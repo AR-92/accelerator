@@ -1,0 +1,46 @@
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Component fallbacks using CSS variables for server-rendered templates */
+@layer components {
+  .card {
+    background: linear-gradient(180deg, var(--surface-1) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-base);
+    box-shadow: var(--shadow-soft-dark);
+  }
+
+  .btn-primary {
+    background-color: var(--accent-default);
+    color: var(--text-primary);
+    border-radius: var(--radius-xl);
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--accent-600);
+  }
+
+  .btn-ghost {
+    background-color: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+
+  .input-base {
+    background-color: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    color: var(--text-primary);
+    padding: 0.625rem 0.75rem;
+  }
+
+  .input-base:focus {
+    box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+}

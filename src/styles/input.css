@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@theme {
+  --color-bg-primary: #343541;
+  --color-bg-secondary: #444654;
+  --color-bg-sidebar: #202123;
+  --color-bg-sidebar-hover: #2A2B32;
+  --color-text-primary: #ECECF1;
+  --color-text-secondary: #9A9B9F;
+  --color-accent-green: #10A37F;
+  --color-accent-green-hover: #19C37D;
+  --color-border-color: #565869;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-primary text-text-primary;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-text-primary font-semibold;
+  }
+}

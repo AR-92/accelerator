@@ -1,0 +1,13 @@
+<button 
+    type="{{type}}" 
+    class="px-{{#if size}}{{size}}{{else}}6{{/if}} py-{{#if sizeY}}{{sizeY}}{{else}}3{{/if}} 
+           {{#if variant}}
+             {{#ifeq variant 'primary'}}bg-slate-700 text-slate-100 hover:bg-slate-600{{/ifeq}}
+             {{#ifeq variant 'secondary'}}bg-slate-800 text-slate-300 hover:bg-slate-700{{/ifeq}}
+             {{#ifeq variant 'outline'}}border border-slate-700 text-slate-200 hover:bg-slate-800{{/ifeq}}
+             {{#ifeq variant 'emerald'}}bg-emerald-600 text-white hover:bg-emerald-700{{/ifeq}}
+           {{else}}bg-slate-700 text-slate-100 hover:bg-slate-600{{/if}}
+           rounded-md transition-colors {{#if block}}w-full{{/if}}"
+>
+    {{text}}
+</button>

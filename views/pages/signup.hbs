@@ -1,0 +1,55 @@
+<div class="w-full max-w-sm mx-auto bg-bg-secondary p-6 rounded-lg">
+    <div class="text-center mb-8">
+        <div class="flex justify-center mb-6">
+            <img src="/public/images/accelerator_logo.svg" alt="Accelerator Logo" class="w-full max-w-xs h-auto">
+        </div>
+        <h1 class="text-2xl font-light mb-2 text-text-primary">Create Account</h1>
+        <p class="text-text-secondary">Sign up to get started</p>
+    </div>
+    
+    <form class="space-y-6" hx-post="/auth/signup" hx-target="#signup-result" hx-swap="innerHTML">
+        {{> form-input id="name" name="name" label="Full Name" inputType="text" placeholder="John Doe" required=true}}
+        
+        {{> form-input id="email" name="email" label="Email" inputType="email" placeholder="your@email.com" required=true}}
+        
+        {{> form-input id="password" name="password" label="Password" inputType="password" placeholder="••••••••" required=true}}
+        
+        {{> form-input id="confirmPassword" name="confirmPassword" label="Confirm Password" inputType="password" placeholder="••••••••" required=true}}
+        
+        <div class="flex items-center">
+            <input 
+                type="checkbox" 
+                id="terms" 
+                name="terms" 
+                class="h-4 w-4 bg-bg-primary border border-border-color rounded text-text-primary focus:ring-text-primary"
+                required
+            >
+            <label for="terms" class="ml-2 block text-sm text-text-secondary">
+                I agree to the <a href="#" class="text-text-primary hover:text-text-secondary">Terms and Conditions</a>
+            </label>
+        </div>
+        
+        {{> button type="submit" text="Sign Up" variant="primary" block=true sizeY="3"}}
+    </form>
+    
+    <div id="signup-result" class="mt-4 text-center"></div>
+    
+    <p class="mt-8 text-center text-sm text-text-secondary">
+        Already have an account? 
+        <a href="/auth/login" class="text-text-primary hover:text-text-secondary">Sign in</a>
+    </p>
+
+    <script>
+        // Handle HTMX response for signup
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.addEventListener('htmx:afterRequest', function(evt) {
+                if (evt.detail.xhr.status === 200) {
+                    // On successful signup, redirect to login
+                    setTimeout(function() {
+                        window.location.href = '/auth/login';
+                    }, 1500);
+                }
+            });
+        });
+    </script>
+</div>

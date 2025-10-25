@@ -1,0 +1,32 @@
+{
+  "name": "accelerator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:tailwind\"",
+    "dev:server": "nodemon server.js",
+    "dev:tailwind": "npx tailwindcss -i ./src/styles/input.css -o ./public/css/main.css --watch",
+    "build:css": "npx tailwindcss -i ./src/styles/input.css -o ./public/css/main.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.16",
+    "nodemon": "^3.1.10",
+    "tailwindcss": "^4.1.16"
+  },
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.10",
+    "bcryptjs": "^3.0.2",
+    "concurrently": "^9.2.1",
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "express-handlebars": "^8.0.3",
+    "handlebars": "^4.7.8"
+  }
+}

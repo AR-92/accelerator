@@ -1,0 +1,49 @@
+<div class="w-full max-w-sm mx-auto bg-bg-secondary p-6 rounded-lg">
+    <div class="text-center mb-8">
+        <div class="flex justify-center mb-6">
+            <img src="/public/images/accelerator_logo.svg" alt="Accelerator Logo" class="w-full max-w-xs h-auto">
+        </div>
+        <h1 class="text-2xl font-light mb-2 text-text-primary">Welcome Back</h1>
+        <p class="text-text-secondary">Sign in to your account</p>
+    </div>
+    
+    <form class="space-y-6" hx-post="/auth/login" hx-target="#login-result" hx-swap="innerHTML">
+        {{> form-input id="login-email" name="email" label="Email" inputType="email" placeholder="your@email.com" required=true}}
+        
+        {{> form-input id="login-password" name="password" label="Password" inputType="password" placeholder="••••••••" required=true}}
+        
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <input 
+                    type="checkbox" 
+                    id="login-remember" 
+                    name="remember" 
+                    class="h-4 w-4 bg-bg-primary border border-border-color rounded text-text-primary focus:ring-text-primary"
+                >
+                <label for="login-remember" class="ml-2 block text-sm text-text-secondary">Remember me</label>
+            </div>
+            <a href="#" class="text-sm text-text-secondary hover:text-text-primary">Forgot password?</a>
+        </div>
+        
+        {{> button type="submit" text="Sign In" variant="primary" block=true sizeY="3"}}
+    </form>
+    
+    <div id="login-result" class="mt-4 text-center"></div>
+    
+    <p class="mt-8 text-center text-sm text-text-secondary">
+        Don't have an account? 
+        <a href="/auth/signup" class="text-text-primary hover:text-text-secondary">Sign up</a>
+    </p>
+
+    <script>
+        // Handle HTMX response for login
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.addEventListener('htmx:afterRequest', function(evt) {
+                if (evt.detail.xhr.status === 200) {
+                    // On successful login, redirect to dashboard
+                    window.location.href = '/pages/dashboard';
+                }
+            });
+        });
+    </script>
+</div>

@@ -1,0 +1,23 @@
+<div class="w-64 bg-bg-sidebar border-r border-border-color min-h-screen hidden md:flex flex-col">
+    <div class="p-6 border-b border-border-color">
+        <div class="flex justify-center">
+            <img src="/public/images/accelerator_logo.svg" alt="Accelerator Logo" class="w-full max-w-[80%] h-auto">
+        </div>
+    </div>
+    <nav class="flex-grow p-4">
+        <a href="/pages/dashboard" class="block py-3 px-4 rounded text-text-secondary hover:bg-bg-sidebar-hover hover:text-text-primary transition mb-2 {{#if isActiveDashboard}}bg-bg-secondary text-text-primary{{/if}}">Dashboard</a>
+        <a href="/pages/portfolio" class="block py-3 px-4 rounded text-text-secondary hover:bg-bg-sidebar-hover hover:text-text-primary transition mb-2 {{#if isActivePortfolio}}bg-bg-secondary text-text-primary{{/if}}">Portfolio</a>
+        <a href="/pages/chat" class="block py-3 px-4 rounded text-text-secondary hover:bg-bg-sidebar-hover hover:text-text-primary transition mb-2 {{#if isActiveChat}}bg-bg-secondary text-text-primary{{/if}}">Chat</a>
+        <a href="/pages/ideas" class="block py-3 px-4 rounded text-text-secondary hover:bg-bg-sidebar-hover hover:text-text-primary transition mb-2 {{#if isActiveIdeas}}bg-bg-secondary text-text-primary{{/if}}">Ideas</a>
+        <a href="/pages/reports" class="block py-3 px-4 rounded text-text-secondary hover:bg-bg-sidebar-hover hover:text-text-primary transition mb-2 {{#if isActiveReports}}bg-bg-secondary text-text-primary{{/if}}">Reports</a>
+        <a href="/pages/settings" class="block py-3 px-4 rounded text-text-secondary hover:bg-bg-sidebar-hover hover:text-text-primary transition mb-2 {{#if isActiveSettings}}bg-bg-secondary text-text-primary{{/if}}">Settings</a>
+    </nav>
+    <div class="p-4 border-t border-border-color">
+        <form action="/auth/logout" method="POST" class="w-full">
+            <button type="submit" class="w-full py-2 px-4 bg-accent-green hover:bg-accent-green-hover text-white rounded transition">
+                Logout
+            </button>
+        </form>
+        <p class="text-center text-text-secondary text-sm mt-4">&copy; 2025 Accelerator</p>
+    </div>
+</div>
