@@ -1,14 +1,4 @@
 /* This file ensures all needed Tailwind classes are generated */
-/* Supabase colors */
-.bg-supabase-green { }
-.text-supabase-green { }
-.border-supabase-green { }
-.ring-supabase-green { }
-
-.bg-supabase-green-hover { }
-.text-supabase-green-hover { }
-.border-supabase-green-hover { }
-.ring-supabase-green-hover { }
 
 /* Background colors */
 .bg-bg-primary { }
@@ -19,6 +9,7 @@
 .bg-bg-dark { }
 .bg-bg-sidebar { }
 .bg-bg-sidebar-hover { }
+.bg-sidebar-accent { }
 
 /* Text colors */
 .text-text-primary { }
@@ -26,6 +17,15 @@
 .text-text-subtle { }
 .text-text-inverse { }
 .text-text-disabled { }
+.text-sidebar-accent-foreground { }
+.text-sidebar-foreground { }
+
+/* Border colors */
+.border-border-default { }
+.border-border-strong { }
+.border-border-weak { }
+.border-border-dark { }
+.border-sidebar-ring { }
 
 /* Border colors */
 .border-border-default { }
@@ -114,11 +114,17 @@
 
 .w-full { }
 .w-11 { }
+.w-8 { }
 .h-64 { }
+.h-8 { }
+.h-12 { }
+.px-3 { }
+.py-1\.5 { }
 
 /* Other common utilities */
 .rounded-md { }
 .rounded-lg { }
+.rounded-full { }
 .flex { }
 .grid { }
 .hidden { }
@@ -126,10 +132,47 @@
 .inline { }
 .items-center { }
 .justify-between { }
+.justify-left { }
 .space-y-4 { }
 .space-y-6 { }
+.gap-2 { }
 .gap-4 { }
 .gap-6 { }
 .font-medium { }
 .font-semibold { }
-.shadow-sm { }
+.text-sm { }
+.text-xs { }
+.leading-tight { }
+.truncate { }
+.outline-hidden { }
+.ring-sidebar-ring { }
+.focus-visible:ring-2 { }
+.transition-[width,height,padding] { }
+.shrink-0 { }
+.overflow-hidden { }
+.ml-auto { }
+.size-4 { }
+.size-8 { }
+.aspect-square { }
+.grayscale { }
+.active:bg-sidebar-accent { }
+.active:text-sidebar-accent-foreground { }
+.disabled:pointer-events-none { }
+.disabled:opacity-50 { }
+.aria-disabled:pointer-events-none { }
+.aria-disabled:opacity-50 { }
+.data-\[active\=true\]:bg-sidebar-accent { }
+.data-\[active\=true\]:font-medium { }
+.data-\[active\=true\]:text-sidebar-accent-foreground { }
+.data-\[state\=open\]:hover:bg-sidebar-accent { }
+.data-\[state\=open\]:hover:text-sidebar-accent-foreground { }
+.group-data-\[collapsible\=icon\]:size-8\! { }
+.group-data-\[collapsible\=icon\]:p-0\! { }
+.\[&>span\:last-child\]:truncate { }
+.\[&>svg\]:size-4 { }
+.\[&>svg\]:shrink-0 { }
+.hover:bg-sidebar-accent { }
+.hover:text-sidebar-accent-foreground { }
+.data-\[state\=open\]:bg-sidebar-accent { }
+.data-\[state\=open\]:text-sidebar-accent-foreground { }
+.text-sidebar-foreground\/70 { }

@@ -9,6 +9,14 @@
   --color-accent-green: #10A37F;
   --color-accent-green-hover: #19C37D;
   --color-border-color: #565869;
+  --sidebar: #202123;
+  --sidebar-foreground: #ECECF1;
+  --sidebar-primary: #343541;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #2A2B32;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #565869;
+  --sidebar-ring: #565869;
 }
 
 @layer base {
