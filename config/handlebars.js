@@ -10,6 +10,23 @@ handlebars.registerHelper('ifeq', function(a, b, options) {
   return options.inverse(this);
 });
 
+handlebars.registerHelper('times', function(n, options) {
+  let ret = '';
+  for (let i = 0; i < n && i < 5; i++) {
+    ret += options.fn(this);
+  }
+  return ret;
+});
+
+handlebars.registerHelper('timesDiff', function(max, n, options) {
+  let ret = '';
+  const count = Math.max(0, max - n);
+  for (let i = 0; i < count; i++) {
+    ret += options.fn(this);
+  }
+  return ret;
+});
+
 const handlebarsConfig = engine({ 
   extname: '.hbs',
   defaultLayout: 'main',

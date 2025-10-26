@@ -1,121 +1,79 @@
 <div class="w-full">
     <div class="mb-8">
         <h1 class="text-2xl font-light mb-2">Portfolio</h1>
-        <p class="text-gray-500">Browse and manage your collection of projects and assets</p>
+        <p class="text-gray-500">Manage your portfolio projects and showcase your work</p>
     </div>
     
-    <!-- Portfolio filters -->
-    <div class="flex flex-wrap gap-4 mb-8">
-        <button class="px-4 py-2 border border-gray-700 text-gray-300 hover:bg-gray-800 rounded transition">All Projects</button>
-        <button class="px-4 py-2 border border-gray-700 text-gray-300 hover:bg-gray-800 rounded transition">Web Design</button>
-        <button class="px-4 py-2 border border-gray-700 text-gray-300 hover:bg-gray-800 rounded transition">UI/UX</button>
-        <button class="px-4 py-2 border border-gray-700 text-gray-300 hover:bg-gray-800 rounded transition">Development</button>
-        <button class="px-4 py-2 border border-gray-700 text-gray-300 hover:bg-gray-800 rounded transition">Illustration</button>
+    <div>
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-light text-gray-900 dark:text-gray-100">Your Portfolio Projects</h2>
+            <div class="flex gap-2">
+                <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded text-sm">
+                    Filter
+                </button>
+                <button class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded text-sm">
+                    Sort
+                </button>
+            </div>
+        </div>
+        
+        {{#if error}}
+        <div class="text-center py-8">
+            <p class="text-red-500">{{error}}</p>
+        </div>
+        {{else if ideas}}
+        <div id="portfolio-list">
+            {{#each ideas}}
+            <!-- Portfolio Item {{this.id}} -->
+            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 mb-4 shadow-sm">
+                <div class="flex justify-between items-start">
+                    <div class="flex-grow">
+                        <div class="flex items-center gap-2 mb-2">
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">{{this.title}}</h3>
+                            <span class="px-2 py-1 text-xs rounded border bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-400 border-gray-200 dark:border-gray-600">
+                                {{this.category}}
+                            </span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">{{this.description}}</p>
+                        <div class="flex flex-wrap gap-2">
+                            {{#each this.tags}}
+                            <span class="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 text-xs rounded border border-purple-200 dark:border-purple-800/50">{{this}}</span>
+                            {{/each}}
+                            <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs rounded border border-yellow-200 dark:border-yellow-800/50">
+                                Votes: {{this.votes}}
+                            </span>
+                            <span class="px-2 py-1 {{#if this.isPublic}}bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400{{else}}bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400{{/if}} text-xs rounded border {{#if this.isPublic}}border-green-200 dark:border-green-800/50{{else}}border-red-200 dark:border-red-800/50{{/if}}">
+                                {{#if this.isPublic}}Public{{else}}Private{{/if}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 ml-4">
+                        <a href="/pages/portfolio/{{this.id}}" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                            </svg>
+                        </button>
+                        <button class="p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <div class="text-center py-8">
+            <p class="text-gray-500 dark:text-gray-400">No portfolio projects found. Add some projects to showcase your work.</p>
+        </div>
+        {{/if}}
     </div>
-    
-    <!-- Portfolio grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Portfolio item 1 -->
-        <div class="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden hover:bg-gray-800 transition cursor-pointer">
-            <div class="h-48 bg-gradient-to-r from-purple-900 to-blue-800 flex items-center justify-center">
-                <div class="text-5xl">🎨</div>
-            </div>
-            <div class="p-5">
-                <h3 class="text-lg font-light mb-2">E-commerce Dashboard</h3>
-                <p class="text-gray-500 text-sm mb-4">A comprehensive analytics dashboard for e-commerce businesses with real-time metrics and reporting.</p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">React</span>
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">Node.js</span>
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">MongoDB</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Portfolio item 2 -->
-        <div class="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden hover:bg-gray-800 transition cursor-pointer">
-            <div class="h-48 bg-gradient-to-r from-green-900 to-teal-800 flex items-center justify-center">
-                <div class="text-5xl">📱</div>
-            </div>
-            <div class="p-5">
-                <h3 class="text-lg font-light mb-2">Mobile Banking App</h3>
-                <p class="text-gray-500 text-sm mb-4">Secure and user-friendly mobile banking solution with account management and transaction features.</p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">Flutter</span>
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">Firebase</span>
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">REST API</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Portfolio item 3 -->
-        <div class="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden hover:bg-gray-800 transition cursor-pointer">
-            <div class="h-48 bg-gradient-to-r from-yellow-900 to-orange-800 flex items-center justify-center">
-                <div class="text-5xl">🌐</div>
-            </div>
-            <div class="p-5">
-                <h3 class="text-lg font-light mb-2">Travel Website</h3>
-                <p class="text-gray-500 text-sm mb-4">Beautiful travel booking website with destination discovery and booking features.</p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">Vue.js</span>
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">Express</span>
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">PostgreSQL</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Portfolio item 4 -->
-        <div class="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden hover:bg-gray-800 transition cursor-pointer">
-            <div class="h-48 bg-gradient-to-r from-pink-900 to-rose-800 flex items-center justify-center">
-                <div class="text-5xl">📊</div>
-            </div>
-            <div class="p-5">
-                <h3 class="text-lg font-light mb-2">Analytics Platform</h3>
-                <p class="text-gray-500 text-sm mb-4">Data visualization platform with customizable dashboards and reporting tools.</p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">Angular</span>
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">D3.js</span>
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">Python</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Portfolio item 5 -->
-        <div class="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden hover:bg-gray-800 transition cursor-pointer">
-            <div class="h-48 bg-gradient-to-r from-indigo-900 to-purple-800 flex items-center justify-center">
-                <div class="text-5xl">🛒</div>
-            </div>
-            <div class="p-5">
-                <h3 class="text-lg font-light mb-2">Marketplace Platform</h3>
-                <p class="text-gray-500 text-sm mb-4">Multi-vendor marketplace with payment processing and inventory management.</p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">Next.js</span>
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">Stripe</span>
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">Redis</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Portfolio item 6 -->
-        <div class="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden hover:bg-gray-800 transition cursor-pointer">
-            <div class="h-48 bg-gradient-to-r from-cyan-900 to-blue-800 flex items-center justify-center">
-                <div class="text-5xl">🎧</div>
-            </div>
-            <div class="p-5">
-                <h3 class="text-lg font-light mb-2">Music Streaming App</h3>
-                <p class="text-gray-500 text-sm mb-4">Music streaming application with personalized playlists and social features.</p>
-                <div class="flex flex-wrap gap-2">
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">React Native</span>
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">Node.js</span>
-                    <span class="px-2 py-1 bg-gray-800 text-gray-400 text-xs rounded">AWS</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Load more button -->
-    <div class="mt-8 text-center">
-        <button class="px-6 py-3 border border-gray-700 text-gray-300 hover:bg-gray-800 rounded transition">
-            Load More Projects
-        </button>
-    </div>
+</div>
 </div>

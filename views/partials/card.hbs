@@ -1,9 +1,9 @@
-<div class="bg-slate-900 border border-slate-800 rounded-lg p-{{#if padding}}{{padding}}{{else}}6{{/if}} {{#if marginBottom}}mb-{{marginBottom}}{{else}}mb-6{{/if}}">
+<div class="card p-{{#if padding}}{{padding}}{{else}}6{{/if}} {{#if marginBottom}}mb-{{marginBottom}}{{else}}mb-6{{/if}}">
     {{#if title}}
-    <h2 class="text-lg font-light {{#if subtitle}}mb-2{{else}}mb-4{{/if}} text-slate-50">{{title}}</h2>
+    <h2 class="text-lg font-medium {{#if subtitle}}mb-2{{else}}mb-4{{/if}} text-gray-900">{{title}}</h2>
     {{/if}}
     {{#if subtitle}}
-    <p class="text-slate-400 mb-4">{{subtitle}}</p>
+    <p class="text-gray-500 mb-4">{{subtitle}}</p>
     {{/if}}
     <div>
         {{{content}}}

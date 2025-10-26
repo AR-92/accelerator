@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Helper function for page data
 const getPageData = (title, activeKey, padding = 'py-8') => ({
-  title: `${title} - Minimal Dark UI`,
+  title: `${title} - Supabase UI`,
   [`isActive${activeKey}`]: true,
   mainPadding: padding
 });
@@ -69,7 +69,55 @@ router.post('/settings/preferences', (req, res) => {
 
 // GET portfolio
 router.get('/portfolio', (req, res) => {
-  res.render('pages/portfolio', getPageData('Portfolio', 'Portfolio'));
+  // Load portfolio data from JSON file asynchronously
+  const fs = require('fs').promises;
+  const path = require('path');
+  
+  const portfolioDataPath = path.join(__dirname, '../data/portfolio.json');
+  
+  fs.readFile(portfolioDataPath, 'utf8')
+    .then(data => {
+      const portfolioData = JSON.parse(data);
+      res.render('pages/portfolio', {
+        ...getPageData('Portfolio', 'Portfolio'),
+        ideas: portfolioData
+      });
+    })
+    .catch(error => {
+      console.error('Error reading portfolio data:', error);
+      res.render('pages/portfolio', {
+        ...getPageData('Portfolio', 'Portfolio'),
+        ideas: [],
+        error: 'Failed to load portfolio data. Please try again later.'
+      });
+    });
+});
+
+// GET individual portfolio idea
+router.get('/portfolio/:id', (req, res) => {
+  const fs = require('fs').promises;
+  const path = require('path');
+  
+  const portfolioDataPath = path.join(__dirname, '../data/portfolio.json');
+  
+  fs.readFile(portfolioDataPath, 'utf8')
+    .then(data => {
+      const portfolioData = JSON.parse(data);
+      const idea = portfolioData.find(i => i.id == req.params.id);
+      
+      if (!idea) {
+        return res.status(404).render('pages/404', getPageData('Not Found', ''));
+      }
+      
+      res.render('pages/portfolio-idea', {
+        ...getPageData('Portfolio Idea', 'Portfolio'),
+        idea: idea
+      });
+    })
+    .catch(error => {
+      console.error('Error reading portfolio data:', error);
+      res.status(500).render('pages/404', getPageData('Error', ''));
+    });
 });
 
 // GET ideas

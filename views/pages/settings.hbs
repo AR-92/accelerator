@@ -1,159 +1,128 @@
-<div class="w-full">
-    <div class="mb-8">
-        <h1 class="text-2xl font-light mb-2 text-text-primary">Settings</h1>
-        <p class="text-text-secondary">Manage your account preferences and configurations</p>
-    </div>
-    
-    <!-- Settings form -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2">
-            <div class="bg-bg-secondary border border-border-color rounded p-6 mb-6">
-                <h2 class="text-lg font-light mb-4 text-text-primary">Profile Information</h2>
-                
-                <form hx-post="/pages/settings/profile" hx-target="#profile-result" hx-swap="innerHTML" class="space-y-6">
-                    <div>
-                        <label for="fullName" class="block text-sm text-text-secondary mb-2">Full Name</label>
-                        <input 
-                            type="text" 
-                            id="fullName" 
-                            name="fullName" 
-                            value="John Doe"
-                            class="w-full px-4 py-3 bg-bg-primary border border-border-color rounded text-text-primary focus:outline-none focus:ring-1 focus:ring-border-color" 
-                        >
-                    </div>
-                    
-                    <div>
-                        <label for="email" class="block text-sm text-text-secondary mb-2">Email Address</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            value="john.doe@example.com"
-                            class="w-full px-4 py-3 bg-bg-primary border border-border-color rounded text-text-primary focus:outline-none focus:ring-1 focus:ring-border-color" 
-                        >
-                    </div>
-                    
-                    <div>
-                        <label for="bio" class="block text-sm text-text-secondary mb-2">Bio</label>
-                        <textarea 
-                            id="bio" 
-                            name="bio" 
-                            rows="3"
-                            class="w-full px-4 py-3 bg-bg-primary border border-border-color rounded text-text-primary focus:outline-none focus:ring-1 focus:ring-border-color"
-                        >Frontend Developer with 5+ years of experience in creating beautiful UIs.</textarea>
-                    </div>
-                    
-                    <div>
-                        <button type="submit" class="px-6 py-3 bg-bg-primary text-text-primary hover:bg-bg-sidebar-hover rounded transition">
-                            Update Profile
-                        </button>
-                    </div>
-                </form>
-                
-                <div id="profile-result" class="mt-4"></div>
+<main class="flex-1 p-4 xl:px-8">
+    <div class="container max-w-6xl flex h-full flex-col gap-4 px-0 lg:gap-6">
+        <div class="container mx-auto max-w-7xl px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="grid gap-1">
+                    <h1 class="font-heading text-2xl font-semibold">Account Settings</h1>
+                    <p class="text-base text-muted-foreground">Manage account and website settings.</p>
+                </div>
             </div>
-            
-            <div class="bg-bg-secondary border border-border-color rounded p-6">
-                <h2 class="text-lg font-light mb-4 text-text-primary">Account Security</h2>
-                
-                <form hx-post="/pages/settings/security" hx-target="#security-result" hx-swap="innerHTML" class="space-y-6">
-                    <div>
-                        <label for="currentPassword" class="block text-sm text-text-secondary mb-2">Current Password</label>
-                        <input 
-                            type="password" 
-                            id="currentPassword" 
-                            name="currentPassword" 
-                            class="w-full px-4 py-3 bg-bg-primary border border-border-color rounded text-text-primary focus:outline-none focus:ring-1 focus:ring-border-color" 
-                            required
-                        >
-                    </div>
-                    
-                    <div>
-                        <label for="newPassword" class="block text-sm text-text-secondary mb-2">New Password</label>
-                        <input 
-                            type="password" 
-                            id="newPassword" 
-                            name="newPassword" 
-                            class="w-full px-4 py-3 bg-bg-primary border border-border-color rounded text-text-primary focus:outline-none focus:ring-1 focus:ring-border-color" 
-                            required
-                        >
-                    </div>
-                    
-                    <div>
-                        <label for="confirmNewPassword" class="block text-sm text-text-secondary mb-2">Confirm New Password</label>
-                        <input 
-                            type="password" 
-                            id="confirmNewPassword" 
-                            name="confirmNewPassword" 
-                            class="w-full px-4 py-3 bg-bg-primary border border-border-color rounded text-text-primary focus:outline-none focus:ring-1 focus:ring-border-color" 
-                            required
-                        >
-                    </div>
-                    
-                    <div>
-                        <button type="submit" class="px-6 py-3 bg-bg-primary text-text-primary hover:bg-bg-sidebar-hover rounded transition">
-                            Update Password
+            <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-[280px,1fr]">
+                <div class="overflow-hidden border bg-card text-card-foreground shadow-sm h-fit rounded-[6px] py-2" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px 0px;">
+                    <nav class="space-y-1">
+                        <button class="flex w-full items-center gap-3 px-3 py-[14px] text-sm font-medium transition-colors duration-150 border-r-[5px] border-r-primary bg-[#9e28b526] text-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8 7C8 5.93913 8.42143 4.92172 9.17157 4.17157C9.92172 3.42143 10.9391 3 12 3C13.0609 3 14.0783 3.42143 14.8284 4.17157C15.5786 4.92172 16 5.93913 16 7C16 8.06087 15.5786 9.07828 14.8284 9.82843C14.0783 10.5786 13.0609 11 12 11C10.9391 11 9.92172 10.5786 9.17157 9.82843C8.42143 9.07828 8 8.06087 8 7ZM8 13C6.67392 13 5.40215 13.5268 4.46447 14.4645C3.52678 15.4021 3 16.6739 3 18C3 18.7956 3.31607 19.5587 3.87868 20.1213C4.44129 20.6839 5.20435 21 6 21H18C18.7956 21 19.5587 20.6839 20.1213 20.1213C20.6839 19.5587 21 18.7956 21 18C21 16.6739 20.4732 15.4021 19.5355 14.4645C18.5979 13.5268 17.3261 13 16 13H8Z" fill="#9E28B5"></path>
+                            </svg>
+                            My Profile
                         </button>
-                    </div>
-                </form>
-                
-                <div id="security-result" class="mt-4"></div>
-            </div>
-        </div>
-        
-        <div>
-            <div class="bg-bg-secondary border border-border-color rounded p-6">
-                <h2 class="text-lg font-light mb-4 text-text-primary">Preferences</h2>
-                
-                <form hx-post="/pages/settings/preferences" hx-target="#preferences-result" hx-swap="innerHTML" class="space-y-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <label class="block text-sm text-text-secondary">Dark Mode</label>
-                            <p class="text-xs text-text-secondary">Enable dark theme for the app</p>
-                        </div>
-                        <div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" checked class="sr-only peer">
-                                <div class="w-11 h-6 bg-border-color peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-bg-sidebar-hover"></div>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <label class="block text-sm text-text-secondary">Email Notifications</label>
-                            <p class="text-xs text-text-secondary">Receive email updates</p>
-                        </div>
-                        <div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" checked class="sr-only peer">
-                                <div class="w-11 h-6 bg-border-color peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-bg-sidebar-hover"></div>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <label class="block text-sm text-text-secondary">Push Notifications</label>
-                            <p class="text-xs text-text-secondary">Receive push notifications</p>
-                        </div>
-                        <div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" class="sr-only peer">
-                                <div class="w-11 h-6 bg-border-color peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-bg-sidebar-hover"></div>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <button type="submit" class="w-full px-6 py-3 bg-bg-primary text-text-primary hover:bg-bg-sidebar-hover rounded transition">
-                            Save Preferences
+                        <button class="flex w-full items-center gap-3 px-3 py-[14px] text-sm font-medium transition-colors duration-150 text-muted-foreground hover:bg-muted">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M2 16C2 13.172 2 11.757 2.879 10.879C3.757 10 5.172 10 8 10H16C18.828 10 20.243 10 21.121 10.879C22 11.757 22 13.172 22 16C22 18.828 22 20.243 21.121 21.121C20.243 22 18.828 22 16 22H8C5.172 22 3.757 22 2.879 21.121C2 20.243 2 18.828 2 16Z" stroke="#2A2A2A" stroke-width="1.5"></path>
+                                <path d="M6 10V8C6 6.4087 6.63214 4.88258 7.75736 3.75736C8.88258 2.63214 10.4087 2 12 2C13.5913 2 15.1174 2.63214 16.2426 3.75736C17.3679 4.88258 18 6.4087 18 8V10" stroke="#2A2A2A" stroke-width="1.5" stroke-linecap="round"></path>
+                                <path d="M8 16H8.009M11.991 16H12M15.991 16H16" stroke="#2A2A2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            Change Password
                         </button>
+                        <button class="flex w-full items-center gap-3 px-3 py-[14px] text-sm font-medium transition-colors duration-150 text-muted-foreground hover:bg-muted">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" color="#2A2A2A" class="w-6">
+                                <path d="M21 5.25H3C2.58579 5.25 2.25 5.58579 2.25 6V18C2.25 18.4142 2.58579 18.75 3 18.75H21C21.4142 18.75 21.75 18.4142 21.75 18V6C21.75 5.58579 21.4142 5.25 21 5.25Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M15.75 15.75H18.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M11.25 15.75H12.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M2.25 9.08008H21.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                            Subscription
+                        </button>
+                        <button class="flex w-full items-center gap-3 px-3 py-[14px] text-sm font-medium transition-colors duration-150 text-muted-foreground hover:bg-muted">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2A2A2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-dollar-sign w-6">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path>
+                                <path d="M12 18V6"></path>
+                            </svg>
+                            Payment
+                        </button>
+                        <button class="flex w-full items-center gap-3 px-3 py-[14px] text-sm font-medium transition-colors duration-150 text-muted-foreground hover:bg-muted">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M3 10.2337L3.747 10.1697C3.72978 9.97763 3.63924 9.79956 3.49416 9.67249C3.34909 9.54542 3.16064 9.47912 2.96796 9.48736C2.77528 9.49559 2.59318 9.57774 2.45948 9.71673C2.32578 9.85572 2.25076 10.0409 2.25 10.2337H3ZM20.236 12.0567L19.53 16.1367L21.009 16.3927L21.714 12.3127L20.236 12.0567ZM13.245 21.2497H8.596V22.7497H13.245V21.2497ZM7.685 20.4127L6.873 11.0197L5.378 11.1487L6.191 20.5417L7.685 20.4127ZM19.53 16.1367C19.023 19.0667 16.381 21.2497 13.245 21.2497V22.7497C17.071 22.7497 20.371 20.0807 21.009 16.3927L19.53 16.1367ZM13.255 5.09972L12.592 9.14472L14.072 9.38672L14.735 5.34272L13.255 5.09972ZM7.188 10.2457L8.627 9.00572L7.647 7.86972L6.21 9.10972L7.188 10.2457ZM11.244 4.97172L11.72 3.13772L10.268 2.76172L9.792 4.59472L11.244 4.97172ZM12.438 2.77772L12.583 2.82472L13.042 1.39672L12.897 1.34972L12.438 2.77772ZM10.523 6.81572C10.8352 6.23163 11.0772 5.61266 11.244 4.97172L9.792 4.59472C9.65421 5.12101 9.45553 5.62944 9.2 6.10972L10.523 6.81572ZM12.583 2.82472C12.7255 2.86838 12.8547 2.94711 12.9588 3.05368C13.063 3.16026 13.1387 3.29128 13.179 3.43472L14.631 3.05872C14.5281 2.67002 14.3284 2.31373 14.0505 2.02309C13.7727 1.73246 13.4257 1.51697 13.042 1.39672L12.583 2.82472ZM11.72 3.13772C11.7402 3.06584 11.7757 2.99915 11.824 2.94221C11.8724 2.88526 11.9324 2.83939 12 2.80772L11.349 1.45672C10.817 1.71272 10.417 2.18672 10.268 2.76172L11.72 3.13772ZM12 2.80772C12.137 2.74275 12.2935 2.73203 12.438 2.77772L12.897 1.34972C12.3863 1.18645 11.8324 1.22473 11.349 1.45672L12 2.80772ZM14.154 10.9837H19.334V9.48372H14.154V10.9837ZM4.719 21.4057L3.747 10.1697L2.253 10.2987L3.223 21.5347L4.719 21.4057ZM3.75 21.5127V10.2337H2.25V21.5127H3.75ZM3.223 21.5347C3.21995 21.4984 3.22549 21.4618 3.23733 21.4273C3.24918 21.3928 3.26807 21.3612 3.2928 21.3344C3.31753 21.3076 3.34757 21.2862 3.381 21.2716C3.41443 21.2571 3.45053 21.2496 3.487 21.2497V22.7497C4.213 22.7497 4.781 22.1277 4.719 21.4057L3.223 21.5347ZM14.735 5.34272C14.8607 4.58251 14.8253 3.80436 14.631 3.05872L13.179 3.43572C13.3208 3.97891 13.3467 4.54587 13.255 5.09972L14.735 5.34272ZM8.596 21.2497C8.36701 21.2493 8.14648 21.1632 7.97785 21.0082C7.80923 20.8533 7.70475 20.6409 7.685 20.4127L6.191 20.5417C6.24303 21.1439 6.51888 21.7047 6.96411 22.1134C7.40933 22.5222 7.99159 22.7492 8.596 22.7497V21.2497ZM8.627 9.00572C9.307 8.41972 10.039 7.72272 10.524 6.81572L9.2 6.10972C8.854 6.75872 8.303 7.30572 7.647 7.86972L8.627 9.00572ZM21.714 12.3127C21.7742 11.9657 21.7578 11.6097 21.666 11.2697C21.5741 10.9297 21.4091 10.6139 21.1823 10.3444C20.9556 10.0749 20.6727 9.85819 20.3534 9.70952C20.0341 9.56085 19.6862 9.48378 19.334 9.48372V10.9837C19.901 10.9837 20.334 11.4957 20.236 12.0567L21.714 12.3127ZM3.487 21.2497C3.633 21.2497 3.75 21.3677 3.75 21.5127H2.25C2.25 22.1947 2.803 22.7497 3.487 22.7497V21.2497ZM12.592 9.14472C12.5547 9.3713 12.5672 9.60328 12.6285 9.82456C12.6899 10.0458 12.7986 10.2511 12.9472 10.4262C13.0958 10.6012 13.2807 10.7419 13.4891 10.8383C13.6975 10.9348 13.9244 10.9837 14.154 10.9837V9.48372C14.1418 9.48377 14.1297 9.48214 14.1187 9.477C14.1076 9.47186 14.0978 9.46434 14.09 9.45498C14.0821 9.44563 14.0765 9.43466 14.0734 9.42286C14.0703 9.41106 14.0698 9.39872 14.072 9.38672L12.592 9.14472ZM6.873 11.0197C6.8608 10.8749 6.88208 10.7293 6.937 10.5948C6.99193 10.4602 7.07794 10.3406 7.188 10.2457L6.208 9.10872C5.91814 9.35886 5.69177 9.6742 5.54748 10.0288C5.4032 10.3835 5.34511 10.7673 5.378 11.1487L6.873 11.0197Z" fill="#2A2A2A"></path>
+                            </svg>
+                            Votes Management
+                        </button>
+                        <button class="flex w-full items-center gap-3 px-3 py-[14px] text-sm font-medium transition-colors duration-150 text-muted-foreground hover:bg-muted">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2A2A2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-coins w-6">
+                                <path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"></path>
+                                <path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"></path>
+                                <path d="m2 16 6 6"></path>
+                                <circle cx="16" cy="9" r="2.9"></circle>
+                                <circle cx="6" cy="5" r="3"></circle>
+                            </svg>
+                            Voting Rewards
+                        </button>
+                    </nav>
+                </div>
+                <div>
+                    <div class="overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm">
+                        <div class="p-6">
+                            <form class="space-y-6">
+                                <div class="mb-6 flex justify-center"></div>
+                                <div class="flex items-center gap-[24px] lg:gap-[40px]">
+                                    <div class="relative">
+                                        <img alt="AhmedRana" loading="lazy" width="160" height="160" decoding="async" data-nimg="1" class="h-[100px] w-[100px] rounded-full object-cover lg:h-[160px] lg:w-[160px]" src="/logo.svg" style="color: transparent;">
+                                        <div class="absolute bottom-0 right-0">
+                                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="1" y="1" width="38" height="38" rx="19" fill="#9E28B5"></rect>
+                                                <rect x="1" y="1" width="38" height="38" rx="19" stroke="white" stroke-width="2"></rect>
+                                                <path d="M20 15.2004C18.7269 15.2004 17.506 15.7061 16.6059 16.6063C15.7057 17.5065 15.2 18.7274 15.2 20.0004C15.2 21.2734 15.7057 22.4943 16.6059 23.3945C17.506 24.2947 18.7269 24.8004 20 24.8004C21.273 24.8004 22.4939 24.2947 23.3941 23.3945C24.2943 22.4943 24.8 21.2734 24.8 20.0004C24.8 18.7274 24.2943 17.5065 23.3941 16.6063C22.4939 15.7061 21.273 15.2004 20 15.2004ZM16.4 20.0004C16.4 19.0456 16.7793 18.1299 17.4544 17.4548C18.1295 16.7797 19.0452 16.4004 20 16.4004C20.9548 16.4004 21.8704 16.7797 22.5456 17.4548C23.2207 18.1299 23.6 19.0456 23.6 20.0004C23.6 20.9552 23.2207 21.8708 22.5456 22.546C21.8704 23.2211 20.9548 23.6004 20 23.6004C19.0452 23.6004 18.1295 23.2211 17.4544 22.546C16.7793 21.8708 16.4 20.9552 16.4 20.0004ZM17.7488 10.4004C17.4152 10.4004 17.0883 10.4931 16.8043 10.6681C16.5204 10.8431 16.2907 11.0936 16.1408 11.3916L15.4328 12.8004H13.4048C12.6091 12.8004 11.8461 13.1165 11.2835 13.6791C10.7209 14.2417 10.4048 15.0047 10.4048 15.8004V25.4004C10.4048 26.196 10.7209 26.9591 11.2835 27.5217C11.8461 28.0843 12.6091 28.4004 13.4048 28.4004H26.6048C27.4004 28.4004 28.1635 28.0843 28.7261 27.5217C29.2887 26.9591 29.6048 26.196 29.6048 25.4004V15.8004C29.6048 15.0047 29.2887 14.2417 28.7261 13.6791C28.1635 13.1165 27.4004 12.8004 26.6048 12.8004H24.5768L23.876 11.3964C23.7266 11.0972 23.4968 10.8455 23.2123 10.6695C22.9279 10.4936 22.6 10.4004 22.2656 10.4004H17.7488ZM17.2124 11.9304C17.2624 11.8311 17.3391 11.7476 17.4338 11.6894C17.5285 11.6311 17.6376 11.6003 17.7488 11.6004H22.2656C22.3771 11.6002 22.4865 11.631 22.5815 11.6896C22.6764 11.7481 22.7532 11.8319 22.8032 11.9316L23.6708 13.668C23.7207 13.7675 23.7973 13.8512 23.892 13.9097C23.9867 13.9682 24.0959 13.9992 24.2072 13.9992H26.606C27.0834 13.9992 27.5412 14.1888 27.8788 14.5264C28.2163 14.864 28.406 15.3218 28.406 15.7992V25.4004C28.406 25.8778 28.2163 26.3356 27.8788 26.6732C27.5412 27.0107 27.0834 27.2004 26.606 27.2004H13.406C12.9286 27.2004 12.4708 27.0107 12.1332 26.6732C11.7956 26.3356 11.606 25.8778 11.606 25.4004V15.8004C11.606 15.323 11.7956 14.8652 12.1332 14.5276C12.4708 14.19 12.9286 14.0004 13.406 14.0004H15.8036C15.9147 14.0002 16.0236 13.9691 16.1181 13.9106C16.2126 13.8521 16.289 13.7685 16.3388 13.6692L17.2124 11.9304Z" fill="white"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-[12px] lg:gap-[24px]">
+                                        <button class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] border hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4 rounded-md border-primary text-primary" type="button">Update New</button>
+                                        <button class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 py-2 px-4 rounded-md" type="button">Delate Avatar</button>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-primary" for="first_name">First Name</label>
+                                        <div class="relative">
+                                            <div class="relative flex items-center">
+                                                <input class="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pr-3 focus:border-primary focus-visible:ring-0 focus-visible:ring-offset-0" id="first_name" required="" value="Ahmed" name="first_name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-primary" for="last_name">Last Name</label>
+                                        <div class="relative">
+                                            <div class="relative flex items-center">
+                                                <input class="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pr-3 focus:border-primary focus-visible:ring-0 focus-visible:ring-offset-0" id="last_name" required="" value="Rana" name="last_name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-primary" for="email">Email</label>
+                                        <div class="relative">
+                                            <div class="relative flex items-center">
+                                                <input class="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pr-3 focus:border-primary focus-visible:ring-0 focus-visible:ring-offset-0" id="email" required="" type="email" value="chatflow732@gmail.com" name="email">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-primary">Gender</label>
+                                        <div class="flex gap-4">
+                                            <button class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] border hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4 rounded-md border-primary text-primary" type="button">Male</button>
+                                            <button class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] border border-input hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4 rounded-md" type="button">Female</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4">
+                                    <button class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md" type="submit">Save Changes</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </form>
-                
-                <div id="preferences-result" class="mt-4"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</main>

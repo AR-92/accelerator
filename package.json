@@ -7,8 +7,8 @@
     "start": "node server.js",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:tailwind\"",
     "dev:server": "nodemon server.js",
-    "dev:tailwind": "npx tailwindcss -i ./src/styles/input.css -o ./public/css/main.css --watch",
-    "build:css": "npx tailwindcss -i ./src/styles/input.css -o ./public/css/main.css",
+    "dev:tailwind": "npx tailwindcss -i ./src/input.css -o ./public/css/main.css --watch",
+    "build:css": "npx tailwindcss -i ./src/input.css -o ./public/css/main.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

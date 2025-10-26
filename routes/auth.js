@@ -4,7 +4,7 @@ const router = express.Router();
 // GET login page
 router.get('/login', (req, res) => {
   res.render('pages/login', { 
-    title: 'Login - Minimal Dark UI',
+    title: 'Login - Supabase UI',
     layout: 'auth' // Use auth layout for login page
   });
 });
@@ -30,7 +30,7 @@ router.post('/login', (req, res) => {
 // GET signup page
 router.get('/signup', (req, res) => {
   res.render('pages/signup', { 
-    title: 'Sign Up - Minimal Dark UI',
+    title: 'Sign Up - Supabase UI',
     layout: 'auth' // Use auth layout for signup page
   });
 });
