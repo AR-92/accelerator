@@ -3,7 +3,7 @@ const router = express.Router();
 
 // Helper function for page data
 const getPageData = (title, activeKey, padding = 'py-8') => ({
-  title: `${title} - Supabase UI`,
+  title: `${title} - Accelerator Platform`,
   [`isActive${activeKey}`]: true,
   mainPadding: padding
 });
@@ -12,12 +12,12 @@ const getPageData = (title, activeKey, padding = 'py-8') => ({
 
 // GET dashboard
 router.get('/dashboard', (req, res) => {
-  res.render('pages/dashboard', getPageData('Dashboard', 'Dashboard'));
+  res.render('pages/dashboard', getPageData('Dashboard - My Ideas', 'Dashboard'));
 });
 
 // GET chat
 router.get('/chat', (req, res) => {
-  res.render('pages/chat', getPageData('Chat', 'Chat'));
+  res.render('pages/chat', getPageData('Team Collaboration - Chat', 'Chat'));
 });
 
 // POST chat message
@@ -36,12 +36,12 @@ router.post('/chat', (req, res) => {
 
 // GET reports
 router.get('/reports', (req, res) => {
-  res.render('pages/reports', getPageData('Reports', 'Reports'));
+  res.render('pages/reports', getPageData('Analytics & Reports', 'Reports'));
 });
 
 // GET settings
 router.get('/settings', (req, res) => {
-  res.render('pages/settings', getPageData('Settings', 'Settings'));
+  res.render('pages/settings', getPageData('Account Settings', 'Settings'));
 });
 
 // POST profile settings
@@ -79,14 +79,14 @@ router.get('/portfolio', (req, res) => {
     .then(data => {
       const portfolioData = JSON.parse(data);
       res.render('pages/portfolio', {
-        ...getPageData('Portfolio', 'Portfolio'),
+        ...getPageData('Idea Portfolio', 'Portfolio'),
         ideas: portfolioData
       });
     })
     .catch(error => {
       console.error('Error reading portfolio data:', error);
       res.render('pages/portfolio', {
-        ...getPageData('Portfolio', 'Portfolio'),
+        ...getPageData('Idea Portfolio', 'Portfolio'),
         ideas: [],
         error: 'Failed to load portfolio data. Please try again later.'
       });
@@ -106,23 +106,23 @@ router.get('/portfolio/:id', (req, res) => {
       const idea = portfolioData.find(i => i.id == req.params.id);
       
       if (!idea) {
-        return res.status(404).render('pages/404', getPageData('Not Found', ''));
+        return res.status(404).render('pages/404', getPageData('Idea Not Found - Accelerator Platform', ''));
       }
       
       res.render('pages/portfolio-idea', {
-        ...getPageData('Portfolio Idea', 'Portfolio'),
+        ...getPageData('Idea Details', 'Portfolio'),
         idea: idea
       });
     })
     .catch(error => {
       console.error('Error reading portfolio data:', error);
-      res.status(500).render('pages/404', getPageData('Error', ''));
+      res.status(500).render('pages/404', getPageData('Internal Server Error - Accelerator Platform', ''));
     });
 });
 
 // GET ideas
 router.get('/ideas', (req, res) => {
-  res.render('pages/ideas', getPageData('Ideas', 'Ideas'));
+  res.render('pages/ideas', getPageData('Submit New Idea', 'Ideas'));
 });
 
 // POST new idea
@@ -157,6 +157,21 @@ router.post('/ideas', (req, res) => {
     </div>
   `);
 });
+
+// GET UI test page
+router.get('/test-ui', (req, res) => {
+  res.render('pages/test-ui', getPageData('UI Test Page', ''));
+});
+
+// GET UI test page with minimal layout
+router.get('/test-ui-minimal', (req, res) => {
+  res.render('pages/test-ui-minimal', {
+    ...getPageData('UI Test Page (Minimal Layout)', ''),
+    layout: 'minimal'
+  });
+});
+
+module.exports = router;
 
 
 
