@@ -179,42 +179,42 @@ router.get('/test-ui-minimal', (req, res) => {
 
 // GET idea model
 router.get('/idea-model', (req, res) => {
-  res.render('pages/idea-model', getPageData('Idea Model - Coming Soon', ''));
+  res.render('pages/idea-model', getPageData('Idea Model - Coming Soon', 'IdeaModel'));
 });
 
 // GET business model
 router.get('/business-model', (req, res) => {
-  res.render('pages/business-model', getPageData('Business Model - Coming Soon', ''));
+  res.render('pages/business-model', getPageData('Business Model - Coming Soon', 'BusinessModel'));
 });
 
 // GET financial model
 router.get('/financial-model', (req, res) => {
-  res.render('pages/financial-model', getPageData('Financial Model - Coming Soon', ''));
+  res.render('pages/financial-model', getPageData('Financial Model - Coming Soon', 'FinancialModel'));
 });
 
 // GET fund model
 router.get('/fund-model', (req, res) => {
-  res.render('pages/fund-model', getPageData('Fund Model - Coming Soon', ''));
+  res.render('pages/fund-model', getPageData('Fund Model - Coming Soon', 'FundModel'));
 });
 
 // GET marketing model
 router.get('/marketing-model', (req, res) => {
-  res.render('pages/marketing-model', getPageData('Marketing Model - Coming Soon', ''));
+  res.render('pages/marketing-model', getPageData('Marketing Model - Coming Soon', 'MarketingModel'));
 });
 
 // GET team model
 router.get('/team-model', (req, res) => {
-  res.render('pages/team-model', getPageData('Team Model - Coming Soon', ''));
+  res.render('pages/team-model', getPageData('Team Model - Coming Soon', 'TeamModel'));
 });
 
 // GET legal model
 router.get('/legal-model', (req, res) => {
-  res.render('pages/legal-model', getPageData('Legal Model - Coming Soon', ''));
+  res.render('pages/legal-model', getPageData('Legal Model - Coming Soon', 'LegalModel'));
 });
 
 // GET valuation
 router.get('/valuation', (req, res) => {
-  res.render('pages/valuation', getPageData('Valuation - Coming Soon', ''));
+  res.render('pages/valuation', getPageData('Valuation - Coming Soon', 'Valuation'));
 });
 
 module.exports = router;
