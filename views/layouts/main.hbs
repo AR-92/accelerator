@@ -16,8 +16,8 @@
 </head>
 <body class="min-h-screen flex bg-background font-sans text-foreground">
     <!-- Sidebar will be loaded here -->
-    <div id="navigation">
-        {{> navigation}}
+    <div id="sidebar">
+        {{> sidebar}}
     </div>
 
     <!-- Main Content -->
@@ -27,35 +27,7 @@
         </div>
     </div>
     
-    <script>
-        // Toggle sidebar user dropdown menu
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebarUserMenuButton = document.getElementById('sidebar-user-menu-button');
-            const sidebarUserMenu = document.getElementById('sidebar-user-menu');
-            
-            if (sidebarUserMenuButton && sidebarUserMenu) {
-                sidebarUserMenuButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    sidebarUserMenu.classList.toggle('hidden');
-                    
-                    // Update data-state attribute for the button
-                    if (sidebarUserMenu.classList.contains('hidden')) {
-                        sidebarUserMenuButton.setAttribute('data-state', 'closed');
-                    } else {
-                        sidebarUserMenuButton.setAttribute('data-state', 'open');
-                    }
-                });
-                
-                // Close dropdown when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!sidebarUserMenuButton.contains(e.target) && !sidebarUserMenu.contains(e.target)) {
-                        sidebarUserMenu.classList.add('hidden');
-                        sidebarUserMenuButton.setAttribute('data-state', 'closed');
-                    }
-                });
-            }
-        });
-    </script>
+
     
     <script src="/public/js/main.js"></script>
 </body>

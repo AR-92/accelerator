@@ -45,17 +45,10 @@
         }
     }
     
-    // Update all theme toggles (navigation and settings)
+    // Update all theme toggles (settings)
     function updateAllThemeToggles() {
         const isDark = document.documentElement.classList.contains('dark');
-        
-        // Update navigation toggle
-        const navIndicator = document.getElementById('theme-toggle-indicator');
-        if (navIndicator) {
-            const position = isDark ? 'translateX(28px)' : 'translateX(0px)';
-            navIndicator.style.transform = position;
-        }
-        
+
         // Update settings toggle
         const settingsToggle = document.getElementById('dark-mode-toggle');
         if (settingsToggle) {
@@ -67,8 +60,8 @@
     window.initializeThemeToggle = function() {
         const html = document.documentElement;
         const isDark = html.classList.contains('dark');
-        
-        // Update toggle in navigation
+
+        // Update theme toggle indicators
         updateThemeToggleIndicator();
     };
     

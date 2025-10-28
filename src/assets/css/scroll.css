@@ -1,0 +1,123 @@
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ffffff60;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ffffffa2;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Fix for code block text wrapping */
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
+  line-height: 1.5;
+  padding: 1em;
+}
+
+pre code {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  display: block;
+  padding: 0;
+}
+
+.overflow-x-auto pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 1em;
+}
+
+/* Accordion animation classes */
+.accordion-content-open {
+  max-height: 100px;
+}
+
+.accordion-content-closed {
+  max-height: 0;
+}
+
+/* Ensure code blocks don't overflow */
+.code-block {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.code-block pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-width: 100%;
+  padding: 1em;
+}
+
+/* Additional fixes for code block formatting */
+:not(pre) > code {
+  white-space: normal;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25rem;
+}
+
+pre[class*='language-'] {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 1em;
+}
+
+/* Fix for long lines in code blocks */
+pre code {
+  display: block;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+/* Force wrapping for very long lines */
+pre code * {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Ensure tables in code blocks don't overflow */
+.code-block table,
+.code-block pre {
+  max-width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+/* Improve spacing in code blocks */
+pre code,
+.code-block pre code {
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+}
+
+/* Special handling for Hyperscript code blocks */
+pre.code-hyperscript,
+.code-block pre.code-hyperscript {
+  padding: 0;
+}
+
+pre.code-hyperscript code {
+  padding: 1.25em;
+  line-height: 1.6;
+}
+
+/* Fix SVG escaping in code blocks */
+code {
+  font-family: monospace;
+}

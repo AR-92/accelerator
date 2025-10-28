@@ -1,105 +1,78 @@
 /* Design tokens for Tailwind + templates; keep in sync with tailwind.config.js */
 :root {
-  /* Colors - Supabase Design System */
-  --bg-primary: #FFFFFF;        /* Supabase light background */
-  --bg-secondary: #F9FAFB;      /* Supabase secondary background */
-  --bg-subtle: #F3F4F6;         /* Supabase subtle background */
-  --bg-muted: #E5E7EB;          /* Supabase muted background */
-  --bg-strong: #D1D5DB;         /* Supabase strong background */
-  --bg-dark: #111827;           /* Supabase dark background */
-  --bg-sidebar: #FFFFFF;        /* Supabase sidebar background */
-  --bg-sidebar-hover: #F3F4F6;  /* Supabase sidebar hover background */
-  
-  --text-primary: #111827;      /* Supabase primary text */
-  --text-secondary: #4B5563;    /* Supabase secondary text */
-  --text-subtle: #6B7280;       /* Supabase subtle text */
-  --text-inverse: #FFFFFF;      /* Supabase inverse text */
-  --text-disabled: #9CA3AF;     /* Supabase disabled text */
-  --text-card-foreground: #111827; /* Text color for card foreground */
-  
-  --border-default: #E5E7EB;    /* Supabase default border */
-  --border-strong: #D1D5DB;     /* Supabase strong border */
-  --border-weak: #F3F4F6;       /* Supabase weak border */
-  --border-dark: #9CA3AF;       /* Supabase dark border */
-  
-  --primary-purple: #9E28B5;    /* Primary purple from logo */
-  --primary-purple-dark: #7B1F91; /* Dark purple */
-  --primary-purple-light: #B44BC7; /* Light purple */
-  --primary-purple-hover: #8A23A0; /* Purple hover state */
-  --primary-purple-variant: #8E1FA6; /* Alternative purple */
-  
-  --success: #10B981;          /* Supabase success status */
-  --warning: #F59E0B;          /* Supabase warning status */
-  --error: #EF4444;            /* Supabase error status */
-  --info: #3B82F6;             /* Supabase info status */
-  
-  --btn-primary-bg: #9E28B5;   /* Primary purple button background */
-  --btn-primary-hover: #8A23A0; /* Primary purple button hover */
-  --btn-secondary-bg: #F3F4F6; /* Supabase secondary button background */
-  --btn-secondary-hover: #E5E7EB; /* Supabase secondary button hover */
-  --link-color: #3B82F6;       /* Supabase link color */
-  --link-hover: #2563EB;       /* Supabase link hover */
-  
-  /* Shadcn/ui specific colors */
-  --color-card: #FFFFFF;
-  --color-card-foreground: #111827;
-  --color-input: #E5E7EB;
-  --color-ring: #9E28B5;
-  --color-accent: #F3F4F6;
-  --color-accent-foreground: #111827;
-  --color-muted-foreground: #6B7280;
-  --color-background: #FFFFFF;
-  
-  /* Radii */
-  --radius-xl: 12px;
-  --radius-lg: 0.5rem;         /* 8px */
-  --radius-md: 0.375rem;       /* 6px */
-  --radius-sm: 8px;
+   --background: 0 0% 100%;
+   --foreground: 222.2 47.4% 11.2%;
 
-  /* Spacing */
-  --spacing-2-5: 10px;
-  --spacing-3-5: 14px;
-  --spacing-4-5: 18px;
-  --spacing-base: 1rem;        /* 16px */
+   --muted: 210 40% 96.1%;
+   --muted-foreground: 215.4 16.3% 46.9%;
 
-  /* Shadows */
-  --shadow-soft-dark: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-soft-elev: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+   --popover: 0 0% 100%;
+   --popover-foreground: 222.2 47.4% 11.2%;
+
+   --border: 214.3 31.8% 91.4%;
+   --input: 214.3 31.8% 91.4%;
+
+   --card: 0 0% 100%;
+   --card-foreground: 222.2 47.4% 11.2%;
+
+   --primary: 222.2 47.4% 11.2%;
+   --primary-foreground: 210 40% 98%;
+
+   --secondary: 210 40% 96.1%;
+   --secondary-foreground: 222.2 47.4% 11.2%;
+
+   --accent: 210 40% 96.1%;
+   --accent-foreground: 222.2 47.4% 11.2%;
+
+   --destructive: 0 100% 50%;
+   --destructive-foreground: 210 40% 98%;
+
+   --ring: 215 20.2% 65.1%;
+
+   /* Consistent border radius system */
+   --radius-xs: 2px;
+   --radius-sm: 4px;
+   --radius: 6px;
+   --radius-md: 8px;
+   --radius-lg: 12px;
+   --radius-xl: 16px;
 }
 
-/* Dark mode color variables */
-[data-theme="dark"], 
 .dark {
-  /* Colors - Dark theme */
-  --bg-primary: #111827;        /* Dark background */
-  --bg-secondary: #1F2937;      /* Secondary dark background */
-  --bg-subtle: #374151;         /* Subtle dark background */
-  --bg-muted: #4B5563;          /* Muted dark background */
-  --bg-strong: #6B7280;         /* Strong dark background */
-  --bg-sidebar: #1F2937;        /* Sidebar dark background */
-  --bg-sidebar-hover: #374151;  /* Sidebar hover dark background */
-  
-  --text-primary: #F9FAFB;      /* Light text for dark backgrounds */
-  --text-secondary: #D1D5DB;    /* Secondary light text */
-  --text-subtle: #9CA3AF;       /* Subtle light text */
-  --text-disabled: #6B7280;     /* Disabled light text */
-  --text-card-foreground: #F9FAFB; /* Light text for card foreground */
-  
-  --border-default: #374151;    /* Dark border */
-  --border-strong: #4B5563;     /* Strong dark border */
-  --border-weak: #1F2937;       /* Weak dark border */
-  
-  --btn-secondary-bg: #1F2937;  /* Dark secondary button background */
-  --btn-secondary-hover: #374151; /* Dark secondary button hover */
-  --link-color: #818CF8;        /* Lighter link color for dark theme */
-  --link-hover: #A5B4FC;        /* Lighter link hover color for dark theme */
-  
-  /* Shadcn/ui specific colors for dark theme */
-  --color-card: #1F2937;
-  --color-card-foreground: #F9FAFB;
-  --color-input: #374151;
-  --color-accent: #1F2937;
-  --color-accent-foreground: #F9FAFB;
-  --color-muted-foreground: #9CA3AF;
-  --color-background: #111827;
+   --background: 240 10% 3.9%;
+   --foreground: 0 0% 98%;
+
+   --muted: 240 3.7% 15.9%;
+   --muted-foreground: 240 5% 64.9%;
+
+   --accent: 240 3.7% 15.9%;
+   --accent-foreground: 0 0% 98%;
+
+   --popover: 224 71% 4%;
+   --popover-foreground: 215 20.2% 65.1%;
+
+   --border: 240 3.7% 15.9%;
+   --input: 240 3.7% 15.9%;
+
+   --card: 240 10% 3.9%;
+   --card-foreground: 0 0% 98%;
+
+   --primary: 0 0% 98%;
+   --primary-foreground: 240 5.9% 10%;
+
+   --secondary: 240 3.7% 15.9%;
+   --secondary-foreground: 0 0% 98%;
+
+   --destructive: 0 63% 31%;
+   --destructive-foreground: 210 40% 98%;
+
+   --ring: 240 4.9% 83.9%;
+
+   /* Consistent border radius system */
+   --radius-xs: 2px;
+   --radius-sm: 4px;
+   --radius: 6px;
+   --radius-md: 8px;
+   --radius-lg: 12px;
+   --radius-xl: 16px;
 }

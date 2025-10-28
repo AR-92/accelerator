@@ -165,51 +165,36 @@ router.get('/test-ui', (req, res) => {
 
 // GET UI test page with minimal layout
 router.get('/test-ui-minimal', (req, res) => {
-  res.render('pages/test-ui-minimal', {
-    ...getPageData('UI Test Page (Minimal Layout)', ''),
-    layout: 'minimal',
-    currentPath: req.path
-  });
-});
-
-// GET idea model
-router.get('/idea-model', (req, res) => {
-  res.render('pages/idea-model', getPageData('Idea Model - Coming Soon', ''));
-});
-
-// GET business model
-router.get('/business-model', (req, res) => {
-  res.render('pages/business-model', getPageData('Business Model - Coming Soon', ''));
-});
-
-// GET financial model
-router.get('/financial-model', (req, res) => {
-  res.render('pages/financial-model', getPageData('Financial Model - Coming Soon', ''));
-});
-
-// GET fund model
-router.get('/fund-model', (req, res) => {
-  res.render('pages/fund-model', getPageData('Fund Model - Coming Soon', ''));
-});
-
-// GET marketing model
-router.get('/marketing-model', (req, res) => {
-  res.render('pages/marketing-model', getPageData('Marketing Model - Coming Soon', ''));
-});
-
-// GET team model
-router.get('/team-model', (req, res) => {
-  res.render('pages/team-model', getPageData('Team Model - Coming Soon', ''));
-});
-
-// GET legal model
-router.get('/legal-model', (req, res) => {
-  res.render('pages/legal-model', getPageData('Legal Model - Coming Soon', ''));
-});
-
-// GET valuation
-router.get('/valuation', (req, res) => {
-  res.render('pages/valuation', getPageData('Valuation - Coming Soon', ''));
+  // Load sidebar configuration from JSON file
+  const fs = require('fs').promises;
+  const path = require('path');
+  
+  const sidebarConfigPath = path.join(__dirname, '../data/sidebar-config.json');
+  
+  fs.readFile(sidebarConfigPath, 'utf8')
+    .then(data => {
+      const sidebarConfig = JSON.parse(data);
+      // Ensure the structure is correct
+      if (!sidebarConfig || !sidebarConfig.sidebar || !Array.isArray(sidebarConfig.sidebar.items)) {
+        throw new Error('Invalid sidebar configuration structure');
+      }
+      res.render('pages/test-ui-minimal', {
+        ...getPageData('UI Test Page (Minimal Layout)', ''),
+        layout: 'minimal',
+        sidebarConfig: sidebarConfig,
+        currentPath: req.path
+      });
+    })
+    .catch(error => {
+      console.error('Error reading or parsing sidebar config:', error);
+      res.render('pages/test-ui-minimal', {
+        ...getPageData('UI Test Page (Minimal Layout)', ''),
+        layout: 'minimal',
+        sidebarConfig: { sidebar: { items: [] } }, // Fallback empty config
+        currentPath: req.path,
+        error: 'Failed to load sidebar configuration. Please try again later.'
+      });
+    });
 });
 
 module.exports = router;
