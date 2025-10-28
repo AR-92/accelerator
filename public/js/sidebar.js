@@ -159,7 +159,10 @@ const menuTitle = spanElement ? spanElement.textContent : '';
 
   menuItems.forEach(item => {
     item.addEventListener('click', function (e) {
-      e.preventDefault();
+      // Only prevent default for buttons, allow links to navigate
+      if (item.tagName.toLowerCase() === 'button') {
+        e.preventDefault();
+      }
 
       // Remove active state from all items
       document.querySelectorAll('[data-slot="sidebar-menu-item"]').forEach(el => {
@@ -176,6 +179,19 @@ const menuTitle = spanElement ? spanElement.textContent : '';
         menuButton.classList.add('bg-sidebar-accent', 'text-sidebar-accent-foreground', 'font-medium');
       }
     });
+  });
+
+  // Set active state based on current URL
+  const currentPath = window.location.pathname;
+  menuItems.forEach(item => {
+    const href = item.getAttribute('href');
+    if (href && (currentPath === href || (href !== '/' && currentPath.startsWith(href)))) {
+      const menuButton = item.closest('[data-sidebar="menu-button"]');
+      if (menuButton) {
+        menuButton.dataset.active = 'true';
+        menuButton.classList.add('bg-sidebar-accent', 'text-sidebar-accent-foreground', 'font-medium');
+      }
+    }
   });
 
   // Function to create and position dropdown menu next to the sidebar item with content-fitting width

@@ -44,6 +44,11 @@ router.get('/settings', (req, res) => {
   res.render('pages/settings', getPageData('Account Settings', 'Settings'));
 });
 
+// GET subscriptions
+router.get('/subscriptions', (req, res) => {
+  res.render('pages/subscriptions', getPageData('Subscriptions', 'Subscriptions'));
+});
+
 // POST profile settings
 router.post('/settings/profile', (req, res) => {
   res.send('<div class="text-green-500">Profile updated successfully!</div>');
