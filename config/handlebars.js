@@ -1,6 +1,7 @@
 const path = require('path');
 const { engine } = require('express-handlebars');
 const handlebars = require('handlebars');
+const icons = require('lucide-static');
 
 // Register custom helpers
 handlebars.registerHelper('ifeq', function(a, b, options) {
@@ -33,6 +34,17 @@ handlebars.registerHelper('filterByGroup', function(items, group) {
     return [];
   }
   return items.filter(item => item.group === group);
+});
+
+// Helper for Lucide icons
+handlebars.registerHelper('lucide', function(iconName, classes) {
+  const icon = icons[iconName];
+  if (!icon) return '';
+  let svg = icon;
+  if (classes) {
+    svg = svg.replace('class="', 'class="' + classes + ' ');
+  }
+  return new handlebars.SafeString(svg);
 });
 
 // Recursive helper for rendering sidebar items

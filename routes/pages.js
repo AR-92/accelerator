@@ -39,9 +39,63 @@ router.get('/reports', (req, res) => {
   res.render('pages/reports', getPageData('Analytics & Reports', 'Reports'));
 });
 
-// GET settings
+// GET settings (redirect to profile)
 router.get('/settings', (req, res) => {
-  res.render('pages/settings', getPageData('Account Settings', 'Settings'));
+  res.redirect('/pages/settings/profile');
+});
+
+// GET settings profile
+router.get('/settings/profile', (req, res) => {
+  res.render('pages/settings-profile', {
+    ...getPageData('Account Settings - Profile', 'Settings'),
+    layout: 'settings',
+    activeTab: 'profile'
+  });
+});
+
+// GET settings password
+router.get('/settings/password', (req, res) => {
+  res.render('pages/settings-password', {
+    ...getPageData('Account Settings - Password', 'Settings'),
+    layout: 'settings',
+    activeTab: 'password'
+  });
+});
+
+// GET settings subscription
+router.get('/settings/subscription', (req, res) => {
+  res.render('pages/settings-subscription', {
+    ...getPageData('Account Settings - Subscription', 'Settings'),
+    layout: 'settings',
+    activeTab: 'subscription'
+  });
+});
+
+// GET settings payment
+router.get('/settings/payment', (req, res) => {
+  res.render('pages/settings-payment', {
+    ...getPageData('Account Settings - Payment', 'Settings'),
+    layout: 'settings',
+    activeTab: 'payment'
+  });
+});
+
+// GET settings votes
+router.get('/settings/votes', (req, res) => {
+  res.render('pages/settings-votes', {
+    ...getPageData('Account Settings - Votes', 'Settings'),
+    layout: 'settings',
+    activeTab: 'votes'
+  });
+});
+
+// GET settings rewards
+router.get('/settings/rewards', (req, res) => {
+  res.render('pages/settings-rewards', {
+    ...getPageData('Account Settings - Rewards', 'Settings'),
+    layout: 'settings',
+    activeTab: 'rewards'
+  });
 });
 
 // GET subscriptions
