@@ -15,6 +15,31 @@ router.get('/dashboard', (req, res) => {
   res.render('pages/dashboard', getPageData('Dashboard - My Ideas', 'Dashboard'));
 });
 
+// GET dashboard tabs
+router.get('/dashboard/tab/business', (req, res) => {
+  res.render('pages/dashboard-business', getPageData('Dashboard - Business', 'Dashboard'));
+});
+
+router.get('/dashboard/tab/financial', (req, res) => {
+  res.render('pages/dashboard-financial', getPageData('Dashboard - Financial', 'Dashboard'));
+});
+
+router.get('/dashboard/tab/marketing', (req, res) => {
+  res.render('pages/dashboard-marketing', getPageData('Dashboard - Marketing', 'Dashboard'));
+});
+
+router.get('/dashboard/tab/fund', (req, res) => {
+  res.render('pages/dashboard-fund', getPageData('Dashboard - Funding', 'Dashboard'));
+});
+
+router.get('/dashboard/tab/team', (req, res) => {
+  res.render('pages/dashboard-team', getPageData('Dashboard - Team', 'Dashboard'));
+});
+
+router.get('/dashboard/tab/promote', (req, res) => {
+  res.render('pages/dashboard-promote', getPageData('Dashboard - Promotion', 'Dashboard'));
+});
+
 // GET chat
 router.get('/chat', (req, res) => {
   res.render('pages/chat', getPageData('Team Collaboration - Chat', 'Chat'));

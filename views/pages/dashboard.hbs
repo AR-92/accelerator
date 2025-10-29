@@ -6,13 +6,13 @@
       </div>
     </div>
     <div class="flex w-[90vw] items-center gap-[16px] overflow-x-auto border-b border-gray-200 dark:border-gray-700 lg:w-full lg:gap-[48px]">
-      <a class="p-[10px] text-[16px] font-[500] border-b border-primary text-black dark:text-white dark:border-white" href="/dashboard">Idea</a>
-      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/dashboard/tab/business">Business</a>
-      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/dashboard/tab/financial">Financial</a>
-      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/dashboard/tab/marketing">Marketing</a>
-      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/dashboard/tab/fund">Fund</a>
-      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/dashboard/tab/team">Team</a>
-      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/dashboard/tab/promote">Promote</a>
+      <a class="p-[10px] text-[16px] font-[500] border-b border-primary text-black dark:text-white dark:border-white" href="/pages/dashboard">Idea</a>
+      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/pages/dashboard/tab/business">Business</a>
+      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/pages/dashboard/tab/financial">Financial</a>
+      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/pages/dashboard/tab/marketing">Marketing</a>
+      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/pages/dashboard/tab/fund">Fund</a>
+      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/pages/dashboard/tab/team">Team</a>
+      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/pages/dashboard/tab/promote">Promote</a>
     </div>
     <div class="grid grid-cols-1 gap-[17px] sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
       <div class="rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
@@ -275,21 +275,87 @@
         </div>
       </div>
     </div>
-    <div class="rounded-[6px] bg-card px-0 py-[20px] lg:px-[32px] text-card-foreground" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
-      <div class="flex flex-col items-center justify-between gap-[16px] lg:flex-row">
-        <div>
-          <h3 class="text-[28px] font-[600] text-primary dark:text-white">Votes Average</h3>
-          <p class="text-[20px] text-gray-500 dark:text-gray-400">Ideas Performance</p>
-        </div>
-        <div class="flex items-center gap-[20px]">
-          <button class="justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md flex items-center gap-[8px]" type="button" id="radix-:r1f:" aria-haspopup="menu" aria-expanded="false" data-state="closed">All<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M11.3332 6.66667L7.99984 10L4.6665 6.66667" stroke="white" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg></button>
-        </div>
-      </div>
-      <div class="flex h-[200px] flex-col items-center justify-center gap-4 text-center">
-        <div class="text-2xl font-semibold text-gray-400 dark:text-gray-500">No Ideas Available</div>
-        <p class="text-sm text-gray-500 dark:text-gray-400">Ideas progress will appear here once data is available.</p>
-      </div>
-    </div>
+     <!-- Idea Management Tools -->
+     <div class="flex flex-col items-stretch gap-[17px] lg:flex-row">
+       <div class="w-full rounded-[11px] bg-card px-[26px] py-[20px] text-card-foreground lg:w-[40%] lg:min-w-[40%]">
+         <h3 class="text-[18px] font-[500] text-gray-900 dark:text-gray-100 mb-4">Idea Management</h3>
+         <div class="space-y-3">
+           <a href="/ideas" class="flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md text-sm font-medium transition">
+             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+             </svg>
+             Create New Idea
+           </a>
+           <button class="flex items-center justify-center w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition">
+             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+             </svg>
+             Collaborate on Ideas
+           </button>
+           <button class="flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md text-sm font-medium transition">
+             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+             </svg>
+             View Analytics
+           </button>
+         </div>
+       </div>
+
+       <div class="w-full rounded-[11px] bg-card px-[26px] py-[20px] text-card-foreground">
+         <h3 class="text-[18px] font-[500] text-gray-900 dark:text-gray-100 mb-4">Recent Activity</h3>
+         <div class="space-y-4">
+           <div class="flex items-start gap-3">
+             <div class="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+               <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+               </svg>
+             </div>
+             <div class="flex-1">
+               <p class="text-sm font-medium text-gray-900 dark:text-gray-100">Idea "test" received 100 votes</p>
+               <p class="text-xs text-gray-500 dark:text-gray-400">2 hours ago</p>
+             </div>
+           </div>
+           <div class="flex items-start gap-3">
+             <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+               <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+               </svg>
+             </div>
+             <div class="flex-1">
+               <p class="text-sm font-medium text-gray-900 dark:text-gray-100">New idea created</p>
+               <p class="text-xs text-gray-500 dark:text-gray-400">1 day ago</p>
+             </div>
+           </div>
+           <div class="flex items-start gap-3">
+             <div class="w-8 h-8 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+               <svg class="w-4 h-4 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+               </svg>
+             </div>
+             <div class="flex-1">
+               <p class="text-sm font-medium text-gray-900 dark:text-gray-100">Comment added to idea</p>
+               <p class="text-xs text-gray-500 dark:text-gray-400">3 days ago</p>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+
+     <div class="rounded-[6px] bg-card px-0 py-[20px] lg:px-[32px] text-card-foreground" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+       <div class="flex flex-col items-center justify-between gap-[16px] lg:flex-row">
+         <div>
+           <h3 class="text-[28px] font-[600] text-primary dark:text-white">Votes Average</h3>
+           <p class="text-[20px] text-gray-500 dark:text-gray-400">Ideas Performance</p>
+         </div>
+         <div class="flex items-center gap-[20px]">
+           <button class="justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md flex items-center gap-[8px]" type="button" id="radix-:r1f:" aria-haspopup="menu" aria-expanded="false" data-state="closed">All<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+               <path d="M11.3332 6.66667L7.99984 10L4.6665 6.66667" stroke="white" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"></path>
+             </svg></button>
+         </div>
+       </div>
+       <div class="flex h-[200px] flex-col items-center justify-center gap-4 text-center">
+         <div class="text-2xl font-semibold text-gray-400 dark:text-gray-500">No Ideas Available</div>
+         <p class="text-sm text-gray-500 dark:text-gray-400">Ideas progress will appear here once data is available.</p>
+       </div>
+     </div>
   
