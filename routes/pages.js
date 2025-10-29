@@ -49,7 +49,9 @@ router.get('/settings/profile', (req, res) => {
   res.render('pages/settings-profile', {
     ...getPageData('Account Settings - Profile', 'Settings'),
     layout: 'settings',
-    activeTab: 'profile'
+    activeTab: 'profile',
+    pageTitle: 'Account Settings',
+    pageDescription: 'Manage account and website settings.'
   });
 });
 
@@ -58,7 +60,9 @@ router.get('/settings/password', (req, res) => {
   res.render('pages/settings-password', {
     ...getPageData('Account Settings - Password', 'Settings'),
     layout: 'settings',
-    activeTab: 'password'
+    activeTab: 'password',
+    pageTitle: 'Account Settings',
+    pageDescription: 'Manage account and website settings.'
   });
 });
 
@@ -67,7 +71,9 @@ router.get('/settings/subscription', (req, res) => {
   res.render('pages/settings-subscription', {
     ...getPageData('Account Settings - Subscription', 'Settings'),
     layout: 'settings',
-    activeTab: 'subscription'
+    activeTab: 'subscription',
+    pageTitle: 'Account Settings',
+    pageDescription: 'Manage account and website settings.'
   });
 });
 
@@ -76,7 +82,9 @@ router.get('/settings/payment', (req, res) => {
   res.render('pages/settings-payment', {
     ...getPageData('Account Settings - Payment', 'Settings'),
     layout: 'settings',
-    activeTab: 'payment'
+    activeTab: 'payment',
+    pageTitle: 'Account Settings',
+    pageDescription: 'Manage account and website settings.'
   });
 });
 
@@ -85,7 +93,20 @@ router.get('/settings/votes', (req, res) => {
   res.render('pages/settings-votes', {
     ...getPageData('Account Settings - Votes', 'Settings'),
     layout: 'settings',
-    activeTab: 'votes'
+    activeTab: 'votes',
+    pageTitle: 'Account Settings',
+    pageDescription: 'Manage account and website settings.'
+  });
+});
+
+// GET settings billing
+router.get('/settings/billing', (req, res) => {
+  res.render('pages/settings-billing', {
+    ...getPageData('Account Settings - Billing', 'Settings'),
+    layout: 'settings',
+    activeTab: 'billing',
+    pageTitle: 'Account Settings',
+    pageDescription: 'Manage account and website settings.'
   });
 });
 
@@ -94,8 +115,25 @@ router.get('/settings/rewards', (req, res) => {
   res.render('pages/settings-rewards', {
     ...getPageData('Account Settings - Rewards', 'Settings'),
     layout: 'settings',
-    activeTab: 'rewards'
+    activeTab: 'rewards',
+    pageTitle: 'Account Settings',
+    pageDescription: 'Manage account and website settings.'
   });
+});
+
+// GET subscriptions billing
+router.get('/subscriptions/billing', (req, res) => {
+  res.render('pages/subscriptions-billing', getPageData('Billing History', 'Subscriptions'));
+});
+
+// GET subscriptions payment
+router.get('/subscriptions/payment', (req, res) => {
+  res.render('pages/subscriptions-payment', getPageData('Payment Methods', 'Subscriptions'));
+});
+
+// POST settings preferences
+router.post('/settings/preferences', (req, res) => {
+  res.send('<div class="text-green-500">Preferences saved successfully!</div>');
 });
 
 // GET subscriptions
