@@ -3,7 +3,7 @@ const router = express.Router();
 
 // GET main auth page (unified login/signup)
 router.get('/', (req, res) => {
-  res.render('pages/auth', { 
+  res.render('public/auth/auth', { 
     title: 'Sign In - Accelerator Platform',
     layout: 'auth'
   });
@@ -29,7 +29,7 @@ router.post('/login', (req, res) => {
 
 // GET signup page
 router.get('/signup', (req, res) => {
-  res.render('pages/auth-signup', {
+  res.render('public/auth/auth-signup', {
     title: 'Create Account - Accelerator Platform',
     layout: 'auth'
   });
