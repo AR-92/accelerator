@@ -55,11 +55,81 @@ To run the application in production mode:
 npm start
 ```
 
-### Development Scripts
+## Deployment
+
+### Docker Deployment
+
+The application includes Docker support for containerized deployment:
+
+1. Build the Docker image:
+   ```bash
+   docker build -t accelerator .
+   ```
+
+2. Run the application with Docker:
+   ```bash
+   docker run -p 3000:3000 --env-file .env accelerator
+   ```
+
+3. Or use docker-compose:
+   ```bash
+   docker-compose up -d
+   ```
+
+For development with Docker:
+```bash
+docker-compose -f docker-compose.dev.yml up
+```
+
+### PM2 Process Management
+
+For production deployments, use PM2 for process management:
+
+1. Install PM2 globally:
+   ```bash
+   npm install -g pm2
+   ```
+
+2. Start the application with PM2:
+   ```bash
+   pm2 start ecosystem.config.js
+   ```
+
+3. Other useful PM2 commands:
+   ```bash
+   pm2 stop ecosystem.config.js      # Stop the application
+   pm2 restart ecosystem.config.js   # Restart the application
+   pm2 reload ecosystem.config.js    # Reload the application
+   pm2 logs accelerator             # View logs
+   pm2 monit                        # Monitor resources
+   ```
+
+### Build Process
+
+Before deploying, build the application assets:
+
+```bash
+npm run build
+```
+
+This creates a production-ready build in the `dist` directory.
+
+### Environment Configurations
+
+The application supports different environments:
+- `.env` - Development environment
+- `.env.staging` - Staging environment
+- `.env.production` - Production environment
+
+## Development Scripts
 
 - `npm run dev` - Start the development server with hot reloading
 - `npm start` - Start the production server
 - `npm run build:css` - Build the CSS files
+- `npm run build` - Build the entire application for production
+- `npm run pm2:start` - Start the application with PM2
+- `npm run pm2:stop` - Stop the application with PM2
+- `npm run pm2:restart` - Restart the application with PM2
 
 ## Project Structure
 
@@ -68,6 +138,7 @@ accelerator/
 ├── config/                   # Configuration files
 ├── data/                     # Data files (e.g., portfolio.json)
 ├── docs/                     # Project documentation
+├── logs/                     # Application logs (created automatically)
 ├── public/                   # Static assets (CSS, JS, images, icons)
 │   ├── css/                  # Compiled CSS files
 │   ├── js/                   # Client-side JavaScript
@@ -94,6 +165,10 @@ accelerator/
 │   ├── unit/                 # Unit tests
 │   ├── integration/          # Integration tests
 │   └── fixtures/             # Test fixtures
+├── Dockerfile                # Docker configuration
+├── docker-compose.yml        # Production docker compose
+├── docker-compose.dev.yml    # Development docker compose
+├── ecosystem.config.js       # PM2 configuration
 ├── server.js                 # Main server file
 └── package.json              # Project dependencies and scripts
 ```
@@ -104,8 +179,16 @@ accelerator/
 - Express.js
 - Handlebars templating engine
 - Tailwind CSS
+- Winston logging
+- PM2 process manager
+- Docker containerization
 - HTML5 & CSS3
 - JavaScript (ES6+)
+
+## Health Check
+
+The application provides a health check endpoint:
+- `GET /health` - Returns application status and database connectivity
 
 ## License
 
