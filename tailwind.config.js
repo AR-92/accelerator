@@ -79,37 +79,13 @@ module.exports = {
     },
   },
   safelist: [
-    "rounded-none",
-    "rounded-xs",
-    "rounded-sm",
-    "rounded",
-    "rounded-md",
-    "rounded-lg",
-    "rounded-xl",
-    "rounded-full",
-    "border",
-    "border-border",
-    "border-input",
-    "mr-4",
-    "ml-4",
-    "mt-4",
-    "mb-4",
-    "pl-4",
-    "pr-4",
-    "pt-4",
-    "pb-4",
-    "text-center",
-    "justify-center",
-    "font-sans",
-    "text-foreground",
-    "bg-background",
-    "text-foreground",
-    // Dark mode classes
-    "dark:scale-0",
-    "dark:scale-100",
-    "dark:rotate-0",
-    "dark:-rotate-90",
-    // Additional safelist for sidebar and custom components
+    // Safelist for dynamic classes that might not be detected by content scanning
+    // Keep only essential classes that are applied dynamically via JavaScript or templating
+    {
+      pattern: /^(bg|text|border|ring)-(primary|secondary|accent|destructive|muted|card|popover|foreground|background)$/,
+      variants: ['hover', 'focus', 'active', 'dark']
+    },
+    // Individual classes that might be applied dynamically
     "bg-sidebar",
     "text-sidebar-foreground",
     "bg-sidebar-primary",
@@ -120,6 +96,7 @@ module.exports = {
     "ring-sidebar-ring",
   ],
   plugins: [
+    require("@tailwindcss/forms"),
     require("tailwindcss-animate"),
   ],
 };
