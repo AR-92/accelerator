@@ -1,30 +1,44 @@
-@import "tailwindcss";
-@theme {
-  --color-bg-primary: #343541;
-  --color-bg-secondary: #444654;
-  --color-bg-sidebar: #202123;
-  --color-bg-sidebar-hover: #2A2B32;
-  --color-text-primary: #ECECF1;
-  --color-text-secondary: #9A9B9F;
-  --color-accent-green: #10A37F;
-  --color-accent-green-hover: #19C37D;
-  --color-border-color: #565869;
-  --sidebar: #202123;
-  --sidebar-foreground: #ECECF1;
-  --sidebar-primary: #343541;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #2A2B32;
-  --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: #565869;
-  --sidebar-ring: #565869;
+/* Custom theme styles that align with shadcn/ui HSL system */
+@layer base {
+  :root {
+    /* Override default shadcn/ui colors to match dark theme */
+    --background: 220 10% 15%; /* Dark background */
+    --foreground: 0 0% 95%;    /* Light text */
+    
+    --muted: 220 10% 20%;
+    --muted-foreground: 240 5% 64.9%;
+    
+    --popover: 220 10% 10%;
+    --popover-foreground: 0 0% 95%;
+    
+    --border: 220 10% 25%;
+    --input: 220 10% 25%;
+    
+    --card: 220 10% 10%;
+    --card-foreground: 0 0% 95%;
+    
+    --primary: 217 91% 60%;    /* Blueish accent */
+    --primary-foreground: 0 0% 98%;
+    
+    --secondary: 220 10% 20%;
+    --secondary-foreground: 0 0% 95%;
+    
+    --accent: 220 10% 20%;
+    --accent-foreground: 0 0% 95%;
+    
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --ring: 217 91% 60%;
+  }
 }
 
 @layer base {
   body {
-    @apply bg-bg-primary text-text-primary;
+    @apply bg-background text-foreground;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply text-text-primary font-semibold;
+    @apply text-foreground font-semibold;
   }
 }

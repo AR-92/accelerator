@@ -7,6 +7,7 @@ module.exports = {
     './src/**/*.{js,ts}',
     './src/**/*.css',
     './src/assets/**/*.{css,js}',
+    './src/styles/**/*.{css,js}',
   ],
   theme: {
     container: {
@@ -101,11 +102,22 @@ module.exports = {
     "justify-center",
     "font-sans",
     "text-foreground",
+    "bg-background",
+    "text-foreground",
     // Dark mode classes
     "dark:scale-0",
     "dark:scale-100",
     "dark:rotate-0",
     "dark:-rotate-90",
+    // Additional safelist for sidebar and custom components
+    "bg-sidebar",
+    "text-sidebar-foreground",
+    "bg-sidebar-primary",
+    "text-sidebar-primary-foreground",
+    "bg-sidebar-accent",
+    "text-sidebar-accent-foreground",
+    "border-sidebar-border",
+    "ring-sidebar-ring",
   ],
   plugins: [
     require("tailwindcss-animate"),

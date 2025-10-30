@@ -334,6 +334,16 @@ router.get('/valuation', (req, res) => {
   res.render('pages/valuation', getPageData('Valuation - Coming Soon', 'Valuation'));
 });
 
+// GET pitch deck
+router.get('/pitch-deck', (req, res) => {
+  res.render('pages/pitch-deck', getPageData('Pitch Deck - Create & Manage', 'PitchDeck'));
+});
+
+// GET business plan
+router.get('/business-plan', (req, res) => {
+  res.render('pages/business-plan', getPageData('Business Plan - Strategic Planning', 'BusinessPlan'));
+});
+
 module.exports = router;
 
 
