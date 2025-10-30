@@ -5,44 +5,66 @@ const router = express.Router();
 const getPageData = (title, activeKey, padding = 'py-8') => ({
   title: `${title} - Accelerator Platform`,
   [`isActive${activeKey}`]: true,
-  mainPadding: padding
+  mainPadding: padding,
 });
-
-
 
 // GET dashboard
 router.get('/dashboard', (req, res) => {
-  res.render('pages/dashboard/dashboard', getPageData('Dashboard - My Ideas', 'Dashboard'));
+  res.render(
+    'pages/dashboard/dashboard',
+    getPageData('Dashboard - My Ideas', 'Dashboard')
+  );
 });
 
 // GET dashboard tabs
 router.get('/dashboard/tab/business', (req, res) => {
-  res.render('pages/dashboard/dashboard-business', getPageData('Dashboard - Business', 'Dashboard'));
+  res.render(
+    'pages/dashboard/dashboard-business',
+    getPageData('Dashboard - Business', 'Dashboard')
+  );
 });
 
 router.get('/dashboard/tab/financial', (req, res) => {
-  res.render('pages/dashboard/dashboard-financial', getPageData('Dashboard - Financial', 'Dashboard'));
+  res.render(
+    'pages/dashboard/dashboard-financial',
+    getPageData('Dashboard - Financial', 'Dashboard')
+  );
 });
 
 router.get('/dashboard/tab/marketing', (req, res) => {
-  res.render('pages/dashboard/dashboard-marketing', getPageData('Dashboard - Marketing', 'Dashboard'));
+  res.render(
+    'pages/dashboard/dashboard-marketing',
+    getPageData('Dashboard - Marketing', 'Dashboard')
+  );
 });
 
 router.get('/dashboard/tab/fund', (req, res) => {
-  res.render('pages/dashboard/dashboard-fund', getPageData('Dashboard - Funding', 'Dashboard'));
+  res.render(
+    'pages/dashboard/dashboard-fund',
+    getPageData('Dashboard - Funding', 'Dashboard')
+  );
 });
 
 router.get('/dashboard/tab/team', (req, res) => {
-  res.render('pages/dashboard/dashboard-team', getPageData('Dashboard - Team', 'Dashboard'));
+  res.render(
+    'pages/dashboard/dashboard-team',
+    getPageData('Dashboard - Team', 'Dashboard')
+  );
 });
 
 router.get('/dashboard/tab/promote', (req, res) => {
-  res.render('pages/dashboard/dashboard-promote', getPageData('Dashboard - Promotion', 'Dashboard'));
+  res.render(
+    'pages/dashboard/dashboard-promote',
+    getPageData('Dashboard - Promotion', 'Dashboard')
+  );
 });
 
 // GET team chat
 router.get('/chat', (req, res) => {
-  res.render('pages/chat/team-chat', getPageData('Team Collaboration - Chat', 'Chat'));
+  res.render(
+    'pages/chat/team-chat',
+    getPageData('Team Collaboration - Chat', 'Chat')
+  );
 });
 
 // GET AI assistant chat
@@ -50,11 +72,22 @@ router.get('/chat/ai', (req, res) => {
   res.render('pages/chat/ai-chat', getPageData('AI Assistant - Chat', 'Chat'));
 });
 
+// GET AI assistant detailed chat
+router.get('/chat/ai-new', (req, res) => {
+  res.render(
+    'pages/chat/ai-chat-new',
+    getPageData('AI Assistant - Detailed Chat', 'Chat')
+  );
+});
+
 // POST chat message
 router.post('/chat', (req, res) => {
   const { message } = req.body;
-  const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  
+  const timestamp = new Date().toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
   res.send(`
     <div class="mb-4">
       <div class="font-medium text-gray-300">You</div>
@@ -66,7 +99,10 @@ router.post('/chat', (req, res) => {
 
 // GET reports
 router.get('/reports', (req, res) => {
-  res.render('pages/account/reports', getPageData('Analytics & Reports', 'Reports'));
+  res.render(
+    'pages/account/reports',
+    getPageData('Analytics & Reports', 'Reports')
+  );
 });
 
 // GET settings (redirect to profile)
@@ -81,7 +117,7 @@ router.get('/settings/profile', (req, res) => {
     layout: 'settings',
     activeTab: 'profile',
     pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.'
+    pageDescription: 'Manage account and website settings.',
   });
 });
 
@@ -92,7 +128,7 @@ router.get('/settings/password', (req, res) => {
     layout: 'settings',
     activeTab: 'password',
     pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.'
+    pageDescription: 'Manage account and website settings.',
   });
 });
 
@@ -103,7 +139,7 @@ router.get('/settings/subscription', (req, res) => {
     layout: 'settings',
     activeTab: 'subscription',
     pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.'
+    pageDescription: 'Manage account and website settings.',
   });
 });
 
@@ -114,7 +150,7 @@ router.get('/settings/payment', (req, res) => {
     layout: 'settings',
     activeTab: 'payment',
     pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.'
+    pageDescription: 'Manage account and website settings.',
   });
 });
 
@@ -125,7 +161,7 @@ router.get('/settings/votes', (req, res) => {
     layout: 'settings',
     activeTab: 'votes',
     pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.'
+    pageDescription: 'Manage account and website settings.',
   });
 });
 
@@ -136,7 +172,7 @@ router.get('/settings/billing', (req, res) => {
     layout: 'settings',
     activeTab: 'billing',
     pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.'
+    pageDescription: 'Manage account and website settings.',
   });
 });
 
@@ -147,18 +183,24 @@ router.get('/settings/rewards', (req, res) => {
     layout: 'settings',
     activeTab: 'rewards',
     pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.'
+    pageDescription: 'Manage account and website settings.',
   });
 });
 
 // GET subscriptions billing
 router.get('/subscriptions/billing', (req, res) => {
-  res.render('pages/account/billing/history', getPageData('Billing History', 'Subscriptions'));
+  res.render(
+    'pages/account/billing/history',
+    getPageData('Billing History', 'Subscriptions')
+  );
 });
 
 // GET subscriptions payment
 router.get('/subscriptions/payment', (req, res) => {
-  res.render('pages/account/payment/methods', getPageData('Payment Methods', 'Subscriptions'));
+  res.render(
+    'pages/account/payment/methods',
+    getPageData('Payment Methods', 'Subscriptions')
+  );
 });
 
 // POST settings preferences
@@ -168,7 +210,10 @@ router.post('/settings/preferences', (req, res) => {
 
 // GET subscriptions
 router.get('/subscriptions', (req, res) => {
-  res.render('pages/account/subscriptions/index', getPageData('Subscriptions', 'Subscriptions'));
+  res.render(
+    'pages/account/subscriptions/index',
+    getPageData('Subscriptions', 'Subscriptions')
+  );
 });
 
 // POST profile settings
@@ -179,13 +224,17 @@ router.post('/settings/profile', (req, res) => {
 // POST security settings
 router.post('/settings/security', (req, res) => {
   const { currentPassword, newPassword, confirmNewPassword } = req.body;
-  
+
   if (newPassword !== confirmNewPassword) {
     res.send('<div class="text-red-500">New passwords do not match.</div>');
   } else if (newPassword.length < 6) {
-    res.send('<div class="text-red-500">Password must be at least 6 characters.</div>');
+    res.send(
+      '<div class="text-red-500">Password must be at least 6 characters.</div>'
+    );
   } else {
-    res.send('<div class="text-green-500">Password updated successfully!</div>');
+    res.send(
+      '<div class="text-green-500">Password updated successfully!</div>'
+    );
   }
 });
 
@@ -199,23 +248,26 @@ router.get('/portfolio', (req, res) => {
   // Load portfolio data from JSON file asynchronously
   const fs = require('fs').promises;
   const path = require('path');
-  
-  const portfolioDataPath = path.join(__dirname, '../../../data/portfolio.json');
-  
+
+  const portfolioDataPath = path.join(
+    __dirname,
+    '../../../data/portfolio.json'
+  );
+
   fs.readFile(portfolioDataPath, 'utf8')
-    .then(data => {
+    .then((data) => {
       const portfolioData = JSON.parse(data);
       res.render('pages/portfolio/portfolio', {
         ...getPageData('Idea Portfolio', 'Portfolio'),
-        ideas: portfolioData
+        ideas: portfolioData,
       });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error reading portfolio data:', error);
       res.render('pages/portfolio/portfolio', {
         ...getPageData('Idea Portfolio', 'Portfolio'),
         ideas: [],
-        error: 'Failed to load portfolio data. Please try again later.'
+        error: 'Failed to load portfolio data. Please try again later.',
       });
     });
 });
@@ -224,26 +276,39 @@ router.get('/portfolio', (req, res) => {
 router.get('/portfolio/:id', (req, res) => {
   const fs = require('fs').promises;
   const path = require('path');
-  
-  const portfolioDataPath = path.join(__dirname, '../../../data/portfolio.json');
-  
+
+  const portfolioDataPath = path.join(
+    __dirname,
+    '../../../data/portfolio.json'
+  );
+
   fs.readFile(portfolioDataPath, 'utf8')
-    .then(data => {
+    .then((data) => {
       const portfolioData = JSON.parse(data);
-      const idea = portfolioData.find(i => i.id == req.params.id);
-      
+      const idea = portfolioData.find((i) => i.id == req.params.id);
+
       if (!idea) {
-        return res.status(404).render('pages/404', getPageData('Idea Not Found - Accelerator Platform', ''));
+        return res
+          .status(404)
+          .render(
+            'pages/404',
+            getPageData('Idea Not Found - Accelerator Platform', '')
+          );
       }
-      
+
       res.render('pages/portfolio/portfolio-idea', {
         ...getPageData('Idea Details', 'Portfolio'),
-        idea: idea
+        idea: idea,
       });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error reading portfolio data:', error);
-      res.status(500).render('pages/404', getPageData('Internal Server Error - Accelerator Platform', ''));
+      res
+        .status(500)
+        .render(
+          'pages/404',
+          getPageData('Internal Server Error - Accelerator Platform', '')
+        );
     });
 });
 
@@ -256,7 +321,7 @@ router.get('/ideas', (req, res) => {
 router.post('/ideas', (req, res) => {
   const { title, description, category } = req.body;
   const timestamp = new Date().toLocaleDateString();
-  
+
   res.send(`
     <div class="bg-gray-900 border border-gray-800 rounded p-6 mb-4 animate-fade-in">
       <div class="flex justify-between items-start">
@@ -285,75 +350,110 @@ router.post('/ideas', (req, res) => {
   `);
 });
 
-
-
 // GET idea model
 router.get('/idea-model', (req, res) => {
-  res.render('pages/startup/build/idea/idea-model', getPageData('Idea Model - Coming Soon', 'IdeaModel'));
+  res.render(
+    'pages/startup/build/idea/idea-model',
+    getPageData('Idea Model - Coming Soon', 'IdeaModel')
+  );
 });
 
 // GET business model
 router.get('/business-model', (req, res) => {
-  res.render('pages/startup/build/business/business-model', getPageData('Business Model - Coming Soon', 'BusinessModel'));
+  res.render(
+    'pages/startup/build/business/business-model',
+    getPageData('Business Model - Coming Soon', 'BusinessModel')
+  );
 });
 
 // GET financial model
 router.get('/financial-model', (req, res) => {
-  res.render('pages/startup/build/financial/financial-model', getPageData('Financial Model - Coming Soon', 'FinancialModel'));
+  res.render(
+    'pages/startup/build/financial/financial-model',
+    getPageData('Financial Model - Coming Soon', 'FinancialModel')
+  );
 });
 
 // GET fund model
 router.get('/fund-model', (req, res) => {
-  res.render('pages/startup/build/fund/fund-model', getPageData('Fund Model - Coming Soon', 'FundModel'));
+  res.render(
+    'pages/startup/build/fund/fund-model',
+    getPageData('Fund Model - Coming Soon', 'FundModel')
+  );
 });
 
 // GET marketing model
 router.get('/marketing-model', (req, res) => {
-  res.render('pages/startup/build/marketing/marketing-model', getPageData('Marketing Model - Coming Soon', 'MarketingModel'));
+  res.render(
+    'pages/startup/build/marketing/marketing-model',
+    getPageData('Marketing Model - Coming Soon', 'MarketingModel')
+  );
 });
 
 // GET team model
 router.get('/team-model', (req, res) => {
-  res.render('pages/startup/build/team/team-model', getPageData('Team Model - Coming Soon', 'TeamModel'));
+  res.render(
+    'pages/startup/build/team/team-model',
+    getPageData('Team Model - Coming Soon', 'TeamModel')
+  );
 });
 
 // GET legal model
 router.get('/legal-model', (req, res) => {
-  res.render('pages/startup/build/legal/legal-model', getPageData('Legal Model - Coming Soon', 'LegalModel'));
+  res.render(
+    'pages/startup/build/legal/legal-model',
+    getPageData('Legal Model - Coming Soon', 'LegalModel')
+  );
 });
 
 // GET valuation
 router.get('/valuation', (req, res) => {
-  res.render('pages/startup/promote/valuation/valuation', getPageData('Valuation - Coming Soon', 'Valuation'));
+  res.render(
+    'pages/startup/promote/valuation/valuation',
+    getPageData('Valuation - Coming Soon', 'Valuation')
+  );
 });
 
 // GET pitch deck
 router.get('/pitch-deck', (req, res) => {
-  res.render('pages/startup/promote/pitch-deck/pitch-deck', getPageData('Pitch Deck - Create & Manage', 'PitchDeck'));
+  res.render(
+    'pages/startup/promote/pitch-deck/pitch-deck',
+    getPageData('Pitch Deck - Create & Manage', 'PitchDeck')
+  );
 });
 
 // GET business plan
 router.get('/business-plan', (req, res) => {
-  res.render('pages/startup/promote/business-plan/business-plan', getPageData('Business Plan - Strategic Planning', 'BusinessPlan'));
+  res.render(
+    'pages/startup/promote/business-plan/business-plan',
+    getPageData('Business Plan - Strategic Planning', 'BusinessPlan')
+  );
 });
 
 // GET auth login page
 router.get('/auth', (req, res) => {
-  res.render('pages/auth/auth', getPageData('Login - Accelerator Platform', 'Auth'));
+  res.render(
+    'pages/auth/auth',
+    getPageData('Login - Accelerator Platform', 'Auth')
+  );
 });
 
 // GET auth signup page
 router.get('/auth/signup', (req, res) => {
-  res.render('pages/auth/auth-signup', getPageData('Sign Up - Accelerator Platform', 'Auth'));
+  res.render(
+    'pages/auth/auth-signup',
+    getPageData('Sign Up - Accelerator Platform', 'Auth')
+  );
 });
 
 // GET forgot password page
 router.get('/forgot-password', (req, res) => {
-  res.render('pages/auth/forgot-password', getPageData('Forgot Password - Accelerator Platform', 'Auth'));
+  res.render(
+    'pages/auth/forgot-password',
+    getPageData('Forgot Password - Accelerator Platform', 'Auth')
+  );
 });
 
 module.exports = router;
-
-
 
 module.exports = router;
