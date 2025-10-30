@@ -142,7 +142,7 @@
   }
   
   .table-header {
-    @apply border-b bg-muted bg-opacity-50 font-medium;
+    @apply border-b bg-muted/50 font-medium;
   }
   
   .table-row {
@@ -242,6 +242,20 @@
 }
 
 @layer utilities {
+  /* Dark mode utilities */
+  .dark .scale-0 {
+    transform: scale(0);
+  }
+  .dark .scale-100 {
+    transform: scale(1);
+  }
+  .dark .rotate-0 {
+    transform: rotate(0deg);
+  }
+  .dark .-rotate-90 {
+    transform: rotate(-90deg);
+  }
+
   .bg-background {
     background-color: hsl(var(--background));
   }
@@ -340,129 +354,5 @@
   }
   .ring-offset-background {
     --tw-ring-offset-color: hsl(var(--background));
-  }
-}
-
-@layer utilities {
-  /* Enhanced utilities for sidebar colors */
-  .bg-sidebar {
-    background-color: hsl(var(--sidebar-bg));
-  }
-  .bg-sidebar-foreground {
-    background-color: hsl(var(--sidebar-foreground));
-  }
-  .bg-sidebar-primary {
-    background-color: hsl(var(--sidebar-primary));
-  }
-  .bg-sidebar-primary-foreground {
-    background-color: hsl(var(--sidebar-primary-foreground));
-  }
-  .bg-sidebar-accent {
-    background-color: hsl(var(--sidebar-accent));
-  }
-  .bg-sidebar-accent-foreground {
-    background-color: hsl(var(--sidebar-accent-foreground));
-  }
-  .border-sidebar {
-    border-color: hsl(var(--sidebar-border));
-  }
-  .text-sidebar {
-    color: hsl(var(--sidebar-foreground));
-  }
-  .text-sidebar-primary {
-    color: hsl(var(--sidebar-primary));
-  }
-  .text-sidebar-primary-foreground {
-    color: hsl(var(--sidebar-primary-foreground));
-  }
-  .text-sidebar-accent {
-    color: hsl(var(--sidebar-accent));
-  }
-  .text-sidebar-accent-foreground {
-    color: hsl(var(--sidebar-accent-foreground));
-  }
-  .ring-sidebar {
-    --tw-ring-color: hsl(var(--sidebar-ring));
-  }
-  .ring-offset-sidebar {
-    --tw-ring-offset-color: hsl(var(--sidebar-bg));
-  }
-  
-  /* Advanced CSS utilities */
-  
-  /* Container Queries Utilities */
-  .container-query {
-    container-type: inline-size;
-  }
-  
-  /* Custom properties for dynamic theming */
-  .theme-vars {
-    --primary-hue: 222;
-    --primary-saturation: 47.4%;
-    --primary-lightness: 11.2%;
-    --secondary-hue: 210;
-    --secondary-saturation: 40%;
-    --secondary-lightness: 96.1%;
-  }
-  
-  /* HSL color manipulation utilities - using comma syntax for compatibility */
-  .hue-rotate-primary {
-    color: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
-  }
-  
-  /* Advanced layout utilities */
-  .grid-flow-region {
-    grid-template-areas: 
-      "header header header"
-      "sidebar main aside"
-      "footer footer footer";
-  }
-  
-  .region-header { grid-area: header; }
-  .region-sidebar { grid-area: sidebar; }
-  .region-main { grid-area: main; }
-  .region-aside { grid-area: aside; }
-  .region-footer { grid-area: footer; }
-  
-  /* Modern focus styles */
-  .focus-within-ring {
-    transition: box-shadow 0.2s ease;
-  }
-  
-  .focus-within-ring:focus-within {
-    box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
-  }
-  
-  /* Reduced motion support */
-  @media (prefers-reduced-motion: reduce) {
-    .motion-safe {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-    
-    .motion-reduce {
-      animation: none;
-      transition: none;
-    }
-  }
-  
-  /* High contrast mode support */
-  @media (prefers-contrast: high) {
-    .contrast-high {
-      border-width: 2px;
-      border-style: solid;
-    }
-  }
-  
-  /* Print styles */
-  @media print {
-    .print-hidden {
-      display: none !important;
-    }
-    
-    .print-block {
-      display: block !important;
-    }
   }
 }

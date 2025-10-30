@@ -3,11 +3,16 @@ module.exports = {
   darkMode: 'class',
   content: [
     './src/views/**/*.{hbs,handlebars,html}',
-    './public/**/*.{js,css}',
-    './src/**/*.{js,ts}',
-    './src/**/*.css',
-    './src/assets/**/*.{css,js}',
-    './src/styles/**/*.{css,js}',
+    './src/components/**/*.{hbs,handlebars,html,js,ts,jsx,tsx}',
+    './src/pages/**/*.{hbs,handlebars,html,js,ts,jsx,tsx}',
+    './src/app/**/*.{hbs,handlebars,html,js,ts,jsx,tsx}',
+    './public/**/*.js',
+    './src/**/*.{js,ts,jsx,tsx}',
+    '!./src/**/*.test.{js,ts,jsx,tsx}',
+    '!./src/tests/**/*',
+    '!./coverage/**/*',
+    '!./dist/**/*',
+    '!./build/**/*',
   ],
   theme: {
     container: {
@@ -51,6 +56,16 @@ module.exports = {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-bg))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          primaryForeground: "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          accentForeground: "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
         },
       },
       borderRadius: {
@@ -98,5 +113,6 @@ module.exports = {
   plugins: [
     require("@tailwindcss/forms"),
     require("tailwindcss-animate"),
+    require("@tailwindcss/container-queries"),
   ],
 };

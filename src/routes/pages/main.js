@@ -354,6 +354,11 @@ router.get('/auth/signup', (req, res) => {
   res.render('pages/auth/auth-signup', getPageData('Sign Up - Accelerator Platform', 'Auth'));
 });
 
+// GET forgot password page
+router.get('/forgot-password', (req, res) => {
+  res.render('pages/auth/forgot-password', getPageData('Forgot Password - Accelerator Platform', 'Auth'));
+});
+
 module.exports = router;
 
 
