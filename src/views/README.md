@@ -9,7 +9,6 @@ views/
 ├── layouts/           # Main layout templates
 │   ├── main.hbs       # Default application layout with sidebar
 │   ├── settings.hbs   # Settings page layout
-│   ├── minimal.hbs    # Minimal layout for lightweight pages
 │   └── auth.hbs       # Authentication page layout
 ├── partials/          # Reusable UI components
 │   ├── sidebar.hbs    # Main sidebar navigation
@@ -34,21 +33,7 @@ views/
 │   ├── auth/          # Authentication pages
 │   │   ├── auth.hbs       # Login page
 │   │   └── auth-signup.hbs # Signup page
-│   ├── 404.hbs        # Error page
-│   └── test-ui-minimal.hbs  # UI testing page
-├── dashboard/         # Dashboard pages and tabs
-│   ├── dashboard.hbs  # Main dashboard (idea tab)
-│   ├── dashboard-business.hbs
-│   ├── dashboard-financial.hbs
-│   ├── dashboard-marketing.hbs
-│   ├── dashboard-fund.hbs
-│   ├── dashboard-team.hbs
-│   └── dashboard-promote.hbs
-├── portfolio/         # Portfolio-related pages
-│   ├── portfolio.hbs      # Portfolio listing page
-│   └── portfolio-idea.hbs # Individual portfolio item page
-├── chat/              # Chat and communication pages
-│   └── chat.hbs       # Main chat interface
+│   └── 404.hbs        # Error page
 ├── ideas/             # Idea management pages
 │   └── ideas.hbs      # Ideas submission page
 ├── startup/           # Startup building and promotion
@@ -114,7 +99,6 @@ Different pages use different layouts based on their purpose:
 - Main application pages: `main` layout (includes sidebar)
 - Settings pages: `settings` layout (includes settings navigation)
 - Authentication pages: `auth` layout (minimal interface)
-- Lightweight pages: `minimal` layout
 
 ## Partials
 
