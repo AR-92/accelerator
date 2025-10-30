@@ -156,8 +156,8 @@ handlebars.registerHelper('renderSidebarItem', function(item, currentPath) {
 const handlebarsConfig = engine({ 
   extname: '.hbs',
   defaultLayout: 'main',
-  layoutsDir: path.join(__dirname, '../views/layouts'),
-  partialsDir: path.join(__dirname, '../views/partials')
+  layoutsDir: path.join(__dirname, '../src/views/layouts'),
+  partialsDir: path.join(__dirname, '../src/views/partials')
 });
 
 module.exports = {

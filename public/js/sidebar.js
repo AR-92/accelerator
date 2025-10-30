@@ -551,11 +551,60 @@ document.addEventListener('DOMContentLoaded', function() {
     accountItem.appendChild(accountText);
 
     accountItem.addEventListener('click', function () {
-      window.location.href = '/pages/profile';
+      window.location.href = '/pages/settings/profile';
       closeDropdownMenu();
     });
 
     accountGroup.appendChild(accountItem);
+
+    // Subscriptions item
+    const subscriptionItem = document.createElement('div');
+    subscriptionItem.setAttribute('role', 'menuitem');
+    subscriptionItem.setAttribute('data-slot', 'dropdown-menu-item');
+    subscriptionItem.setAttribute('data-variant', 'default');
+    subscriptionItem.className = 'focus:bg-accent focus:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:*:[svg]:!text-destructive [&_svg:not([class*="text-"])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*="size-"])]:size-4';
+    subscriptionItem.setAttribute('tabindex', '-1');
+    subscriptionItem.setAttribute('data-orientation', 'vertical');
+
+    const subscriptionIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    subscriptionIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    subscriptionIcon.setAttribute('width', '24');
+    subscriptionIcon.setAttribute('height', '24');
+    subscriptionIcon.setAttribute('viewBox', '0 0 24 24');
+    subscriptionIcon.setAttribute('fill', 'none');
+    subscriptionIcon.setAttribute('stroke', 'currentColor');
+    subscriptionIcon.setAttribute('stroke-width', '2');
+    subscriptionIcon.setAttribute('stroke-linecap', 'round');
+    subscriptionIcon.setAttribute('stroke-linejoin', 'round');
+    subscriptionIcon.className = 'lucide lucide-credit-card';
+
+    const subscriptionRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    subscriptionRect.setAttribute('width', '20');
+    subscriptionRect.setAttribute('height', '14');
+    subscriptionRect.setAttribute('x', '2');
+    subscriptionRect.setAttribute('y', '5');
+    subscriptionRect.setAttribute('rx', '2');
+    subscriptionIcon.appendChild(subscriptionRect);
+
+    const subscriptionLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    subscriptionLine.setAttribute('x1', '2');
+    subscriptionLine.setAttribute('x2', '22');
+    subscriptionLine.setAttribute('y1', '10');
+    subscriptionLine.setAttribute('y2', '10');
+    subscriptionIcon.appendChild(subscriptionLine);
+
+    subscriptionItem.appendChild(subscriptionIcon);
+
+    const subscriptionText = document.createElement('span');
+    subscriptionText.textContent = 'Subscriptions';
+    subscriptionItem.appendChild(subscriptionText);
+
+    subscriptionItem.addEventListener('click', function () {
+      window.location.href = '/pages/subscriptions';
+      closeDropdownMenu();
+    });
+
+    accountGroup.appendChild(subscriptionItem);
 
     // Billing item
     const billingItem = document.createElement('div');
@@ -578,21 +627,6 @@ document.addEventListener('DOMContentLoaded', function() {
     billingIcon.setAttribute('stroke-linejoin', 'round');
     billingIcon.className = 'lucide lucide-credit-card';
 
-    const billingRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    billingRect.setAttribute('width', '20');
-    billingRect.setAttribute('height', '14');
-    billingRect.setAttribute('x', '2');
-    billingRect.setAttribute('y', '5');
-    billingRect.setAttribute('rx', '2');
-    billingIcon.appendChild(billingRect);
-
-    const billingLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    billingLine.setAttribute('x1', '2');
-    billingLine.setAttribute('x2', '22');
-    billingLine.setAttribute('y1', '10');
-    billingLine.setAttribute('y2', '10');
-    billingIcon.appendChild(billingLine);
-
     billingItem.appendChild(billingIcon);
 
     const billingText = document.createElement('span');
@@ -600,11 +634,215 @@ document.addEventListener('DOMContentLoaded', function() {
     billingItem.appendChild(billingText);
 
     billingItem.addEventListener('click', function () {
-      window.location.href = '/pages/billing';
+      window.location.href = '/pages/settings/billing';
       closeDropdownMenu();
     });
 
     accountGroup.appendChild(billingItem);
+
+    // Payment Methods item
+    const paymentItem = document.createElement('div');
+    paymentItem.setAttribute('role', 'menuitem');
+    paymentItem.setAttribute('data-slot', 'dropdown-menu-item');
+    paymentItem.setAttribute('data-variant', 'default');
+    paymentItem.className = 'focus:bg-accent focus:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:*:[svg]:!text-destructive [&_svg:not([class*="text-"])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*="size-"])]:size-4';
+    paymentItem.setAttribute('tabindex', '-1');
+    paymentItem.setAttribute('data-orientation', 'vertical');
+
+    const paymentIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    paymentIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    paymentIcon.setAttribute('width', '24');
+    paymentIcon.setAttribute('height', '24');
+    paymentIcon.setAttribute('viewBox', '0 0 24 24');
+    paymentIcon.setAttribute('fill', 'none');
+    paymentIcon.setAttribute('stroke', 'currentColor');
+    paymentIcon.setAttribute('stroke-width', '2');
+    paymentIcon.setAttribute('stroke-linecap', 'round');
+    paymentIcon.setAttribute('stroke-linejoin', 'round');
+    paymentIcon.className = 'lucide lucide-credit-card';
+
+    const paymentRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    paymentRect.setAttribute('width', '20');
+    paymentRect.setAttribute('height', '14');
+    paymentRect.setAttribute('x', '2');
+    paymentRect.setAttribute('y', '5');
+    paymentRect.setAttribute('rx', '2');
+    paymentIcon.appendChild(paymentRect);
+
+    const paymentLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    paymentLine.setAttribute('x1', '2');
+    paymentLine.setAttribute('x2', '22');
+    paymentLine.setAttribute('y1', '10');
+    paymentLine.setAttribute('y2', '10');
+    paymentIcon.appendChild(paymentLine);
+
+    paymentItem.appendChild(paymentIcon);
+
+    const paymentText = document.createElement('span');
+    paymentText.textContent = 'Payment Methods';
+    paymentItem.appendChild(paymentText);
+
+    paymentItem.addEventListener('click', function () {
+      window.location.href = '/pages/subscriptions/payment';
+      closeDropdownMenu();
+    });
+
+    accountGroup.appendChild(paymentItem);
+
+    // Votes Management item
+    const votesItem = document.createElement('div');
+    votesItem.setAttribute('role', 'menuitem');
+    votesItem.setAttribute('data-slot', 'dropdown-menu-item');
+    votesItem.setAttribute('data-variant', 'default');
+    votesItem.className = 'focus:bg-accent focus:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:*:[svg]:!text-destructive [&_svg:not([class*="text-"])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*="size-"])]:size-4';
+    votesItem.setAttribute('tabindex', '-1');
+    votesItem.setAttribute('data-orientation', 'vertical');
+
+    const votesIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    votesIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    votesIcon.setAttribute('width', '24');
+    votesIcon.setAttribute('height', '24');
+    votesIcon.setAttribute('viewBox', '0 0 24 24');
+    votesIcon.setAttribute('fill', 'none');
+    votesIcon.setAttribute('stroke', 'currentColor');
+    votesIcon.setAttribute('stroke-width', '2');
+    votesIcon.setAttribute('stroke-linecap', 'round');
+    votesIcon.setAttribute('stroke-linejoin', 'round');
+    votesIcon.className = 'lucide lucide-vote';
+
+    const votesPath1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    votesPath1.setAttribute('d', 'm9 12 2 2 4-4');
+    votesIcon.appendChild(votesPath1);
+
+    const votesPath2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    votesPath2.setAttribute('d', 'M5 8c0-2.5 2-2.5 2-5');
+    votesIcon.appendChild(votesPath2);
+
+    const votesPath3 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    votesPath3.setAttribute('d', 'M19 8c0-2.5-2-2.5-2-5');
+    votesIcon.appendChild(votesPath3);
+
+    const votesPath4 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    votesPath4.setAttribute('d', 'M12 19c-4 0-7-1-7-1');
+    votesIcon.appendChild(votesPath4);
+
+    votesItem.appendChild(votesIcon);
+
+    const votesText = document.createElement('span');
+    votesText.textContent = 'Votes Management';
+    votesItem.appendChild(votesText);
+
+    votesItem.addEventListener('click', function () {
+      window.location.href = '/pages/settings/votes';
+      closeDropdownMenu();
+    });
+
+    accountGroup.appendChild(votesItem);
+
+    // Voting Rewards item
+    const rewardsItem = document.createElement('div');
+    rewardsItem.setAttribute('role', 'menuitem');
+    rewardsItem.setAttribute('data-slot', 'dropdown-menu-item');
+    rewardsItem.setAttribute('data-variant', 'default');
+    rewardsItem.className = 'focus:bg-accent focus:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:*:[svg]:!text-destructive [&_svg:not([class*="text-"])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*="size-"])]:size-4';
+    rewardsItem.setAttribute('tabindex', '-1');
+    rewardsItem.setAttribute('data-orientation', 'vertical');
+
+    const rewardsIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    rewardsIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    rewardsIcon.setAttribute('width', '24');
+    rewardsIcon.setAttribute('height', '24');
+    rewardsIcon.setAttribute('viewBox', '0 0 24 24');
+    rewardsIcon.setAttribute('fill', 'none');
+    rewardsIcon.setAttribute('stroke', 'currentColor');
+    rewardsIcon.setAttribute('stroke-width', '2');
+    rewardsIcon.setAttribute('stroke-linecap', 'round');
+    rewardsIcon.setAttribute('stroke-linejoin', 'round');
+    rewardsIcon.className = 'lucide lucide-hand-coins';
+
+    const rewardsPath1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    rewardsPath1.setAttribute('d', 'M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17');
+    rewardsIcon.appendChild(rewardsPath1);
+
+    const rewardsPath2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    rewardsPath2.setAttribute('d', 'M16 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L8 17');
+    rewardsIcon.appendChild(rewardsPath2);
+
+    const rewardsPath3 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    rewardsPath3.setAttribute('d', 'M9 9h.01');
+    rewardsIcon.appendChild(rewardsPath3);
+
+    const rewardsPath4 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    rewardsPath4.setAttribute('d', 'M15 9h.01');
+    rewardsIcon.appendChild(rewardsPath4);
+
+    const rewardsPath5 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    rewardsPath5.setAttribute('d', 'M21 15a2 2 0 0 1-2 2h-1a1 1 0 0 0 0 2h1a2 2 0 0 1 2-2');
+    rewardsIcon.appendChild(rewardsPath5);
+
+    const rewardsPath6 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    rewardsPath6.setAttribute('d', 'M21 9a2 2 0 0 1-2-2h-1a1 1 0 0 0 0-2h1a2 2 0 0 1 2 2');
+    rewardsIcon.appendChild(rewardsPath6);
+
+    rewardsItem.appendChild(rewardsIcon);
+
+    const rewardsText = document.createElement('span');
+    rewardsText.textContent = 'Voting Rewards';
+    rewardsItem.appendChild(rewardsText);
+
+    rewardsItem.addEventListener('click', function () {
+      window.location.href = '/pages/settings/rewards';
+      closeDropdownMenu();
+    });
+
+    accountGroup.appendChild(rewardsItem);
+
+    // Password Settings item
+    const passwordItem = document.createElement('div');
+    passwordItem.setAttribute('role', 'menuitem');
+    passwordItem.setAttribute('data-slot', 'dropdown-menu-item');
+    passwordItem.setAttribute('data-variant', 'default');
+    passwordItem.className = 'focus:bg-accent focus:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:*:[svg]:!text-destructive [&_svg:not([class*="text-"])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*="size-"])]:size-4';
+    passwordItem.setAttribute('tabindex', '-1');
+    passwordItem.setAttribute('data-orientation', 'vertical');
+
+    const passwordIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    passwordIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    passwordIcon.setAttribute('width', '24');
+    passwordIcon.setAttribute('height', '24');
+    passwordIcon.setAttribute('viewBox', '0 0 24 24');
+    passwordIcon.setAttribute('fill', 'none');
+    passwordIcon.setAttribute('stroke', 'currentColor');
+    passwordIcon.setAttribute('stroke-width', '2');
+    passwordIcon.setAttribute('stroke-linecap', 'round');
+    passwordIcon.setAttribute('stroke-linejoin', 'round');
+    passwordIcon.className = 'lucide lucide-lock';
+
+    const lockRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    lockRect.setAttribute('width', '18');
+    lockRect.setAttribute('height', '11');
+    lockRect.setAttribute('x', '3');
+    lockRect.setAttribute('y', '11');
+    lockRect.setAttribute('rx', '2');
+    lockRect.setAttribute('ry', '2');
+    passwordIcon.appendChild(lockRect);
+
+    const lockPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    lockPath.setAttribute('d', 'M7 11V7a5 5 0 0 1 10 0v4');
+    passwordIcon.appendChild(lockPath);
+
+    passwordItem.appendChild(passwordIcon);
+
+    const passwordText = document.createElement('span');
+    passwordText.textContent = 'Password Settings';
+    passwordItem.appendChild(passwordText);
+
+    passwordItem.addEventListener('click', function () {
+      window.location.href = '/pages/settings/password';
+      closeDropdownMenu();
+    });
+
+    accountGroup.appendChild(passwordItem);
 
     // Notifications item
     const notificationsItem = document.createElement('div');
@@ -642,7 +880,7 @@ document.addEventListener('DOMContentLoaded', function() {
     notificationsItem.appendChild(notificationsText);
 
     notificationsItem.addEventListener('click', function () {
-      console.log('Notifications clicked');
+      window.location.href = '/pages/settings/profile';
       closeDropdownMenu();
     });
 

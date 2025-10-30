@@ -65,15 +65,37 @@ npm start
 
 ```
 accelerator/
-├── config/           # Configuration files
-├── data/             # Data files (e.g., portfolio.json)
-├── middleware/       # Express middleware
-├── public/           # Static assets (CSS, JS, images)
-├── routes/           # Express routes
-├── src/              # Source files (SCSS, JS)
-├── views/            # Handlebars templates
-├── server.js         # Main server file
-└── package.json      # Project dependencies and scripts
+├── config/                   # Configuration files
+├── data/                     # Data files (e.g., portfolio.json)
+├── docs/                     # Project documentation
+├── public/                   # Static assets (CSS, JS, images, icons)
+│   ├── css/                  # Compiled CSS files
+│   ├── js/                   # Client-side JavaScript
+│   ├── images/               # Image assets
+│   ├── icons/                # Icon files
+│   └── uploads/              # User uploaded files
+├── src/                      # Source files
+│   ├── controllers/          # Route controllers
+│   ├── middleware/           # Express middleware
+│   ├── models/               # Data models
+│   ├── routes/               # Express routes
+│   │   ├── pages/            # Page routes (HTML)
+│   │   └── api/              # API routes (JSON)
+│   │       └── v1/           # API version 1
+│   ├── services/             # Business logic services
+│   ├── utils/                # Utility functions
+│   ├── views/                # Handlebars templates
+│   │   ├── layouts/          # Template layouts
+│   │   ├── partials/         # Reusable template components
+│   │   ├── pages/            # Page-specific templates
+│   │   └── components/       # UI components
+│   └── styles/               # Source CSS/SCSS files
+├── tests/                    # Test files
+│   ├── unit/                 # Unit tests
+│   ├── integration/          # Integration tests
+│   └── fixtures/             # Test fixtures
+├── server.js                 # Main server file
+└── package.json              # Project dependencies and scripts
 ```
 
 ## Technologies Used

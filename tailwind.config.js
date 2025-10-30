@@ -2,7 +2,7 @@
 module.exports = {
   darkMode: 'class',
   content: [
-    './views/**/*.{hbs,handlebars,html}',
+    './src/views/**/*.{hbs,handlebars,html}',
     './public/**/*.{js,css}',
     './src/**/*.{js,ts}',
     './src/**/*.css',

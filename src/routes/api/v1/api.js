@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const llmService = require('../src/services/llmService');
+const llmService = require('../../../services/llmService');
 
 router.post('/chat', async (req, res) => {
   try {

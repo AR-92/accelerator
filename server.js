@@ -2,12 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const { handlebarsConfig } = require('./config/handlebars');
-const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
+const { errorHandler, notFoundHandler } = require('./src/middleware/errorHandler');
 
 // Import routes
-const authRoutes = require('./routes/auth');
-const pageRoutes = require('./routes/pages');
-const apiRoutes = require('./routes/api');
+const authRoutes = require('./src/routes/pages/auth');
+const pageRoutes = require('./src/routes/pages/main');
+const apiRoutes = require('./src/routes/api/v1/api');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 // Set up Handlebars as the templating engine
 app.engine('hbs', handlebarsConfig);
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'src', 'views'));
 
 // Serve static files
 app.use(express.static(path.join(__dirname)));

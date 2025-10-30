@@ -12,37 +12,37 @@ const getPageData = (title, activeKey, padding = 'py-8') => ({
 
 // GET dashboard
 router.get('/dashboard', (req, res) => {
-  res.render('dashboard/dashboard', getPageData('Dashboard - My Ideas', 'Dashboard'));
+  res.render('pages/dashboard/dashboard', getPageData('Dashboard - My Ideas', 'Dashboard'));
 });
 
 // GET dashboard tabs
 router.get('/dashboard/tab/business', (req, res) => {
-  res.render('dashboard/dashboard-business', getPageData('Dashboard - Business', 'Dashboard'));
+  res.render('pages/dashboard/dashboard-business', getPageData('Dashboard - Business', 'Dashboard'));
 });
 
 router.get('/dashboard/tab/financial', (req, res) => {
-  res.render('dashboard/dashboard-financial', getPageData('Dashboard - Financial', 'Dashboard'));
+  res.render('pages/dashboard/dashboard-financial', getPageData('Dashboard - Financial', 'Dashboard'));
 });
 
 router.get('/dashboard/tab/marketing', (req, res) => {
-  res.render('dashboard/dashboard-marketing', getPageData('Dashboard - Marketing', 'Dashboard'));
+  res.render('pages/dashboard/dashboard-marketing', getPageData('Dashboard - Marketing', 'Dashboard'));
 });
 
 router.get('/dashboard/tab/fund', (req, res) => {
-  res.render('dashboard/dashboard-fund', getPageData('Dashboard - Funding', 'Dashboard'));
+  res.render('pages/dashboard/dashboard-fund', getPageData('Dashboard - Funding', 'Dashboard'));
 });
 
 router.get('/dashboard/tab/team', (req, res) => {
-  res.render('dashboard/dashboard-team', getPageData('Dashboard - Team', 'Dashboard'));
+  res.render('pages/dashboard/dashboard-team', getPageData('Dashboard - Team', 'Dashboard'));
 });
 
 router.get('/dashboard/tab/promote', (req, res) => {
-  res.render('dashboard/dashboard-promote', getPageData('Dashboard - Promotion', 'Dashboard'));
+  res.render('pages/dashboard/dashboard-promote', getPageData('Dashboard - Promotion', 'Dashboard'));
 });
 
 // GET chat
 router.get('/chat', (req, res) => {
-  res.render('chat/chat', getPageData('Team Collaboration - Chat', 'Chat'));
+  res.render('pages/chat/chat', getPageData('Team Collaboration - Chat', 'Chat'));
 });
 
 // POST chat message
@@ -61,7 +61,7 @@ router.post('/chat', (req, res) => {
 
 // GET reports
 router.get('/reports', (req, res) => {
-  res.render('account/reports', getPageData('Analytics & Reports', 'Reports'));
+  res.render('pages/account/reports', getPageData('Analytics & Reports', 'Reports'));
 });
 
 // GET settings (redirect to profile)
@@ -71,7 +71,7 @@ router.get('/settings', (req, res) => {
 
 // GET settings profile
 router.get('/settings/profile', (req, res) => {
-  res.render('account/settings/profile', {
+  res.render('pages/account/settings/profile', {
     ...getPageData('Account Settings - Profile', 'Settings'),
     layout: 'settings',
     activeTab: 'profile',
@@ -82,7 +82,7 @@ router.get('/settings/profile', (req, res) => {
 
 // GET settings password
 router.get('/settings/password', (req, res) => {
-  res.render('account/settings/password', {
+  res.render('pages/account/settings/password', {
     ...getPageData('Account Settings - Password', 'Settings'),
     layout: 'settings',
     activeTab: 'password',
@@ -93,7 +93,7 @@ router.get('/settings/password', (req, res) => {
 
 // GET settings subscription
 router.get('/settings/subscription', (req, res) => {
-  res.render('account/subscriptions/index', {
+  res.render('pages/account/subscriptions/index', {
     ...getPageData('Account Settings - Subscription', 'Settings'),
     layout: 'settings',
     activeTab: 'subscription',
@@ -104,7 +104,7 @@ router.get('/settings/subscription', (req, res) => {
 
 // GET settings payment
 router.get('/settings/payment', (req, res) => {
-  res.render('account/payment/index', {
+  res.render('pages/account/payment/index', {
     ...getPageData('Account Settings - Payment', 'Settings'),
     layout: 'settings',
     activeTab: 'payment',
@@ -115,7 +115,7 @@ router.get('/settings/payment', (req, res) => {
 
 // GET settings votes
 router.get('/settings/votes', (req, res) => {
-  res.render('account/settings/votes', {
+  res.render('pages/account/settings/votes', {
     ...getPageData('Account Settings - Votes', 'Settings'),
     layout: 'settings',
     activeTab: 'votes',
@@ -126,7 +126,7 @@ router.get('/settings/votes', (req, res) => {
 
 // GET settings billing
 router.get('/settings/billing', (req, res) => {
-  res.render('account/billing/history', {
+  res.render('pages/account/billing/history', {
     ...getPageData('Account Settings - Billing', 'Settings'),
     layout: 'settings',
     activeTab: 'billing',
@@ -137,7 +137,7 @@ router.get('/settings/billing', (req, res) => {
 
 // GET settings rewards
 router.get('/settings/rewards', (req, res) => {
-  res.render('account/settings/rewards', {
+  res.render('pages/account/settings/rewards', {
     ...getPageData('Account Settings - Rewards', 'Settings'),
     layout: 'settings',
     activeTab: 'rewards',
@@ -148,12 +148,12 @@ router.get('/settings/rewards', (req, res) => {
 
 // GET subscriptions billing
 router.get('/subscriptions/billing', (req, res) => {
-  res.render('account/billing/history', getPageData('Billing History', 'Subscriptions'));
+  res.render('pages/account/billing/history', getPageData('Billing History', 'Subscriptions'));
 });
 
 // GET subscriptions payment
 router.get('/subscriptions/payment', (req, res) => {
-  res.render('account/payment/methods', getPageData('Payment Methods', 'Subscriptions'));
+  res.render('pages/account/payment/methods', getPageData('Payment Methods', 'Subscriptions'));
 });
 
 // POST settings preferences
@@ -163,7 +163,7 @@ router.post('/settings/preferences', (req, res) => {
 
 // GET subscriptions
 router.get('/subscriptions', (req, res) => {
-  res.render('account/subscriptions/index', getPageData('Subscriptions', 'Subscriptions'));
+  res.render('pages/account/subscriptions/index', getPageData('Subscriptions', 'Subscriptions'));
 });
 
 // POST profile settings
@@ -195,19 +195,19 @@ router.get('/portfolio', (req, res) => {
   const fs = require('fs').promises;
   const path = require('path');
   
-  const portfolioDataPath = path.join(__dirname, '../data/portfolio.json');
+  const portfolioDataPath = path.join(__dirname, '../../../data/portfolio.json');
   
   fs.readFile(portfolioDataPath, 'utf8')
     .then(data => {
       const portfolioData = JSON.parse(data);
-      res.render('portfolio/portfolio', {
+      res.render('pages/portfolio/portfolio', {
         ...getPageData('Idea Portfolio', 'Portfolio'),
         ideas: portfolioData
       });
     })
     .catch(error => {
       console.error('Error reading portfolio data:', error);
-      res.render('portfolio/portfolio', {
+      res.render('pages/portfolio/portfolio', {
         ...getPageData('Idea Portfolio', 'Portfolio'),
         ideas: [],
         error: 'Failed to load portfolio data. Please try again later.'
@@ -220,7 +220,7 @@ router.get('/portfolio/:id', (req, res) => {
   const fs = require('fs').promises;
   const path = require('path');
   
-  const portfolioDataPath = path.join(__dirname, '../data/portfolio.json');
+  const portfolioDataPath = path.join(__dirname, '../../../data/portfolio.json');
   
   fs.readFile(portfolioDataPath, 'utf8')
     .then(data => {
@@ -228,23 +228,23 @@ router.get('/portfolio/:id', (req, res) => {
       const idea = portfolioData.find(i => i.id == req.params.id);
       
       if (!idea) {
-        return res.status(404).render('public/404', getPageData('Idea Not Found - Accelerator Platform', ''));
+        return res.status(404).render('pages/404', getPageData('Idea Not Found - Accelerator Platform', ''));
       }
       
-      res.render('portfolio/portfolio-idea', {
+      res.render('pages/portfolio/portfolio-idea', {
         ...getPageData('Idea Details', 'Portfolio'),
         idea: idea
       });
     })
     .catch(error => {
       console.error('Error reading portfolio data:', error);
-      res.status(500).render('public/404', getPageData('Internal Server Error - Accelerator Platform', ''));
+      res.status(500).render('pages/404', getPageData('Internal Server Error - Accelerator Platform', ''));
     });
 });
 
 // GET ideas
 router.get('/ideas', (req, res) => {
-  res.render('ideas/ideas', getPageData('Submit New Idea', 'Ideas'));
+  res.render('pages/ideas/ideas', getPageData('Submit New Idea', 'Ideas'));
 });
 
 // POST new idea
@@ -287,7 +287,7 @@ router.get('/test-ui', (req, res) => {
 
 // GET UI test page with minimal layout
 router.get('/test-ui-minimal', (req, res) => {
-  res.render('public/test-ui-minimal', {
+  res.render('pages/test-ui-minimal', {
     ...getPageData('UI Test Page (Minimal Layout)', ''),
     layout: 'minimal',
     currentPath: req.path
@@ -296,62 +296,62 @@ router.get('/test-ui-minimal', (req, res) => {
 
 // GET idea model
 router.get('/idea-model', (req, res) => {
-  res.render('startup/build/idea/idea-model', getPageData('Idea Model - Coming Soon', 'IdeaModel'));
+  res.render('pages/startup/build/idea/idea-model', getPageData('Idea Model - Coming Soon', 'IdeaModel'));
 });
 
 // GET business model
 router.get('/business-model', (req, res) => {
-  res.render('startup/build/business/business-model', getPageData('Business Model - Coming Soon', 'BusinessModel'));
+  res.render('pages/startup/build/business/business-model', getPageData('Business Model - Coming Soon', 'BusinessModel'));
 });
 
 // GET financial model
 router.get('/financial-model', (req, res) => {
-  res.render('startup/build/financial/financial-model', getPageData('Financial Model - Coming Soon', 'FinancialModel'));
+  res.render('pages/startup/build/financial/financial-model', getPageData('Financial Model - Coming Soon', 'FinancialModel'));
 });
 
 // GET fund model
 router.get('/fund-model', (req, res) => {
-  res.render('startup/build/fund/fund-model', getPageData('Fund Model - Coming Soon', 'FundModel'));
+  res.render('pages/startup/build/fund/fund-model', getPageData('Fund Model - Coming Soon', 'FundModel'));
 });
 
 // GET marketing model
 router.get('/marketing-model', (req, res) => {
-  res.render('startup/build/marketing/marketing-model', getPageData('Marketing Model - Coming Soon', 'MarketingModel'));
+  res.render('pages/startup/build/marketing/marketing-model', getPageData('Marketing Model - Coming Soon', 'MarketingModel'));
 });
 
 // GET team model
 router.get('/team-model', (req, res) => {
-  res.render('startup/build/team/team-model', getPageData('Team Model - Coming Soon', 'TeamModel'));
+  res.render('pages/startup/build/team/team-model', getPageData('Team Model - Coming Soon', 'TeamModel'));
 });
 
 // GET legal model
 router.get('/legal-model', (req, res) => {
-  res.render('startup/build/legal/legal-model', getPageData('Legal Model - Coming Soon', 'LegalModel'));
+  res.render('pages/startup/build/legal/legal-model', getPageData('Legal Model - Coming Soon', 'LegalModel'));
 });
 
 // GET valuation
 router.get('/valuation', (req, res) => {
-  res.render('startup/promote/valuation/valuation', getPageData('Valuation - Coming Soon', 'Valuation'));
+  res.render('pages/startup/promote/valuation/valuation', getPageData('Valuation - Coming Soon', 'Valuation'));
 });
 
 // GET pitch deck
 router.get('/pitch-deck', (req, res) => {
-  res.render('startup/promote/pitch-deck/pitch-deck', getPageData('Pitch Deck - Create & Manage', 'PitchDeck'));
+  res.render('pages/startup/promote/pitch-deck/pitch-deck', getPageData('Pitch Deck - Create & Manage', 'PitchDeck'));
 });
 
 // GET business plan
 router.get('/business-plan', (req, res) => {
-  res.render('startup/promote/business-plan/business-plan', getPageData('Business Plan - Strategic Planning', 'BusinessPlan'));
+  res.render('pages/startup/promote/business-plan/business-plan', getPageData('Business Plan - Strategic Planning', 'BusinessPlan'));
 });
 
 // GET auth login page
 router.get('/auth', (req, res) => {
-  res.render('public/auth/auth', getPageData('Login - Accelerator Platform', 'Auth'));
+  res.render('pages/auth/auth', getPageData('Login - Accelerator Platform', 'Auth'));
 });
 
 // GET auth signup page
 router.get('/auth/signup', (req, res) => {
-  res.render('public/auth/auth-signup', getPageData('Sign Up - Accelerator Platform', 'Auth'));
+  res.render('pages/auth/auth-signup', getPageData('Sign Up - Accelerator Platform', 'Auth'));
 });
 
 module.exports = router;
