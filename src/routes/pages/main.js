@@ -80,6 +80,22 @@ router.get('/chat/ai-new', (req, res) => {
   );
 });
 
+// GET manus static chat
+router.get('/chat/manus-static', (req, res) => {
+  res.render(
+    'pages/chat/manus-chat-static',
+    getPageData('Manus Static Chat', 'Chat')
+  );
+});
+
+// GET manus static chat
+router.get('/chat/manus-static', (req, res) => {
+  res.render(
+    'pages/chat/manus-chat-static',
+    getPageData('Manus Static Chat', 'Chat')
+  );
+});
+
 // POST chat message
 router.post('/chat', (req, res) => {
   const { message } = req.body;
