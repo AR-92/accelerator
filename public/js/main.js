@@ -102,7 +102,7 @@
         
         if (!searchInput || !ideasGrid) return;
         
-        let ideas = Array.from(ideasGrid.children);
+        const ideas = Array.from(ideasGrid.children);
         
         searchInput.addEventListener('input', function() {
             const query = this.value.toLowerCase();

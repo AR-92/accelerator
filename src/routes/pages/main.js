@@ -470,6 +470,30 @@ router.get('/forgot-password', (req, res) => {
   );
 });
 
+// GET new project page
+router.get('/new-project', (req, res) => {
+  res.render('pages/new-project', {
+    ...getPageData('New Project - Accelerator Platform', 'NewProject'),
+    layout: 'testing',
+  });
+});
+
+// GET explore ideas page
+router.get('/explore-ideas', (req, res) => {
+  res.render('pages/explore-ideas', {
+    ...getPageData('Explore Ideas - Accelerator Platform', 'ExploreIdeas'),
+    layout: 'testing',
+  });
+});
+
+// GET learn page
+router.get('/learn', (req, res) => {
+  res.render('pages/learn', {
+    ...getPageData('Learn - Accelerator Platform', 'Learn'),
+    layout: 'testing',
+  });
+});
+
 module.exports = router;
 
 module.exports = router;

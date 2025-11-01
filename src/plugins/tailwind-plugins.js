@@ -1,7 +1,7 @@
 const plugin = require('tailwindcss/plugin');
 
 // Custom plugin for accessibility utilities
-const accessibilityPlugin = plugin(function({ addUtilities, theme }) {
+const accessibilityPlugin = plugin(function ({ addUtilities, theme }) {
   const newUtilities = {
     '.sr-only-focusable': {
       position: 'absolute',
@@ -22,7 +22,7 @@ const accessibilityPlugin = plugin(function({ addUtilities, theme }) {
         overflow: 'visible',
         clip: 'auto',
         whiteSpace: 'normal',
-      }
+      },
     },
     '.skip-link': {
       position: 'absolute',
@@ -44,8 +44,8 @@ const accessibilityPlugin = plugin(function({ addUtilities, theme }) {
         height: 'auto',
         overflow: 'visible',
         clip: 'auto',
-      }
-    }
+      },
+    },
   };
 
   addUtilities(newUtilities, {
@@ -54,7 +54,7 @@ const accessibilityPlugin = plugin(function({ addUtilities, theme }) {
 });
 
 // Custom plugin for advanced typography
-const typographyPlugin = plugin(function({ addComponents, theme }) {
+const typographyPlugin = plugin(function ({ addComponents, theme }) {
   addComponents({
     '.prose-unstyled': {
       'h1, h2, h3, h4, h5, h6': {
@@ -87,7 +87,7 @@ const typographyPlugin = plugin(function({ addComponents, theme }) {
         '&:focus': {
           outline: `2px solid ${theme('colors.ring')}`,
           outlineOffset: '2px',
-        }
+        },
       },
       blockquote: {
         borderLeft: `4px solid ${theme('colors.border')}`,
@@ -96,12 +96,16 @@ const typographyPlugin = plugin(function({ addComponents, theme }) {
         color: theme('colors.muted.foreground'),
         margin: `${theme('margin.6')} 0`,
       },
-    }
+    },
   });
 });
 
 // Custom plugin for animation utilities
-const animationPlugin = plugin(function({ addUtilities, matchUtilities, theme }) {
+const animationPlugin = plugin(function ({
+  addUtilities,
+  matchUtilities,
+  theme,
+}) {
   addUtilities({
     '.animate-in': {
       animationName: 'fadeIn',
@@ -122,39 +126,42 @@ const animationPlugin = plugin(function({ addUtilities, matchUtilities, theme })
       '--tw-exit-translate-y': '0',
     },
   });
-  
-  matchUtilities({
-    'duration': (value) => ({
-      'animationDuration': value,
-    }),
-    'animate': (value) => ({
-      'animationName': value,
-    }),
-  }, { 
-    values: theme('animation'),
-  });
+
+  matchUtilities(
+    {
+      duration: (value) => ({
+        animationDuration: value,
+      }),
+      animate: (value) => ({
+        animationName: value,
+      }),
+    },
+    {
+      values: theme('animation'),
+    }
+  );
 });
 
 // Custom plugin for responsive design utilities
-const responsivePlugin = plugin(function({ addUtilities, theme }) {
+const responsivePlugin = plugin(function ({ addUtilities, theme }) {
   const viewports = theme('screens', {});
   const responsiveUtilities = {};
-  
+
   for (const [name, size] of Object.entries(viewports)) {
     responsiveUtilities[`.breakpoint-${name}`] = {
-      '@media (min-width: ' + size + ')': {
-        '--breakpoint': name
-      }
+      [`@media (min-width: ${size})`]: {
+        '--breakpoint': name,
+      },
     };
   }
-  
+
   addUtilities(responsiveUtilities, {
     variants: ['responsive'],
   });
 });
 
 // Custom plugin for grid layout utilities
-const gridPlugin = plugin(function({ addUtilities, theme }) {
+const gridPlugin = plugin(function ({ addUtilities, theme }) {
   const gridUtilities = {
     '.grid-cols-auto-fit': {
       gridTemplateColumns: 'repeat(auto-fit, minmax(0, 1fr))',
@@ -172,7 +179,7 @@ const gridPlugin = plugin(function({ addUtilities, theme }) {
       gridRow: '1 / -1',
     },
   };
-  
+
   addUtilities(gridUtilities, {
     variants: ['responsive'],
   });
