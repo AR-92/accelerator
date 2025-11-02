@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const newState = currentState === 'open' ? 'closed' : 'open';
 
     // Check if this is the user profile dropdown
-    const isUserProfile = triggerElement.id === 'user-profile-dropdown';
+    const isUserProfile = triggerElement.id === 'user-profile-dropdown' || triggerElement.id === 'navbar-user-profile-dropdown';
 
     if (newState === 'open') {
       // Close any existing dropdowns first

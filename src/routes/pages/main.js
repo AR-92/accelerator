@@ -11,61 +11,61 @@ const getPageData = (title, activeKey, padding = 'py-8') => ({
 
 // GET dashboard
 router.get('/dashboard', (req, res) => {
-  res.render(
-    'pages/dashboard/dashboard',
-    getPageData('Dashboard - My Ideas', 'Dashboard')
-  );
+  res.render('pages/dashboard/dashboard', {
+    ...getPageData('Dashboard - My Ideas', 'Dashboard'),
+    layout: 'testing',
+  });
 });
 
 // GET dashboard tabs
 router.get('/dashboard/tab/business', (req, res) => {
-  res.render(
-    'pages/dashboard/dashboard-business',
-    getPageData('Dashboard - Business', 'Dashboard')
-  );
+  res.render('pages/dashboard/dashboard-business', {
+    ...getPageData('Dashboard - Business', 'Dashboard'),
+    layout: 'testing',
+  });
 });
 
 router.get('/dashboard/tab/financial', (req, res) => {
-  res.render(
-    'pages/dashboard/dashboard-financial',
-    getPageData('Dashboard - Financial', 'Dashboard')
-  );
+  res.render('pages/dashboard/dashboard-financial', {
+    ...getPageData('Dashboard - Financial', 'Dashboard'),
+    layout: 'testing',
+  });
 });
 
 router.get('/dashboard/tab/marketing', (req, res) => {
-  res.render(
-    'pages/dashboard/dashboard-marketing',
-    getPageData('Dashboard - Marketing', 'Dashboard')
-  );
+  res.render('pages/dashboard/dashboard-marketing', {
+    ...getPageData('Dashboard - Marketing', 'Dashboard'),
+    layout: 'testing',
+  });
 });
 
 router.get('/dashboard/tab/fund', (req, res) => {
-  res.render(
-    'pages/dashboard/dashboard-fund',
-    getPageData('Dashboard - Funding', 'Dashboard')
-  );
+  res.render('pages/dashboard/dashboard-fund', {
+    ...getPageData('Dashboard - Funding', 'Dashboard'),
+    layout: 'testing',
+  });
 });
 
 router.get('/dashboard/tab/team', (req, res) => {
-  res.render(
-    'pages/dashboard/dashboard-team',
-    getPageData('Dashboard - Team', 'Dashboard')
-  );
+  res.render('pages/dashboard/dashboard-team', {
+    ...getPageData('Dashboard - Team', 'Dashboard'),
+    layout: 'testing',
+  });
 });
 
 router.get('/dashboard/tab/promote', (req, res) => {
-  res.render(
-    'pages/dashboard/dashboard-promote',
-    getPageData('Dashboard - Promotion', 'Dashboard')
-  );
+  res.render('pages/dashboard/dashboard-promote', {
+    ...getPageData('Dashboard - Promotion', 'Dashboard'),
+    layout: 'testing',
+  });
 });
 
 // GET team chat
 router.get('/chat', (req, res) => {
-  res.render(
-    'pages/chat/team-chat',
-    getPageData('Team Collaboration - Chat', 'Chat')
-  );
+  res.render('pages/chat/team-chat', {
+    ...getPageData('Team Collaboration - Chat', 'Chat'),
+    layout: 'testing',
+  });
 });
 
 // GET AI assistant chat
@@ -75,10 +75,10 @@ router.get('/chat/ai', (req, res) => {
 
 // GET AI assistant detailed chat
 router.get('/chat/ai-new', (req, res) => {
-  res.render(
-    'pages/chat/ai-chat-new',
-    getPageData('AI Assistant - Detailed Chat', 'Chat')
-  );
+  res.render('pages/chat/ai-chat-new', {
+    ...getPageData('AI Assistant - Detailed Chat', 'Chat'),
+    layout: 'testing',
+  });
 });
 
 // GET manus static chat
@@ -277,6 +277,7 @@ router.get('/portfolio', (req, res) => {
       res.render('pages/portfolio/portfolio', {
         ...getPageData('Idea Portfolio', 'Portfolio'),
         ideas: portfolioData,
+        layout: 'testing',
       });
     })
     .catch((error) => {
@@ -316,6 +317,7 @@ router.get('/portfolio/:id', (req, res) => {
       res.render('pages/portfolio/portfolio-idea', {
         ...getPageData('Idea Details', 'Portfolio'),
         idea: idea,
+        layout: 'testing',
       });
     })
     .catch((error) => {
@@ -327,6 +329,14 @@ router.get('/portfolio/:id', (req, res) => {
           getPageData('Internal Server Error - Accelerator Platform', '')
         );
     });
+});
+
+// GET notifications
+router.get('/notifications', (req, res) => {
+  res.render('pages/notifications', {
+    ...getPageData('Notifications', 'Notifications'),
+    layout: 'testing',
+  });
 });
 
 // GET ideas
