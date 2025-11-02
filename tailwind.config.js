@@ -144,6 +144,12 @@ module.exports = {
     'ring-sidebar-ring',
     // Force include the header size
     'text-[48px]',
+    // Classes for progress bars and connecting lines in build-start-up.hbs
+    'bg-gray-200',
+    'bg-purple-600',
+    'border-gray-300',
+    'text-gray-400',
+    'text-purple-600',
   ],
   plugins: [
     require('@tailwindcss/forms'),
