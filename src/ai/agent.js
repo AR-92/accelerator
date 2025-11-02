@@ -1,11 +1,13 @@
 // Placeholder AI Assistant Agent for development
 // This file can be replaced with the actual AI implementation
 
+const { logger } = require('../../config/logger');
+
 class AIAssistantAgent {
   constructor() {
     this.name = 'Placeholder AI Agent';
     this.version = '1.0.0';
-    console.log('AI Assistant Agent initialized (placeholder version)');
+    logger.info('AI Assistant Agent initialized (placeholder version)');
   }
 
   async run(query, options = {}) {
@@ -16,14 +18,18 @@ class AIAssistantAgent {
     return {
       success: true,
       response: `This is a mock response to your query: "${query}". The actual AI agent would provide a real response here.`,
-      thoughts: ['Analyzing user query', 'Generating response', 'Returning results'],
+      thoughts: [
+        'Analyzing user query',
+        'Generating response',
+        'Returning results',
+      ],
       context: {
         query,
         timestamp: new Date().toISOString(),
         userId: options.userId || null,
-        ...options
+        ...options,
       },
-      currentStep: 'completed'
+      currentStep: 'completed',
     };
   }
 
@@ -32,15 +38,15 @@ class AIAssistantAgent {
       status: 'healthy',
       name: this.name,
       version: this.version,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   }
 
   delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
 
 module.exports = {
-  AIAssistantAgent
+  AIAssistantAgent,
 };

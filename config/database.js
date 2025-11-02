@@ -1,5 +1,6 @@
 // Supabase configuration
 const { createClient } = require('@supabase/supabase-js');
+const { logger } = require('./logger');
 
 // Create a single Supabase client for the entire project
 const supabaseUrl = process.env.SUPABASE_URL;
@@ -10,7 +11,9 @@ let supabase;
 if (supabaseUrl && supabaseKey) {
   supabase = createClient(supabaseUrl, supabaseKey);
 } else {
-  console.warn('Supabase credentials not provided. Database operations will not work.');
+  logger.warn(
+    'Supabase credentials not provided. Database operations will not work.'
+  );
   supabase = null;
 }
 
@@ -18,25 +21,25 @@ if (supabaseUrl && supabaseKey) {
 const testConnection = async () => {
   try {
     if (!supabase) {
-      console.warn('Supabase client not initialized');
+      logger.warn('Supabase client not initialized');
       return false;
     }
-    
+
     // Test with a simple query to check connection
-    const { data, error } = await supabase.from('users').select('id').limit(1);
-    
+    const { error } = await supabase.from('users').select('id').limit(1);
+
     if (error) {
-      console.error('Supabase connection error:', error.message);
+      logger.error('Supabase connection error:', error.message);
       return false;
     }
     return true;
   } catch (err) {
-    console.error('Supabase connection failed:', err.message);
+    logger.error('Supabase connection failed:', err.message);
     return false;
   }
 };
 
 module.exports = {
   supabase,
-  testConnection
+  testConnection,
 };

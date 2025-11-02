@@ -20,11 +20,17 @@ class ThemeManager {
 
   applyTheme(themeName) {
     const root = document.documentElement;
-    
+
     // Remove all theme classes
-    root.classList.remove('light', 'dark', 'theme-green', 'theme-purple', 'theme-sunset');
-    
-    switch(themeName) {
+    root.classList.remove(
+      'light',
+      'dark',
+      'theme-green',
+      'theme-purple',
+      'theme-sunset'
+    );
+
+    switch (themeName) {
       case 'light':
         root.classList.remove('dark');
         root.classList.add('light');
@@ -34,7 +40,10 @@ class ThemeManager {
         root.classList.add('dark');
         break;
       case 'system':
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        if (
+          window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches
+        ) {
           root.classList.add('dark');
         } else {
           root.classList.add('light');
@@ -57,13 +66,16 @@ class ThemeManager {
         break;
       default:
         // Default to system preference
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        if (
+          window.matchMedia &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches
+        ) {
           root.classList.add('dark');
         } else {
           root.classList.add('light');
         }
     }
-    
+
     this.currentTheme = themeName;
     this.storeTheme(themeName);
   }
@@ -71,11 +83,13 @@ class ThemeManager {
   setupThemeListeners() {
     // Listen for system theme changes
     if (window.matchMedia) {
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        if (this.currentTheme === 'system') {
-          this.applyTheme('system');
-        }
-      });
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', () => {
+          if (this.currentTheme === 'system') {
+            this.applyTheme('system');
+          }
+        });
     }
   }
 
@@ -86,7 +100,7 @@ class ThemeManager {
       { id: 'dark', name: 'Dark' },
       { id: 'green', name: 'Green' },
       { id: 'purple', name: 'Purple' },
-      { id: 'sunset', name: 'Sunset' }
+      { id: 'sunset', name: 'Sunset' },
     ];
   }
 
@@ -96,7 +110,9 @@ class ThemeManager {
 
   toggleTheme() {
     const themes = this.getAvailableThemes();
-    const currentIndex = themes.findIndex(theme => theme.id === this.currentTheme);
+    const currentIndex = themes.findIndex(
+      (theme) => theme.id === this.currentTheme
+    );
     const nextIndex = (currentIndex + 1) % themes.length;
     this.applyTheme(themes[nextIndex].id);
   }

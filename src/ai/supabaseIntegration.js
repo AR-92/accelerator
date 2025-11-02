@@ -1,5 +1,5 @@
 const { supabase } = require('../config/database');
-const { aiConfig } = require('./config');
+const { logger } = require('../../config/logger');
 
 class SupabaseAIService {
   constructor() {
@@ -11,7 +11,9 @@ class SupabaseAIService {
     try {
       // Extract potential user identifiers from the query
       const userIdMatch = query.match(/user id[:\s]+(\w+)/i);
-      const emailMatch = query.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/);
+      const emailMatch = query.match(
+        /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/
+      );
       const nameMatch = query.match(/(?:named|name[:\s]+)([A-Za-z\s]+)/i);
 
       let user = null;
@@ -50,7 +52,7 @@ class SupabaseAIService {
 
       return user ? { userData: user } : {};
     } catch (error) {
-      console.error('Error fetching user data:', error.message);
+      logger.error('Error fetching user data:', error.message);
       return {};
     }
   }
@@ -60,7 +62,9 @@ class SupabaseAIService {
     try {
       // Extract potential product identifiers from the query
       const productIdMatch = query.match(/product id[:\s]+(\w+)/i);
-      const productNameMatch = query.match(/(?:product|item)[:\s]+([A-Za-z0-9\s-]+)/i);
+      const productNameMatch = query.match(
+        /(?:product|item)[:\s]+([A-Za-z0-9\s-]+)/i
+      );
 
       let products = [];
 
@@ -86,7 +90,7 @@ class SupabaseAIService {
 
       return products.length > 0 ? { productData: products } : {};
     } catch (error) {
-      console.error('Error fetching product data:', error.message);
+      logger.error('Error fetching product data:', error.message);
       return {};
     }
   }
@@ -94,20 +98,20 @@ class SupabaseAIService {
   // Method to save conversation history to Supabase
   async saveConversation(userId, query, response, context = {}) {
     try {
-      const { data, error } = await this.supabase
-        .from('conversations')
-        .insert([{
+      const { data, error } = await this.supabase.from('conversations').insert([
+        {
           user_id: userId,
           query: query,
           response: response,
           context: context,
-          timestamp: new Date().toISOString()
-        }]);
+          timestamp: new Date().toISOString(),
+        },
+      ]);
 
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Error saving conversation:', error.message);
+      logger.error('Error saving conversation:', error.message);
       throw error;
     }
   }
@@ -125,7 +129,7 @@ class SupabaseAIService {
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Error getting conversation history:', error.message);
+      logger.error('Error getting conversation history:', error.message);
       return [];
     }
   }
@@ -133,18 +137,21 @@ class SupabaseAIService {
   // Method to save agent state to Supabase (for long-running agents)
   async saveAgentState(agentId, state) {
     try {
-      const { data, error } = await this.supabase
-        .from('agent_states')
-        .upsert([{
-          id: agentId,
-          state: state,
-          updated_at: new Date().toISOString()
-        }], { onConflict: 'id' });
+      const { data, error } = await this.supabase.from('agent_states').upsert(
+        [
+          {
+            id: agentId,
+            state: state,
+            updated_at: new Date().toISOString(),
+          },
+        ],
+        { onConflict: 'id' }
+      );
 
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Error saving agent state:', error.message);
+      logger.error('Error saving agent state:', error.message);
       throw error;
     }
   }
@@ -159,7 +166,8 @@ class SupabaseAIService {
         .single();
 
       if (error) {
-        if (error.code === 'PGRST116') { // No rows returned
+        if (error.code === 'PGRST116') {
+          // No rows returned
           return null;
         }
         throw error;
@@ -167,7 +175,7 @@ class SupabaseAIService {
 
       return data.state;
     } catch (error) {
-      console.error('Error loading agent state:', error.message);
+      logger.error('Error loading agent state:', error.message);
       return null;
     }
   }
@@ -179,7 +187,7 @@ class SupabaseAIService {
 
     return {
       ...userData,
-      ...productData
+      ...productData,
     };
   }
 }
@@ -189,5 +197,5 @@ const supabaseAIService = new SupabaseAIService();
 
 module.exports = {
   SupabaseAIService,
-  supabaseAIService
+  supabaseAIService,
 };

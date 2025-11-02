@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { logger } = require('../../../config/logger');
 
 // Helper function for page data
 const getPageData = (title, activeKey, padding = 'py-8') => ({
@@ -239,7 +240,7 @@ router.post('/settings/profile', (req, res) => {
 
 // POST security settings
 router.post('/settings/security', (req, res) => {
-  const { currentPassword, newPassword, confirmNewPassword } = req.body;
+  const { newPassword, confirmNewPassword } = req.body;
 
   if (newPassword !== confirmNewPassword) {
     res.send('<div class="text-red-500">New passwords do not match.</div>');
@@ -279,7 +280,7 @@ router.get('/portfolio', (req, res) => {
       });
     })
     .catch((error) => {
-      console.error('Error reading portfolio data:', error);
+      logger.error('Error reading portfolio data:', error);
       res.render('pages/portfolio/portfolio', {
         ...getPageData('Idea Portfolio', 'Portfolio'),
         ideas: [],
@@ -318,7 +319,7 @@ router.get('/portfolio/:id', (req, res) => {
       });
     })
     .catch((error) => {
-      console.error('Error reading portfolio data:', error);
+      logger.error('Error reading portfolio data:', error);
       res
         .status(500)
         .render(
@@ -336,7 +337,6 @@ router.get('/ideas', (req, res) => {
 // POST new idea
 router.post('/ideas', (req, res) => {
   const { title, description, category } = req.body;
-  const timestamp = new Date().toLocaleDateString();
 
   res.send(`
     <div class="bg-gray-900 border border-gray-800 rounded p-6 mb-4 animate-fade-in">

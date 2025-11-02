@@ -1,6 +1,5 @@
 // Example integration test file
 const request = require('supertest');
-const express = require('express');
 const app = require('../../server.js'); // Adjust path as needed
 
 describe('Example Integration Tests', () => {
@@ -8,7 +7,7 @@ describe('Example Integration Tests', () => {
     request(app)
       .get('/')
       .expect(302) // Assuming redirect to login
-      .end((err, res) => {
+      .end((err) => {
         if (err) return done(err);
         done();
       });

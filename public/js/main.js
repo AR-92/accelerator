@@ -58,9 +58,6 @@
     
     // Initialize theme toggle indicators when needed
     window.initializeThemeToggle = function() {
-        const html = document.documentElement;
-        const isDark = html.classList.contains('dark');
-
         // Update theme toggle indicators
         updateThemeToggleIndicator();
     };

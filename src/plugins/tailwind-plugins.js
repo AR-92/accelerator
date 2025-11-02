@@ -161,7 +161,7 @@ const responsivePlugin = plugin(function ({ addUtilities, theme }) {
 });
 
 // Custom plugin for grid layout utilities
-const gridPlugin = plugin(function ({ addUtilities, theme }) {
+const gridPlugin = plugin(function ({ addUtilities }) {
   const gridUtilities = {
     '.grid-cols-auto-fit': {
       gridTemplateColumns: 'repeat(auto-fit, minmax(0, 1fr))',

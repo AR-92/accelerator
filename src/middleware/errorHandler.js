@@ -1,8 +1,10 @@
 // Error handling middleware
 
-const errorHandler = (err, req, res, next) => {
-  console.error(err.stack);
-  
+const { logger } = require('../../config/logger');
+
+const errorHandler = (err, req, res) => {
+  logger.error(err.stack);
+
   // In development, send full error details
   if (process.env.NODE_ENV === 'development') {
     res.status(500).send(`
@@ -23,13 +25,13 @@ const errorHandler = (err, req, res, next) => {
 };
 
 const notFoundHandler = (req, res) => {
-  res.status(404).render('pages/404', { 
+  res.status(404).render('pages/404', {
     title: 'Page Not Found - Minimal Dark UI',
-    mainPadding: 'py-16'
+    mainPadding: 'py-16',
   });
 };
 
 module.exports = {
   errorHandler,
-  notFoundHandler
+  notFoundHandler,
 };

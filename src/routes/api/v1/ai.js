@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { AIAssistantAgent } = require('../../../ai/agent');
+const { logger } = require('../../../../config/logger');
 
 // Initialize the AI agent
 const aiAgent = new AIAssistantAgent();
@@ -9,17 +10,17 @@ const aiAgent = new AIAssistantAgent();
 router.post('/chat', async (req, res) => {
   try {
     const { query, userId, conversationState } = req.body;
-    
+
     if (!query) {
-      return res.status(400).json({ 
-        error: 'Query is required' 
+      return res.status(400).json({
+        error: 'Query is required',
       });
     }
 
     // Run the AI agent with the provided query
     const result = await aiAgent.run(query, {
       userId: userId || null,
-      ...conversationState
+      ...conversationState,
     });
 
     res.json({
@@ -27,13 +28,13 @@ router.post('/chat', async (req, res) => {
       response: result.response,
       thoughts: result.thoughts,
       context: result.context,
-      currentStep: result.currentStep
+      currentStep: result.currentStep,
     });
   } catch (error) {
-    console.error('AI Agent error:', error);
-    res.status(500).json({ 
+    logger.error('AI Agent error:', error);
+    res.status(500).json({
       error: 'Internal server error',
-      message: error.message 
+      message: error.message,
     });
   }
 });
@@ -44,9 +45,9 @@ router.get('/health', (req, res) => {
     const health = aiAgent.healthCheck();
     res.json(health);
   } catch (error) {
-    res.status(500).json({ 
+    res.status(500).json({
       status: 'unhealthy',
-      error: error.message 
+      error: error.message,
     });
   }
 });
@@ -56,18 +57,18 @@ router.get('/history/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
     const { supabaseAIService } = require('../ai/supabaseIntegration');
-    
+
     const history = await supabaseAIService.getConversationHistory(userId);
-    
+
     res.json({
       success: true,
-      history
+      history,
     });
   } catch (error) {
-    console.error('Error fetching history:', error);
-    res.status(500).json({ 
+    logger.error('Error fetching history:', error);
+    res.status(500).json({
       error: 'Internal server error',
-      message: error.message 
+      message: error.message,
     });
   }
 });

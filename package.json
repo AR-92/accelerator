@@ -6,9 +6,10 @@
   "scripts": {
     "start": "node server.js",
     "start:prod": "NODE_ENV=production node server.js",
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:tailwind\"",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:tailwind\" \"npm run dev:browser-sync\"",
     "dev:server": "nodemon server.js",
     "dev:tailwind": "npx tailwindcss -i ./src/input.css -o ./public/css/main.css --watch",
+    "dev:browser-sync": "browser-sync start --proxy 'localhost:3000' --port 3002 --files 'src/views/**/*.hbs, public/**/*.js, public/**/*.css' --reload-delay 500",
     "build": "npm run build:css && npm run build:clean && echo 'Build completed successfully'",
     "build:css": "npx tailwindcss -i ./src/input.css -o ./public/css/main.css --minify",
     "build:css:optimized": "NODE_ENV=production npx tailwindcss -i ./src/input.css -o ./public/css/main.css --minify --config tailwind.config.js",
@@ -53,6 +54,7 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "browser-sync": "^3.0.4",
     "eslint": "^8.57.0",
     "eslint-plugin-node": "^11.1.0",
     "husky": "^9.0.11",

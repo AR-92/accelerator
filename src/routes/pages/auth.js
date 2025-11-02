@@ -3,9 +3,9 @@ const router = express.Router();
 
 // GET main auth page (unified login/signup)
 router.get('/', (req, res) => {
-  res.render('pages/auth/auth', { 
+  res.render('pages/auth/auth', {
     title: 'Sign In - Accelerator Platform',
-    layout: 'auth'
+    layout: 'auth',
   });
 });
 
@@ -16,14 +16,18 @@ router.get('/login', (req, res) => {
 
 // POST login
 router.post('/login', (req, res) => {
-  const { email, password, remember } = req.body;
-  
+  const { email, password } = req.body;
+
   // Simple validation
   if (email && password && password.length >= 6) {
     // In a real application, you would authenticate the user here
     res.redirect('/pages/dashboard');
   } else {
-    res.status(400).send('<div class="text-red-500 text-center">Invalid credentials. Please try again.</div>');
+    res
+      .status(400)
+      .send(
+        '<div class="text-red-500 text-center">Invalid credentials. Please try again.</div>'
+      );
   }
 });
 
@@ -31,21 +35,33 @@ router.post('/login', (req, res) => {
 router.get('/signup', (req, res) => {
   res.render('pages/auth/auth-signup', {
     title: 'Create Account - Accelerator Platform',
-    layout: 'auth'
+    layout: 'auth',
   });
 });
 
 // POST signup
 router.post('/signup', (req, res) => {
-  const { name, email, password, confirmPassword, terms } = req.body;
-  
+  const { password, confirmPassword, terms } = req.body;
+
   // Simple validation
   if (!terms) {
-    res.status(400).send('<div class="text-red-500 text-center">Please agree to the Terms and Conditions.</div>');
+    res
+      .status(400)
+      .send(
+        '<div class="text-red-500 text-center">Please agree to the Terms and Conditions.</div>'
+      );
   } else if (password !== confirmPassword) {
-    res.status(400).send('<div class="text-red-500 text-center">Passwords do not match. Please try again.</div>');
+    res
+      .status(400)
+      .send(
+        '<div class="text-red-500 text-center">Passwords do not match. Please try again.</div>'
+      );
   } else if (password.length < 6) {
-    res.status(400).send('<div class="text-red-500 text-center">Password must be at least 6 characters.</div>');
+    res
+      .status(400)
+      .send(
+        '<div class="text-red-500 text-center">Password must be at least 6 characters.</div>'
+      );
   } else {
     // In a real application, you would create the user account here
     res.send(`

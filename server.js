@@ -95,7 +95,7 @@ app.get('/health', async (req, res) => {
 
     res.status(200).json(healthCheck);
   } catch (error) {
-    console.error('Health check error:', error);
+    logger.error('Health check error:', error);
     res.status(500).json({
       status: 'ERROR',
       timestamp: new Date().toISOString(),
