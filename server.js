@@ -14,6 +14,7 @@ const { logger, logRequest } = require('./config/logger');
 const authRoutes = require('./src/routes/pages/auth');
 const pageRoutes = require('./src/routes/pages/main');
 const testRoutes = require('./src/routes/pages/test');
+const testingRoutes = require('./src/routes/pages/testing-routes');
 const apiRoutes = require('./src/routes/api/v1/api');
 
 const app = express();
@@ -65,6 +66,7 @@ app.use(
 app.use('/auth', authRoutes);
 app.use('/pages', pageRoutes);
 app.use('/pages', testRoutes);
+app.use('/pages', testingRoutes);
 app.use('/api', apiRoutes);
 
 // Health check endpoint
@@ -114,6 +116,15 @@ app.get('/explore-ideas', (req, res) => {
   res.render('pages/explore-ideas', {
     title: 'Explore Ideas - Accelerator Platform',
     isActiveExploreIdeas: true,
+    mainPadding: 'py-8',
+    layout: 'testing',
+  });
+});
+
+// Direct route for idea-detail (without /pages prefix)
+app.get('/idea-detail', (req, res) => {
+  res.render('pages/idea-detail', {
+    title: 'Idea Detail - Accelerator Platform',
     mainPadding: 'py-8',
     layout: 'testing',
   });

@@ -131,7 +131,7 @@ router.get('/settings', (req, res) => {
 router.get('/settings/profile', (req, res) => {
   res.render('pages/account/settings/profile', {
     ...getPageData('Account Settings - Profile', 'Settings'),
-    layout: 'settings',
+    layout: 'testing',
     activeTab: 'profile',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -142,7 +142,7 @@ router.get('/settings/profile', (req, res) => {
 router.get('/settings/password', (req, res) => {
   res.render('pages/account/settings/password', {
     ...getPageData('Account Settings - Password', 'Settings'),
-    layout: 'settings',
+    layout: 'testing',
     activeTab: 'password',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -153,7 +153,7 @@ router.get('/settings/password', (req, res) => {
 router.get('/settings/subscription', (req, res) => {
   res.render('pages/account/subscriptions/index', {
     ...getPageData('Account Settings - Subscription', 'Settings'),
-    layout: 'settings',
+    layout: 'testing',
     activeTab: 'subscription',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -164,7 +164,7 @@ router.get('/settings/subscription', (req, res) => {
 router.get('/settings/payment', (req, res) => {
   res.render('pages/account/payment/index', {
     ...getPageData('Account Settings - Payment', 'Settings'),
-    layout: 'settings',
+    layout: 'testing',
     activeTab: 'payment',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -175,7 +175,7 @@ router.get('/settings/payment', (req, res) => {
 router.get('/settings/votes', (req, res) => {
   res.render('pages/account/settings/votes', {
     ...getPageData('Account Settings - Votes', 'Settings'),
-    layout: 'settings',
+    layout: 'testing',
     activeTab: 'votes',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -186,7 +186,7 @@ router.get('/settings/votes', (req, res) => {
 router.get('/settings/billing', (req, res) => {
   res.render('pages/account/billing/history', {
     ...getPageData('Account Settings - Billing', 'Settings'),
-    layout: 'settings',
+    layout: 'testing',
     activeTab: 'billing',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -197,7 +197,7 @@ router.get('/settings/billing', (req, res) => {
 router.get('/settings/rewards', (req, res) => {
   res.render('pages/account/settings/rewards', {
     ...getPageData('Account Settings - Rewards', 'Settings'),
-    layout: 'settings',
+    layout: 'testing',
     activeTab: 'rewards',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -208,7 +208,10 @@ router.get('/settings/rewards', (req, res) => {
 router.get('/subscriptions/billing', (req, res) => {
   res.render(
     'pages/account/billing/history',
-    getPageData('Billing History', 'Subscriptions')
+    {
+      ...getPageData('Billing History', 'Subscriptions'),
+      layout: 'testing'
+    }
   );
 });
 
@@ -216,7 +219,10 @@ router.get('/subscriptions/billing', (req, res) => {
 router.get('/subscriptions/payment', (req, res) => {
   res.render(
     'pages/account/payment/methods',
-    getPageData('Payment Methods', 'Subscriptions')
+    {
+      ...getPageData('Payment Methods', 'Subscriptions'),
+      layout: 'testing'
+    }
   );
 });
 
@@ -229,7 +235,10 @@ router.post('/settings/preferences', (req, res) => {
 router.get('/subscriptions', (req, res) => {
   res.render(
     'pages/account/subscriptions/index',
-    getPageData('Subscriptions', 'Subscriptions')
+    {
+      ...getPageData('Subscriptions', 'Subscriptions'),
+      layout: 'testing',
+    }
   );
 });
 
@@ -492,6 +501,14 @@ router.get('/new-project', (req, res) => {
 router.get('/explore-ideas', (req, res) => {
   res.render('pages/explore-ideas', {
     ...getPageData('Explore Ideas - Accelerator Platform', 'ExploreIdeas'),
+    layout: 'testing',
+  });
+});
+
+// GET upgrade page
+router.get('/upgrade', (req, res) => {
+  res.render('pages/upgrade', {
+    ...getPageData('Upgrade to Pro - Accelerator Platform', 'Upgrade'),
     layout: 'testing',
   });
 });

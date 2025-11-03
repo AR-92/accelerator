@@ -1,10 +1,10 @@
 <!-- New Project Creation Page -->
-<div class="flex flex-col min-h-screen w-full">
-    <main class="flex w-full flex-grow items-center justify-center">
+<div class="flex flex-col min-h-0 w-full">
+    <main class="flex w-full flex-grow items-center justify-center py-2 mb-8">
         <div class="flex flex-col max-w-3xl w-full px-4 mx-auto">
             <!-- Header -->
-            <header class="w-full flex flex-col items-center gap-10 mb-7">
-                <h1 class="text-2xl font-sans font-medium text-foreground mb-4">
+            <header class="w-full flex flex-col items-center gap-2 mb-2">
+                <h1 class="text-2xl font-sans font-medium text-foreground mb-2">
                     What problem are you trying to solve?
                 </h1>
             </header>
@@ -16,7 +16,7 @@
 
                 <div class="flex flex-col w-full">
                     <div class="relative">
-                        <div class="flex flex-col gap-3 rounded-[22px] transition-all relative py-3 max-h-[300px] border border-input bg-background shadow-sm">
+                        <div class="flex flex-col gap-2 rounded-[22px] transition-all relative py-2 max-h-[220px] border border-input bg-background shadow-sm">
                             <!-- textarea wrapper -->
                             <div class="overflow-y-auto pl-4 pr-2">
                                 <label for="assistant-prompt" class="sr-only">Describe your project requirements</label>
@@ -27,7 +27,7 @@
                                     placeholder="Describe your project requirements..." 
                                     aria-label="Describe your project requirements"
                                     aria-describedby="prompt-help"
-                                    class="flex w-full rounded-md border-0 bg-transparent p-0 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 overflow-hidden resize-none min-h-[40px] max-h-40"
+                                    class="flex w-full rounded-md border-0 bg-transparent p-0 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 overflow-hidden resize-none min-h-[40px] max-h-32"
                                     required
                                 ></textarea>
                                 <p id="prompt-help" class="sr-only">Enter your project description or requirements</p>
@@ -113,10 +113,10 @@
                 </div>
 
                 <!-- Content options / presets -->
-                <div class="relative w-full mt-4">
+                <div class="relative w-full mt-2">
                     <fieldset class="w-full border-0 p-0 m-0">
                         <legend class="sr-only">Content options</legend>
-                        <div class="w-full flex flex-col justify-center items-center gap-4">
+                        <div class="w-full flex flex-col justify-center items-center gap-2">
                             <div class="flex justify-center items-center gap-2 flex-wrap">
                                 <!-- option buttons -->
                                 <button type="button" 
@@ -175,8 +175,8 @@
     </main>
     
     <!-- Footer -->
-    <footer id="main-content" class="py-4 w-full flex justify-center">
-        <a  hx-get="/explore-ideas" hx-target="#main-content" class="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+    <footer id="main-content" class="py-2 w-full flex justify-center">
+        <a hx-get="/api/ideas-list" hx-target="#main-content" class="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
             {{lucide 'Sparkles' 'lucide lucide-sparkles size-4'}}
             <span>Explore More Ideas</span>
         </a>

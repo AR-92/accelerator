@@ -85,4 +85,9 @@ router.post('/products', async (req, res) => {
   }
 });
 
+// GET ideas list partial for HTMX
+router.get('/ideas-list', (req, res) => {
+  res.render('partials/ideas-list', { layout: null });
+});
+
 module.exports = router;
