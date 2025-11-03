@@ -1,4 +1,4 @@
-<div id="root" class="h-full flex flex-col">
+<div id="root" class="h-full flex flex-col w-full">
   <div role="region" aria-label="Notifications (F8)" tabindex="-1" style="pointer-events: none;">
     <ol tabindex="-1"
       class="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]">
@@ -116,32 +116,32 @@
       <div class="border-b border-border px-4 py-3 flex items-center justify-between">
         <h2 class="text-sm font-semibold text-foreground">Team Structure</h2>
         <div class="flex items-center gap-1">
-          <button class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-maximize2 h-3 w-3">
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <polyline points="9 21 3 21 3 15"></polyline>
-              <line x1="21" x2="14" y1="3" y2="10"></line>
-              <line x1="3" x2="10" y1="21" y2="14"></line>
-            </svg>
-          </button>
-          <button class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-message-square h-3 w-3">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            </svg>
-          </button>
-          <button class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-x h-3 w-3">
-              <path d="M18 6 6 18"></path>
-              <path d="M6 6 12 12"></path>
-              <path d="M18 18 12 12"></path>
-            </svg>
-          </button>
+           <button onclick="toggleMaximize(this)" class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               class="lucide lucide-maximize2 h-3 w-3">
+               <polyline points="15 3 21 3 21 9"></polyline>
+               <polyline points="9 21 3 21 3 15"></polyline>
+               <line x1="21" x2="14" y1="3" y2="10"></line>
+               <line x1="3" x2="10" y1="21" y2="14"></line>
+             </svg>
+           </button>
+           <button onclick="toggleMessage(this)" class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               class="lucide lucide-message-square h-3 w-3">
+               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+             </svg>
+           </button>
+           <button onclick="closeAside(this)" class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               class="lucide lucide-x h-3 w-3">
+               <path d="M18 6 6 18"></path>
+               <path d="M6 6 12 12"></path>
+               <path d="M18 18 12 12"></path>
+             </svg>
+           </button>
         </div>
       </div>
       <div class="flex-1 overflow-y-auto p-4">
