@@ -368,61 +368,7 @@ router.post('/ideas', (req, res) => {
   `);
 });
 
-// GET idea model
-router.get('/idea-model', (req, res) => {
-  res.render(
-    'pages/startup/build/idea/idea-model',
-    getPageData('Idea Model - Coming Soon', 'IdeaModel')
-  );
-});
 
-// GET business model
-router.get('/business-model', (req, res) => {
-  res.render(
-    'pages/startup/build/business/business-model',
-    getPageData('Business Model - Coming Soon', 'BusinessModel')
-  );
-});
-
-// GET financial model
-router.get('/financial-model', (req, res) => {
-  res.render(
-    'pages/startup/build/financial/financial-model',
-    getPageData('Financial Model - Coming Soon', 'FinancialModel')
-  );
-});
-
-// GET fund model
-router.get('/fund-model', (req, res) => {
-  res.render(
-    'pages/startup/build/fund/fund-model',
-    getPageData('Fund Model - Coming Soon', 'FundModel')
-  );
-});
-
-// GET marketing model
-router.get('/marketing-model', (req, res) => {
-  res.render(
-    'pages/startup/build/marketing/marketing-model',
-    getPageData('Marketing Model - Coming Soon', 'MarketingModel')
-  );
-});
-
-// GET team model
-router.get('/team-model', (req, res) => {
-  res.render(
-    'pages/startup/build/team/team-model',
-    getPageData('Team Model - Coming Soon', 'TeamModel')
-  );
-});
-
-// GET legal model
-router.get('/legal-model', (req, res) => {
-  res.render(
-    'pages/startup/build/legal/legal-model',
-    getPageData('Legal Model - Coming Soon', 'LegalModel')
-  );
-});
 
 // GET valuation
 router.get('/valuation', (req, res) => {
