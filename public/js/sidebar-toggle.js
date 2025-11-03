@@ -1,12 +1,9 @@
 (function () {
   'use strict';
 
-  console.log('sidebar toggle');
-
   let sidebarCollapsed = localStorage.getItem('sidebarHidden') === 'true';
 
   function setSidebarState(collapsed) {
-    console.log('setSidebarState called with collapsed:', collapsed);
     sidebarCollapsed = collapsed;
     localStorage.setItem('sidebarHidden', collapsed);
 
@@ -16,13 +13,6 @@
     const navbarSidebarToggle = document.getElementById(
       'navbar-sidebar-toggle'
     );
-
-    console.log('Elements found:', {
-      sidebar: !!sidebar,
-      sidebarShowToggle: !!sidebarShowToggle,
-      sidebarToggle: !!sidebarToggle,
-      navbarSidebarToggle: !!navbarSidebarToggle,
-    });
 
     if (sidebar) {
       sidebar.classList.toggle('hidden', collapsed);
@@ -69,7 +59,6 @@
   }
 
   function toggleSidebar() {
-    console.log('toggleSidebar called');
     setSidebarState(!sidebarCollapsed);
   }
 
@@ -99,12 +88,9 @@
     const toggles = document.querySelectorAll(
       '#sidebar-collapse-toggle, #sidebar-show-toggle, #navbar-sidebar-toggle'
     );
-    console.log('Toggles found:', toggles.length);
     toggles.forEach((toggle) => {
-      console.log('Adding listener to:', toggle.id);
       if (!toggle.hasAttribute('data-sidebar-listener')) {
         toggle.addEventListener('click', (e) => {
-          console.log('Click event on:', toggle.id);
           e.preventDefault();
           toggleSidebar();
         });
