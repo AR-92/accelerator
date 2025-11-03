@@ -1,6 +1,19 @@
 <!-- Navbar based on main page header -->
-<header class="h-14 border-b border-border bg-background flex items-center justify-between px-4 p-2">
+<header id="navbar-container" class="h-14 border-b border-border bg-background flex items-center justify-between px-4 p-2">
   <div class="flex items-center gap-4">
+    <div class="flex items-center navbar-logo-section">
+      <img src="/images/favcon.svg" alt="Accelerator Logo" class="h-8 w-8">
+    </div>
+    <button id="navbar-sidebar-toggle" class="h-9 w-9 flex items-center justify-center hover:bg-muted rounded-md transition-colors navbar-expand-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-panel-left h-4 w-4">
+        <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+        <path d="M9 3v18"></path>
+        <path d="m14 9 3 3-3 3"></path>
+      </svg>
+    </button>
+    <div class="h-6 w-px bg-border mx-2 navbar-divider"></div>
     <nav class="flex items-center gap-6 ml-8">
       <a href="/pages/dashboard"
         class="text-sm text-muted-foreground hover:text-foreground transition-colors">Dashboard</a>
@@ -166,3 +179,4 @@
   </div>
 </header>
 <script src="/js/navbar.js"></script>
+<script src="/js/sidebar-toggle.js"></script>

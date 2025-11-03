@@ -124,6 +124,8 @@ console.log("hello i am navbar");
       dropdownButton.setAttribute('aria-expanded', 'false');
     }
 
+
+
     // Expose functions globally if needed
     window.AcceleratorNavbar = {
       initialize: initializeNavbarDropdowns
