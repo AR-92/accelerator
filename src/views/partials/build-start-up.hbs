@@ -287,21 +287,20 @@
         </div>
       </div>
     </div>
- </aside>
+  </aside>
 
- <!-- Floating toggle button that appears when sidebar is hidden -->
- <button id="sidebar-show-toggle" 
-   class="fixed top-4 left-4 z-50 w-10 h-10 rounded-md bg-background border border-border flex items-center justify-center shadow-lg hidden"
-   style="top: 10px; left: 10px;">
-   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-     class="lucide lucide-panel-left stroke-muted-foreground">
-     <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-     <path d="M9 3v18"></path>
-     <path d="m14 9 3 3-3 3"></path>
-   </svg>
- </button>
-
+  <!-- Floating toggle button that appears when sidebar is hidden -->
+  <button id="sidebar-show-toggle"
+    class="fixed top-4 left-4 z-50 w-10 h-10 rounded-md bg-background border border-border flex items-center justify-center shadow-lg hidden"
+    style="top: 10px; left: 10px;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="lucide lucide-panel-left stroke-muted-foreground">
+      <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+      <path d="M9 3v18"></path>
+      <path d="m14 9 3 3-3 3"></path>
+    </svg>
+  </button>
 
 
 <style>
@@ -350,3 +349,93 @@
   
 
 </style>
+
+<script>
+(function() {
+  'use strict';
+
+  // Initialize collapsible functionality for project dropdowns
+  function initProjectCollapsible() {
+    const collapsibleElements = document.querySelectorAll('[data-collapsible="true"]');
+
+    collapsibleElements.forEach(function(element) {
+      element.addEventListener('click', function(e) {
+        // Don't trigger if clicking on the options menu button
+        if (e.target.closest('[data-dropdown-toggle]')) {
+          return;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        const targetId = element.getAttribute('data-target');
+        const targetElement = document.getElementById(targetId);
+        const chevron = element.querySelector('[data-icon="chevron"]');
+
+        if (targetElement && chevron) {
+          // Toggle visibility
+          const isHidden = targetElement.classList.contains('hidden');
+          if (isHidden) {
+            targetElement.classList.remove('hidden');
+            chevron.classList.add('rotate-180');
+            element.setAttribute('aria-expanded', 'true');
+          } else {
+            targetElement.classList.add('hidden');
+            chevron.classList.remove('rotate-180');
+            element.setAttribute('aria-expanded', 'false');
+          }
+        }
+      });
+    });
+  }
+
+  // Initialize project options dropdown functionality
+  function initProjectOptionsDropdown() {
+    const dropdownToggles = document.querySelectorAll('[data-dropdown-toggle]');
+
+    dropdownToggles.forEach(function(toggle) {
+      const menu = toggle.querySelector('[data-dropdown-menu]') || toggle.nextElementSibling;
+
+      if (menu) {
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+          if (!toggle.contains(e.target)) {
+            menu.classList.add('hidden');
+            menu.classList.remove('opacity-100', 'visible');
+            toggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+
+        // Toggle dropdown
+        toggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const isHidden = menu.classList.contains('hidden');
+
+          if (isHidden) {
+            menu.classList.remove('hidden', 'opacity-0', 'invisible');
+            menu.classList.add('opacity-100', 'visible');
+            toggle.setAttribute('aria-expanded', 'true');
+          } else {
+            menu.classList.add('hidden', 'opacity-0', 'invisible');
+            menu.classList.remove('opacity-100', 'visible');
+            toggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initProjectCollapsible();
+      initProjectOptionsDropdown();
+    });
+  } else {
+    initProjectCollapsible();
+    initProjectOptionsDropdown();
+  }
+})();
+</script>

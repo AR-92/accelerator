@@ -89,14 +89,6 @@ router.get('/chat/manus-static', (req, res) => {
   );
 });
 
-// GET manus static chat
-router.get('/chat/manus-static', (req, res) => {
-  res.render(
-    'pages/chat/manus-chat-static',
-    getPageData('Manus Static Chat', 'Chat')
-  );
-});
-
 // POST chat message
 router.post('/chat', (req, res) => {
   const { message } = req.body;
@@ -206,24 +198,18 @@ router.get('/settings/rewards', (req, res) => {
 
 // GET subscriptions billing
 router.get('/subscriptions/billing', (req, res) => {
-  res.render(
-    'pages/account/billing/history',
-    {
-      ...getPageData('Billing History', 'Subscriptions'),
-      layout: 'main'
-    }
-  );
+  res.render('pages/account/billing/history', {
+    ...getPageData('Billing History', 'Subscriptions'),
+    layout: 'main',
+  });
 });
 
 // GET subscriptions payment
 router.get('/subscriptions/payment', (req, res) => {
-  res.render(
-    'pages/account/payment/methods',
-    {
-      ...getPageData('Payment Methods', 'Subscriptions'),
-      layout: 'main'
-    }
-  );
+  res.render('pages/account/payment/methods', {
+    ...getPageData('Payment Methods', 'Subscriptions'),
+    layout: 'main',
+  });
 });
 
 // POST settings preferences
@@ -233,13 +219,10 @@ router.post('/settings/preferences', (req, res) => {
 
 // GET subscriptions
 router.get('/subscriptions', (req, res) => {
-  res.render(
-    'pages/account/subscriptions/index',
-    {
-      ...getPageData('Subscriptions', 'Subscriptions'),
-      layout: 'main',
-    }
-  );
+  res.render('pages/account/subscriptions/index', {
+    ...getPageData('Subscriptions', 'Subscriptions'),
+    layout: 'main',
+  });
 });
 
 // POST profile settings
@@ -544,7 +527,5 @@ router.get('/pages/buy-credits', (req, res) => {
     layout: 'main',
   });
 });
-
-module.exports = router;
 
 module.exports = router;

@@ -13,8 +13,6 @@ const { logger, logRequest } = require('./config/logger');
 // Import routes
 const authRoutes = require('./src/routes/pages/auth');
 const pageRoutes = require('./src/routes/pages/main');
-const testRoutes = require('./src/routes/pages/test');
-const testingRoutes = require('./src/routes/pages/testing-routes');
 const aiAssistantModelsRoutes = require('./src/routes/pages/ai-assistant-models');
 const apiRoutes = require('./src/routes/api/v1/api');
 
@@ -66,8 +64,6 @@ app.use(
 // Use routes
 app.use('/auth', authRoutes);
 app.use('/pages', pageRoutes);
-app.use('/pages', testRoutes);
-app.use('/pages', testingRoutes);
 app.use('/pages', aiAssistantModelsRoutes);
 app.use('/api', apiRoutes);
 

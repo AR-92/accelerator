@@ -1,5 +1,3 @@
-console.log("hello i am navbar");
-
   (function () {
     'use strict';
     // Initialize navbar functionality when DOM is loaded
