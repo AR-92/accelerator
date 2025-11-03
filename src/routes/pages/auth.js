@@ -81,4 +81,10 @@ router.post('/logout', (req, res) => {
   res.redirect('/auth');
 });
 
+// GET logout
+router.get('/logout', (req, res) => {
+  // In a real application, you would destroy the session here
+  res.redirect('/auth');
+});
+
 module.exports = router;

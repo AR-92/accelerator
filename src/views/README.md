@@ -11,7 +11,6 @@ views/
 │   ├── settings.hbs   # Settings page layout
 │   └── auth.hbs       # Authentication page layout
 ├── partials/          # Reusable UI components
-│   ├── sidebar.hbs    # Main sidebar navigation
 │   ├── settings-nav.hbs  # Settings navigation menu
 │   └── subscription-nav.hbs  # Subscription navigation menu
 ├── dashboard/         # Dashboard pages and tabs
@@ -103,7 +102,6 @@ Different pages use different layouts based on their purpose:
 ## Partials
 
 Common UI components are stored as partials and can be included in any template:
-- `{{> sidebar}}` - Main navigation sidebar
 - `{{> settings-nav}}` - Settings menu navigation
 - `{{> subscription-nav}}` - Subscription management navigation
 

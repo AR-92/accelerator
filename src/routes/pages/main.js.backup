@@ -233,7 +233,7 @@ router.get('/portfolio/:id', (req, res) => {
       const idea = portfolioData.find(i => i.id == req.params.id);
       
       if (!idea) {
-        return res.status(404).render('pages/404', getPageData('Idea Not Found - Accelerator Platform', ''));
+        return res.status(404).render('pages/error/page-not-found', getPageData('Idea Not Found - Accelerator Platform', ''));
       }
       
       res.render('pages/portfolio/portfolio-idea', {
@@ -243,7 +243,7 @@ router.get('/portfolio/:id', (req, res) => {
     })
     .catch(error => {
       console.error('Error reading portfolio data:', error);
-      res.status(500).render('pages/404', getPageData('Internal Server Error - Accelerator Platform', ''));
+      res.status(500).render('pages/error/page-not-found', getPageData('Internal Server Error - Accelerator Platform', ''));
     });
 });
 

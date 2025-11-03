@@ -25,7 +25,7 @@ const errorHandler = (err, req, res) => {
 };
 
 const notFoundHandler = (req, res) => {
-  res.status(404).render('pages/404', {
+  res.status(404).render('pages/error/page-not-found', {
     title: 'Page Not Found - Minimal Dark UI',
     mainPadding: 'py-16',
   });

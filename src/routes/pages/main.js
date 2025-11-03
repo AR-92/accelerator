@@ -13,7 +13,7 @@ const getPageData = (title, activeKey, padding = 'py-8') => ({
 router.get('/dashboard', (req, res) => {
   res.render('pages/dashboard/dashboard', {
     ...getPageData('Dashboard - My Ideas', 'Dashboard'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
@@ -21,42 +21,42 @@ router.get('/dashboard', (req, res) => {
 router.get('/dashboard/tab/business', (req, res) => {
   res.render('pages/dashboard/dashboard-business', {
     ...getPageData('Dashboard - Business', 'Dashboard'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
 router.get('/dashboard/tab/financial', (req, res) => {
   res.render('pages/dashboard/dashboard-financial', {
     ...getPageData('Dashboard - Financial', 'Dashboard'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
 router.get('/dashboard/tab/marketing', (req, res) => {
   res.render('pages/dashboard/dashboard-marketing', {
     ...getPageData('Dashboard - Marketing', 'Dashboard'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
 router.get('/dashboard/tab/fund', (req, res) => {
   res.render('pages/dashboard/dashboard-fund', {
     ...getPageData('Dashboard - Funding', 'Dashboard'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
 router.get('/dashboard/tab/team', (req, res) => {
   res.render('pages/dashboard/dashboard-team', {
     ...getPageData('Dashboard - Team', 'Dashboard'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
 router.get('/dashboard/tab/promote', (req, res) => {
   res.render('pages/dashboard/dashboard-promote', {
     ...getPageData('Dashboard - Promotion', 'Dashboard'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
@@ -64,7 +64,7 @@ router.get('/dashboard/tab/promote', (req, res) => {
 router.get('/chat', (req, res) => {
   res.render('pages/chat/team-chat', {
     ...getPageData('Team Collaboration - Chat', 'Chat'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
@@ -77,7 +77,7 @@ router.get('/chat/ai', (req, res) => {
 router.get('/chat/ai-new', (req, res) => {
   res.render('pages/chat/ai-chat-new', {
     ...getPageData('AI Assistant - Detailed Chat', 'Chat'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
@@ -131,7 +131,7 @@ router.get('/settings', (req, res) => {
 router.get('/settings/profile', (req, res) => {
   res.render('pages/account/settings/profile', {
     ...getPageData('Account Settings - Profile', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'profile',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -142,7 +142,7 @@ router.get('/settings/profile', (req, res) => {
 router.get('/settings/password', (req, res) => {
   res.render('pages/account/settings/password', {
     ...getPageData('Account Settings - Password', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'password',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -153,7 +153,7 @@ router.get('/settings/password', (req, res) => {
 router.get('/settings/subscription', (req, res) => {
   res.render('pages/account/subscriptions/index', {
     ...getPageData('Account Settings - Subscription', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'subscription',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -162,9 +162,9 @@ router.get('/settings/subscription', (req, res) => {
 
 // GET settings payment
 router.get('/settings/payment', (req, res) => {
-  res.render('pages/account/payment/index', {
+  res.render('pages/account/payment/methods', {
     ...getPageData('Account Settings - Payment', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'payment',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -175,7 +175,7 @@ router.get('/settings/payment', (req, res) => {
 router.get('/settings/votes', (req, res) => {
   res.render('pages/account/settings/votes', {
     ...getPageData('Account Settings - Votes', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'votes',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -186,7 +186,7 @@ router.get('/settings/votes', (req, res) => {
 router.get('/settings/billing', (req, res) => {
   res.render('pages/account/billing/history', {
     ...getPageData('Account Settings - Billing', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'billing',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -197,7 +197,7 @@ router.get('/settings/billing', (req, res) => {
 router.get('/settings/rewards', (req, res) => {
   res.render('pages/account/settings/rewards', {
     ...getPageData('Account Settings - Rewards', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'rewards',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -210,7 +210,7 @@ router.get('/subscriptions/billing', (req, res) => {
     'pages/account/billing/history',
     {
       ...getPageData('Billing History', 'Subscriptions'),
-      layout: 'testing'
+      layout: 'main'
     }
   );
 });
@@ -221,7 +221,7 @@ router.get('/subscriptions/payment', (req, res) => {
     'pages/account/payment/methods',
     {
       ...getPageData('Payment Methods', 'Subscriptions'),
-      layout: 'testing'
+      layout: 'main'
     }
   );
 });
@@ -237,7 +237,7 @@ router.get('/subscriptions', (req, res) => {
     'pages/account/subscriptions/index',
     {
       ...getPageData('Subscriptions', 'Subscriptions'),
-      layout: 'testing',
+      layout: 'main',
     }
   );
 });
@@ -286,7 +286,7 @@ router.get('/portfolio', (req, res) => {
       res.render('pages/portfolio/portfolio', {
         ...getPageData('Idea Portfolio', 'Portfolio'),
         ideas: portfolioData,
-        layout: 'testing',
+        layout: 'main',
       });
     })
     .catch((error) => {
@@ -318,7 +318,7 @@ router.get('/portfolio/:id', (req, res) => {
         return res
           .status(404)
           .render(
-            'pages/404',
+            'pages/error/page-not-found',
             getPageData('Idea Not Found - Accelerator Platform', '')
           );
       }
@@ -326,7 +326,7 @@ router.get('/portfolio/:id', (req, res) => {
       res.render('pages/portfolio/portfolio-idea', {
         ...getPageData('Idea Details', 'Portfolio'),
         idea: idea,
-        layout: 'testing',
+        layout: 'main',
       });
     })
     .catch((error) => {
@@ -334,7 +334,7 @@ router.get('/portfolio/:id', (req, res) => {
       res
         .status(500)
         .render(
-          'pages/404',
+          'pages/error/page-not-found',
           getPageData('Internal Server Error - Accelerator Platform', '')
         );
     });
@@ -342,9 +342,9 @@ router.get('/portfolio/:id', (req, res) => {
 
 // GET notifications
 router.get('/notifications', (req, res) => {
-  res.render('pages/notifications', {
+  res.render('pages/communication/notifications', {
     ...getPageData('Notifications', 'Notifications'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
@@ -491,33 +491,57 @@ router.get('/forgot-password', (req, res) => {
 
 // GET new project page
 router.get('/new-project', (req, res) => {
-  res.render('pages/new-project', {
+  res.render('pages/projects/create-project', {
     ...getPageData('New Project - Accelerator Platform', 'NewProject'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
 // GET explore ideas page
 router.get('/explore-ideas', (req, res) => {
-  res.render('pages/explore-ideas', {
+  res.render('pages/content/browse-ideas', {
     ...getPageData('Explore Ideas - Accelerator Platform', 'ExploreIdeas'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
 // GET upgrade page
 router.get('/upgrade', (req, res) => {
-  res.render('pages/upgrade', {
+  res.render('pages/core/upgrade-plan', {
     ...getPageData('Upgrade to Pro - Accelerator Platform', 'Upgrade'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
 // GET learn page
 router.get('/learn', (req, res) => {
-  res.render('pages/learn', {
+  res.render('pages/learning/courses', {
     ...getPageData('Learn - Accelerator Platform', 'Learn'),
-    layout: 'testing',
+    layout: 'main',
+  });
+});
+
+// GET help center page
+router.get('/help', (req, res) => {
+  res.render('pages/help/help-center', {
+    ...getPageData('Help Center - Accelerator Platform', 'Help'),
+    layout: 'main',
+  });
+});
+
+// GET buy credits page
+router.get('/buy-credits', (req, res) => {
+  res.render('pages/account/buy-credits', {
+    ...getPageData('Buy Credits - Accelerator Platform', 'BuyCredits'),
+    layout: 'main',
+  });
+});
+
+// GET buy credits page with /pages prefix
+router.get('/pages/buy-credits', (req, res) => {
+  res.render('pages/account/buy-credits', {
+    ...getPageData('Buy Credits - Accelerator Platform', 'BuyCredits'),
+    layout: 'main',
   });
 });
 

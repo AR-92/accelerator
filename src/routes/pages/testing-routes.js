@@ -12,7 +12,7 @@ const getTestingPageData = (title, activeKey, padding = 'py-8') => ({
 router.get('/settings/profile', (req, res) => {
   res.render('pages/account/settings/profile', {
     ...getTestingPageData('Account Settings - Profile', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'profile',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -22,7 +22,7 @@ router.get('/settings/profile', (req, res) => {
 router.get('/settings/password', (req, res) => {
   res.render('pages/account/settings/password', {
     ...getTestingPageData('Account Settings - Password', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'password',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -32,7 +32,7 @@ router.get('/settings/password', (req, res) => {
 router.get('/settings/subscription', (req, res) => {
   res.render('pages/account/subscriptions/index', {
     ...getTestingPageData('Account Settings - Subscription', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'subscription',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -40,9 +40,9 @@ router.get('/settings/subscription', (req, res) => {
 });
 
 router.get('/settings/payment', (req, res) => {
-  res.render('pages/account/payment/index', {
+  res.render('pages/account/payment/methods', {
     ...getTestingPageData('Account Settings - Payment', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'payment',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -52,7 +52,7 @@ router.get('/settings/payment', (req, res) => {
 router.get('/settings/votes', (req, res) => {
   res.render('pages/account/settings/votes', {
     ...getTestingPageData('Account Settings - Votes', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'votes',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -62,7 +62,7 @@ router.get('/settings/votes', (req, res) => {
 router.get('/settings/billing', (req, res) => {
   res.render('pages/account/billing/history', {
     ...getTestingPageData('Account Settings - Billing', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'billing',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -72,7 +72,7 @@ router.get('/settings/billing', (req, res) => {
 router.get('/settings/rewards', (req, res) => {
   res.render('pages/account/settings/rewards', {
     ...getTestingPageData('Account Settings - Rewards', 'Settings'),
-    layout: 'testing',
+    layout: 'main',
     activeTab: 'rewards',
     pageTitle: 'Account Settings',
     pageDescription: 'Manage account and website settings.',
@@ -83,7 +83,7 @@ router.get('/settings/rewards', (req, res) => {
 router.get('/subscriptions', (req, res) => {
   res.render('pages/account/subscriptions/index', {
     ...getTestingPageData('Subscriptions', 'Subscriptions'),
-    layout: 'testing',
+    layout: 'main',
     pageTitle: 'Subscriptions',
     pageDescription: 'Manage your subscription plans.',
   });
@@ -92,7 +92,7 @@ router.get('/subscriptions', (req, res) => {
 router.get('/subscriptions/billing', (req, res) => {
   res.render('pages/account/billing/history', {
     ...getTestingPageData('Billing History', 'Subscriptions'),
-    layout: 'testing',
+    layout: 'main',
     pageTitle: 'Billing History',
     pageDescription: 'View your billing history.',
   });
@@ -101,7 +101,7 @@ router.get('/subscriptions/billing', (req, res) => {
 router.get('/subscriptions/payment', (req, res) => {
   res.render('pages/account/payment/methods', {
     ...getTestingPageData('Payment Methods', 'Subscriptions'),
-    layout: 'testing',
+    layout: 'main',
     pageTitle: 'Payment Methods',
     pageDescription: 'Manage your payment methods.',
   });
@@ -109,17 +109,17 @@ router.get('/subscriptions/payment', (req, res) => {
 
 // Route for upgrade page using testing layout (with /pages/ prefix to match navbar links)
 router.get('/upgrade', (req, res) => {
-  res.render('pages/upgrade', {
+  res.render('pages/core/upgrade-plan', {
     ...getTestingPageData('Upgrade to Pro', 'Upgrade'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 
 // Route for notifications page using testing layout (with /pages/ prefix to match navbar links)
 router.get('/notifications', (req, res) => {
-  res.render('pages/notifications', {
+  res.render('pages/communication/notifications', {
     ...getTestingPageData('Notifications', 'Notifications'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 

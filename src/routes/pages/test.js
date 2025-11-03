@@ -10,9 +10,9 @@ const getPageData = (title, activeKey, padding = 'py-8') => ({
 
 // GET test page
 router.get('/test', (req, res) => {
-  res.render('pages/test', {
+  res.render('pages/communication/ai-assistant', {
     ...getPageData('Test UI Page', 'Test'),
-    layout: 'testing',
+    layout: 'main',
   });
 });
 

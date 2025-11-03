@@ -22,8 +22,7 @@ accelerator/
 │   │   └── animate.min.css # Animation library
 │   ├── js/                 # JavaScript files
 │   │   ├── htmx.min.js     # HTMX library
-│   │   ├── main.js         # Main JavaScript
-│   │   └── sidebar.js      # Sidebar JavaScript
+│   │   └── main.js         # Main JavaScript
 │   ├── images/             # Image assets
 │   └── favicons/           # Favicon files
 ├── routes/                 # Express route handlers
