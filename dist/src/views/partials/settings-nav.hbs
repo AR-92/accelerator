@@ -1,0 +1,46 @@
+<div class="@container relative flex w-full min-w-0 flex-col p-2">
+    <ul class="flex w-full min-w-0 flex-col gap-1">
+        <li class="group/menu-item relative">
+            <a href="/pages/settings/profile" data-active="{{#ifeq activeTab 'profile'}}true{{else}}false{{/ifeq}}" class="flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-hidden transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-purple-500 data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-purple-500 h-8 text-sm">
+                {{lucide 'User' 'size-4 text-current'}}
+                <span>My Profile</span>
+            </a>
+        </li>
+        <li class="group/menu-item relative">
+            <a href="/pages/settings/password" data-active="{{#ifeq activeTab 'password'}}true{{else}}false{{/ifeq}}" class="flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-hidden transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-purple-500 data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-purple-500 h-8 text-sm">
+                {{lucide 'Lock' 'size-4 text-current'}}
+                <span>Change Password</span>
+            </a>
+        </li>
+         <li class="group/menu-item relative">
+             <a href="/pages/subscriptions" data-active="{{#ifeq activeTab 'subscriptions'}}true{{else}}false{{/ifeq}}" class="flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-hidden transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-purple-500 data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-purple-500 h-8 text-sm">
+                 {{lucide 'CreditCard' 'size-4 text-current'}}
+                 <span>Subscriptions</span>
+             </a>
+         </li>
+         <li class="group/menu-item relative">
+             <a href="/pages/settings/payment" data-active="{{#ifeq activeTab 'payment'}}true{{else}}false{{/ifeq}}" class="flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-hidden transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-purple-500 data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-purple-500 h-8 text-sm">
+                 {{lucide 'CreditCard' 'size-4 text-current'}}
+                 <span>Payment Methods</span>
+             </a>
+         </li>
+         <li class="group/menu-item relative">
+             <a href="/pages/settings/billing" data-active="{{#ifeq activeTab 'billing'}}true{{else}}false{{/ifeq}}" class="flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-hidden transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-purple-500 data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-purple-500 h-8 text-sm">
+                 {{lucide 'CircleDollarSign' 'size-4 text-current'}}
+                 <span>Billing History</span>
+             </a>
+         </li>
+        <li class="group/menu-item relative">
+            <a href="/pages/settings/votes" data-active="{{#ifeq activeTab 'votes'}}true{{else}}false{{/ifeq}}" class="flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-hidden transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-purple-500 data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-purple-500 h-8 text-sm">
+                {{lucide 'Vote' 'size-4 text-current'}}
+                <span>Votes Management</span>
+            </a>
+        </li>
+        <li class="group/menu-item relative">
+            <a href="/pages/settings/rewards" data-active="{{#ifeq activeTab 'rewards'}}true{{else}}false{{/ifeq}}" class="flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-hidden transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-purple-500 data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-purple-500 h-8 text-sm">
+                {{lucide 'HandCoins' 'size-4 text-current'}}
+                <span>Voting Rewards</span>
+            </a>
+        </li>
+    </ul>
+</div>

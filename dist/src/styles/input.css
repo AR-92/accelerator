@@ -1,0 +1,67 @@
+/* Custom theme styles that align with shadcn/ui HSL system */
+@layer base {
+  :root {
+    /* Override default shadcn/ui colors to match dark theme */
+    --background: 220 10% 15%; /* Dark background */
+    --foreground: 0 0% 95%; /* Light text */
+
+    --muted: 220 10% 20%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --popover: 220 10% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --border: 220 10% 25%;
+    --input: 220 10% 25%;
+
+    --card: 220 10% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --primary: 217 91% 60%; /* Blueish accent */
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 220 10% 20%;
+    --secondary-foreground: 0 0% 95%;
+
+    --accent: 220 10% 20%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --ring: 217 91% 60%;
+
+    /* Additional variables for chat interface */
+    --icon-tertiary: hsl(220 10% 60%);
+    --border-main: hsl(220 10% 25%);
+    --background-card-gray: hsl(220 10% 15%);
+    --fill-tsp-white-light: hsl(0 0% 98%);
+    --background-menu-white: hsl(0 0% 100%);
+    --text-primary: hsl(0 0% 95%);
+    --text-tertiary: hsl(220 5% 64.9%);
+    --background-gray-main: hsl(220 10% 20%);
+    --fill-input-chat: hsl(220 10% 15%);
+    --text-disable: hsl(220 5% 64.9%);
+    --text-secondary: hsl(0 0% 85%);
+    --fill-tsp-gray-main: hsl(220 10% 20%);
+    --icon-primary: hsl(0 0% 95%);
+    --fill-white: hsl(0 0% 100%);
+    --shadow-S: 0px 0.5px 3px 0px hsl(0 0% 0% / 0.08);
+    --fill-tsp-white-main: hsl(0 0% 98%);
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-foreground font-semibold;
+  }
+}

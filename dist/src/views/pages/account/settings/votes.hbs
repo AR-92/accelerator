@@ -1,0 +1,90 @@
+<div class="container mx-auto max-w-7xl px-4 py-6">
+    <div class="flex items-center justify-between">
+        <div class="grid gap-1">
+            <h1 class="font-heading text-2xl font-semibold">Account Settings</h1>
+            <p class="text-base text-muted-foreground">Manage account and website settings.</p>
+        </div>
+    </div>
+    <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-[280px,1fr]">
+        {{> settings-nav}}
+        <div>
+            <div class="overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm">
+                <div class="p-6">
+                    <div class="mb-6 flex justify-center">
+                        <h2 class="text-xl font-semibold">Votes Management</h2>
+                    </div>
+        <div class="space-y-6">
+            <div>
+                <h3 class="text-lg font-medium mb-4">Voting Preferences</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="font-medium">Email notifications for new votes</p>
+                            <p class="text-sm text-muted-foreground">Get notified when someone votes on your content</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer" checked>
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                        </label>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="font-medium">Anonymous voting</p>
+                            <p class="text-sm text-muted-foreground">Hide your identity when voting</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                        </label>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="font-medium">Vote reminders</p>
+                            <p class="text-sm text-muted-foreground">Receive reminders to vote on active proposals</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" class="sr-only peer" checked>
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-lg font-medium mb-4">Voting History</h3>
+                <div class="space-y-4">
+                    <div class="border rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium">Proposal: New Feature Request</p>
+                                <p class="text-sm text-muted-foreground">Voted: Yes • 2 days ago</p>
+                            </div>
+                            <span class="text-green-600 font-medium">Approved</span>
+                        </div>
+                    </div>
+                    <div class="border rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium">Budget Allocation Q1</p>
+                                <p class="text-sm text-muted-foreground">Voted: No • 1 week ago</p>
+                            </div>
+                            <span class="text-red-600 font-medium">Rejected</span>
+                        </div>
+                    </div>
+                    <div class="border rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium">Team Expansion</p>
+                                <p class="text-sm text-muted-foreground">Voted: Yes • 2 weeks ago</p>
+                            </div>
+                            <span class="text-yellow-600 font-medium">Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-4">
+                <button class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md" type="button">Save Preferences</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="flex flex-col gap-4 lg:gap-6">
+    <div class="flex items-center justify-between">
+      <div class="grid gap-1">
+        <h1 class="font-heading text-2xl font-semibold text-gray-900 dark:text-white">{{idea.title}}</h1>
+        <p class="text-base text-gray-600 dark:text-gray-400">Detailed view of the idea.</p>
+      </div>
+      <a href="/pages/portfolio" class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background rounded-md h-10 px-4 bg-primary-purple text-white hover:bg-primary-purple-hover">Back to Portfolio</a>
+    </div>
+    <div class="flex flex-col gap-6">
+      <div class="overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+        <div class="flex flex-col items-center text-center mb-6">
+          <img alt="{{idea.title}}" class="mb-4 size-32 rounded-full p-3 bg-gray-100 dark:bg-gray-700" src="{{idea.image}}">
+          <h3 class="mb-1 break-all text-xl font-semibold text-gray-900 dark:text-white">{{idea.title}}</h3>
+          <div class="mb-2 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+            <span>{{idea.category}}</span>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-400">{{idea.description}}</p>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-1">
+            {{#times idea.votes}}
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star size-4 text-yellow-500 fill-current">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            {{/times}}
+            {{#timesDiff 5 idea.votes}}
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star size-4 text-gray-300">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            {{/timesDiff}}
+            <span class="text-sm text-gray-600 dark:text-gray-400 ml-2">Votes: {{idea.votes}}</span>
+          </div>
+          <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background h-10 py-2 px-4 rounded-md gap-2 transition-colors {{#if idea.isPublic}}bg-green-500/10 text-green-600 hover:bg-green-500/20{{else}}bg-red-500/10 text-red-600 hover:bg-red-500/20{{/if}}" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye size-4">
+              <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span class="font-medium">{{#if idea.isPublic}}Public{{else}}Private{{/if}}</span>
+          </button>
+        </div>
+        <div class="mt-4">
+          <h4 class="text-lg font-semibold mb-2">Tags</h4>
+          <div class="flex flex-wrap gap-2">
+            {{#each idea.tags}}
+            <span class="px-2 py-1 bg-purple-900/30 text-purple-400 text-xs rounded border border-purple-800/50">{{this}}</span>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,387 @@
+<aside id="sidebar" class="@container w-64 border-r border-border bg-background flex flex-col h-full">
+  <div class="flex px-2 py-1 items-center justify-between border-b border-border">
+    <div id="sidebar-logo" class="bg-background text-foreground flex items-center justify-center rounded-lg overflow-hidden">
+      <img src="/images/accelerator_logo.svg" alt="Logo" class="w-[120px] h-10">
+    </div>
+    <button id="sidebar-collapse-toggle"
+      class="peer/menu-button flex items-center justify-center gap-2 overflow-hidden rounded-md p-2 text-left outline-hidden ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground data-[collapsible=icon]:size-8! data-[collapsible=icon]:p-2! [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-12 text-sm data-[collapsible=icon]:p-0!">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-panel-left-close stroke-muted-foreground">
+        <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+        <path d="M9 3v18"></path>
+        <path d="m16 15-3-3 3-3"></path>
+      </svg>
+    </button>
+  </div>
+  <div class="flex flex-col gap-[2px] flex-1 min-h-0 p-2">
+     <a href="/pages/new-project"
+       class="flex items-center rounded-[10px] clickable cursor-pointer transition-colors w-full gap-3 h-[36px] bg-[var(--fill-tsp-white-main)] hover:bg-[var(--fill-tsp-white-light)] pointer-events-auto px-3 py-[7.5px]"
+       style="display: flex !important; align-items: center !important;">
+       <div class="shrink-0 size-[18px] flex items-center justify-center">
+         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+           class="lucide lucide-square-pen">
+           <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+           <path
+             d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z">
+           </path>
+         </svg>
+       </div>
+       <div class="flex-1 min-w-0 flex items-center text-[14px] text-[var(--text-primary)] overflow-hidden"
+         style="opacity: 1; width: auto; display: flex !important; align-items: center !important; min-width: 0 !important;">
+         <span class="truncate" title="New Project" style="white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; display: block !important; max-width: 100% !important;">New Project</span>
+       </div>
+     </a>
+     <a href="/pages/explore-ideas"
+       class="flex items-center rounded-[10px] clickable cursor-pointer transition-colors w-full gap-3 h-[36px] hover:bg-[var(--fill-tsp-white-light)] pointer-events-auto px-3 py-[7.5px] group"
+       style="display: flex !important; align-items: center !important;">
+       <div class="shrink-0 size-[18px] flex items-center justify-center">
+         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+           class="lucide lucide-search">
+           <circle cx="11" cy="11" r="8"></circle>
+           <path d="m21 21-4.3-4.3"></path>
+         </svg>
+       </div>
+       <div class="flex-1 min-w-0 flex items-center text-[14px] text-[var(--text-primary)] overflow-hidden"
+         style="opacity: 1; width: auto; display: flex !important; align-items: center !important; min-width: 0 !important;">
+         <span class="truncate" title="Explore Ideas" style="white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; display: block !important; max-width: 100% !important;">Explore Ideas</span>
+       </div>
+       <div class="shrink-0 flex items-center gap-1">
+         <div class="text-[var(--text-tertiary)] text-sm hidden group-hover:inline-flex items-center gap-1">CtrlK</div>
+       </div>
+     </a>
+     <a href="/pages/learn"
+       class="flex items-center rounded-[10px] clickable cursor-pointer transition-colors w-full gap-3 h-[36px] hover:bg-[var(--fill-tsp-white-light)] pointer-events-auto px-3 py-[7.5px]"
+       style="display: flex !important; align-items: center !important;">
+       <div class="shrink-0 size-[18px] flex items-center justify-center">
+         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+           class="lucide lucide-library-big">
+           <rect width="8" height="18" x="3" y="3" rx="1"></rect>
+           <path d="M7 3v18"></path>
+           <path
+             d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z">
+           </path>
+         </svg>
+       </div>
+       <div class="flex-1 min-w-0 flex items-center text-[14px] text-[var(--text-primary)] overflow-hidden"
+         style="opacity: 1; width: auto; display: flex !important; align-items: center !important; min-width: 0 !important;">
+         <span class="truncate" title="Learn" style="white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; display: block !important; max-width: 100% !important;">Learn</span>
+       </div>
+     </a>
+     <div class="flex flex-col flex-1 min-h-0 mt-[24px] gap-2 -mx-[6px] px-[6px]" style="opacity: 1; height: auto;">
+       <div class="flex items-center px-3 py-0 clickable" aria-expanded="false" aria-haspopup="dialog">
+         <span class="text-[14px] font-medium text-[var(--text-tertiary)] tracking-[-0.154px]">All Projects</span>
+       </div>
+         <div id="projects-scrollable" class="flex flex-col flex-1 min-h-0 pb-5 overflow-auto -me-[6px] pe-[6px]">
+         <div class="simplebar-wrapper" style="margin: 0px -6px -20px 0px;">
+           <div class="simplebar-height-auto-observer-wrapper">
+             <div class="simplebar-height-auto-observer"></div>
+           </div>
+           <div class="simplebar-mask">
+             <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+               <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content"
+                 style="height: 100%; overflow: hidden;">
+                 <div class="simplebar-content">
+
+                   <div class="flex flex-col w-full">
+                     <div class="relative flex items-center rounded-[10px] clickable cursor-pointer transition-colors w-full h-[36px] hover:bg-[var(--fill-tsp-white-light)] pointer-events-auto px-3 py-[7.5px] group" data-collapsible="true" data-target="sama-for-education-content" aria-expanded="false">
+                       <div class="flex items-center gap-3 flex-1" style="display: flex !important; align-items: center !important;">
+                         <div class="shrink-0 size-[24px] flex items-center justify-center">
+                           <div class="w-[24px] h-[24px] bg-purple-600 text-white text-xs font-semibold flex items-center justify-center rounded-full p-1">SE</div>
+                         </div>
+                         <div class="min-w-0 flex items-center text-[14px] text-[var(--text-primary)] overflow-hidden" style="opacity: 1; width: auto; display: flex !important; align-items: center !important; min-width: 0 !important;">
+                           <span class="truncate" title="Sama for Education" style="white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; display: block !important; max-width: 100% !important;">Sama for Education</span>
+                         </div>
+                       </div>
+                        <div class="flex items-center gap-1">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute right-3 top-1/2 -translate-y-1/2 lucide lucide-chevron-right w-4 h-4 text-[var(--text-primary)] chevron-collapsed" style="color: var(--text-primary); stroke: var(--text-primary);">
+                            <path d="m9 18 6-6-6-6"></path>
+                          </svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute right-3 top-1/2 -translate-y-1/2 lucide lucide-chevron-down w-4 h-4 text-[var(--text-primary)] chevron-expanded hidden" style="color: var(--text-primary); stroke: var(--text-primary);">
+                            <path d="m6 9 6 6 6-6"></path>
+                          </svg>
+                        </div>
+
+                     </div>
+                     <div id="sama-for-education-content" class="collapsible-content hidden pl-8 pr-3 py-1">
+                       <div class="border-l-2 border-gray-300 pl-4 space-y-4">
+                         <a href="/pages/ai-assistant-models/idea-model" class="block relative cursor-pointer">
+                           <div class="absolute -left-6 w-3 h-3 bg-purple-600 rounded-full"></div>
+                           <div class="text-xs text-[var(--text-tertiary)]">Idea Model</div>
+                           <div class="flex items-center mt-1">
+                             <div class="flex-1 bg-gray-200 rounded-full h-1">
+                               <div class="bg-purple-600 h-1 rounded-full" style="width: 100%"></div>
+                             </div>
+                             <span class="text-xs text-purple-600 ml-2">100%</span>
+                           </div>
+                         </a>
+                         <a href="/pages/ai-assistant-models/business-model" class="block relative cursor-pointer">
+                           <div class="absolute -left-6 w-3 h-3 bg-gray-300 rounded-full"></div>
+                           <div class="text-xs text-[var(--text-tertiary)]">Business Model</div>
+                           <div class="flex items-center mt-1">
+                             <div class="flex-1 bg-gray-200 rounded-full h-1">
+                               <div class="bg-purple-600 h-1 rounded-full" style="width: 0%"></div>
+                             </div>
+                             <span class="text-xs text-gray-400 ml-2">0%</span>
+                           </div>
+                         </a>
+                         <a href="/pages/ai-assistant-models/financial-model" class="block relative cursor-pointer">
+                           <div class="absolute -left-6 w-3 h-3 bg-gray-300 rounded-full"></div>
+                           <div class="text-xs text-[var(--text-tertiary)]">Financial Model</div>
+                           <div class="flex items-center mt-1">
+                             <div class="flex-1 bg-gray-200 rounded-full h-1">
+                               <div class="bg-purple-600 h-1 rounded-full" style="width: 0%"></div>
+                             </div>
+                             <span class="text-xs text-gray-400 ml-2">0%</span>
+                           </div>
+                         </a>
+                         <a href="/pages/ai-assistant-models/fund-model" class="block relative cursor-pointer">
+                           <div class="absolute -left-6 w-3 h-3 bg-gray-300 rounded-full"></div>
+                           <div class="text-xs text-[var(--text-tertiary)]">Funding Model</div>
+                           <div class="flex items-center mt-1">
+                             <div class="flex-1 bg-gray-200 rounded-full h-1">
+                               <div class="bg-purple-600 h-1 rounded-full" style="width: 0%"></div>
+                             </div>
+                             <span class="text-xs text-gray-400 ml-2">0%</span>
+                           </div>
+                         </a>
+                         <a href="/pages/ai-assistant-models/marketing-model" class="block relative cursor-pointer">
+                           <div class="absolute -left-6 w-3 h-3 bg-gray-300 rounded-full"></div>
+                           <div class="text-xs text-[var(--text-tertiary)]">Marketing Model</div>
+                           <div class="flex items-center mt-1">
+                             <div class="flex-1 bg-gray-200 rounded-full h-1">
+                               <div class="bg-purple-600 h-1 rounded-full" style="width: 0%"></div>
+                             </div>
+                             <span class="text-xs text-gray-400 ml-2">0%</span>
+                           </div>
+                         </a>
+                         <a href="/pages/ai-assistant-models/team-model" class="block relative cursor-pointer">
+                           <div class="absolute -left-6 w-3 h-3 bg-gray-300 rounded-full"></div>
+                           <div class="text-xs text-[var(--text-tertiary)]">Team Model</div>
+                           <div class="flex items-center mt-1">
+                             <div class="flex-1 bg-gray-200 rounded-full h-1">
+                               <div class="bg-purple-600 h-1 rounded-full" style="width: 0%"></div>
+                             </div>
+                             <span class="text-xs text-gray-400 ml-2">0%</span>
+                           </div>
+                         </a>
+                         <a href="/pages/ai-assistant-models/legal-model" class="block relative cursor-pointer">
+                           <div class="absolute -left-6 w-3 h-3 bg-gray-300 rounded-full"></div>
+                           <div class="text-xs text-[var(--text-tertiary)]">Legal Model</div>
+                           <div class="flex items-center mt-1">
+                             <div class="flex-1 bg-gray-200 rounded-full h-1">
+                               <div class="bg-purple-600 h-1 rounded-full" style="width: 0%"></div>
+                             </div>
+                             <span class="text-xs text-gray-400 ml-2">0%</span>
+                           </div>
+                         </a>
+                         <a href="/pages/pitch-deck" class="block relative cursor-pointer">
+                           <div class="absolute -left-6 w-3 h-3 bg-gray-300 rounded-full"></div>
+                           <div class="text-xs text-[var(--text-tertiary)]">Pitch Deck</div>
+                           <div class="flex items-center mt-1">
+                             <div class="flex-1 bg-gray-200 rounded-full h-1">
+                               <div class="bg-purple-600 h-1 rounded-full" style="width: 0%"></div>
+                             </div>
+                             <span class="text-xs text-gray-400 ml-2">0%</span>
+                           </div>
+                         </a>
+                         <a href="/pages/business-plan" class="block relative cursor-pointer">
+                           <div class="absolute -left-6 w-3 h-3 bg-gray-300 rounded-full"></div>
+                           <div class="text-xs text-[var(--text-tertiary)]">Business Plan</div>
+                           <div class="flex items-center mt-1">
+                             <div class="flex-1 bg-gray-200 rounded-full h-1">
+                               <div class="bg-purple-600 h-1 rounded-full" style="width: 0%"></div>
+                             </div>
+                             <span class="text-xs text-gray-400 ml-2">0%</span>
+                           </div>
+                         </a>
+                         <a href="/pages/valuation" class="block relative cursor-pointer">
+                           <div class="absolute -left-6 w-3 h-3 bg-gray-300 rounded-full"></div>
+                           <div class="text-xs text-[var(--text-tertiary)]">Valuation</div>
+                           <div class="flex items-center mt-1">
+                             <div class="flex-1 bg-gray-200 rounded-full h-1">
+                               <div class="bg-purple-600 h-1 rounded-full" style="width: 0%"></div>
+                             </div>
+                             <span class="text-xs text-gray-400 ml-2">0%</span>
+                           </div>
+                         </a>
+                       </div>
+                     </div>
+                   </div>
+
+
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+   </div>
+   </div>
+  </div>
+  </div>
+
+    <!-- Footer -->
+    <div class="p-1 border-t border-border">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-1">
+          <a href="/pages/settings/profile" class="flex items-center justify-center rounded-md hover:bg-muted size-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground">
+              <path d="M20 7h-9"></path>
+              <path d="M14 17H5"></path>
+              <circle cx="17" cy="17" r="3"></circle>
+              <circle cx="7" cy="7" r="3"></circle>
+            </svg>
+          </a>
+          <a href="/pages/learn" class="flex items-center justify-center rounded-md hover:bg-muted size-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 20 20" fill="none" class="text-muted-foreground">
+              <path d="M13.3574 13.3291C14.6331 12.6198 15.6295 11.5263 16.1923 10.2181C16.7551 8.90992 16.8528 7.46002 16.4704 6.09308C16.0879 4.72614 15.2466 3.51847 14.0768 2.65719C12.907 1.79591 11.474 1.3291 9.9998 1.3291C8.52566 1.3291 7.09266 1.79591 5.92284 2.65719C4.75303 3.51847 3.91171 4.72614 3.52924 6.09308C3.14677 7.46002 3.2445 8.90992 3.8073 10.2181C4.37009 11.5263 5.36653 12.6198 6.64221 13.3291" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M11.6998 18.7C10.5696 18.8183 9.43005 18.8183 8.2998 18.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M12.1998 16.2C10.746 16.4751 9.25357 16.4751 7.7998 16.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M10.5388 5.5L9.01779 7.195C8.97045 7.24796 8.93807 7.31258 8.92397 7.3822C8.90987 7.45183 8.91457 7.52395 8.93759 7.59116C8.9606 7.65836 9.0011 7.71823 9.05491 7.7646C9.10873 7.81097 9.17392 7.84217 9.24379 7.855L10.7318 8.126C10.8055 8.13937 10.874 8.17318 10.9295 8.22359C10.9849 8.27399 11.0251 8.33896 11.0454 8.41109C11.0658 8.48322 11.0654 8.55961 11.0444 8.63155C11.0235 8.7035 10.9827 8.7681 10.9268 8.818L9.03879 10.5" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+          <a href="/pages/help" class="flex items-center justify-center rounded-md hover:bg-muted size-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <path d="M12 17h.01"></path>
+            </svg>
+          </a>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="text-xs text-muted-foreground">Free Plan</div>
+          <a href="/pages/buy-credits" class="h-6 px-2 bg-purple-600 text-primary-foreground rounded text-xs font-medium hover:opacity-90 transition-opacity inline-flex items-center justify-center dark:text-white">
+            Buy Credits
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Floating toggle button that appears when sidebar is hidden -->
+  <button id="sidebar-show-toggle"
+    class="fixed top-4 left-4 z-50 w-10 h-10 rounded-md bg-background border border-border flex items-center justify-center shadow-lg hidden"
+    style="top: 10px; left: 10px;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+      class="lucide lucide-panel-left stroke-muted-foreground">
+      <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+      <path d="M9 3v18"></path>
+      <path d="m14 9 3 3-3 3"></path>
+    </svg>
+  </button>
+
+
+<style>
+  :root {
+    --text-primary: hsl(var(--foreground));
+    --text-tertiary: hsl(var(--muted-foreground));
+    --icon-tertiary: hsl(var(--muted-foreground));
+    --fill-tsp-white-main: hsl(var(--background));
+    --fill-tsp-white-light: hsl(var(--muted));
+    --fill-tsp-gray-main: hsl(var(--muted));
+    --text-disable: hsl(var(--muted-foreground));
+  }
+
+  .collapsible-content {
+    transition: all 0.3s ease;
+  }
+
+
+
+  [data-icon="chevron"] {
+    color: var(--text-primary) !important;
+    stroke: var(--text-primary) !important;
+  }
+  
+
+  
+  /* Ensure text truncation works properly in sidebar items */
+  .truncate {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  
+  /* More specific rule for sidebar navigation text */
+  aside a[role="link"] span.truncate,
+  aside .clickable span.truncate,
+  aside a.flex span.truncate {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+    display: block !important;
+  }
+
+
+  
+
+</style>
+
+<script>
+(function() {
+  'use strict';
+
+  // Initialize collapsible functionality for project dropdowns
+  function initProjectCollapsible() {
+    const collapsibleElements = document.querySelectorAll('[data-collapsible="true"]');
+    const scrollable = document.getElementById('projects-scrollable');
+
+    // Set initial overflow based on collapsed state
+    if (scrollable) {
+      scrollable.style.overflowY = 'auto';
+    }
+
+    collapsibleElements.forEach(function(element) {
+      element.addEventListener('click', function(e) {
+        // Don't trigger if clicking on the options menu button
+        if (e.target.closest('[data-dropdown-toggle]')) {
+          return;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        const targetId = element.getAttribute('data-target');
+        const targetElement = document.getElementById(targetId);
+        const chevronCollapsed = element.querySelector('.chevron-collapsed');
+        const chevronExpanded = element.querySelector('.chevron-expanded');
+
+        if (targetElement && chevronCollapsed && chevronExpanded) {
+          // Toggle visibility
+          const isHidden = targetElement.classList.contains('hidden');
+          if (isHidden) {
+            targetElement.classList.remove('hidden');
+            chevronCollapsed.classList.add('hidden');
+            chevronExpanded.classList.remove('hidden');
+            element.setAttribute('aria-expanded', 'true');
+          } else {
+            targetElement.classList.add('hidden');
+            chevronCollapsed.classList.remove('hidden');
+            chevronExpanded.classList.add('hidden');
+            element.setAttribute('aria-expanded', 'false');
+          }
+        }
+      });
+    });
+  }
+
+
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initProjectCollapsible();
+    });
+  } else {
+    initProjectCollapsible();
+  }
+})();
+</script>

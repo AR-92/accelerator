@@ -1,0 +1,261 @@
+<div class="flex h-full bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  <!-- Chat Sidebar (Chat List) -->
+  <div class="w-80 border-r border-gray-200 dark:border-gray-700 flex flex-col">
+    <!-- Chat Header -->
+    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+      <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">AI Chats</h2>
+      <div class="mt-3 flex items-center space-x-3">
+        <div class="flex-1 relative">
+          <input type="text" placeholder="Search chats..." class="w-full pl-3 pr-4 py-2 bg-gray-50 dark:bg-gray-800 border-0 rounded-lg text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search absolute right-3 top-2.5 text-gray-400">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+        </div>
+        <button class="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus">
+            <path d="M5 12h14"></path>
+            <path d="M12 5v14"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat List -->
+    <div class="flex-1 overflow-y-auto">
+      <div class="py-2">
+        <!-- Active Chat -->
+        <div class="flex items-center px-6 py-3 bg-purple-50 dark:bg-purple-900/20 cursor-pointer">
+          <div class="relative">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot text-white">
+                <path d="M12 8V4H8"></path>
+                <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+                <path d="M2 14h2"></path>
+                <path d="M20 14h2"></path>
+                <path d="M15 13v2"></path>
+                <path d="M9 13v2"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-3 flex-1 min-w-0">
+            <div class="flex items-center justify-between">
+              <h3 class="font-medium text-gray-900 dark:text-gray-100 text-sm">AI Assistant</h3>
+              <span class="text-xs text-gray-500 dark:text-gray-400">now</span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 truncate mt-0.5">How can I help you today?</p>
+          </div>
+        </div>
+
+        <!-- Other Chats -->
+        <div class="flex items-center px-6 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
+          <div class="relative">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot text-white">
+                <path d="M12 8V4H8"></path>
+                <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+                <path d="M2 14h2"></path>
+                <path d="M20 14h2"></path>
+                <path d="M15 13v2"></path>
+                <path d="M9 13v2"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-3 flex-1 min-w-0">
+            <div class="flex items-center justify-between">
+              <h3 class="font-medium text-gray-900 dark:text-gray-100 text-sm">Business Advisor</h3>
+              <span class="text-xs text-gray-500 dark:text-gray-400">Yesterday</span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 truncate mt-0.5">Reviewing your business plan...</p>
+          </div>
+        </div>
+
+        <div class="flex items-center px-6 py-3 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer">
+          <div class="relative">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot text-white">
+                <path d="M12 8V4H8"></path>
+                <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+                <path d="M2 14h2"></path>
+                <path d="M20 14h2"></path>
+                <path d="M15 13v2"></path>
+                <path d="M9 13v2"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="ml-3 flex-1 min-w-0">
+            <div class="flex items-center justify-between">
+              <h3 class="font-medium text-gray-900 dark:text-gray-100 text-sm">Startup Mentor</h3>
+              <span class="text-xs text-gray-500 dark:text-gray-400">3 days ago</span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400 truncate mt-0.5">Tips for pitch deck creation</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Chat Area -->
+  <div class="flex-1 flex flex-col bg-gradient-to-br from-white to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <!-- Chat Header -->
+    <div class="px-6 py-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+      <div class="flex items-center">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot text-white">
+            <path d="M12 8V4H8"></path>
+            <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+            <path d="M2 14h2"></path>
+            <path d="M20 14h2"></path>
+            <path d="M15 13v2"></path>
+            <path d="M9 13v2"></path>
+          </svg>
+        </div>
+        <div class="ml-3">
+          <h3 class="font-medium text-gray-900 dark:text-gray-100">AI Assistant</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Always available to help</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Messages Area -->
+    <div class="flex-1 overflow-y-auto px-6 py-4">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <!-- Date Separator -->
+        <div class="flex items-center justify-center py-4">
+          <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-full text-xs font-medium">
+            Today
+          </div>
+        </div>
+
+        <!-- AI welcome message -->
+        <div class="flex space-x-3">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center flex-shrink-0 mt-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot text-white">
+              <path d="M12 8V4H8"></path>
+              <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+              <path d="M2 14h2"></path>
+              <path d="M20 14h2"></path>
+              <path d="M15 13v2"></path>
+              <path d="M9 13v2"></path>
+            </svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center space-x-2 mb-2">
+              <span class="font-medium text-gray-900 dark:text-gray-200 text-sm">AI Assistant</span>
+              <span class="text-xs text-gray-500 dark:text-gray-500">Just now</span>
+            </div>
+            <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 p-4 rounded-2xl max-w-md">
+              <p class="text-gray-900 dark:text-gray-200 text-sm leading-relaxed">Hello! I'm your AI assistant. How can I help you with your startup journey today? I can help with business planning, market analysis, funding strategies, and more.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- User message -->
+        <div class="flex space-x-3 justify-end">
+          <div class="flex-1 max-w-md">
+            <div class="bg-purple-600 text-white p-4 rounded-2xl ml-auto">
+              <p class="text-sm leading-relaxed">Can you help me brainstorm ideas for a SaaS product targeted at small businesses?</p>
+            </div>
+            <div class="flex justify-end mt-2">
+              <span class="text-xs text-gray-500 dark:text-gray-400">10:42 AM</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI response -->
+        <div class="flex space-x-3">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center flex-shrink-0 mt-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot text-white">
+              <path d="M12 8V4H8"></path>
+              <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+              <path d="M2 14h2"></path>
+              <path d="M20 14h2"></path>
+              <path d="M15 13v2"></path>
+              <path d="M9 13v2"></path>
+            </svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center space-x-2 mb-2">
+              <span class="font-medium text-gray-900 dark:text-gray-200 text-sm">AI Assistant</span>
+              <span class="text-xs text-gray-500 dark:text-gray-500">10:43 AM</span>
+            </div>
+            <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 p-4 rounded-2xl max-w-md">
+              <p class="text-gray-900 dark:text-gray-200 text-sm leading-relaxed">Absolutely! Here are some SaaS ideas for small businesses:</p>
+              <ul class="mt-2 space-y-1 ml-4">
+                <li class="text-gray-900 dark:text-gray-200 text-sm">• Customer feedback and review management</li>
+                <li class="text-gray-900 dark:text-gray-200 text-sm">• Employee scheduling and time tracking</li>
+                <li class="text-gray-900 dark:text-gray-200 text-sm">• Small business accounting and invoicing</li>
+                <li class="text-gray-900 dark:text-gray-200 text-sm">• Inventory management for retail</li>
+              </ul>
+              <p class="mt-2 text-gray-900 dark:text-gray-200 text-sm">Would you like to explore any of these in more detail?</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Typing indicator -->
+        <div class="flex space-x-3">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center flex-shrink-0 mt-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bot text-white">
+              <path d="M12 8V4H8"></path>
+              <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+              <path d="M2 14h2"></path>
+              <path d="M20 14h2"></path>
+              <path d="M15 13v2"></path>
+              <path d="M9 13v2"></path>
+            </svg>
+          </div>
+          <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 p-4 rounded-2xl">
+            <div class="flex items-center space-x-2">
+              <div class="flex space-x-1">
+                <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+              </div>
+              <span class="text-sm text-gray-500 dark:text-gray-400">AI is thinking...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message Input -->
+    <div class="px-6 py-6 bg-white dark:bg-gray-900">
+      <div class="max-w-4xl mx-auto">
+        <div class="flex items-end space-x-4">
+          <button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <path d="M16 13H8"></path>
+              <path d="M16 17H8"></path>
+              <path d="M10 9H8"></path>
+            </svg>
+          </button>
+          <div class="flex-1">
+            <div class="relative">
+              <input
+                type="text"
+                placeholder="Ask AI anything..."
+                class="w-full px-0 py-3 bg-transparent border-0 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:ring-0 placeholder-gray-400"
+              />
+              <button class="absolute right-0 top-3 p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smile">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                  <line x1="9" x2="9.01" y1="9" y2="9"></line>
+                  <line x1="15" x2="15.01" y1="9" y2="9"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <button class="p-2 text-purple-600 dark:text-purple-500 hover:text-purple-700 dark:hover:text-purple-400 rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send">
+              <path d="m22 2-7 20-4-9-9-4Z"></path>
+              <path d="M22 2 11 13"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

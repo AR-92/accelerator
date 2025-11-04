@@ -1,0 +1,350 @@
+<div class="p-4">
+    <div class="flex flex-col gap-4 lg:gap-6">
+    <div class="flex items-center justify-between">
+      <div class="grid gap-1">
+        <h1 class="font-heading text-2xl font-semibold dark:text-white">Financial Dashboard</h1>
+        <p class="text-base text-muted-foreground">Track your financial performance and projections.</p>
+      </div>
+    </div>
+    <div class="flex w-[90vw] items-center gap-[16px] overflow-x-auto border-b border-gray-200 dark:border-gray-700 lg:w-full lg:gap-[48px]">
+      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/pages/dashboard">Idea</a>
+      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/pages/dashboard/tab/business">Business</a>
+      <a class="p-[10px] text-[16px] font-[500] border-b border-primary text-black dark:text-white dark:border-white" href="/pages/dashboard/tab/financial">Financial</a>
+      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/pages/dashboard/tab/marketing">Marketing</a>
+      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/pages/dashboard/tab/fund">Fund</a>
+      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/pages/dashboard/tab/team">Team</a>
+      <a class="p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400" href="/pages/dashboard/tab/promote">Promote</a>
+    </div>
+
+    <!-- Financial Metrics -->
+    <div class="grid grid-cols-1 gap-[17px] sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+      <div class="rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+        <div class="flex items-center justify-between px-[10px] py-[4px]">
+          <div class="flex flex-col gap-[4px]">
+            <h3 class="text-[14px] font-[500] text-gray-500 dark:text-gray-400">Revenue</h3>
+            <p class="text-[18px] font-[600] text-gray-900 dark:text-gray-100">$0</p>
+          </div>
+          <div>
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="44" height="44" rx="8" fill="#E8F5E8"></rect>
+              <path d="M22 8C15.3726 8 10 13.3726 10 20C10 26.6274 15.3726 32 22 32C28.6274 32 34 26.6274 34 20C34 13.3726 28.6274 8 22 8ZM27 16L25 14L19 20L17 18L15 20L19 24L27 16Z" fill="#4CAF50"/>
+            </svg>
+          </div>
+        </div>
+        <p class="flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none">
+            <path d="M7.02979 8.30925H11.0298V15.7426L13.0398 15.7676V8.30925H17.0298L12.0298 4.14258L7.02979 8.30925Z" fill="#4CAF50"></path>
+          </svg>
+          <span class="text-[#4CAF50] dark:text-green-400">+0%</span>Since last month
+        </p>
+      </div>
+
+      <div class="rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+        <div class="flex items-center justify-between px-[10px] py-[4px]">
+          <div class="flex flex-col gap-[4px]">
+            <h3 class="text-[14px] font-[500] text-gray-500 dark:text-gray-400">Expenses</h3>
+            <p class="text-[18px] font-[600] text-gray-900 dark:text-gray-100">$0</p>
+          </div>
+          <div>
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="44" height="44" rx="8" fill="#FFEBEE"></rect>
+              <path d="M22 8C15.3726 8 10 13.3726 10 20C10 26.6274 15.3726 32 22 32C28.6274 32 34 26.6274 34 20C34 13.3726 28.6274 8 22 8ZM27 16L25 14L19 20L17 18L15 20L19 24L27 16Z" fill="#F44336"/>
+            </svg>
+          </div>
+        </div>
+        <p class="flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none">
+            <path d="M16.9702 11.6907H12.9702V4.25742L10.9602 4.23242V11.6907H6.97021L11.9702 15.8574L16.9702 11.6907Z" fill="#F44336"></path>
+          </svg>
+          <span class="text-[#F44336] dark:text-red-400">+0%</span>Since last month
+        </p>
+      </div>
+
+      <div class="rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+        <div class="flex items-center justify-between px-[10px] py-[4px]">
+          <div class="flex flex-col gap-[4px]">
+            <h3 class="text-[14px] font-[500] text-gray-500 dark:text-gray-400">Net Profit</h3>
+            <p class="text-[18px] font-[600] text-gray-900 dark:text-gray-100">$0</p>
+          </div>
+          <div>
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="44" height="44" rx="8" fill="#FFF3E0"></rect>
+              <path d="M22 8C15.3726 8 10 13.3726 10 20C10 26.6274 15.3726 32 22 32C28.6274 32 34 26.6274 34 20C34 13.3726 28.6274 8 22 8ZM24 28H20V24H24V28ZM26.07 16.56L24.17 18.46C23.31 19.32 22.68 20 22 20.68V22H20V20.68C19.32 20 18.69 19.32 17.83 18.46L15.93 16.56C15.42 16.05 15.17 15.34 15.25 14.63C15.33 13.92 15.73 13.32 16.34 13.05C18.27 12.16 19.73 12.16 21.66 13.05C22.27 13.32 22.67 13.92 22.75 14.63C22.83 15.34 22.58 16.05 22.07 16.56Z" fill="#FF9800"/>
+            </svg>
+          </div>
+        </div>
+        <p class="flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none">
+            <path d="M7.02979 8.30925H11.0298V15.7426L13.0398 15.7676V8.30925H17.0298L12.0298 4.14258L7.02979 8.30925Z" fill="#FF9800"></path>
+          </svg>
+          <span class="text-[#FF9800] dark:text-yellow-400">+0%</span>Since last month
+        </p>
+      </div>
+
+      <div class="rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+        <div class="flex items-center justify-between px-[10px] py-[4px]">
+          <div class="flex flex-col gap-[4px]">
+            <h3 class="text-[14px] font-[500] text-gray-500 dark:text-gray-400">Cash Flow</h3>
+            <p class="text-[18px] font-[600] text-gray-900 dark:text-gray-100">$0</p>
+          </div>
+          <div>
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="44" height="44" rx="8" fill="#E3F2FD"></rect>
+              <path d="M22 8C17.5817 8 14 11.5817 14 16C14 20.4183 17.5817 24 22 24C26.4183 24 30 20.4183 30 16C30 11.5817 26.4183 8 22 8ZM22 20C20.3431 20 19 18.6569 19 17C19 15.3431 20.3431 14 22 14C23.6569 14 25 15.3431 25 17C25 18.6569 23.6569 20 22 20Z" fill="#2196F3"/>
+              <path d="M22 26C16.4772 26 12 21.5228 12 16C12 10.4772 16.4772 6 22 6C27.5228 6 32 10.4772 32 16C32 21.5228 27.5228 26 22 26ZM22 10C18.6863 10 16 12.6863 16 16C16 19.3137 18.6863 22 22 22C25.3137 22 28 19.3137 28 16C28 12.6863 25.3137 10 22 10Z" fill="#1976D2"/>
+            </svg>
+          </div>
+        </div>
+        <p class="flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none">
+            <path d="M7.02979 8.30925H11.0298V15.7426L13.0398 15.7676V8.30925H17.0298L12.0298 4.14258L7.02979 8.30925Z" fill="#2196F3"></path>
+          </svg>
+          <span class="text-[#2196F3] dark:text-blue-400">+0%</span>Since last month
+        </p>
+      </div>
+
+      <div class="rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+        <div class="flex items-center justify-between px-[10px] py-[4px]">
+          <div class="flex flex-col gap-[4px]">
+            <h3 class="text-[14px] font-[500] text-gray-500 dark:text-gray-400">Financial Plan</h3>
+            <p class="text-[18px] font-[600] text-gray-900 dark:text-gray-100">25%</p>
+          </div>
+          <div>
+            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="44" height="44" rx="8" fill="#F3E5F5"></rect>
+              <path d="M22 8C15.3726 8 10 13.3726 10 20C10 26.6274 15.3726 32 22 32C28.6274 32 34 26.6274 34 20C34 13.3726 28.6274 8 22 8ZM27 16L25 14L19 20L17 18L15 20L19 24L27 16Z" fill="#9C27B0"/>
+            </svg>
+          </div>
+        </div>
+        <p class="flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none">
+            <path d="M7.02979 8.30925H11.0298V15.7426L13.0398 15.7676V8.30925H17.0298L12.0298 4.14258L7.02979 8.30925Z" fill="#9C27B0"></path>
+          </svg>
+          <span class="text-[#9C27B0] dark:text-purple-400">+10%</span>Since last month
+        </p>
+      </div>
+    </div>
+
+    <!-- Financial Projections and Charts -->
+    <div class="flex flex-col items-stretch gap-[17px] lg:flex-row">
+      <div class="w-full rounded-[11px] bg-card px-[26px] py-[20px] text-card-foreground lg:w-[60%] lg:min-w-[60%]">
+        <h3 class="text-[18px] font-[500] text-gray-900 dark:text-gray-100 mb-4">Financial Projections</h3>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+              </div>
+              <h4 class="font-medium text-blue-800 dark:text-blue-400">Revenue Forecast</h4>
+            </div>
+            <p class="text-sm text-blue-700 dark:text-blue-300">3-month projection: $0</p>
+            <div class="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div class="bg-blue-600 h-2 rounded-full" style="width: 25%"></div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+                <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                </svg>
+              </div>
+              <h4 class="font-medium text-green-800 dark:text-green-400">Break-even Analysis</h4>
+            </div>
+            <p class="text-sm text-green-700 dark:text-green-300">Target: Q2 2024</p>
+            <div class="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div class="bg-green-600 h-2 rounded-full" style="width: 40%"></div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-8 h-8 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center">
+                <svg class="w-4 h-4 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+              </div>
+              <h4 class="font-medium text-yellow-800 dark:text-yellow-400">Cash Flow Planning</h4>
+            </div>
+            <p class="text-sm text-yellow-700 dark:text-yellow-300">6-month runway</p>
+            <div class="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div class="bg-yellow-600 h-2 rounded-full" style="width: 60%"></div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+                <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+              </div>
+              <h4 class="font-medium text-purple-800 dark:text-purple-400">Financial Statements</h4>
+            </div>
+            <p class="text-sm text-purple-700 dark:text-purple-300">Draft completed</p>
+            <div class="mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div class="bg-purple-600 h-2 rounded-full" style="width: 80%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full rounded-[11px] bg-card px-[26px] py-[20px] text-card-foreground">
+        <h3 class="text-[18px] font-[500] text-gray-900 dark:text-gray-100 mb-4">Quick Actions</h3>
+        <div class="space-y-3">
+          <a href="/pages/financial-model" class="flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md text-sm font-medium transition">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+            </svg>
+            Create Financial Model
+          </a>
+          <button class="flex items-center justify-center w-full px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm font-medium transition">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+            </svg>
+            Revenue Projections
+          </button>
+          <button class="flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md text-sm font-medium transition">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+            </svg>
+            Cost Analysis
+          </button>
+        </div>
+      </div>
+    </div>
+
+     <!-- Financial Activities -->
+     <div class="rounded-[6px] bg-card px-[32px] py-[20px] text-card-foreground" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+       <div class="flex flex-col items-center justify-between gap-[16px] lg:flex-row">
+         <h3 class="text-[28px] font-[600] text-primary">Financial Activities</h3>
+        <div class="flex items-center gap-[20px]">
+          <button class="justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md flex items-center gap-[8px]" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path d="M0.9375 3.75H19.0625C19.3111 3.75 19.5496 3.84877 19.7254 4.02459C19.9012 4.2004 20 4.43886 20 4.6875C20 4.93614 19.9012 5.1746 19.7254 5.35041C19.5496 5.52623 19.3111 5.625 19.0625 5.625H0.9375C0.68886 5.625 0.450403 5.52623 0.274587 5.35041C0.098772 5.1746 0 4.93614 0 4.6875C0 4.43886 0.098772 4.2004 0.274587 4.02459C0.450403 3.84877 0.68886 3.75 0.9375 3.75ZM3.75 9.6875C3.75 9.43886 3.84877 9.2004 4.02459 9.02459C4.2004 8.84877 4.43886 8.75 4.6875 8.75H15.3125C15.5611 8.75 15.7996 8.84877 16.1512 9.02459C16.25 9.2004 16.25 9.43886 16.25 9.6875C16.25 9.93614 16.1512 10.1746 15.9754 10.3504C15.7996 10.5262 15.5611 10.625 15.3125 10.625H4.6875C4.43886 10.625 4.2004 10.5262 4.02459 10.3504C3.84877 10.1746 3.75 9.93614 3.75 9.6875ZM7.5 14.6875C7.5 14.4389 7.59877 14.2004 7.77459 14.0246C7.9504 13.8488 8.18886 13.75 8.4375 13.75H11.5625C11.8111 13.75 12.0496 13.8488 12.2254 14.0246C12.4012 14.2004 12.5 14.4389 12.5 14.6875C12.5 14.9361 12.4012 15.1746 12.2254 15.3504C12.0496 15.5262 11.8111 15.625 11.5625 15.625H8.4375C8.18886 15.625 7.9504 15.5262 7.77459 15.3504C7.59877 15.1746 7.5 14.9361 7.5 14.6875Z" fill="white"></path>
+            </svg>Filter
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-[28px] w-[75vw] rounded-[8px] lg:w-full" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+        <div class="relative w-full overflow-auto">
+          <table class="w-full caption-bottom text-sm min-w-full overflow-x-auto">
+             <thead class="[&_tr]:border-b h-[64px] bg-muted">
+               <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                 <th class="h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Activity</th>
+                 <th class="h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 w-[200px] text-[16px] font-[600] text-primary lg:text-[22px]">Status</th>
+                 <th class="h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 w-[116px] text-[16px] font-[600] text-primary lg:text-[22px]">Amount</th>
+                 <th class="h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Due Date</th>
+                 <th class="h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]"></th>
+              </tr>
+            </thead>
+            <tbody class="[&_tr:last-child]:border-0">
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                  <div class="flex w-[200px] items-center gap-[10px]">
+                    <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+                      <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                      </svg>
+                    </div>
+                     <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Revenue Model Setup</p>
+                  </div>
+                </td>
+                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                  <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded">Completed</span>
+                </td>
+                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                  <p class="text-[14px] font-[500] text-[#2A2A2A] lg:text-[16px]">$0</p>
+                </td>
+                 <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                   <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Dec 20, 2023</p>
+                 </td>
+                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                  <div class="flex justify-end">
+                    <button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                  <div class="flex w-[200px] items-center gap-[10px]">
+                    <div class="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center">
+                      <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                      </svg>
+                    </div>
+                     <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Cost Structure Analysis</p>
+                  </div>
+                </td>
+                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                  <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs rounded">In Progress</span>
+                </td>
+                 <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                   <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">$0</p>
+                 </td>
+                 <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                   <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Jan 15, 2024</p>
+                 </td>
+                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                  <div class="flex justify-end">
+                    <button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                  <div class="flex w-[200px] items-center gap-[10px]">
+                    <div class="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center">
+                      <svg class="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                      </svg>
+                    </div>
+                     <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Financial Projections</p>
+                  </div>
+                </td>
+                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                  <span class="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 text-xs rounded">Not Started</span>
+                </td>
+                 <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                   <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">$0</p>
+                 </td>
+                 <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                   <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Feb 28, 2024</p>
+                 </td>
+                <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                  <div class="flex justify-end">
+                    <button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="1"></circle>
+                        <circle cx="12" cy="5" r="1"></circle>
+                        <circle cx="12" cy="19" r="1"></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
