@@ -18,539 +18,524 @@
       </div>
     </div>
 
-    <!-- Executive Metrics Dashboard -->
-    <div class='grid grid-cols-1 gap-[17px] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6'>
-      <!-- Total Portfolio Value -->
-      <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-        <div class='flex items-center justify-between px-[10px] py-[4px]'>
-          <div class='flex flex-col gap-[4px]'>
-            <h3 class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>Portfolio Value</h3>
-            <p class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'>$2.4M</p>
-          </div>
-          <div>
-            <div style="background:#E3F2FD; border-radius: 6px;">
-              <div style="width:38px; height:38px; background:#E3F2FD; border-radius:50%; position:relative;">
-                <div class="flex items-center justify-center" style="width:35px; height:35px; background:#2196F3; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'DollarSign' 'w-4 h-4 text-white'}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'>
-          {{lucide 'TrendingUp' 'w-5 h-4' style='color: #4CAF50'}}
-          <span class='text-[#4CAF50] dark:text-green-400'>+12%</span> vs last quarter
-        </p>
-      </div>
+     <!-- Executive Metrics Dashboard -->
+     <div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6'>
+       <!-- Total Portfolio Value -->
+       <div class='rounded-lg bg-card p-4 text-card-foreground shadow-sm border border-border/50 hover:shadow-md transition-shadow'>
+         <div class='flex items-center justify-between'>
+           <div class='flex flex-col gap-2'>
+             <h3 class='text-sm font-medium text-muted-foreground'>Portfolio Value</h3>
+             <p class='text-xl font-semibold text-foreground'>$2.4M</p>
+           </div>
+           <div class='w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'>
+             {{lucide 'DollarSign' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
+           </div>
+         </div>
+         <p class='flex items-center gap-1 text-xs font-medium text-muted-foreground mt-2'>
+           {{lucide 'TrendingUp' 'w-4 h-4 text-green-600 dark:text-green-400'}}
+           <span class='text-green-600 dark:text-green-400'>+12%</span> vs last quarter
+         </p>
+       </div>
 
-      <!-- Active Enterprises -->
-      <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-        <div class='flex items-center justify-between px-[10px] py-[4px]'>
-          <div class='flex flex-col gap-[4px]'>
-            <h3 class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>Active Enterprises</h3>
-            <p class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'>24</p>
-          </div>
-          <div>
-            <div style="background:#FFF3E0; border-radius: 6px;">
-              <div style="width:38px; height:38px; background:#FFF3E0; border-radius:50%; position:relative;">
-                <div class="flex items-center justify-center" style="width:35px; height:35px; background:#FF9800; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Building2' 'w-4 h-4 text-white'}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'>
-          {{lucide 'TrendingUp' 'w-5 h-4' style='color: #4CAF50'}}
-          <span class='text-[#4CAF50] dark:text-green-400'>+3</span> new this month
-        </p>
-      </div>
+       <!-- Active Enterprises -->
+       <div class='rounded-lg bg-card p-4 text-card-foreground shadow-sm border border-border/50 hover:shadow-md transition-shadow'>
+         <div class='flex items-center justify-between'>
+           <div class='flex flex-col gap-2'>
+             <h3 class='text-sm font-medium text-muted-foreground'>Active Enterprises</h3>
+             <p class='text-xl font-semibold text-foreground'>24</p>
+           </div>
+           <div class='w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center'>
+             {{lucide 'Building2' 'w-5 h-5 text-orange-600 dark:text-orange-400'}}
+           </div>
+         </div>
+         <p class='flex items-center gap-1 text-xs font-medium text-muted-foreground mt-2'>
+           {{lucide 'TrendingUp' 'w-4 h-4 text-green-600 dark:text-green-400'}}
+           <span class='text-green-600 dark:text-green-400'>+3</span> new this month
+         </p>
+       </div>
 
-      <!-- Total Revenue -->
-      <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-        <div class='flex items-center justify-between px-[10px] py-[4px]'>
-          <div class='flex flex-col gap-[4px]'>
-            <h3 class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>Total Revenue</h3>
-            <p class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'>$847K</p>
-          </div>
-          <div>
-            <div style="background:#FCE4EC; border-radius: 6px;">
-              <div style="width:38px; height:38px; background:#FCE4EC; border-radius:50%; position:relative;">
-                <div class="flex items-center justify-center" style="width:35px; height:35px; background:#E91E63; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'TrendingUp' 'w-4 h-4 text-white'}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'>
-          {{lucide 'TrendingUp' 'w-5 h-4' style='color: #4CAF50'}}
-          <span class='text-[#4CAF50] dark:text-green-400'>+18%</span> vs last quarter
-        </p>
-      </div>
+       <!-- Total Revenue -->
+       <div class='rounded-lg bg-card p-4 text-card-foreground shadow-sm border border-border/50 hover:shadow-md transition-shadow'>
+         <div class='flex items-center justify-between'>
+           <div class='flex flex-col gap-2'>
+             <h3 class='text-sm font-medium text-muted-foreground'>Total Revenue</h3>
+             <p class='text-xl font-semibold text-foreground'>$847K</p>
+           </div>
+           <div class='w-10 h-10 bg-pink-100 dark:bg-pink-900/30 rounded-lg flex items-center justify-center'>
+             {{lucide 'TrendingUp' 'w-5 h-5 text-pink-600 dark:text-pink-400'}}
+           </div>
+         </div>
+         <p class='flex items-center gap-1 text-xs font-medium text-muted-foreground mt-2'>
+           {{lucide 'TrendingUp' 'w-4 h-4 text-green-600 dark:text-green-400'}}
+           <span class='text-green-600 dark:text-green-400'>+18%</span> vs last quarter
+         </p>
+       </div>
 
-      <!-- Investment Returns -->
-      <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-        <div class='flex items-center justify-between px-[10px] py-[4px]'>
-          <div class='flex flex-col gap-[4px]'>
-            <h3 class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>Avg ROI</h3>
-            <p class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'>24.5%</p>
-          </div>
-          <div>
-            <div style="background:#E8F5E8; border-radius: 6px;">
-              <div style="width:38px; height:38px; background:#E8F5E8; border-radius:50%; position:relative;">
-                <div class="flex items-center justify-center" style="width:35px; height:35px; background:#4CAF50; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Target' 'w-4 h-4 text-white'}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'>
-          {{lucide 'TrendingUp' 'w-5 h-4' style='color: #4CAF50'}}
-          <span class='text-[#4CAF50] dark:text-green-400'>+2.1%</span> vs last quarter
-        </p>
-      </div>
+       <!-- Investment Returns -->
+       <div class='rounded-lg bg-card p-4 text-card-foreground shadow-sm border border-border/50 hover:shadow-md transition-shadow'>
+         <div class='flex items-center justify-between'>
+           <div class='flex flex-col gap-2'>
+             <h3 class='text-sm font-medium text-muted-foreground'>Avg ROI</h3>
+             <p class='text-xl font-semibold text-foreground'>24.5%</p>
+           </div>
+           <div class='w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'>
+             {{lucide 'Target' 'w-5 h-5 text-green-600 dark:text-green-400'}}
+           </div>
+         </div>
+         <p class='flex items-center gap-1 text-xs font-medium text-muted-foreground mt-2'>
+           {{lucide 'TrendingUp' 'w-4 h-4 text-green-600 dark:text-green-400'}}
+           <span class='text-green-600 dark:text-green-400'>+2.1%</span> vs last quarter
+         </p>
+       </div>
 
-      <!-- Risk Score -->
-      <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-        <div class='flex items-center justify-between px-[10px] py-[4px]'>
-          <div class='flex flex-col gap-[4px]'>
-            <h3 class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>Risk Score</h3>
-            <p class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'>Low</p>
-          </div>
-          <div>
-            <div style="background:#F3E5F5; border-radius: 6px;">
-              <div style="width:38px; height:38px; background:#F3E5F5; border-radius:50%; position:relative;">
-                <div class="flex items-center justify-center" style="width:35px; height:35px; background:#9C27B0; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Shield' 'w-4 h-4 text-white'}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'>
-          {{lucide 'TrendingDown' 'w-5 h-4' style='color: #4CAF50'}}
-          <span class='text-[#4CAF50] dark:text-green-400'>-5%</span> improvement
-        </p>
-      </div>
+       <!-- Risk Score -->
+       <div class='rounded-lg bg-card p-4 text-card-foreground shadow-sm border border-border/50 hover:shadow-md transition-shadow'>
+         <div class='flex items-center justify-between'>
+           <div class='flex flex-col gap-2'>
+             <h3 class='text-sm font-medium text-muted-foreground'>Risk Score</h3>
+             <p class='text-xl font-semibold text-foreground'>Low</p>
+           </div>
+           <div class='w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center'>
+             {{lucide 'Shield' 'w-5 h-5 text-purple-600 dark:text-purple-400'}}
+           </div>
+         </div>
+         <p class='flex items-center gap-1 text-xs font-medium text-muted-foreground mt-2'>
+           {{lucide 'TrendingDown' 'w-4 h-4 text-green-600 dark:text-green-400'}}
+           <span class='text-green-600 dark:text-green-400'>-5%</span> improvement
+         </p>
+       </div>
 
-      <!-- Compliance Rate -->
-      <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-        <div class='flex items-center justify-between px-[10px] py-[4px]'>
-          <div class='flex flex-col gap-[4px]'>
-            <h3 class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>Compliance</h3>
-            <p class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'>98.2%</p>
-          </div>
-          <div>
-            <div style="background:#E0F2F1; border-radius: 6px;">
-              <div style="width:38px; height:38px; background:#E0F2F1; border-radius:50%; position:relative;">
-                <div class="flex items-center justify-center" style="width:35px; height:35px; background:#009688; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'CheckCircle' 'w-4 h-4 text-white'}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'>
-          {{lucide 'TrendingUp' 'w-5 h-4' style='color: #4CAF50'}}
-          <span class='text-[#4CAF50] dark:text-green-400'>+0.3%</span> vs last month
-        </p>
-      </div>
+       <!-- Compliance Rate -->
+       <div class='rounded-lg bg-card p-4 text-card-foreground shadow-sm border border-border/50 hover:shadow-md transition-shadow'>
+         <div class='flex items-center justify-between'>
+           <div class='flex flex-col gap-2'>
+             <h3 class='text-sm font-medium text-muted-foreground'>Compliance</h3>
+             <p class='text-xl font-semibold text-foreground'>98.2%</p>
+           </div>
+           <div class='w-10 h-10 bg-teal-100 dark:bg-teal-900/30 rounded-lg flex items-center justify-center'>
+             {{lucide 'CheckCircle' 'w-5 h-5 text-teal-600 dark:text-teal-400'}}
+           </div>
+         </div>
+         <p class='flex items-center gap-1 text-xs font-medium text-muted-foreground mt-2'>
+           {{lucide 'TrendingUp' 'w-4 h-4 text-green-600 dark:text-green-400'}}
+           <span class='text-green-600 dark:text-green-400'>+0.3%</span> vs last month
+         </p>
+       </div>
     </div>
 
-    <!-- Enterprise Portfolio Grid -->
-    <div class='rounded-md bg-card px-[26px] py-[20px] text-card-foreground' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-      <div class='flex items-center justify-between mb-6'>
-        <h3 class='text-[18px] font-[500] text-gray-900 dark:text-gray-100'>Enterprise Portfolio</h3>
-        <div class='flex items-center gap-2'>
-          <input type='text' placeholder='Search enterprises...' class='px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100' />
-          <select class='px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100'>
-            <option>All Industries</option>
-            <option>Technology</option>
-            <option>Healthcare</option>
-            <option>Finance</option>
-            <option>Retail</option>
-          </select>
-        </div>
-      </div>
+     <!-- Enterprise Portfolio Grid -->
+     <div class='rounded-lg bg-card p-6 text-card-foreground shadow-sm border border-border/50'>
+       <div class='flex items-center justify-between mb-6'>
+         <h3 class='text-lg font-semibold text-foreground'>Enterprise Portfolio</h3>
+         <div class='flex items-center gap-3'>
+           <div class='relative'>
+             <input type='text' placeholder='Search enterprises...' class='pl-9 pr-4 py-2 border border-input rounded-md text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent' />
+             <div class='absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground'>
+               {{lucide 'Search' 'w-4 h-4'}}
+             </div>
+           </div>
+           <select class='px-3 py-2 border border-input rounded-md text-sm bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent'>
+             <option>All Industries</option>
+             <option>Technology</option>
+             <option>Healthcare</option>
+             <option>Finance</option>
+             <option>Retail</option>
+           </select>
+         </div>
+       </div>
       <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
-        <!-- Enterprise Card 1 -->
-        <div class='p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow'>
-          <div class='flex items-start justify-between mb-3'>
-            <div class='w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'>
-              {{lucide 'Building' 'w-6 h-6 text-blue-600 dark:text-blue-400'}}
-            </div>
-            <span class='px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded-full'>Active</span>
-          </div>
-          <h4 class='font-medium text-gray-900 dark:text-gray-100 mb-1'>TechStart Solutions</h4>
-          <p class='text-sm text-gray-500 dark:text-gray-400 mb-3'>SaaS platform for small businesses</p>
-          <div class='space-y-2'>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Investment</span>
-              <span class='font-medium'>$250K</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Revenue</span>
-              <span class='font-medium'>$45K</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>ROI</span>
-              <span class='font-medium text-green-600'>32%</span>
-            </div>
-          </div>
-        </div>
+         <!-- Enterprise Card 1 -->
+         <div class='p-4 border border-border rounded-lg hover:shadow-md transition-all duration-200 hover:border-primary/20 bg-card'>
+           <div class='flex items-start justify-between mb-3'>
+             <div class='w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'>
+               {{lucide 'Building' 'w-6 h-6 text-blue-600 dark:text-blue-400'}}
+             </div>
+             <span class='px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-medium rounded-full'>Active</span>
+           </div>
+           <h4 class='font-semibold text-foreground mb-1'>TechStart Solutions</h4>
+           <p class='text-sm text-muted-foreground mb-4'>SaaS platform for small businesses</p>
+           <div class='space-y-3'>
+             <div class='flex justify-between text-sm'>
+               <span class='text-muted-foreground'>Investment</span>
+               <span class='font-medium text-foreground'>$250K</span>
+             </div>
+             <div class='flex justify-between text-sm'>
+               <span class='text-muted-foreground'>Revenue</span>
+               <span class='font-medium text-foreground'>$45K</span>
+             </div>
+             <div class='flex justify-between text-sm'>
+               <span class='text-muted-foreground'>ROI</span>
+               <span class='font-medium text-green-600 dark:text-green-400'>32%</span>
+             </div>
+           </div>
+         </div>
 
-        <!-- Enterprise Card 2 -->
-        <div class='p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow'>
-          <div class='flex items-start justify-between mb-3'>
-            <div class='w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center'>
-              {{lucide 'Heart' 'w-6 h-6 text-purple-600 dark:text-purple-400'}}
-            </div>
-            <span class='px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs rounded-full'>Growth</span>
-          </div>
-          <h4 class='font-medium text-gray-900 dark:text-gray-100 mb-1'>HealthTech Innovations</h4>
-          <p class='text-sm text-gray-500 dark:text-gray-400 mb-3'>AI-powered medical diagnostics</p>
-          <div class='space-y-2'>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Investment</span>
-              <span class='font-medium'>$500K</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Revenue</span>
-              <span class='font-medium'>$78K</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>ROI</span>
-              <span class='font-medium text-green-600'>18%</span>
-            </div>
-          </div>
-        </div>
+         <!-- Enterprise Card 2 -->
+         <div class='p-4 border border-border rounded-lg hover:shadow-md transition-all duration-200 hover:border-primary/20 bg-card'>
+           <div class='flex items-start justify-between mb-3'>
+             <div class='w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center'>
+               {{lucide 'Heart' 'w-6 h-6 text-purple-600 dark:text-purple-400'}}
+             </div>
+             <span class='px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs font-medium rounded-full'>Growth</span>
+           </div>
+           <h4 class='font-semibold text-foreground mb-1'>HealthTech Innovations</h4>
+           <p class='text-sm text-muted-foreground mb-4'>AI-powered medical diagnostics</p>
+           <div class='space-y-3'>
+             <div class='flex justify-between text-sm'>
+               <span class='text-muted-foreground'>Investment</span>
+               <span class='font-medium text-foreground'>$500K</span>
+             </div>
+             <div class='flex justify-between text-sm'>
+               <span class='text-muted-foreground'>Revenue</span>
+               <span class='font-medium text-foreground'>$78K</span>
+             </div>
+             <div class='flex justify-between text-sm'>
+               <span class='text-muted-foreground'>ROI</span>
+               <span class='font-medium text-green-600 dark:text-green-400'>18%</span>
+             </div>
+           </div>
+         </div>
 
-        <!-- Enterprise Card 3 -->
-        <div class='p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow'>
-          <div class='flex items-start justify-between mb-3'>
-            <div class='w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'>
-              {{lucide 'Leaf' 'w-6 h-6 text-green-600 dark:text-green-400'}}
-            </div>
-            <span class='px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded-full'>Active</span>
-          </div>
-          <h4 class='font-medium text-gray-900 dark:text-gray-100 mb-1'>GreenEnergy Corp</h4>
-          <p class='text-sm text-gray-500 dark:text-gray-400 mb-3'>Renewable energy solutions</p>
-          <div class='space-y-2'>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Investment</span>
-              <span class='font-medium'>$750K</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Revenue</span>
-              <span class='font-medium'>$120K</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>ROI</span>
-              <span class='font-medium text-green-600'>28%</span>
-            </div>
-          </div>
-        </div>
+         <!-- Enterprise Card 3 -->
+         <div class='p-4 border border-border rounded-lg hover:shadow-md transition-all duration-200 hover:border-primary/20 bg-card'>
+           <div class='flex items-start justify-between mb-3'>
+             <div class='w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'>
+               {{lucide 'Leaf' 'w-6 h-6 text-green-600 dark:text-green-400'}}
+             </div>
+             <span class='px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs font-medium rounded-full'>Active</span>
+           </div>
+           <h4 class='font-semibold text-foreground mb-1'>GreenEnergy Corp</h4>
+           <p class='text-sm text-muted-foreground mb-4'>Renewable energy solutions</p>
+           <div class='space-y-3'>
+             <div class='flex justify-between text-sm'>
+               <span class='text-muted-foreground'>Investment</span>
+               <span class='font-medium text-foreground'>$750K</span>
+             </div>
+             <div class='flex justify-between text-sm'>
+               <span class='text-muted-foreground'>Revenue</span>
+               <span class='font-medium text-foreground'>$120K</span>
+             </div>
+             <div class='flex justify-between text-sm'>
+               <span class='text-muted-foreground'>ROI</span>
+               <span class='font-medium text-green-600 dark:text-green-400'>28%</span>
+             </div>
+           </div>
+         </div>
 
-        <!-- Enterprise Card 4 -->
-        <div class='p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow'>
-          <div class='flex items-start justify-between mb-3'>
-            <div class='w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center'>
-              {{lucide 'ShoppingCart' 'w-6 h-6 text-orange-600 dark:text-orange-400'}}
-            </div>
-            <span class='px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 text-xs rounded-full'>At Risk</span>
-          </div>
-          <h4 class='font-medium text-gray-900 dark:text-gray-100 mb-1'>RetailPlus</h4>
-          <p class='text-sm text-gray-500 dark:text-gray-400 mb-3'>E-commerce platform</p>
-          <div class='space-y-2'>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Investment</span>
-              <span class='font-medium'>$300K</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Revenue</span>
-              <span class='font-medium'>$25K</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>ROI</span>
-              <span class='font-medium text-red-600'>-8%</span>
-            </div>
-          </div>
-        </div>
+         <!-- Enterprise Card 4 -->
+         <div class='p-4 border border-border rounded-lg hover:shadow-md transition-all duration-200 hover:border-primary/20 bg-card'>
+           <div class='flex items-start justify-between mb-3'>
+             <div class='w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center'>
+               {{lucide 'ShoppingCart' 'w-6 h-6 text-orange-600 dark:text-orange-400'}}
+             </div>
+             <span class='px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 text-xs font-medium rounded-full'>At Risk</span>
+           </div>
+           <h4 class='font-semibold text-foreground mb-1'>RetailPlus</h4>
+           <p class='text-sm text-muted-foreground mb-4'>E-commerce platform</p>
+           <div class='space-y-3'>
+             <div class='flex justify-between text-sm'>
+               <span class='text-muted-foreground'>Investment</span>
+               <span class='font-medium text-foreground'>$300K</span>
+             </div>
+             <div class='flex justify-between text-sm'>
+               <span class='text-muted-foreground'>Revenue</span>
+               <span class='font-medium text-foreground'>$25K</span>
+             </div>
+             <div class='flex justify-between text-sm'>
+               <span class='text-muted-foreground'>ROI</span>
+               <span class='font-medium text-red-600 dark:text-red-400'>-8%</span>
+             </div>
+           </div>
+         </div>
       </div>
     </div>
 
-    <!-- Financial Analytics and Risk Monitoring -->
-    <div class='flex flex-col gap-[17px] lg:flex-row'>
-      <!-- Financial Analytics -->
-      <div class='w-full rounded-md bg-card px-[26px] py-[20px] text-card-foreground lg:w-[60%] lg:min-w-[60%]' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-        <h3 class='text-[18px] font-[500] text-gray-900 dark:text-gray-100 mb-4'>Financial Analytics</h3>
+     <!-- Financial Analytics and Risk Monitoring -->
+     <div class='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+       <!-- Financial Analytics -->
+       <div class='lg:col-span-2 rounded-lg bg-card p-6 text-card-foreground shadow-sm border border-border/50'>
+         <h3 class='text-lg font-semibold text-foreground mb-6'>Financial Analytics</h3>
         <div class='space-y-6'>
-          <!-- Revenue Trends Chart -->
-          <div>
-            <h4 class='text-sm font-medium text-gray-700 dark:text-gray-300 mb-3'>Revenue Trends (Last 6 Months)</h4>
-            <div class='h-64 bg-gray-50 dark:bg-gray-800 rounded-lg flex items-center justify-center'>
-              <svg viewBox='0 0 400 200' class='w-full h-full'>
-                <defs>
-                  <linearGradient id='revenueGradient' x1='0%' y1='0%' x2='0%' y2='100%'>
-                    <stop offset='0%' style='stop-color:#3B82F6;stop-opacity:0.8' />
-                    <stop offset='100%' style='stop-color:#3B82F6;stop-opacity:0.1' />
-                  </linearGradient>
-                </defs>
-                <polyline fill='url(#revenueGradient)' stroke='#3B82F6' stroke-width='2' points='20,180 80,160 140,140 200,120 260,100 320,80' />
-                <circle cx='20' cy='180' r='3' fill='#3B82F6' />
-                <circle cx='80' cy='160' r='3' fill='#3B82F6' />
-                <circle cx='140' cy='140' r='3' fill='#3B82F6' />
-                <circle cx='200' cy='120' r='3' fill='#3B82F6' />
-                <circle cx='260' cy='100' r='3' fill='#3B82F6' />
-                <circle cx='320' cy='80' r='3' fill='#3B82F6' />
-                <text x='20' y='200' class='text-xs fill-gray-500'>Jan</text>
-                <text x='80' y='200' class='text-xs fill-gray-500'>Feb</text>
-                <text x='140' y='200' class='text-xs fill-gray-500'>Mar</text>
-                <text x='200' y='200' class='text-xs fill-gray-500'>Apr</text>
-                <text x='260' y='200' class='text-xs fill-gray-500'>May</text>
-                <text x='320' y='200' class='text-xs fill-gray-500'>Jun</text>
-              </svg>
-            </div>
-          </div>
+           <!-- Revenue Trends Chart -->
+           <div>
+             <h4 class='text-sm font-medium text-muted-foreground mb-4'>Revenue Trends (Last 6 Months)</h4>
+             <div class='h-64 bg-muted/30 rounded-lg p-4 flex items-end justify-between'>
+               <div class='flex flex-col items-center flex-1'>
+                 <div class='w-full bg-blue-500 rounded-t mb-2' style='height: 120px;'></div>
+                 <span class='text-xs text-muted-foreground'>Jan</span>
+               </div>
+               <div class='flex flex-col items-center flex-1'>
+                 <div class='w-full bg-blue-500 rounded-t mb-2' style='height: 140px;'></div>
+                 <span class='text-xs text-muted-foreground'>Feb</span>
+               </div>
+               <div class='flex flex-col items-center flex-1'>
+                 <div class='w-full bg-blue-500 rounded-t mb-2' style='height: 100px;'></div>
+                 <span class='text-xs text-muted-foreground'>Mar</span>
+               </div>
+               <div class='flex flex-col items-center flex-1'>
+                 <div class='w-full bg-blue-500 rounded-t mb-2' style='height: 160px;'></div>
+                 <span class='text-xs text-muted-foreground'>Apr</span>
+               </div>
+               <div class='flex flex-col items-center flex-1'>
+                 <div class='w-full bg-blue-500 rounded-t mb-2' style='height: 130px;'></div>
+                 <span class='text-xs text-muted-foreground'>May</span>
+               </div>
+               <div class='flex flex-col items-center flex-1'>
+                 <div class='w-full bg-blue-500 rounded-t mb-2' style='height: 170px;'></div>
+                 <span class='text-xs text-muted-foreground'>Jun</span>
+               </div>
+             </div>
+           </div>
 
-          <!-- Investment Allocation -->
-          <div>
-            <h4 class='text-sm font-medium text-gray-700 dark:text-gray-300 mb-3'>Investment Allocation by Sector</h4>
-            <div class='space-y-3'>
-              <div class='flex items-center justify-between'>
-                <div class='flex items-center gap-3'>
-                  <div class='w-4 h-4 bg-blue-500 rounded'></div>
-                  <span class='text-sm'>Technology</span>
-                </div>
-                <div class='flex items-center gap-2'>
-                  <div class='w-24 h-2 bg-gray-200 dark:bg-gray-700 rounded-full'>
-                    <div class='w-3/4 h-2 bg-blue-500 rounded-full'></div>
-                  </div>
-                  <span class='text-sm font-medium'>45%</span>
-                </div>
-              </div>
-              <div class='flex items-center justify-between'>
-                <div class='flex items-center gap-3'>
-                  <div class='w-4 h-4 bg-green-500 rounded'></div>
-                  <span class='text-sm'>Healthcare</span>
-                </div>
-                <div class='flex items-center gap-2'>
-                  <div class='w-24 h-2 bg-gray-200 dark:bg-gray-700 rounded-full'>
-                    <div class='w-1/2 h-2 bg-green-500 rounded-full'></div>
-                  </div>
-                  <span class='text-sm font-medium'>25%</span>
-                </div>
-              </div>
-              <div class='flex items-center justify-between'>
-                <div class='flex items-center gap-3'>
-                  <div class='w-4 h-4 bg-purple-500 rounded'></div>
-                  <span class='text-sm'>Finance</span>
-                </div>
-                <div class='flex items-center gap-2'>
-                  <div class='w-24 h-2 bg-gray-200 dark:bg-gray-700 rounded-full'>
-                    <div class='w-1/4 h-2 bg-purple-500 rounded-full'></div>
-                  </div>
-                  <span class='text-sm font-medium'>15%</span>
-                </div>
-              </div>
-              <div class='flex items-center justify-between'>
-                <div class='flex items-center gap-3'>
-                  <div class='w-4 h-4 bg-orange-500 rounded'></div>
-                  <span class='text-sm'>Retail</span>
-                </div>
-                <div class='flex items-center gap-2'>
-                  <div class='w-24 h-2 bg-gray-200 dark:bg-gray-700 rounded-full'>
-                    <div class='w-1/6 h-2 bg-orange-500 rounded-full'></div>
-                  </div>
-                  <span class='text-sm font-medium'>10%</span>
-                </div>
-              </div>
-              <div class='flex items-center justify-between'>
-                <div class='flex items-center gap-3'>
-                  <div class='w-4 h-4 bg-gray-500 rounded'></div>
-                  <span class='text-sm'>Other</span>
-                </div>
-                <div class='flex items-center gap-2'>
-                  <div class='w-24 h-2 bg-gray-200 dark:bg-gray-700 rounded-full'>
-                    <div class='w-1/12 h-2 bg-gray-500 rounded-full'></div>
-                  </div>
-                  <span class='text-sm font-medium'>5%</span>
-                </div>
-              </div>
-            </div>
-          </div>
+           <!-- Investment Allocation -->
+           <div>
+             <h4 class='text-sm font-medium text-muted-foreground mb-4'>Investment Allocation by Sector</h4>
+             <div class='space-y-4'>
+               <div class='flex items-center justify-between p-3 rounded-lg bg-muted/30'>
+                 <div class='flex items-center gap-3'>
+                   <div class='w-3 h-3 bg-blue-500 rounded-full'></div>
+                   <span class='text-sm font-medium text-foreground'>Technology</span>
+                 </div>
+                 <div class='flex items-center gap-3'>
+                   <div class='flex-1 w-32 h-2 bg-muted rounded-full'>
+                     <div class='w-3/4 h-2 bg-blue-500 rounded-full'></div>
+                   </div>
+                   <span class='text-sm font-semibold text-foreground min-w-[3rem]'>45%</span>
+                 </div>
+               </div>
+               <div class='flex items-center justify-between p-3 rounded-lg bg-muted/30'>
+                 <div class='flex items-center gap-3'>
+                   <div class='w-3 h-3 bg-green-500 rounded-full'></div>
+                   <span class='text-sm font-medium text-foreground'>Healthcare</span>
+                 </div>
+                 <div class='flex items-center gap-3'>
+                   <div class='flex-1 w-32 h-2 bg-muted rounded-full'>
+                     <div class='w-1/2 h-2 bg-green-500 rounded-full'></div>
+                   </div>
+                   <span class='text-sm font-semibold text-foreground min-w-[3rem]'>25%</span>
+                 </div>
+               </div>
+               <div class='flex items-center justify-between p-3 rounded-lg bg-muted/30'>
+                 <div class='flex items-center gap-3'>
+                   <div class='w-3 h-3 bg-purple-500 rounded-full'></div>
+                   <span class='text-sm font-medium text-foreground'>Finance</span>
+                 </div>
+                 <div class='flex items-center gap-3'>
+                   <div class='flex-1 w-32 h-2 bg-muted rounded-full'>
+                     <div class='w-1/4 h-2 bg-purple-500 rounded-full'></div>
+                   </div>
+                   <span class='text-sm font-semibold text-foreground min-w-[3rem]'>15%</span>
+                 </div>
+               </div>
+               <div class='flex items-center justify-between p-3 rounded-lg bg-muted/30'>
+                 <div class='flex items-center gap-3'>
+                   <div class='w-3 h-3 bg-orange-500 rounded-full'></div>
+                   <span class='text-sm font-medium text-foreground'>Retail</span>
+                 </div>
+                 <div class='flex items-center gap-3'>
+                   <div class='flex-1 w-32 h-2 bg-muted rounded-full'>
+                     <div class='w-1/6 h-2 bg-orange-500 rounded-full'></div>
+                   </div>
+                   <span class='text-sm font-semibold text-foreground min-w-[3rem]'>10%</span>
+                 </div>
+               </div>
+               <div class='flex items-center justify-between p-3 rounded-lg bg-muted/30'>
+                 <div class='flex items-center gap-3'>
+                   <div class='w-3 h-3 bg-gray-500 rounded-full'></div>
+                   <span class='text-sm font-medium text-foreground'>Other</span>
+                 </div>
+                 <div class='flex items-center gap-3'>
+                   <div class='flex-1 w-32 h-2 bg-muted rounded-full'>
+                     <div class='w-1/12 h-2 bg-gray-500 rounded-full'></div>
+                   </div>
+                   <span class='text-sm font-semibold text-foreground min-w-[3rem]'>5%</span>
+                 </div>
+               </div>
+             </div>
+           </div>
         </div>
       </div>
 
-      <!-- Risk & Compliance Monitoring -->
-      <div class='w-full rounded-md bg-card px-[26px] py-[20px] text-card-foreground' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-        <h3 class='text-[18px] font-[500] text-gray-900 dark:text-gray-100 mb-4'>Risk & Compliance</h3>
-        <div class='space-y-4'>
-          <!-- Risk Indicators -->
-          <div class='grid grid-cols-2 gap-4'>
-            <div class='p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800'>
-              <div class='flex items-center gap-3 mb-2'>
-                <div class='w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'>
-                  <svg class='w-4 h-4 text-green-600 dark:text-green-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                  </svg>
-                </div>
-                <h4 class='font-medium text-green-800 dark:text-green-400'>Low Risk</h4>
-              </div>
-              <p class='text-2xl font-bold text-green-800 dark:text-green-400'>18</p>
-              <p class='text-sm text-green-700 dark:text-green-300'>Enterprises</p>
-            </div>
+       <!-- Risk & Compliance Monitoring -->
+       <div class='rounded-lg bg-card p-6 text-card-foreground shadow-sm border border-border/50'>
+         <h3 class='text-lg font-semibold text-foreground mb-6'>Risk & Compliance</h3>
+         <div class='space-y-6'>
+           <!-- Risk Indicators -->
+           <div class='grid grid-cols-2 gap-4'>
+             <div class='p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors'>
+               <div class='flex items-center gap-3 mb-3'>
+                 <div class='w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'>
+                   {{lucide 'CheckCircle' 'w-5 h-5 text-green-600 dark:text-green-400'}}
+                 </div>
+                 <h4 class='font-semibold text-green-800 dark:text-green-400'>Low Risk</h4>
+               </div>
+               <p class='text-2xl font-bold text-green-800 dark:text-green-400 mb-1'>18</p>
+               <p class='text-sm text-green-700 dark:text-green-300'>Enterprises</p>
+             </div>
 
-            <div class='p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800'>
-              <div class='flex items-center gap-3 mb-2'>
-                <div class='w-8 h-8 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center'>
-                  <svg class='w-4 h-4 text-yellow-600 dark:text-yellow-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z'></path>
-                  </svg>
-                </div>
-                <h4 class='font-medium text-yellow-800 dark:text-yellow-400'>Medium Risk</h4>
-              </div>
-              <p class='text-2xl font-bold text-yellow-800 dark:text-yellow-400'>5</p>
-              <p class='text-sm text-yellow-700 dark:text-yellow-300'>Enterprises</p>
-            </div>
+             <div class='p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800 hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-colors'>
+               <div class='flex items-center gap-3 mb-3'>
+                 <div class='w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center'>
+                   {{lucide 'AlertTriangle' 'w-5 h-5 text-yellow-600 dark:text-yellow-400'}}
+                 </div>
+                 <h4 class='font-semibold text-yellow-800 dark:text-yellow-400'>Medium Risk</h4>
+               </div>
+               <p class='text-2xl font-bold text-yellow-800 dark:text-yellow-400 mb-1'>5</p>
+               <p class='text-sm text-yellow-700 dark:text-yellow-300'>Enterprises</p>
+             </div>
 
-            <div class='p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800'>
-              <div class='flex items-center gap-3 mb-2'>
-                <div class='w-8 h-8 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center'>
-                  <svg class='w-4 h-4 text-red-600 dark:text-red-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 18L18 6M6 6l12 12'></path>
-                  </svg>
-                </div>
-                <h4 class='font-medium text-red-800 dark:text-red-400'>High Risk</h4>
-              </div>
-              <p class='text-2xl font-bold text-red-800 dark:text-red-400'>1</p>
-              <p class='text-sm text-red-700 dark:text-red-300'>Enterprise</p>
-            </div>
+             <div class='p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors'>
+               <div class='flex items-center gap-3 mb-3'>
+                 <div class='w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center'>
+                   {{lucide 'XCircle' 'w-5 h-5 text-red-600 dark:text-red-400'}}
+                 </div>
+                 <h4 class='font-semibold text-red-800 dark:text-red-400'>High Risk</h4>
+               </div>
+               <p class='text-2xl font-bold text-red-800 dark:text-red-400 mb-1'>1</p>
+               <p class='text-sm text-red-700 dark:text-red-300'>Enterprise</p>
+             </div>
 
-            <div class='p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800'>
-              <div class='flex items-center gap-3 mb-2'>
-                <div class='w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'>
-                  <svg class='w-4 h-4 text-blue-600 dark:text-blue-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
-                  </svg>
-                </div>
-                <h4 class='font-medium text-blue-800 dark:text-blue-400'>Compliant</h4>
-              </div>
-              <p class='text-2xl font-bold text-blue-800 dark:text-blue-400'>98%</p>
-              <p class='text-sm text-blue-700 dark:text-blue-300'>Avg Score</p>
-            </div>
-          </div>
+             <div class='p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors'>
+               <div class='flex items-center gap-3 mb-3'>
+                 <div class='w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'>
+                   {{lucide 'ShieldCheck' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
+                 </div>
+                 <h4 class='font-semibold text-blue-800 dark:text-blue-400'>Compliant</h4>
+               </div>
+               <p class='text-2xl font-bold text-blue-800 dark:text-blue-400 mb-1'>98%</p>
+               <p class='text-sm text-blue-700 dark:text-blue-300'>Avg Score</p>
+             </div>
+           </div>
 
-          <!-- Recent Alerts -->
-          <div>
-            <h4 class='font-medium text-gray-900 dark:text-gray-100 mb-3'>Recent Alerts</h4>
-            <div class='space-y-2'>
-              <div class='flex items-center gap-3 p-2 bg-red-50 dark:bg-red-900/20 rounded-lg'>
-                <div class='w-2 h-2 bg-red-500 rounded-full'></div>
-                <span class='text-sm text-red-800 dark:text-red-400'>RetailPlus showing negative ROI trend</span>
-                <span class='text-xs text-gray-500 ml-auto'>2h ago</span>
-              </div>
-              <div class='flex items-center gap-3 p-2 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg'>
-                <div class='w-2 h-2 bg-yellow-500 rounded-full'></div>
-                <span class='text-sm text-yellow-800 dark:text-yellow-400'>Compliance audit due for 3 enterprises</span>
-                <span class='text-xs text-gray-500 ml-auto'>1d ago</span>
-              </div>
-              <div class='flex items-center gap-3 p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg'>
-                <div class='w-2 h-2 bg-blue-500 rounded-full'></div>
-                <span class='text-sm text-blue-800 dark:text-blue-400'>New funding round completed</span>
-                <span class='text-xs text-gray-500 ml-auto'>3d ago</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Strategic Planning Tools -->
-    <div class='rounded-md bg-card px-[26px] py-[20px] text-card-foreground' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-      <h3 class='text-[18px] font-[500] text-gray-900 dark:text-gray-100 mb-4'>Strategic Planning Tools</h3>
-      <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-        <!-- Market Analysis -->
-        <div class='p-4 border border-gray-200 dark:border-gray-700 rounded-lg'>
-          <div class='flex items-center gap-3 mb-4'>
-            <div class='w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'>
-              {{lucide 'BarChart3' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
-            </div>
-            <div>
-              <h4 class='font-medium text-gray-900 dark:text-gray-100'>Market Analysis</h4>
-              <p class='text-sm text-gray-500 dark:text-gray-400'>Industry trends & opportunities</p>
-            </div>
-          </div>
-          <div class='space-y-2 mb-4'>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Tech Sector Growth</span>
-              <span class='font-medium text-green-600'>+15.2%</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Healthcare Demand</span>
-              <span class='font-medium text-green-600'>+8.7%</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Market Saturation</span>
-              <span class='font-medium text-yellow-600'>Medium</span>
-            </div>
-          </div>
-          <button class='w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition'>
-            View Full Analysis
-          </button>
-        </div>
-
-        <!-- Resource Allocation -->
-        <div class='p-4 border border-gray-200 dark:border-gray-700 rounded-lg'>
-          <div class='flex items-center gap-3 mb-4'>
-            <div class='w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'>
-              {{lucide 'Users' 'w-5 h-5 text-green-600 dark:text-green-400'}}
-            </div>
-            <div>
-              <h4 class='font-medium text-gray-900 dark:text-gray-100'>Resource Allocation</h4>
-              <p class='text-sm text-gray-500 dark:text-gray-400'>Team & budget optimization</p>
-            </div>
-          </div>
-          <div class='space-y-2 mb-4'>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Available Budget</span>
-              <span class='font-medium'>$2.1M</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Team Capacity</span>
-              <span class='font-medium'>85%</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Next Allocation</span>
-              <span class='font-medium text-blue-600'>Q2 2024</span>
-            </div>
-          </div>
-          <button class='w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md transition'>
-            Optimize Resources
-          </button>
-        </div>
-
-        <!-- Performance Benchmarking -->
-        <div class='p-4 border border-gray-200 dark:border-gray-700 rounded-lg'>
-          <div class='flex items-center gap-3 mb-4'>
-            <div class='w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center'>
-              {{lucide 'Target' 'w-5 h-5 text-purple-600 dark:text-purple-400'}}
-            </div>
-            <div>
-              <h4 class='font-medium text-gray-900 dark:text-gray-100'>Performance Benchmarking</h4>
-              <p class='text-sm text-gray-500 dark:text-gray-400'>Compare against industry standards</p>
-            </div>
-          </div>
-          <div class='space-y-2 mb-4'>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Portfolio Performance</span>
-              <span class='font-medium text-green-600'>Above Avg</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Risk Management</span>
-              <span class='font-medium text-green-600'>Excellent</span>
-            </div>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Innovation Index</span>
-              <span class='font-medium text-blue-600'>High</span>
-            </div>
-          </div>
-          <button class='w-full px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-md transition'>
-            View Benchmarks
-          </button>
+           <!-- Recent Alerts -->
+           <div>
+             <h4 class='font-semibold text-foreground mb-4'>Recent Alerts</h4>
+             <div class='space-y-3'>
+               <div class='flex items-start gap-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800'>
+                 <div class='w-2 h-2 bg-red-500 rounded-full mt-2'></div>
+                 <div class='flex-1'>
+                   <span class='text-sm font-medium text-red-800 dark:text-red-400'>RetailPlus showing negative ROI trend</span>
+                   <p class='text-xs text-red-700 dark:text-red-300 mt-1'>Requires immediate attention</p>
+                 </div>
+                 <span class='text-xs text-muted-foreground'>2h ago</span>
+               </div>
+               <div class='flex items-start gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800'>
+                 <div class='w-2 h-2 bg-yellow-500 rounded-full mt-2'></div>
+                 <div class='flex-1'>
+                   <span class='text-sm font-medium text-yellow-800 dark:text-yellow-400'>Compliance audit due for 3 enterprises</span>
+                   <p class='text-xs text-yellow-700 dark:text-yellow-300 mt-1'>Due within 7 days</p>
+                 </div>
+                 <span class='text-xs text-muted-foreground'>1d ago</span>
+               </div>
+               <div class='flex items-start gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800'>
+                 <div class='w-2 h-2 bg-blue-500 rounded-full mt-2'></div>
+                 <div class='flex-1'>
+                   <span class='text-sm font-medium text-blue-800 dark:text-blue-400'>New funding round completed</span>
+                   <p class='text-xs text-blue-700 dark:text-blue-300 mt-1'>Successfully closed $2.1M</p>
+                 </div>
+                 <span class='text-xs text-muted-foreground'>3d ago</span>
+               </div>
+             </div>
+           </div>
         </div>
       </div>
     </div>
+
+     <!-- Strategic Planning Tools -->
+     <div class='rounded-lg bg-card p-6 text-card-foreground shadow-sm border border-border/50'>
+       <h3 class='text-lg font-semibold text-foreground mb-6'>Strategic Planning Tools</h3>
+       <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+         <!-- Market Analysis -->
+         <div class='p-6 border border-border rounded-lg hover:shadow-md transition-all duration-200 hover:border-primary/20 bg-card'>
+           <div class='flex items-center gap-4 mb-6'>
+             <div class='w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'>
+               {{lucide 'BarChart3' 'w-6 h-6 text-blue-600 dark:text-blue-400'}}
+             </div>
+             <div>
+               <h4 class='font-semibold text-foreground'>Market Analysis</h4>
+               <p class='text-sm text-muted-foreground'>Industry trends & opportunities</p>
+             </div>
+           </div>
+           <div class='space-y-3 mb-6'>
+             <div class='flex justify-between items-center'>
+               <span class='text-sm text-muted-foreground'>Tech Sector Growth</span>
+               <span class='font-semibold text-green-600 dark:text-green-400'>+15.2%</span>
+             </div>
+             <div class='flex justify-between items-center'>
+               <span class='text-sm text-muted-foreground'>Healthcare Demand</span>
+               <span class='font-semibold text-green-600 dark:text-green-400'>+8.7%</span>
+             </div>
+             <div class='flex justify-between items-center'>
+               <span class='text-sm text-muted-foreground'>Market Saturation</span>
+               <span class='font-semibold text-yellow-600 dark:text-yellow-400'>Medium</span>
+             </div>
+           </div>
+           <button class='w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'>
+             View Full Analysis
+           </button>
+         </div>
+
+         <!-- Resource Allocation -->
+         <div class='p-6 border border-border rounded-lg hover:shadow-md transition-all duration-200 hover:border-primary/20 bg-card'>
+           <div class='flex items-center gap-4 mb-6'>
+             <div class='w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'>
+               {{lucide 'Users' 'w-6 h-6 text-green-600 dark:text-green-400'}}
+             </div>
+             <div>
+               <h4 class='font-semibold text-foreground'>Resource Allocation</h4>
+               <p class='text-sm text-muted-foreground'>Team & budget optimization</p>
+             </div>
+           </div>
+           <div class='space-y-3 mb-6'>
+             <div class='flex justify-between items-center'>
+               <span class='text-sm text-muted-foreground'>Available Budget</span>
+               <span class='font-semibold text-foreground'>$2.1M</span>
+             </div>
+             <div class='flex justify-between items-center'>
+               <span class='text-sm text-muted-foreground'>Team Capacity</span>
+               <span class='font-semibold text-foreground'>85%</span>
+             </div>
+             <div class='flex justify-between items-center'>
+               <span class='text-sm text-muted-foreground'>Next Allocation</span>
+               <span class='font-semibold text-blue-600 dark:text-blue-400'>Q2 2024</span>
+             </div>
+           </div>
+           <button class='w-full px-4 py-3 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2'>
+             Optimize Resources
+           </button>
+         </div>
+
+         <!-- Performance Benchmarking -->
+         <div class='p-6 border border-border rounded-lg hover:shadow-md transition-all duration-200 hover:border-primary/20 bg-card'>
+           <div class='flex items-center gap-4 mb-6'>
+             <div class='w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center'>
+               {{lucide 'Target' 'w-6 h-6 text-purple-600 dark:text-purple-400'}}
+             </div>
+             <div>
+               <h4 class='font-semibold text-foreground'>Performance Benchmarking</h4>
+               <p class='text-sm text-muted-foreground'>Compare against industry standards</p>
+             </div>
+           </div>
+           <div class='space-y-3 mb-6'>
+             <div class='flex justify-between items-center'>
+               <span class='text-sm text-muted-foreground'>Portfolio Performance</span>
+               <span class='font-semibold text-green-600 dark:text-green-400'>Above Avg</span>
+             </div>
+             <div class='flex justify-between items-center'>
+               <span class='text-sm text-muted-foreground'>Risk Management</span>
+               <span class='font-semibold text-green-600 dark:text-green-400'>Excellent</span>
+             </div>
+             <div class='flex justify-between items-center'>
+               <span class='text-sm text-muted-foreground'>Innovation Index</span>
+               <span class='font-semibold text-blue-600 dark:text-blue-400'>High</span>
+             </div>
+           </div>
+           <button class='w-full px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2'>
+             View Benchmarks
+           </button>
+         </div>
+       </div>
+     </div>
   </div>
 </div></content>
 </xai:function_call > 
