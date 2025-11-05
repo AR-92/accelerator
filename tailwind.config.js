@@ -118,39 +118,72 @@ module.exports = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: 0 },
         },
+        'fade-in': {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+        'pulse-on-hover': {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.5 },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'fade-in': 'fade-in 0.5s ease-in-out',
+        'pulse-on-hover': 'pulse-on-hover 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: 0 },
+        },
+        'fade-in': {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
+        'pulse-on-hover': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.02)' },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        'fade-in': 'fade-in 0.5s ease-in-out',
+        'pulse-on-hover': 'pulse-on-hover 2s infinite',
       },
     },
   },
-  safelist: [
-    // Safelist for dynamic classes that might not be detected by content scanning
-    // Keep only essential classes that are applied dynamically via JavaScript or templating
-    {
-      pattern:
-        /^(bg|text|border|ring)-(primary|secondary|accent|destructive|muted|card|popover|foreground|background)$/,
-      variants: ['hover', 'focus', 'active', 'dark'],
-    },
-    // Individual classes that might be applied dynamically
-    'bg-sidebar',
-    'text-sidebar-foreground',
-    'bg-sidebar-primary',
-    'text-sidebar-primary-foreground',
-    'bg-sidebar-accent',
-    'text-sidebar-accent-foreground',
-    'border-sidebar-border',
-    'ring-sidebar-ring',
-    // Force include the header size
-    'text-[48px]',
-    // Classes for progress bars and connecting lines in build-start-up.hbs
-    'bg-gray-200',
-    'bg-purple-600',
-    'border-gray-300',
-    'text-gray-400',
-    'text-purple-600',
-  ],
+   safelist: [
+     // Safelist for dynamic classes that might not be detected by content scanning
+     // Keep only essential classes that are applied dynamically via JavaScript or templating
+     {
+       pattern:
+         /^(bg|text|border|ring)-(primary|secondary|accent|destructive|muted|card|popover|foreground|background)$/,
+       variants: ['hover', 'focus', 'active', 'dark'],
+     },
+     // Individual classes that might be applied dynamically
+     'bg-sidebar',
+     'text-sidebar-foreground',
+     'bg-sidebar-primary',
+     'text-sidebar-primary-foreground',
+     'bg-sidebar-accent',
+     'text-sidebar-accent-foreground',
+     'border-sidebar-border',
+     'ring-sidebar-ring',
+     // Force include the header size
+     'text-[48px]',
+     // Classes for progress bars and connecting lines in build-start-up.hbs
+     'bg-gray-200',
+     'bg-purple-600',
+     'text-gray-400',
+     'text-purple-600',
+     'border-gray-300',
+     // Gradient for premium badge
+     'bg-gradient-to-r',
+     'from-yellow-400',
+     'to-orange-500',
+   ],
   plugins: [
     require('@tailwindcss/forms'),
     require('tailwindcss-animate'),

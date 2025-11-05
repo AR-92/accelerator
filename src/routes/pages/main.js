@@ -265,12 +265,109 @@ router.get('/portfolio', (req, res) => {
 
   fs.readFile(portfolioDataPath, 'utf8')
     .then((data) => {
-      const portfolioData = JSON.parse(data);
-      res.render('pages/portfolio/portfolio', {
-        ...getPageData('Idea Portfolio', 'Portfolio'),
-        ideas: portfolioData,
-        layout: 'main',
-      });
+      let portfolioData;
+      try {
+        portfolioData = JSON.parse(data);
+      } catch (parseError) {
+        logger.error('Error parsing portfolio data:', parseError);
+        return res.render('pages/portfolio/portfolio', {
+          ...getPageData('Idea Portfolio', 'Portfolio'),
+          ideas: [],
+          grouped: null,
+          currentCategory: 'All',
+          currentSort: '',
+          currentGroup: null,
+          currentSearch: '',
+          stats: { projects: 0, categories: 0, avgVotes: 0, tags: 0 },
+          layout: 'main',
+        });
+      }
+
+      try {
+        // Handle filtering, sorting, grouping, and search
+        const { category, sort, group, search } = req.query;
+
+        if (category && category !== 'All') {
+          portfolioData = portfolioData.filter(
+            (item) => item.category === category
+          );
+        }
+
+        if (search) {
+          const term = search.toLowerCase();
+          portfolioData = portfolioData.filter(
+            (item) =>
+              item.title.toLowerCase().includes(term) ||
+              item.description.toLowerCase().includes(term) ||
+              item.tags.some((tag) => tag.toLowerCase().includes(term))
+          );
+        }
+
+        if (sort) {
+          if (sort === 'votes') {
+            portfolioData = portfolioData.sort((a, b) => b.votes - a.votes);
+          } else if (sort === 'date') {
+            portfolioData = portfolioData.sort(
+              (a, b) => new Date(b.createdDate) - new Date(a.createdDate)
+            );
+          }
+        }
+
+        let grouped = null;
+        if (group === 'category') {
+          grouped = portfolioData.reduce((acc, item) => {
+            if (!acc[item.category]) acc[item.category] = [];
+            acc[item.category].push(item);
+            return acc;
+          }, {});
+        }
+
+        // Calculate dynamic stats
+        const totalProjects = portfolioData.length;
+        const categories = [
+          ...new Set(portfolioData.map((item) => item.category)),
+        ].length;
+        const avgVotes =
+          portfolioData.length > 0
+            ? Math.round(
+                portfolioData.reduce((sum, item) => sum + item.votes, 0) /
+                  portfolioData.length
+              )
+            : 0;
+        const totalTags = [
+          ...new Set(portfolioData.flatMap((item) => item.tags)),
+        ].length;
+
+        res.render('pages/portfolio/portfolio', {
+          ...getPageData('Idea Portfolio', 'Portfolio'),
+          ideas: portfolioData,
+          grouped: grouped,
+          currentCategory: category || 'All',
+          currentSort: sort || '',
+          currentGroup: group || null,
+          currentSearch: search || '',
+          stats: {
+            projects: totalProjects,
+            categories: categories,
+            avgVotes: avgVotes,
+            tags: totalTags,
+          },
+          layout: 'main',
+        });
+      } catch (processingError) {
+        logger.error('Error processing portfolio data:', processingError);
+        res.render('pages/portfolio/portfolio', {
+          ...getPageData('Idea Portfolio', 'Portfolio'),
+          ideas: [],
+          grouped: null,
+          currentCategory: 'All',
+          currentSort: '',
+          currentGroup: null,
+          currentSearch: '',
+          stats: { projects: 0, categories: 0, avgVotes: 0, tags: 0 },
+          layout: 'main',
+        });
+      }
     })
     .catch((error) => {
       logger.error('Error reading portfolio data:', error);
@@ -368,8 +465,6 @@ router.post('/ideas', (req, res) => {
   `);
 });
 
-
-
 // GET valuation
 router.get('/valuation', (req, res) => {
   res.render(
@@ -428,9 +523,15 @@ router.get('/new-project', (req, res) => {
 
 // GET explore ideas page
 router.get('/explore-ideas', (req, res) => {
+  const fs = require('fs');
+  const path = require('path');
+  const ideasPath = path.join(__dirname, '../../../data/ideas.json');
+  const ideas = JSON.parse(fs.readFileSync(ideasPath, 'utf8'));
+
   res.render('pages/content/browse-ideas', {
     ...getPageData('Explore Ideas - Accelerator Platform', 'ExploreIdeas'),
     layout: 'main',
+    ideas: ideas,
   });
 });
 

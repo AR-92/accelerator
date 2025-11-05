@@ -19,7 +19,7 @@ class DynamicStyleGenerator {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
       const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = (hash << 5) - hash + char;
       hash = hash & hash; // Convert to 32bit integer
     }
     return `dynamic-${Math.abs(hash).toString(16)}`;
@@ -29,7 +29,7 @@ class DynamicStyleGenerator {
   addDynamicRule(selector, styles) {
     const className = this.generateClassName({ selector, styles });
     const rule = `${selector} { ${this.stylesToCSS(styles)} }`;
-    
+
     // Check if rule already exists
     if (!this.appliedStyles.has(className)) {
       try {
@@ -39,7 +39,7 @@ class DynamicStyleGenerator {
         console.error('Error adding dynamic CSS rule:', e);
       }
     }
-    
+
     return className;
   }
 
@@ -61,7 +61,7 @@ class DynamicStyleGenerator {
       md: '768px',
       lg: '1024px',
       xl: '1280px',
-      '2xl': '1536px'
+      '2xl': '1536px',
     };
 
     // Add base styles
@@ -84,7 +84,7 @@ class DynamicStyleGenerator {
   // Create gradient utilities
   createGradientUtility(className, gradient) {
     return this.addDynamicRule(`.${className}`, {
-      backgroundImage: gradient
+      backgroundImage: gradient,
     });
   }
 
@@ -93,7 +93,7 @@ class DynamicStyleGenerator {
     // Add keyframes
     const animationName = className.replace('animate-', '');
     const keyframeRule = `@keyframes ${animationName} { ${this.keyframesToCSS(keyframes)} }`;
-    
+
     try {
       this.styleSheet.insertRule(keyframeRule, this.styleSheet.cssRules.length);
     } catch (e) {
@@ -102,7 +102,7 @@ class DynamicStyleGenerator {
 
     // Add animation class
     return this.addDynamicRule(`.${className}`, {
-      animation: `${animationName} 1s ease infinite`
+      animation: `${animationName} 1s ease infinite`,
     });
   }
 
@@ -118,7 +118,7 @@ class DynamicStyleGenerator {
   // Create custom property utilities
   createCustomPropertyUtility(className, property, value) {
     return this.addDynamicRule(`.${className}`, {
-      [property]: value
+      [property]: value,
     });
   }
 
@@ -126,13 +126,13 @@ class DynamicStyleGenerator {
   removeRule(className) {
     if (this.appliedStyles.has(className)) {
       const ruleIndex = Array.from(this.styleSheet.cssRules).findIndex(
-        rule => rule.selectorText === `.${className}`
+        (rule) => rule.selectorText === `.${className}`
       );
-      
+
       if (ruleIndex !== -1) {
         this.styleSheet.deleteRule(ruleIndex);
       }
-      
+
       this.appliedStyles.delete(className);
     }
   }
@@ -143,7 +143,7 @@ class DynamicStyleGenerator {
     while (this.styleSheet.cssRules.length > 0) {
       this.styleSheet.deleteRule(0);
     }
-    
+
     // Clear tracking map
     this.appliedStyles.clear();
   }

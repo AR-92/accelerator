@@ -368,8 +368,6 @@ router.post('/ideas', (req, res) => {
   `);
 });
 
-
-
 // GET valuation
 router.get('/valuation', (req, res) => {
   res.render(

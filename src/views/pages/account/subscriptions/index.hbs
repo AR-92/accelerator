@@ -1,183 +1,428 @@
 {{!< main}}
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="text-center mb-12">
-        <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-4">Choose Your Plan</h1>
-        <p class="text-xl text-gray-600 dark:text-gray-400">Select the perfect plan for your organization</p>
+<div class='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
+  <div class='text-center mb-12'>
+    <h1 class='text-5xl font-bold text-gray-900 dark:text-white mb-4'>Choose
+      Your Plan</h1>
+    <p class='text-xl text-gray-600 dark:text-gray-400'>Select the perfect plan
+      for your organization</p>
+  </div>
+
+  <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
+    <!-- Student Plan -->
+    <div
+      class='relative bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1'
+    >
+      <div
+        class='bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-lg p-6 mb-6'
+      >
+        <h3
+          class='text-2xl font-bold text-gray-900 dark:text-white mb-2'
+        >Student</h3>
+        <div
+          class='text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2'
+        >$0<span
+            class='text-lg font-normal text-gray-600 dark:text-gray-400'
+          >/month</span></div>
+        <p class='text-gray-600 dark:text-gray-400'>Perfect for learning and
+          personal projects</p>
+      </div>
+      <ul class='space-y-3 mb-6'>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Basic features</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Up to 3 projects</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Community support</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Limited storage (5GB)</span>
+        </li>
+      </ul>
+      <button
+        class='w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg'
+      >
+        Get Started Free
+      </button>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <!-- Student Plan -->
-        <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-lg p-6 mb-6">
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Student</h3>
-                <div class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">$0<span class="text-lg font-normal text-gray-600 dark:text-gray-400">/month</span></div>
-                <p class="text-gray-600 dark:text-gray-400">Perfect for learning and personal projects</p>
-            </div>
-            <ul class="space-y-3 mb-6">
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Basic features</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Up to 3 projects</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Community support</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Limited storage (5GB)</span>
-                </li>
-            </ul>
-            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg">
-                Get Started Free
-            </button>
-        </div>
-
-        <!-- Startup Plan -->
-        <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 border-purple-500 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-lg">
-                Popular
-            </div>
-            <div class="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/30 dark:to-indigo-900/30 rounded-lg p-6 mb-6">
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Startup</h3>
-                <div class="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">$29<span class="text-lg font-normal text-gray-600 dark:text-gray-400">/month</span></div>
-                <p class="text-gray-600 dark:text-gray-400">Ideal for growing businesses</p>
-            </div>
-            <ul class="space-y-3 mb-6">
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Advanced analytics</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Unlimited projects</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Priority support</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Custom integrations</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">50GB storage</span>
-                </li>
-            </ul>
-            <button class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg">
-                Choose Startup
-            </button>
-        </div>
-
-        <!-- Enterprise Plan -->
-        <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-            <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 rounded-lg p-6 mb-6">
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Enterprise</h3>
-                <div class="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">$99<span class="text-lg font-normal text-gray-600 dark:text-gray-400">/month</span></div>
-                <p class="text-gray-600 dark:text-gray-400">For established companies</p>
-            </div>
-            <ul class="space-y-3 mb-6">
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Everything in Startup</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Dedicated account manager</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Advanced security</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">API access</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">500GB storage</span>
-                </li>
-            </ul>
-            <button class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg">
-                Choose Enterprise
-            </button>
-        </div>
-
-        <!-- Corporate Plan -->
-        <div class="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-            <div class="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/30 dark:to-orange-900/30 rounded-lg p-6 mb-6">
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Corporate</h3>
-                <div class="text-4xl font-bold text-amber-600 dark:text-amber-400 mb-2">$299<span class="text-lg font-normal text-gray-600 dark:text-gray-400">/month</span></div>
-                <p class="text-gray-600 dark:text-gray-400">For large organizations</p>
-            </div>
-            <ul class="space-y-3 mb-6">
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Everything in Enterprise</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">White-label solution</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">24/7 phone support</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Custom development</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    <span class="text-gray-700 dark:text-gray-300">Unlimited storage</span>
-                </li>
-            </ul>
-            <button class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg">
-                Choose Corporate
-            </button>
-        </div>
+    <!-- Startup Plan -->
+    <div
+      class='relative bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 border-purple-500 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1'
+    >
+      <div
+        class='absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-semibold shadow-lg'
+      >
+        Popular
+      </div>
+      <div
+        class='bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/30 dark:to-indigo-900/30 rounded-lg p-6 mb-6'
+      >
+        <h3
+          class='text-2xl font-bold text-gray-900 dark:text-white mb-2'
+        >Startup</h3>
+        <div
+          class='text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2'
+        >$29<span
+            class='text-lg font-normal text-gray-600 dark:text-gray-400'
+          >/month</span></div>
+        <p class='text-gray-600 dark:text-gray-400'>Ideal for growing businesses</p>
+      </div>
+      <ul class='space-y-3 mb-6'>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Advanced analytics</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Unlimited projects</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Priority support</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Custom integrations</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>50GB storage</span>
+        </li>
+      </ul>
+      <button
+        class='w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg'
+      >
+        Choose Startup
+      </button>
     </div>
+
+    <!-- Enterprise Plan -->
+    <div
+      class='relative bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1'
+    >
+      <div
+        class='bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 rounded-lg p-6 mb-6'
+      >
+        <h3
+          class='text-2xl font-bold text-gray-900 dark:text-white mb-2'
+        >Enterprise</h3>
+        <div
+          class='text-4xl font-bold text-green-600 dark:text-green-400 mb-2'
+        >$99<span
+            class='text-lg font-normal text-gray-600 dark:text-gray-400'
+          >/month</span></div>
+        <p class='text-gray-600 dark:text-gray-400'>For established companies</p>
+      </div>
+      <ul class='space-y-3 mb-6'>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Everything in Startup</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Dedicated account
+            manager</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Advanced security</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>API access</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>500GB storage</span>
+        </li>
+      </ul>
+      <button
+        class='w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg'
+      >
+        Choose Enterprise
+      </button>
+    </div>
+
+    <!-- Corporate Plan -->
+    <div
+      class='relative bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1'
+    >
+      <div
+        class='bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/30 dark:to-orange-900/30 rounded-lg p-6 mb-6'
+      >
+        <h3
+          class='text-2xl font-bold text-gray-900 dark:text-white mb-2'
+        >Corporate</h3>
+        <div
+          class='text-4xl font-bold text-amber-600 dark:text-amber-400 mb-2'
+        >$299<span
+            class='text-lg font-normal text-gray-600 dark:text-gray-400'
+          >/month</span></div>
+        <p class='text-gray-600 dark:text-gray-400'>For large organizations</p>
+      </div>
+      <ul class='space-y-3 mb-6'>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Everything in
+            Enterprise</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>White-label solution</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>24/7 phone support</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Custom development</span>
+        </li>
+        <li class='flex items-center'>
+          <svg
+            class='w-5 h-5 text-green-500 mr-2'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              stroke-width='2'
+              d='M5 13l4 4L19 7'
+            ></path>
+          </svg>
+          <span class='text-gray-700 dark:text-gray-300'>Unlimited storage</span>
+        </li>
+      </ul>
+      <button
+        class='w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg'
+      >
+        Choose Corporate
+      </button>
+    </div>
+  </div>
 </div>

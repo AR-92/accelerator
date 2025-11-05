@@ -1,0 +1,114 @@
+[
+  {
+    "href": "/idea-detail#interactive-turkiye-map",
+    "title": "Interactive Türkiye Province Map",
+    "type": "Code",
+    "typeIcon": "Terminal",
+    "rating": 4,
+    "description": "A detailed interactive map of Türkiye's provinces with data visualization capabilities.",
+    "tags": ["Mapping", "Data"]
+  },
+  {
+    "href": "/idea-detail#squid-game-explained",
+    "title": "Squid Game Season 3 Plot Explained in 5 Minutes",
+    "type": "Audio",
+    "typeIcon": "AudioLines",
+    "rating": 5,
+    "isFavorite": true,
+    "description": "A quick overview of the anticipated Squid Game Season 3 plot with theories and predictions.",
+    "tags": ["Entertainment", "Video"]
+  },
+  {
+    "href": "/idea-detail#sales-trends-chart",
+    "title": "High-Resolution Line Chart of Monthly Sales Trends",
+    "type": "PDF",
+    "typeIcon": "FileText",
+    "rating": 3,
+    "description": "A comprehensive analysis of sales trends with interactive visualizations.",
+    "tags": ["Data", "Analytics"]
+  },
+  {
+    "href": "/idea-detail#serapeum-saqqara",
+    "title": "Serapeum at Saqqara: History & Purpose",
+    "type": "Document",
+    "typeIcon": "FileText",
+    "rating": 2,
+    "description": "Detailed historical analysis of the Serapeum of Saqqara and its significance in ancient Egypt.",
+    "tags": ["History", "Education"]
+  },
+  {
+    "href": "/idea-detail#ai-presentation-2025",
+    "title": "Most Viral AI Product in 2025 Presentation",
+    "type": "Slides",
+    "typeIcon": "Presentation",
+    "rating": 5,
+    "isFavorite": true,
+    "description": "A presentation showcasing the most viral AI products predicted for 2025.",
+    "tags": ["AI", "Future"]
+  },
+  {
+    "href": "/idea-detail#ab-test-visual",
+    "title": "Side-by-Side Bar Chart for A/B Test Results",
+    "type": "Image",
+    "typeIcon": "Image",
+    "rating": 4,
+    "isFavorite": true,
+    "description": "A clean visualization comparing A/B test results with side-by-side bar charts.",
+    "tags": ["Data", "Analytics"]
+  },
+  {
+    "href": "/idea-detail#life-journey-animation",
+    "title": "Cinematic Time-Lapse Cartoon of Human Life Journey",
+    "type": "Video",
+    "typeIcon": "Video",
+    "rating": 1,
+    "description": "A beautiful animated representation of life's journey from birth to old age.",
+    "tags": ["Entertainment", "Animation"]
+  },
+  {
+    "href": "/idea-detail#crossword-generator",
+    "title": "Crossword Puzzle Generator Features and Options Explained",
+    "type": "Website",
+    "typeIcon": "AppWindow",
+    "rating": 3,
+    "description": "Interactive crossword puzzle generator with customizable themes and difficulty levels.",
+    "tags": ["Education", "Game"]
+  },
+  {
+    "href": "/idea-detail#ghibli-transformer",
+    "title": "Turn Keshi Photos into Ghibli Style Images",
+    "type": "Image",
+    "typeIcon": "Image",
+    "rating": 5,
+    "isFavorite": true,
+    "description": "AI-powered tool to transform photos into Studio Ghibli-style illustrations.",
+    "tags": ["AI", "Art"]
+  },
+  {
+    "href": "/idea-detail#album-cover-animations",
+    "title": "Animating Classic Rock Album Covers into Videos",
+    "type": "Video",
+    "typeIcon": "Video",
+    "rating": 4,
+    "description": "Tool to create animated videos of classic rock album covers with music synchronization.",
+    "tags": ["Entertainment", "Music"]
+  },
+  {
+    "href": "/idea-detail#periodic-sound-app",
+    "title": "Periodic Elements Sound App",
+    "type": "Website",
+    "typeIcon": "AppWindow",
+    "rating": 2,
+    "description": "Interactive periodic table with sound effects for each element.",
+    "tags": ["Education", "Science"]
+  },
+  {
+    "href": "/idea-detail#texas-relocation",
+    "title": "Incentives for Relocating to Texas",
+    "type": "Code",
+    "typeIcon": "Terminal",
+    "rating": 3,
+    "description": "Analysis of tax benefits and incentives for businesses moving to Texas.",
+    "tags": ["Business", "Finance"]
+  }
+]

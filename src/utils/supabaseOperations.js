@@ -8,9 +8,11 @@ const userOperations = {
   // Create a new user
   createUser: async (userData) => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
       const { data, error } = await supabase
         .from('users')
@@ -29,9 +31,11 @@ const userOperations = {
   // Get user by ID
   getUserById: async (id) => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
       const { data, error } = await supabase
         .from('users')
@@ -50,13 +54,13 @@ const userOperations = {
   // Get all users
   getAllUsers: async () => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
-      const { data, error } = await supabase
-        .from('users')
-        .select('*');
+      const { data, error } = await supabase.from('users').select('*');
 
       if (error) throw error;
       return data;
@@ -69,9 +73,11 @@ const userOperations = {
   // Update user
   updateUser: async (id, updates) => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
       const { data, error } = await supabase
         .from('users')
@@ -91,9 +97,11 @@ const userOperations = {
   // Delete user
   deleteUser: async (id) => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
       const { data, error } = await supabase
         .from('users')
@@ -106,7 +114,7 @@ const userOperations = {
       console.error('Error deleting user:', error.message);
       throw error;
     }
-  }
+  },
 };
 
 // Example product operations
@@ -114,9 +122,11 @@ const productOperations = {
   // Create a new product
   createProduct: async (productData) => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
       const { data, error } = await supabase
         .from('products')
@@ -135,9 +145,11 @@ const productOperations = {
   // Get product by ID
   getProductById: async (id) => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
       const { data, error } = await supabase
         .from('products')
@@ -156,13 +168,13 @@ const productOperations = {
   // Get all products
   getAllProducts: async () => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
-      const { data, error } = await supabase
-        .from('products')
-        .select('*');
+      const { data, error } = await supabase.from('products').select('*');
 
       if (error) throw error;
       return data;
@@ -175,9 +187,11 @@ const productOperations = {
   // Update product
   updateProduct: async (id, updates) => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
       const { data, error } = await supabase
         .from('products')
@@ -197,9 +211,11 @@ const productOperations = {
   // Delete product
   deleteProduct: async (id) => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
       const { data, error } = await supabase
         .from('products')
@@ -212,7 +228,7 @@ const productOperations = {
       console.error('Error deleting product:', error.message);
       throw error;
     }
-  }
+  },
 };
 
 // Example auth operations
@@ -220,9 +236,11 @@ const authOperations = {
   // Sign up
   signUp: async (email, password) => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -240,9 +258,11 @@ const authOperations = {
   // Sign in
   signIn: async (email, password) => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
@@ -260,12 +280,14 @@ const authOperations = {
   // Sign out
   signOut: async () => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
       const { error } = await supabase.auth.signOut();
-      
+
       if (error) throw error;
       return true;
     } catch (error) {
@@ -277,23 +299,28 @@ const authOperations = {
   // Get current user
   getCurrentUser: async () => {
     if (!isSupabaseAvailable) {
-      throw new Error('Database not available. Please configure Supabase credentials.');
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
     }
-    
+
     try {
-      const { data: { user }, error } = await supabase.auth.getUser();
-      
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
+
       if (error) throw error;
       return user;
     } catch (error) {
       console.error('Error getting current user:', error.message);
       throw error;
     }
-  }
+  },
 };
 
 module.exports = {
   userOperations,
   productOperations,
-  authOperations
+  authOperations,
 };

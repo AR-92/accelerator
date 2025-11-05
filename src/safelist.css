@@ -1,178 +1,330 @@
 /* This file ensures all needed Tailwind classes are generated */
 
 /* Background colors */
-.bg-bg-primary { }
-.bg-bg-secondary { }
-.bg-bg-subtle { }
-.bg-bg-muted { }
-.bg-bg-strong { }
-.bg-bg-dark { }
-.bg-bg-sidebar { }
-.bg-bg-sidebar-hover { }
-.bg-sidebar-accent { }
+.bg-bg-primary {
+}
+.bg-bg-secondary {
+}
+.bg-bg-subtle {
+}
+.bg-bg-muted {
+}
+.bg-bg-strong {
+}
+.bg-bg-dark {
+}
+.bg-bg-sidebar {
+}
+.bg-bg-sidebar-hover {
+}
+.bg-sidebar-accent {
+}
 
 /* Text colors */
-.text-text-primary { }
-.text-text-secondary { }
-.text-text-subtle { }
-.text-text-inverse { }
-.text-text-disabled { }
-.text-sidebar-accent-foreground { }
-.text-sidebar-foreground { }
+.text-text-primary {
+}
+.text-text-secondary {
+}
+.text-text-subtle {
+}
+.text-text-inverse {
+}
+.text-text-disabled {
+}
+.text-sidebar-accent-foreground {
+}
+.text-sidebar-foreground {
+}
 
 /* Border colors */
-.border-border-default { }
-.border-border-strong { }
-.border-border-weak { }
-.border-border-dark { }
-.border-sidebar-ring { }
+.border-border-default {
+}
+.border-border-strong {
+}
+.border-border-weak {
+}
+.border-border-dark {
+}
+.border-sidebar-ring {
+}
 
 /* Border colors */
-.border-border-default { }
-.border-border-strong { }
-.border-border-weak { }
-.border-border-dark { }
+.border-border-default {
+}
+.border-border-strong {
+}
+.border-border-weak {
+}
+.border-border-dark {
+}
 
 /* Status colors */
-.bg-success { }
-.text-success { }
-.border-success { }
+.bg-success {
+}
+.text-success {
+}
+.border-success {
+}
 
-.bg-warning { }
-.text-warning { }
-.border-warning { }
+.bg-warning {
+}
+.text-warning {
+}
+.border-warning {
+}
 
-.bg-error { }
-.text-error { }
-.border-error { }
+.bg-error {
+}
+.text-error {
+}
+.border-error {
+}
 
-.bg-info { }
-.text-info { }
-.border-info { }
+.bg-info {
+}
+.text-info {
+}
+.border-info {
+}
 
 /* Button colors */
-.bg-btn-primary-bg { }
-.bg-btn-primary-hover { }
-.bg-btn-secondary-bg { }
-.bg-btn-secondary-hover { }
+.bg-btn-primary-bg {
+}
+.bg-btn-primary-hover {
+}
+.bg-btn-secondary-bg {
+}
+.bg-btn-secondary-hover {
+}
 
 /* Common utilities */
-.bg-white { }
-.bg-gray-50 { }
-.bg-gray-100 { }
-.bg-gray-200 { }
-.bg-gray-300 { }
-.bg-gray-400 { }
-.bg-gray-500 { }
-.bg-gray-600 { }
-.bg-gray-700 { }
-.bg-gray-800 { }
-.bg-gray-900 { }
+.bg-white {
+}
+.bg-gray-50 {
+}
+.bg-gray-100 {
+}
+.bg-gray-200 {
+}
+.bg-gray-300 {
+}
+.bg-gray-400 {
+}
+.bg-gray-500 {
+}
+.bg-gray-600 {
+}
+.bg-gray-700 {
+}
+.bg-gray-800 {
+}
+.bg-gray-900 {
+}
 
-.text-white { }
-.text-gray-50 { }
-.text-gray-100 { }
-.text-gray-200 { }
-.text-gray-300 { }
-.text-gray-400 { }
-.text-gray-500 { }
-.text-gray-600 { }
-.text-gray-700 { }
-.text-gray-800 { }
-.text-gray-900 { }
+.text-white {
+}
+.text-gray-50 {
+}
+.text-gray-100 {
+}
+.text-gray-200 {
+}
+.text-gray-300 {
+}
+.text-gray-400 {
+}
+.text-gray-500 {
+}
+.text-gray-600 {
+}
+.text-gray-700 {
+}
+.text-gray-800 {
+}
+.text-gray-900 {
+}
 
-.border-white { }
-.border-gray-50 { }
-.border-gray-100 { }
-.border-gray-200 { }
-.border-gray-300 { }
-.border-gray-400 { }
-.border-gray-500 { }
-.border-gray-600 { }
-.border-gray-700 { }
-.border-gray-800 { }
-.border-gray-900 { }
+.border-white {
+}
+.border-gray-50 {
+}
+.border-gray-100 {
+}
+.border-gray-200 {
+}
+.border-gray-300 {
+}
+.border-gray-400 {
+}
+.border-gray-500 {
+}
+.border-gray-600 {
+}
+.border-gray-700 {
+}
+.border-gray-800 {
+}
+.border-gray-900 {
+}
 
 /* Spacing and sizing */
-.p-0 { }
-.p-1 { }
-.p-2 { }
-.p-3 { }
-.p-4 { }
-.p-5 { }
-.p-6 { }
-.p-8 { }
+.p-0 {
+}
+.p-1 {
+}
+.p-2 {
+}
+.p-3 {
+}
+.p-4 {
+}
+.p-5 {
+}
+.p-6 {
+}
+.p-8 {
+}
 
-.m-0 { }
-.m-1 { }
-.m-2 { }
-.m-3 { }
-.m-4 { }
-.m-5 { }
-.m-6 { }
-.m-8 { }
+.m-0 {
+}
+.m-1 {
+}
+.m-2 {
+}
+.m-3 {
+}
+.m-4 {
+}
+.m-5 {
+}
+.m-6 {
+}
+.m-8 {
+}
 
-.w-full { }
-.w-11 { }
-.w-8 { }
-.h-64 { }
-.h-8 { }
-.h-12 { }
-.px-3 { }
-.py-1\.5 { }
+.w-full {
+}
+.w-11 {
+}
+.w-8 {
+}
+.h-64 {
+}
+.h-8 {
+}
+.h-12 {
+}
+.px-3 {
+}
+.py-1\.5 {
+}
 
 /* Other common utilities */
-.rounded-md { }
-.rounded-lg { }
-.rounded-full { }
-.flex { }
-.grid { }
-.hidden { }
-.block { }
-.inline { }
-.items-center { }
-.justify-between { }
-.justify-left { }
-.space-y-4 { }
-.space-y-6 { }
-.gap-2 { }
-.gap-4 { }
-.gap-6 { }
-.font-medium { }
-.font-semibold { }
-.text-sm { }
-.text-xs { }
-.leading-tight { }
-.truncate { }
-.outline-hidden { }
-.ring-sidebar-ring { }
-.focus-visible:ring-2 { }
-.transition-[width,height,padding] { }
-.shrink-0 { }
-.overflow-hidden { }
-.ml-auto { }
-.size-4 { }
-.size-8 { }
-.aspect-square { }
-.grayscale { }
-.active:bg-sidebar-accent { }
-.active:text-sidebar-accent-foreground { }
-.disabled:pointer-events-none { }
-.disabled:opacity-50 { }
-.aria-disabled:pointer-events-none { }
-.aria-disabled:opacity-50 { }
-.data-\[active\=true\]:bg-sidebar-accent { }
-.data-\[active\=true\]:font-medium { }
-.data-\[active\=true\]:text-sidebar-accent-foreground { }
-.data-\[state\=open\]:hover:bg-sidebar-accent { }
-.data-\[state\=open\]:hover:text-sidebar-accent-foreground { }
-.group-data-\[collapsible\=icon\]:size-8\! { }
-.group-data-\[collapsible\=icon\]:p-0\! { }
-.\[&>span\:last-child\]:truncate { }
-.\[&>svg\]:size-4 { }
-.\[&>svg\]:shrink-0 { }
-.hover:bg-sidebar-accent { }
-.hover:text-sidebar-accent-foreground { }
-.data-\[state\=open\]:bg-sidebar-accent { }
-.data-\[state\=open\]:text-sidebar-accent-foreground { }
-.text-sidebar-foreground\/70 { }
+.rounded-md {
+}
+.rounded-lg {
+}
+.rounded-full {
+}
+.flex {
+}
+.grid {
+}
+.hidden {
+}
+.block {
+}
+.inline {
+}
+.items-center {
+}
+.justify-between {
+}
+.justify-left {
+}
+.space-y-4 {
+}
+.space-y-6 {
+}
+.gap-2 {
+}
+.gap-4 {
+}
+.gap-6 {
+}
+.font-medium {
+}
+.font-semibold {
+}
+.text-sm {
+}
+.text-xs {
+}
+.leading-tight {
+}
+.truncate {
+}
+.outline-hidden {
+}
+.ring-sidebar-ring {
+}
+.focus-visible:ring-2 {
+}
+.transition-[width,height,padding] {
+}
+.shrink-0 {
+}
+.overflow-hidden {
+}
+.ml-auto {
+}
+.size-4 {
+}
+.size-8 {
+}
+.aspect-square {
+}
+.grayscale {
+}
+.active:bg-sidebar-accent {
+}
+.active:text-sidebar-accent-foreground {
+}
+.disabled:pointer-events-none {
+}
+.disabled:opacity-50 {
+}
+.aria-disabled:pointer-events-none {
+}
+.aria-disabled:opacity-50 {
+}
+.data-\[active\=true\]:bg-sidebar-accent {
+}
+.data-\[active\=true\]:font-medium {
+}
+.data-\[active\=true\]:text-sidebar-accent-foreground {
+}
+.data-\[state\=open\]:hover:bg-sidebar-accent {
+}
+.data-\[state\=open\]:hover:text-sidebar-accent-foreground {
+}
+.group-data-\[collapsible\=icon\]:size-8\! {
+}
+.group-data-\[collapsible\=icon\]:p-0\! {
+}
+.\[& > span\:last-child\]:truncate {
+}
+.\[& > svg\]:size-4 {
+}
+.\[& > svg\]:shrink-0 {
+}
+.hover:bg-sidebar-accent {
+}
+.hover:text-sidebar-accent-foreground {
+}
+.data-\[state\=open\]:bg-sidebar-accent {
+}
+.data-\[state\=open\]:text-sidebar-accent-foreground {
+}
+.text-sidebar-foreground\/70 {
+}

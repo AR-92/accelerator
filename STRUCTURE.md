@@ -67,6 +67,7 @@ accelerator/
 ## Migration Notes
 
 When adding new features:
+
 - Place API routes in `routes/api/`
 - Place page routes in `routes/pages/`
 - Place service logic in `src/services/`

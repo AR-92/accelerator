@@ -1,0 +1,53 @@
+<a
+  class='flex relative flex-col gap-1 items-start p-4 cursor-pointer group/item-btns overflow-hidden border rounded-[12px] border-gray-300 hover:border-gray-400 dark:hover:border-gray-600 hover:shadow-md transition-all duration-200'
+  href='/pages/portfolio/{{id}}'
+  draggable='false'
+>
+  <!-- Image -->
+  <div class='w-full mb-3'>
+    <img src='{{image}}' alt='Project thumbnail for {{title}}' class='w-full h-32 object-cover rounded-md' loading='lazy' />
+  </div>
+
+  <div class='w-full'>
+    <span
+      class='text-ellipsis break-words line-clamp-2 text-sm text-[var(--theme-text-primary)] font-medium'
+    >{{title}}</span>
+  </div>
+
+   <div class='flex items-center gap-1.5 mb-1'>
+     {{lucide (categoryIcon category) 'w-4 h-4 stroke-[var(--icon-tertiary)]'}}
+     <div
+       class='text-[var(--text-tertiary)] text-[13px] leading-[18px] truncate'
+     >{{category}}</div>
+   </div>
+
+  <div class='text-xs text-gray-500 mb-2 line-clamp-2'>{{description}}</div>
+
+   <div class='flex flex-wrap gap-1 mb-2'>
+     {{{formatTags tags}}}
+   </div>
+
+  <div
+    class='flex items-center justify-between w-full mt-auto pt-2 border-t border-gray-300'
+  >
+     <div class='flex items-center'>
+       <div class='flex items-center mr-2'>
+         {{lucide 'ThumbsUp' 'w-4 h-4 text-gray-500'}}
+         <span class='text-xs text-gray-600 ml-1'>{{votes}}</span>
+       </div>
+     </div>
+
+     <div class='flex space-x-2'>
+        <button type='button' class='text-gray-500 hover:text-blue-500' aria-label='Share project'>
+          {{lucide 'Share' 'w-4 h-4'}}
+        </button>
+        <button type='button' class='text-gray-500 {{#if isPublic}}hover:text-green-500{{else}}hover:text-red-500{{/if}}' aria-label='{{#if isPublic}}Public project{{else}}Private project{{/if}}'>
+          {{#if isPublic}}
+            {{lucide 'Eye' 'w-4 h-4 text-green-500'}}
+          {{else}}
+            {{lucide 'EyeOff' 'w-4 h-4 text-red-500'}}
+          {{/if}}
+        </button>
+     </div>
+  </div>
+</a>

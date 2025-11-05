@@ -95,6 +95,7 @@ The directory structure aligns with the application's route structure:
 ## Layout Usage
 
 Different pages use different layouts based on their purpose:
+
 - Main application pages: `main` layout (includes sidebar)
 - Settings pages: `settings` layout (includes settings navigation)
 - Authentication pages: `auth` layout (minimal interface)
@@ -102,12 +103,14 @@ Different pages use different layouts based on their purpose:
 ## Partials
 
 Common UI components are stored as partials and can be included in any template:
+
 - `{{> settings-nav}}` - Settings menu navigation
 - `{{> subscription-nav}}` - Subscription management navigation
 
 ## Adding New Pages
 
 When adding new pages:
+
 1. Place them in the appropriate subdirectory based on their function
 2. Update routes in `routes/pages.js` to point to the correct file path
 3. Ensure internal links use the correct `/pages/...` paths

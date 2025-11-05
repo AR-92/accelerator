@@ -14,5 +14,5 @@ const optionalAuth = (req, res, next) => {
 
 module.exports = {
   requireAuth,
-  optionalAuth
+  optionalAuth,
 };

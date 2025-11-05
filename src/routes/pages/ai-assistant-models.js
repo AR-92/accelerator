@@ -28,7 +28,10 @@ router.get('/ai-assistant-models/business-model', (req, res) => {
 // GET financial model
 router.get('/ai-assistant-models/financial-model', (req, res) => {
   res.render('pages/ai-assistant-models/financial-model', {
-    ...getAiAssistantModelPageData('Financial Model Assistant', 'FinancialModel'),
+    ...getAiAssistantModelPageData(
+      'Financial Model Assistant',
+      'FinancialModel'
+    ),
     layout: 'main',
   });
 });
@@ -44,7 +47,10 @@ router.get('/ai-assistant-models/fund-model', (req, res) => {
 // GET marketing model
 router.get('/ai-assistant-models/marketing-model', (req, res) => {
   res.render('pages/ai-assistant-models/marketing-model', {
-    ...getAiAssistantModelPageData('Marketing Model Assistant', 'MarketingModel'),
+    ...getAiAssistantModelPageData(
+      'Marketing Model Assistant',
+      'MarketingModel'
+    ),
     layout: 'main',
   });
 });

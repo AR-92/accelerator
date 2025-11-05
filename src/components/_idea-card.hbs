@@ -1,0 +1,76 @@
+<a
+  class='flex relative flex-col gap-1 items-start p-4 cursor-pointer group/item-btns overflow-hidden border rounded-[12px] border-gray-300'
+  href='{{href}}'
+  target='_blank'
+  draggable='false'
+  rel='noreferrer'
+>
+  <div class='w-full'>
+    <span
+      class='text-ellipsis break-words line-clamp-2 text-sm text-[var(--theme-text-primary)] font-medium'
+    >{{title}}</span>
+  </div>
+
+   <div class='flex items-center gap-1.5 mb-1'>
+     {{lucide typeIcon 'w-4 h-4 stroke-[var(--icon-tertiary)]'}}
+     <div
+       class='text-[var(--text-tertiary)] text-[13px] leading-[18px] truncate'
+     >{{type}}</div>
+   </div>
+
+  <div class='text-xs text-gray-500 mb-2 line-clamp-2'>{{description}}</div>
+
+   <div class='flex flex-wrap gap-1 mb-2'>
+     {{{formatTags tags}}}
+   </div>
+
+  <div
+    class='flex items-center justify-between w-full mt-auto pt-2 border-t border-gray-300'
+  >
+     <div class='flex items-center'>
+       <button class='mr-2 text-gray-500 hover:text-yellow-500'>
+         {{lucide 'Star' 'w-4 h-4'}}
+       </button>
+       <div class='flex'>
+         {{#if (gt rating 0)}}
+           {{lucide 'Star' 'w-3.5 h-3.5 fill-yellow-400 text-yellow-400'}}
+         {{else}}
+           {{lucide 'Star' 'w-3.5 h-3.5 text-gray-300'}}
+         {{/if}}
+         {{#if (gt rating 1)}}
+           {{lucide 'Star' 'w-3.5 h-3.5 fill-yellow-400 text-yellow-400'}}
+         {{else}}
+           {{lucide 'Star' 'w-3.5 h-3.5 text-gray-300'}}
+         {{/if}}
+         {{#if (gt rating 2)}}
+           {{lucide 'Star' 'w-3.5 h-3.5 fill-yellow-400 text-yellow-400'}}
+         {{else}}
+           {{lucide 'Star' 'w-3.5 h-3.5 text-gray-300'}}
+         {{/if}}
+         {{#if (gt rating 3)}}
+           {{lucide 'Star' 'w-3.5 h-3.5 fill-yellow-400 text-yellow-400'}}
+         {{else}}
+           {{lucide 'Star' 'w-3.5 h-3.5 text-gray-300'}}
+         {{/if}}
+         {{#if (gt rating 4)}}
+           {{lucide 'Star' 'w-3.5 h-3.5 fill-yellow-400 text-yellow-400'}}
+         {{else}}
+           {{lucide 'Star' 'w-3.5 h-3.5 text-gray-300'}}
+         {{/if}}
+       </div>
+     </div>
+
+     <div class='flex space-x-2'>
+       <button class='text-gray-500 hover:text-blue-500'>
+         {{lucide 'Share' 'w-4 h-4'}}
+       </button>
+       <button class='text-gray-500 hover:text-green-500'>
+         {{#if isFavorite}}
+           {{lucide 'Heart' 'w-4 h-4 fill-red-500 text-red-500'}}
+         {{else}}
+           {{lucide 'Heart' 'w-4 h-4'}}
+         {{/if}}
+       </button>
+     </div>
+  </div>
+</a>

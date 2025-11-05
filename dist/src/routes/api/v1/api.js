@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { userOperations, productOperations } = require('../../../utils/supabaseOperations');
+const {
+  userOperations,
+  productOperations,
+} = require('../../../utils/supabaseOperations');
 const aiRoutes = require('./ai');
 
 // Include AI routes under /ai endpoint
@@ -87,7 +90,15 @@ router.post('/products', async (req, res) => {
 
 // GET ideas list partial for HTMX
 router.get('/ideas-list', (req, res) => {
-  res.render('partials/ideas-list', { layout: null });
+  const fs = require('fs');
+  const path = require('path');
+  const ideasPath = path.join(__dirname, '../../../../data/ideas.json');
+  const ideas = JSON.parse(fs.readFileSync(ideasPath, 'utf8'));
+
+  res.render('partials/ideas-list', {
+    layout: null,
+    ideas: ideas,
+  });
 });
 
 module.exports = router;

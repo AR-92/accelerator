@@ -21,26 +21,31 @@ A web application for managing ideas, portfolios, and business development proce
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone <repository-url>
    ```
 
 2. Navigate to the project directory:
+
    ```bash
    cd accelerator
    ```
 
 3. Install dependencies:
+
    ```bash
    npm install
    ```
 
 4. Create a `.env` file based on `.env.example`:
+
    ```bash
    cp .env.example .env
    ```
 
 5. Start the development server:
+
    ```bash
    npm run dev
    ```
@@ -62,11 +67,13 @@ npm start
 The application includes Docker support for containerized deployment:
 
 1. Build the Docker image:
+
    ```bash
    docker build -t accelerator .
    ```
 
 2. Run the application with Docker:
+
    ```bash
    docker run -p 3000:3000 --env-file .env accelerator
    ```
@@ -77,6 +84,7 @@ The application includes Docker support for containerized deployment:
    ```
 
 For development with Docker:
+
 ```bash
 docker-compose -f docker-compose.dev.yml up
 ```
@@ -86,11 +94,13 @@ docker-compose -f docker-compose.dev.yml up
 For production deployments, use PM2 for process management:
 
 1. Install PM2 globally:
+
    ```bash
    npm install -g pm2
    ```
 
 2. Start the application with PM2:
+
    ```bash
    pm2 start ecosystem.config.js
    ```
@@ -117,6 +127,7 @@ This creates a production-ready build in the `dist` directory.
 ### Environment Configurations
 
 The application supports different environments:
+
 - `.env` - Development environment
 - `.env.staging` - Staging environment
 - `.env.production` - Production environment
@@ -188,6 +199,7 @@ accelerator/
 ## Health Check
 
 The application provides a health check endpoint:
+
 - `GET /health` - Returns application status and database connectivity
 
 ## License

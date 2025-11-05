@@ -8,12 +8,24 @@ const productionSecurity = {
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https:", "https://fonts.googleapis.com", "'strict-dynamic'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https:", "'strict-dynamic'"],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          'https:',
+          'https://fonts.googleapis.com',
+          "'strict-dynamic'",
+        ],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "'unsafe-eval'",
+          'https:',
+          "'strict-dynamic'",
+        ],
         scriptSrcAttr: ["'unsafe-inline'"], // Allow inline event handlers like onclick
-        imgSrc: ["'self'", "data:", "https:"],
-        fontSrc: ["'self'", "https:", "data:", "https://fonts.gstatic.com"],
-        connectSrc: ["'self'", "https:"],
+        imgSrc: ["'self'", 'data:', 'https:'],
+        fontSrc: ["'self'", 'https:', 'data:', 'https://fonts.gstatic.com'],
+        connectSrc: ["'self'", 'https:'],
         mediaSrc: ["'self'"],
         objectSrc: ["'none'"],
         childSrc: ["'self'"],
@@ -34,7 +46,7 @@ const productionSecurity = {
     noSniff: true,
     xssFilter: true,
     frameguard: {
-      action: 'deny'
+      action: 'deny',
     },
   }),
 
@@ -63,13 +75,13 @@ const developmentSecurity = {
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
         scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
         scriptSrcAttr: ["'unsafe-inline'"], // Allow inline event handlers like onclick
-        imgSrc: ["'self'", "data:", "https:"],
-        fontSrc: ["'self'", "https:", "data:"],
-        connectSrc: ["'self'", "http:", "https:"],
-        frameSrc: ["'self'", "https://www.google.com"],
+        imgSrc: ["'self'", 'data:', 'https:'],
+        fontSrc: ["'self'", 'https:', 'data:'],
+        connectSrc: ["'self'", 'http:', 'https:'],
+        frameSrc: ["'self'", 'https://www.google.com'],
       },
     },
   }),

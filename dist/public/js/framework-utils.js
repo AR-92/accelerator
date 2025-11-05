@@ -9,7 +9,7 @@
 function toggleMaximize(btn) {
   const aside = btn.closest('aside');
   const main = aside.previousElementSibling;
-  
+
   if (!aside || !main) {
     console.error('Could not find aside or main elements');
     return;
@@ -36,7 +36,7 @@ function toggleMaximize(btn) {
  */
 function toggleMessage(btn) {
   const aside = btn.closest('aside');
-  
+
   if (!aside) {
     console.error('Could not find parent aside element');
     return;
@@ -56,7 +56,7 @@ function toggleMessage(btn) {
  */
 function closeAside(btn) {
   const aside = btn.closest('aside');
-  
+
   if (!aside) {
     console.error('Could not find parent aside element');
     return;
@@ -65,7 +65,7 @@ function closeAside(btn) {
   // Add fade-out effect before hiding
   aside.style.opacity = '0';
   aside.style.transition = 'opacity 0.3s ease-out';
-  
+
   setTimeout(() => {
     aside.style.display = 'none';
   }, 300);
@@ -76,6 +76,6 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     toggleMaximize,
     toggleMessage,
-    closeAside
+    closeAside,
   };
 }
