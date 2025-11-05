@@ -17,6 +17,22 @@ router.get('/dashboard', (req, res) => {
   });
 });
 
+// GET enterprise dashboard
+router.get('/enterprise-dashboard', (req, res) => {
+  res.render('pages/dashboard/enterprise-dashboard', {
+    ...getPageData('Enterprise Dashboard - Manage Startups', 'EnterpriseDashboard'),
+    layout: 'main',
+  });
+});
+
+// GET corporate dashboard
+router.get('/corporate-dashboard', (req, res) => {
+  res.render('pages/dashboard/enterprise-dashboard', {
+    ...getPageData('Corporate Dashboard - Manage Startups', 'CorporateDashboard'),
+    layout: 'main',
+  });
+});
+
 // GET dashboard tabs
 router.get('/dashboard/tab/business', (req, res) => {
   res.render('pages/dashboard/dashboard-business', {

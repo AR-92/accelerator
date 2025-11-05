@@ -17,193 +17,160 @@
       </div>
     </div>
 
-    <!-- Enterprise Metrics -->
-    <div class='grid grid-cols-1 gap-[17px] sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5'>
-      <div
-        class='rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm'
-        style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
-      >
-        <div class='flex items-center justify-between px-[10px] py-[4px]'>
-          <div class='flex flex-col gap-[4px]'>
-            <h3
-              class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
-            >Total Startups</h3>
-            <p
-              class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
-            >{{startupCount}}</p>
-          </div>
-          <div>
-            <div class='w-11 h-11 bg-blue-100 rounded-lg flex items-center justify-center'>{{lucide 'Building2' 'w-5 h-5 fill-blue-600'}}</div>
-          </div>
-        </div>
-        <p
-          class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
-        >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='24'
-            height='20'
-            viewBox='0 0 24 20'
-            fill='none'
-          >
-            <path
-              d='M7.02979 8.30925H11.0298V15.7426L13.0398 15.7676V8.30925H17.0298L12.0298 4.14258L7.02979 8.30925Z'
-              fill='#2196F3'
-            ></path>
-          </svg>
-          <span class='text-[#2196F3] dark:text-blue-400'>+3</span>Since last
-          month
-        </p>
-      </div>
-
-      <div
-        class='rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm'
-        style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
-      >
-        <div class='flex items-center justify-between px-[10px] py-[4px]'>
-          <div class='flex flex-col gap-[4px]'>
-            <h3
-              class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
-            >Total Ideas</h3>
-            <p
-              class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
-            >{{ideaCount}}</p>
-          </div>
-          <div>
-            <div class='w-11 h-11 bg-yellow-50 rounded-lg flex items-center justify-center'>{{lucide 'Lightbulb' 'w-5 h-5 fill-orange-500'}}</div>
-          </div>
-        </div>
-        <p
-          class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
-        >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='24'
-            height='20'
-            viewBox='0 0 24 20'
-            fill='none'
-          >
-            <path
-              d='M7.02979 8.30925H11.0298V15.7426L13.0398 15.7676V8.30925H17.0298L12.0298 4.14258L7.02979 8.30925Z'
-              fill='#FF9800'
-            ></path>
-          </svg>
-          <span class='text-[#FF9800] dark:text-yellow-400'>+12</span>Since
-          last month
-        </p>
-      </div>
-
-      <div
-        class='rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm'
-        style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
-      >
-        <div class='flex items-center justify-between px-[10px] py-[4px]'>
-          <div class='flex flex-col gap-[4px]'>
-            <h3
-              class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
-            >Active Projects</h3>
-            <p
-              class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
-            >{{activeProjectCount}}</p>
-          </div>
-          <div>
-            <div class='w-11 h-11 bg-red-50 rounded-lg flex items-center justify-center'>{{lucide 'Activity' 'w-5 h-5 fill-pink-500'}}</div>
-          </div>
-        </div>
-        <p
-          class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
-        >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='24'
-            height='20'
-            viewBox='0 0 24 20'
-            fill='none'
-          >
-            <path
-              d='M7.02979 8.30925H11.0298V15.7426L13.0398 15.7676V8.30925H17.0298L12.0298 4.14258L7.02979 8.30925Z'
-              fill='#E91E63'
-            ></path>
-          </svg>
-          <span class='text-[#E91E63] dark:text-pink-400'>+2</span>Since last
-          month
-        </p>
-      </div>
-
-      <div
-        class='rounded-[111px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm'
-        style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
-      >
-        <div class='flex items-center justify-between px-[10px] py-[4px]'>
-          <div class='flex flex-col gap-[4px]'>
-            <h3
-              class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
-            >Total Revenue</h3>
-            <p
-              class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
-            >${{revenue}}</p>
-          </div>
-          <div>
-            <div class='w-11 h-11 bg-green-50 rounded-lg flex items-center justify-center'>{{lucide 'DollarSign' 'w-5 h-5 fill-green-500'}}</div>
-          </div>
-        </div>
-        <p
-          class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
-        >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='24'
-            height='20'
-            viewBox='0 0 24 20'
-            fill='none'
-          >
-            <path
-              d='M7.02979 8.30925H11.0298V15.7426L13.0398 15.7676V8.30925H17.0298L12.0298 4.14258L7.02979 8.30925Z'
-              fill='#4CAF50'
-            ></path>
-          </svg>
-           <span class='text-[#4CAF50] dark:text-green-400'>+8.5%</span>Since last
+     <!-- Enterprise Metrics -->
+     <div
+       class='grid grid-cols-1 gap-[17px] sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5'
+     >
+       <div
+         class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm'
+         style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+       >
+         <div class='flex items-center justify-between px-[10px] py-[4px]'>
+           <div class='flex flex-col gap-[4px]'>
+             <h3
+               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
+             >Total Startups</h3>
+             <p
+               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
+             >24</p>
+           </div>
+           <div>
+             <div style="background:#E3F2FD; border-radius: 6px;">
+               <div style="width:38px; height:38px; background:#E3F2FD; border-radius:50%; position:relative;">
+                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#2196F3; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Building2' 'w-4 h-4 text-white'}}</div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <p
+           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
+         >
+ {{lucide 'TrendingUp' 'w-5 h-4' style='color: #2196F3'}}
+           <span class='text-[#2196F3] dark:text-blue-400'>+3</span>Since last
            month
          </p>
        </div>
 
        <div
-        class='rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm'
-        style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
-      >
-        <div class='flex items-center justify-between px-[10px] py-[4px]'>
-          <div class='flex flex-col gap-[4px]'>
-            <h3
-              class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
-            >Team Members</h3>
-            <p
-              class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
-            >{{teamCount}}</p>
-          </div>
-          <div>
-            <div class='w-11 h-11 bg-purple-50 rounded-lg flex items-center justify-center'>{{lucide 'Users' 'w-5 h-5 fill-purple-600'}}</div>
-          </div>
+         class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm'
+         style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+       >
+         <div class='flex items-center justify-between px-[10px] py-[4px]'>
+           <div class='flex flex-col gap-[4px]'>
+             <h3
+               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
+             >Total Ideas</h3>
+             <p
+               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
+             >156</p>
+           </div>
+           <div>
+             <div style="background:#FFF3E0; border-radius: 6px;">
+               <div style="width:38px; height:38px; background:#FFF3E0; border-radius:50%; position:relative;">
+                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#FF9800; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Lightbulb' 'w-4 h-4 text-white'}}</div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <p
+           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
+         >
+ {{lucide 'TrendingUp' 'w-5 h-4' style='color: #FF9800'}}
+           <span class='text-[#FF9800] dark:text-yellow-400'>+12</span>Since
+           last month
+         </p>
+       </div>
+
+       <div
+         class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm'
+         style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+       >
+         <div class='flex items-center justify-between px-[10px] py-[4px]'>
+           <div class='flex flex-col gap-[4px]'>
+             <h3
+               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
+             >Active Projects</h3>
+             <p
+               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
+             >89</p>
+           </div>
+           <div>
+             <div style="background:#FCE4EC; border-radius: 6px;">
+               <div style="width:38px; height:38px; background:#FCE4EC; border-radius:50%; position:relative;">
+                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#E91E63; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Activity' 'w-4 h-4 text-white'}}</div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <p
+           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
+         >
+ {{lucide 'TrendingUp' 'w-5 h-4' style='color: #E91E63'}}
+           <span class='text-[#E91E63] dark:text-pink-400'>+7</span>Since last
+           month
+         </p>
+       </div>
+
+       <div
+         class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm'
+         style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+       >
+         <div class='flex items-center justify-between px-[10px] py-[4px]'>
+           <div class='flex flex-col gap-[4px]'>
+             <h3
+               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
+             >Total Revenue</h3>
+             <p
+               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
+             >$2.4M</p>
+           </div>
+           <div>
+             <div style="background:#E8F5E8; border-radius: 6px;">
+               <div style="width:38px; height:38px; background:#E8F5E8; border-radius:50%; position:relative;">
+                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#4CAF50; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'DollarSign' 'w-4 h-4 text-white'}}</div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <p
+           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
+         >
+ {{lucide 'TrendingUp' 'w-5 h-4' style='color: #4CAF50'}}
+            <span class='text-[#4CAF50] dark:text-green-400'>+18.5%</span>Since last
+            month
+          </p>
         </div>
-        <p
-          class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
-        >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            width='24'
-            height='20'
-            viewBox='0 0 24 20'
-            fill='none'
-          >
-            <path
-              d='M7.02979 8.30925H11.0298V15.7426L13.0398 15.7676V8.30925H17.0298L12.0298 4.14258L7.02979 8.30925Z'
-              fill='#9C27B0'
-            ></path>
-          </svg>
-          <span class='text-[#9C27B0] dark:text-purple-400'>+5</span>Since
-          last month
-        </p>
+
+        <div
+         class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm'
+         style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+       >
+         <div class='flex items-center justify-between px-[10px] py-[4px]'>
+           <div class='flex flex-col gap-[4px]'>
+             <h3
+               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
+             >Team Members</h3>
+             <p
+               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
+             >142</p>
+           </div>
+           <div>
+             <div style="background:#F3E5F5; border-radius: 6px;">
+               <div style="width:38px; height:38px; background:#F3E5F5; border-radius:50%; position:relative;">
+                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#9C27B0; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Users' 'w-4 h-4 text-white'}}</div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <p
+           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
+         >
+ {{lucide 'TrendingUp' 'w-5 h-4' style='color: #9C27B0'}}
+           <span class='text-[#9C27B0] dark:text-purple-400'>+11</span>Since
+           last month
+         </p>
+       </div>
       </div>
-     </div>
 
      <!-- Section Divider -->
      <div class='my-8 border-t border-gray-200 dark:border-gray-700'></div>
@@ -240,90 +207,475 @@
         </div>
       </div>
       
-      <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-        {{#each startups}}
-        <div class='border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow'>
-          <div class='flex items-start justify-between'>
-            <div>
-              <h4 class='font-medium text-lg'>{{this.name}}</h4>
-              <p class='text-sm text-gray-500 dark:text-gray-400'>{{this.description}}</p>
-              <div class='mt-2 flex items-center gap-2'>
-                <span class='text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 rounded-full'>{{this.status}}</span>
-                <span class='text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full'>{{this.stage}}</span>
-              </div>
-            </div>
-            <div class='flex gap-1'>
-              <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='View'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-eye'>
-                  <path d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'/>
-                  <circle cx='12' cy='12' r='1'/>
-                </svg>
-              </button>
-              <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='Edit'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-edit'>
-                  <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/>
-                  <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z'/>
-                </svg>
-              </button>
-              <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='More options'>
-                <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-more-horizontal'>
-                  <circle cx='12' cy='12' r='1'/>
-                  <circle cx='19' cy='12' r='1'/>
-                  <circle cx='5' cy='12' r='1'/>
-                </svg>
-              </button>
-            </div>
-          </div>
-          
-          <div class='mt-4 grid grid-cols-2 gap-2'>
-            <div>
-              <p class='text-xs text-gray-500 dark:text-gray-400'>Projects</p>
-              <p class='font-medium'>{{this.projectCount}}</p>
-            </div>
-            <div>
-              <p class='text-xs text-gray-500 dark:text-gray-400'>Team Size</p>
-              <p class='font-medium'>{{this.teamSize}}</p>
-            </div>
-            <div>
-              <p class='text-xs text-gray-500 dark:text-gray-400'>Idea Score</p>
-              <p class='font-medium'>{{this.ideaScore}}/10</p>
-            </div>
-            <div>
-              <p class='text-xs text-gray-500 dark:text-gray-400'>Last Activity</p>
-              <p class='font-medium'>{{this.lastActivity}}</p>
-            </div>
-          </div>
-          
-          <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
-            <div class='flex justify-between text-sm'>
-              <span class='text-gray-500 dark:text-gray-400'>Progress</span>
-              <span>{{this.progress}}%</span>
-            </div>
-            <div class='mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
-              <div class='bg-blue-600 h-2 rounded-full' style='width: {{this.progress}}%'></div>
-            </div>
-          </div>
-          
-          <!-- Role Management for this Startup -->
-          <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
-            <div class='flex justify-between items-center mb-2'>
-              <h5 class='text-sm font-medium text-gray-700 dark:text-gray-300'>Team Roles</h5>
-              <button class='text-xs text-blue-600 dark:text-blue-400 hover:underline'>Manage</button>
-            </div>
-            <div class='flex -space-x-2'>
-              {{#each this.teamMembers}}
-                <div class='w-6 h-6 rounded-full bg-gray-300 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-gray-700' title='{{this.name}} - {{this.role}}'>
-                  {{initial this.name}}
-                </div>
-              {{/each}}
-              <div class='w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600'>
-                +{{this.additionalTeamCount}}
-              </div>
-            </div>
-          </div>
-        </div>
-        {{/each}}
-      </div>
+       <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+         <!-- Startup 1 -->
+         <div class='border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow'>
+           <div class='flex items-start justify-between'>
+             <div>
+               <h4 class='font-medium text-lg'>EcoTech Solutions</h4>
+               <p class='text-sm text-gray-500 dark:text-gray-400'>Sustainable energy monitoring platform</p>
+               <div class='mt-2 flex items-center gap-2'>
+                 <span class='text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full'>Active</span>
+                 <span class='text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 rounded-full'>MVP</span>
+               </div>
+             </div>
+             <div class='flex gap-1'>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='View'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-eye'>
+                   <path d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'/>
+                   <circle cx='12' cy='12' r='1'/>
+                 </svg>
+               </button>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='Edit'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-edit'>
+                   <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/>
+                   <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z'/>
+                 </svg>
+               </button>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='More options'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-more-horizontal'>
+                   <circle cx='12' cy='12' r='1'/>
+                   <circle cx='19' cy='12' r='1'/>
+                   <circle cx='5' cy='12' r='1'/>
+                 </svg>
+               </button>
+             </div>
+           </div>
+
+           <div class='mt-4 grid grid-cols-2 gap-2'>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Projects</p>
+               <p class='font-medium'>8</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Team Size</p>
+               <p class='font-medium'>12</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Idea Score</p>
+               <p class='font-medium'>8.7/10</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Last Activity</p>
+               <p class='font-medium'>2h ago</p>
+             </div>
+           </div>
+
+           <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+             <div class='flex justify-between text-sm'>
+               <span class='text-gray-500 dark:text-gray-400'>Progress</span>
+               <span>85%</span>
+             </div>
+             <div class='mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
+               <div class='bg-blue-600 h-2 rounded-full' style='width: 85%'></div>
+             </div>
+           </div>
+
+           <!-- Role Management for this Startup -->
+           <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+             <div class='flex justify-between items-center mb-2'>
+               <h5 class='text-sm font-medium text-gray-700 dark:text-gray-300'>Team Roles</h5>
+               <button class='text-xs text-blue-600 dark:text-blue-400 hover:underline'>Manage</button>
+             </div>
+             <div class='flex -space-x-2'>
+               <div class='w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Sarah Chen - CEO'>SC</div>
+               <div class='w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Mike Johnson - CTO'>MJ</div>
+               <div class='w-6 h-6 rounded-full bg-purple-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Lisa Wong - Designer'>LW</div>
+               <div class='w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600'>+9</div>
+             </div>
+           </div>
+         </div>
+
+         <!-- Startup 2 -->
+         <div class='border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow'>
+           <div class='flex items-start justify-between'>
+             <div>
+               <h4 class='font-medium text-lg'>HealthAI Diagnostics</h4>
+               <p class='text-sm text-gray-500 dark:text-gray-400'>AI-powered medical imaging analysis</p>
+               <div class='mt-2 flex items-center gap-2'>
+                 <span class='text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full'>Active</span>
+                 <span class='text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 rounded-full'>Prototype</span>
+               </div>
+             </div>
+             <div class='flex gap-1'>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='View'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-eye'>
+                   <path d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'/>
+                   <circle cx='12' cy='12' r='1'/>
+                 </svg>
+               </button>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='Edit'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-edit'>
+                   <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/>
+                   <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z'/>
+                 </svg>
+               </button>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='More options'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-more-horizontal'>
+                   <circle cx='12' cy='12' r='1'/>
+                   <circle cx='19' cy='12' r='1'/>
+                   <circle cx='5' cy='12' r='1'/>
+                 </svg>
+               </button>
+             </div>
+           </div>
+
+           <div class='mt-4 grid grid-cols-2 gap-2'>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Projects</p>
+               <p class='font-medium'>6</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Team Size</p>
+               <p class='font-medium'>15</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Idea Score</p>
+               <p class='font-medium'>9.2/10</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Last Activity</p>
+               <p class='font-medium'>1d ago</p>
+             </div>
+           </div>
+
+           <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+             <div class='flex justify-between text-sm'>
+               <span class='text-gray-500 dark:text-gray-400'>Progress</span>
+               <span>72%</span>
+             </div>
+             <div class='mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
+               <div class='bg-blue-600 h-2 rounded-full' style='width: 72%'></div>
+             </div>
+           </div>
+
+           <!-- Role Management for this Startup -->
+           <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+             <div class='flex justify-between items-center mb-2'>
+               <h5 class='text-sm font-medium text-gray-700 dark:text-gray-300'>Team Roles</h5>
+               <button class='text-xs text-blue-600 dark:text-blue-400 hover:underline'>Manage</button>
+             </div>
+             <div class='flex -space-x-2'>
+               <div class='w-6 h-6 rounded-full bg-red-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Dr. Emily Davis - CEO'>ED</div>
+               <div class='w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Alex Kumar - Lead Developer'>AK</div>
+               <div class='w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Rachel Green - ML Engineer'>RG</div>
+               <div class='w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600'>+12</div>
+             </div>
+           </div>
+         </div>
+
+         <!-- Startup 3 -->
+         <div class='border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow'>
+           <div class='flex items-start justify-between'>
+             <div>
+               <h4 class='font-medium text-lg'>FinFlow Analytics</h4>
+               <p class='text-sm text-gray-500 dark:text-gray-400'>Personal finance management with AI insights</p>
+               <div class='mt-2 flex items-center gap-2'>
+                 <span class='text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 rounded-full'>Under Review</span>
+                 <span class='text-xs px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 rounded-full'>Beta</span>
+               </div>
+             </div>
+             <div class='flex gap-1'>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='View'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-eye'>
+                   <path d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'/>
+                   <circle cx='12' cy='12' r='1'/>
+                 </svg>
+               </button>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='Edit'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-edit'>
+                   <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/>
+                   <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z'/>
+                 </svg>
+               </button>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='More options'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-more-horizontal'>
+                   <circle cx='12' cy='12' r='1'/>
+                   <circle cx='19' cy='12' r='1'/>
+                   <circle cx='5' cy='12' r='1'/>
+                 </svg>
+               </button>
+             </div>
+           </div>
+
+           <div class='mt-4 grid grid-cols-2 gap-2'>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Projects</p>
+               <p class='font-medium'>4</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Team Size</p>
+               <p class='font-medium'>8</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Idea Score</p>
+               <p class='font-medium'>7.8/10</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Last Activity</p>
+               <p class='font-medium'>3d ago</p>
+             </div>
+           </div>
+
+           <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+             <div class='flex justify-between text-sm'>
+               <span class='text-gray-500 dark:text-gray-400'>Progress</span>
+               <span>45%</span>
+             </div>
+             <div class='mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
+               <div class='bg-blue-600 h-2 rounded-full' style='width: 45%'></div>
+             </div>
+           </div>
+
+           <!-- Role Management for this Startup -->
+           <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+             <div class='flex justify-between items-center mb-2'>
+               <h5 class='text-sm font-medium text-gray-700 dark:text-gray-300'>Team Roles</h5>
+               <button class='text-xs text-blue-600 dark:text-blue-400 hover:underline'>Manage</button>
+             </div>
+             <div class='flex -space-x-2'>
+               <div class='w-6 h-6 rounded-full bg-purple-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Tom Wilson - CEO'>TW</div>
+               <div class='w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Nina Patel - Product Manager'>NP</div>
+               <div class='w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='David Kim - Developer'>DK</div>
+               <div class='w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600'>+5</div>
+             </div>
+           </div>
+         </div>
+
+         <!-- Startup 4 -->
+         <div class='border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow'>
+           <div class='flex items-start justify-between'>
+             <div>
+               <h4 class='font-medium text-lg'>AgriTech Solutions</h4>
+               <p class='text-sm text-gray-500 dark:text-gray-400'>Smart farming with IoT sensors</p>
+               <div class='mt-2 flex items-center gap-2'>
+                 <span class='text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full'>Active</span>
+                 <span class='text-xs px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-400 rounded-full'>Launch</span>
+               </div>
+             </div>
+             <div class='flex gap-1'>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='View'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-eye'>
+                   <path d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'/>
+                   <circle cx='12' cy='12' r='1'/>
+                 </svg>
+               </button>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='Edit'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-edit'>
+                   <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/>
+                   <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z'/>
+                 </svg>
+               </button>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='More options'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-more-horizontal'>
+                   <circle cx='12' cy='12' r='1'/>
+                   <circle cx='19' cy='12' r='1'/>
+                   <circle cx='5' cy='12' r='1'/>
+                 </svg>
+               </button>
+             </div>
+           </div>
+
+           <div class='mt-4 grid grid-cols-2 gap-2'>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Projects</p>
+               <p class='font-medium'>12</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Team Size</p>
+               <p class='font-medium'>18</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Idea Score</p>
+               <p class='font-medium'>8.9/10</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Last Activity</p>
+               <p class='font-medium'>6h ago</p>
+             </div>
+           </div>
+
+           <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+             <div class='flex justify-between text-sm'>
+               <span class='text-gray-500 dark:text-gray-400'>Progress</span>
+               <span>91%</span>
+             </div>
+             <div class='mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
+               <div class='bg-blue-600 h-2 rounded-full' style='width: 91%'></div>
+             </div>
+           </div>
+
+           <!-- Role Management for this Startup -->
+           <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+             <div class='flex justify-between items-center mb-2'>
+               <h5 class='text-sm font-medium text-gray-700 dark:text-gray-300'>Team Roles</h5>
+               <button class='text-xs text-blue-600 dark:text-blue-400 hover:underline'>Manage</button>
+             </div>
+             <div class='flex -space-x-2'>
+               <div class='w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Maria Garcia - CEO'>MG</div>
+               <div class='w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Carlos Rodriguez - CTO'>CR</div>
+               <div class='w-6 h-6 rounded-full bg-purple-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Anna Schmidt - Agronomist'>AS</div>
+               <div class='w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600'>+15</div>
+             </div>
+           </div>
+         </div>
+
+         <!-- Startup 5 -->
+         <div class='border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow'>
+           <div class='flex items-start justify-between'>
+             <div>
+               <h4 class='font-medium text-lg'>EduLearn Platform</h4>
+               <p class='text-sm text-gray-500 dark:text-gray-400'>Adaptive learning with gamification</p>
+               <div class='mt-2 flex items-center gap-2'>
+                 <span class='text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 rounded-full'>Completed</span>
+                 <span class='text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full'>Launched</span>
+               </div>
+             </div>
+             <div class='flex gap-1'>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='View'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-eye'>
+                   <path d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'/>
+                   <circle cx='12' cy='12' r='1'/>
+                 </svg>
+               </button>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='Edit'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-edit'>
+                   <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/>
+                   <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z'/>
+                 </svg>
+               </button>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='More options'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-more-horizontal'>
+                   <circle cx='12' cy='12' r='1'/>
+                   <circle cx='19' cy='12' r='1'/>
+                   <circle cx='5' cy='12' r='1'/>
+                 </svg>
+               </button>
+             </div>
+           </div>
+
+           <div class='mt-4 grid grid-cols-2 gap-2'>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Projects</p>
+               <p class='font-medium'>10</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Team Size</p>
+               <p class='font-medium'>14</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Idea Score</p>
+               <p class='font-medium'>9.5/10</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Last Activity</p>
+               <p class='font-medium'>1w ago</p>
+             </div>
+           </div>
+
+           <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+             <div class='flex justify-between text-sm'>
+               <span class='text-gray-500 dark:text-gray-400'>Progress</span>
+               <span>100%</span>
+             </div>
+             <div class='mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
+               <div class='bg-green-600 h-2 rounded-full' style='width: 100%'></div>
+             </div>
+           </div>
+
+           <!-- Role Management for this Startup -->
+           <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+             <div class='flex justify-between items-center mb-2'>
+               <h5 class='text-sm font-medium text-gray-700 dark:text-gray-300'>Team Roles</h5>
+               <button class='text-xs text-blue-600 dark:text-blue-400 hover:underline'>Manage</button>
+             </div>
+             <div class='flex -space-x-2'>
+               <div class='w-6 h-6 rounded-full bg-indigo-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Sophie Laurent - CEO'>SL</div>
+               <div class='w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='James Mitchell - CTO'>JM</div>
+               <div class='w-6 h-6 rounded-full bg-pink-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Emma Thompson - UX Designer'>ET</div>
+               <div class='w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600'>+11</div>
+             </div>
+           </div>
+         </div>
+
+         <!-- Startup 6 -->
+         <div class='border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow'>
+           <div class='flex items-start justify-between'>
+             <div>
+               <h4 class='font-medium text-lg'>LogiChain</h4>
+               <p class='text-sm text-gray-500 dark:text-gray-400'>Blockchain-based supply chain tracking</p>
+               <div class='mt-2 flex items-center gap-2'>
+                 <span class='text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full'>Active</span>
+                 <span class='text-xs px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 rounded-full'>Seed</span>
+               </div>
+             </div>
+             <div class='flex gap-1'>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='View'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-eye'>
+                   <path d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'/>
+                   <circle cx='12' cy='12' r='1'/>
+                 </svg>
+               </button>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='Edit'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-edit'>
+                   <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/>
+                   <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z'/>
+                 </svg>
+               </button>
+               <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='More options'>
+                 <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-more-horizontal'>
+                   <circle cx='12' cy='12' r='1'/>
+                   <circle cx='19' cy='12' r='1'/>
+                   <circle cx='5' cy='12' r='1'/>
+                 </svg>
+               </button>
+             </div>
+           </div>
+
+           <div class='mt-4 grid grid-cols-2 gap-2'>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Projects</p>
+               <p class='font-medium'>7</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Team Size</p>
+               <p class='font-medium'>11</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Idea Score</p>
+               <p class='font-medium'>8.3/10</p>
+             </div>
+             <div>
+               <p class='text-xs text-gray-500 dark:text-gray-400'>Last Activity</p>
+               <p class='font-medium'>4h ago</p>
+             </div>
+           </div>
+
+           <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+             <div class='flex justify-between text-sm'>
+               <span class='text-gray-500 dark:text-gray-400'>Progress</span>
+               <span>68%</span>
+             </div>
+             <div class='mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
+               <div class='bg-blue-600 h-2 rounded-full' style='width: 68%'></div>
+             </div>
+           </div>
+
+           <!-- Role Management for this Startup -->
+           <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+             <div class='flex justify-between items-center mb-2'>
+               <h5 class='text-sm font-medium text-gray-700 dark:text-gray-300'>Team Roles</h5>
+               <button class='text-xs text-blue-600 dark:text-blue-400 hover:underline'>Manage</button>
+             </div>
+             <div class='flex -space-x-2'>
+               <div class='w-6 h-6 rounded-full bg-orange-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Robert Chen - CEO'>RC</div>
+               <div class='w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Lisa Park - Blockchain Dev'>LP</div>
+               <div class='w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Marcus Johnson - Operations'>MJ</div>
+               <div class='w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600'>+8</div>
+             </div>
+           </div>
+         </div>
+       </div>
     </div>
 
     <!-- Section Divider -->
