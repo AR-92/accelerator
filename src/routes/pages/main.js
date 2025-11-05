@@ -20,18 +20,355 @@ router.get('/dashboard', (req, res) => {
 // GET enterprise dashboard
 router.get('/enterprise-dashboard', (req, res) => {
   res.render('pages/dashboard/enterprise-dashboard', {
-    ...getPageData('Enterprise Dashboard - Manage Startups', 'EnterpriseDashboard'),
+    ...getPageData(
+      'Enterprise Dashboard - Manage Startups',
+      'EnterpriseDashboard'
+    ),
     layout: 'main',
   });
 });
 
-  // GET corporate dashboard
-  router.get('/corporate-dashboard', (req, res) => {
-    res.render('pages/dashboard/corporate-dashboard', {
-      ...getPageData('Corporate Dashboard - Executive Oversight', 'CorporateDashboard'),
-      layout: 'main',
-    });
+// GET corporate dashboard
+router.get('/corporate-dashboard', (req, res) => {
+  // Mock data for corporate dashboard - replace with actual database queries
+  const corporateData = {
+    activeEnterprises: 12,
+    totalEnterprises: 15,
+    enterpriseGrowth: '+8.5%',
+    recentEnterprises: 3,
+    pendingApprovals: 2,
+    pendingEnterprises: [
+      {
+        id: 101,
+        name: 'Future Dynamics',
+        description: 'AI-powered logistics optimization platform',
+        requestedBy: 'Sarah Johnson',
+        industry: 'Logistics',
+        budget: '$750K',
+        submittedDate: '3 days ago',
+        daysPending: 3,
+      },
+      {
+        id: 102,
+        name: 'GreenTech Innovations',
+        description: 'Sustainable energy solutions for urban environments',
+        requestedBy: 'Michael Chen',
+        industry: 'Clean Energy',
+        budget: '$1.2M',
+        submittedDate: '5 days ago',
+        daysPending: 5,
+      },
+    ],
+    enterpriseList: [
+      {
+        id: 1,
+        name: 'TechCorp Enterprises',
+        status: 'Active',
+        initiatives: 5,
+        revenue: '$2.5M',
+        employees: 150,
+        lastActivity: '2 hours ago',
+      },
+      {
+        id: 2,
+        name: 'Innovate Solutions',
+        status: 'Active',
+        initiatives: 3,
+        revenue: '$1.8M',
+        employees: 95,
+        lastActivity: '1 day ago',
+      },
+      {
+        id: 3,
+        name: 'Future Dynamics',
+        status: 'Pending Approval',
+        initiatives: 2,
+        revenue: '$750K',
+        employees: 45,
+        lastActivity: '3 days ago',
+      },
+    ],
+    enterpriseStats: {
+      totalRevenue: '$15.2M',
+      avgRevenue: '$1.1M',
+      totalEmployees: 850,
+      avgEmployees: 62,
+    },
+    financialOverview: {
+      totalBudget: '$50M',
+      allocatedBudget: '$42.5M',
+      availableBudget: '$7.5M',
+      budgetUtilization: '85%',
+      costCenters: [
+        {
+          name: 'Technology',
+          allocated: '$15M',
+          spent: '$12.8M',
+          utilization: '85%',
+          status: 'On Track',
+        },
+        {
+          name: 'Operations',
+          allocated: '$12M',
+          spent: '$10.2M',
+          utilization: '85%',
+          status: 'On Track',
+        },
+        {
+          name: 'Marketing',
+          allocated: '$8M',
+          spent: '$7.5M',
+          utilization: '94%',
+          status: 'Over Budget',
+        },
+        {
+          name: 'HR & Talent',
+          allocated: '$7.5M',
+          spent: '$6.8M',
+          utilization: '91%',
+          status: 'On Track',
+        },
+        {
+          name: 'Facilities',
+          allocated: '$5M',
+          spent: '$4.2M',
+          utilization: '84%',
+          status: 'On Track',
+        },
+        {
+          name: 'R&D',
+          allocated: '$2.5M',
+          spent: '$1.0M',
+          utilization: '40%',
+          status: 'Under Budget',
+        },
+      ],
+      roiTracking: [
+        {
+          enterprise: 'TechCorp Enterprises',
+          investment: '$2.5M',
+          revenue: '$8.2M',
+          roi: '228%',
+          status: 'Excellent',
+        },
+        {
+          enterprise: 'Innovate Solutions',
+          investment: '$1.8M',
+          revenue: '$4.1M',
+          roi: '128%',
+          status: 'Good',
+        },
+        {
+          enterprise: 'Future Dynamics',
+          investment: '$750K',
+          revenue: '$1.2M',
+          roi: '60%',
+          status: 'Moderate',
+        },
+      ],
+      budgetVariance: '+2.3%',
+      forecastAccuracy: '94%',
+    },
+    riskCompliance: {
+      overallRiskScore: 'Medium',
+      complianceStatus: '98.5%',
+      activeRisks: 12,
+      criticalRisks: 2,
+      riskRegister: [
+        {
+          id: 1,
+          enterprise: 'TechCorp Enterprises',
+          risk: 'Market Competition',
+          category: 'Strategic',
+          impact: 'High',
+          probability: 'Medium',
+          status: 'Mitigating',
+          owner: 'Sarah Chen',
+        },
+        {
+          id: 2,
+          enterprise: 'Innovate Solutions',
+          risk: 'Technology Obsolescence',
+          category: 'Operational',
+          impact: 'Medium',
+          probability: 'Low',
+          status: 'Monitoring',
+          owner: 'Mike Johnson',
+        },
+        {
+          id: 3,
+          enterprise: 'Future Dynamics',
+          risk: 'Regulatory Changes',
+          category: 'Compliance',
+          impact: 'High',
+          probability: 'High',
+          status: 'Critical',
+          owner: 'Lisa Park',
+        },
+      ],
+      complianceMetrics: [
+        {
+          area: 'Data Privacy',
+          status: 'Compliant',
+          score: '100%',
+          lastAudit: '2 weeks ago',
+        },
+        {
+          area: 'Financial Reporting',
+          status: 'Compliant',
+          score: '98%',
+          lastAudit: '1 week ago',
+        },
+        {
+          area: 'Labor Laws',
+          status: 'Review Needed',
+          score: '85%',
+          lastAudit: '3 weeks ago',
+        },
+        {
+          area: 'Environmental',
+          status: 'Compliant',
+          score: '97%',
+          lastAudit: '1 month ago',
+        },
+        {
+          area: 'Cybersecurity',
+          status: 'Compliant',
+          score: '99%',
+          lastAudit: '1 week ago',
+        },
+      ],
+      auditTrail: [
+        {
+          action: 'Risk assessment completed',
+          enterprise: 'TechCorp Enterprises',
+          date: '2 days ago',
+          status: 'Approved',
+        },
+        {
+          action: 'Compliance audit passed',
+          enterprise: 'All Enterprises',
+          date: '1 week ago',
+          status: 'Completed',
+        },
+        {
+          action: 'New risk identified',
+          enterprise: 'Future Dynamics',
+          date: '3 days ago',
+          status: 'Under Review',
+        },
+      ],
+    },
+    performanceAnalytics: {
+      benchmarkData: {
+        industryAvg: 78,
+        topQuartile: 92,
+        corporateAvg: 85,
+        bestEnterprise: 'TechCorp Enterprises',
+      },
+      performanceHeatmap: [
+        {
+          enterprise: 'TechCorp Enterprises',
+          q1: 95,
+          q2: 88,
+          q3: 92,
+          q4: 96,
+          average: 93,
+        },
+        {
+          enterprise: 'Innovate Solutions',
+          q1: 82,
+          q2: 85,
+          q3: 78,
+          q4: 88,
+          average: 83,
+        },
+        {
+          enterprise: 'Future Dynamics',
+          q1: 75,
+          q2: 80,
+          q3: 82,
+          q4: 85,
+          average: 81,
+        },
+      ],
+      predictiveInsights: [
+        {
+          insight: 'TechCorp Enterprises shows 15% growth potential in Q2',
+          confidence: 'High',
+          impact: 'Positive',
+        },
+        {
+          insight: 'Future Dynamics may face resource constraints',
+          confidence: 'Medium',
+          impact: 'Negative',
+        },
+        {
+          insight: 'Innovate Solutions trending above industry average',
+          confidence: 'High',
+          impact: 'Positive',
+        },
+      ],
+      kpiTracking: [
+        {
+          metric: 'Revenue Growth',
+          target: '25%',
+          actual: '22%',
+          status: 'On Track',
+        },
+        {
+          metric: 'Customer Acquisition',
+          target: '150',
+          actual: '142',
+          status: 'On Track',
+        },
+        {
+          metric: 'Employee Satisfaction',
+          target: '4.2/5',
+          actual: '4.1/5',
+          status: 'Slightly Below',
+        },
+        {
+          metric: 'Innovation Index',
+          target: '85',
+          actual: '88',
+          status: 'Exceeding',
+        },
+      ],
+    },
+    recentActivities: [
+      {
+        action: 'New enterprise approved',
+        enterprise: 'TechCorp Enterprises',
+        time: '2 hours ago',
+      },
+      {
+        action: 'Initiative launched',
+        enterprise: 'Innovate Solutions',
+        time: '5 hours ago',
+      },
+      {
+        action: 'Revenue milestone reached',
+        enterprise: 'Future Dynamics',
+        time: '1 day ago',
+      },
+      {
+        action: 'Budget reallocation approved',
+        enterprise: 'Marketing',
+        time: '3 hours ago',
+      },
+    ],
+  };
+
+  res.render('pages/dashboard/corporate-dashboard', {
+    ...getPageData(
+      'Corporate Dashboard - Executive Oversight',
+      'CorporateDashboard'
+    ),
+    layout: 'main',
+    ...corporateData,
   });
+});
 
 // GET dashboard tabs
 router.get('/dashboard/tab/business', (req, res) => {
