@@ -1,0 +1,2823 @@
+<div class='flex-1 flex flex-col bg-background'>
+  <div class='border-b border-border px-4 py-3'>
+    <div class='flex items-center justify-between'>
+      <div class='flex items-center gap-2'>
+        <div
+          class='w-8 h-8 rounded-full bg-purple-500 dark:bg-purple-600 text-white flex items-center justify-center flex-shrink-0 text-sm font-bold'
+        >
+          AI
+        </div>
+        <h2 class='text-sm font-medium text-foreground'>AI Assistant
+        </h2>
+      </div>
+      <div class='flex items-center gap-2'>
+        <button
+          class='h-8 px-3 border border-border rounded-md text-sm hover:bg-muted transition-colors'
+        >Request Advice</button>
+        <button
+          class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md transition-colors'
+        >
+          <span class='text-sm'>📎</span>
+        </button>
+        <button
+          class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md transition-colors'
+        >
+          <span class='text-sm'>⋮</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class='flex-1 overflow-y-auto px-4 py-6'>
+    <div class='max-w-3xl mx-auto space-y-6'>
+      <!-- Welcome Message -->
+      <div class='flex gap-4'>
+        <div
+          class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'
+          style='margin-top: -6px;'
+        >
+          <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+        </div>
+        <div class='flex-1'>
+          <div
+            class='text-sm font-semibold text-foreground mb-2'
+          >Accelerator</div>
+          <div class='text-sm text-foreground leading-relaxed'>Welcome to the AI
+            Assistant! How can I help you today?</div>
+          <div class='flex items-center gap-2 mt-3'>
+            <button
+              class='h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-volume2 h-3 w-3'
+              >
+                <path
+                  d='M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z'
+                >
+                </path>
+                <path d='M16 9a5 5 0 0 1 0 6'></path>
+                <path d='M19.364 18.364a9 9 0 0 0 0-12.728'></path>
+              </svg>
+            </button>
+            <button
+              class='h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-copy h-3 w-3'
+              >
+                <rect width='14' height='14' x='8' y='8' rx='2' ry='2'></rect>
+                <path
+                  d='M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2'
+                ></path>
+              </svg>
+            </button>
+            <button
+              class='h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-rotate-cw h-3 w-3'
+              >
+                <path
+                  d='M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8'
+                ></path>
+                <path d='M21 3v5h-5'></path>
+              </svg>
+            </button>
+            <button
+              class='h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='24'
+                height='24'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-thumbs-down h-3 w-3'
+              >
+                <path d='M17 14V2'></path>
+                <path
+                  d='M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z'
+                >
+                </path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div class='flex flex-col'>
+        <!-- Task Header -->
+        <div class='bg-muted rounded-2xl p-4 mb-4'>
+          <div class='flex items-center justify-between mb-3'>
+            <div class='flex items-center gap-3'>
+               <div class='w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold'>
+                 <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+                 </svg>
+               </div>
+               <div>
+                 <h4 class='text-sm font-semibold text-foreground'>Research Report</h4>
+                 <p class='text-sm text-muted-foreground'>AI Automation Agency Trends and Best Practices</p>
+               </div>
+            </div>
+            <div class='flex items-center gap-2'>
+               <span class='inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800'>
+                 <svg class='w-3 h-3 mr-1' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
+                 </svg>
+                 Published
+               </span>
+              <span class='text-xs text-muted-foreground'>10:30 AM</span>
+            </div>
+          </div>
+          <div class='w-full bg-secondary rounded-full h-2'>
+            <div class='bg-primary h-2 rounded-full' style='width: 100%;'></div>
+          </div>
+        </div>
+
+         <!-- Task Content with Steps -->
+          <div class='flex'>
+            <div class='w-[60px] relative'>
+              <div class='absolute left-20 top-5 bottom-5 w-0 border-l border-dotted border-gray-500 z-0'></div>
+            </div>
+            <div class='flex flex-col gap-4 flex-1 min-w-0 overflow-hidden pt-2'>
+            <!-- Step 1: Research Planning -->
+            <div class='flex gap-4 mb-6'>
+              <div class='flex-shrink-0 relative'>
+                <div class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                  1
+                </div>
+              </div>
+              <div class='flex-1 pb-6'>
+                <div class='bg-background rounded-lg p-4 border border-border'>
+                  <div class='flex items-center gap-2 mb-2'>
+                    <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+                    </svg>
+                    <h5 class='text-sm font-semibold text-foreground'>Research Planning</h5>
+                  </div>
+                  <p class='text-sm text-muted-foreground mb-3'>Initiated comprehensive research on AI automation agency trends and best practices.</p>
+                  <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                    <span class='flex items-center gap-1'>
+                      <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <circle cx='12' cy='12' r='10'></circle>
+                        <polyline points='12,6 12,12 16,14'></polyline>
+                      </svg>
+                      2.3s
+                    </span>
+                    <span class='flex items-center gap-1'>
+                      <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                        <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                      </svg>
+                      98% confidence
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: Data Collection -->
+            <div class='flex gap-4 mb-6'>
+              <div class='flex-shrink-0 relative'>
+                <div class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                  2
+                </div>
+              </div>
+              <div class='flex-1 pb-6'>
+                <div class='bg-background rounded-lg p-4 border border-border'>
+                  <div class='flex items-center gap-2 mb-2'>
+                    <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4'></path>
+                    </svg>
+                    <h5 class='text-sm font-semibold text-foreground'>Data Collection</h5>
+                  </div>
+                  <p class='text-sm text-muted-foreground mb-3'>Gathered insights from industry reports, case studies, and expert interviews.</p>
+                  <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                    <span class='flex items-center gap-1'>
+                      <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <circle cx='12' cy='12' r='10'></circle>
+                        <polyline points='12,6 12,12 16,14'></polyline>
+                      </svg>
+                      5.7s
+                    </span>
+                    <span class='flex items-center gap-1'>
+                      <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                        <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                      </svg>
+                      95% confidence
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Analysis & Synthesis -->
+            <div class='flex gap-4 mb-6'>
+              <div class='flex-shrink-0 relative'>
+                <div class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                  3
+                </div>
+              </div>
+              <div class='flex-1 pb-6'>
+                <div class='bg-background rounded-lg p-4 border border-border'>
+                  <div class='flex items-center gap-2 mb-3'>
+                    <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'></path>
+                    </svg>
+                    <h5 class='text-sm font-semibold text-foreground'>Analysis & Synthesis</h5>
+                  </div>
+                  <div class='space-y-3'>
+                    <div class='p-3 bg-muted rounded-lg'>
+                      <h6 class='text-sm font-medium text-foreground mb-2'>Key Findings:</h6>
+                       <ul class='space-y-1 text-sm text-muted-foreground'>
+                         <li>• Focus on industry-specific solutions rather than generic AI services</li>
+                         <li>• Emphasize human-in-the-loop systems for quality assurance</li>
+                         <li>• Develop transparent pricing models with clear ROI metrics</li>
+                         <li>• Build strong data governance and privacy frameworks</li>
+                         <li>• Invest in talent combining technical skills with domain expertise</li>
+                         <li>• Integrate advanced AI technologies like multimodal models and edge computing</li>
+                         <li>• Prioritize sustainable and energy-efficient automation solutions</li>
+                         <li>• Develop comprehensive training programs for workforce transition</li>
+                       </ul>
+                    </div>
+                    <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                      <span class='flex items-center gap-1'>
+                        <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                          <circle cx='12' cy='12' r='10'></circle>
+                          <polyline points='12,6 12,12 16,14'></polyline>
+                        </svg>
+                        8.2s
+                      </span>
+                      <span class='flex items-center gap-1'>
+                        <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                          <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                          <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                        </svg>
+                        92% confidence
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4: Recommendations -->
+            <div class='flex gap-4 mb-6'>
+              <div class='flex-shrink-0 relative'>
+                <div class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                  4
+                </div>
+              </div>
+              <div class='flex-1 pb-6'>
+                <div class='bg-background rounded-lg p-4 border border-border'>
+                  <div class='flex items-center gap-2 mb-3'>
+                    <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+                    </svg>
+                    <h5 class='text-sm font-semibold text-foreground'>Recommendations</h5>
+                  </div>
+                  <div class='space-y-3'>
+                     <div class='p-3 bg-green-50 border border-green-200 rounded-lg'>
+                       <p class='text-sm text-green-800 mb-2'>✅ <strong>Stay updated with emerging technologies:</strong></p>
+                       <p class='text-sm text-green-700'>Multimodal AI, edge computing, and federated learning to maintain competitive advantage.</p>
+                     </div>
+                     <div class='p-3 bg-blue-50 border border-blue-200 rounded-lg'>
+                       <p class='text-sm text-blue-800 mb-2'>🔄 <strong>Implement continuous learning:</strong></p>
+                       <p class='text-sm text-blue-700'>Establish feedback loops and regular model updates to improve AI performance over time.</p>
+                     </div>
+                     <div class='p-3 bg-purple-50 border border-purple-200 rounded-lg'>
+                       <p class='text-sm text-purple-800 mb-2'>🛡️ <strong>Prioritize ethical AI practices:</strong></p>
+                       <p class='text-sm text-purple-700'>Ensure transparency, fairness, and accountability in all AI automation solutions.</p>
+                     </div>
+                    <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                      <span class='flex items-center gap-1'>
+                        <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                          <circle cx='12' cy='12' r='10'></circle>
+                          <polyline points='12,6 12,12 16,14'></polyline>
+                        </svg>
+                        3.1s
+                      </span>
+                      <span class='flex items-center gap-1'>
+                        <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                          <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                          <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                        </svg>
+                        96% confidence
+                      </span>
+                    </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+              <!-- Step 5: Executive Summary -->
+             <div class='flex gap-4 mb-6'>
+               <div class='flex-shrink-0 relative'>
+                 <div class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                   5
+                 </div>
+               </div>
+               <div class='flex-1 pb-6'>
+                 <div class='bg-background rounded-lg p-4 border border-border'>
+                   <div class='flex items-center gap-2 mb-3'>
+                     <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+                     </svg>
+                     <h5 class='text-sm font-semibold text-foreground'>Executive Summary</h5>
+                   </div>
+                   <div class='space-y-3'>
+                     <p class='text-sm text-muted-foreground'>The AI automation agency market is experiencing rapid growth, with agencies focusing on specialized solutions and ethical AI practices. Key trends include increased demand for industry-specific automation, emphasis on human-AI collaboration, and growing importance of data privacy and governance.</p>
+                     <div class='grid grid-cols-2 gap-4 text-xs'>
+                       <div>
+                         <span class='font-medium text-foreground'>Market Size:</span> $15.2B (2025)
+                       </div>
+                       <div>
+                         <span class='font-medium text-foreground'>Growth Rate:</span> 28% CAGR
+                       </div>
+                       <div>
+                         <span class='font-medium text-foreground'>Key Players:</span> 500+ agencies
+                       </div>
+                       <div>
+                         <span class='font-medium text-foreground'>Adoption Rate:</span> 65% of enterprises
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+              <!-- Step 6: Tool Execution -->
+             <div class='flex gap-4 mb-6'>
+               <div class='flex-shrink-0 relative'>
+                 <div class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                   6
+                 </div>
+              </div>
+              <div class='flex-1 pb-6'>
+                <div class='bg-background rounded-lg p-4 border border-border'>
+                  <div class='flex items-center gap-2 mb-4'>
+                    <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z'></path>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'></path>
+                    </svg>
+                    <h5 class='text-sm font-semibold text-foreground'>Tool Execution</h5>
+                  </div>
+                  <div class='space-y-3'>
+                    <!-- Searching Tool -->
+                    <div class='flex items-start gap-3 p-3 bg-muted rounded-lg'>
+                      <div class='flex-shrink-0 w-6 h-6 rounded bg-blue-500 flex items-center justify-center'>
+                        <svg class='w-3 h-3 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+                        </svg>
+                      </div>
+                      <div class='flex-1 min-w-0'>
+                        <div class='flex items-center justify-between mb-1'>
+                          <span class='text-sm font-medium text-foreground'>Web Search</span>
+                          <span class='text-xs text-muted-foreground'>10:35 AM</span>
+                        </div>
+                        <p class='text-sm text-muted-foreground'>AI automation agency pitch deck structure, key slides for AI service agency presentation, AI automation market trends and statistics</p>
+                      </div>
+                    </div>
+
+                    <!-- Browsing Tool -->
+                    <div class='flex items-start gap-3 p-3 bg-muted rounded-lg'>
+                      <div class='flex-shrink-0 w-6 h-6 rounded bg-green-500 flex items-center justify-center'>
+                        <svg class='w-3 h-3 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'></path>
+                        </svg>
+                      </div>
+                      <div class='flex-1 min-w-0'>
+                        <div class='flex items-center justify-between mb-1'>
+                          <span class='text-sm font-medium text-foreground'>Web Browsing</span>
+                          <span class='text-xs text-muted-foreground'>10:36 AM</span>
+                        </div>
+                        <p class='text-sm text-muted-foreground'>Analyzing YouTube presentation on AI automation agency strategies</p>
+                      </div>
+                    </div>
+
+                     <!-- Code Generation Tool -->
+                     <div class='flex items-start gap-3 p-3 bg-muted rounded-lg'>
+                       <div class='flex-shrink-0 w-6 h-6 rounded bg-purple-500 flex items-center justify-center'>
+                         <svg class='w-3 h-3 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4'></path>
+                         </svg>
+                       </div>
+                       <div class='flex-1 min-w-0'>
+                         <div class='flex items-center justify-between mb-1'>
+                           <span class='text-sm font-medium text-foreground'>Code Generation</span>
+                           <span class='text-xs text-muted-foreground'>10:37 AM</span>
+                         </div>
+                         <p class='text-sm text-muted-foreground'>Generating React component for dashboard with TypeScript</p>
+                       </div>
+                     </div>
+
+                     <!-- File Analysis Tool -->
+                     <div class='flex items-start gap-3 p-3 bg-muted rounded-lg'>
+                       <div class='flex-shrink-0 w-6 h-6 rounded bg-yellow-500 flex items-center justify-center'>
+                         <svg class='w-3 h-3 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+                         </svg>
+                       </div>
+                       <div class='flex-1 min-w-0'>
+                         <div class='flex items-center justify-between mb-1'>
+                           <span class='text-sm font-medium text-foreground'>File Analysis</span>
+                           <span class='text-xs text-muted-foreground'>10:38 AM</span>
+                         </div>
+                         <p class='text-sm text-muted-foreground'>Analyzing performance.log for errors and bottlenecks</p>
+                       </div>
+                     </div>
+
+                     <!-- Database Query Tool -->
+                     <div class='flex items-start gap-3 p-3 bg-muted rounded-lg'>
+                       <div class='flex-shrink-0 w-6 h-6 rounded bg-blue-600 flex items-center justify-center'>
+                         <svg class='w-3 h-3 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4'></path>
+                         </svg>
+                       </div>
+                       <div class='flex-1 min-w-0'>
+                         <div class='flex items-center justify-between mb-1'>
+                           <span class='text-sm font-medium text-foreground'>Database Query</span>
+                           <span class='text-xs text-muted-foreground'>10:39 AM</span>
+                         </div>
+                         <p class='text-sm text-muted-foreground font-mono text-xs'>SELECT * FROM users WHERE status = "active" AND created_at > "2023-01-01"</p>
+                       </div>
+                     </div>
+
+                     <!-- Web Scraping Tool -->
+                     <div class='flex items-start gap-3 p-3 bg-muted rounded-lg'>
+                       <div class='flex-shrink-0 w-6 h-6 rounded bg-green-600 flex items-center justify-center'>
+                         <svg class='w-3 h-3 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <circle cx='12' cy='12' r='10'></circle>
+                           <line x1='2' y1='12' x2='22' y2='12'></line>
+                           <path d='M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z'></path>
+                         </svg>
+                       </div>
+                       <div class='flex-1 min-w-0'>
+                         <div class='flex items-center justify-between mb-1'>
+                           <span class='text-sm font-medium text-foreground'>Web Scraping</span>
+                           <span class='text-xs text-muted-foreground'>10:40 AM</span>
+                         </div>
+                         <p class='text-sm text-muted-foreground'>Scraping product prices from https://example-store.com/products</p>
+                       </div>
+                     </div>
+
+                     <!-- Image Generation Tool -->
+                     <div class='flex items-start gap-3 p-3 bg-muted rounded-lg'>
+                       <div class='flex-shrink-0 w-6 h-6 rounded bg-rose-500 flex items-center justify-center'>
+                         <svg class='w-3 h-3 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'></path>
+                         </svg>
+                       </div>
+                       <div class='flex-1 min-w-0'>
+                         <div class='flex items-center justify-between mb-1'>
+                           <span class='text-sm font-medium text-foreground'>Image Generation</span>
+                           <span class='text-xs text-muted-foreground'>10:41 AM</span>
+                         </div>
+                         <p class='text-sm text-muted-foreground'>Generating logo design for tech startup with blue color scheme</p>
+                       </div>
+                     </div>
+
+                     <!-- Data Visualization Tool -->
+                     <div class='flex items-start gap-3 p-3 bg-muted rounded-lg'>
+                       <div class='flex-shrink-0 w-6 h-6 rounded bg-sky-500 flex items-center justify-center'>
+                         <svg class='w-3 h-3 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'></path>
+                         </svg>
+                       </div>
+                       <div class='flex-1 min-w-0'>
+                         <div class='flex items-center justify-between mb-1'>
+                           <span class='text-sm font-medium text-foreground'>Data Visualization</span>
+                           <span class='text-xs text-muted-foreground'>10:42 AM</span>
+                         </div>
+                         <p class='text-sm text-muted-foreground'>Creating sales trend chart for Q1-Q4 2023 with D3.js</p>
+                       </div>
+                     </div>
+
+                     <!-- API Testing Tool -->
+                     <div class='flex items-start gap-3 p-3 bg-muted rounded-lg'>
+                       <div class='flex-shrink-0 w-6 h-6 rounded bg-lime-500 flex items-center justify-center'>
+                         <svg class='w-3 h-3 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <polygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'></polygon>
+                         </svg>
+                       </div>
+                       <div class='flex-1 min-w-0'>
+                         <div class='flex items-center justify-between mb-1'>
+                           <span class='text-sm font-medium text-foreground'>API Testing</span>
+                           <span class='text-xs text-muted-foreground'>10:43 AM</span>
+                         </div>
+                         <p class='text-sm text-muted-foreground'>Testing authentication endpoint with various user credentials</p>
+                       </div>
+                     </div>
+
+                     <!-- Code Review Tool -->
+                     <div class='flex items-start gap-3 p-3 bg-muted rounded-lg'>
+                       <div class='flex-shrink-0 w-6 h-6 rounded bg-orange-500 flex items-center justify-center'>
+                         <svg class='w-3 h-3 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+                         </svg>
+                       </div>
+                       <div class='flex-1 min-w-0'>
+                         <div class='flex items-center justify-between mb-1'>
+                           <span class='text-sm font-medium text-foreground'>Code Review</span>
+                           <span class='text-xs text-muted-foreground'>10:44 AM</span>
+                         </div>
+                         <p class='text-sm text-muted-foreground'>Reviewing pull request #1247 for security vulnerabilities</p>
+                       </div>
+                     </div>
+
+                     <!-- Deployment Tool -->
+                     <div class='flex items-start gap-3 p-3 bg-muted rounded-lg'>
+                       <div class='flex-shrink-0 w-6 h-6 rounded bg-gray-500 flex items-center justify-center'>
+                         <svg class='w-3 h-3 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10'></path>
+                         </svg>
+                       </div>
+                       <div class='flex-1 min-w-0'>
+                         <div class='flex items-center justify-between mb-1'>
+                           <span class='text-sm font-medium text-foreground'>Deployment</span>
+                           <span class='text-xs text-muted-foreground'>10:45 AM</span>
+                         </div>
+                         <p class='text-sm text-muted-foreground'>Deploying application to production environment with Docker</p>
+                       </div>
+                     </div>
+
+                     <!-- Monitoring Tool -->
+                     <div class='flex items-start gap-3 p-3 bg-muted rounded-lg'>
+                       <div class='flex-shrink-0 w-6 h-6 rounded bg-red-600 flex items-center justify-center'>
+                         <svg class='w-3 h-3 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <polyline points='22 12 18 12 15 21 9 3 6 12 2 12'></polyline>
+                         </svg>
+                       </div>
+                       <div class='flex-1 min-w-0'>
+                         <div class='flex items-center justify-between mb-1'>
+                           <span class='text-sm font-medium text-foreground'>Monitoring</span>
+                           <span class='text-xs text-muted-foreground'>10:46 AM</span>
+                         </div>
+                         <p class='text-sm text-muted-foreground'>Monitoring server performance metrics in real-time</p>
+                       </div>
+                     </div>
+                   </div>
+                  <div class='flex items-center gap-4 text-xs text-muted-foreground mt-3 pt-3 border-t border-border'>
+                    <span class='flex items-center gap-1'>
+                      <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <circle cx='12' cy='12' r='10'></circle>
+                        <polyline points='12,6 12,12 16,14'></polyline>
+                      </svg>
+                      12.4s total execution time
+                    </span>
+                     <span class='flex items-center gap-1'>
+                       <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                         <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                         <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                       </svg>
+                       All tools completed successfully
+                     </span>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+             <!-- Step 7: Conclusion -->
+             <div class='flex gap-4 mb-6'>
+               <div class='flex-shrink-0 relative'>
+                 <div class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                   7
+                 </div>
+               </div>
+               <div class='flex-1 pb-6'>
+                 <div class='bg-background rounded-lg p-4 border border-border'>
+                   <div class='flex items-center gap-2 mb-3'>
+                     <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+                     </svg>
+                     <h5 class='text-sm font-semibold text-foreground'>Conclusion</h5>
+                   </div>
+                   <div class='space-y-3'>
+                     <p class='text-sm text-muted-foreground'>The research on AI automation agency trends and best practices has been completed successfully. All objectives have been met with comprehensive insights gathered and analyzed.</p>
+                     <div class='p-3 bg-green-50 border border-green-200 rounded-lg'>
+                       <p class='text-sm text-green-800 mb-2'>✅ <strong>Report Status:</strong> Published and ready for distribution</p>
+                       <p class='text-sm text-green-700'>The final report includes market analysis, key findings, actionable recommendations, and supporting data from multiple research tools.</p>
+                     </div>
+                     <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                       <span class='flex items-center gap-1'>
+                         <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <circle cx='12' cy='12' r='10'></circle>
+                           <polyline points='12,6 12,12 16,14'></polyline>
+                         </svg>
+                         0.5s
+                       </span>
+                       <span class='flex items-center gap-1'>
+                         <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                           <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                         </svg>
+                         100% confidence
+                       </span>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+        </div>
+      </div>
+       <!-- Example: Todo List Card -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>Task List</div>
+           <div class='bg-muted rounded-2xl p-4'>
+             <div class='flex items-center justify-between mb-3'>
+               <h4 class='text-sm font-semibold text-foreground'>Project Tasks</h4>
+               <span class='text-xs text-muted-foreground'>2 of 5 completed</span>
+             </div>
+             <div class='w-full bg-secondary rounded-full h-2 mb-4'>
+               <div class='bg-primary h-2 rounded-full' style='width: 40%;'></div>
+             </div>
+             <ul class='space-y-3'>
+               <li class='flex items-start gap-3'>
+                 <input type='checkbox' class='h-4 w-4 rounded border-border text-primary focus:ring-primary mt-0.5'>
+                 <div class='flex-1'>
+                   <span class='text-foreground text-sm font-medium'>Research market trends</span>
+                   <p class='text-xs text-muted-foreground mt-1'>Analyze competitor strategies and identify opportunities</p>
+                   <div class='flex items-center gap-2 mt-1'>
+                     <span class='inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-red-100 text-red-800'>High Priority</span>
+                     <span class='text-xs text-muted-foreground'>Due: Nov 10</span>
+                   </div>
+                 </div>
+               </li>
+               <li class='flex items-start gap-3'>
+                 <input type='checkbox' class='h-4 w-4 rounded border-border text-primary focus:ring-primary mt-0.5' checked>
+                 <div class='flex-1'>
+                   <span class='line-through text-muted-foreground text-sm font-medium'>Create business plan</span>
+                   <p class='text-xs text-muted-foreground mt-1 line-through'>Develop comprehensive business strategy document</p>
+                   <div class='flex items-center gap-2 mt-1'>
+                     <span class='inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-green-100 text-green-800'>Completed</span>
+                     <span class='text-xs text-muted-foreground'>Done: Nov 5</span>
+                   </div>
+                 </div>
+               </li>
+               <li class='flex items-start gap-3'>
+                 <input type='checkbox' class='h-4 w-4 rounded border-border text-primary focus:ring-primary mt-0.5'>
+                 <div class='flex-1'>
+                   <span class='text-foreground text-sm font-medium'>Develop prototype</span>
+                   <p class='text-xs text-muted-foreground mt-1'>Build minimum viable product with core features</p>
+                   <div class='flex items-center gap-2 mt-1'>
+                     <span class='inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-yellow-100 text-yellow-800'>Medium Priority</span>
+                     <span class='text-xs text-muted-foreground'>Due: Nov 20</span>
+                   </div>
+                 </div>
+               </li>
+               <li class='flex items-start gap-3'>
+                 <input type='checkbox' class='h-4 w-4 rounded border-border text-primary focus:ring-primary mt-0.5'>
+                 <div class='flex-1'>
+                   <span class='text-foreground text-sm font-medium'>Conduct user testing</span>
+                   <p class='text-xs text-muted-foreground mt-1'>Gather feedback from target users and iterate</p>
+                   <div class='flex items-center gap-2 mt-1'>
+                     <span class='inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-blue-100 text-blue-800'>Low Priority</span>
+                     <span class='text-xs text-muted-foreground'>Due: Nov 25</span>
+                   </div>
+                 </div>
+               </li>
+               <li class='flex items-start gap-3'>
+                 <input type='checkbox' class='h-4 w-4 rounded border-border text-primary focus:ring-primary mt-0.5'>
+                 <div class='flex-1'>
+                   <span class='text-foreground text-sm font-medium'>Launch marketing campaign</span>
+                   <p class='text-xs text-muted-foreground mt-1'>Execute go-to-market strategy and promotion</p>
+                   <div class='flex items-center gap-2 mt-1'>
+                     <span class='inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-red-100 text-red-800'>High Priority</span>
+                     <span class='text-xs text-muted-foreground'>Due: Dec 1</span>
+                   </div>
+                 </div>
+               </li>
+             </ul>
+             <div class='mt-4 flex gap-2'>
+               <button class='flex-1 px-3 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium'>
+                 Add New Task
+               </button>
+               <button class='px-3 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium'>
+                 Clear Completed
+               </button>
+             </div>
+           </div>
+         </div>
+         <div class='text-xs text-muted-foreground'>10:45 AM</div>
+       </div>
+       <!-- Example: Confirmation Box -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>Confirmation</div>
+           <div class='bg-muted rounded-2xl p-4'>
+             <div class='flex items-start gap-3 mb-4'>
+               <div class='flex-shrink-0 w-10 h-10 rounded-full bg-red-100 flex items-center justify-center'>
+                 <svg class='w-5 h-5 text-red-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z'></path>
+                 </svg>
+               </div>
+               <div class='flex-1'>
+                 <h4 class='text-sm font-semibold text-foreground mb-1'>Delete Project</h4>
+                 <p class='text-sm text-muted-foreground'>This action cannot be undone. All associated data, files, and team access will be permanently removed.</p>
+               </div>
+             </div>
+             <div class='bg-background rounded-lg p-3 mb-4 border border-border'>
+               <div class='flex items-center gap-2 mb-2'>
+                 <div class='w-2 h-2 rounded-full bg-primary'></div>
+                 <span class='text-sm font-medium text-foreground'>Startup Accelerator Project</span>
+               </div>
+               <p class='text-xs text-muted-foreground'>Created: Oct 15, 2025 • Team: 5 members • Files: 23 documents</p>
+             </div>
+             <div class='flex gap-3'>
+               <button class='flex-1 px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 font-medium'>
+                 Delete Project
+               </button>
+               <button class='px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium'>
+                 Cancel
+               </button>
+             </div>
+           </div>
+         </div>
+         <div class='text-xs text-muted-foreground'>10:46 AM</div>
+       </div>
+       <!-- Example: Multi-Step Instruction (Stepper) -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>Process Steps</div>
+           <div class='bg-muted rounded-2xl p-4 max-w-md'>
+             <div class='flex items-center justify-between mb-4'>
+               <h4 class='text-sm font-semibold text-foreground'>Setup Process</h4>
+               <span class='text-sm text-muted-foreground'>Step 3 of 4</span>
+             </div>
+             <div class='w-full bg-secondary rounded-full h-2 mb-4'>
+               <div class='bg-primary h-2 rounded-full' style='width: 75%;'></div>
+             </div>
+             <div class='space-y-4'>
+               <div class='flex items-start gap-3'>
+                 <div class='flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold'>
+                   <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'>
+                     <path fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'></path>
+                   </svg>
+                 </div>
+                 <div class='flex-1'>
+                   <div class='text-sm font-medium text-foreground'>Install Dependencies</div>
+                   <div class='text-xs text-muted-foreground mt-1'>Install Node.js, npm packages, and required tools</div>
+                   <div class='text-xs text-green-600 mt-1'>✓ Completed in 2m 30s</div>
+                 </div>
+               </div>
+               <div class='flex items-start gap-3'>
+                 <div class='flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold'>
+                   <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'>
+                     <path fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'></path>
+                   </svg>
+                 </div>
+                 <div class='flex-1'>
+                   <div class='text-sm font-medium text-foreground'>Configure Database</div>
+                   <div class='text-xs text-muted-foreground mt-1'>Set up PostgreSQL database and connection</div>
+                   <div class='text-xs text-green-600 mt-1'>✓ Completed in 5m 15s</div>
+                 </div>
+               </div>
+               <div class='flex items-start gap-3'>
+                 <div class='flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold border-2 border-primary'>
+                   3
+                 </div>
+                 <div class='flex-1'>
+                   <div class='text-sm font-medium text-foreground'>Set Up Authentication</div>
+                   <div class='text-xs text-muted-foreground mt-1'>Configure OAuth providers and user sessions</div>
+                   <div class='text-xs text-blue-600 mt-1'>⏳ In Progress - Est. 3m remaining</div>
+                 </div>
+               </div>
+               <div class='flex items-start gap-3'>
+                 <div class='flex-shrink-0 w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground text-sm font-bold'>
+                   4
+                 </div>
+                 <div class='flex-1'>
+                   <div class='text-sm font-medium text-muted-foreground'>Deploy to Production</div>
+                   <div class='text-xs text-muted-foreground mt-1'>Push to cloud platform and configure CI/CD</div>
+                   <div class='text-xs text-muted-foreground mt-1'>Pending</div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <!-- Example: Multi-Stage Instruction Walkthrough -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>Setup Instructions</div>
+           <div class='bg-muted rounded-2xl p-4'>
+             <div class='flex items-center gap-2 mb-4'>
+               <svg class='w-5 h-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                 <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+               </svg>
+               <h4 class='text-sm font-semibold text-foreground'>Project Setup Guide</h4>
+             </div>
+             <div class='space-y-4'>
+               <div class='flex items-start gap-3'>
+                 <div class='flex-shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold'>1</div>
+                 <div class='flex-1'>
+                   <div class='text-sm font-medium text-foreground mb-1'>Clone Repository</div>
+                   <div class='text-sm text-muted-foreground mb-2'>Get the project files from GitHub</div>
+                   <div class='bg-background rounded-md p-3 border border-border'>
+                     <code class='text-xs text-foreground'>git clone https://github.com/company/project.git</code>
+                   </div>
+                   <div class='text-xs text-muted-foreground mt-2'>Navigate to the project directory after cloning</div>
+                 </div>
+               </div>
+               <div class='flex items-start gap-3'>
+                 <div class='flex-shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold'>2</div>
+                 <div class='flex-1'>
+                   <div class='text-sm font-medium text-foreground mb-1'>Install Dependencies</div>
+                   <div class='text-sm text-muted-foreground mb-2'>Download and install all required packages</div>
+                   <div class='bg-background rounded-md p-3 border border-border'>
+                     <code class='text-xs text-foreground'>npm install</code>
+                   </div>
+                   <div class='text-xs text-muted-foreground mt-2'>This may take several minutes depending on your connection</div>
+                 </div>
+               </div>
+               <div class='flex items-start gap-3'>
+                 <div class='flex-shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold'>3</div>
+                 <div class='flex-1'>
+                   <div class='text-sm font-medium text-foreground mb-1'>Configure Environment</div>
+                   <div class='text-sm text-muted-foreground mb-2'>Set up your local environment variables</div>
+                   <div class='bg-background rounded-md p-3 border border-border'>
+                     <code class='text-xs text-foreground'>cp .env.example .env</code>
+                   </div>
+                   <div class='text-xs text-muted-foreground mt-2'>Edit .env with your API keys and database credentials</div>
+                 </div>
+               </div>
+               <div class='flex items-start gap-3'>
+                 <div class='flex-shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold'>4</div>
+                 <div class='flex-1'>
+                   <div class='text-sm font-medium text-foreground mb-1'>Start Development Server</div>
+                   <div class='text-sm text-muted-foreground mb-2'>Launch the application locally</div>
+                   <div class='bg-background rounded-md p-3 border border-border'>
+                     <code class='text-xs text-foreground'>npm run dev</code>
+                   </div>
+                   <div class='text-xs text-muted-foreground mt-2'>Visit http://localhost:3000 to view the application</div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <!-- Example: Table Example -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>Data Table</div>
+           <div class='bg-muted rounded-2xl p-4'>
+             <div class='flex items-center justify-between mb-4'>
+               <h4 class='text-sm font-semibold text-foreground'>Team Members</h4>
+               <div class='flex items-center gap-2'>
+                 <span class='text-xs text-muted-foreground'>3 of 3 shown</span>
+                 <button class='text-xs px-2 py-1 bg-secondary text-secondary-foreground rounded hover:bg-secondary/80'>Export</button>
+               </div>
+             </div>
+             <div class='overflow-x-auto'>
+               <table class='min-w-full divide-y divide-border'>
+                 <thead class='bg-background/50'>
+                   <tr>
+                     <th class='px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
+                       <div class='flex items-center gap-1'>
+                         Name
+                         <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4'></path>
+                         </svg>
+                       </div>
+                     </th>
+                     <th class='px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Role</th>
+                     <th class='px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Department</th>
+                     <th class='px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Status</th>
+                     <th class='px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Last Active</th>
+                     <th class='px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Actions</th>
+                   </tr>
+                 </thead>
+                  <tbody class='bg-background divide-y divide-border'>
+                    <tr class='hover:bg-muted/50'>
+                      <td class='px-4 py-3'>
+                        <div class='flex items-center'>
+                          <div class='flex-shrink-0 h-8 w-8'>
+                            <div class='h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-medium'>
+                              JD
+                            </div>
+                          </div>
+                          <div class='ml-3'>
+                            <div class='text-sm font-medium text-foreground'>John Doe</div>
+                            <div class='text-sm text-muted-foreground'>john.doe@company.com</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class='px-4 py-3 text-sm text-foreground'>Senior Developer</td>
+                      <td class='px-4 py-3 text-sm text-foreground'>Engineering</td>
+                      <td class='px-4 py-3'>
+                        <span class='inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800'>
+                          Active
+                        </span>
+                      </td>
+                      <td class='px-4 py-3 text-sm text-muted-foreground'>2 hours ago</td>
+                      <td class='px-4 py-3 text-sm font-medium'>
+                        <button class='text-primary hover:text-primary/80'>Edit</button>
+                      </td>
+                    </tr>
+                    <tr class='hover:bg-muted/50'>
+                      <td class='px-4 py-3'>
+                        <div class='flex items-center'>
+                          <div class='flex-shrink-0 h-8 w-8'>
+                            <div class='h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-medium'>
+                              JS
+                            </div>
+                          </div>
+                          <div class='ml-3'>
+                            <div class='text-sm font-medium text-foreground'>Jane Smith</div>
+                            <div class='text-sm text-muted-foreground'>jane.smith@company.com</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class='px-4 py-3 text-sm text-foreground'>UX Designer</td>
+                      <td class='px-4 py-3 text-sm text-foreground'>Design</td>
+                      <td class='px-4 py-3'>
+                        <span class='inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800'>
+                          Active
+                        </span>
+                      </td>
+                      <td class='px-4 py-3 text-sm text-muted-foreground'>1 hour ago</td>
+                      <td class='px-4 py-3 text-sm font-medium'>
+                        <button class='text-primary hover:text-primary/80'>Edit</button>
+                      </td>
+                    </tr>
+                    <tr class='hover:bg-muted/50'>
+                      <td class='px-4 py-3'>
+                        <div class='flex items-center'>
+                          <div class='flex-shrink-0 h-8 w-8'>
+                            <div class='h-8 w-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs font-medium'>
+                              BJ
+                            </div>
+                          </div>
+                          <div class='ml-3'>
+                            <div class='text-sm font-medium text-foreground'>Bob Johnson</div>
+                            <div class='text-sm text-muted-foreground'>bob.johnson@company.com</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td class='px-4 py-3 text-sm text-foreground'>Product Manager</td>
+                      <td class='px-4 py-3 text-sm text-foreground'>Product</td>
+                      <td class='px-4 py-3'>
+                        <span class='inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800'>
+                          Away
+                        </span>
+                      </td>
+                      <td class='px-4 py-3 text-sm text-muted-foreground'>3 days ago</td>
+                      <td class='px-4 py-3 text-sm font-medium'>
+                        <button class='text-primary hover:text-primary/80'>Edit</button>
+                      </td>
+                    </tr>
+                  </tbody>
+               </table>
+             </div>
+           </div>
+         </div>
+       </div>
+        <!-- Example: Chart Mockup -->
+        <div class='flex gap-4'>
+          <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+            <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+          </div>
+          <div class='flex-1'>
+            <div class='text-sm font-semibold text-foreground mb-2'>Performance Overview</div>
+            <div class='bg-muted rounded-2xl p-4'>
+              <div class='flex items-center justify-between mb-6'>
+                <div class='flex items-center gap-2'>
+                  <svg class='w-5 h-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'></path>
+                  </svg>
+                  <h4 class='text-sm font-semibold text-foreground'>Analytics Dashboard</h4>
+                </div>
+                <div class='flex items-center gap-2'>
+                  <select class='text-xs bg-background border border-border rounded px-2 py-1'>
+                    <option>Last 7 days</option>
+                    <option>Last 30 days</option>
+                    <option>Last 90 days</option>
+                  </select>
+                  <button class='text-xs px-2 py-1 bg-secondary text-secondary-foreground rounded hover:bg-secondary/80'>Export</button>
+                </div>
+              </div>
+
+              <!-- Key Metrics Row -->
+              <div class='grid grid-cols-2 md:grid-cols-4 gap-4 mb-6'>
+                <div class='bg-background rounded-lg p-4 border border-border'>
+                  <div class='flex items-center justify-between mb-2'>
+                    <span class='text-xs text-muted-foreground font-medium'>Total Users</span>
+                    <svg class='w-4 h-4 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'></path>
+                    </svg>
+                  </div>
+                  <div class='text-2xl font-bold text-foreground'>24,847</div>
+                  <div class='text-xs text-green-600 mt-1'>+18.2% from last month</div>
+                </div>
+                <div class='bg-background rounded-lg p-4 border border-border'>
+                  <div class='flex items-center justify-between mb-2'>
+                    <span class='text-xs text-muted-foreground font-medium'>Revenue</span>
+                    <svg class='w-4 h-4 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'></path>
+                    </svg>
+                  </div>
+                  <div class='text-2xl font-bold text-foreground'>$89,432</div>
+                  <div class='text-xs text-green-600 mt-1'>+12.5% from last month</div>
+                </div>
+                <div class='bg-background rounded-lg p-4 border border-border'>
+                  <div class='flex items-center justify-between mb-2'>
+                    <span class='text-xs text-muted-foreground font-medium'>Conversion</span>
+                    <svg class='w-4 h-4 text-red-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 17h8m0 0V9m0 8l-8-8-4 4-6-6'></path>
+                    </svg>
+                  </div>
+                  <div class='text-2xl font-bold text-foreground'>3.24%</div>
+                  <div class='text-xs text-red-600 mt-1'>-0.8% from last month</div>
+                </div>
+                <div class='bg-background rounded-lg p-4 border border-border'>
+                  <div class='flex items-center justify-between mb-2'>
+                    <span class='text-xs text-muted-foreground font-medium'>Avg. Session</span>
+                    <svg class='w-4 h-4 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'></path>
+                    </svg>
+                  </div>
+                  <div class='text-2xl font-bold text-foreground'>4m 32s</div>
+                  <div class='text-xs text-green-600 mt-1'>+15.3% from last month</div>
+                </div>
+              </div>
+
+              <!-- Main Chart -->
+              <div class='bg-background rounded-lg p-4 border border-border mb-6'>
+                <div class='flex items-center justify-between mb-4'>
+                  <h5 class='text-sm font-semibold text-foreground'>Traffic Overview</h5>
+                  <div class='flex items-center gap-3'>
+                    <div class='flex items-center gap-2'>
+                      <div class='w-3 h-3 rounded-full bg-primary'></div>
+                      <span class='text-xs text-muted-foreground'>Page Views</span>
+                    </div>
+                    <div class='flex items-center gap-2'>
+                      <div class='w-3 h-3 rounded-full bg-blue-500'></div>
+                      <span class='text-xs text-muted-foreground'>Unique Visitors</span>
+                    </div>
+                    <div class='flex items-center gap-2'>
+                      <div class='w-3 h-3 rounded-full bg-green-500'></div>
+                      <span class='text-xs text-muted-foreground'>Bounce Rate</span>
+                    </div>
+                  </div>
+                </div>
+                <div class='relative'>
+                  <!-- Line Chart -->
+                  <div class='h-48 mb-4'>
+                    <svg viewBox='0 0 400 160' class='w-full h-full'>
+                      <!-- Grid lines -->
+                      <defs>
+                        <pattern id='grid' width='40' height='20' patternUnits='userSpaceOnUse'>
+                          <path d='M 40 0 L 0 0 0 20' fill='none' stroke='currentColor' stroke-width='0.5' class='text-border' opacity='0.3'/>
+                        </pattern>
+                      </defs>
+                      <rect width='100%' height='100%' fill='url(#grid)' />
+
+                      <!-- Bounce Rate Area (Green) -->
+                      <path d='M0,140 L40,120 L80,110 L120,105 L160,115 L200,108 L240,102 L280,98 L320,95 L360,92 L400,90 L400,160 L0,160 Z'
+                            fill='currentColor' class='text-green-500' opacity='0.1'/>
+                      <path d='M0,140 L40,120 L80,110 L120,105 L160,115 L200,108 L240,102 L280,98 L320,95 L360,92 L400,90'
+                            fill='none' stroke='currentColor' stroke-width='2' class='text-green-500'/>
+
+                      <!-- Unique Visitors Line (Blue) -->
+                      <path d='M0,120 L40,100 L80,95 L120,110 L160,125 L200,118 L240,112 L280,108 L320,105 L360,102 L400,100'
+                            fill='none' stroke='currentColor' stroke-width='3' class='text-blue-500'/>
+
+                      <!-- Page Views Line (Primary) -->
+                      <path d='M0,100 L40,80 L80,75 L120,90 L160,105 L200,98 L240,92 L280,88 L320,85 L360,82 L400,80'
+                            fill='none' stroke='currentColor' stroke-width='3' class='text-primary'/>
+                    </svg>
+                  </div>
+                  <div class='flex justify-between text-xs text-muted-foreground'>
+                    <span>Mon</span>
+                    <span>Tue</span>
+                    <span>Wed</span>
+                    <span>Thu</span>
+                    <span>Fri</span>
+                    <span>Sat</span>
+                    <span>Sun</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Secondary Charts Row -->
+              <div class='grid grid-cols-1 md:grid-cols-2 gap-6 mb-6'>
+                <!-- Device Breakdown -->
+                <div class='bg-background rounded-lg p-4 border border-border'>
+                  <h5 class='text-sm font-semibold text-foreground mb-4'>Device Breakdown</h5>
+                  <div class='space-y-3'>
+                    <div class='flex items-center justify-between'>
+                      <div class='flex items-center gap-2'>
+                        <div class='w-3 h-3 rounded-full bg-blue-500'></div>
+                        <span class='text-sm text-foreground'>Desktop</span>
+                      </div>
+                      <div class='text-right'>
+                        <div class='text-sm font-medium text-foreground'>12,847</div>
+                        <div class='text-xs text-muted-foreground'>51.6%</div>
+                      </div>
+                    </div>
+                    <div class='w-full bg-secondary rounded-full h-2'>
+                      <div class='bg-blue-500 h-2 rounded-full' style='width: 51.6%;'></div>
+                    </div>
+
+                    <div class='flex items-center justify-between'>
+                      <div class='flex items-center gap-2'>
+                        <div class='w-3 h-3 rounded-full bg-green-500'></div>
+                        <span class='text-sm text-foreground'>Mobile</span>
+                      </div>
+                      <div class='text-right'>
+                        <div class='text-sm font-medium text-foreground'>9,432</div>
+                        <div class='text-xs text-muted-foreground'>38.0%</div>
+                      </div>
+                    </div>
+                    <div class='w-full bg-secondary rounded-full h-2'>
+                      <div class='bg-green-500 h-2 rounded-full' style='width: 38.0%;'></div>
+                    </div>
+
+                    <div class='flex items-center justify-between'>
+                      <div class='flex items-center gap-2'>
+                        <div class='w-3 h-3 rounded-full bg-purple-500'></div>
+                        <span class='text-sm text-foreground'>Tablet</span>
+                      </div>
+                      <div class='text-right'>
+                        <div class='text-sm font-medium text-foreground'>2,568</div>
+                        <div class='text-xs text-muted-foreground'>10.4%</div>
+                      </div>
+                    </div>
+                    <div class='w-full bg-secondary rounded-full h-2'>
+                      <div class='bg-purple-500 h-2 rounded-full' style='width: 10.4%;'></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Top Pages -->
+                <div class='bg-background rounded-lg p-4 border border-border'>
+                  <h5 class='text-sm font-semibold text-foreground mb-4'>Top Performing Pages</h5>
+                  <div class='space-y-3'>
+                    <div class='flex items-center justify-between'>
+                      <div class='flex items-center gap-2'>
+                        <div class='w-6 h-6 rounded bg-primary/10 flex items-center justify-center'>
+                          <span class='text-xs font-bold text-primary'>1</span>
+                        </div>
+                        <div>
+                          <div class='text-sm font-medium text-foreground'>Homepage</div>
+                          <div class='text-xs text-muted-foreground'>/home</div>
+                        </div>
+                      </div>
+                      <div class='text-right'>
+                        <div class='text-sm font-medium text-foreground'>8,432</div>
+                        <div class='text-xs text-green-600'>+12%</div>
+                      </div>
+                    </div>
+
+                    <div class='flex items-center justify-between'>
+                      <div class='flex items-center gap-2'>
+                        <div class='w-6 h-6 rounded bg-secondary flex items-center justify-center'>
+                          <span class='text-xs font-bold text-muted-foreground'>2</span>
+                        </div>
+                        <div>
+                          <div class='text-sm font-medium text-foreground'>Product Catalog</div>
+                          <div class='text-xs text-muted-foreground'>/products</div>
+                        </div>
+                      </div>
+                      <div class='text-right'>
+                        <div class='text-sm font-medium text-foreground'>6,247</div>
+                        <div class='text-xs text-green-600'>+8%</div>
+                      </div>
+                    </div>
+
+                    <div class='flex items-center justify-between'>
+                      <div class='flex items-center gap-2'>
+                        <div class='w-6 h-6 rounded bg-secondary flex items-center justify-center'>
+                          <span class='text-xs font-bold text-muted-foreground'>3</span>
+                        </div>
+                        <div>
+                          <div class='text-sm font-medium text-foreground'>About Us</div>
+                          <div class='text-xs text-muted-foreground'>/about</div>
+                        </div>
+                      </div>
+                      <div class='text-right'>
+                        <div class='text-sm font-medium text-foreground'>4,189</div>
+                        <div class='text-xs text-red-600'>-3%</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Performance Insights -->
+              <div class='bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4'>
+                <div class='flex items-start gap-3'>
+                  <svg class='w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+                  </svg>
+                  <div>
+                    <h5 class='text-sm font-semibold text-blue-800 mb-2'>Performance Insights</h5>
+                    <div class='grid grid-cols-1 md:grid-cols-2 gap-3 text-sm'>
+                      <div class='flex items-center gap-2'>
+                        <div class='w-2 h-2 rounded-full bg-green-500'></div>
+                        <span class='text-blue-700'>Mobile traffic increased by 23% this week</span>
+                      </div>
+                      <div class='flex items-center gap-2'>
+                        <div class='w-2 h-2 rounded-full bg-yellow-500'></div>
+                        <span class='text-blue-700'>Conversion rate needs attention (-0.8%)</span>
+                      </div>
+                      <div class='flex items-center gap-2'>
+                        <div class='w-2 h-2 rounded-full bg-green-500'></div>
+                        <span class='text-blue-700'>Session duration improved significantly</span>
+                      </div>
+                      <div class='flex items-center gap-2'>
+                        <div class='w-2 h-2 rounded-full bg-blue-500'></div>
+                        <span class='text-blue-700'>New user acquisition trending upward</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='text-xs text-muted-foreground'>10:52 AM</div>
+        </div>
+       <!-- Example: Image Preview Card -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>{{image_title}}</div>
+           <div class='bg-muted rounded-2xl p-4 max-w-md'>
+             <div class='relative group mb-3'>
+               <div class='rounded-lg overflow-hidden border border-border bg-background'>
+                 <img src='/images/placeholder.svg' alt='Mountain Landscape' class='w-full h-48 object-cover'>
+                 <div class='absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100'>
+                   <button class='bg-white/90 rounded-full p-2 hover:bg-white'>
+                     <svg class='w-5 h-5 text-gray-700' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7'></path>
+                     </svg>
+                   </button>
+                 </div>
+               </div>
+             </div>
+             <div class='space-y-2'>
+               <h4 class='text-sm font-semibold text-foreground'>Mountain Landscape Photography</h4>
+               <p class='text-sm text-muted-foreground'>A breathtaking view of the Rocky Mountains at sunrise, captured during a hiking expedition in Colorado.</p>
+               <div class='flex items-center justify-between text-xs text-muted-foreground'>
+                 <span>Uploaded: Nov 12, 2025</span>
+                 <span>2.3 MB • 1920×1080</span>
+               </div>
+               <div class='flex items-center gap-2'>
+                 <div class='flex items-center gap-1'>
+                   <svg class='w-4 h-4 text-yellow-500' fill='currentColor' viewBox='0 0 20 20'>
+                     <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path>
+                   </svg>
+                   <span class='text-xs text-muted-foreground'>4.8 (24 reviews)</span>
+                 </div>
+                 <div class='text-xs text-muted-foreground'>• Landscape • Nature</div>
+               </div>
+             </div>
+             <div class='flex gap-2 mt-4'>
+               <button class='flex-1 text-sm px-3 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium'>
+                 View Full Size
+               </button>
+               <button class='px-3 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80'>
+                 <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+                 </svg>
+               </button>
+               <button class='px-3 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80'>
+                 <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z'></path>
+                 </svg>
+               </button>
+             </div>
+           </div>
+         </div>
+       </div>
+       <!-- Example: File Upload / File Card -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>File Upload</div>
+           <div class='bg-muted rounded-2xl p-4 max-w-md'>
+             <div class='flex items-start gap-3'>
+               <div class='p-3 bg-red-100 rounded-lg'>
+                 <svg class='w-8 h-8 text-red-600' fill='currentColor' viewBox='0 0 20 20'>
+                   <path fill-rule='evenodd' d='M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z' clip-rule='evenodd'></path>
+                 </svg>
+               </div>
+               <div class='flex-1 min-w-0'>
+                 <div class='flex items-center justify-between mb-1'>
+                   <h4 class='text-sm font-semibold text-foreground truncate'>Q4_Project_Report_2025.pdf</h4>
+                   <span class='text-xs text-muted-foreground bg-background px-2 py-1 rounded'>PDF</span>
+                 </div>
+                 <div class='grid grid-cols-2 gap-4 text-xs text-muted-foreground mb-3'>
+                   <div>
+                     <span class='font-medium'>Size:</span> 2.4 MB
+                   </div>
+                   <div>
+                     <span class='font-medium'>Pages:</span> 24
+                   </div>
+                   <div>
+                     <span class='font-medium'>Uploaded:</span> Nov 10
+                   </div>
+                   <div>
+                     <span class='font-medium'>Modified:</span> Nov 12
+                   </div>
+                 </div>
+                 <div class='space-y-2'>
+                   <div class='flex justify-between text-xs'>
+                     <span class='text-muted-foreground'>Upload Progress</span>
+                     <span class='text-foreground font-medium'>75%</span>
+                   </div>
+                   <div class='w-full bg-secondary rounded-full h-2'>
+                     <div class='bg-primary h-2 rounded-full transition-all duration-300' style='width: 75%;'></div>
+                   </div>
+                   <div class='text-xs text-muted-foreground'>1.8 MB of 2.4 MB uploaded</div>
+                 </div>
+               </div>
+             </div>
+             <div class='flex gap-2 mt-4'>
+               <button class='flex-1 text-sm px-3 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium'>
+                 <svg class='w-4 h-4 inline mr-1' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+                 </svg>
+                 Download
+               </button>
+               <button class='px-3 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80'>
+                 <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z'></path>
+                 </svg>
+               </button>
+               <button class='px-3 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80'>
+                 <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'></path>
+                 </svg>
+               </button>
+             </div>
+           </div>
+         </div>
+       </div>
+       <!-- Example: Date / Calendar Card -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>{{date_title}}</div>
+           <div class='bg-muted rounded-2xl p-4 max-w-sm'>
+             <div class='flex items-center justify-between mb-4'>
+               <button class='p-1 hover:bg-background rounded'>
+                 <svg class='w-4 h-4 text-muted-foreground' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 19l-7-7 7-7'></path>
+                 </svg>
+               </button>
+               <div class='text-center'>
+                 <h3 class='text-sm font-semibold text-foreground'>November 2025</h3>
+               </div>
+               <button class='p-1 hover:bg-background rounded'>
+                 <svg class='w-4 h-4 text-muted-foreground' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7'></path>
+                 </svg>
+               </button>
+             </div>
+             <div class='grid grid-cols-7 gap-1 mb-2'>
+               <span class='text-xs text-center text-muted-foreground font-medium'>S</span>
+               <span class='text-xs text-center text-muted-foreground font-medium'>M</span>
+               <span class='text-xs text-center text-muted-foreground font-medium'>T</span>
+               <span class='text-xs text-center text-muted-foreground font-medium'>W</span>
+               <span class='text-xs text-center text-muted-foreground font-medium'>T</span>
+               <span class='text-xs text-center text-muted-foreground font-medium'>F</span>
+               <span class='text-xs text-center text-muted-foreground font-medium'>S</span>
+             </div>
+             <div class='grid grid-cols-7 gap-1'>
+               <div class='h-8 flex items-center justify-center text-sm text-muted-foreground'>30</div>
+               <div class='h-8 flex items-center justify-center text-sm text-muted-foreground'>31</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>1</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>2</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>3</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>4</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>5</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>6</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>7</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>8</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>9</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>10</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>11</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>12</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>13</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>14</div>
+               <div class='h-8 flex items-center justify-center text-sm bg-primary text-primary-foreground rounded-md font-semibold'>15</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer relative'>
+                 16
+                 <div class='absolute -top-1 -right-1 w-2 h-2 bg-blue-500 rounded-full'></div>
+               </div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>17</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>18</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>19</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>20</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>21</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>22</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>23</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>24</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>25</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>26</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>27</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>28</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>29</div>
+               <div class='h-8 flex items-center justify-center text-sm text-foreground hover:bg-background rounded cursor-pointer'>30</div>
+               <div class='h-8 flex items-center justify-center text-sm text-muted-foreground'>1</div>
+             </div>
+             <div class='mt-4 space-y-2'>
+               <div class='text-sm font-medium text-foreground'>Today's Events</div>
+               <div class='space-y-1'>
+                 <div class='flex items-center gap-2 text-xs'>
+                   <div class='w-2 h-2 bg-primary rounded-full'></div>
+                   <span class='text-foreground'>Project deadline - 2:00 PM</span>
+                 </div>
+                 <div class='flex items-center gap-2 text-xs'>
+                   <div class='w-2 h-2 bg-blue-500 rounded-full'></div>
+                   <span class='text-foreground'>Team standup - 10:00 AM</span>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <!-- Example: Map / Location Card -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>{{location_title}}</div>
+           <div class='bg-muted rounded-2xl p-4 max-w-md'>
+             <div class='flex items-center gap-2 mb-3'>
+               <svg class='w-5 h-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                 <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z'></path>
+                 <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 11a3 3 0 11-6 0 3 3 0 016 0z'></path>
+               </svg>
+               <h4 class='text-sm font-semibold text-foreground'>Office Location</h4>
+             </div>
+             <div class='rounded-lg overflow-hidden border border-border mb-3 relative'>
+               <div class='bg-gradient-to-br from-blue-100 to-green-100 w-full h-40 relative'>
+                 <div class='absolute inset-0 opacity-20'>
+                   <svg viewBox='0 0 400 160' class='w-full h-full'>
+                     <path d='M0 80 Q100 40 200 80 T400 80 L400 160 L0 160 Z' fill='currentColor' class='text-blue-200'></path>
+                     <path d='M0 100 Q150 60 300 100 T400 100 L400 160 L0 160 Z' fill='currentColor' class='text-green-200'></path>
+                     <circle cx='200' cy='80' r='4' fill='currentColor' class='text-red-500'></circle>
+                   </svg>
+                 </div>
+                 <div class='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
+                   <div class='w-6 h-6 bg-red-500 rounded-full flex items-center justify-center shadow-lg'>
+                     <div class='w-2 h-2 bg-white rounded-full'></div>
+                   </div>
+                 </div>
+                 <div class='absolute bottom-2 left-2 bg-white/90 px-2 py-1 rounded text-xs font-medium text-gray-700'>
+                   Downtown District
+                 </div>
+               </div>
+             </div>
+             <div class='space-y-2 mb-3'>
+               <div>
+                 <div class='text-sm font-medium text-foreground'>Tech Startup Hub</div>
+                 <div class='text-sm text-muted-foreground'>123 Innovation Drive, Suite 456</div>
+                 <div class='text-sm text-muted-foreground'>San Francisco, CA 94105</div>
+               </div>
+               <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                 <div class='flex items-center gap-1'>
+                   <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'></path>
+                   </svg>
+                   <span>4.2 miles away</span>
+                 </div>
+                 <div class='flex items-center gap-1'>
+                   <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+                   </svg>
+                   <span>12 min drive</span>
+                 </div>
+               </div>
+             </div>
+             <div class='grid grid-cols-2 gap-2 mb-3'>
+               <div class='text-xs'>
+                 <div class='font-medium text-foreground'>Nearby</div>
+                 <div class='text-muted-foreground'>Coffee Shop • 0.2 mi</div>
+                 <div class='text-muted-foreground'>Parking • 0.1 mi</div>
+               </div>
+               <div class='text-xs'>
+                 <div class='font-medium text-foreground'>Rating</div>
+                 <div class='flex items-center gap-1'>
+                   <div class='flex'>
+                     <svg class='w-3 h-3 text-yellow-400' fill='currentColor' viewBox='0 0 20 20'>
+                       <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path>
+                     </svg>
+                     <span class='ml-1 text-muted-foreground'>4.5</span>
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div class='flex gap-2'>
+               <button class='flex-1 text-sm px-3 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium'>
+                 Get Directions
+               </button>
+               <button class='px-3 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80'>
+                 <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'></path>
+                 </svg>
+               </button>
+               <button class='px-3 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80'>
+                 <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z'></path>
+                 </svg>
+               </button>
+             </div>
+           </div>
+         </div>
+       </div>
+       <!-- Example: Analytical Summary Card -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>{{summary_title}}</div>
+           <div class='bg-muted rounded-2xl p-4'>
+             <div class='flex items-center justify-between mb-4'>
+               <h4 class='text-sm font-semibold text-foreground'>Business Analytics Dashboard</h4>
+               <div class='flex items-center gap-2'>
+                 <span class='text-xs text-muted-foreground'>Last 30 days</span>
+                 <button class='text-xs px-2 py-1 bg-secondary text-secondary-foreground rounded hover:bg-secondary/80'>Export</button>
+               </div>
+             </div>
+             <div class='grid grid-cols-3 gap-4 mb-4'>
+               <div class='bg-background rounded-lg p-3 border border-border'>
+                 <div class='flex items-center justify-between mb-1'>
+                   <span class='text-xs text-muted-foreground'>Total Users</span>
+                   <svg class='w-4 h-4 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'></path>
+                   </svg>
+                 </div>
+                 <div class='text-xl font-bold text-foreground'>12,847</div>
+                 <div class='text-xs text-green-600'>+12.5% from last month</div>
+               </div>
+               <div class='bg-background rounded-lg p-3 border border-border'>
+                 <div class='flex items-center justify-between mb-1'>
+                   <span class='text-xs text-muted-foreground'>Revenue</span>
+                   <svg class='w-4 h-4 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'></path>
+                   </svg>
+                 </div>
+                 <div class='text-xl font-bold text-foreground'>$89,432</div>
+                 <div class='text-xs text-green-600'>+8.2% from last month</div>
+               </div>
+               <div class='bg-background rounded-lg p-3 border border-border'>
+                 <div class='flex items-center justify-between mb-1'>
+                   <span class='text-xs text-muted-foreground'>Satisfaction</span>
+                   <svg class='w-4 h-4 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'></path>
+                   </svg>
+                 </div>
+                 <div class='text-xl font-bold text-foreground'>94%</div>
+                 <div class='text-xs text-green-600'>+2.1% from last month</div>
+               </div>
+             </div>
+             <div class='mb-4'>
+               <div class='flex items-center justify-between mb-2'>
+                 <span class='text-sm font-medium text-foreground'>Revenue Trend</span>
+                 <span class='text-xs text-muted-foreground'>Monthly</span>
+               </div>
+               <div class='flex items-end h-16 gap-1'>
+                 <div class='flex-1 bg-primary rounded-t' style='height: 40%;'></div>
+                 <div class='flex-1 bg-primary rounded-t' style='height: 60%;'></div>
+                 <div class='flex-1 bg-primary rounded-t' style='height: 80%;'></div>
+                 <div class='flex-1 bg-primary rounded-t' style='height: 70%;'></div>
+                 <div class='flex-1 bg-primary rounded-t' style='height: 90%;'></div>
+                 <div class='flex-1 bg-primary rounded-t' style='height: 100%;'></div>
+               </div>
+               <div class='flex justify-between text-xs text-muted-foreground mt-1'>
+                 <span>Jun</span>
+                 <span>Jul</span>
+                 <span>Aug</span>
+                 <span>Sep</span>
+                 <span>Oct</span>
+                 <span>Nov</span>
+               </div>
+             </div>
+             <div class='flex flex-wrap gap-2 mb-3'>
+               <span class='px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium'>High Growth</span>
+               <span class='px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full font-medium'>Strong Retention</span>
+               <span class='px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full font-medium'>Market Leader</span>
+             </div>
+             <p class='text-sm text-foreground'>Business performance continues to exceed expectations with consistent growth across all key metrics. User acquisition and retention rates are at record highs.</p>
+           </div>
+         </div>
+       </div>
+       <!-- Example: Search Result Preview -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>Search Results</div>
+           <div class='bg-muted rounded-2xl p-4'>
+             <div class='flex items-center justify-between mb-4'>
+               <div class='flex items-center gap-2'>
+                 <svg class='w-5 h-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+                 </svg>
+                 <h4 class='text-sm font-semibold text-foreground'>Search Results</h4>
+               </div>
+               <div class='text-xs text-muted-foreground'>About 1,240,000 results (0.45 seconds)</div>
+             </div>
+             <div class='space-y-3'>
+               <div class='p-4 bg-background rounded-lg border border-border hover:shadow-sm transition-shadow'>
+                 <div class='flex items-start gap-3'>
+                   <div class='flex-shrink-0 w-4 h-4 rounded bg-blue-500 mt-1'></div>
+                   <div class='flex-1 min-w-0'>
+                     <a href='https://react.dev/learn' class='text-primary hover:underline'>
+                       <h3 class='text-sm font-medium text-foreground line-clamp-2'>Getting Started with React - React Documentation</h3>
+                     </a>
+                     <div class='flex items-center gap-2 mt-1'>
+                       <span class='text-xs text-green-600'>react.dev</span>
+                       <span class='text-xs text-muted-foreground'>› learn</span>
+                       <span class='inline-flex items-center px-1.5 py-0.5 rounded text-xs bg-green-100 text-green-800'>Official</span>
+                     </div>
+                     <p class='text-sm text-muted-foreground mt-2 line-clamp-3'>Learn React fundamentals including components, JSX, props, state, and lifecycle methods. Start building your first React application with our comprehensive tutorial.</p>
+                     <div class='flex items-center gap-4 mt-2 text-xs text-muted-foreground'>
+                       <span>⭐ 4.8/5</span>
+                       <span>📅 Updated Nov 2025</span>
+                       <span>👁️ 2.1M views</span>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               <div class='p-4 bg-background rounded-lg border border-border hover:shadow-sm transition-shadow'>
+                 <div class='flex items-start gap-3'>
+                   <div class='flex-shrink-0 w-4 h-4 rounded bg-purple-500 mt-1'></div>
+                   <div class='flex-1 min-w-0'>
+                     <a href='https://www.codecademy.com/learn/react-101' class='text-primary hover:underline'>
+                       <h3 class='text-sm font-medium text-foreground line-clamp-2'>React 101: Interactive Course - Codecademy</h3>
+                     </a>
+                     <div class='flex items-center gap-2 mt-1'>
+                       <span class='text-xs text-green-600'>codecademy.com</span>
+                       <span class='text-xs text-muted-foreground'>› learn › react-101</span>
+                       <span class='inline-flex items-center px-1.5 py-0.5 rounded text-xs bg-blue-100 text-blue-800'>Course</span>
+                     </div>
+                     <p class='text-sm text-muted-foreground mt-2 line-clamp-3'>Interactive React course covering ES6, components, state management, and building complete applications. Includes hands-on projects and quizzes.</p>
+                     <div class='flex items-center gap-4 mt-2 text-xs text-muted-foreground'>
+                       <span>⭐ 4.6/5</span>
+                       <span>⏱️ 8 hours</span>
+                       <span>🎓 150K students</span>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               <div class='p-4 bg-background rounded-lg border border-border hover:shadow-sm transition-shadow'>
+                 <div class='flex items-start gap-3'>
+                   <div class='flex-shrink-0 w-4 h-4 rounded bg-red-500 mt-1'></div>
+                   <div class='flex-1 min-w-0'>
+                     <a href='https://www.udemy.com/course/react-the-complete-guide/' class='text-primary hover:underline'>
+                       <h3 class='text-sm font-medium text-foreground line-clamp-2'>React - The Complete Guide (incl Hooks, React Router, Redux) - Udemy</h3>
+                     </a>
+                     <div class='flex items-center gap-2 mt-1'>
+                       <span class='text-xs text-green-600'>udemy.com</span>
+                       <span class='text-xs text-muted-foreground'>› course › react-the-complete-guide</span>
+                       <span class='inline-flex items-center px-1.5 py-0.5 rounded text-xs bg-orange-100 text-orange-800'>Best Seller</span>
+                     </div>
+                     <p class='text-sm text-muted-foreground mt-2 line-clamp-3'>Comprehensive React course covering modern React with hooks, context API, Redux, React Router, and Next.js. Build real-world projects.</p>
+                     <div class='flex items-center gap-4 mt-2 text-xs text-muted-foreground'>
+                       <span>⭐ 4.7/5</span>
+                       <span>⏱️ 40.5 hours</span>
+                       <span>💰 $89.99</span>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div class='flex items-center justify-between mt-4 pt-3 border-t border-border'>
+               <button class='text-sm text-primary hover:underline'>Previous</button>
+               <div class='flex gap-1'>
+                 <span class='px-2 py-1 text-xs bg-primary text-primary-foreground rounded'>1</span>
+                 <span class='px-2 py-1 text-xs text-muted-foreground hover:bg-muted rounded cursor-pointer'>2</span>
+                 <span class='px-2 py-1 text-xs text-muted-foreground hover:bg-muted rounded cursor-pointer'>3</span>
+                 <span class='px-2 py-1 text-xs text-muted-foreground'>...</span>
+                 <span class='px-2 py-1 text-xs text-muted-foreground hover:bg-muted rounded cursor-pointer'>10</span>
+               </div>
+               <button class='text-sm text-primary hover:underline'>Next</button>
+             </div>
+           </div>
+         </div>
+       </div>
+       <!-- Example: Tool Invocation Result (Structured JSON-like) -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>API Response</div>
+           <div class='bg-muted rounded-2xl p-4 max-w-md'>
+             <div class='flex items-center justify-between mb-3'>
+               <div class='flex items-center gap-2'>
+                 <svg class='w-5 h-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <rect width='16' height='16' x='4' y='4' rx='2'></rect>
+                   <rect width='6' height='6' x='9' y='9' rx='1'></rect>
+                   <path d='M9 1v3'></path>
+                   <path d='M15 1v3'></path>
+                   <path d='M9 20v3'></path>
+                   <path d='M15 20v3'></path>
+                   <path d='M20 9h3'></path>
+                   <path d='M20 14h3'></path>
+                   <path d='M1 9h3'></path>
+                   <path d='M1 14h3'></path>
+                 </svg>
+                 <h4 class='text-sm font-semibold text-foreground'>API Response</h4>
+               </div>
+               <div class='flex items-center gap-1'>
+                 <span class='inline-flex items-center px-2 py-1 rounded-full text-xs bg-green-100 text-green-800'>200 OK</span>
+                 <button class='p-1 hover:bg-background rounded' title='Copy response'>
+                   <svg class='w-4 h-4 text-muted-foreground' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                     <rect width='14' height='14' x='8' y='8' rx='2' ry='2'></rect>
+                     <path d='M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2'></path>
+                   </svg>
+                 </button>
+               </div>
+             </div>
+             <div class='bg-secondary text-secondary-foreground p-4 rounded-lg text-sm font-mono overflow-x-auto border border-border'>
+               <div class='flex items-center justify-between mb-3'>
+                 <span class='text-xs text-muted-foreground'>JSON Response</span>
+                 <span class='text-xs text-muted-foreground'>Size: 247 bytes</span>
+               </div>
+               <div class='space-y-1'>
+                 <div class='flex'>
+                   <span class='text-blue-400 w-16 flex-shrink-0'>"status":</span>
+                   <span class='text-green-400'>"success"</span>
+                 </div>
+                 <div class='flex'>
+                   <span class='text-blue-400 w-16 flex-shrink-0'>"data":</span>
+                   <span class='text-muted-foreground'>{</span>
+                 </div>
+                 <div class='ml-4'>
+                   <div class='flex'>
+                     <span class='text-blue-400 w-16 flex-shrink-0'>"id":</span>
+                     <span class='text-orange-400'>12345</span>
+                   </div>
+                   <div class='flex'>
+                     <span class='text-blue-400 w-16 flex-shrink-0'>"name":</span>
+                     <span class='text-green-400'>"John Doe"</span>
+                   </div>
+                   <div class='flex'>
+                     <span class='text-blue-400 w-16 flex-shrink-0'>"email":</span>
+                     <span class='text-green-400'>"john.doe@example.com"</span>
+                   </div>
+                   <div class='flex'>
+                     <span class='text-blue-400 w-16 flex-shrink-0'>"role":</span>
+                     <span class='text-green-400'>"Software Engineer"</span>
+                   </div>
+                   <div class='flex'>
+                     <span class='text-blue-400 w-16 flex-shrink-0'>"department":</span>
+                     <span class='text-green-400'>"Engineering"</span>
+                   </div>
+                   <div class='flex'>
+                     <span class='text-blue-400 w-16 flex-shrink-0'>"value":</span>
+                     <span class='text-orange-400'>98765</span>
+                   </div>
+                   <div class='flex'>
+                     <span class='text-blue-400 w-16 flex-shrink-0'>"timestamp":</span>
+                     <span class='text-green-400'>"2025-11-04T10:30:00Z"</span>
+                   </div>
+                 </div>
+                 <div class='flex'>
+                   <span class='text-muted-foreground w-16 flex-shrink-0'>}</span>
+                 </div>
+               </div>
+             </div>
+             <div class='flex items-center justify-between mt-3 text-xs text-muted-foreground'>
+               <span>Response time: 245ms</span>
+               <span>Content-Type: application/json</span>
+             </div>
+           </div>
+         </div>
+       </div>
+       <!-- Example: Reasoning Trace Card -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>Analysis Process</div>
+           <div class='bg-muted rounded-2xl p-4'>
+             <div class='flex items-center justify-between mb-4'>
+               <div class='flex items-center gap-2'>
+                 <svg class='w-5 h-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'></path>
+                 </svg>
+                 <h4 class='text-sm font-semibold text-foreground'>AI Reasoning Process</h4>
+               </div>
+               <div class='text-xs text-muted-foreground'>Total: 9.9s • Confidence: 94%</div>
+             </div>
+             <div class='w-full bg-secondary rounded-full h-2 mb-4'>
+               <div class='bg-primary h-2 rounded-full' style='width: 94%;'></div>
+             </div>
+             <ul class='space-y-3'>
+               <li class='flex items-start gap-3'>
+                 <div class='flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold'>
+                   <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'>
+                     <path fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'></path>
+                   </svg>
+                 </div>
+                 <div class='flex-1'>
+                   <div class='text-sm font-medium text-foreground mb-1'>Requirements Analysis</div>
+                   <div class='text-sm text-muted-foreground mb-2'>Analyzed user requirements and identified key features needed for the project</div>
+                   <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                     <span class='flex items-center gap-1'>
+                       <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                         <circle cx='12' cy='12' r='10'></circle>
+                         <polyline points='12,6 12,12 16,14'></polyline>
+                       </svg>
+                       2.3s
+                     </span>
+                     <span class='flex items-center gap-1'>
+                       <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                         <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                         <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                       </svg>
+                       98% confidence
+                     </span>
+                   </div>
+                 </div>
+               </li>
+               <li class='flex items-start gap-3'>
+                 <div class='flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold'>
+                   <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'>
+                     <path fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'></path>
+                   </svg>
+                 </div>
+                 <div class='flex-1'>
+                   <div class='text-sm font-medium text-foreground mb-1'>Technical Assessment</div>
+                   <div class='text-sm text-muted-foreground mb-2'>Evaluated technical constraints, dependencies, and implementation feasibility</div>
+                   <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                     <span class='flex items-center gap-1'>
+                       <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                         <circle cx='12' cy='12' r='10'></circle>
+                         <polyline points='12,6 12,12 16,14'></polyline>
+                       </svg>
+                       1.8s
+                     </span>
+                     <span class='flex items-center gap-1'>
+                       <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                         <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                         <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                       </svg>
+                       95% confidence
+                     </span>
+                   </div>
+                 </div>
+               </li>
+               <li class='flex items-start gap-3'>
+                 <div class='flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold'>
+                   <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'>
+                     <path fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'></path>
+                   </svg>
+                 </div>
+                 <div class='flex-1'>
+                   <div class='text-sm font-medium text-foreground mb-1'>Solution Planning</div>
+                   <div class='text-sm text-muted-foreground mb-2'>Generated comprehensive implementation plan with detailed milestones</div>
+                   <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                     <span class='flex items-center gap-1'>
+                       <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                         <circle cx='12' cy='12' r='10'></circle>
+                         <polyline points='12,6 12,12 16,14'></polyline>
+                       </svg>
+                       3.1s
+                     </span>
+                     <span class='flex items-center gap-1'>
+                       <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                         <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                         <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                       </svg>
+                       92% confidence
+                     </span>
+                   </div>
+                 </div>
+               </li>
+               <li class='flex items-start gap-3'>
+                 <div class='flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold'>
+                   <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'>
+                     <path fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'></path>
+                   </svg>
+                 </div>
+                 <div class='flex-1'>
+                   <div class='text-sm font-medium text-foreground mb-1'>Validation & Final Review</div>
+                   <div class='text-sm text-muted-foreground mb-2'>Validated solution against business objectives and requirements</div>
+                   <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                     <span class='flex items-center gap-1'>
+                       <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                         <circle cx='12' cy='12' r='10'></circle>
+                         <polyline points='12,6 12,12 16,14'></polyline>
+                       </svg>
+                       2.7s
+                     </span>
+                     <span class='flex items-center gap-1'>
+                       <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                         <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                         <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                       </svg>
+                       96% confidence
+                     </span>
+                   </div>
+                 </div>
+               </li>
+             </ul>
+             <div class='mt-4 p-3 bg-green-50 border border-green-200 rounded-lg'>
+               <div class='flex items-center gap-2 mb-1'>
+                 <svg class='w-4 h-4 text-green-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                   <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+                 </svg>
+                 <span class='text-sm font-medium text-green-800'>Analysis Complete</span>
+               </div>
+               <p class='text-sm text-green-700'>The proposed solution meets all requirements with high confidence and is ready for implementation. All technical and business constraints have been addressed.</p>
+             </div>
+           </div>
+         </div>
+       </div>
+       <!-- Example: Mini Dialogue Card -->
+       <div class='flex gap-4'>
+         <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+           <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+         </div>
+         <div class='flex-1'>
+           <div class='text-sm font-semibold text-foreground mb-2'>Conversation Summary</div>
+           <div class='bg-muted rounded-2xl p-4 max-w-md'>
+             <div class='flex items-center gap-2 mb-4'>
+               <svg class='w-5 h-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                 <path d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'></path>
+               </svg>
+               <h4 class='text-sm font-semibold text-foreground'>Conversation Summary</h4>
+               <span class='text-xs text-muted-foreground ml-auto'>5 messages • 2 min ago</span>
+             </div>
+             <div class='space-y-4 max-h-64 overflow-y-auto'>
+               <div class='flex gap-3'>
+                 <div class='flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-medium'>
+                   JD
+                 </div>
+                 <div class='flex-1'>
+                   <div class='flex items-center gap-2 mb-1'>
+                     <span class='text-sm font-medium text-foreground'>John Doe</span>
+                     <span class='text-xs text-muted-foreground'>10:23 AM</span>
+                   </div>
+                   <div class='bg-background rounded-2xl rounded-tl-md px-4 py-2 max-w-md'>
+                     <p class='text-sm text-foreground'>How do I optimize my React app for better performance?</p>
+                   </div>
+                 </div>
+               </div>
+               <div class='flex gap-3'>
+                 <div class='flex-shrink-0 w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-xs font-medium'>
+                   AI
+                 </div>
+                 <div class='flex-1'>
+                   <div class='flex items-center gap-2 mb-1'>
+                     <span class='text-sm font-medium text-foreground'>AI Assistant</span>
+                     <span class='text-xs text-muted-foreground'>10:23 AM</span>
+                   </div>
+                   <div class='bg-primary/10 rounded-2xl rounded-tl-md px-4 py-2 max-w-md'>
+                     <p class='text-sm text-foreground'>Great question! Here are several techniques to optimize React performance:</p>
+                     <ul class='mt-2 ml-4 space-y-1 text-sm text-foreground'>
+                       <li>• Use React.memo for component memoization</li>
+                       <li>• Implement lazy loading for routes</li>
+                       <li>• Code splitting with dynamic imports</li>
+                       <li>• Optimize bundle size with webpack</li>
+                     </ul>
+                   </div>
+                 </div>
+               </div>
+               <div class='flex gap-3'>
+                 <div class='flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-medium'>
+                   JD
+                 </div>
+                 <div class='flex-1'>
+                   <div class='flex items-center gap-2 mb-1'>
+                     <span class='text-sm font-medium text-foreground'>John Doe</span>
+                     <span class='text-xs text-muted-foreground'>10:24 AM</span>
+                   </div>
+                   <div class='bg-background rounded-2xl rounded-tl-md px-4 py-2 max-w-md'>
+                     <p class='text-sm text-foreground'>Can you explain React.memo in more detail?</p>
+                   </div>
+                 </div>
+               </div>
+               <div class='flex gap-3'>
+                 <div class='flex-shrink-0 w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-xs font-medium'>
+                   AI
+                 </div>
+                 <div class='flex-1'>
+                   <div class='flex items-center gap-2 mb-1'>
+                     <span class='text-sm font-medium text-foreground'>AI Assistant</span>
+                     <span class='text-xs text-muted-foreground'>10:24 AM</span>
+                   </div>
+                   <div class='bg-primary/10 rounded-2xl rounded-tl-md px-4 py-2 max-w-md'>
+                     <p class='text-sm text-foreground'>React.memo is a higher-order component that prevents unnecessary re-renders by memoizing the component. It does a shallow comparison of props.</p>
+                     <div class='mt-2 p-3 bg-background rounded-lg'>
+                       <code class='text-xs text-foreground'>const MyComponent = React.memo(({ data }) => {</code><br>
+                       <code class='text-xs text-foreground ml-4'>return &lt;div&gt;{data}&lt;/div&gt;;</code><br>
+                       <code class='text-xs text-foreground'>});</code>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               <div class='flex gap-3'>
+                 <div class='flex-shrink-0 w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground text-xs'>
+                   <div class='flex space-x-1'>
+                     <div class='w-1 h-1 bg-current rounded-full animate-bounce'></div>
+                     <div class='w-1 h-1 bg-current rounded-full animate-bounce' style='animation-delay: 0.1s'></div>
+                     <div class='w-1 h-1 bg-current rounded-full animate-bounce' style='animation-delay: 0.2s'></div>
+                   </div>
+                 </div>
+                 <div class='bg-primary/10 rounded-2xl rounded-tl-md px-4 py-2'>
+                   <p class='text-xs text-muted-foreground italic'>AI is typing...</p>
+                 </div>
+               </div>
+             </div>
+             <div class='mt-4 pt-3 border-t border-border'>
+               <div class='flex items-center justify-between'>
+                 <div class='flex items-center gap-2'>
+                   <span class='inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800'>Technical</span>
+                   <span class='inline-flex items-center px-2 py-1 rounded-full text-xs bg-green-100 text-green-800'>Helpful</span>
+                 </div>
+                 <span class='text-xs text-muted-foreground'>Conversation focused on React performance optimization techniques and best practices.</span>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+        <!-- Example: Knowledge Card -->
+        <div class='flex gap-4'>
+          <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+            <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+          </div>
+          <div class='flex-1'>
+            <div class='text-sm font-semibold text-foreground mb-2'>Knowledge Base</div>
+            <div class='bg-muted rounded-2xl p-4'>
+              <div class='flex items-center gap-2 mb-4'>
+                <svg class='w-5 h-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'></path>
+                </svg>
+                <h4 class='text-sm font-semibold text-foreground'>AI Ethics & Best Practices</h4>
+                <span class='text-xs text-muted-foreground ml-auto'>Updated Nov 2025</span>
+              </div>
+              <div class='space-y-4 mb-4'>
+                <div class='bg-background rounded-lg p-3 border border-border'>
+                  <div class='flex items-start gap-3'>
+                    <div class='flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-bold'>1</div>
+                    <div class='flex-1'>
+                      <h5 class='text-sm font-medium text-foreground mb-1'>Bias Detection & Mitigation</h5>
+                      <p class='text-sm text-muted-foreground'>Machine learning algorithms can predict user behavior patterns but must be regularly audited for bias. Implement fairness metrics and diverse training datasets to ensure equitable outcomes.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class='bg-background rounded-lg p-3 border border-border'>
+                  <div class='flex items-start gap-3'>
+                    <div class='flex-shrink-0 w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs font-bold'>2</div>
+                    <div class='flex-1'>
+                      <h5 class='text-sm font-medium text-foreground mb-1'>Data Privacy Compliance</h5>
+                      <p class='text-sm text-muted-foreground'>Data privacy regulations like GDPR, CCPA, and emerging AI-specific laws must be considered in all implementations. Implement data minimization, consent management, and audit trails.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class='bg-background rounded-lg p-3 border border-border'>
+                  <div class='flex items-start gap-3'>
+                    <div class='flex-shrink-0 w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 text-xs font-bold'>3</div>
+                    <div class='flex-1'>
+                      <h5 class='text-sm font-medium text-foreground mb-1'>Scalable Architecture Design</h5>
+                      <p class='text-sm text-muted-foreground'>Scalability is crucial for handling large datasets efficiently. Design systems with horizontal scaling, caching layers, and distributed processing capabilities from the ground up.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class='border-t border-border pt-4'>
+                <p class='text-sm font-medium mb-3 text-foreground'>Trusted References & Resources:</p>
+                <div class='grid grid-cols-1 gap-2'>
+                  <a href='https://example.com/ml-ethics' class='flex items-center gap-2 p-2 bg-background rounded-lg border border-border hover:bg-muted/50 transition-colors'>
+                    <div class='w-4 h-4 rounded bg-blue-500 flex-shrink-0'></div>
+                    <div class='flex-1 min-w-0'>
+                      <div class='text-sm font-medium text-foreground truncate'>Machine Learning Ethics Framework</div>
+                      <div class='text-xs text-muted-foreground'>MIT Technology Review • 2025</div>
+                    </div>
+                    <svg class='w-4 h-4 text-muted-foreground flex-shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'></path>
+                    </svg>
+                  </a>
+                  <a href='https://example.com/privacy-ai' class='flex items-center gap-2 p-2 bg-background rounded-lg border border-border hover:bg-muted/50 transition-colors'>
+                    <div class='w-4 h-4 rounded bg-green-500 flex-shrink-0'></div>
+                    <div class='flex-1 min-w-0'>
+                      <div class='text-sm font-medium text-foreground truncate'>AI Privacy & Data Protection Guide</div>
+                      <div class='text-xs text-muted-foreground'>EFF Privacy Guidelines • 2025</div>
+                    </div>
+                    <svg class='w-4 h-4 text-muted-foreground flex-shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'></path>
+                    </svg>
+                  </a>
+                  <a href='https://example.com/scalable-ai' class='flex items-center gap-2 p-2 bg-background rounded-lg border border-border hover:bg-muted/50 transition-colors'>
+                    <div class='w-4 h-4 rounded bg-purple-500 flex-shrink-0'></div>
+                    <div class='flex-1 min-w-0'>
+                      <div class='text-sm font-medium text-foreground truncate'>Building Scalable AI Systems</div>
+                      <div class='text-xs text-muted-foreground'>Google AI Blog • 2025</div>
+                    </div>
+                    <svg class='w-4 h-4 text-muted-foreground flex-shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <div class='mt-4 flex gap-2'>
+                <button class='flex-1 px-3 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium'>
+                  Read Full Article
+                </button>
+                <button class='px-3 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80'>
+                  <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z'></path>
+                  </svg>
+                </button>
+                <button class='px-3 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80'>
+                  <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z'></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class='text-xs text-muted-foreground'>10:47 AM</div>
+        </div>
+        <!-- Example: Short Form Card -->
+        <div class='flex gap-4'>
+          <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+            <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+          </div>
+          <div class='flex-1'>
+            <div class='text-sm font-semibold text-foreground mb-2'>Contact Information</div>
+            <div class='bg-muted rounded-2xl p-4 max-w-md'>
+              <div class='flex items-center gap-2 mb-4'>
+                <svg class='w-5 h-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+                </svg>
+                <h4 class='text-sm font-semibold text-foreground'>Project Consultation Request</h4>
+              </div>
+              <form class='space-y-4'>
+                <div>
+                  <label class='block text-sm font-medium text-foreground mb-2'>Full Name *</label>
+                  <input
+                    type='text'
+                    value='John Doe'
+                    class='w-full bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors'
+                    placeholder='Enter your full name'
+                  />
+                  <p class='text-xs text-green-600 mt-1 flex items-center gap-1'>
+                    <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
+                    </svg>
+                    Valid name format
+                  </p>
+                </div>
+                <div>
+                  <label class='block text-sm font-medium text-foreground mb-2'>Email Address *</label>
+                  <input
+                    type='email'
+                    value='john.doe@example.com'
+                    class='w-full bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors'
+                    placeholder='your.email@example.com'
+                  />
+                  <p class='text-xs text-green-600 mt-1 flex items-center gap-1'>
+                    <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
+                    </svg>
+                    Valid email address
+                  </p>
+                </div>
+                <div>
+                  <label class='block text-sm font-medium text-foreground mb-2'>Phone Number</label>
+                  <input
+                    type='tel'
+                    value='(555) 123-4567'
+                    class='w-full bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors'
+                    placeholder='(555) 123-4567'
+                  />
+                  <p class='text-xs text-muted-foreground mt-1'>Optional - for urgent consultations</p>
+                </div>
+                <div>
+                  <label class='block text-sm font-medium text-foreground mb-2'>Project Type</label>
+                  <select class='w-full bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors'>
+                    <option value=''>Select project type</option>
+                    <option value='web' selected>Web Application</option>
+                    <option value='mobile'>Mobile App</option>
+                    <option value='ai'>AI/ML Solution</option>
+                    <option value='consulting'>Technical Consulting</option>
+                  </select>
+                </div>
+                <div>
+                  <label class='block text-sm font-medium text-foreground mb-2'>Project Budget</label>
+                  <div class='grid grid-cols-3 gap-2'>
+                    <label class='flex items-center'>
+                      <input type='radio' name='budget' value='small' class='h-4 w-4 text-primary focus:ring-primary border-border' checked>
+                      <span class='ml-2 text-sm text-foreground'>$5K-15K</span>
+                    </label>
+                    <label class='flex items-center'>
+                      <input type='radio' name='budget' value='medium' class='h-4 w-4 text-primary focus:ring-primary border-border'>
+                      <span class='ml-2 text-sm text-foreground'>$15K-50K</span>
+                    </label>
+                    <label class='flex items-center'>
+                      <input type='radio' name='budget' value='large' class='h-4 w-4 text-primary focus:ring-primary border-border'>
+                      <span class='ml-2 text-sm text-foreground'>$50K+</span>
+                    </label>
+                  </div>
+                </div>
+                <div>
+                  <label class='flex items-center'>
+                    <input type='checkbox' class='h-4 w-4 text-primary focus:ring-primary border-border rounded'>
+                    <span class='ml-2 text-sm text-foreground'>I agree to the <a href='#' class='text-primary hover:underline'>Terms of Service</a> and <a href='#' class='text-primary hover:underline'>Privacy Policy</a></span>
+                  </label>
+                </div>
+                <div class='flex gap-3'>
+                  <button type='submit' class='flex-1 py-2 bg-primary text-primary-foreground rounded-md text-sm hover:bg-primary/90 font-medium transition-colors'>
+                    <svg class='w-4 h-4 inline mr-1' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 19l9 2-9-18-9 18 9-2zm0 0v-8'></path>
+                    </svg>
+                    Send Request
+                  </button>
+                  <button type='button' class='px-4 py-2 bg-secondary text-secondary-foreground rounded-md text-sm hover:bg-secondary/80 font-medium transition-colors'>
+                    Save Draft
+                  </button>
+                </div>
+              </form>
+              <div class='mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg'>
+                <div class='flex items-start gap-2'>
+                  <svg class='w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <circle cx='12' cy='12' r='10'></circle>
+                    <path d='M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3'></path>
+                    <path d='M12 17h.01'></path>
+                  </svg>
+                  <div>
+                    <p class='text-sm font-medium text-blue-800'>What happens next?</p>
+                    <p class='text-sm text-blue-700'>We'll review your request within 24 hours and schedule a free consultation call to discuss your project requirements.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='text-xs text-muted-foreground'>10:48 AM</div>
+        </div>
+        <!-- Example: Styled Markdown Render -->
+        <div class='flex gap-4'>
+          <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+            <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+          </div>
+          <div class='flex-1'>
+            <div class='text-sm font-semibold text-foreground mb-2'>Documentation</div>
+            <div class='bg-muted rounded-2xl p-4'>
+              <div class='flex items-center justify-between mb-4'>
+                <div class='flex items-center gap-2'>
+                  <svg class='w-5 h-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+                  </svg>
+                  <h4 class='text-sm font-semibold text-foreground'>React Performance Optimization Guide</h4>
+                </div>
+                <div class='flex items-center gap-2'>
+                  <span class='inline-flex items-center px-2 py-1 rounded-full text-xs bg-green-100 text-green-800'>v2.1.0</span>
+                  <button class='text-xs px-2 py-1 bg-secondary text-secondary-foreground rounded hover:bg-secondary/80'>Edit</button>
+                </div>
+              </div>
+              <div class='prose prose-sm max-w-none'>
+                <h1 class='text-2xl font-bold mb-4 text-foreground'>🚀 Advanced React Performance Techniques</h1>
+
+                <p class='text-foreground mb-4 leading-relaxed'>
+                  This comprehensive guide covers advanced techniques for optimizing React application performance, from component-level optimizations to application architecture improvements.
+                </p>
+
+                <div class='bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6'>
+                  <div class='flex items-start gap-2'>
+                    <svg class='w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z'></path>
+                    </svg>
+                    <div>
+                      <h4 class='text-sm font-semibold text-yellow-800 mb-1'>⚠️ Important Prerequisites</h4>
+                      <p class='text-sm text-yellow-700'>Before implementing these optimizations, ensure you have React DevTools installed and have profiled your application to identify actual performance bottlenecks.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <h2 class='text-xl font-semibold mb-3 text-foreground'>1. Component Optimization</h2>
+
+                <h3 class='text-lg font-medium mb-2 text-foreground'>React.memo for Component Memoization</h3>
+                <p class='text-foreground mb-3'>Prevent unnecessary re-renders by memoizing components:</p>
+
+                <div class='bg-background rounded-lg p-4 border border-border mb-4'>
+                  <div class='flex items-center justify-between mb-2'>
+                    <span class='text-xs font-medium text-muted-foreground'>JavaScript</span>
+                    <button class='text-xs px-2 py-1 bg-secondary text-secondary-foreground rounded hover:bg-secondary/80'>Copy</button>
+                  </div>
+                  <pre class='text-sm text-foreground overflow-x-auto'><code>const MyComponent = React.memo(({ data, onClick }) => {
+  return (
+    &lt;div onClick={onClick}&gt;
+      {data.map(item => (
+        &lt;ExpensiveComponent key={item.id} item={item} /&gt;
+      ))}
+    &lt;/div&gt;
+  );
+});</code></pre>
+                </div>
+
+                <h3 class='text-lg font-medium mb-2 text-foreground'>useMemo for Expensive Calculations</h3>
+                <p class='text-foreground mb-3'>Cache expensive computations:</p>
+
+                <div class='bg-background rounded-lg p-4 border border-border mb-4'>
+                  <div class='flex items-center justify-between mb-2'>
+                    <span class='text-xs font-medium text-muted-foreground'>JavaScript</span>
+                    <button class='text-xs px-2 py-1 bg-secondary text-secondary-foreground rounded hover:bg-secondary/80'>Copy</button>
+                  </div>
+                  <pre class='text-sm text-foreground overflow-x-auto'><code>const processedData = useMemo(() => {
+  return data
+    .filter(item => item.active)
+    .map(item => ({
+      ...item,
+      computedValue: expensiveCalculation(item.value)
+    }))
+    .sort((a, b) => a.computedValue - b.computedValue);
+}, [data]);</code></pre>
+                </div>
+
+                <h2 class='text-xl font-semibold mb-3 text-foreground'>2. Code Splitting & Lazy Loading</h2>
+
+                <div class='grid grid-cols-1 md:grid-cols-2 gap-4 mb-4'>
+                  <div class='bg-background rounded-lg p-4 border border-border'>
+                    <h4 class='text-sm font-semibold text-foreground mb-2'>Route-based Splitting</h4>
+                    <pre class='text-xs text-foreground'><code>const Dashboard = lazy(() =>
+  import('./pages/Dashboard')
+);
+
+&lt;Suspense fallback={&lt;Spinner /&gt;}&gt;
+  &lt;Dashboard /&gt;
+&lt;/Suspense&gt;</code></pre>
+                  </div>
+                  <div class='bg-background rounded-lg p-4 border border-border'>
+                    <h4 class='text-sm font-semibold text-foreground mb-2'>Component-based Splitting</h4>
+                    <pre class='text-xs text-foreground'><code>const HeavyChart = lazy(() =>
+  import('./components/HeavyChart')
+);
+
+&lt;Suspense fallback={&lt;div&gt;Loading...&lt;/div&gt;}&gt;
+  &lt;HeavyChart /&gt;
+&lt;/Suspense&gt;</code></pre>
+                  </div>
+                </div>
+
+                <h2 class='text-xl font-semibold mb-3 text-foreground'>3. Bundle Analysis & Optimization</h2>
+
+                <div class='bg-background rounded-lg p-4 border border-border mb-4'>
+                  <h4 class='text-sm font-semibold text-foreground mb-3'>Webpack Bundle Analyzer</h4>
+                  <div class='space-y-2'>
+                    <div class='flex items-center justify-between text-sm'>
+                      <span class='text-foreground'>vendor.js</span>
+                      <span class='text-muted-foreground'>2.4 MB</span>
+                      <div class='w-24 bg-secondary rounded-full h-2'>
+                        <div class='bg-red-500 h-2 rounded-full' style='width: 85%;'></div>
+                      </div>
+                    </div>
+                    <div class='flex items-center justify-between text-sm'>
+                      <span class='text-foreground'>app.js</span>
+                      <span class='text-muted-foreground'>1.2 MB</span>
+                      <div class='w-24 bg-secondary rounded-full h-2'>
+                        <div class='bg-yellow-500 h-2 rounded-full' style='width: 60%;'></div>
+                      </div>
+                    </div>
+                    <div class='flex items-center justify-between text-sm'>
+                      <span class='text-foreground'>styles.css</span>
+                      <span class='text-muted-foreground'>245 KB</span>
+                      <div class='w-24 bg-secondary rounded-full h-2'>
+                        <div class='bg-green-500 h-2 rounded-full' style='width: 35%;'></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <h2 class='text-xl font-semibold mb-3 text-foreground'>4. Performance Monitoring</h2>
+
+                <ul class='list-disc pl-5 space-y-2 text-foreground mb-4'>
+                  <li><strong>React DevTools Profiler:</strong> Identify component render times and frequency</li>
+                  <li><strong>Chrome Performance Tab:</strong> Analyze JavaScript execution and memory usage</li>
+                  <li><strong>Lighthouse:</strong> Automated performance audits and scoring</li>
+                  <li><strong>Web Vitals:</strong> Core metrics for user experience quality</li>
+                </ul>
+
+                <div class='bg-green-50 border border-green-200 rounded-lg p-4'>
+                  <div class='flex items-start gap-3'>
+                    <svg class='w-5 h-5 text-green-600 mt-0.5 flex-shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+                    </svg>
+                    <div>
+                      <h4 class='text-sm font-semibold text-green-800 mb-1'>✅ Success Metrics</h4>
+                      <ul class='text-sm text-green-700 space-y-1'>
+                        <li>• First Contentful Paint: &lt; 1.5s</li>
+                        <li>• Largest Contentful Paint: &lt; 2.5s</li>
+                        <li>• Cumulative Layout Shift: &lt; 0.1</li>
+                        <li>• Bundle size reduction: 40%</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='text-xs text-muted-foreground'>10:49 AM</div>
+        </div>
+        <!-- Example: Rich Combination Card -->
+        <div class='flex gap-4'>
+          <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+            <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+          </div>
+          <div class='flex-1'>
+            <div class='text-sm font-semibold text-foreground mb-2'>Project Dashboard</div>
+            <div class='bg-muted rounded-2xl p-4 max-w-2xl'>
+              <div class='flex items-center justify-between mb-4'>
+                <div class='flex items-center gap-2'>
+                  <svg class='w-5 h-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <rect width='18' height='18' x='3' y='4' rx='2' ry='2'></rect>
+                    <line x1='16' x2='16' y1='2' y2='6'></line>
+                    <line x1='8' x2='8' y1='2' y2='6'></line>
+                    <line x1='3' x2='21' y1='10' y2='10'></line>
+                  </svg>
+                  <h4 class='text-sm font-semibold text-foreground'>E-commerce Platform Redesign</h4>
+                </div>
+                <div class='flex items-center gap-2'>
+                  <span class='inline-flex items-center px-2 py-1 rounded-full text-xs bg-green-100 text-green-800'>On Track</span>
+                  <span class='text-xs text-muted-foreground'>Due: Dec 15</span>
+                </div>
+              </div>
+
+              <div class='grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4'>
+                <div class='bg-background rounded-lg p-4 border border-border'>
+                  <div class='flex items-center justify-between mb-3'>
+                    <h5 class='text-sm font-medium text-foreground'>Project Progress</h5>
+                    <span class='text-sm font-bold text-foreground'>73%</span>
+                  </div>
+                  <div class='w-full bg-secondary rounded-full h-2 mb-3'>
+                    <div class='bg-primary h-2 rounded-full' style='width: 73%;'></div>
+                  </div>
+                  <div class='grid grid-cols-3 gap-2 text-center'>
+                    <div>
+                      <div class='text-lg font-bold text-green-600'>12</div>
+                      <div class='text-xs text-muted-foreground'>Completed</div>
+                    </div>
+                    <div>
+                      <div class='text-lg font-bold text-yellow-600'>3</div>
+                      <div class='text-xs text-muted-foreground'>In Progress</div>
+                    </div>
+                    <div>
+                      <div class='text-lg font-bold text-muted-foreground'>2</div>
+                      <div class='text-xs text-muted-foreground'>Pending</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class='bg-background rounded-lg p-4 border border-border'>
+                  <h5 class='text-sm font-medium text-foreground mb-3'>Team Activity</h5>
+                  <div class='space-y-2'>
+                    <div class='flex items-center gap-2'>
+                      <div class='w-2 h-2 rounded-full bg-green-500'></div>
+                      <span class='text-sm text-foreground'>Sarah completed UI mockups</span>
+                      <span class='text-xs text-muted-foreground ml-auto'>2h ago</span>
+                    </div>
+                    <div class='flex items-center gap-2'>
+                      <div class='w-2 h-2 rounded-full bg-blue-500'></div>
+                      <span class='text-sm text-foreground'>Mike deployed staging environment</span>
+                      <span class='text-xs text-muted-foreground ml-auto'>4h ago</span>
+                    </div>
+                    <div class='flex items-center gap-2'>
+                      <div class='w-2 h-2 rounded-full bg-purple-500'></div>
+                      <span class='text-sm text-foreground'>Alex reviewed pull request #47</span>
+                      <span class='text-xs text-muted-foreground ml-auto'>6h ago</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class='bg-background rounded-lg p-4 border border-border mb-4'>
+                <div class='flex items-center justify-between mb-3'>
+                  <h5 class='text-sm font-medium text-foreground'>Revenue Impact Projection</h5>
+                  <div class='flex items-center gap-2'>
+                    <div class='flex items-center gap-1'>
+                      <div class='w-3 h-3 rounded-full bg-primary'></div>
+                      <span class='text-xs text-muted-foreground'>Current</span>
+                    </div>
+                    <div class='flex items-center gap-1'>
+                      <div class='w-3 h-3 rounded-full bg-green-500'></div>
+                      <span class='text-xs text-muted-foreground'>Projected</span>
+                    </div>
+                  </div>
+                </div>
+                <div class='relative'>
+                  <div class='flex items-end h-32 gap-2 mb-2'>
+                    <div class='flex-1 flex flex-col items-center'>
+                      <div class='w-full bg-primary rounded-t-md relative' style='height: 60%;'>
+                        <div class='absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs font-medium text-foreground'>$42K</div>
+                      </div>
+                      <span class='text-xs mt-2 text-muted-foreground font-medium'>Q1</span>
+                    </div>
+                    <div class='flex-1 flex flex-col items-center'>
+                      <div class='w-full bg-primary rounded-t-md relative' style='height: 75%;'>
+                        <div class='absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs font-medium text-foreground'>$58K</div>
+                      </div>
+                      <span class='text-xs mt-2 text-muted-foreground font-medium'>Q2</span>
+                    </div>
+                    <div class='flex-1 flex flex-col items-center'>
+                      <div class='w-full bg-green-500 rounded-t-md relative' style='height: 90%;'>
+                        <div class='absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs font-medium text-white'>$72K</div>
+                      </div>
+                      <span class='text-xs mt-2 text-muted-foreground font-medium'>Q3</span>
+                    </div>
+                    <div class='flex-1 flex flex-col items-center'>
+                      <div class='w-full bg-green-500 rounded-t-md relative' style='height: 100%;'>
+                        <div class='absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs font-medium text-white'>$89K</div>
+                      </div>
+                      <span class='text-xs mt-2 text-muted-foreground font-medium'>Q4</span>
+                    </div>
+                  </div>
+                  <div class='flex justify-between text-xs text-muted-foreground'>
+                    <span>$0</span>
+                    <span>$50K</span>
+                    <span>$100K</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class='grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4'>
+                <div class='bg-background rounded-lg p-3 border border-border text-center'>
+                  <div class='text-lg font-bold text-foreground'>98%</div>
+                  <div class='text-xs text-muted-foreground'>User Satisfaction</div>
+                  <div class='text-xs text-green-600 mt-1'>+5% vs last month</div>
+                </div>
+                <div class='bg-background rounded-lg p-3 border border-border text-center'>
+                  <div class='text-lg font-bold text-foreground'>24.5s</div>
+                  <div class='text-xs text-muted-foreground'>Avg. Session Time</div>
+                  <div class='text-xs text-green-600 mt-1'>+12% vs last month</div>
+                </div>
+                <div class='bg-background rounded-lg p-3 border border-border text-center'>
+                  <div class='text-lg font-bold text-foreground'>2.1%</div>
+                  <div class='text-xs text-muted-foreground'>Bounce Rate</div>
+                  <div class='text-xs text-red-600 mt-1'>-0.8% vs last month</div>
+                </div>
+              </div>
+
+              <div class='bg-background rounded-lg p-4 border border-border mb-4'>
+                <h5 class='text-sm font-medium text-foreground mb-3'>Latest Mockups</h5>
+                <div class='grid grid-cols-3 gap-3'>
+                  <div class='relative group cursor-pointer'>
+                    <div class='rounded-lg overflow-hidden border border-border bg-secondary'>
+                      <img src='/images/placeholder.svg' alt='Homepage Design' class='w-full h-20 object-cover'>
+                      <div class='absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100'>
+                        <svg class='w-6 h-6 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class='text-xs text-center mt-1 text-muted-foreground'>Homepage</div>
+                  </div>
+                  <div class='relative group cursor-pointer'>
+                    <div class='rounded-lg overflow-hidden border border-border bg-secondary'>
+                      <img src='/images/placeholder.svg' alt='Product Page Design' class='w-full h-20 object-cover'>
+                      <div class='absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100'>
+                        <svg class='w-6 h-6 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class='text-xs text-center mt-1 text-muted-foreground'>Product Page</div>
+                  </div>
+                  <div class='relative group cursor-pointer'>
+                    <div class='rounded-lg overflow-hidden border border-border bg-secondary'>
+                      <img src='/images/placeholder.svg' alt='Checkout Flow' class='w-full h-20 object-cover'>
+                      <div class='absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100'>
+                        <svg class='w-6 h-6 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class='text-xs text-center mt-1 text-muted-foreground'>Checkout</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class='flex flex-wrap gap-2'>
+                <button class='flex-1 min-w-0 px-3 py-2 bg-primary text-primary-foreground rounded-md text-sm hover:bg-primary/90 font-medium transition-colors'>
+                  <svg class='w-4 h-4 inline mr-1' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'></path>
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'></path>
+                  </svg>
+                  View Full Dashboard
+                </button>
+                <button class='px-3 py-2 bg-secondary text-secondary-foreground rounded-md text-sm hover:bg-secondary/80 font-medium transition-colors'>
+                  <svg class='w-4 h-4 inline mr-1' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+                  </svg>
+                  Export Report
+                </button>
+                <button class='px-3 py-2 bg-secondary text-secondary-foreground rounded-md text-sm hover:bg-secondary/80 font-medium transition-colors'>
+                  <svg class='w-4 h-4 inline mr-1' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z'></path>
+                  </svg>
+                  Share
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class='text-xs text-muted-foreground'>10:50 AM</div>
+        </div>
+        <!-- Example: Empty / Fallback State Card -->
+        <div class='flex gap-4'>
+          <div class='bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
+            <img src='/images/favcon.svg' alt='Logo' class='size-6' />
+          </div>
+          <div class='flex-1'>
+            <div class='text-sm font-semibold text-foreground mb-2'>Search Results</div>
+            <div class='bg-muted rounded-2xl p-6 text-center max-w-lg'>
+              <div class='mx-auto mb-6'>
+                <div class='relative'>
+                  <div class='mx-auto bg-gradient-to-br from-blue-100 to-purple-100 rounded-full w-24 h-24 flex items-center justify-center mb-4'>
+                    <svg class='w-12 h-12 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <circle cx='11' cy='11' r='8'></circle>
+                      <path d='m21 21-4.3-4.3'></path>
+                    </svg>
+                  </div>
+                  <div class='absolute -top-2 -right-2 bg-yellow-400 rounded-full w-8 h-8 flex items-center justify-center'>
+                    <svg class='w-4 h-4 text-yellow-800' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                      <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <h3 class='text-lg font-semibold text-foreground mb-2'>No projects found</h3>
+              <p class='text-sm text-muted-foreground mb-6 max-w-sm mx-auto'>
+                We couldn't find any projects matching "machine learning dashboard". Try broadening your search terms or check your spelling.
+              </p>
+
+              <div class='flex flex-col sm:flex-row gap-3 justify-center mb-6'>
+                <button class='px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm hover:bg-primary/90 font-medium transition-colors'>
+                  <svg class='w-4 h-4 inline mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 4v16m8-8H4'></path>
+                  </svg>
+                  Create New Project
+                </button>
+                <button class='px-4 py-2 bg-secondary text-secondary-foreground rounded-md text-sm hover:bg-secondary/80 font-medium transition-colors'>
+                  Clear Search
+                </button>
+              </div>
+
+              <div class='border-t border-border pt-6'>
+                <h4 class='text-sm font-medium text-foreground mb-3'>Popular searches</h4>
+                <div class='flex flex-wrap gap-2 justify-center'>
+                  <button class='px-3 py-1 bg-background text-foreground rounded-full text-xs hover:bg-muted transition-colors border border-border'>
+                    React Dashboard
+                  </button>
+                  <button class='px-3 py-1 bg-background text-foreground rounded-full text-xs hover:bg-muted transition-colors border border-border'>
+                    E-commerce Platform
+                  </button>
+                  <button class='px-3 py-1 bg-background text-foreground rounded-full text-xs hover:bg-muted transition-colors border border-border'>
+                    Mobile App
+                  </button>
+                  <button class='px-3 py-1 bg-background text-foreground rounded-full text-xs hover:bg-muted transition-colors border border-border'>
+                    API Integration
+                  </button>
+                  <button class='px-3 py-1 bg-background text-foreground rounded-full text-xs hover:bg-muted transition-colors border border-border'>
+                    Data Visualization
+                  </button>
+                </div>
+              </div>
+
+              <div class='mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg'>
+                <div class='flex items-start gap-3'>
+                  <svg class='w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                    <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+                  </svg>
+                  <div>
+                    <h5 class='text-sm font-medium text-blue-800 mb-1'>Need help getting started?</h5>
+                    <p class='text-sm text-blue-700 mb-2'>Browse our project templates or contact our support team for personalized assistance.</p>
+                    <button class='text-sm text-blue-600 hover:text-blue-800 font-medium'>View Templates →</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='text-xs text-muted-foreground'>10:51 AM</div>
+        </div>
+      <!-- End of Examples -->
+    </div>
+  </div>
+  <div class='border-t border-border p-4'>
+    <div class='max-w-3xl mx-auto'>
+      <div class='flex items-center gap-2 bg-muted rounded-lg px-4 py-2'>
+        <button
+          class='h-8 w-8 flex items-center justify-center hover:bg-background/50 rounded-md transition-colors'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='lucide lucide-mic h-4 w-4'
+          >
+            <path
+              d='M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z'
+            ></path>
+            <path d='M19 10v2a7 7 0 0 1-14 0v-2'></path>
+            <line x1='12' x2='12' y1='19' y2='22'></line>
+          </svg>
+        </button>
+        <input
+          type='text'
+          placeholder='Send a message...'
+          class='flex-1 bg-transparent border-0 outline-none text-sm text-foreground placeholder:text-muted-foreground'
+        />
+        <button
+          class='h-8 w-8 flex items-center justify-center hover:bg-background/50 rounded-md transition-colors'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='lucide lucide-mic h-4 w-4'
+          >
+            <path
+              d='M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z'
+            ></path>
+            <path d='M19 10v2a7 7 0 0 1-14 0v-2'></path>
+            <line x1='12' x2='12' y1='19' y2='22'></line>
+          </svg>
+        </button>
+      </div>
+      <div class='flex items-center justify-between mt-2'>
+        <button
+          onclick='reopenAside()'
+          class='text-xs text-muted-foreground hover:text-foreground underline'
+        >Preview</button>
+        <div class='text-xs text-center text-muted-foreground'>AI Assistant</div>
+      </div>
+    </div>
+  </div>
+</div>

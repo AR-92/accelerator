@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example Chat UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --text-primary: hsl(222.2 84% 4.9%);
+        --text-secondary: hsl(215.4 16.3% 46.9%);
+        --text-tertiary: hsl(215 20.2% 65.1%);
+        --icon-secondary: hsl(215 20.2% 65.1%);
+        --fill-white: hsl(0 0% 100%);
+        --fill-tsp-white-main: hsl(0 0% 100%);
+        --border-main: hsl(214.3 31.8% 91.4%);
+        --fill-tsp-gray-main: hsl(210 40% 96%);
+        --fill-tsp-gray-dark: hsl(210 40% 94%);
+        --border-light: hsl(214.3 31.8% 91.4%);
+        --border-dark: hsl(214.3 31.8% 91.4%);
+        --text-disable: hsl(215 20.2% 65.1%);
+        --fill-tsp-white-dark: hsl(210 40% 92%);
+        --icon-white: hsl(0 0% 100%);
+        --icon-white-tsp: hsl(0 0% 100%);
+      }
+
+      .dark {
+        --text-primary: hsl(210 40% 98%);
+        --text-secondary: hsl(215 20.2% 65.1%);
+        --text-tertiary: hsl(217.2 32.6% 17.5%);
+        --icon-secondary: hsl(215 20.2% 65.1%);
+        --fill-white: hsl(222.2 84% 4.9%);
+        --fill-tsp-white-main: hsl(217.2 32.6% 17.5%);
+        --border-main: hsl(217.2 32.6% 17.5%);
+        --fill-tsp-gray-main: hsl(217.2 32.6% 17.5%);
+        --fill-tsp-gray-dark: hsl(217.2 32.6% 17.5%);
+      }
+    </style>
+  </head>
+  <body class="bg-background">
+    <div class="flex-1 flex flex-col bg-background h-screen">
+      <!-- Header -->
+      <div class="border-b border-border px-4 py-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div
+              class="w-8 h-8 rounded-full bg-purple-500 dark:bg-purple-600 text-white flex items-center justify-center flex-shrink-0 text-sm font-bold"
+            >
+              AI
+            </div>
+            <h2 class="text-sm font-medium text-foreground">AI Assistant</h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <button
+              class="h-8 px-3 border border-border rounded-md text-sm hover:bg-muted transition-colors"
+            >
+              Request Advice
+            </button>
+            <button
+              class="h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md transition-colors"
+            >
+              <span class="text-sm">📎</span>
+            </button>
+            <button
+              class="h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md transition-colors"
+            >
+              <span class="text-sm">⋮</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Messages Area -->
+      <div class="flex-1 overflow-y-auto px-4 py-6">
+        <div class="max-w-3xl mx-auto space-y-6">
+          <!-- Welcome Message (when no messages) -->
+          <div class="flex gap-4">
+            <div
+              class="bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
+              style="margin-top: -6px"
+            >
+              <img src="/images/favcon.svg" alt="Logo" class="size-6" />
+            </div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold text-foreground mb-2">
+                Accelerator
+              </div>
+              <div class="text-sm text-foreground leading-relaxed">
+                Welcome to the AI Assistant! How can I help you today?
+              </div>
+              <div class="flex items-center gap-2 mt-3">
+                <button
+                  class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-volume2 h-3 w-3"
+                  >
+                    <path
+                      d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"
+                    ></path>
+                    <path d="M16 9a5 5 0 0 1 0 6"></path>
+                    <path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path>
+                  </svg>
+                </button>
+                <button
+                  class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-copy h-3 w-3"
+                  >
+                    <rect
+                      width="14"
+                      height="14"
+                      x="8"
+                      y="8"
+                      rx="2"
+                      ry="2"
+                    ></rect>
+                    <path
+                      d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                    ></path>
+                  </svg>
+                </button>
+                <button
+                  class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-rotate-cw h-3 w-3"
+                  >
+                    <path
+                      d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"
+                    ></path>
+                    <path d="M21 3v5h-5"></path>
+                  </svg>
+                </button>
+                <button
+                  class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-thumbs-down h-3 w-3"
+                  >
+                    <path d="M17 14V2"></path>
+                    <path
+                      d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Example User Message -->
+          <div class="flex w-full flex-col items-end justify-end gap-1 group">
+            <div class="flex flex-col items-end max-w-[90%]">
+              <div class="w-full flex justify-between items-center gap-[8px]">
+                <div>
+                  <div class="flex gap-[4px] items-center">
+                    <span
+                      class="text-[var(--text-secondary)] text-sm leading-[22px] truncate"
+                    ></span>
+                  </div>
+                </div>
+                <div
+                  class="flex items-center justify-end gap-[2px] overflow-hidden invisible group-hover:visible"
+                >
+                  <div
+                    class="flex h-7 w-7 items-center justify-center cursor-pointer rounded-md hover:bg-[var(--fill-tsp-gray-main)]"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-copy size-5 w-4 h-4 text-[var(--icon-secondary)]"
+                    >
+                      <rect
+                        width="14"
+                        height="14"
+                        x="8"
+                        y="8"
+                        rx="2"
+                        ry="2"
+                      ></rect>
+                      <path
+                        d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div
+                    class="float-right transition text-[12px] text-[var(--text-tertiary)] whitespace-nowrap"
+                  >
+                    10:30 AM
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex relative flex-col gap-2 items-end">
+              <div
+                class="relative flex items-center rounded-[12px] overflow-hidden bg-[var(--fill-white)] dark:bg-[var(--fill-tsp-white-main)] p-3 ltr:rounded-br-none rtl:rounded-bl-none border border-[var(--border-main)] dark:border-0"
+              >
+                <div class="transition-all duration-300">
+                  <span
+                    class="text-[var(--text-primary)] u-break-words whitespace-pre-wrap"
+                    >Can you help me research AI automation agency trends and
+                    best practices?</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Example AI Task Response -->
+          <div class="flex flex-col">
+            <!-- Task Header -->
+            <div
+              class="text-sm w-full clickable flex gap-2 justify-between group/header truncate text-[var(--text-primary)]"
+            >
+              <div
+                class="flex flex-row gap-2 justify-center items-center truncate"
+              >
+                <div
+                  class="w-4 h-4 flex-shrink-0 flex items-center justify-center border-[var(--border-dark)] rounded-[15px] bg-[var(--text-disable)] dark:bg-[var(--fill-tsp-white-dark)] border-0"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-check text-[var(--icon-white)] dark:text-[var(--icon-white-tsp)]"
+                  >
+                    <path d="M20 6 9 17l-5-5"></path>
+                  </svg>
+                </div>
+                <div
+                  class="truncate font-medium"
+                  title="Research AI automation agency trends and best practices"
+                >
+                  Research AI automation agency trends and best practices
+                </div>
+                <span class="flex-shrink-0 flex">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-chevron-down transition-transform duration-300 w-4 h-4 rotate-180"
+                  >
+                    <path d="m6 9 6 6 6-6"></path>
+                  </svg>
+                </span>
+              </div>
+              <div
+                class="float-right transition text-[12px] text-[var(--text-tertiary)] invisible group-hover/header:visible"
+              >
+                10:30 AM
+              </div>
+            </div>
+            <!-- Task Content -->
+            <div class="flex">
+              <div class="w-[24px] relative">
+                <div
+                  class="border-l border-dashed border-[var(--border-dark)] absolute start-[8px] top-0 bottom-0"
+                ></div>
+              </div>
+              <div
+                class="flex flex-col gap-3 flex-1 min-w-0 overflow-hidden pt-2"
+              >
+                <div class="flex flex-col gap-2 w-full">
+                  <p class="text-[var(--text-secondary)] text-[14px]">
+                    I learned to target clients with a professional style,
+                    focusing on broad AI automation services. I'll research best
+                    practices, key slides, and market trends for a compelling
+                    pitch deck.
+                  </p>
+                </div>
+                <!-- Tool Call: Searching -->
+                <div class="flex items-center group gap-2 w-full">
+                  <div class="flex-1 min-w-0 h-[28px]">
+                    <div
+                      class="rounded-[15px] px-[10px] py-[3px] border border-[var(--border-light)] bg-[var(--fill-tsp-gray-main)] inline-flex max-w-full gap-[4px] items-center relative h-full overflow-hidden clickable hover:bg-[var(--fill-tsp-gray-dark)] dark:hover:bg-white/[0.02]"
+                    >
+                      <div
+                        class="w-[21px] inline-flex items-center flex-shrink-0 text-[var(--text-primary)]"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 18 18"
+                          fill="none"
+                        >
+                          <g filter="url(#filter0_ii)">
+                            <path
+                              d="M2 4.7C2 3.20883 3.20883 2 4.7 2H13.3C14.7912 2 16 3.20883 16 4.7V13.3C16 14.7912 14.7912 16 13.3 16H4.7C3.20883 16 2 14.7912 2 13.3V4.7Z"
+                              fill="url(#paint0_linear)"
+                            ></path>
+                          </g>
+                          <path
+                            d="M2.42857 4.7C2.42857 3.44552 3.44552 2.42857 4.7 2.42857H13.3C14.5545 2.42857 15.5714 3.44552 15.5714 4.7V13.3C15.5714 14.5545 14.5545 15.5714 13.3 15.5714H4.7C3.44552 15.5714 2.42857 14.5545 2.42857 13.3V4.7Z"
+                            stroke="#B9B9B7"
+                            stroke-width="0.857143"
+                          ></path>
+                          <circle
+                            cx="8.625"
+                            cy="8.625"
+                            r="3"
+                            stroke="#535350"
+                            stroke-width="1.2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></circle>
+                          <path
+                            d="M10.875 10.875L12.375 12.375"
+                            stroke="#535350"
+                            stroke-width="1.2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                        </svg>
+                      </div>
+                      <div
+                        title="AI automation agency pitch deck structure, key slides for AI service agency presentation, AI automation market trends and statistics for pitch deck"
+                        class="max-w-[100%] truncate text-[var(--text-secondary)] relative top-[-1px]"
+                      >
+                        <span class="text-[13px]">Searching</span>
+                        <span
+                          class="text-[12px] font-mono ms-[6px] text-[var(--text-tertiary)]"
+                          >AI automation agency pitch deck structure, key slides
+                          for AI service agency presentation, AI automation
+                          market trends and statistics for pitch deck</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="float-right transition text-[12px] text-[var(--text-tertiary)] invisible group-hover:visible"
+                  >
+                    10:30 AM
+                  </div>
+                </div>
+                <!-- Tool Call: Browsing -->
+                <div class="flex items-center group gap-2 w-full">
+                  <div class="flex-1 min-w-0 h-[28px]">
+                    <div
+                      class="rounded-[15px] px-[10px] py-[3px] border border-[var(--border-light)] bg-[var(--fill-tsp-gray-main)] inline-flex max-w-full gap-[4px] items-center relative h-full overflow-hidden clickable hover:bg-[var(--fill-tsp-gray-dark)] dark:hover:bg-white/[0.02]"
+                    >
+                      <div
+                        class="w-[21px] inline-flex items-center flex-shrink-0 text-[var(--text-primary)]"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 18 18"
+                          fill="none"
+                        >
+                          <g filter="url(#filter0_ii)">
+                            <rect
+                              x="1.5"
+                              y="1.5"
+                              width="15"
+                              height="15"
+                              rx="7.5"
+                              fill="url(#paint0_linear)"
+                            ></rect>
+                          </g>
+                          <rect
+                            x="1.92857"
+                            y="1.92857"
+                            width="14.1429"
+                            height="14.1429"
+                            rx="7.07143"
+                            stroke="#B9B9B7"
+                            stroke-width="0.857143"
+                          ></rect>
+                          <path
+                            d="M7.52172 7.76297C7.56208 7.65057 7.65057 7.56208 7.76297 7.52172L11.2014 6.28681C11.5197 6.17249 11.8274 6.48026 11.7131 6.79854L10.4776 10.2365C10.4373 10.3488 10.3488 10.4373 10.2365 10.4776L6.79854 11.7131C6.48026 11.8274 6.17249 11.5197 6.28681 11.2014L7.52172 7.76297Z"
+                            stroke="#535350"
+                            stroke-width="1.2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                        </svg>
+                      </div>
+                      <div
+                        title="https://www.youtube.com/watch?v=KAJPWyVxYMo"
+                        class="max-w-[100%] truncate text-[var(--text-secondary)] relative top-[-1px]"
+                      >
+                        <span class="text-[13px]">Browsing</span>
+                        <span
+                          class="text-[12px] font-mono ms-[6px] text-[var(--text-tertiary)]"
+                          >https://www.youtube.com/watch?v=KAJPWyVxYMo</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="float-right transition text-[12px] text-[var(--text-tertiary)] invisible group-hover:visible"
+                  >
+                    10:31 AM
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Example Regular AI Response -->
+          <div class="flex gap-4">
+            <div
+              class="bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
+              style="margin-top: -6px"
+            >
+              <img src="/images/favcon.svg" alt="Logo" class="size-6" />
+            </div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold text-foreground mb-2">
+                AI Assistant
+              </div>
+              <div class="text-sm text-foreground leading-relaxed">
+                Based on my research, here are the key trends in AI automation
+                agencies: 1. **Market Growth**: The AI automation market is
+                expected to reach $126 billion by 2025, growing at 36% CAGR. 2.
+                **Service Focus**: Agencies are shifting from single AI
+                implementations to comprehensive automation solutions that
+                integrate multiple AI technologies. 3. **Industry
+                Applications**: Healthcare, finance, and manufacturing are
+                leading adopters, with retail and logistics rapidly catching up.
+                4. **Key Challenges**: Data privacy concerns, integration
+                complexity, and the need for specialized talent are major
+                hurdles. Would you like me to elaborate on any of these trends
+                or help you develop a pitch deck for your AI automation agency?
+              </div>
+              <div class="flex items-center gap-2 mt-3">
+                <button
+                  class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-volume2 h-3 w-3"
+                  >
+                    <path
+                      d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"
+                    ></path>
+                    <path d="M16 9a5 5 0 0 1 0 6"></path>
+                    <path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path>
+                  </svg>
+                </button>
+                <button
+                  class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-copy h-3 w-3"
+                  >
+                    <rect
+                      width="14"
+                      height="14"
+                      x="8"
+                      y="8"
+                      rx="2"
+                      ry="2"
+                    ></rect>
+                    <path
+                      d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                    ></path>
+                  </svg>
+                </button>
+                <button
+                  class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-rotate-cw h-3 w-3"
+                  >
+                    <path
+                      d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"
+                    ></path>
+                    <path d="M21 3v5h-5"></path>
+                  </svg>
+                </button>
+                <button
+                  class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-thumbs-down h-3 w-3"
+                  >
+                    <path d="M17 14V2"></path>
+                    <path
+                      d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Example User Follow-up -->
+          <div class="flex w-full flex-col items-end justify-end gap-1 group">
+            <div class="flex flex-col items-end max-w-[90%]">
+              <div class="w-full flex justify-between items-center gap-[8px]">
+                <div>
+                  <div class="flex gap-[4px] items-center">
+                    <span
+                      class="text-[var(--text-secondary)] text-sm leading-[22px] truncate"
+                    ></span>
+                  </div>
+                </div>
+                <div
+                  class="flex items-center justify-end gap-[2px] overflow-hidden invisible group-hover:visible"
+                >
+                  <div
+                    class="flex h-7 w-7 items-center justify-center cursor-pointer rounded-md hover:bg-[var(--fill-tsp-gray-main)]"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-copy size-5 w-4 h-4 text-[var(--icon-secondary)]"
+                    >
+                      <rect
+                        width="14"
+                        height="14"
+                        x="8"
+                        y="8"
+                        rx="2"
+                        ry="2"
+                      ></rect>
+                      <path
+                        d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div
+                    class="float-right transition text-[12px] text-[var(--text-tertiary)] whitespace-nowrap"
+                  >
+                    10:32 AM
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex relative flex-col gap-2 items-end">
+              <div
+                class="relative flex items-center rounded-[12px] overflow-hidden bg-[var(--fill-white)] dark:bg-[var(--fill-tsp-white-main)] p-3 ltr:rounded-br-none rtl:rounded-bl-none border border-[var(--border-main)] dark:border-0"
+              >
+                <div class="transition-all duration-300">
+                  <span
+                    class="text-[var(--text-primary)] u-break-words whitespace-pre-wrap"
+                    >Yes, please help me create a pitch deck outline for an AI
+                    automation agency.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="border-t border-border p-4">
+        <div class="max-w-3xl mx-auto">
+          <div class="flex items-center gap-2 bg-muted rounded-lg px-4 py-2">
+            <button
+              class="h-8 w-8 flex items-center justify-center hover:bg-background/50 rounded-md transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-mic h-4 w-4"
+              >
+                <path
+                  d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"
+                ></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" x2="12" y1="19" y2="22"></line>
+              </svg>
+            </button>
+            <input
+              type="text"
+              placeholder="Send a message..."
+              class="flex-1 bg-transparent border-0 outline-none text-sm text-foreground placeholder:text-muted-foreground"
+            />
+            <button
+              class="h-8 w-8 flex items-center justify-center hover:bg-background/50 rounded-md transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-mic h-4 w-4"
+              >
+                <path
+                  d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"
+                ></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" x2="12" y1="19" y2="22"></line>
+              </svg>
+            </button>
+          </div>
+          <div class="flex items-center justify-between mt-2">
+            <button
+              onclick="reopenAside()"
+              class="text-xs text-muted-foreground hover:text-foreground underline"
+            >
+              Preview
+            </button>
+            <div class="text-xs text-center text-muted-foreground">
+              AI Assistant
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
