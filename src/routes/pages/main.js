@@ -25,13 +25,13 @@ router.get('/enterprise-dashboard', (req, res) => {
   });
 });
 
-// GET corporate dashboard
-router.get('/corporate-dashboard', (req, res) => {
-  res.render('pages/dashboard/enterprise-dashboard', {
-    ...getPageData('Corporate Dashboard - Manage Startups', 'CorporateDashboard'),
-    layout: 'main',
+  // GET corporate dashboard
+  router.get('/corporate-dashboard', (req, res) => {
+    res.render('pages/dashboard/corporate-dashboard', {
+      ...getPageData('Corporate Dashboard - Executive Oversight', 'CorporateDashboard'),
+      layout: 'main',
+    });
   });
-});
 
 // GET dashboard tabs
 router.get('/dashboard/tab/business', (req, res) => {
