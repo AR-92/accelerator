@@ -18,7 +18,7 @@ views/
 │   │   └── corporate.hbs
 │   ├── enterprise/
 │   │   └── enterprise.hbs
-│   └── startup/
+│   └── reports/
 │       ├── business.hbs
 │       ├── financial.hbs
 │       ├── fund.hbs
@@ -40,7 +40,7 @@ views/
 │   └── 404.hbs        # Error page
 ├── ideas/             # Idea management pages
 │   └── ideas.hbs      # Ideas submission page
-├── startup/           # Startup building and promotion
+├── reports/           # Startup building and promotion
 │   ├── build/         # Business model development
 │   │   ├── idea/          # Idea validation
 │   │   │   └── idea-model.hbs
@@ -90,7 +90,7 @@ The directory structure aligns with the application's route structure:
 - `/pages/portfolio` → `views/portfolio/portfolio.hbs`
 - `/pages/ideas` → `views/ideas/ideas.hbs`
 - `/pages/business-model` → `views/startup/build/business/business-model.hbs`
-- `/pages/pitch-deck` → `views/startup/promote/pitch-deck/pitch-deck.hbs`
+- `/pages/pitch-deck` → `views/reports/pitch-deck.hbs`
 - `/pages/auth` → `views/public/auth/auth.hbs`
 - `/pages/settings/profile` → `views/account/settings/profile.hbs`
 - `/pages/subscriptions` → `views/account/subscriptions/index.hbs`

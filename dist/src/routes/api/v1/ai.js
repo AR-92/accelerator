@@ -52,25 +52,6 @@ router.get('/health', (req, res) => {
   }
 });
 
-// Endpoint to get conversation history for a user
-router.get('/history/:userId', async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const { supabaseAIService } = require('../ai/supabaseIntegration');
-
-    const history = await supabaseAIService.getConversationHistory(userId);
-
-    res.json({
-      success: true,
-      history,
-    });
-  } catch (error) {
-    logger.error('Error fetching history:', error);
-    res.status(500).json({
-      error: 'Internal server error',
-      message: error.message,
-    });
-  }
-});
+// Conversation history endpoint removed - Supabase dependency
 
 module.exports = router;

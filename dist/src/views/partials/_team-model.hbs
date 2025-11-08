@@ -1,31 +1,34 @@
-<div class='@container w-full mx-auto px-4 py-4 @sm:py-8 @sm:px-4'>
-  <div class='mb-6 @sm:mb-8'>
+<div class='@container w-full mx-auto p-4 @sm:p-6 @md:p-8 @lg:p-10 @xl:p-12'>
+  <div class='mb-6 @sm/main:mb-7 @md/main:mb-8'>
     <h1
-      class='text-2xl @sm:text-3xl font-bold text-gray-900 dark:text-white mb-2'
+      class='text-xl @sm/main:text-2xl @md/main:text-3xl @lg/main:text-4xl font-bold text-gray-900 dark:text-white mb-2'
     >Team Structure & Culture</h1>
     <p
-      class='text-sm text-gray-600 dark:text-gray-400 @sm:text-base'
+      class='text-xs @sm/main:text-sm @md/main:text-base @lg/main:text-lg text-gray-600 dark:text-gray-400'
     >Organizational design and team development framework</p>
   </div>
 
   <!-- Team Overview -->
-  <div class='grid grid-cols-1 gap-4 @sm:gap-6 mb-6 @sm:mb-8'>
+  <div
+    class='grid grid-cols-1 @md:grid-cols-2 @lg:grid-cols-4 gap-4 @sm:gap-6 mb-6 @sm:mb-7 @md:mb-8'
+  >
     <div
-      class='bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-6 shadow-sm'
+      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
     >
       <div class='flex items-center justify-between'>
         <div>
-          <p class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'>Total
-            Team Size</p>
           <p
-            class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white'
+            class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
+          >Total Team Size</p>
+          <p
+            class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white'
           >12</p>
         </div>
         <div
-          class='w-10 h-10 @sm:w-12 @sm:h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'
+          class='w-10 h-10 @sm:w-12 @sm:h-12 @md:w-14 @md:h-14 @lg:w-16 @lg:h-16 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'
         >
           <svg
-            class='w-5 @sm:w-6 h-5 @sm:h-6 text-blue-600 dark:text-blue-400'
+            class='w-5 @sm:w-6 h-5 @sm:h-6 @md:w-7 @md:h-7 text-blue-600 dark:text-blue-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -39,28 +42,31 @@
           </svg>
         </div>
       </div>
-      <div class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm'>
+      <div
+        class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm @md:text-base'
+      >
         <span class='text-green-600 dark:text-green-400 font-medium'>+3</span>
         <span class='text-gray-500 dark:text-gray-400 ml-1 @sm:ml-2'>Q4 hires</span>
       </div>
     </div>
 
     <div
-      class='bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-6 shadow-sm'
+      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
     >
       <div class='flex items-center justify-between'>
         <div>
-          <p class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'>Open
-            Positions</p>
           <p
-            class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white'
+            class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
+          >Open Positions</p>
+          <p
+            class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white'
           >4</p>
         </div>
         <div
-          class='w-10 h-10 @sm:w-12 @sm:h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center'
+          class='w-10 h-10 @sm:w-12 @sm:h-12 @md:w-14 @md:h-14 @lg:w-16 @lg:h-16 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center'
         >
           <svg
-            class='w-5 @sm:w-6 h-5 @sm:h-6 text-orange-600 dark:text-orange-400'
+            class='w-5 @sm:w-6 h-5 @sm:h-6 @md:w-7 @md:h-7 text-orange-600 dark:text-orange-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -74,7 +80,9 @@
           </svg>
         </div>
       </div>
-      <div class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm'>
+      <div
+        class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm @md:text-base'
+      >
         <span class='text-orange-600 dark:text-orange-400 font-medium'>2 urgent</span>
         <span class='text-gray-500 dark:text-gray-400 ml-1 @sm:ml-2'>need
           filling</span>
@@ -82,21 +90,22 @@
     </div>
 
     <div
-      class='bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-6 shadow-sm'
+      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
     >
       <div class='flex items-center justify-between'>
         <div>
-          <p class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'>Team
-            Satisfaction</p>
           <p
-            class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white'
+            class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
+          >Team Satisfaction</p>
+          <p
+            class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white'
           >4.2/5</p>
         </div>
         <div
-          class='w-10 h-10 @sm:w-12 @sm:h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'
+          class='w-10 h-10 @sm:w-12 @sm:h-12 @md:w-14 @md:h-14 @lg:w-16 @lg:h-16 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'
         >
           <svg
-            class='w-5 @sm:w-6 h-5 @sm:h-6 text-green-600 dark:text-green-400'
+            class='w-5 @sm:w-6 h-5 @sm:h-6 @md:w-7 @md:h-7 text-green-600 dark:text-green-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -110,7 +119,9 @@
           </svg>
         </div>
       </div>
-      <div class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm'>
+      <div
+        class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm @md:text-base'
+      >
         <span class='text-green-600 dark:text-green-400 font-medium'>+0.3</span>
         <span class='text-gray-500 dark:text-gray-400 ml-1 @sm:ml-2'>vs last
           quarter</span>
@@ -118,21 +129,22 @@
     </div>
 
     <div
-      class='bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-6 shadow-sm'
+      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
     >
       <div class='flex items-center justify-between'>
         <div>
-          <p class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'>Avg.
-            Tenure</p>
           <p
-            class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white'
+            class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
+          >Avg. Tenure</p>
+          <p
+            class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white'
           >1.8 yrs</p>
         </div>
         <div
-          class='w-10 h-10 @sm:w-12 @sm:h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center'
+          class='w-10 h-10 @sm:w-12 @sm:h-12 @md:w-14 @md:h-14 @lg:w-16 @lg:h-16 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center'
         >
           <svg
-            class='w-5 @sm:w-6 h-5 @sm:h-6 text-purple-600 dark:text-purple-400'
+            class='w-5 @sm:w-6 h-5 @sm:h-6 @md:w-7 @md:h-7 text-purple-600 dark:text-purple-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -146,7 +158,9 @@
           </svg>
         </div>
       </div>
-      <div class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm'>
+      <div
+        class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm @md:text-base'
+      >
         <span class='text-green-600 dark:text-green-400 font-medium'>+0.2 yrs</span>
         <span class='text-gray-500 dark:text-gray-400 ml-1 @sm:ml-2'>vs industry
           avg</span>
@@ -156,20 +170,22 @@
 
   <!-- Organizational Structure -->
   <div
-    class='bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-6 shadow-sm mb-6 @sm:mb-8'
+    class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm mb-6 @sm:mb-7 @md:mb-8'
   >
     <h2
-      class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 @sm:mb-6'
+      class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white mb-4 @sm:mb-5 @md:mb-6'
     >Organizational Structure</h2>
 
-    <div class='grid grid-cols-1 gap-4 @sm:gap-6'>
+    <div
+      class='grid grid-cols-1 @md:grid-cols-2 @lg:grid-cols-4 gap-4 @sm:gap-6'
+    >
       <!-- Executive Team -->
       <div class='text-center'>
         <div
-          class='w-14 h-14 @sm:w-16 @sm:h-16 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
+          class='w-14 h-14 @sm:w-16 @sm:h-16 @md:w-20 @md:h-20 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
         >
           <svg
-            class='w-6 @sm:w-8 h-6 @sm:h-8 text-purple-600 dark:text-purple-400'
+            class='w-6 @sm:w-8 h-6 @sm:h-8 @md:w-10 @md:h-10 text-purple-600 dark:text-purple-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -183,23 +199,23 @@
           </svg>
         </div>
         <h4
-          class='font-medium text-sm text-gray-900 dark:text-white mb-1'
+          class='font-medium text-sm @sm:text-base @md:text-xl text-gray-900 dark:text-white mb-1 @sm:mb-1.5'
         >Executive Team</h4>
         <p
-          class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400 mb-1 @sm:mb-2'
+          class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400 mb-1 @sm:mb-2'
         >CEO, CTO</p>
         <p
-          class='text-xs @sm:text-xs text-purple-600 dark:text-purple-400 font-medium'
+          class='text-xs @sm:text-xs @md:text-sm text-purple-600 dark:text-purple-400 font-medium'
         >2 members</p>
       </div>
 
       <!-- Product Team -->
       <div class='text-center'>
         <div
-          class='w-14 h-14 @sm:w-16 @sm:h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
+          class='w-14 h-14 @sm:w-16 @sm:h-16 @md:w-20 @md:h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
         >
           <svg
-            class='w-6 @sm:w-8 h-6 @sm:h-8 text-blue-600 dark:text-blue-400'
+            class='w-6 @sm:w-8 h-6 @sm:h-8 @md:w-10 @md:h-10 text-blue-600 dark:text-blue-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -213,23 +229,23 @@
           </svg>
         </div>
         <h4
-          class='font-medium text-sm text-gray-900 dark:text-white mb-1'
+          class='font-medium text-sm @sm:text-base @md:text-xl text-gray-900 dark:text-white mb-1 @sm:mb-1.5'
         >Product Team</h4>
         <p
-          class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400 mb-1 @sm:mb-2'
+          class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400 mb-1 @sm:mb-2'
         >PM, Designers, Engineers</p>
         <p
-          class='text-xs @sm:text-xs text-blue-600 dark:text-blue-400 font-medium'
+          class='text-xs @sm:text-xs @md:text-sm text-blue-600 dark:text-blue-400 font-medium'
         >6 members</p>
       </div>
 
       <!-- Sales & Marketing -->
       <div class='text-center'>
         <div
-          class='w-14 h-14 @sm:w-16 @sm:h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
+          class='w-14 h-14 @sm:w-16 @sm:h-16 @md:w-20 @md:h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
         >
           <svg
-            class='w-6 @sm:w-8 h-6 @sm:h-8 text-green-600 dark:text-green-400'
+            class='w-6 @sm:w-8 h-6 @sm:h-8 @md:w-10 @md:h-10 text-green-600 dark:text-green-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -242,23 +258,24 @@
             ></path>
           </svg>
         </div>
-        <h4 class='font-medium text-sm text-gray-900 dark:text-white mb-1'>Sales
-          & Marketing</h4>
+        <h4
+          class='font-medium text-sm @sm:text-base @md:text-xl text-gray-900 dark:text-white mb-1 @sm:mb-1.5'
+        >Sales & Marketing</h4>
         <p
-          class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400 mb-1 @sm:mb-2'
+          class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400 mb-1 @sm:mb-2'
         >Sales Reps, Marketers</p>
         <p
-          class='text-xs @sm:text-xs text-green-600 dark:text-green-400 font-medium'
+          class='text-xs @sm:text-xs @md:text-sm text-green-600 dark:text-green-400 font-medium'
         >3 members</p>
       </div>
 
       <!-- Operations -->
       <div class='text-center'>
         <div
-          class='w-14 h-14 @sm:w-16 @sm:h-16 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
+          class='w-14 h-14 @sm:w-16 @sm:h-16 @md:w-20 @md:h-20 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
         >
           <svg
-            class='w-6 @sm:w-8 h-6 @sm:h-8 text-orange-600 dark:text-orange-400'
+            class='w-6 @sm:w-8 h-6 @sm:h-8 @md:w-10 @md:h-10 text-orange-600 dark:text-orange-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -272,36 +289,38 @@
           </svg>
         </div>
         <h4
-          class='font-medium text-sm text-gray-900 dark:text-white mb-1'
+          class='font-medium text-sm @sm:text-base @md:text-xl text-gray-900 dark:text-white mb-1 @sm:mb-1.5'
         >Operations</h4>
         <p
-          class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400 mb-1 @sm:mb-2'
+          class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400 mb-1 @sm:mb-2'
         >HR, Finance, Support</p>
         <p
-          class='text-xs @sm:text-xs text-orange-600 dark:text-orange-400 font-medium'
+          class='text-xs @sm:text-xs @md:text-sm text-orange-600 dark:text-orange-400 font-medium'
         >1 member</p>
       </div>
     </div>
   </div>
 
   <!-- Key Roles & Responsibilities -->
-  <div class='grid grid-cols-1 gap-6 @sm:gap-8 mb-6 @sm:mb-8'>
+  <div
+    class='grid grid-cols-1 @lg:grid-cols-2 gap-6 @md:gap-7 @lg:gap-8 mb-6 @sm:mb-7 @md:mb-8'
+  >
     <div
-      class='bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-6 shadow-sm'
+      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
     >
       <h3
-        class='text-lg @sm:text-xl font-bold text-gray-900 dark:text-white mb-2 @sm:mb-4'
+        class='text-lg @sm:text-xl @md:text-2xl font-bold text-gray-900 dark:text-white mb-2 @sm:mb-3 @md:mb-4'
       >Critical Roles</h3>
       <div class='space-y-3 @sm:space-y-4'>
         <div
-          class='p-3 @sm:p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg'
+          class='p-3 @sm:p-4 @md:p-5 @lg:p-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg'
         >
           <div class='flex items-center gap-2 @sm:gap-3 mb-1 @sm:mb-2'>
             <div
-              class='w-7 h-7 @sm:w-8 @sm:h-8 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center'
+              class='w-7 h-7 @sm:w-8 @sm:h-8 @md:w-10 @md:h-10 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center'
             >
               <svg
-                class='w-4 h-4 text-red-600 dark:text-red-400'
+                class='w-4 h-4 @md:w-5 @md:h-5 text-red-600 dark:text-red-400'
                 fill='none'
                 stroke='currentColor'
                 viewBox='0 0 24 24'
@@ -315,29 +334,29 @@
               </svg>
             </div>
             <h4
-              class='font-medium text-xs @sm:text-sm text-red-800 dark:text-red-400'
+              class='font-medium text-xs @sm:text-sm @md:text-base text-red-800 dark:text-red-400'
             >Senior Full-Stack Engineer</h4>
           </div>
           <p
-            class='text-xs @sm:text-sm text-red-700 dark:text-red-300 mb-1 @sm:mb-2'
+            class='text-xs @sm:text-sm @md:text-base text-red-700 dark:text-red-300 mb-1 @sm:mb-2'
           >Lead development of core AI features and system architecture</p>
           <div class='flex items-center gap-2'>
             <span
-              class='px-1.5 py-0.5 @sm:px-2 @sm:py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 text-xs rounded'
+              class='px-1.5 py-0.5 @sm:px-2 @sm:py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 text-xs @sm:text-sm rounded'
             >Urgent</span>
-            <span class='text-xs text-gray-500'>Hiring now</span>
+            <span class='text-xs @sm:text-sm text-gray-500'>Hiring now</span>
           </div>
         </div>
 
         <div
-          class='p-3 @sm:p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg'
+          class='p-3 @sm:p-4 @md:p-5 @lg:p-6 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg'
         >
           <div class='flex items-center gap-2 @sm:gap-3 mb-1 @sm:mb-2'>
             <div
-              class='w-7 h-7 @sm:w-8 @sm:h-8 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center'
+              class='w-7 h-7 @sm:w-8 @sm:h-8 @md:w-10 @md:h-10 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center'
             >
               <svg
-                class='w-4 h-4 text-orange-600 dark:text-orange-400'
+                class='w-4 h-4 @md:w-5 @md:h-5 text-orange-600 dark:text-orange-400'
                 fill='none'
                 stroke='currentColor'
                 viewBox='0 0 24 24'
@@ -351,29 +370,29 @@
               </svg>
             </div>
             <h4
-              class='font-medium text-xs @sm:text-sm text-orange-800 dark:text-orange-400'
+              class='font-medium text-xs @sm:text-sm @md:text-base text-orange-800 dark:text-orange-400'
             >Product Marketing Manager</h4>
           </div>
           <p
-            class='text-xs @sm:text-sm text-orange-700 dark:text-orange-300 mb-1 @sm:mb-2'
+            class='text-xs @sm:text-sm @md:text-base text-orange-700 dark:text-orange-300 mb-1 @sm:mb-2'
           >Drive go-to-market strategy and customer acquisition</p>
           <div class='flex items-center gap-2'>
             <span
-              class='px-1.5 py-0.5 @sm:px-2 @sm:py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-400 text-xs rounded'
+              class='px-1.5 py-0.5 @sm:px-2 @sm:py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-400 text-xs @sm:text-sm rounded'
             >High Priority</span>
-            <span class='text-xs text-gray-500'>Starting Q1</span>
+            <span class='text-xs @sm:text-sm text-gray-500'>Starting Q1</span>
           </div>
         </div>
 
         <div
-          class='p-3 @sm:p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg'
+          class='p-3 @sm:p-4 @md:p-5 @lg:p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg'
         >
           <div class='flex items-center gap-2 @sm:gap-3 mb-1 @sm:mb-2'>
             <div
-              class='w-7 h-7 @sm:w-8 @sm:h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'
+              class='w-7 h-7 @sm:w-8 @sm:h-8 @md:w-10 @md:h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'
             >
               <svg
-                class='w-4 h-4 text-blue-600 dark:text-blue-400'
+                class='w-4 h-4 @md:w-5 @md:h-5 text-blue-600 dark:text-blue-400'
                 fill='none'
                 stroke='currentColor'
                 viewBox='0 0 24 24'
@@ -387,37 +406,37 @@
               </svg>
             </div>
             <h4
-              class='font-medium text-xs @sm:text-sm text-blue-800 dark:text-blue-400'
+              class='font-medium text-xs @sm:text-sm @md:text-base text-blue-800 dark:text-blue-400'
             >UX/UI Designer</h4>
           </div>
           <p
-            class='text-xs @sm:text-sm text-blue-700 dark:text-blue-300 mb-1 @sm:mb-2'
+            class='text-xs @sm:text-sm @md:text-base text-blue-700 dark:text-blue-300 mb-1 @sm:mb-2'
           >Design intuitive user experiences and interfaces</p>
           <div class='flex items-center gap-2'>
             <span
-              class='px-1.5 py-0.5 @sm:px-2 @sm:py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs rounded'
+              class='px-1.5 py-0.5 @sm:px-2 @sm:py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs @sm:text-sm rounded'
             >Medium Priority</span>
-            <span class='text-xs text-gray-500'>Q1 2024</span>
+            <span class='text-xs @sm:text-sm text-gray-500'>Q1 2024</span>
           </div>
         </div>
       </div>
     </div>
 
     <div
-      class='bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-6 shadow-sm'
+      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
     >
       <h3
-        class='text-lg @sm:text-xl font-bold text-gray-900 dark:text-white mb-2 @sm:mb-4'
+        class='text-lg @sm:text-xl @md:text-2xl font-bold text-gray-900 dark:text-white mb-2 @sm:mb-3 @md:mb-4'
       >Team Development</h3>
       <div class='space-y-3 @sm:space-y-4'>
         <div
-          class='p-3 @sm:p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg'
+          class='p-3 @sm:p-4 @md:p-5 @lg:p-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg'
         >
           <h4
-            class='font-medium text-xs @sm:text-sm text-green-800 dark:text-green-400 mb-1 @sm:mb-2'
+            class='font-medium text-xs @sm:text-sm @md:text-base text-green-800 dark:text-green-400 mb-1 @sm:mb-2'
           >Professional Development</h4>
           <ul
-            class='text-xs @sm:text-sm text-green-700 dark:text-green-300 space-y-1'
+            class='text-xs @sm:text-sm @md:text-base text-green-700 dark:text-green-300 space-y-1'
           >
             <li>• Annual conference budget: $2,000/person</li>
             <li>• Online learning platforms subscription</li>
@@ -427,13 +446,13 @@
         </div>
 
         <div
-          class='p-3 @sm:p-4 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg'
+          class='p-3 @sm:p-4 @md:p-5 @lg:p-6 bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg'
         >
           <h4
-            class='font-medium text-xs @sm:text-sm text-purple-800 dark:text-purple-400 mb-1 @sm:mb-2'
+            class='font-medium text-xs @sm:text-sm @md:text-base text-purple-800 dark:text-purple-400 mb-1 @sm:mb-2'
           >Performance Management</h4>
           <ul
-            class='text-xs @sm:text-sm text-purple-700 dark:text-purple-300 space-y-1'
+            class='text-xs @sm:text-sm @md:text-base text-purple-700 dark:text-purple-300 space-y-1'
           >
             <li>• Bi-weekly check-ins</li>
             <li>• 360-degree feedback</li>
@@ -443,13 +462,13 @@
         </div>
 
         <div
-          class='p-3 @sm:p-4 bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 rounded-lg'
+          class='p-3 @sm:p-4 @md:p-5 @lg:p-6 bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 rounded-lg'
         >
           <h4
-            class='font-medium text-xs @sm:text-sm text-teal-800 dark:text-teal-400 mb-1 @sm:mb-2'
+            class='font-medium text-xs @sm:text-sm @md:text-base text-teal-800 dark:text-teal-400 mb-1 @sm:mb-2'
           >Work-Life Balance</h4>
           <ul
-            class='text-xs @sm:text-sm text-teal-700 dark:text-teal-300 space-y-1'
+            class='text-xs @sm:text-sm @md:text-base text-teal-700 dark:text-teal-300 space-y-1'
           >
             <li>• Flexible working hours</li>
             <li>• Unlimited PTO policy</li>
@@ -463,19 +482,21 @@
 
   <!-- Company Culture -->
   <div
-    class='bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-6 shadow-sm mb-6 @sm:mb-8'
+    class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm mb-6 @sm:mb-7 @md:mb-8'
   >
     <h2
-      class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 @sm:mb-6'
+      class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white mb-4 @sm:mb-5 @md:mb-6'
     >Company Culture</h2>
 
-    <div class='grid grid-cols-1 gap-4 @sm:gap-6'>
+    <div
+      class='grid grid-cols-1 @md:grid-cols-2 @lg:grid-cols-4 gap-4 @sm:gap-6'
+    >
       <div class='text-center'>
         <div
-          class='w-14 h-14 @sm:w-16 @sm:h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
+          class='w-14 h-14 @sm:w-16 @sm:h-16 @md:w-20 @md:h-20 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
         >
           <svg
-            class='w-6 @sm:w-8 h-6 @sm:h-8 text-blue-600 dark:text-blue-400'
+            class='w-6 @sm:w-8 h-6 @sm:h-8 @md:w-10 @md:h-10 text-blue-600 dark:text-blue-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -489,18 +510,19 @@
           </svg>
         </div>
         <h4
-          class='font-medium text-sm text-gray-900 dark:text-white mb-1 @sm:mb-2'
+          class='font-medium text-sm @sm:text-base @md:text-xl text-gray-900 dark:text-white mb-1 @sm:mb-2'
         >Collaboration</h4>
-        <p class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'>Open
-          communication and teamwork across all departments</p>
+        <p
+          class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
+        >Open communication and teamwork across all departments</p>
       </div>
 
       <div class='text-center'>
         <div
-          class='w-14 h-14 @sm:w-16 @sm:h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
+          class='w-14 h-14 @sm:w-16 @sm:h-16 @md:w-20 @md:h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
         >
           <svg
-            class='w-6 @sm:w-8 h-6 @sm:h-8 text-green-600 dark:text-green-400'
+            class='w-6 @sm:w-8 h-6 @sm:h-8 @md:w-10 @md:h-10 text-green-600 dark:text-green-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -514,19 +536,19 @@
           </svg>
         </div>
         <h4
-          class='font-medium text-sm text-gray-900 dark:text-white mb-1 @sm:mb-2'
+          class='font-medium text-sm @sm:text-base @md:text-xl text-gray-900 dark:text-white mb-1 @sm:mb-2'
         >Innovation</h4>
         <p
-          class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+          class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
         >Encouraging creative problem-solving and calculated risk-taking</p>
       </div>
 
       <div class='text-center'>
         <div
-          class='w-14 h-14 @sm:w-16 @sm:h-16 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
+          class='w-14 h-14 @sm:w-16 @sm:h-16 @md:w-20 @md:h-20 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
         >
           <svg
-            class='w-6 @sm:w-8 h-6 @sm:h-8 text-purple-600 dark:text-purple-400'
+            class='w-6 @sm:w-8 h-6 @sm:h-8 @md:w-10 @md:h-10 text-purple-600 dark:text-purple-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -540,19 +562,19 @@
           </svg>
         </div>
         <h4
-          class='font-medium text-sm text-gray-900 dark:text-white mb-1 @sm:mb-2'
+          class='font-medium text-sm @sm:text-base @md:text-xl text-gray-900 dark:text-white mb-1 @sm:mb-2'
         >Empathy</h4>
         <p
-          class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+          class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
         >Understanding and supporting team members' needs and perspectives</p>
       </div>
 
       <div class='text-center'>
         <div
-          class='w-14 h-14 @sm:w-16 @sm:h-16 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
+          class='w-14 h-14 @sm:w-16 @sm:h-16 @md:w-20 @md:h-20 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mx-auto mb-2 @sm:mb-3'
         >
           <svg
-            class='w-6 @sm:w-8 h-6 @sm:h-8 text-orange-600 dark:text-orange-400'
+            class='w-6 @sm:w-8 h-6 @sm:h-8 @md:w-10 @md:h-10 text-orange-600 dark:text-orange-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -566,10 +588,10 @@
           </svg>
         </div>
         <h4
-          class='font-medium text-sm text-gray-900 dark:text-white mb-1 @sm:mb-2'
+          class='font-medium text-sm @sm:text-base @md:text-xl text-gray-900 dark:text-white mb-1 @sm:mb-2'
         >Excellence</h4>
         <p
-          class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+          class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
         >Commitment to high-quality work and continuous improvement</p>
       </div>
     </div>
@@ -577,16 +599,16 @@
 
   <!-- Hiring Pipeline -->
   <div
-    class='bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-6 shadow-sm'
+    class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
   >
     <h2
-      class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 @sm:mb-6'
+      class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white mb-4 @sm:mb-5 @md:mb-6'
     >Hiring Pipeline</h2>
 
-    <div class='grid grid-cols-1 gap-4 @sm:gap-6'>
+    <div class='grid grid-cols-1 @lg:grid-cols-3 gap-4 @sm:gap-6'>
       <div>
         <h3
-          class='text-base @sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 @sm:mb-4'
+          class='text-base @sm:text-lg @md:text-xl font-semibold text-gray-900 dark:text-white mb-2 @sm:mb-3 @md:mb-4'
         >Active Candidates</h3>
         <div class='space-y-2 @sm:space-y-3'>
           <div
@@ -594,14 +616,14 @@
           >
             <div class='mb-1 @sm:mb-0'>
               <p
-                class='font-medium text-xs @sm:text-sm text-gray-900 dark:text-white'
+                class='font-medium text-xs @sm:text-sm @md:text-base text-gray-900 dark:text-white'
               >Sarah Chen</p>
               <p
-                class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+                class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
               >Senior Engineer</p>
             </div>
             <span
-              class='px-1.5 py-0.5 @sm:px-2 @sm:py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded'
+              class='px-1.5 py-0.5 @sm:px-2 @sm:py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs @sm:text-sm rounded'
             >Interview</span>
           </div>
 
@@ -610,14 +632,14 @@
           >
             <div class='mb-1 @sm:mb-0'>
               <p
-                class='font-medium text-xs @sm:text-sm text-gray-900 dark:text-white'
+                class='font-medium text-xs @sm:text-sm @md:text-base text-gray-900 dark:text-white'
               >Mike Johnson</p>
               <p
-                class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+                class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
               >Product Manager</p>
             </div>
             <span
-              class='px-1.5 py-0.5 @sm:px-2 @sm:py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs rounded'
+              class='px-1.5 py-0.5 @sm:px-2 @sm:py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs @sm:text-sm rounded'
             >Offer</span>
           </div>
 
@@ -626,13 +648,14 @@
           >
             <div class='mb-1 @sm:mb-0'>
               <p
-                class='font-medium text-xs @sm:text-sm text-gray-900 dark:text-white'
+                class='font-medium text-xs @sm:text-sm @md:text-base text-gray-900 dark:text-white'
               >Lisa Wong</p>
-              <p class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'>UX
-                Designer</p>
+              <p
+                class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
+              >UX Designer</p>
             </div>
             <span
-              class='px-1.5 py-0.5 @sm:px-2 @sm:py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs rounded'
+              class='px-1.5 py-0.5 @sm:px-2 @sm:py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs @sm:text-sm rounded'
             >Screening</span>
           </div>
         </div>
@@ -640,17 +663,17 @@
 
       <div>
         <h3
-          class='text-base @sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 @sm:mb-4'
+          class='text-base @sm:text-lg @md:text-xl font-semibold text-gray-900 dark:text-white mb-2 @sm:mb-3 @md:mb-4'
         >Diversity Goals</h3>
         <div class='space-y-3 @sm:space-y-4'>
           <div
             class='flex flex-col @sm:flex-row justify-between items-start @sm:items-center gap-2'
           >
             <span
-              class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+              class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
             >Women in Tech</span>
             <span
-              class='font-medium text-gray-900 dark:text-white text-xs @sm:text-sm'
+              class='font-medium text-gray-900 dark:text-white text-xs @sm:text-sm @md:text-base'
             >35%</span>
           </div>
           <div
@@ -666,10 +689,10 @@
             class='flex flex-col @sm:flex-row justify-between items-start @sm:items-center gap-2 mt-2 @sm:mt-4'
           >
             <span
-              class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+              class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
             >Underrepresented Groups</span>
             <span
-              class='font-medium text-gray-900 dark:text-white text-xs @sm:text-sm'
+              class='font-medium text-gray-900 dark:text-white text-xs @sm:text-sm @md:text-base'
             >25%</span>
           </div>
           <div
@@ -685,10 +708,10 @@
             class='flex flex-col @sm:flex-row justify-between items-start @sm:items-center gap-2 mt-2 @sm:mt-4'
           >
             <span
-              class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+              class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
             >International Talent</span>
             <span
-              class='font-medium text-gray-900 dark:text-white text-xs @sm:text-sm'
+              class='font-medium text-gray-900 dark:text-white text-xs @sm:text-sm @md:text-base'
             >15%</span>
           </div>
           <div
@@ -704,42 +727,42 @@
 
       <div>
         <h3
-          class='text-base @sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 @sm:mb-4'
+          class='text-base @sm:text-lg @md:text-xl font-semibold text-gray-900 dark:text-white mb-2 @sm:mb-3 @md:mb-4'
         >Recruitment Channels</h3>
         <div class='space-y-2 @sm:space-y-3'>
           <div class='flex justify-between items-center'>
             <span
-              class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+              class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
             >Employee Referrals</span>
             <span
-              class='font-medium text-green-600 text-xs @sm:text-sm'
+              class='font-medium text-green-600 text-xs @sm:text-sm @md:text-base'
             >45%</span>
           </div>
 
           <div class='flex justify-between items-center'>
             <span
-              class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+              class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
             >LinkedIn</span>
             <span
-              class='font-medium text-blue-600 text-xs @sm:text-sm'
+              class='font-medium text-blue-600 text-xs @sm:text-sm @md:text-base'
             >30%</span>
           </div>
 
           <div class='flex justify-between items-center'>
             <span
-              class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+              class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
             >Tech Meetups</span>
             <span
-              class='font-medium text-purple-600 text-xs @sm:text-sm'
+              class='font-medium text-purple-600 text-xs @sm:text-sm @md:text-base'
             >15%</span>
           </div>
 
           <div class='flex justify-between items-center'>
             <span
-              class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+              class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
             >University Recruiting</span>
             <span
-              class='font-medium text-orange-600 text-xs @sm:text-sm'
+              class='font-medium text-orange-600 text-xs @sm:text-sm @md:text-base'
             >10%</span>
           </div>
         </div>

@@ -1,0 +1,655 @@
+<div class='flex flex-col gap-4 lg:gap-6'>
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1
+        class='font-heading text-2xl font-semibold dark:text-white'
+      >Promotion Dashboard</h1>
+      <p class='text-base text-muted-foreground'>Manage your promotion
+        campaigns and social media presence.</p>
+    </div>
+  </div>
+
+     <!-- Promotion Metrics -->
+     <div
+       class='grid grid-cols-1 gap-[17px] sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5'
+     >
+       <div
+         class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm'
+         style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+       >
+         <div class='flex items-center justify-between px-[10px] py-[4px]'>
+           <div class='flex flex-col gap-[4px]'>
+             <h3
+               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
+             >Social Reach</h3>
+             <p
+               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
+             >0</p>
+           </div>
+           <div>
+             <div style="background:#E3F2FD; border-radius: 6px;">
+               <div style="width:38px; height:38px; background:#E3F2FD; border-radius:50%; position:relative;">
+                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#2196F3; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Users' 'w-4 h-4 text-white'}}</div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <p
+           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
+         >
+ {{lucide 'TrendingUp' 'w-5 h-4' style='color: #2196F3'}}
+           <span class='text-[#2196F3] dark:text-blue-400'>+0%</span>Since last
+           month
+         </p>
+       </div>
+
+       <div
+         class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm'
+         style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+       >
+         <div class='flex items-center justify-between px-[10px] py-[4px]'>
+           <div class='flex flex-col gap-[4px]'>
+             <h3
+               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
+             >Engagement Rate</h3>
+             <p
+               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
+             >0%</p>
+           </div>
+           <div>
+             <div style="background:#FCE4EC; border-radius: 6px;">
+               <div style="width:38px; height:38px; background:#FCE4EC; border-radius:50%; position:relative;">
+                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#E91E63; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'BarChart3' 'w-4 h-4 text-white'}}</div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <p
+           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
+         >
+ {{lucide 'TrendingUp' 'w-5 h-4' style='color: #E91E63'}}
+           <span class='text-[#E91E63] dark:text-pink-400'>+0%</span>Since last
+           month
+         </p>
+       </div>
+
+       <div
+         class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm'
+         style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+       >
+         <div class='flex items-center justify-between px-[10px] py-[4px]'>
+           <div class='flex flex-col gap-[4px]'>
+             <h3
+               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
+             >Content Posts</h3>
+             <p
+               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
+             >0</p>
+           </div>
+           <div>
+             <div style="background:#FFF3E0; border-radius: 6px;">
+               <div style="width:38px; height:38px; background:#FFF3E0; border-radius:50%; position:relative;">
+                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#FF9800; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'FileText' 'w-4 h-4 text-white'}}</div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <p
+           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
+         >
+ {{lucide 'TrendingUp' 'w-5 h-4' style='color: #FF9800'}}
+           <span class='text-[#FF9800] dark:text-yellow-400'>+0%</span>Since last
+           month
+         </p>
+       </div>
+
+       <div
+         class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm'
+         style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+       >
+         <div class='flex items-center justify-between px-[10px] py-[4px]'>
+           <div class='flex flex-col gap-[4px]'>
+             <h3
+               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
+             >Website Visitors</h3>
+             <p
+               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
+             >0</p>
+           </div>
+           <div>
+             <div style="background:#E8F5E8; border-radius: 6px;">
+               <div style="width:38px; height:38px; background:#E8F5E8; border-radius:50%; position:relative;">
+                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#4CAF50; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Eye' 'w-4 h-4 text-white'}}</div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <p
+           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
+         >
+ {{lucide 'TrendingUp' 'w-5 h-4' style='color: #4CAF50'}}
+            <span class='text-[#4CAF50] dark:text-green-400'>+0%</span>Since last
+            month
+          </p>
+        </div>
+
+        <div
+         class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm'
+         style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+       >
+         <div class='flex items-center justify-between px-[10px] py-[4px]'>
+           <div class='flex flex-col gap-[4px]'>
+             <h3
+               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
+             >Promotion Strategy</h3>
+             <p
+               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
+             >25%</p>
+           </div>
+           <div>
+             <div style="background:#F3E5F5; border-radius: 6px;">
+               <div style="width:38px; height:38px; background:#F3E5F5; border-radius:50%; position:relative;">
+                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#9C27B0; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Target' 'w-4 h-4 text-white'}}</div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <p
+           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
+         >
+ {{lucide 'TrendingUp' 'w-5 h-4' style='color: #9C27B0'}}
+           <span class='text-[#9C27B0] dark:text-purple-400'>+15%</span>Since
+           last month
+         </p>
+       </div>
+      </div>
+
+    <!-- Social Media Management and Content Strategy -->
+    <div class='flex flex-col items-stretch gap-[17px] lg:flex-row'>
+      <div
+        class='w-full rounded-[11px] bg-card px-[26px] py-[20px] text-card-foreground lg:w-[60%] lg:min-w-[60%]'
+      >
+        <h3
+          class='text-[18px] font-[500] text-gray-900 dark:text-gray-100 mb-4'
+        >Content Strategy</h3>
+        <div class='grid grid-cols-1 gap-4 md:grid-cols-2'>
+          <div
+            class='p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800'
+          >
+            <div class='flex items-center gap-3 mb-2'>
+              <div
+                class='w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'
+              >
+                <svg
+                  class='w-4 h-4 text-blue-600 dark:text-blue-400'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12'
+                  ></path>
+                </svg>
+              </div>
+              <h4 class='font-medium text-blue-800 dark:text-blue-400'>Social
+                Media Posts</h4>
+            </div>
+            <p class='text-sm text-blue-700 dark:text-blue-300'>0 posts
+              scheduled this week</p>
+            <div
+              class='mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
+            >
+              <div
+                class='bg-blue-600 h-2 rounded-full'
+                style='width: 10%'
+              ></div>
+            </div>
+          </div>
+
+          <div
+            class='p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800'
+          >
+            <div class='flex items-center gap-3 mb-2'>
+              <div
+                class='w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'
+              >
+                <svg
+                  class='w-4 h-4 text-green-600 dark:text-green-400'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'
+                  ></path>
+                </svg>
+              </div>
+              <h4 class='font-medium text-green-800 dark:text-green-400'>Video
+                Content</h4>
+            </div>
+            <p class='text-sm text-green-700 dark:text-green-300'>0 videos in
+              production</p>
+            <div
+              class='mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
+            >
+              <div
+                class='bg-green-600 h-2 rounded-full'
+                style='width: 5%'
+              ></div>
+            </div>
+          </div>
+
+          <div
+            class='p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800'
+          >
+            <div class='flex items-center gap-3 mb-2'>
+              <div
+                class='w-8 h-8 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center'
+              >
+                <svg
+                  class='w-4 h-4 text-yellow-600 dark:text-yellow-400'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+                  ></path>
+                </svg>
+              </div>
+              <h4 class='font-medium text-yellow-800 dark:text-yellow-400'>Email
+                Campaigns</h4>
+            </div>
+            <p class='text-sm text-yellow-700 dark:text-yellow-300'>0 campaigns
+              planned</p>
+            <div
+              class='mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
+            >
+              <div
+                class='bg-yellow-600 h-2 rounded-full'
+                style='width: 0%'
+              ></div>
+            </div>
+          </div>
+
+          <div
+            class='p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800'
+          >
+            <div class='flex items-center gap-3 mb-2'>
+              <div
+                class='w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center'
+              >
+                <svg
+                  class='w-4 h-4 text-purple-600 dark:text-purple-400'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
+                  ></path>
+                </svg>
+              </div>
+              <h4
+                class='font-medium text-purple-800 dark:text-purple-400'
+              >Analytics Setup</h4>
+            </div>
+            <p class='text-sm text-purple-700 dark:text-purple-300'>Tracking
+              pixels installed</p>
+            <div
+              class='mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
+            >
+              <div
+                class='bg-purple-600 h-2 rounded-full'
+                style='width: 80%'
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class='w-full rounded-[11px] bg-card px-[26px] py-[20px] text-card-foreground'
+      >
+        <h3
+          class='text-[18px] font-[500] text-gray-900 dark:text-gray-100 mb-4'
+        >Quick Actions</h3>
+        <div class='space-y-3'>
+          <a
+            href='/pages/pitch-deck'
+            class='flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md text-sm font-medium transition'
+          >
+            <svg
+              class='w-4 h-4 mr-2'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+            >
+              <path
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                stroke-width='2'
+                d='M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z'
+              ></path>
+            </svg>
+            Launch Promotion Campaign
+          </a>
+          <button
+            class='flex items-center justify-center w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition'
+          >
+            <svg
+              class='w-4 h-4 mr-2'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+            >
+              <path
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                stroke-width='2'
+                d='M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12'
+              ></path>
+            </svg>
+            Schedule Social Posts
+          </button>
+          <button
+            class='flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md text-sm font-medium transition'
+          >
+            <svg
+              class='w-4 h-4 mr-2'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+            >
+              <path
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                stroke-width='2'
+                d='M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'
+              ></path>
+            </svg>
+            Create Video Content
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Promotion Activities -->
+    <div
+      class='rounded-[6px] bg-card px-[32px] py-[20px] text-card-foreground'
+      style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+    >
+      <div
+        class='flex flex-col items-center justify-between gap-[16px] lg:flex-row'
+      >
+        <h3 class='text-[28px] font-[600] text-primary'>Promotion Activities</h3>
+        <div class='flex items-center gap-[20px]'>
+          <button
+            class='justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md flex items-center gap-[8px]'
+            type='button'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='20'
+              height='20'
+              viewBox='0 0 20 20'
+              fill='none'
+            >
+              <path
+                d='M0.9375 3.75H19.0625C19.3111 3.75 19.5496 3.84877 19.7254 4.02459C19.9012 4.2004 20 4.43886 20 4.6875C20 4.93614 19.9012 5.1746 19.7254 5.35041C19.5496 5.52623 19.3111 5.625 19.0625 5.625H0.9375C0.68886 5.625 0.450403 5.52623 0.274587 5.35041C0.098772 5.1746 0 4.93614 0 4.6875C0 4.43886 0.098772 4.2004 0.274587 4.02459C0.450403 3.84877 0.68886 3.75 0.9375 3.75ZM3.75 9.6875C3.75 9.43886 3.84877 9.2004 4.02459 9.02459C4.2004 8.84877 4.43886 8.75 4.6875 8.75H15.3125C15.5611 8.75 15.7996 8.84877 16.1512 9.02459C16.25 9.2004 16.25 9.43886 16.25 9.6875C16.25 9.93614 16.1512 10.1746 15.9754 10.3504C15.7996 10.5262 15.5611 10.625 15.3125 10.625H4.6875C4.43886 10.625 4.2004 10.5262 4.02459 10.3504C3.84877 10.1746 3.75 9.93614 3.75 9.6875ZM7.5 14.6875C7.5 14.4389 7.59877 14.2004 7.77459 14.0246C7.9504 13.8488 8.18886 13.75 8.4375 13.75H11.5625C11.8111 13.75 12.0496 13.8488 12.2254 14.0246C12.4012 14.2004 12.5 14.4389 12.5 14.6875C12.5 14.9361 12.4012 15.1746 12.2254 15.3504C12.0496 15.5262 11.8111 15.625 11.5625 15.625H8.4375C8.18886 15.625 7.9504 15.5262 7.77459 15.3504C7.59877 15.1746 7.5 14.9361 7.5 14.6875Z'
+                fill='white'
+              ></path>
+            </svg>Filter
+          </button>
+        </div>
+      </div>
+
+       <div
+         class='mt-[28px] w-full rounded-[8px]'
+         style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+       >
+        <div class='relative w-full overflow-auto'>
+          <table
+            class='w-full caption-bottom text-sm min-w-full overflow-x-auto'
+          >
+            <thead class='[&_tr]:border-b h-[64px] bg-muted'>
+              <tr
+                class='border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted'
+              >
+                <th
+                  class='h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]'
+                >Activity</th>
+                <th
+                  class='h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 w-[200px] text-[16px] font-[600] text-primary lg:text-[22px]'
+                >Status</th>
+                <th
+                  class='h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 w-[116px] text-[16px] font-[600] text-primary lg:text-[22px]'
+                >Platform</th>
+                <th
+                  class='h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]'
+                >Scheduled</th>
+                <th
+                  class='h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]'
+                ></th>
+              </tr>
+            </thead>
+            <tbody class='[&_tr:last-child]:border-0'>
+              <tr
+                class='border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted'
+              >
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='flex w-[200px] items-center gap-[10px]'>
+                    <div
+                      class='w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'
+                    >
+                      <svg
+                        class='w-5 h-5 text-blue-600 dark:text-blue-400'
+                        fill='none'
+                        stroke='currentColor'
+                        viewBox='0 0 24 24'
+                      >
+                        <path
+                          stroke-linecap='round'
+                          stroke-linejoin='round'
+                          stroke-width='2'
+                          d='M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12'
+                        ></path>
+                      </svg>
+                    </div>
+                    <p
+                      class='text-[14px] font-[500] text-foreground lg:text-[16px]'
+                    >Product Launch Post</p>
+                  </div>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <span
+                    class='px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded'
+                  >Published</span>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <p
+                    class='text-[14px] font-[500] text-foreground lg:text-[16px]'
+                  >Twitter</p>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <p
+                    class='text-[14px] font-[500] text-foreground lg:text-[16px]'
+                  >Dec 28, 2023</p>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='flex justify-end'>
+                    <button
+                      class='p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
+                    >
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='16'
+                        height='16'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        stroke-width='2'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                      >
+                        <circle cx='12' cy='12' r='1'></circle>
+                        <circle cx='12' cy='5' r='1'></circle>
+                        <circle cx='12' cy='19' r='1'></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr
+                class='border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted'
+              >
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='flex w-[200px] items-center gap-[10px]'>
+                    <div
+                      class='w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center'
+                    >
+                      <svg
+                        class='w-5 h-5 text-yellow-600 dark:text-yellow-400'
+                        fill='none'
+                        stroke='currentColor'
+                        viewBox='0 0 24 24'
+                      >
+                        <path
+                          stroke-linecap='round'
+                          stroke-linejoin='round'
+                          stroke-width='2'
+                          d='M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'
+                        ></path>
+                      </svg>
+                    </div>
+                    <p
+                      class='text-[14px] font-[500] text-foreground lg:text-[16px]'
+                    >Demo Video Creation</p>
+                  </div>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <span
+                    class='px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs rounded'
+                  >In Progress</span>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <p
+                    class='text-[14px] font-[500] text-foreground lg:text-[16px]'
+                  >YouTube</p>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <p
+                    class='text-[14px] font-[500] text-foreground lg:text-[16px]'
+                  >Jan 15, 2024</p>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='flex justify-end'>
+                    <button
+                      class='p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
+                    >
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='16'
+                        height='16'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        stroke-width='2'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                      >
+                        <circle cx='12' cy='12' r='1'></circle>
+                        <circle cx='12' cy='5' r='1'></circle>
+                        <circle cx='12' cy='19' r='1'></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr
+                class='border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted'
+              >
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='flex w-[200px] items-center gap-[10px]'>
+                    <div
+                      class='w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center'
+                    >
+                      <svg
+                        class='w-5 h-5 text-red-600 dark:text-red-400'
+                        fill='none'
+                        stroke='currentColor'
+                        viewBox='0 0 24 24'
+                      >
+                        <path
+                          stroke-linecap='round'
+                          stroke-linejoin='round'
+                          stroke-width='2'
+                          d='M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+                        ></path>
+                      </svg>
+                    </div>
+                    <p
+                      class='text-[14px] font-[500] text-foreground lg:text-[16px]'
+                    >Newsletter Campaign</p>
+                  </div>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <span
+                    class='px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 text-xs rounded'
+                  >Draft</span>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <p
+                    class='text-[14px] font-[500] text-foreground lg:text-[16px]'
+                  >Email</p>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <p
+                    class='text-[14px] font-[500] text-foreground lg:text-[16px]'
+                  >Feb 1, 2024</p>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='flex justify-end'>
+                    <button
+                      class='p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
+                    >
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        width='16'
+                        height='16'
+                        viewBox='0 0 24 24'
+                        fill='none'
+                        stroke='currentColor'
+                        stroke-width='2'
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                      >
+                        <circle cx='12' cy='12' r='1'></circle>
+                        <circle cx='12' cy='5' r='1'></circle>
+                        <circle cx='12' cy='19' r='1'></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

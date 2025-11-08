@@ -1,0 +1,167 @@
+{{!-- Reusable User Message Component --}}
+{{!-- Parameters:
+  - message: The message text (supports HTML for rich formatting)
+  - time: Timestamp string
+  - status: Online status text
+  - initial: User's initial for avatar (default: U)
+  - isPremium: Boolean for premium badge
+  - priority: Priority level ('high', 'medium', 'low')
+  - thumbsUp: Number of thumbs up reactions
+  - heart: Number of heart reactions
+  - smile: Number of smile reactions
+  - editCount: Number of edits
+  - selfDestructTime: Self-destruct timer text
+  - sentTime: Tooltip for sent
+  - deliveredTime: Tooltip for delivered
+  - readTime: Tooltip for read
+--}}
+<article class='flex justify-end' role='region' aria-label='User message'>
+  <div class='flex-1 max-w-[90%] sm:max-w-[80%] md:max-w-[70%]'>
+    <div class='bg-muted rounded-2xl p-4 shadow-lg border border-border hover:shadow-xl transition-all duration-300'>
+      <header class='flex items-center justify-end gap-2 mb-3'>
+        <div class='text-right'>
+          <div class='flex items-center gap-2 mb-1'>
+            <h3 class='text-sm font-semibold text-foreground'>You</h3>
+            <div class='flex items-center gap-1'>
+              {{#if isPremium}}
+              <span class='inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-medium' aria-label='Premium user'>
+                <svg class='w-3 h-3 mr-1' fill='currentColor' viewBox='0 0 20 20' aria-hidden='true'>
+                  <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path>
+                </svg>
+                Premium
+              </span>
+              {{/if}}
+              {{#if priority}}
+              <span class='inline-flex items-center px-2 py-0.5 rounded-full text-xs {{#if (eq priority 'high')}}bg-red-100 text-red-800{{else if (eq priority 'medium')}}bg-yellow-100 text-yellow-800{{else}}bg-blue-100 text-blue-800{{/if}} font-medium' aria-label='{{#if (eq priority 'high')}}High{{else if (eq priority 'medium')}}Medium{{else}}Low{{/if}} priority message'>
+                <svg class='w-3 h-3 mr-1' fill='currentColor' viewBox='0 0 20 20' aria-hidden='true'>
+                  <path fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z' clip-rule='evenodd'></path>
+                </svg>
+                {{#if (eq priority 'high')}}High{{else if (eq priority 'medium')}}Medium{{else}}Low{{/if}} Priority
+              </span>
+              {{/if}}
+            </div>
+          </div>
+          <div class='text-xs text-muted-foreground flex items-center gap-1'>
+            <div class='w-2 h-2 bg-green-500 rounded-full animate-ping' aria-label='Online'></div>
+            User • {{status}}
+            <svg class='w-3 h-3 text-green-600' fill='currentColor' viewBox='0 0 20 20' aria-hidden='true'>
+              <path fill-rule='evenodd' d='M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z' clip-rule='evenodd'></path>
+            </svg>
+          </div>
+        </div>
+        <div class='relative'>
+          <div class='bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-full flex-shrink-0' aria-label='User avatar'>
+            <span class='text-sm font-bold'>{{{initial}}}</span>
+          </div>
+          <div class='absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white' aria-label='Online status'></div>
+          {{#if isPremium}}
+          <div class='absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full border-2 border-white flex items-center justify-center' aria-label='Premium badge'>
+            <svg class='w-2 h-2 text-white' fill='currentColor' viewBox='0 0 20 20' aria-hidden='true'>
+              <path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path>
+            </svg>
+          </div>
+          {{/if}}
+        </div>
+      </header>
+      <section class='bg-background/50 rounded-lg p-3 mb-2 border border-border/50 relative' aria-label='Message content'>
+        <p class='text-foreground text-right m-0'>
+          {{{message}}}
+        </p>
+        <button class='absolute top-2 right-2 h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md transition-colors' title='Translate to Spanish' aria-label='Translate message'>
+          <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
+            <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 5h12M9 3v2m1.048 9.5A18.02 18.02 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129'></path>
+          </svg>
+        </button>
+      </section>
+      <footer class='flex items-center justify-between mt-2'>
+        <div class='text-xs text-muted-foreground font-medium flex items-center gap-1'>
+          <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
+            <circle cx='12' cy='12' r='10'></circle>
+            <polyline points='12,6 12,12 16,14'></polyline>
+          </svg>
+          <time datetime='{{time}}'>{{time}}</time>
+          <div class='flex items-center gap-1 ml-2' aria-label='Message status'>
+            <div class='w-2 h-2 bg-blue-500 rounded-full' title='{{sentTime}}' aria-label='Sent'></div>
+            <div class='w-2 h-2 bg-blue-500 rounded-full' title='{{deliveredTime}}' aria-label='Delivered'></div>
+            <div class='w-2 h-2 bg-green-500 rounded-full' title='{{readTime}}' aria-label='Read'></div>
+          </div>
+        </div>
+        <div class='flex items-center gap-1'>
+          <button class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md transition-colors' title='Reply' aria-label='Reply to message'>
+            <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
+              <polyline points='9 17 4 12 9 7'></polyline>
+              <path d='M20 18v-2a4 4 0 0 0-4-4H4'></path>
+            </svg>
+          </button>
+          <button class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md transition-colors' title='Copy' aria-label='Copy message'>
+            <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
+              <rect width='14' height='14' x='8' y='8' rx='2' ry='2'></rect>
+              <path d='M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2'></path>
+            </svg>
+          </button>
+          <button class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md transition-colors' title='Edit' aria-label='Edit message'>
+            <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
+              <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'></path>
+              <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'></path>
+            </svg>
+          </button>
+          <button class='h-8 w-8 flex items-center justify-center hover:bg-red-100 hover:text-red-600 rounded-md transition-colors' title='Delete' aria-label='Delete message'>
+            <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
+              <path d='M3 6h18'></path>
+              <path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'></path>
+              <line x1='10' y1='11' x2='10' y2='17'></line>
+              <line x1='14' y1='11' x2='14' y2='17'></line>
+            </svg>
+          </button>
+          <div class='relative'>
+            <button class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md transition-colors' title='More actions' aria-label='More actions' aria-haspopup='menu'>
+              <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
+                <circle cx='12' cy='12' r='1'></circle>
+                <circle cx='12' cy='5' r='1'></circle>
+                <circle cx='12' cy='19' r='1'></circle>
+              </svg>
+            </button>
+            <!-- Hidden menu for bookmark and report -->
+            <div class='hidden absolute right-0 mt-1 bg-popover border border-border rounded-md shadow-lg p-1' role='menu'>
+              <button class='w-full text-left px-2 py-1 hover:bg-muted rounded' role='menuitem' aria-label='Bookmark message'>
+                <svg class='w-4 h-4 inline mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z'></path>
+                </svg>
+                Bookmark
+              </button>
+              <button class='w-full text-left px-2 py-1 hover:bg-red-100 hover:text-red-600 rounded' role='menuitem' aria-label='Report message'>
+                <svg class='w-4 h-4 inline mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z'></path>
+                </svg>
+                Report
+              </button>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <div class='flex items-center justify-between mt-2'>
+        <div class='flex items-center gap-2'>
+          {{#if thumbsUp}}
+          <div class='flex items-center gap-1 text-xs text-muted-foreground' aria-label='Reactions'>
+            {{#if thumbsUp}}<span aria-label='{{thumbsUp}} thumbs up'>👍 {{thumbsUp}}</span>{{/if}}
+            {{#if heart}}<span aria-label='{{heart}} hearts'>❤️ {{heart}}</span>{{/if}}
+            {{#if smile}}<span aria-label='{{smile}} smiles'>😊 {{smile}}</span>{{/if}}
+          </div>
+          {{/if}}
+          {{#if editCount}}
+          <button class='text-xs text-primary hover:underline' title='View edit history' aria-label='Message edited {{editCount}} time{{#if (gt editCount 1)}}s{{/if}}'>Edited {{editCount}} time{{#if (gt editCount 1)}}s{{/if}}</button>
+          {{/if}}
+        </div>
+        {{#if selfDestructTime}}
+        <div class='text-xs text-muted-foreground flex items-center gap-1' aria-label='Self-destruct timer'>
+          <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
+            <circle cx='12' cy='12' r='10'></circle>
+            <polyline points='12,6 12,12 16,14'></polyline>
+          </svg>
+          <time>Self-destructs in {{selfDestructTime}}</time>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</article>

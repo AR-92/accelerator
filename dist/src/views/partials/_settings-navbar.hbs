@@ -1,0 +1,36 @@
+      <div
+        class='flex w-[90vw] items-center gap-[16px] overflow-x-auto border-b border-gray-200 dark:border-gray-700 lg:w-full lg:gap-[48px]'
+      >
+        <a
+          class='p-[10px] text-[16px] font-[500] {{#if activeOverview}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+          href='/pages/settings'
+        >Overview</a>
+        <a
+          class='p-[10px] text-[16px] font-[500] {{#if activeProfile}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+          href='/pages/settings/profile'
+        >Profile</a>
+        <a
+          class='p-[10px] text-[16px] font-[500] {{#if activePassword}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+          href='/pages/settings/password'
+        >Password</a>
+        <a
+          class='p-[10px] text-[16px] font-[500] {{#if activeSubscription}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+          href='/pages/settings/subscription'
+        >Subscription</a>
+         <a
+           class='p-[10px] text-[16px] font-[500] {{#if activePaymentBilling}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+           href='/pages/settings/payment-billing'
+         >Payment & Billing</a>
+         <a
+           class='p-[10px] text-[16px] font-[500] {{#if activeVotes}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+           href='/pages/settings/votes'
+         >Votes</a>
+         <a
+           class='p-[10px] text-[16px] font-[500] {{#if activeRewards}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+           href='/pages/settings/rewards'
+         >Rewards</a>
+         <a
+           class='p-[10px] text-[16px] font-[500] {{#if activeCredits}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+           href='/pages/settings/credits'
+         >Credits</a>
+      </div>

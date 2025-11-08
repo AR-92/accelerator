@@ -1,0 +1,138 @@
+<div class='flex flex-col gap-4 lg:gap-6'>
+    <div class='flex items-center justify-between'>
+      <div class='grid gap-1'>
+        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Account Settings</h1>
+        <p class='text-base text-muted-foreground'>Manage your personal information and account security.</p>
+      </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class='border-b border-border'>
+      <nav class='flex space-x-8' aria-label='Tabs'>
+        <button id='profile-tab' class='tab-button border-b-2 border-primary py-2 px-1 text-sm font-medium text-primary' data-tab='profile'>
+          Profile Information
+        </button>
+        <button id='password-tab' class='tab-button border-b-2 border-transparent py-2 px-1 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-gray-300' data-tab='password'>
+          Password & Security
+        </button>
+      </nav>
+    </div>
+
+    <!-- Profile Tab Content -->
+    <div id='profile-content' class='tab-content'>
+      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+        <div class='mb-6'>
+          <h2 class='text-lg font-semibold text-foreground mb-2'>Personal Information</h2>
+          <p class='text-sm text-muted-foreground'>Update your personal details and profile information.</p>
+        </div>
+        <form action="/pages/settings/profile" method="post" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+                <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-primary" for="first_name">First Name</label>
+                <div class="relative">
+                    <div class="relative flex items-center">
+                        <input class="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pr-3 focus:border-primary focus-visible:ring-0 focus-visible:ring-offset-0" id="first_name" type="text" required="" name="firstName" placeholder="Enter your first name">
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-primary" for="last_name">Last Name</label>
+                <div class="relative">
+                    <div class="relative flex items-center">
+                        <input class="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pr-3 focus:border-primary focus-visible:ring-0 focus-visible:ring-offset-0" id="last_name" type="text" required="" name="lastName" placeholder="Enter your last name">
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="space-y-2">
+              <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-primary" for="email">Email Address</label>
+              <div class="relative">
+                  <div class="relative flex items-center">
+                      <input class="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pr-3 focus:border-primary focus-visible:ring-0 focus-visible:ring-offset-0" id="email" type="email" required="" name="email" placeholder="Enter your email">
+                  </div>
+              </div>
+          </div>
+          <div class="space-y-2">
+              <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-primary" for="bio">Bio</label>
+              <div class="relative">
+                  <textarea class="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus:border-primary focus-visible:ring-0 focus-visible:ring-offset-0" id="bio" name="bio" placeholder="Tell us about yourself"></textarea>
+              </div>
+          </div>
+          <div class='flex gap-4'>
+            <button class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md' type='submit'>Update Profile</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Password Tab Content -->
+    <div id='password-content' class='tab-content hidden'>
+      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+        <div class='mb-6'>
+          <h2 class='text-lg font-semibold text-foreground mb-2'>Change Password</h2>
+          <p class='text-sm text-muted-foreground'>Update your password to keep your account secure.</p>
+        </div>
+        <form action="/pages/settings/security" method="post" class="space-y-6">
+          <div class="space-y-2">
+              <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-primary" for="current_password">Current Password</label>
+              <div class="relative">
+                  <div class="relative flex items-center">
+                      <input class="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pr-3 focus:border-primary focus-visible:ring-0 focus-visible:ring-offset-0" id="current_password" type="password" required="" name="currentPassword" placeholder="Enter current password">
+                  </div>
+              </div>
+          </div>
+          <div class="space-y-2">
+              <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-primary" for="new_password">New Password</label>
+              <div class="relative">
+                  <div class="relative flex items-center">
+                      <input class="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pr-3 focus:border-primary focus-visible:ring-0 focus-visible:ring-offset-0" id="new_password" type="password" required="" name="newPassword" placeholder="Enter new password">
+                  </div>
+              </div>
+          </div>
+          <div class="space-y-2">
+              <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-primary" for="confirm_password">Confirm New Password</label>
+              <div class="relative">
+                  <div class="relative flex items-center">
+                      <input class="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pr-3 focus:border-primary focus-visible:ring-0 focus-visible:ring-offset-0" id="confirm_password" type="password" required="" name="confirmNewPassword" placeholder="Confirm new password">
+                  </div>
+              </div>
+          </div>
+          <div class='flex gap-4'>
+            <button class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md' type='submit'>Update Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const tabName = this.getAttribute('data-tab');
+
+          // Remove active state from all tabs
+          tabButtons.forEach(btn => {
+            btn.classList.remove('border-primary', 'text-primary');
+            btn.classList.add('border-transparent', 'text-muted-foreground');
+          });
+
+          // Hide all tab contents
+          tabContents.forEach(content => {
+            content.classList.add('hidden');
+          });
+
+          // Activate clicked tab
+          this.classList.remove('border-transparent', 'text-muted-foreground');
+          this.classList.add('border-primary', 'text-primary');
+
+          // Show corresponding content
+          document.getElementById(tabName + '-content').classList.remove('hidden');
+        });
+      });
+    });
+  </script>

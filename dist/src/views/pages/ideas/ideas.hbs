@@ -1,271 +1,335 @@
 <div class='p-4'>
-  <div class='w-full'>
-    <div class='mb-8'>
-      <h1 class='text-2xl font-light mb-2'>Ideas</h1>
-      <p class='text-gray-500'>Capture, organize, and develop your creative
-        concepts</p>
+  <div class='flex flex-col gap-4 lg:gap-6'>
+    <div class='flex items-center justify-between'>
+      <div class='grid gap-1'>
+        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Ideas Dashboard</h1>
+        <p class='text-base text-muted-foreground'>Track and manage your creative ideas from concept to execution.</p>
+      </div>
     </div>
 
-    <!-- Add new idea form -->
-    <div
-      class='bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 mb-8 shadow-sm'
-    >
-      <h2 class='text-lg font-light mb-4 text-gray-900 dark:text-gray-100'>Add
-        New Idea</h2>
-
-      <form
-        hx-post='/pages/ideas'
-        hx-target='#ideas-list'
-        hx-swap='afterbegin'
-        class='space-y-4'
-      >
-        <div>
-          <label
-            for='idea-title'
-            class='block text-sm text-gray-500 dark:text-gray-400 mb-2'
-          >Title</label>
-          <input
-            type='text'
-            id='idea-title'
-            name='title'
-            placeholder="What's your idea?"
-            class='w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-primary-purple'
-            required
-          />
+    <!-- Ideas Metrics -->
+    <div class='grid grid-cols-1 gap-[17px] sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5'>
+      <div class='rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+        <div class='flex items-center justify-between px-[10px] py-[4px]'>
+          <div class='flex flex-col gap-[4px]'>
+            <h3 class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>Total Ideas</h3>
+            <p class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'>3</p>
+          </div>
+          <div>
+            <svg width='44' height='44' viewBox='0 0 44 44' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              <rect width='44' height='44' rx='8' fill='#FFFCE3'></rect>
+              <path d='M21.9998 34.0006C29.3636 34.0006 35.3332 28.0311 35.3332 20.6673C35.3332 13.3035 29.3636 7.33398 21.9998 7.33398C14.636 7.33398 8.6665 13.3035 8.6665 20.6673C8.6665 28.0311 14.636 34.0006 21.9998 34.0006Z' fill='#FFF59D'></path>
+              <path d='M30.6668 20.6667C30.6668 15.5333 26.2668 11.4667 21.0001 12.0667C17.0001 12.5333 13.8001 15.7333 13.4001 19.7333C13.0668 22.8 14.3334 25.5333 16.4668 27.2667C17.4001 28.0667 18.0001 29.2 18.0001 30.4667V30.6667H26.0001V30.6C26.0001 29.4 26.5334 28.2 27.4668 27.4C29.4001 25.8 30.6668 23.4 30.6668 20.6667Z' fill='#FF9B29'></path>
+              <path d='M26.3999 19.4665L24.3999 18.1332C24.1999 17.9999 23.8666 17.9999 23.6666 18.1332L21.9999 19.1999L20.3999 18.1332C20.1999 17.9999 19.8666 17.9999 19.6666 18.1332L17.6666 19.4665C17.5332 19.5999 17.3999 19.7332 17.3999 19.9332C17.3999 20.1332 17.3999 20.3332 17.5332 20.4665L20.0666 23.5999V30.6665H21.3999V23.3332C21.3999 23.1999 21.3332 23.0665 21.2666 22.9332L19.0666 20.1999L20.0666 19.5332L21.6666 20.5999C21.8666 20.7332 22.1999 20.7332 22.3999 20.5999L23.9999 19.5332L24.9999 20.1999L22.7999 22.9332C22.7332 23.0665 22.6666 23.1999 22.6666 23.3332V30.6665H23.9999V23.5999L26.5332 20.4665C26.6666 20.3332 26.7332 20.1332 26.6666 19.9332C26.5999 19.7332 26.5332 19.5332 26.3999 19.4665Z' fill='#FFF59D'></path>
+              <path d='M22 37.334C23.1046 37.334 24 36.4386 24 35.334C24 34.2294 23.1046 33.334 22 33.334C20.8954 33.334 20 34.2294 20 35.334C20 36.4386 20.8954 37.334 22 37.334Z' fill='#5C6BC0'></path>
+              <path d='M23.3333 36H20.6667C19.2 36 18 34.8 18 33.3333V30H26V33.3333C26 34.8 24.8 36 23.3333 36Z' fill='#9FA8DA'></path>
+              <path d='M26 33.3327L18.2667 34.3993C18.4667 34.866 18.8667 35.3327 19.3333 35.5993L25.6 34.7327C25.8667 34.3327 26 27.866 26 33.3327ZM18 31.7993V33.1327L26 31.9993V30.666L18 31.7993Z' fill='#5C6BC0'></path>
+            </svg>
+          </div>
         </div>
+        <p class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'>
+          <svg xmlns='http://www.w3.org/2000/svg' width='24' height='20' viewBox='0 0 24 20' fill='none'>
+            <path d='M7.02979 8.30925H11.0298V15.7426L13.0398 15.7676V8.30925H17.0298L12.0298 4.14258L7.02979 8.30925Z' fill='#5EB48B'></path>
+          </svg>
+          <span class='text-[#5EB48B] dark:text-green-400'>+100%</span>Since last week
+        </p>
+      </div>
 
-        <div>
-          <label
-            for='idea-description'
-            class='block text-sm text-gray-500 dark:text-gray-400 mb-2'
-          >Description</label>
-          <textarea
-            id='idea-description'
-            name='description'
-            rows='3'
-            placeholder='Describe your idea in more detail...'
-            class='w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-primary-purple'
-          ></textarea>
+      <div class='rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+        <div class='flex items-center justify-between px-[10px] py-[4px]'>
+          <div class='flex flex-col gap-[4px]'>
+            <h3 class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>Votes Received</h3>
+            <p class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'>0</p>
+          </div>
+          <div>
+            <svg width='44' height='44' viewBox='0 0 44 44' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              <rect width='44' height='44' rx='8' fill='#FFFBD3'></rect>
+              <path d='M11.6167 21.1833L15.8167 25.0333L14.65 30.4C14.5333 31.1 14.7667 31.8 15.35 32.15C15.5833 32.3833 15.9333 32.5 16.2833 32.5C16.5167 32.5 16.75 32.5 16.9833 32.3833C16.9833 32.3833 17.1 32.3833 17.1 32.2667L21.8833 29.5833L26.6667 32.2667C26.6667 32.2667 26.7833 32.2667 26.7833 32.3833C27.3667 32.6167 28.0667 32.6167 28.5333 32.2667C29.1167 31.9167 29.35 31.2167 29.2333 30.5167L28.0667 25.15C28.5333 24.8 29.2333 24.1 29.9333 23.4L32.15 21.4167L32.2667 21.3C32.7333 20.8333 32.85 20.1333 32.6167 19.55C32.3833 18.9667 31.9167 18.5 31.2167 18.3833H31.1L25.6167 17.8L23.4 12.7833C23.4 12.7833 23.4 12.6667 23.2833 12.6667C23.1667 11.85 22.5833 11.5 22 11.5C21.4167 11.5 20.8333 11.85 20.4833 12.4333C20.4833 12.4333 20.4833 12.55 20.3667 12.55L18.15 17.5667L12.6667 18.15H12.55C11.9667 18.2667 11.3833 18.7333 11.15 19.3167C11.0333 20.0167 11.15 20.7167 11.6167 21.1833Z' fill='#FBC02D'></path>
+            </svg>
+          </div>
         </div>
+      </div>
 
-        <div>
-          <label
-            for='idea-category'
-            class='block text-sm text-gray-500 dark:text-gray-400 mb-2'
-          >Category</label>
-          <select
-            id='idea-category'
-            name='category'
-            class='w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-primary-purple'
-          >
-            <option value='technology'>Technology</option>
-            <option value='business'>Business</option>
-            <option value='design'>Design</option>
-            <option value='product'>Product</option>
-            <option value='other'>Other</option>
-          </select>
+      <div class='rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+        <div class='flex items-center justify-between px-[10px] py-[4px]'>
+          <div class='flex flex-col gap-[4px]'>
+            <h3 class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>Ideas in Progress</h3>
+            <p class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'>1</p>
+          </div>
+          <div>
+            <svg width='44' height='44' viewBox='0 0 44 44' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              <rect width='44' height='44' rx='8' fill='#E3F2FD'></rect>
+              <path d='M22 8C17.5817 8 14 11.5817 14 16C14 20.4183 17.5817 24 22 24C26.4183 24 30 20.4183 30 16C30 11.5817 26.4183 8 22 8ZM22 20C20.3431 20 19 18.6569 19 17C19 15.3431 20.3431 14 22 14C23.6569 14 25 15.3431 25 17C25 18.6569 23.6569 20 22 20Z' fill='#2196F3'></path>
+              <path d='M22 26C16.4772 26 12 21.5228 12 16C12 10.4772 16.4772 6 22 6C27.5228 6 32 10.4772 32 16C32 21.5228 27.5228 26 22 26ZM22 10C18.6863 10 16 12.6863 16 16C16 19.3137 18.6863 22 22 22C25.3137 22 28 19.3137 28 16C28 12.6863 25.3137 10 22 10Z' fill='#1976D2'></path>
+            </svg>
+          </div>
         </div>
+      </div>
 
-        <div>
-          <button
-            type='submit'
-            class='px-6 py-3 bg-primary-purple hover:bg-primary-purple-hover text-white rounded transition'
-          >
-            Add Idea
-          </button>
+      <div class='rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+        <div class='flex items-center justify-between px-[10px] py-[4px]'>
+          <div class='flex flex-col gap-[4px]'>
+            <h3 class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>Completed Ideas</h3>
+            <p class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'>0</p>
+          </div>
+          <div>
+            <svg width='44' height='44' viewBox='0 0 44 44' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              <rect width='44' height='44' rx='8' fill='#E8F5E8'></rect>
+              <path d='M22 8C15.3726 8 10 13.3726 10 20C10 26.6274 15.3726 32 22 32C28.6274 32 34 26.6274 34 20C34 13.3726 28.6274 8 22 8ZM27 16L25 14L19 20L17 18L15 20L19 24L27 16Z' fill='#4CAF50'></path>
+            </svg>
+          </div>
         </div>
-      </form>
+      </div>
+
+      <div class='rounded-[11px] bg-card px-[16px] py-[20px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+        <div class='flex items-center justify-between px-[10px] py-[4px]'>
+          <div class='flex flex-col gap-[4px]'>
+            <h3 class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>Avg. Progress</h3>
+            <p class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'>43%</p>
+          </div>
+          <div>
+            <svg width='44' height='44' viewBox='0 0 44 44' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              <rect width='44' height='44' rx='8' fill='#FFF3E0'></rect>
+              <path d='M22 8C15.3726 8 10 13.3726 10 20C10 26.6274 15.3726 32 22 32C28.6274 32 34 26.6274 34 20C34 13.3726 28.6274 8 22 8ZM24 28H20V24H24V28ZM26.07 16.56L24.17 18.46C23.31 19.32 22.68 20 22 20.68V22H20V20.68C19.32 20 18.69 19.32 17.83 18.46L15.93 16.56C15.42 16.05 15.17 15.34 15.25 14.63C15.33 13.92 15.73 13.32 16.34 13.05C18.27 12.16 19.73 12.16 21.66 13.05C22.27 13.32 22.67 13.92 22.75 14.63C22.83 15.34 22.58 16.05 22.07 16.56Z' fill='#FF9800'></path>
+            </svg>
+          </div>
+        </div>
+        <p class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'>
+          <svg xmlns='http://www.w3.org/2000/svg' width='24' height='20' viewBox='0 0 24 20' fill='none'>
+            <path d='M7.02979 8.30925H11.0298V15.7426L13.0398 15.7676V8.30925H17.0298L12.0298 4.14258L7.02979 8.30925Z' fill='#FF9800'></path>
+          </svg>
+          <span class='text-[#FF9800] dark:text-yellow-400'>+15%</span>Since last month
+        </p>
+      </div>
     </div>
 
-    <!-- Ideas list -->
-    <div>
-      <div class='flex justify-between items-center mb-4'>
-        <h2 class='text-lg font-light text-gray-900 dark:text-gray-100'>Your
-          Ideas</h2>
-        <div class='flex gap-2'>
-          <button
-            class='px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded text-sm'
-          >
-            Filter
+    <!-- Ideas Progress Overview -->
+    <div class='flex flex-col items-stretch gap-[17px] lg:flex-row'>
+      <div class='w-full rounded-[11px] bg-card px-[26px] py-[20px] text-card-foreground lg:w-[60%] lg:min-w-[60%]'>
+        <h3 class='text-[18px] font-[500] text-gray-900 dark:text-gray-100 mb-4'>Ideas Progress Overview</h3>
+        <div class='flex flex-col items-center gap-[26px] lg:flex-row lg:gap-[56px]'>
+          <div class='relative h-[220px] w-[220px]'>
+            <div class='recharts-wrapper' style='position: relative; cursor: default; width: 220px; height: 220px;'>
+              <svg cx='50%' cy='50%' class='recharts-surface' width='220' height='220' viewBox='0 0 220 220' style='width: 100%; height: 100%;'>
+                <title></title>
+                <desc></desc>
+                <defs>
+                  <clipPath id='recharts3-clip'>
+                    <rect x='5' y='5' height='210' width='210'></rect>
+                  </clipPath>
+                </defs>
+                <g class='recharts-layer recharts-pie' tabindex='0'>
+                  <g class='recharts-layer'>
+                    <g class='recharts-layer recharts-pie-sector' tabindex='-1'>
+                      <path cx='115' cy='115' name='completed' stroke='none' fill='#4CAF50' tabindex='-1' class='recharts-sector' d='M 115,25 A 90,90,0, 0,1, 204.9999999862922,115.00157079632672 L 164.99999999238457,115.00087266462594 A 50,50,0, 0,0, 115,75 Z'></path>
+                    </g>
+                    <g class='recharts-layer recharts-pie-sector' tabindex='-1'>
+                      <path cx='115' cy='115' name='in_progress' stroke='none' fill='#2196F3' tabindex='-1' class='recharts-sector' d='M 204.9999999862922,115.00157079632672 A 90,90,0, 0,1, 115,205 L 165,155 A 50,50,0, 0,0, 164.99999999238457,115.00087266462594 Z'></path>
+                    </g>
+                    <g class='recharts-layer recharts-pie-sector' tabindex='-1'>
+                      <path cx='115' cy='115' name='planning' stroke='none' fill='#FF9800' tabindex='-1' class='recharts-sector' d='M 115,205 A 90,90,0, 0,1, 25.00000001370776,114.99842920367328 L 75,164.99912733537406 A 50,50,0, 0,0, 115,155 Z'></path>
+                    </g>
+                    <g class='recharts-layer recharts-pie-sector' tabindex='-1'>
+                      <path cx='115' cy='115' name='new' stroke='none' fill='#9E9E9E' tabindex='-1' class='recharts-sector' d='M 25.00000001370776,114.99842920367328 A 90,90,0, 0,1, 115,25 L 115,75 A 50,50,0, 0,0, 75,164.99912733537406 Z'></path>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <div class='absolute right-[25px] top-[25px] flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white dark:bg-gray-700 text-[12px] text-[#2A2A2A] dark:text-gray-100 shadow-[0px_0.369px_19.915px_rgba(0,0,0,0.10)]'>0%</div>
+            <div class='absolute left-[0] top-[100px] flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white dark:bg-gray-700 text-[12px] text-[#2A2A2A] dark:text-gray-100 shadow-[0px_0.369px_19.915px_rgba(0,0,0,0.10)]'>33%</div>
+            <div class='absolute bottom-[25px] right-[15px] flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white dark:bg-gray-700 text-[12px] text-[#2A2A2A] dark:text-gray-100 shadow-[0px_0.369px_19.915px_rgba(0,0,0,0.10)]'>33%</div>
+            <div class='absolute top-[25px] left-[25px] flex h-[46px] w-[46px] items-center justify-center rounded-full bg-white dark:bg-gray-700 text-[12px] text-[#2A2A2A] dark:text-gray-100 shadow-[0px_0.369px_19.915px_rgba(0,0,0,0.10)]'>34%</div>
+          </div>
+          <div class='flex flex-col gap-[12px] lg:gap-[26px]'>
+            <p class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>Completed : <span class='font-[600] text-gray-900 dark:text-gray-100'>0%</span></p>
+            <p class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>In Progress : <span class='font-[600] text-gray-900 dark:text-gray-100'>33%</span></p>
+            <p class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>Planning : <span class='font-[600] text-gray-900 dark:text-gray-100'>33%</span></p>
+            <p class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'>New Ideas : <span class='font-[600] text-gray-900 dark:text-gray-100'>34%</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class='w-full rounded-[11px] bg-card px-[26px] py-[20px] text-card-foreground'>
+        <h3 class='text-[18px] font-[500] text-gray-900 dark:text-gray-100 mb-4'>Quick Actions</h3>
+        <div class='space-y-3'>
+          <a href='/pages/ideas' class='flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md text-sm font-medium transition'>
+            <svg class='w-4 h-4 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 6v6m0 0v6m0-6h6m-6 0H6'></path>
+            </svg>
+            Create New Idea
+          </a>
+          <button class='flex items-center justify-center w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition'>
+            <svg class='w-4 h-4 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'></path>
+            </svg>
+            Collaborate on Ideas
           </button>
-          <button
-            class='px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded text-sm'
-          >
-            Sort
+          <button class='flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md text-sm font-medium transition'>
+            <svg class='w-4 h-4 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'></path>
+            </svg>
+            View Analytics
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Ideas Details -->
+    <div class='rounded-[6px] bg-card px-[32px] py-[20px] text-card-foreground' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+      <div class='flex flex-col items-center justify-between gap-[16px] lg:flex-row'>
+        <h3 class='text-[28px] font-[600] text-primary'>Ideas Details</h3>
+        <div class='flex items-center gap-[20px]'>
+          <div class='relative rounded-[11px] bg-[#F9F9F9]'>
+            <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-search absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground'>
+              <circle cx='11' cy='11' r='8'></circle>
+              <path d='m21 21-4.3-4.3'></path>
+            </svg>
+            <div class='relative'>
+              <div class='relative flex items-center'>
+                <input class='flex h-12 rounded-md border border-input bg-transparent px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pr-3 w-full border-none pl-9' placeholder='Search ideas...' value=''>
+              </div>
+            </div>
+          </div>
+          <button class='justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md flex items-center gap-[8px]' type='button'>
+            <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'>
+              <path d='M0.9375 3.75H19.0625C19.3111 3.75 19.5496 3.84877 19.7254 4.02459C19.9012 4.2004 20 4.43886 20 4.6875C20 4.93614 19.9012 5.1746 19.7254 5.35041C19.5496 5.52623 19.3111 5.625 19.0625 5.625H0.9375C0.68886 5.625 0.450403 5.52623 0.274587 5.35041C0.098772 5.1746 0 4.93614 0 4.6875C0 4.43886 0.098772 4.2004 0.274587 4.02459C0.450403 3.84877 0.68886 3.75 0.9375 3.75ZM3.75 9.6875C3.75 9.43886 3.84877 9.2004 4.02459 9.02459C4.2004 8.84877 4.43886 8.75 4.6875 8.75H15.3125C15.5611 8.75 15.7996 8.84877 16.1512 9.02459C16.25 9.2004 16.25 9.43886 16.25 9.6875C16.25 9.93614 16.1512 10.1746 15.9754 10.3504C15.7996 10.5262 15.5611 10.625 15.3125 10.625H4.6875C4.43886 10.625 4.2004 10.5262 4.02459 10.3504C3.84877 10.1746 3.75 9.93614 3.75 9.6875ZM7.5 14.6875C7.5 14.4389 7.59877 14.2004 7.77459 14.0246C7.9504 13.8488 8.18886 13.75 8.4375 13.75H11.5625C11.8111 13.75 12.0496 13.8488 12.2254 14.0246C12.4012 14.2004 12.5 14.4389 12.5 14.6875C12.5 14.9361 12.4012 15.1746 12.2254 15.3504C12.0496 15.5262 11.8111 15.625 11.5625 15.625H8.4375C8.18886 15.625 7.9504 15.5262 7.77459 15.3504C7.59877 15.1746 7.5 14.9361 7.5 14.6875Z' fill='white'></path>
+            </svg>Filter
           </button>
         </div>
       </div>
 
-      <div id='ideas-list'>
-        <!-- Idea 1 -->
-        <div
-          class='bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 mb-4 shadow-sm'
-        >
-          <div class='flex justify-between items-start'>
-            <div class='flex-grow'>
-              <h3
-                class='text-lg font-medium mb-2 text-gray-900 dark:text-gray-100'
-              >AI-Powered Task Manager</h3>
-              <p class='text-gray-600 dark:text-gray-400 mb-4'>An intelligent
-                task management system that learns from your habits and suggests
-                optimal scheduling for tasks based on priority, complexity, and
-                your personal productivity patterns.</p>
-              <div class='flex flex-wrap gap-2'>
-                <span
-                  class='px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 text-xs rounded border border-purple-200 dark:border-purple-800/50'
-                >Technology</span>
-                <span
-                  class='px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded border border-green-200 dark:border-green-800/50'
-                >In Progress</span>
-              </div>
-            </div>
-            <div class='flex gap-2 ml-4'>
-              <button
-                class='p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
-              >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  class='h-5 w-5'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                >
-                  <path
-                    d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'
-                  />
-                </svg>
-              </button>
-              <button
-                class='p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400'
-              >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  class='h-5 w-5'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                >
-                  <path
-                    fill-rule='evenodd'
-                    d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
-                    clip-rule='evenodd'
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
+      <div class='mt-[28px] w-[75vw] rounded-[8px] lg:w-full' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+        <div class='relative w-full overflow-auto'>
+          <table class='w-full caption-bottom text-sm min-w-full overflow-x-auto'>
+            <thead class='[&_tr]:border-b h-[64px] bg-muted'>
+              <tr class='border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted'>
+                <th class='h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]'>Idea Name</th>
+                <th class='h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 w-[200px] text-[16px] font-[600] text-primary lg:text-[22px]'>Category</th>
+                <th class='h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 w-[116px] text-[16px] font-[600] text-primary lg:text-[22px]'>Status</th>
+                <th class='h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]'>Progress</th>
+                <th class='h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]'>Votes</th>
+                <th class='h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]'></th>
+              </tr>
+            </thead>
+            <tbody class='[&_tr:last-child]:border-0'>
+              <tr class='border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted'>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='flex w-[200px] items-center gap-[10px]'>
+                    <div class='w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'>
+                      <svg class='w-5 h-5 text-blue-600 dark:text-blue-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z'></path>
+                      </svg>
+                    </div>
+                    <p class='text-[14px] font-[500] text-foreground lg:text-[16px]'>AI-Powered Task Manager</p>
+                  </div>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <span class='px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 text-xs rounded'>Technology</span>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <span class='px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded'>In Progress</span>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
+                    <div class='bg-green-600 h-2 rounded-full' style='width: 75%'></div>
+                  </div>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <p class='text-[14px] font-[500] text-foreground lg:text-[16px]'>0</p>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='flex justify-end'>
+                    <button class='p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'>
+                      <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                        <circle cx='12' cy='12' r='1'></circle>
+                        <circle cx='12' cy='5' r='1'></circle>
+                        <circle cx='12' cy='19' r='1'></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
 
-        <!-- Idea 2 -->
-        <div
-          class='bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 mb-4 shadow-sm'
-        >
-          <div class='flex justify-between items-start'>
-            <div class='flex-grow'>
-              <h3
-                class='text-lg font-medium mb-2 text-gray-900 dark:text-gray-100'
-              >Sustainable Shopping Assistant</h3>
-              <p class='text-gray-600 dark:text-gray-400 mb-4'>A mobile app that
-                helps consumers make environmentally conscious purchasing
-                decisions by providing sustainability ratings for products and
-                suggesting eco-friendly alternatives.</p>
-              <div class='flex flex-wrap gap-2'>
-                <span
-                  class='px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs rounded border border-blue-200 dark:border-blue-800/50'
-                >Business</span>
-                <span
-                  class='px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs rounded border border-yellow-200 dark:border-yellow-800/50'
-                >Planning</span>
-              </div>
-            </div>
-            <div class='flex gap-2 ml-4'>
-              <button
-                class='p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
-              >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  class='h-5 w-5'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                >
-                  <path
-                    d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'
-                  />
-                </svg>
-              </button>
-              <button
-                class='p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400'
-              >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  class='h-5 w-5'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                >
-                  <path
-                    fill-rule='evenodd'
-                    d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
-                    clip-rule='evenodd'
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
+              <tr class='border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted'>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='flex w-[200px] items-center gap-[10px]'>
+                    <div class='w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'>
+                      <svg class='w-5 h-5 text-green-600 dark:text-green-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'></path>
+                      </svg>
+                    </div>
+                    <p class='text-[14px] font-[500] text-foreground lg:text-[16px]'>Sustainable Shopping Assistant</p>
+                  </div>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <span class='px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs rounded'>Business</span>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <span class='px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs rounded'>Planning</span>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
+                    <div class='bg-yellow-600 h-2 rounded-full' style='width: 45%'></div>
+                  </div>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <p class='text-[14px] font-[500] text-foreground lg:text-[16px]'>0</p>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='flex justify-end'>
+                    <button class='p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'>
+                      <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                        <circle cx='12' cy='12' r='1'></circle>
+                        <circle cx='12' cy='5' r='1'></circle>
+                        <circle cx='12' cy='19' r='1'></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
 
-        <!-- Idea 3 -->
-        <div
-          class='bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 mb-4 shadow-sm'
-        >
-          <div class='flex justify-between items-start'>
-            <div class='flex-grow'>
-              <h3
-                class='text-lg font-medium mb-2 text-gray-900 dark:text-gray-100'
-              >Virtual Reality Fitness</h3>
-              <p class='text-gray-600 dark:text-gray-400 mb-4'>Immersive VR
-                fitness experiences that transform workouts into engaging
-                adventures, with games that encourage physical activity while
-                providing real exercise benefits.</p>
-              <div class='flex flex-wrap gap-2'>
-                <span
-                  class='px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded border border-green-200 dark:border-green-800/50'
-                >Design</span>
-                <span
-                  class='px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-400 text-xs rounded border border-gray-200 dark:border-gray-600'
-                >New</span>
-              </div>
-            </div>
-            <div class='flex gap-2 ml-4'>
-              <button
-                class='p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
-              >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  class='h-5 w-5'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                >
-                  <path
-                    d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'
-                  />
-                </svg>
-              </button>
-              <button
-                class='p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400'
-              >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  class='h-5 w-5'
-                  viewBox='0 0 20 20'
-                  fill='currentColor'
-                >
-                  <path
-                    fill-rule='evenodd'
-                    d='M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z'
-                    clip-rule='evenodd'
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
+              <tr class='border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted'>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='flex w-[200px] items-center gap-[10px]'>
+                    <div class='w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center'>
+                      <svg class='w-5 h-5 text-purple-600 dark:text-purple-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'></path>
+                      </svg>
+                    </div>
+                    <p class='text-[14px] font-[500] text-foreground lg:text-[16px]'>Virtual Reality Fitness</p>
+                  </div>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <span class='px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded'>Design</span>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <span class='px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-400 text-xs rounded'>New</span>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
+                    <div class='bg-gray-600 h-2 rounded-full' style='width: 10%'></div>
+                  </div>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <p class='text-[14px] font-[500] text-foreground lg:text-[16px]'>0</p>
+                </td>
+                <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
+                  <div class='flex justify-end'>
+                    <button class='p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'>
+                      <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
+                        <circle cx='12' cy='12' r='1'></circle>
+                        <circle cx='12' cy='5' r='1'></circle>
+                        <circle cx='12' cy='19' r='1'></circle>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

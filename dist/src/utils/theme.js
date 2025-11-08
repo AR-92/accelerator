@@ -6,12 +6,22 @@ class ThemeManager {
   }
 
   init() {
-    this.applyTheme(this.currentTheme);
+    // Force light mode for auth pages
+    if (this.isAuthPage()) {
+      this.applyTheme('light');
+    } else {
+      this.applyTheme(this.currentTheme);
+    }
     this.setupThemeListeners();
   }
 
   getStoredTheme() {
     return localStorage.getItem('theme');
+  }
+
+  isAuthPage() {
+    const path = window.location.pathname;
+    return path.startsWith('/auth') || path === '/forgot-password';
   }
 
   storeTheme(theme) {

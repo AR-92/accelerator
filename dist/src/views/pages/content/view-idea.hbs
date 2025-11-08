@@ -1,4 +1,4 @@
-<div class='w-full max-w-4xl mx-auto p-6 bg-white min-h-screen'>
+<div class='w-full mx-auto p-6 bg-white min-h-screen'>
   <!-- Back Button -->
   <div class='mb-6'>
     <button
@@ -57,38 +57,28 @@
             class='px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full idea-tag'
           >Visualization</span>
         </div>
-        <div class='flex items-center justify-between'>
-          <div class='flex items-center'>
-            <div class='flex text-yellow-400'>
-              <svg class='w-5 h-5 fill-current' viewBox='0 0 24 24'>
-                <path
-                  d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'
-                />
-              </svg>
-              <svg class='w-5 h-5 fill-current' viewBox='0 0 24 24'>
-                <path
-                  d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'
-                />
-              </svg>
-              <svg class='w-5 h-5 fill-current' viewBox='0 0 24 24'>
-                <path
-                  d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'
-                />
-              </svg>
-              <svg class='w-5 h-5 fill-current' viewBox='0 0 24 24'>
-                <path
-                  d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'
-                />
-              </svg>
-              <svg class='w-5 h-5 fill-current' viewBox='0 0 24 24'>
-                <path
-                  d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'
-                />
-              </svg>
-            </div>
-            <span class='ml-2 text-gray-600 idea-rating'>4.8 (128 votes)</span>
-          </div>
-          <div class='flex space-x-3'>
+         <div class='flex items-center justify-between'>
+           <div class='flex items-center'>
+             <div class='flex text-yellow-400'>
+               <svg class='w-5 h-5 fill-current' viewBox='0 0 24 24'>
+                 <path d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/>
+               </svg>
+               <svg class='w-5 h-5 fill-current' viewBox='0 0 24 24'>
+                 <path d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/>
+               </svg>
+               <svg class='w-5 h-5 fill-current' viewBox='0 0 24 24'>
+                 <path d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/>
+               </svg>
+               <svg class='w-5 h-5 fill-current' viewBox='0 0 24 24'>
+                 <path d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/>
+               </svg>
+               <svg class='w-5 h-5 fill-current' viewBox='0 0 24 24'>
+                 <path d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/>
+               </svg>
+             </div>
+             <span class='ml-2 text-gray-600 idea-rating'>4.8 (128 votes)</span>
+           </div>
+           <div class='flex space-x-3'>
             <button class='text-gray-500 hover:text-blue-500'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -127,39 +117,45 @@
     </div>
   </div>
 
-  <!-- Idea Details Section -->
-  <div class='bg-white rounded-xl p-6 mb-6'>
-    <h2 class='text-xl font-bold text-gray-900 mb-4'>Idea Details</h2>
-    <div class='prose max-w-none'>
-      <p>This idea focuses on creating an interactive map of Türkiye's provinces
-        with detailed data visualization capabilities. The map will allow users
-        to explore various demographic, economic, and geographic information
-        about each province.</p>
-      <h3>Key Features:</h3>
-      <ul>
-        <li>Interactive map with hover/click functionality</li>
-        <li>Data visualization for each province</li>
-        <li>Filtering and sorting options</li>
-        <li>Export functionality for reports</li>
-        <li>Mobile-responsive design</li>
-      </ul>
-      <h3>Technologies:</h3>
-      <p>This project would utilize modern web technologies including
-        JavaScript, D3.js for visualization, and a mapping library such as
-        Leaflet or Google Maps API.</p>
-      <h3>Implementation Steps:</h3>
-      <ol>
-        <li>Research and gather data for each province</li>
-        <li>Design the UI/UX for the map interface</li>
-        <li>Implement the base map functionality</li>
-        <li>Add data visualization components</li>
-        <li>Implement filtering and export features</li>
-        <li>Test and refine the user experience</li>
-      </ol>
-    </div>
-  </div>
+   <!-- Two Column Layout: Details and Voting -->
+   <div class='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
+     <!-- Left Column: Idea Details -->
+     <div class='bg-white rounded-xl p-6'>
+       <h2 class='text-xl font-bold text-gray-900 mb-4'>Idea Details</h2>
+       <div class='prose max-w-none'>
+         <p>This idea focuses on creating an interactive map of Türkiye's provinces
+           with detailed data visualization capabilities. The map will allow users
+           to explore various demographic, economic, and geographic information
+           about each province.</p>
+         <h3>Key Features:</h3>
+         <ul>
+           <li>Interactive map with hover/click functionality</li>
+           <li>Data visualization for each province</li>
+           <li>Filtering and sorting options</li>
+           <li>Export functionality for reports</li>
+           <li>Mobile-responsive design</li>
+         </ul>
+         <h3>Technologies:</h3>
+         <p>This project would utilize modern web technologies including
+           JavaScript, D3.js for visualization, and a mapping library such as
+           Leaflet or Google Maps API.</p>
+         <h3>Implementation Steps:</h3>
+         <ol>
+           <li>Research and gather data for each province</li>
+           <li>Design the UI/UX for the map interface</li>
+           <li>Implement the base map functionality</li>
+           <li>Add data visualization components</li>
+           <li>Implement filtering and export features</li>
+           <li>Test and refine the user experience</li>
+         </ol>
+       </div>
+     </div>
 
-  <!-- Activity Section -->
+      <!-- Right Column: Minimal Rating Widget -->
+      {{> _idea-rating-widget}}
+   </div>
+
+   <!-- Activity Section -->
   <div class='bg-white rounded-xl p-6'>
     <h2 class='text-xl font-bold text-gray-900 mb-4'>Community Activity</h2>
     <div class='space-y-4'>
@@ -386,5 +382,144 @@
   If idea not found, show a default message
   document.querySelector('.idea-title').textContent = 'Idea Not Found';
   document.querySelector('.idea-description').textContent = 'The requested idea
-  could not be found.'; } });
+   could not be found.'; } });
+
+   // Voting functionality
+   function initializeVoting() {
+     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+     checkboxes.forEach(checkbox => {
+       checkbox.addEventListener('change', updateOverallRating);
+     });
+
+     // Load existing votes for this idea
+     loadVotesForIdea(ideaSlug);
+
+     // Submit vote button
+     document.getElementById('submit-vote').addEventListener('click', () => {
+       submitVote(ideaSlug);
+     });
+   }
+
+   function updateOverallRating() {
+     const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+     const totalQuestions = 6;
+     const checkedCount = checkedBoxes.length;
+
+     if (checkedCount > 0) {
+       // Calculate rating out of 5 based on percentage of questions answered positively
+       const rating = ((checkedCount / totalQuestions) * 5).toFixed(1);
+       document.querySelector('.overall-rating').textContent = rating;
+       document.getElementById('submit-vote').disabled = false;
+     } else {
+       document.querySelector('.overall-rating').textContent = 'Not rated yet';
+       document.getElementById('submit-vote').disabled = true;
+     }
+   }
+
+   async function loadVotesForIdea(ideaSlug) {
+     try {
+       const response = await fetch(`/api/v1/ideas/${ideaSlug}/votes`);
+       const ideaVotes = await response.json();
+
+       if (ideaVotes.length > 0) {
+         // Calculate average number of positive answers per vote
+         const positiveAnswers = ideaVotes.map(vote => {
+           let count = 0;
+           if (vote.marketViability && vote.marketViability > 0) count++;
+           if (vote.realWorldProblem && vote.realWorldProblem > 0) count++;
+           if (vote.innovation && vote.innovation > 0) count++;
+           if (vote.technicalFeasibility && vote.technicalFeasibility > 0) count++;
+           if (vote.scalability && vote.scalability > 0) count++;
+           if (vote.marketSurvival && vote.marketSurvival > 0) count++;
+           return count;
+         });
+
+         const avgPositiveAnswers = positiveAnswers.reduce((a, b) => a + b, 0) / positiveAnswers.length;
+         const communityScore = ((avgPositiveAnswers / 6) * 5).toFixed(1);
+
+         document.querySelector('.community-score').textContent = communityScore;
+         document.querySelector('.idea-rating').textContent = `${communityScore} (${ideaVotes.length} votes)`;
+       } else {
+         // Reset to default if no votes
+         document.querySelector('.idea-rating').textContent = idea.rating || 'No rating yet';
+         document.querySelector('.community-score').textContent = 'N/A';
+       }
+     } catch (error) {
+       console.error('Error loading votes:', error);
+       document.querySelector('.idea-rating').textContent = idea.rating || 'No rating yet';
+       document.querySelector('.community-score').textContent = 'N/A';
+     }
+   }
+
+   async function submitVote(ideaSlug) {
+     const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+
+     if (checkedBoxes.length === 0) {
+       alert('Please check at least one question before submitting your evaluation.');
+       return;
+     }
+
+     // Convert checkbox selections to the API format (1 for checked, 0 for unchecked)
+     const voteData = {
+       marketViability: document.querySelector('input[name="question-3"]').checked ? 1 : 0,
+       realWorldProblem: document.querySelector('input[name="question-1"]').checked ? 1 : 0,
+       innovation: document.querySelector('input[name="question-4"]').checked ? 1 : 0,
+       technicalFeasibility: document.querySelector('input[name="question-2"]').checked ? 1 : 0,
+       scalability: document.querySelector('input[name="question-5"]').checked ? 1 : 0,
+       marketSurvival: document.querySelector('input[name="question-6"]').checked ? 1 : 0
+     };
+
+     try {
+       const response = await fetch(`/api/v1/ideas/${ideaSlug}/votes`, {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify(voteData)
+       });
+
+       if (response.ok) {
+         // Reload averages
+         await loadVotesForIdea(ideaSlug);
+
+         // Reset form
+         document.querySelectorAll('input[type="checkbox"]').forEach(input => input.checked = false);
+         updateOverallRating();
+
+         // Show success message
+         showSuccessMessage();
+       } else {
+         const error = await response.json();
+         alert('Error submitting evaluation: ' + error.error);
+       }
+     } catch (error) {
+       console.error('Error submitting vote:', error);
+       alert('Error submitting evaluation. Please try again.');
+     }
+   }
+
+   function showSuccessMessage() {
+     // Create success message element
+     const successDiv = document.createElement('div');
+     successDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-bounce';
+     successDiv.innerHTML = `
+       <div class="flex items-center">
+         <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+         </svg>
+         Evaluation submitted successfully!
+       </div>
+     `;
+
+     document.body.appendChild(successDiv);
+
+     // Remove after 3 seconds
+     setTimeout(() => {
+       successDiv.remove();
+     }, 3000);
+   }
+
+   // Initialize voting after idea is loaded
+   initializeVoting();
 </script>

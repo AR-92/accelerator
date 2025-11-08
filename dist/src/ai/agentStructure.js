@@ -1,7 +1,7 @@
 const { StateGraph, Annotation } = require('@langchain/langgraph');
 const { HumanMessage } = require('@langchain/core/messages');
 const { ChatPromptTemplate } = require('@langchain/core/prompts');
-const { supabaseAIService } = require('./supabaseIntegration');
+// Supabase AI service removed
 const { aiConfig } = require('./config');
 const { logger } = require('../../config/logger');
 
@@ -88,14 +88,17 @@ const routerNode = async (state) => {
 // 2. Data fetching node for user information
 const fetchUserDataNode = async (state) => {
   try {
-    // Fetch real user data from Supabase
-    const userData = await supabaseAIService.fetchUserData(state.query);
+    // User data fetching removed - Supabase dependency
+    const userData = {}; // Empty data since Supabase removed
 
     return {
       ...state,
       context: { ...state.context, ...userData },
       currentStep: 'process',
-      thoughts: [...state.thoughts, 'Fetched user data from Supabase'],
+      thoughts: [
+        ...state.thoughts,
+        'User data fetching disabled - Supabase removed',
+      ],
     };
   } catch (error) {
     logger.error('Error in fetchUserDataNode:', error);
@@ -114,14 +117,17 @@ const fetchUserDataNode = async (state) => {
 // 3. Data fetching node for product information
 const fetchProductDataNode = async (state) => {
   try {
-    // Fetch real product data from Supabase
-    const productData = await supabaseAIService.fetchProductData(state.query);
+    // Product data fetching removed - Supabase dependency
+    const productData = {}; // Empty data since Supabase removed
 
     return {
       ...state,
       context: { ...state.context, ...productData },
       currentStep: 'process',
-      thoughts: [...state.thoughts, 'Fetched product data from Supabase'],
+      thoughts: [
+        ...state.thoughts,
+        'Product data fetching disabled - Supabase removed',
+      ],
     };
   } catch (error) {
     logger.error('Error in fetchProductDataNode:', error);
@@ -197,20 +203,7 @@ const processNode = async (state) => {
     // Call the model
     const response = await model.invoke([new HumanMessage(formattedPrompt)]);
 
-    // Save the conversation to Supabase if userId is available
-    if (state.userId) {
-      try {
-        await supabaseAIService.saveConversation(
-          state.userId,
-          state.query,
-          response.content,
-          state.context
-        );
-      } catch (saveError) {
-        logger.error('Error saving conversation:', saveError);
-        // Don't fail the whole process if saving fails
-      }
-    }
+    // Conversation saving removed - Supabase dependency
 
     return {
       ...state,
@@ -218,7 +211,7 @@ const processNode = async (state) => {
       currentStep: 'complete',
       thoughts: [
         ...state.thoughts,
-        'Processed query with LLM and saved conversation',
+        'Processed query with LLM - conversation saving disabled',
       ],
     };
   } catch (error) {

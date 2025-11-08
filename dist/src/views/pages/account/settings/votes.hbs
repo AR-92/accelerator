@@ -1,18 +1,21 @@
-<div class="container mx-auto max-w-7xl px-4 py-6">
-    <div class="flex items-center justify-between">
-        <div class="grid gap-1">
-            <h1 class="font-heading text-2xl font-semibold">Account Settings</h1>
-            <p class="text-base text-muted-foreground">Manage account and website settings.</p>
-        </div>
+<div class='flex flex-col gap-4 lg:gap-6'>
+    <!-- Breadcrumb Navigation -->
+    <nav class='flex items-center space-x-2 text-sm text-muted-foreground'>
+      <a href='/pages/settings' class='hover:text-foreground'>Settings</a>
+      <span>/</span>
+      <a href='/pages/settings/other' class='hover:text-foreground'>Other Settings</a>
+      <span>/</span>
+      <span class='text-foreground'>Votes</span>
+    </nav>
+
+    <div class='flex items-center justify-between'>
+      <div class='grid gap-1'>
+        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Votes Settings</h1>
+        <p class='text-base text-muted-foreground'>Manage your voting preferences and history.</p>
+      </div>
     </div>
-    <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-[280px,1fr]">
-        {{> settings-nav}}
-        <div>
-            <div class="overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm">
-                <div class="p-6">
-                    <div class="mb-6 flex justify-center">
-                        <h2 class="text-xl font-semibold">Votes Management</h2>
-                    </div>
+
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
         <div class="space-y-6">
             <div>
                 <h3 class="text-lg font-medium mb-4">Voting Preferences</h3>
@@ -81,10 +84,9 @@
                     </div>
                 </div>
             </div>
-            <div class="flex gap-4">
-                <button class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md" type="button">Save Preferences</button>
-            </div>
+        <div class='flex gap-4'>
+          <button class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md' type='button'>Save Preferences</button>
         </div>
-        </div>
+      </div>
     </div>
-</div>
+  </div>

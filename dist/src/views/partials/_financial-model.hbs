@@ -1,32 +1,34 @@
 <div class='@container w-full mx-auto p-4 @sm:p-6 @md:p-8 @lg:p-10 @xl:p-12'>
-  <div class='mb-6 @sm:mb-7 @md:mb-8'>
+  <div class='mb-6 @sm/main:mb-7 @md/main:mb-8'>
     <h1
-      class='text-2xl @sm:text-3xl font-bold text-gray-900 dark:text-white mb-2'
+      class='text-xl @sm/main:text-2xl @md/main:text-3xl @lg/main:text-4xl font-bold text-gray-900 dark:text-white mb-2'
     >Financial Model</h1>
     <p
-      class='text-sm @sm:text-base text-gray-600 dark:text-gray-400'
+      class='text-xs @sm/main:text-sm @md/main:text-base @lg/main:text-lg text-gray-600 dark:text-gray-400'
     >Comprehensive financial planning and projections for your business</p>
   </div>
 
   <!-- Key Financial Metrics -->
-  <div class='grid grid-cols-1 gap-4 @sm:gap-6 mb-6 @sm:mb-7 @md:mb-8'>
+  <div
+    class='grid grid-cols-1 @lg:grid-cols-2 @xl:grid-cols-4 gap-4 @sm:gap-6 mb-6 @sm:mb-7 @md:mb-8'
+  >
     <div
-      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 shadow-sm'
+      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
     >
       <div class='flex items-center justify-between'>
         <div>
           <p
-            class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+            class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
           >Revenue (Year 1)</p>
           <p
-            class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white'
+            class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white'
           >$2.4M</p>
         </div>
         <div
-          class='w-10 h-10 @sm:w-12 @sm:h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'
+          class='w-10 h-10 @sm:w-12 @sm:h-12 @md:w-14 @md:h-14 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'
         >
           <svg
-            class='w-5 @sm:w-6 h-5 @sm:h-6 text-green-600 dark:text-green-400'
+            class='w-5 @sm:w-6 h-5 @sm:h-6 @md:w-7 @md:h-7 text-green-600 dark:text-green-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -40,7 +42,9 @@
           </svg>
         </div>
       </div>
-      <div class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm'>
+      <div
+        class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm @md:text-base'
+      >
         <span
           class='text-green-600 dark:text-green-400 font-medium'
         >+23.5%</span>
@@ -50,21 +54,22 @@
     </div>
 
     <div
-      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 shadow-sm'
+      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
     >
       <div class='flex items-center justify-between'>
         <div>
-          <p class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'>Gross
-            Margin</p>
           <p
-            class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white'
+            class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
+          >Gross Margin</p>
+          <p
+            class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white'
           >68%</p>
         </div>
         <div
-          class='w-10 h-10 @sm:w-12 @sm:h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'
+          class='w-10 h-10 @sm:w-12 @sm:h-12 @md:w-14 @md:h-14 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'
         >
           <svg
-            class='w-5 @sm:w-6 h-5 @sm:h-6 text-blue-600 dark:text-blue-400'
+            class='w-5 @sm:w-6 h-5 @sm:h-6 @md:w-7 @md:h-7 text-blue-600 dark:text-blue-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -78,7 +83,9 @@
           </svg>
         </div>
       </div>
-      <div class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm'>
+      <div
+        class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm @md:text-base'
+      >
         <span class='text-blue-600 dark:text-blue-400 font-medium'>+5.2%</span>
         <span class='text-gray-500 dark:text-gray-400 ml-1 @sm:ml-2'>vs industry
           avg</span>
@@ -86,22 +93,22 @@
     </div>
 
     <div
-      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 shadow-sm'
+      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
     >
       <div class='flex items-center justify-between'>
         <div>
           <p
-            class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+            class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
           >Customer Acquisition Cost</p>
           <p
-            class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white'
+            class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white'
           >$127</p>
         </div>
         <div
-          class='w-10 h-10 @sm:w-12 @sm:h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center'
+          class='w-10 h-10 @sm:w-12 @sm:h-12 @md:w-14 @md:h-14 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center'
         >
           <svg
-            class='w-5 @sm:w-6 h-5 @sm:h-6 text-purple-600 dark:text-purple-400'
+            class='w-5 @sm:w-6 h-5 @sm:h-6 @md:w-7 @md:h-7 text-purple-600 dark:text-purple-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -115,7 +122,9 @@
           </svg>
         </div>
       </div>
-      <div class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm'>
+      <div
+        class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm @md:text-base'
+      >
         <span class='text-green-600 dark:text-green-400 font-medium'>-$23</span>
         <span class='text-gray-500 dark:text-gray-400 ml-1 @sm:ml-2'>vs last
           quarter</span>
@@ -123,22 +132,22 @@
     </div>
 
     <div
-      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 shadow-sm'
+      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
     >
       <div class='flex items-center justify-between'>
         <div>
           <p
-            class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+            class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
           >Break-even Point</p>
           <p
-            class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white'
+            class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white'
           >18 months</p>
         </div>
         <div
-          class='w-10 h-10 @sm:w-12 @sm:h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center'
+          class='w-10 h-10 @sm:w-12 @sm:h-12 @md:w-14 @md:h-14 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center'
         >
           <svg
-            class='w-5 @sm:w-6 h-5 @sm:h-6 text-orange-600 dark:text-orange-400'
+            class='w-5 @sm:w-6 h-5 @sm:h-6 @md:w-7 @md:h-7 text-orange-600 dark:text-orange-400'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -152,7 +161,9 @@
           </svg>
         </div>
       </div>
-      <div class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm'>
+      <div
+        class='mt-1 @sm:mt-2 flex items-center text-xs @sm:text-sm @md:text-base'
+      >
         <span class='text-orange-600 dark:text-orange-400 font-medium'>Target:
           12 months</span>
       </div>
@@ -161,48 +172,48 @@
 
   <!-- Revenue Projections -->
   <div
-    class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 shadow-sm mb-6 @sm:mb-7 @md:mb-8'
+    class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm mb-6 @sm:mb-7 @md:mb-8'
   >
     <h2
-      class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 @sm:mb-5 @md:mb-6'
+      class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white mb-4 @sm:mb-5 @md:mb-6'
     >Revenue Projections</h2>
     <div class='overflow-x-auto'>
       <table class='w-full'>
         <thead>
           <tr class='border-b border-gray-200 dark:border-gray-700'>
             <th
-              class='text-left py-2 px-3 text-xs @sm:text-sm text-gray-600 dark:text-gray-400 font-medium'
+              class='text-left py-2 px-3 text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400 font-medium'
             >Revenue Stream</th>
             <th
-              class='text-right py-2 px-3 text-xs @sm:text-sm text-gray-600 dark:text-gray-400 font-medium'
+              class='text-right py-2 px-3 text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400 font-medium'
             >Year 1</th>
             <th
-              class='text-right py-2 px-3 text-xs @sm:text-sm text-gray-600 dark:text-gray-400 font-medium'
+              class='text-right py-2 px-3 text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400 font-medium'
             >Year 2</th>
             <th
-              class='text-right py-2 px-3 text-xs @sm:text-sm text-gray-600 dark:text-gray-400 font-medium'
+              class='text-right py-2 px-3 text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400 font-medium'
             >Year 3</th>
             <th
-              class='text-right py-2 px-3 text-xs @sm:text-sm text-gray-600 dark:text-gray-400 font-medium'
+              class='text-right py-2 px-3 text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400 font-medium'
             >CAGR</th>
           </tr>
         </thead>
         <tbody>
           <tr class='border-b border-gray-100 dark:border-gray-700/50'>
             <td
-              class='py-2 px-3 text-xs @sm:text-sm text-gray-900 dark:text-white font-medium'
+              class='py-2 px-3 text-xs @sm:text-sm @md:text-base text-gray-900 dark:text-white font-medium'
             >Product Sales</td>
             <td
-              class='py-2 px-3 text-right text-xs @sm:text-sm text-gray-900 dark:text-white'
+              class='py-2 px-3 text-right text-xs @sm:text-sm @md:text-base text-gray-900 dark:text-white'
             >$1,200,000</td>
             <td
-              class='py-2 px-3 text-right text-xs @sm:text-sm text-gray-900 dark:text-white'
+              class='py-2 px-3 text-right text-xs @sm:text-sm @md:text-base text-gray-900 dark:text-white'
             >$1,800,000</td>
             <td
-              class='py-2 px-3 text-right text-xs @sm:text-sm text-gray-900 dark:text-white'
+              class='py-2 px-3 text-right text-xs @sm:text-sm @md:text-base text-gray-900 dark:text-white'
             >$2,430,000</td>
             <td
-              class='py-2 px-3 text-right text-xs @sm:text-sm text-green-600 dark:text-green-400'
+              class='py-2 px-3 text-right text-xs @sm:text-sm @md:text-base text-green-600 dark:text-green-400'
             >+42.3%</td>
           </tr>
           <tr class='border-b border-gray-100 dark:border-gray-700/50'>
@@ -264,18 +275,18 @@
   <!-- Cost Structure -->
   <div class='grid grid-cols-1 gap-6 @sm:gap-8 mb-6 @sm:mb-7 @md:mb-8'>
     <div
-      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 shadow-sm'
+      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
     >
       <h3
-        class='text-lg @sm:text-xl font-bold text-gray-900 dark:text-white mb-2 @sm:mb-4'
+        class='text-lg @sm:text-xl @md:text-2xl font-bold text-gray-900 dark:text-white mb-2 @sm:mb-3 @md:mb-4'
       >Cost of Goods Sold (COGS)</h3>
       <div class='space-y-3 @sm:space-y-4'>
         <div class='flex justify-between items-center'>
           <span
-            class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+            class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
           >Direct Materials</span>
           <span
-            class='font-medium text-xs @sm:text-sm text-gray-900 dark:text-white'
+            class='font-medium text-xs @sm:text-sm @md:text-base text-gray-900 dark:text-white'
           >$450,000</span>
         </div>
         <div class='flex justify-between items-center'>
@@ -308,10 +319,10 @@
     </div>
 
     <div
-      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 shadow-sm'
+      class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
     >
       <h3
-        class='text-lg @sm:text-xl font-bold text-gray-900 dark:text-white mb-2 @sm:mb-4'
+        class='text-lg @sm:text-xl @md:text-2xl font-bold text-gray-900 dark:text-white mb-2 @sm:mb-3 @md:mb-4'
       >Operating Expenses</h3>
       <div class='space-y-3 @sm:space-y-4'>
         <div class='flex justify-between items-center'>
@@ -354,53 +365,55 @@
 
   <!-- Cash Flow Projection -->
   <div
-    class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 shadow-sm mb-6 @sm:mb-7 @md:mb-8'
+    class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm mb-6 @sm:mb-7 @md:mb-8'
   >
     <h2
-      class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 @sm:mb-5 @md:mb-6'
+      class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white mb-4 @sm:mb-5 @md:mb-6'
     >Cash Flow Projection</h2>
-    <div class='grid grid-cols-1 gap-3 @sm:gap-4'>
+    <div
+      class='grid grid-cols-1 @md:grid-cols-2 @lg:grid-cols-4 gap-3 @sm:gap-4'
+    >
       <div
-        class='text-center p-3 @sm:p-4 border border-gray-200 dark:border-gray-700 rounded-lg'
+        class='text-center p-3 @sm:p-4 @md:p-5 @lg:p-6 border border-gray-200 dark:border-gray-700 rounded-lg'
       >
         <p
-          class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400 mb-1 @sm:mb-2'
+          class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400 mb-1 @sm:mb-2'
         >Month 1-6</p>
         <p
-          class='text-xl @sm:text-2xl font-bold text-red-600 dark:text-red-400'
+          class='text-xl @sm:text-2xl @md:text-3xl font-bold text-red-600 dark:text-red-400'
         >-$180K</p>
         <p class='text-xs text-gray-500 dark:text-gray-400'>Burn Rate</p>
       </div>
       <div
-        class='text-center p-3 sm:p-4 border border-gray-200 dark:border-gray-700 rounded-lg'
+        class='text-center p-3 sm:p-4 md:p-5 lg:p-6 border border-gray-200 dark:border-gray-700 rounded-lg'
       >
         <p
           class='text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1 sm:mb-2'
         >Month 7-12</p>
         <p
-          class='text-xl sm:text-2xl font-bold text-yellow-600 dark:text-yellow-400'
+          class='text-xl sm:text-2xl md:text-3xl font-bold text-yellow-600 dark:text-yellow-400'
         >-$90K</p>
         <p class='text-xs text-gray-500 dark:text-gray-400'>Burn Rate</p>
       </div>
       <div
-        class='text-center p-3 sm:p-4 border border-gray-200 dark:border-gray-700 rounded-lg'
+        class='text-center p-3 sm:p-4 md:p-5 lg:p-6 border border-gray-200 dark:border-gray-700 rounded-lg'
       >
         <p
           class='text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1 sm:mb-2'
         >Month 13-18</p>
         <p
-          class='text-xl sm:text-2xl font-bold text-green-600 dark:text-green-400'
+          class='text-xl sm:text-2xl md:text-3xl font-bold text-green-600 dark:text-green-400'
         >+$45K</p>
         <p class='text-xs text-gray-500 dark:text-gray-400'>Positive Cash Flow</p>
       </div>
       <div
-        class='text-center p-3 sm:p-4 border border-gray-200 dark:border-gray-700 rounded-lg'
+        class='text-center p-3 sm:p-4 md:p-5 lg:p-6 border border-gray-200 dark:border-gray-700 rounded-lg'
       >
         <p
           class='text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1 sm:mb-2'
         >Year 2+</p>
         <p
-          class='text-xl sm:text-2xl font-bold text-green-600 dark:text-green-400'
+          class='text-xl sm:text-2xl md:text-3xl font-bold text-green-600 dark:text-green-400'
         >+$280K</p>
         <p class='text-xs text-gray-500 dark:text-gray-400'>Monthly Cash Flow</p>
       </div>
@@ -409,23 +422,23 @@
 
   <!-- Funding Requirements -->
   <div
-    class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 shadow-sm'
+    class='@container bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4 @sm:p-5 @md:p-6 @lg:p-8 shadow-sm'
   >
     <h2
-      class='text-xl @sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 @sm:mb-5 @md:mb-6'
+      class='text-xl @sm:text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white mb-4 @sm:mb-5 @md:mb-6'
     >Funding Requirements</h2>
-    <div class='grid grid-cols-1 gap-6 @sm:gap-8'>
+    <div class='grid grid-cols-1 @lg:grid-cols-2 gap-6 @sm:gap-8'>
       <div>
         <h3
-          class='text-base @sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 @sm:mb-4'
+          class='text-base @sm:text-lg @md:text-xl font-semibold text-gray-900 dark:text-white mb-2 @sm:mb-3 @md:mb-4'
         >Use of Funds</h3>
         <div class='space-y-2 @sm:space-y-3'>
           <div class='flex justify-between items-center'>
             <span
-              class='text-xs @sm:text-sm text-gray-600 dark:text-gray-400'
+              class='text-xs @sm:text-sm @md:text-base text-gray-600 dark:text-gray-400'
             >Product Development</span>
             <span
-              class='font-medium text-xs @sm:text-sm text-gray-900 dark:text-white'
+              class='font-medium text-xs @sm:text-sm @md:text-base text-gray-900 dark:text-white'
             >40%</span>
           </div>
           <div
@@ -494,7 +507,7 @@
       </div>
       <div>
         <h3
-          class='text-base @sm:text-lg font-semibold text-gray-900 dark:text-white mb-2 @sm:mb-4'
+          class='text-base @sm:text-lg @md:text-xl font-semibold text-gray-900 dark:text-white mb-2 @sm:mb-3 @md:mb-4'
         >Funding Sources</h3>
         <div class='space-y-2 @sm:space-y-4'>
           <div
@@ -502,7 +515,7 @@
           >
             <div>
               <p
-                class='font-medium text-xs @sm:text-sm text-gray-900 dark:text-white'
+                class='font-medium text-xs @sm:text-sm @md:text-base text-gray-900 dark:text-white'
               >Seed Round</p>
               <p class='text-xs text-gray-600 dark:text-gray-400'>$500,000</p>
             </div>

@@ -64,7 +64,7 @@ This directory contains all the Handlebars template files organized by functiona
 - Project management pages
   - `create-project.hbs` - New project creation page
 
-### `/startup/`
+### `/reports/`
 
 - Startup building tools
   - `/build/` - Pages for building different aspects of startups

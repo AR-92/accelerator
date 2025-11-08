@@ -11,60 +11,258 @@ const getPageData = (title, activeKey, padding = 'py-8') => ({
 
 // GET dashboard
 router.get('/dashboard', (req, res) => {
-  res.render('pages/dashboard/dashboard', {
-    ...getPageData('Dashboard - My Ideas', 'Dashboard'),
-    layout: 'main',
+  res.render('pages/dashboard/startup/overview', {
+    ...getPageData('Dashboard - Overview', 'Dashboard'),
+    layout: 'reports',
+    activeOverview: true,
+  });
+});
+
+// GET enterprise dashboard
+router.get('/enterprise-dashboard', (req, res) => {
+  res.render('pages/dashboard/enterprise/overview', {
+    ...getPageData('Enterprise Dashboard - Overview', 'EnterpriseDashboard'),
+    layout: 'enterprise',
+    activeOverview: true,
+  });
+});
+
+// GET enterprise dashboard startups
+router.get('/enterprise-dashboard/startups', (req, res) => {
+  res.render('pages/dashboard/enterprise/startups', {
+    ...getPageData('Enterprise Dashboard - Startups', 'EnterpriseDashboard'),
+    layout: 'enterprise',
+    activeStartups: true,
+  });
+});
+
+// GET enterprise dashboard projects
+router.get('/enterprise-dashboard/projects', (req, res) => {
+  res.render('pages/dashboard/enterprise/projects', {
+    ...getPageData('Enterprise Dashboard - Projects', 'EnterpriseDashboard'),
+    layout: 'enterprise',
+    activeProjects: true,
+  });
+});
+
+// GET enterprise dashboard analytics
+router.get('/enterprise-dashboard/analytics', (req, res) => {
+  res.render('pages/dashboard/enterprise/analytics', {
+    ...getPageData('Enterprise Dashboard - Analytics', 'EnterpriseDashboard'),
+    layout: 'enterprise',
+    activeAnalytics: true,
+  });
+});
+
+// GET enterprise dashboard users
+router.get('/enterprise-dashboard/users', (req, res) => {
+  res.render('pages/dashboard/enterprise/users', {
+    ...getPageData('Enterprise Dashboard - Users', 'EnterpriseDashboard'),
+    layout: 'enterprise',
+    activeUsers: true,
+  });
+});
+
+// GET enterprise dashboard activity log
+router.get('/enterprise-dashboard/activity-log', (req, res) => {
+  res.render('pages/dashboard/enterprise/activity-log', {
+    ...getPageData(
+      'Enterprise Dashboard - Activity Log',
+      'EnterpriseDashboard'
+    ),
+    layout: 'enterprise',
+    activeActivityLog: true,
+  });
+});
+
+// GET corporate dashboard overview
+router.get('/corporate-dashboard', (req, res) => {
+  res.render('pages/dashboard/corporate/overview', {
+    ...getPageData('Corporate Dashboard - Overview', 'CorporateDashboard'),
+    layout: 'corporate',
+    activeOverview: true,
+  });
+});
+
+// GET corporate dashboard enterprises
+router.get('/corporate-dashboard/enterprises', (req, res) => {
+  res.render('pages/dashboard/corporate/enterprises', {
+    ...getPageData('Corporate Dashboard - Enterprises', 'CorporateDashboard'),
+    layout: 'corporate',
+    activeEnterprises: true,
+  });
+});
+
+// GET corporate dashboard projects
+router.get('/corporate-dashboard/projects', (req, res) => {
+  res.render('pages/dashboard/corporate/projects', {
+    ...getPageData('Corporate Dashboard - Projects', 'CorporateDashboard'),
+    layout: 'corporate',
+    activeProjects: true,
+  });
+});
+
+// GET corporate dashboard analytics
+router.get('/corporate-dashboard/analytics', (req, res) => {
+  res.render('pages/dashboard/corporate/analytics', {
+    ...getPageData('Corporate Dashboard - Analytics', 'CorporateDashboard'),
+    layout: 'corporate',
+    activeAnalytics: true,
+  });
+});
+
+// GET corporate dashboard users
+router.get('/corporate-dashboard/users', (req, res) => {
+  res.render('pages/dashboard/corporate/users', {
+    ...getPageData('Corporate Dashboard - Users', 'CorporateDashboard'),
+    layout: 'corporate',
+    activeUsers: true,
+  });
+});
+
+// GET corporate dashboard activity log
+router.get('/corporate-dashboard/activity-log', (req, res) => {
+  res.render('pages/dashboard/corporate/activity-log', {
+    ...getPageData('Corporate Dashboard - Activity Log', 'CorporateDashboard'),
+    layout: 'corporate',
+    activeActivityLog: true,
   });
 });
 
 // GET dashboard tabs
 router.get('/dashboard/tab/business', (req, res) => {
-  res.render('pages/dashboard/dashboard-business', {
+  res.render('pages/dashboard/startup/business', {
     ...getPageData('Dashboard - Business', 'Dashboard'),
-    layout: 'main',
+    layout: 'reports',
+    activeBusiness: true,
   });
 });
 
 router.get('/dashboard/tab/financial', (req, res) => {
-  res.render('pages/dashboard/dashboard-financial', {
+  res.render('pages/dashboard/startup/financial', {
     ...getPageData('Dashboard - Financial', 'Dashboard'),
-    layout: 'main',
+    layout: 'reports',
+    activeFinancial: true,
   });
 });
 
 router.get('/dashboard/tab/marketing', (req, res) => {
-  res.render('pages/dashboard/dashboard-marketing', {
+  res.render('pages/dashboard/startup/marketing', {
     ...getPageData('Dashboard - Marketing', 'Dashboard'),
-    layout: 'main',
+    layout: 'reports',
+    activeMarketing: true,
   });
 });
 
 router.get('/dashboard/tab/fund', (req, res) => {
-  res.render('pages/dashboard/dashboard-fund', {
+  res.render('pages/dashboard/startup/fund', {
     ...getPageData('Dashboard - Funding', 'Dashboard'),
-    layout: 'main',
+    layout: 'reports',
+    activeFund: true,
   });
 });
 
 router.get('/dashboard/tab/team', (req, res) => {
-  res.render('pages/dashboard/dashboard-team', {
+  res.render('pages/dashboard/startup/team', {
     ...getPageData('Dashboard - Team', 'Dashboard'),
-    layout: 'main',
+    layout: 'reports',
+    activeTeam: true,
   });
 });
 
 router.get('/dashboard/tab/promote', (req, res) => {
-  res.render('pages/dashboard/dashboard-promote', {
+  res.render('pages/dashboard/startup/promote', {
     ...getPageData('Dashboard - Promotion', 'Dashboard'),
-    layout: 'main',
+    layout: 'reports',
+    activePromote: true,
+  });
+});
+
+router.get('/dashboard/tab/activity-log', (req, res) => {
+  res.render('pages/dashboard/startup/activity-log', {
+    ...getPageData('Dashboard - Activity Log', 'Dashboard'),
+    layout: 'reports',
+    activeActivityLog: true,
+  });
+});
+
+router.get('/dashboard/tab/idea', (req, res) => {
+  res.render('pages/dashboard/startup/idea', {
+    ...getPageData('Dashboard - Ideas', 'Dashboard'),
+    layout: 'reports',
+    activeIdea: true,
   });
 });
 
 // GET collaborate
 router.get('/collaborate', (req, res) => {
   res.render('pages/collaborate/collaborate', {
-    ...getPageData('Collaborate', 'Collaborate'),
-    layout: 'main',
+    ...getPageData('Collaboration Hub', 'Collaborate'),
+    layout: 'collaborate',
+    activeDashboard: true,
+  });
+});
+
+// GET collaborate chat
+router.get('/collaborate/chat', (req, res) => {
+  res.render('pages/collaborate/chat', {
+    ...getPageData('Team Chat', 'Collaborate'),
+    layout: 'collaborate',
+    activeChat: true,
+  });
+});
+
+// GET collaborate tasks
+router.get('/collaborate/tasks', (req, res) => {
+  res.render('pages/collaborate/tasks', {
+    ...getPageData('Task Board', 'Collaborate'),
+    layout: 'collaborate',
+    activeTasks: true,
+  });
+});
+
+// GET collaborate files
+router.get('/collaborate/files', (req, res) => {
+  res.render('pages/collaborate/files', {
+    ...getPageData('File Repository', 'Collaborate'),
+    layout: 'collaborate',
+    activeFiles: true,
+  });
+});
+
+// GET collaborate team
+router.get('/collaborate/team', (req, res) => {
+  res.render('pages/collaborate/team', {
+    ...getPageData('Team Directory', 'Collaborate'),
+    layout: 'collaborate',
+    activeTeam: true,
+  });
+});
+
+// GET collaborate calendar
+router.get('/collaborate/calendar', (req, res) => {
+  res.render('pages/collaborate/calendar', {
+    ...getPageData('Team Calendar', 'Collaborate'),
+    layout: 'collaborate',
+    activeCalendar: true,
+  });
+});
+
+// GET collaborate activity
+router.get('/collaborate/activity', (req, res) => {
+  res.render('pages/collaborate/activity', {
+    ...getPageData('Activity Timeline', 'Collaborate'),
+    layout: 'collaborate',
+    activeActivity: true,
+  });
+});
+
+// GET collaborate settings
+router.get('/collaborate/settings', (req, res) => {
+  res.render('pages/collaborate/settings', {
+    ...getPageData('Collaboration Settings', 'Collaborate'),
+    layout: 'collaborate',
+    activeSettings: true,
   });
 });
 
@@ -117,85 +315,102 @@ router.get('/reports', (req, res) => {
   );
 });
 
-// GET settings (redirect to profile)
+// GET settings overview
 router.get('/settings', (req, res) => {
-  res.redirect('/pages/settings/profile');
+  res.render('pages/account/settings/settings-center', {
+    ...getPageData('Settings - Accelerator Platform', 'Settings'),
+    layout: 'settings',
+    activeOverview: true,
+  });
+});
+
+// GET settings accounts
+router.get('/settings/accounts', (req, res) => {
+  res.render('pages/account/settings/settings-accounts', {
+    ...getPageData('Account Settings', 'Settings'),
+    layout: 'settings-accounts',
+    activeAccounts: true,
+  });
+});
+
+// GET settings billing
+router.get('/settings/billing', (req, res) => {
+  res.render('pages/account/settings/settings-billing', {
+    ...getPageData('Billing & Payments', 'Settings'),
+    layout: 'settings-billing',
+    activeBilling: true,
+  });
+});
+
+// GET settings other
+router.get('/settings/other', (req, res) => {
+  res.render('pages/account/settings/settings-other', {
+    ...getPageData('Other Settings', 'Settings'),
+    layout: 'settings-other',
+    activeOther: true,
+  });
 });
 
 // GET settings profile
 router.get('/settings/profile', (req, res) => {
   res.render('pages/account/settings/profile', {
-    ...getPageData('Account Settings - Profile', 'Settings'),
-    layout: 'main',
-    activeTab: 'profile',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
+    ...getPageData('Profile Settings', 'Settings'),
+    layout: 'settings-accounts',
+    activeProfile: true,
   });
 });
 
 // GET settings password
 router.get('/settings/password', (req, res) => {
   res.render('pages/account/settings/password', {
-    ...getPageData('Account Settings - Password', 'Settings'),
-    layout: 'main',
-    activeTab: 'password',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
+    ...getPageData('Password Settings', 'Settings'),
+    layout: 'settings-accounts',
+    activePassword: true,
   });
 });
 
 // GET settings subscription
 router.get('/settings/subscription', (req, res) => {
   res.render('pages/account/subscriptions/index', {
-    ...getPageData('Account Settings - Subscription', 'Settings'),
-    layout: 'main',
-    activeTab: 'subscription',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
+    ...getPageData('Subscription Settings', 'Settings'),
+    layout: 'settings-billing',
+    activeSubscription: true,
   });
 });
 
-// GET settings payment
-router.get('/settings/payment', (req, res) => {
-  res.render('pages/account/payment/methods', {
-    ...getPageData('Account Settings - Payment', 'Settings'),
-    layout: 'main',
-    activeTab: 'payment',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
+// GET settings payment & billing
+router.get('/settings/payment-billing', (req, res) => {
+  res.render('pages/account/settings/payment-billing', {
+    ...getPageData('Payment & Billing', 'Settings'),
+    layout: 'settings-billing',
+    activePaymentBilling: true,
   });
 });
 
 // GET settings votes
 router.get('/settings/votes', (req, res) => {
   res.render('pages/account/settings/votes', {
-    ...getPageData('Account Settings - Votes', 'Settings'),
-    layout: 'main',
-    activeTab: 'votes',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
-  });
-});
-
-// GET settings billing
-router.get('/settings/billing', (req, res) => {
-  res.render('pages/account/billing/history', {
-    ...getPageData('Account Settings - Billing', 'Settings'),
-    layout: 'main',
-    activeTab: 'billing',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
+    ...getPageData('Vote Management', 'Settings'),
+    layout: 'settings-other',
+    activeVotes: true,
   });
 });
 
 // GET settings rewards
 router.get('/settings/rewards', (req, res) => {
   res.render('pages/account/settings/rewards', {
-    ...getPageData('Account Settings - Rewards', 'Settings'),
-    layout: 'main',
-    activeTab: 'rewards',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
+    ...getPageData('Voting Rewards', 'Settings'),
+    layout: 'settings-other',
+    activeRewards: true,
+  });
+});
+
+// GET settings credits
+router.get('/settings/credits', (req, res) => {
+  res.render('pages/account/settings/credits', {
+    ...getPageData('Credits Management', 'Settings'),
+    layout: 'settings-billing',
+    activeCredits: true,
   });
 });
 
@@ -204,6 +419,22 @@ router.get('/subscriptions/billing', (req, res) => {
   res.render('pages/account/billing/history', {
     ...getPageData('Billing History', 'Subscriptions'),
     layout: 'main',
+  });
+});
+
+// GET subscriptions payment
+router.get('/subscriptions/payment', (req, res) => {
+  res.render('pages/account/payment/methods', {
+    ...getPageData('Payment Methods', 'Subscriptions'),
+    layout: 'main',
+  });
+});
+
+// GET subscriptions
+router.get('/subscriptions', (req, res) => {
+  res.render('pages/account/subscriptions/index', {
+    ...getPageData('Subscriptions', 'Subscriptions'),
+    layout: 'settings-billing',
   });
 });
 
@@ -224,7 +455,7 @@ router.post('/settings/preferences', (req, res) => {
 router.get('/subscriptions', (req, res) => {
   res.render('pages/account/subscriptions/index', {
     ...getPageData('Subscriptions', 'Subscriptions'),
-    layout: 'main',
+    layout: 'settings-billing',
   });
 });
 
@@ -268,12 +499,109 @@ router.get('/portfolio', (req, res) => {
 
   fs.readFile(portfolioDataPath, 'utf8')
     .then((data) => {
-      const portfolioData = JSON.parse(data);
-      res.render('pages/portfolio/portfolio', {
-        ...getPageData('Idea Portfolio', 'Portfolio'),
-        ideas: portfolioData,
-        layout: 'main',
-      });
+      let portfolioData;
+      try {
+        portfolioData = JSON.parse(data);
+      } catch (parseError) {
+        logger.error('Error parsing portfolio data:', parseError);
+        return res.render('pages/portfolio/portfolio', {
+          ...getPageData('Idea Portfolio', 'Portfolio'),
+          ideas: [],
+          grouped: null,
+          currentCategory: 'All',
+          currentSort: '',
+          currentGroup: null,
+          currentSearch: '',
+          stats: { projects: 0, categories: 0, avgVotes: 0, tags: 0 },
+          layout: 'main',
+        });
+      }
+
+      try {
+        // Handle filtering, sorting, grouping, and search
+        const { category, sort, group, search } = req.query;
+
+        if (category && category !== 'All') {
+          portfolioData = portfolioData.filter(
+            (item) => item.category === category
+          );
+        }
+
+        if (search) {
+          const term = search.toLowerCase();
+          portfolioData = portfolioData.filter(
+            (item) =>
+              item.title.toLowerCase().includes(term) ||
+              item.description.toLowerCase().includes(term) ||
+              item.tags.some((tag) => tag.toLowerCase().includes(term))
+          );
+        }
+
+        if (sort) {
+          if (sort === 'votes') {
+            portfolioData = portfolioData.sort((a, b) => b.votes - a.votes);
+          } else if (sort === 'date') {
+            portfolioData = portfolioData.sort(
+              (a, b) => new Date(b.createdDate) - new Date(a.createdDate)
+            );
+          }
+        }
+
+        let grouped = null;
+        if (group === 'category') {
+          grouped = portfolioData.reduce((acc, item) => {
+            if (!acc[item.category]) acc[item.category] = [];
+            acc[item.category].push(item);
+            return acc;
+          }, {});
+        }
+
+        // Calculate dynamic stats
+        const totalProjects = portfolioData.length;
+        const categories = [
+          ...new Set(portfolioData.map((item) => item.category)),
+        ].length;
+        const avgVotes =
+          portfolioData.length > 0
+            ? Math.round(
+                portfolioData.reduce((sum, item) => sum + item.votes, 0) /
+                  portfolioData.length
+              )
+            : 0;
+        const totalTags = [
+          ...new Set(portfolioData.flatMap((item) => item.tags)),
+        ].length;
+
+        res.render('pages/portfolio/portfolio', {
+          ...getPageData('Idea Portfolio', 'Portfolio'),
+          ideas: portfolioData,
+          grouped: grouped,
+          currentCategory: category || 'All',
+          currentSort: sort || '',
+          currentGroup: group || null,
+          currentSearch: search || '',
+          stats: {
+            projects: totalProjects,
+            categories: categories,
+            avgVotes: avgVotes,
+            tags: totalTags,
+          },
+          layout: 'main',
+        });
+      } catch (processingError) {
+        logger.error('Error processing portfolio data:', processingError);
+        res.render('pages/portfolio/portfolio', {
+          ...getPageData('Idea Portfolio', 'Portfolio'),
+          ideas: [],
+          grouped: null,
+          currentCategory: 'All',
+          currentSort: '',
+          currentGroup: null,
+          currentSearch: '',
+          stats: { projects: 0, categories: 0, avgVotes: 0, tags: 0 },
+          layout: 'main',
+        });
+      }
     })
     .catch((error) => {
       logger.error('Error reading portfolio data:', error);
@@ -374,7 +702,7 @@ router.post('/ideas', (req, res) => {
 // GET valuation
 router.get('/valuation', (req, res) => {
   res.render(
-    'pages/startup/promote/valuation/valuation',
+    'pages/reports/valuation',
     getPageData('Valuation - Coming Soon', 'Valuation')
   );
 });
@@ -382,7 +710,7 @@ router.get('/valuation', (req, res) => {
 // GET pitch deck
 router.get('/pitch-deck', (req, res) => {
   res.render(
-    'pages/startup/promote/pitch-deck/pitch-deck',
+    'pages/reports/pitch-deck',
     getPageData('Pitch Deck - Create & Manage', 'PitchDeck')
   );
 });
@@ -390,7 +718,7 @@ router.get('/pitch-deck', (req, res) => {
 // GET business plan
 router.get('/business-plan', (req, res) => {
   res.render(
-    'pages/startup/promote/business-plan/business-plan',
+    'pages/reports/business-plan',
     getPageData('Business Plan - Strategic Planning', 'BusinessPlan')
   );
 });
@@ -429,9 +757,15 @@ router.get('/new-project', (req, res) => {
 
 // GET explore ideas page
 router.get('/explore-ideas', (req, res) => {
+  const fs = require('fs');
+  const path = require('path');
+  const ideasPath = path.join(__dirname, '../../../data/ideas.json');
+  const ideas = JSON.parse(fs.readFileSync(ideasPath, 'utf8'));
+
   res.render('pages/content/browse-ideas', {
     ...getPageData('Explore Ideas - Accelerator Platform', 'ExploreIdeas'),
     layout: 'main',
+    ideas: ideas,
   });
 });
 
@@ -443,19 +777,93 @@ router.get('/upgrade', (req, res) => {
   });
 });
 
-// GET learn page
+// GET learn center overview
 router.get('/learn', (req, res) => {
-  res.render('pages/learning/courses', {
-    ...getPageData('Learn - Accelerator Platform', 'Learn'),
-    layout: 'main',
+  res.render('pages/learn/learn-center', {
+    ...getPageData('Learning Center - Accelerator Platform', 'Learn'),
+    layout: 'learn',
+    activeOverview: true,
   });
 });
 
-// GET help center page
+// GET learn getting started
+router.get('/learn/getting-started', (req, res) => {
+  res.render('pages/learn/getting-started', {
+    ...getPageData('Getting Started - Learning Center', 'Learn'),
+    layout: 'learn',
+    activeGettingStarted: true,
+  });
+});
+
+// GET learn courses
+router.get('/learn/courses', (req, res) => {
+  res.render('pages/learn/courses', {
+    ...getPageData('Courses - Learning Center', 'Learn'),
+    layout: 'learn',
+    activeCourses: true,
+  });
+});
+
+// GET learn tutorials
+router.get('/learn/tutorials', (req, res) => {
+  res.render('pages/learn/tutorials', {
+    ...getPageData('Tutorials - Learning Center', 'Learn'),
+    layout: 'learn',
+    activeTutorials: true,
+  });
+});
+
+// GET learn resources
+router.get('/learn/resources', (req, res) => {
+  res.render('pages/learn/resources', {
+    ...getPageData('Resources - Learning Center', 'Learn'),
+    layout: 'learn',
+    activeResources: true,
+  });
+});
+
+// GET help center overview
 router.get('/help', (req, res) => {
   res.render('pages/help/help-center', {
     ...getPageData('Help Center - Accelerator Platform', 'Help'),
-    layout: 'main',
+    layout: 'help',
+    activeOverview: true,
+  });
+});
+
+// GET help getting started
+router.get('/help/getting-started', (req, res) => {
+  res.render('pages/help/getting-started', {
+    ...getPageData('Getting Started - Help Center', 'Help'),
+    layout: 'help',
+    activeGettingStarted: true,
+  });
+});
+
+// GET help ai assistant
+router.get('/help/ai-assistant', (req, res) => {
+  res.render('pages/help/ai-assistant', {
+    ...getPageData('AI Assistant - Help Center', 'Help'),
+    layout: 'help',
+    activeAIAssistant: true,
+  });
+});
+
+// GET help account billing
+router.get('/help/account-billing', (req, res) => {
+  res.render('pages/help/account-billing', {
+    ...getPageData('Account & Billing - Help Center', 'Help'),
+    layout: 'help',
+    activeAccountBilling: true,
+  });
+});
+
+// GET help faq
+router.get('/help/faq', (req, res) => {
+  res.render('pages/help/faq', {
+    ...getPageData('FAQ - Help Center', 'Help'),
+    layout: 'help',
+    activeFAQ: true,
   });
 });
 
