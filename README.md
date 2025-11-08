@@ -62,33 +62,6 @@ npm start
 
 ## Deployment
 
-### Docker Deployment
-
-The application includes Docker support for containerized deployment:
-
-1. Build the Docker image:
-
-   ```bash
-   docker build -t accelerator .
-   ```
-
-2. Run the application with Docker:
-
-   ```bash
-   docker run -p 3000:3000 --env-file .env accelerator
-   ```
-
-3. Or use docker-compose:
-   ```bash
-   docker-compose up -d
-   ```
-
-For development with Docker:
-
-```bash
-docker-compose -f docker-compose.dev.yml up
-```
-
 ### PM2 Process Management
 
 For production deployments, use PM2 for process management:
@@ -176,9 +149,6 @@ accelerator/
 │   ├── unit/                 # Unit tests
 │   ├── integration/          # Integration tests
 │   └── fixtures/             # Test fixtures
-├── Dockerfile                # Docker configuration
-├── docker-compose.yml        # Production docker compose
-├── docker-compose.dev.yml    # Development docker compose
 ├── ecosystem.config.js       # PM2 configuration
 ├── server.js                 # Main server file
 └── package.json              # Project dependencies and scripts
