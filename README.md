@@ -121,7 +121,6 @@ The application supports different environments:
 accelerator/
 ├── config/                   # Configuration files
 ├── data/                     # Data files (e.g., portfolio.json)
-├── logs/                     # Application logs (created automatically)
 ├── public/                   # Static assets (CSS, JS, images, icons)
 │   ├── css/                  # Compiled CSS files
 │   ├── js/                   # Client-side JavaScript
