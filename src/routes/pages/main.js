@@ -13,7 +13,7 @@ const getPageData = (title, activeKey, padding = 'py-8') => ({
 router.get('/dashboard', (req, res) => {
   res.render('pages/dashboard/startup/overview', {
     ...getPageData('Dashboard - Overview', 'Dashboard'),
-    layout: 'startup',
+    layout: 'reports',
     activeOverview: true,
   });
 });
@@ -133,7 +133,7 @@ router.get('/corporate-dashboard/activity-log', (req, res) => {
 router.get('/dashboard/tab/business', (req, res) => {
   res.render('pages/dashboard/startup/business', {
     ...getPageData('Dashboard - Business', 'Dashboard'),
-    layout: 'startup',
+    layout: 'reports',
     activeBusiness: true,
   });
 });
@@ -141,7 +141,7 @@ router.get('/dashboard/tab/business', (req, res) => {
 router.get('/dashboard/tab/financial', (req, res) => {
   res.render('pages/dashboard/startup/financial', {
     ...getPageData('Dashboard - Financial', 'Dashboard'),
-    layout: 'startup',
+    layout: 'reports',
     activeFinancial: true,
   });
 });
@@ -149,7 +149,7 @@ router.get('/dashboard/tab/financial', (req, res) => {
 router.get('/dashboard/tab/marketing', (req, res) => {
   res.render('pages/dashboard/startup/marketing', {
     ...getPageData('Dashboard - Marketing', 'Dashboard'),
-    layout: 'startup',
+    layout: 'reports',
     activeMarketing: true,
   });
 });
@@ -157,7 +157,7 @@ router.get('/dashboard/tab/marketing', (req, res) => {
 router.get('/dashboard/tab/fund', (req, res) => {
   res.render('pages/dashboard/startup/fund', {
     ...getPageData('Dashboard - Funding', 'Dashboard'),
-    layout: 'startup',
+    layout: 'reports',
     activeFund: true,
   });
 });
@@ -165,7 +165,7 @@ router.get('/dashboard/tab/fund', (req, res) => {
 router.get('/dashboard/tab/team', (req, res) => {
   res.render('pages/dashboard/startup/team', {
     ...getPageData('Dashboard - Team', 'Dashboard'),
-    layout: 'startup',
+    layout: 'reports',
     activeTeam: true,
   });
 });
@@ -173,7 +173,7 @@ router.get('/dashboard/tab/team', (req, res) => {
 router.get('/dashboard/tab/promote', (req, res) => {
   res.render('pages/dashboard/startup/promote', {
     ...getPageData('Dashboard - Promotion', 'Dashboard'),
-    layout: 'startup',
+    layout: 'reports',
     activePromote: true,
   });
 });
@@ -181,7 +181,7 @@ router.get('/dashboard/tab/promote', (req, res) => {
 router.get('/dashboard/tab/activity-log', (req, res) => {
   res.render('pages/dashboard/startup/activity-log', {
     ...getPageData('Dashboard - Activity Log', 'Dashboard'),
-    layout: 'startup',
+    layout: 'reports',
     activeActivityLog: true,
   });
 });
@@ -189,7 +189,7 @@ router.get('/dashboard/tab/activity-log', (req, res) => {
 router.get('/dashboard/tab/idea', (req, res) => {
   res.render('pages/dashboard/startup/idea', {
     ...getPageData('Dashboard - Ideas', 'Dashboard'),
-    layout: 'startup',
+    layout: 'reports',
     activeIdea: true,
   });
 });
@@ -675,7 +675,7 @@ router.post('/ideas', (req, res) => {
 // GET valuation
 router.get('/valuation', (req, res) => {
   res.render(
-    'pages/startup/promote/valuation/valuation',
+    'pages/reports/valuation',
     getPageData('Valuation - Coming Soon', 'Valuation')
   );
 });
@@ -683,7 +683,7 @@ router.get('/valuation', (req, res) => {
 // GET pitch deck
 router.get('/pitch-deck', (req, res) => {
   res.render(
-    'pages/startup/promote/pitch-deck/pitch-deck',
+    'pages/reports/pitch-deck',
     getPageData('Pitch Deck - Create & Manage', 'PitchDeck')
   );
 });
@@ -691,7 +691,7 @@ router.get('/pitch-deck', (req, res) => {
 // GET business plan
 router.get('/business-plan', (req, res) => {
   res.render(
-    'pages/startup/promote/business-plan/business-plan',
+    'pages/reports/business-plan',
     getPageData('Business Plan - Strategic Planning', 'BusinessPlan')
   );
 });

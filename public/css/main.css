@@ -2847,6 +2847,11 @@ body {
   border-color: rgb(165 243 252 / var(--tw-border-opacity, 1));
 }
 
+.border-orange-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(249 115 22 / var(--tw-border-opacity, 1));
+}
+
 .\!bg-\[var\(--tab-active-black\)\] {
   background-color: var(--tab-active-black) !important;
 }
@@ -3590,6 +3595,10 @@ body {
   --tw-gradient-to: #e5e7eb var(--tw-gradient-to-position);
 }
 
+.to-orange-100 {
+  --tw-gradient-to: #ffedd5 var(--tw-gradient-to-position);
+}
+
 .bg-\[length\:200\%\] {
   background-size: 200%;
 }
@@ -3848,6 +3857,11 @@ body {
 .py-20 {
   padding-top: 5rem;
   padding-bottom: 5rem;
+}
+
+.px-12 {
+  padding-left: 3rem;
+  padding-right: 3rem;
 }
 
 .pb-16 {
@@ -7613,6 +7627,10 @@ body {
 
 .dark\:to-gray-700:is(.dark *) {
   --tw-gradient-to: #374151 var(--tw-gradient-to-position);
+}
+
+.dark\:to-orange-800\/20:is(.dark *) {
+  --tw-gradient-to: rgb(154 52 18 / 0.2) var(--tw-gradient-to-position);
 }
 
 .dark\:text-\[var\(--icon-white-tsp\)\]:is(.dark *) {
