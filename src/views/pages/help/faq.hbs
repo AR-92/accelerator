@@ -1,152 +1,43 @@
 <div class='flex flex-col gap-4 lg:gap-6'>
-  <div class='flex items-center justify-between'>
-    <div class='grid gap-1'>
-      <h1 class='font-heading text-2xl font-semibold dark:text-white'>Frequently
-        Asked Questions</h1>
-      <p class='text-base text-muted-foreground'>Find answers to common
-        questions about our platform and services.</p>
-    </div>
-  </div>
+   <div class='flex items-center justify-between'>
+     <div class='grid gap-1'>
+       <h1 class='font-heading text-2xl font-semibold dark:text-white'>{{category.name}}</h1>
+       <p class='text-base text-muted-foreground'>{{category.description}}</p>
+     </div>
+   </div>
 
-  <div class='space-y-6'>
-    <!-- FAQ 1 -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-medium text-foreground mb-3'>What is the
-        Accelerator Platform?</h3>
-      <p class='text-muted-foreground'>
-        The Accelerator Platform is an AI-powered tool designed to help
-        entrepreneurs and startups build, launch, and scale their businesses.
-        Our platform provides AI-driven recommendations, business planning
-        tools, and resources to guide you through every stage of your startup
-        journey.
-      </p>
-    </div>
-
-    <!-- FAQ 2 -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-medium text-foreground mb-3'>How do I create a new
-        project?</h3>
-      <p class='text-muted-foreground'>
-        To create a new project, click on the "New Project" button in the left
-        sidebar. You'll be prompted to enter your project name and description.
-        Once created, you can start exploring AI-generated ideas, developing
-        your business model, and building your startup strategy using our
-        various tools.
-      </p>
-    </div>
-
-    <!-- FAQ 3 -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-medium text-foreground mb-3'>How does the AI
-        assistant work?</h3>
-      <p class='text-muted-foreground'>
-        Our AI assistant uses advanced machine learning models to analyze your
-        project requirements and provide tailored recommendations. Simply
-        describe your idea or ask specific questions, and our AI will generate
-        insights, suggest improvements, and help you build various aspects of
-        your business including business models, financial projections,
-        marketing strategies, and team building.
-      </p>
+    <div class='space-y-4'>
+      {{#each articles}}
+      <a href='/pages/help/article/{{slug}}' class='block bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md hover:border-primary/20 transition-all duration-200 group'>
+        <div class='flex items-start justify-between'>
+          <div class='flex-1'>
+            <h3 class='text-lg font-medium text-foreground mb-2 group-hover:text-primary transition-colors'>{{title}}</h3>
+            <p class='text-muted-foreground mb-3'>{{excerpt}}</p>
+            <div class='flex items-center gap-4 text-sm text-muted-foreground'>
+              <span class='flex items-center gap-1'>
+                <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+                </svg>
+                {{readTimeMinutes}} min read
+              </span>
+              <span class='flex items-center gap-1'>
+                <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'></path>
+                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'></path>
+                </svg>
+                {{viewCount}} views
+              </span>
+            </div>
+          </div>
+          <div class='ml-4 opacity-0 group-hover:opacity-100 transition-opacity'>
+            <svg class='w-5 h-5 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7'></path>
+            </svg>
+          </div>
+        </div>
+      </a>
+      {{/each}}
     </div>
 
-    <!-- FAQ 4 -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-medium text-foreground mb-3'>What are credits and
-        how do they work?</h3>
-      <p class='text-muted-foreground'>
-        Credits are our platform's currency system that allows you to access
-        premium AI features and advanced tools. Each credit represents a certain
-        amount of computational resources used for AI processing. Different
-        features consume different amounts of credits, and you can purchase
-        additional credits as needed. Free accounts receive a monthly credit
-        allowance to get started.
-      </p>
-    </div>
 
-    <!-- FAQ 5 -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-medium text-foreground mb-3'>Can I collaborate
-        with others on projects?</h3>
-      <p class='text-muted-foreground'>
-        Yes! Our platform includes comprehensive collaboration features. You can
-        invite team members to your projects, share documents, assign tasks, and
-        work together in real-time. The collaboration hub provides chat, file
-        sharing, task management, and team coordination tools to keep everyone
-        aligned and productive.
-      </p>
-    </div>
-
-    <!-- FAQ 6 -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-medium text-foreground mb-3'>Is my data secure?</h3>
-      <p class='text-muted-foreground'>
-        Absolutely. We take data security very seriously. All data is encrypted
-        in transit and at rest using industry-standard encryption protocols. We
-        comply with GDPR and other privacy regulations, and we never share your
-        personal information or project data with third parties without your
-        explicit consent. Our infrastructure is hosted on secure,
-        enterprise-grade cloud platforms with regular security audits.
-      </p>
-    </div>
-
-    <!-- FAQ 7 -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-medium text-foreground mb-3'>What types of
-        businesses can I create with this platform?</h3>
-      <p class='text-muted-foreground'>
-        Our platform is designed to support entrepreneurs across all industries
-        and business types. Whether you're building a tech startup, e-commerce
-        business, service-based company, or traditional brick-and-mortar
-        venture, our AI tools can help. We support various business models
-        including SaaS, marketplace, subscription services, and more. The AI
-        adapts its recommendations based on your industry and target market.
-      </p>
-    </div>
-
-    <!-- FAQ 8 -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-medium text-foreground mb-3'>How accurate are the
-        AI-generated business plans and financial projections?</h3>
-      <p class='text-muted-foreground'>
-        Our AI generates comprehensive business plans and financial projections
-        based on industry data, market trends, and proven business frameworks.
-        While the AI provides excellent starting points and insights, we always
-        recommend validating the information with real market research and
-        professional advisors. The AI serves as a powerful tool to accelerate
-        your planning process, but final business decisions should incorporate
-        human expertise and local market knowledge.
-      </p>
-    </div>
-  </div>
-
-  <!-- Still Need Help? -->
-  <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-    <div class='text-center'>
-      <h3 class='text-lg font-semibold text-foreground mb-2'>Still Need Help?</h3>
-      <p class='text-muted-foreground mb-4'>
-        Can't find the answer you're looking for? Our support team is here to
-        help.
-      </p>
-      <div class='flex flex-wrap justify-center gap-3'>
-        <button
-          class='flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90'
-        >
-          {{lucide 'MessageCircle' 'w-4 h-4'}}
-          Contact Support
-        </button>
-        <button
-          class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted'
-        >
-          {{lucide 'ExternalLink' 'w-4 h-4'}}
-          Community Forum
-        </button>
-        <button
-          class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted'
-        >
-          {{lucide 'BookOpen' 'w-4 h-4'}}
-          Documentation
-        </button>
-      </div>
-    </div>
-  </div>
 </div>

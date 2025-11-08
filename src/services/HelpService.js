@@ -1,14 +1,14 @@
 /**
- * Learning service handling business logic for learning content
+ * Help service handling business logic for help content
  */
-class LearningService {
-  constructor(learningContentRepository, learningCategoryRepository) {
-    this.contentRepo = learningContentRepository;
-    this.categoryRepo = learningCategoryRepository;
+class HelpService {
+  constructor(helpContentRepository, helpCategoryRepository) {
+    this.contentRepo = helpContentRepository;
+    this.categoryRepo = helpCategoryRepository;
   }
 
   /**
-   * Get all learning categories
+   * Get all help categories
    * @returns {Promise<Object[]>} Array of category data
    */
   async getAllCategories() {
@@ -25,7 +25,21 @@ class LearningService {
     const category = await this.categoryRepo.findBySlug(slug);
     if (!category) {
       const NotFoundError = require('../utils/errors/NotFoundError');
-      throw new NotFoundError('Learning category not found');
+      throw new NotFoundError('Help category not found');
+    }
+    return category.toPublicJSON();
+  }
+
+  /**
+   * Get category by ID
+   * @param {number} id - Category ID
+   * @returns {Promise<Object>} Category data
+   */
+  async getCategoryById(id) {
+    const category = await this.categoryRepo.findById(id);
+    if (!category) {
+      const NotFoundError = require('../utils/errors/NotFoundError');
+      throw new NotFoundError('Help category not found');
     }
     return category.toPublicJSON();
   }
@@ -49,7 +63,7 @@ class LearningService {
     const article = await this.contentRepo.findBySlug(slug);
     if (!article) {
       const NotFoundError = require('../utils/errors/NotFoundError');
-      throw new NotFoundError('Learning article not found');
+      throw new NotFoundError('Help article not found');
     }
 
     // Increment view count asynchronously (don't wait for it)
@@ -70,7 +84,7 @@ class LearningService {
     const category = await this.categoryRepo.findBySlug(categorySlug);
     if (!category) {
       const NotFoundError = require('../utils/errors/NotFoundError');
-      throw new NotFoundError('Learning category not found');
+      throw new NotFoundError('Help category not found');
     }
 
     const articles = await this.contentRepo.findByCategory(
@@ -156,90 +170,22 @@ class LearningService {
   }
 
   /**
-   * Get user progress for an article
-   * @param {number} userId - User ID
+   * Mark article as helpful
    * @param {number} articleId - Article ID
-   * @returns {Promise<Object|null>} Progress data
+   * @returns {Promise<Object>} Updated article data with helpful count
    */
-  async getUserArticleProgress(userId, articleId) {
-    return await this.contentRepo.getUserProgress(userId, articleId);
-  }
-
-  /**
-   * Update user progress for an article
-   * @param {number} userId - User ID
-   * @param {number} articleId - Article ID
-   * @param {Object} progressData - Progress data
-   * @returns {Promise<boolean>} Success status
-   */
-  async updateUserArticleProgress(userId, articleId, progressData) {
-    return await this.contentRepo.updateUserProgress(
-      userId,
-      articleId,
-      progressData
-    );
-  }
-
-  /**
-   * Get all user learning progress
-   * @param {number} userId - User ID
-   * @returns {Promise<Object[]>} Array of progress data
-   */
-  async getUserLearningProgress(userId) {
-    return await this.contentRepo.getUserLearningProgress(userId);
-  }
-
-  /**
-   * Mark article as completed for user
-   * @param {number} userId - User ID
-   * @param {number} articleId - Article ID
-   * @returns {Promise<boolean>} Success status
-   */
-  async markArticleCompleted(userId, articleId) {
-    return await this.contentRepo.markArticleCompleted(userId, articleId);
-  }
-
-  /**
-   * Check if user liked an article
-   * @param {number} userId - User ID
-   * @param {number} articleId - Article ID
-   * @returns {Promise<boolean>} Whether user liked the article
-   */
-  async hasUserLikedArticle(userId, articleId) {
-    return await this.contentRepo.hasUserLiked(userId, articleId);
-  }
-
-  /**
-   * Add like to article
-   * @param {number} userId - User ID
-   * @param {number} articleId - Article ID
-   * @returns {Promise<Object>} Updated article data with like count
-   */
-  async likeArticle(userId, articleId) {
-    await this.contentRepo.addLike(userId, articleId);
+  async markArticleHelpful(articleId) {
+    await this.contentRepo.incrementHelpful(articleId);
     return await this.getArticleBySlug(
       (await this.contentRepo.findById(articleId)).slug
     );
   }
 
   /**
-   * Remove like from article
-   * @param {number} userId - User ID
-   * @param {number} articleId - Article ID
-   * @returns {Promise<Object>} Updated article data with like count
-   */
-  async unlikeArticle(userId, articleId) {
-    await this.contentRepo.removeLike(userId, articleId);
-    return await this.getArticleBySlug(
-      (await this.contentRepo.findById(articleId)).slug
-    );
-  }
-
-  /**
-   * Get learning content statistics
+   * Get help content statistics
    * @returns {Promise<Object>} Statistics object
    */
-  async getLearningStats() {
+  async getHelpStats() {
     const [articleStats, categories] = await Promise.all([
       this.contentRepo.getStats(),
       this.categoryRepo.findAllActive(),
@@ -271,7 +217,7 @@ class LearningService {
     const updated = await this.contentRepo.update(id, articleData);
     if (!updated) {
       const NotFoundError = require('../utils/errors/NotFoundError');
-      throw new NotFoundError('Learning article not found');
+      throw new NotFoundError('Help article not found');
     }
 
     // Find the updated article by slug if provided, otherwise by ID
@@ -313,7 +259,7 @@ class LearningService {
     const updated = await this.categoryRepo.update(id, categoryData);
     if (!updated) {
       const NotFoundError = require('../utils/errors/NotFoundError');
-      throw new NotFoundError('Learning category not found');
+      throw new NotFoundError('Help category not found');
     }
 
     const category = await this.categoryRepo.findById(id);
@@ -330,4 +276,4 @@ class LearningService {
   }
 }
 
-module.exports = LearningService;
+module.exports = HelpService;

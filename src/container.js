@@ -15,18 +15,24 @@ const {
   LearningContentRepository,
   LearningCategoryRepository,
 } = require('./repositories/LearningContentRepository');
+const {
+  HelpContentRepository,
+  HelpCategoryRepository,
+} = require('./repositories/HelpContentRepository');
 
 // Import services
 const AuthService = require('./services/AuthService');
 const IdeaService = require('./services/IdeaService');
 const VoteService = require('./services/VoteService');
 const LearningService = require('./services/LearningService');
+const HelpService = require('./services/HelpService');
 
 // Import controllers
 const AuthController = require('./controllers/AuthController');
 const IdeaController = require('./controllers/IdeaController');
 const VoteController = require('./controllers/VoteController');
 const LearningController = require('./controllers/LearningController');
+const HelpController = require('./controllers/HelpController');
 
 // Create container instance
 const container = new Container();
@@ -50,6 +56,14 @@ container.register(
   'learningCategoryRepository',
   (c) => new LearningCategoryRepository(c.get('db'))
 );
+container.register(
+  'helpContentRepository',
+  (c) => new HelpContentRepository(c.get('db'))
+);
+container.register(
+  'helpCategoryRepository',
+  (c) => new HelpCategoryRepository(c.get('db'))
+);
 
 // Register services
 container.register(
@@ -72,6 +86,14 @@ container.register(
       c.get('learningCategoryRepository')
     )
 );
+container.register(
+  'helpService',
+  (c) =>
+    new HelpService(
+      c.get('helpContentRepository'),
+      c.get('helpCategoryRepository')
+    )
+);
 
 // Register controllers
 container.register(
@@ -89,6 +111,10 @@ container.register(
 container.register(
   'learningController',
   (c) => new LearningController(c.get('learningService'))
+);
+container.register(
+  'helpController',
+  (c) => new HelpController(c.get('helpService'))
 );
 
 module.exports = container;

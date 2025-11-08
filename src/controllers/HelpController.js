@@ -1,37 +1,37 @@
 /**
- * Learning controller handling HTTP requests for learning content operations
+ * Help controller handling HTTP requests for help content operations
  */
-class LearningController {
-  constructor(learningService) {
-    this.learningService = learningService;
+class HelpController {
+  constructor(helpService) {
+    this.helpService = helpService;
   }
 
   /**
-   * Get learning center overview
+   * Get help center overview
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    */
-  async getLearningCenter(req, res) {
+  async getHelpCenter(req, res) {
     try {
       const [categories, featuredArticles, stats] = await Promise.all([
-        this.learningService.getAllCategories(),
-        this.learningService.getFeaturedArticles(6),
-        this.learningService.getLearningStats(),
+        this.helpService.getAllCategories(),
+        this.helpService.getFeaturedArticles(6),
+        this.helpService.getHelpStats(),
       ]);
 
-      res.render('pages/learn/learn-center', {
-        title: 'Learning Center - Accelerator Platform',
-        layout: 'learn',
+      res.render('pages/help/help-center', {
+        title: 'Help Center - Accelerator Platform',
+        layout: 'help',
         activeOverview: true,
         categories,
         featuredArticles,
         stats,
       });
     } catch (error) {
-      console.error('Get learning center error:', error);
-      res.status(500).render('pages/learn/learn-center', {
-        title: 'Learning Center - Accelerator Platform',
-        layout: 'learn',
+      console.error('Get help center error:', error);
+      res.status(500).render('pages/help/help-center', {
+        title: 'Help Center - Accelerator Platform',
+        layout: 'help',
         activeOverview: true,
         categories: [],
         featuredArticles: [],
@@ -55,31 +55,31 @@ class LearningController {
       if (offset) options.offset = parseInt(offset);
 
       const [category, articles] = await Promise.all([
-        this.learningService.getCategoryBySlug(categorySlug),
-        this.learningService.getArticlesByCategory(categorySlug, options),
+        this.helpService.getCategoryBySlug(categorySlug),
+        this.helpService.getArticlesByCategory(categorySlug, options),
       ]);
 
       // Map category slug to view names and active flags
       const viewMap = {
         'getting-started': 'getting-started',
-        courses: 'courses',
-        tutorials: 'tutorials',
-        resources: 'resources',
+        'ai-assistant': 'ai-assistant',
+        'account-billing': 'account-billing',
+        faq: 'faq',
       };
 
       const activeFlags = {
         'getting-started': 'activeGettingStarted',
-        courses: 'activeCourses',
-        tutorials: 'activeTutorials',
-        resources: 'activeResources',
+        'ai-assistant': 'activeAIAssistant',
+        'account-billing': 'activeAccountBilling',
+        faq: 'activeFAQ',
       };
 
-      const viewName = viewMap[categorySlug] || 'learn-center';
+      const viewName = viewMap[categorySlug] || 'help-center';
       const activeFlag = activeFlags[categorySlug];
 
       const renderData = {
-        title: `${category.name} - Learning Center`,
-        layout: 'learn',
+        title: `${category.name} - Help Center`,
+        layout: 'help',
         category,
         articles,
         currentCategory: categorySlug,
@@ -89,7 +89,7 @@ class LearningController {
         renderData[activeFlag] = true;
       }
 
-      res.render(`pages/learn/${viewName}`, renderData);
+      res.render(`pages/help/${viewName}`, renderData);
     } catch (error) {
       console.error('Get category articles error:', error);
 
@@ -100,9 +100,9 @@ class LearningController {
         });
       }
 
-      res.status(500).render('pages/learn/learn-center', {
-        title: 'Learning Center - Accelerator Platform',
-        layout: 'learn',
+      res.status(500).render('pages/help/help-center', {
+        title: 'Help Center - Accelerator Platform',
+        layout: 'help',
         activeOverview: true,
         articles: [],
         error: 'Failed to load articles',
@@ -118,20 +118,44 @@ class LearningController {
   async getArticle(req, res) {
     try {
       const { articleSlug } = req.params;
-      const article = await this.learningService.getArticleBySlug(articleSlug);
+
+      const article = await this.helpService.getArticleBySlug(articleSlug);
+
+      if (!article) {
+        return res.status(404).render('pages/error/page-not-found', {
+          title: 'Article Not Found - Accelerator Platform',
+          layout: 'main',
+        });
+      }
+
+      // Get category information for breadcrumb
+      let category = null;
+      try {
+        category = await this.helpService.getCategoryById(article.categoryId);
+      } catch (error) {
+        console.error('Category lookup failed:', error.message);
+        category = { slug: 'help', name: 'Help Center' };
+      }
 
       // Get related articles based on category and tags
-      const relatedArticles = await this.learningService.getRelatedArticles(
+      const relatedArticles = await this.helpService.getRelatedArticles(
         article.id,
         article.categoryId,
         article.tags,
         4
       );
 
-      res.render('pages/learn/article', {
-        title: `${article.title} - Learning Center`,
-        layout: 'learn',
-        article,
+      // Add category info to article object for template
+      const articleWithCategory = {
+        ...article,
+        categorySlug: category.slug,
+        categoryName: category.name,
+      };
+
+      res.render('pages/help/article', {
+        title: `${article.title} - Help Center`,
+        layout: 'help',
+        article: articleWithCategory,
         relatedArticles,
       });
     } catch (error) {
@@ -161,12 +185,12 @@ class LearningController {
       const { q: query, category, difficulty, limit, offset } = req.query;
 
       // Get categories for filter dropdown
-      const categories = await this.learningService.getAllCategories();
+      const categories = await this.helpService.getAllCategories();
 
       if (!query || query.trim().length < 2) {
-        return res.render('pages/learn/search-results', {
-          title: 'Search Learning Content - Accelerator Platform',
-          layout: 'learn',
+        return res.render('pages/help/search-results', {
+          title: 'Search Help Content - Accelerator Platform',
+          layout: 'help',
           articles: [],
           categories,
           searchQuery: query || '',
@@ -187,8 +211,8 @@ class LearningController {
       filters.offset = currentOffset;
 
       const [articles, totalResults] = await Promise.all([
-        this.learningService.searchArticles(query.trim(), filters),
-        this.learningService.countSearchResults(query.trim(), {
+        this.helpService.searchArticles(query.trim(), filters),
+        this.helpService.countSearchResults(query.trim(), {
           ...filters,
           limit: undefined,
           offset: undefined,
@@ -205,9 +229,9 @@ class LearningController {
       const offsetStart = currentOffset + 1;
       const offsetEnd = currentOffset + articles.length;
 
-      res.render('pages/learn/search-results', {
-        title: `Search Results: ${query} - Learning Center`,
-        layout: 'learn',
+      res.render('pages/help/search-results', {
+        title: `Search Results: ${query} - Help Center`,
+        layout: 'help',
         articles,
         categories,
         searchQuery: query,
@@ -227,12 +251,12 @@ class LearningController {
       });
     } catch (error) {
       console.error('Search articles error:', error);
-      const categories = await this.learningService
+      const categories = await this.helpService
         .getAllCategories()
         .catch(() => []);
-      res.status(500).render('pages/learn/search-results', {
-        title: 'Search Learning Content - Accelerator Platform',
-        layout: 'learn',
+      res.status(500).render('pages/help/search-results', {
+        title: 'Search Help Content - Accelerator Platform',
+        layout: 'help',
         articles: [],
         categories,
         searchQuery: req.query.q || '',
@@ -252,7 +276,7 @@ class LearningController {
    */
   async getCategoriesAPI(req, res) {
     try {
-      const categories = await this.learningService.getAllCategories();
+      const categories = await this.helpService.getAllCategories();
       res.json({
         success: true,
         categories,
@@ -280,7 +304,7 @@ class LearningController {
       if (limit) options.limit = parseInt(limit);
       if (offset) options.offset = parseInt(offset);
 
-      const articles = await this.learningService.getArticlesByCategory(
+      const articles = await this.helpService.getArticlesByCategory(
         categorySlug,
         options
       );
@@ -314,7 +338,7 @@ class LearningController {
   async getArticleAPI(req, res) {
     try {
       const { articleSlug } = req.params;
-      const article = await this.learningService.getArticleBySlug(articleSlug);
+      const article = await this.helpService.getArticleBySlug(articleSlug);
 
       res.json({
         success: true,
@@ -353,7 +377,7 @@ class LearningController {
         });
       }
 
-      const articles = await this.learningService.searchArticles(query);
+      const articles = await this.helpService.searchArticles(query);
       res.json({
         success: true,
         articles,
@@ -370,233 +394,45 @@ class LearningController {
   }
 
   /**
-   * Get user progress for an article (API)
+   * Mark article as helpful (API)
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    */
-  async getUserArticleProgressAPI(req, res) {
+  async markArticleHelpfulAPI(req, res) {
     try {
       const { articleId } = req.params;
-      const userId = req.user?.id; // Assuming user is authenticated
 
-      if (!userId) {
-        return res.status(401).json({
-          error: 'Authentication Required',
-          message: 'User must be logged in',
-        });
-      }
-
-      const progress = await this.learningService.getUserArticleProgress(
-        userId,
+      const article = await this.helpService.markArticleHelpful(
         parseInt(articleId)
       );
       res.json({
         success: true,
-        progress,
+        helpfulCount: article.helpfulCount,
+        message: 'Article marked as helpful',
       });
     } catch (error) {
-      console.error('Get user article progress API error:', error);
+      console.error('Mark article helpful API error:', error);
       res.status(500).json({
         error: 'Internal Server Error',
-        message: 'Failed to fetch progress',
+        message: 'Failed to mark article as helpful',
       });
     }
   }
 
   /**
-   * Update user progress for an article (API)
+   * Get help statistics (API)
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    */
-  async updateUserArticleProgressAPI(req, res) {
+  async getHelpStatsAPI(req, res) {
     try {
-      const { articleId } = req.params;
-      const userId = req.user?.id;
-      const { progressPercentage, timeSpentSeconds, isCompleted } = req.body;
-
-      if (!userId) {
-        return res.status(401).json({
-          error: 'Authentication Required',
-          message: 'User must be logged in',
-        });
-      }
-
-      const success = await this.learningService.updateUserArticleProgress(
-        userId,
-        parseInt(articleId),
-        {
-          progressPercentage: parseInt(progressPercentage) || 0,
-          timeSpentSeconds: parseInt(timeSpentSeconds) || 0,
-          isCompleted: Boolean(isCompleted),
-        }
-      );
-
-      res.json({
-        success,
-        message: success
-          ? 'Progress updated successfully'
-          : 'Failed to update progress',
-      });
-    } catch (error) {
-      console.error('Update user article progress API error:', error);
-      res.status(500).json({
-        error: 'Internal Server Error',
-        message: 'Failed to update progress',
-      });
-    }
-  }
-
-  /**
-   * Mark article as completed (API)
-   * @param {Object} req - Express request object
-   * @param {Object} res - Express response object
-   */
-  async markArticleCompletedAPI(req, res) {
-    try {
-      const { articleId } = req.params;
-      const userId = req.user?.id;
-
-      if (!userId) {
-        return res.status(401).json({
-          error: 'Authentication Required',
-          message: 'User must be logged in',
-        });
-      }
-
-      const success = await this.learningService.markArticleCompleted(
-        userId,
-        parseInt(articleId)
-      );
-      res.json({
-        success,
-        message: success
-          ? 'Article marked as completed'
-          : 'Failed to mark article as completed',
-      });
-    } catch (error) {
-      console.error('Mark article completed API error:', error);
-      res.status(500).json({
-        error: 'Internal Server Error',
-        message: 'Failed to mark article as completed',
-      });
-    }
-  }
-
-  /**
-   * Get user learning progress (API)
-   * @param {Object} req - Express request object
-   * @param {Object} res - Express response object
-   */
-  async getUserLearningProgressAPI(req, res) {
-    try {
-      const userId = req.user?.id;
-
-      if (!userId) {
-        return res.status(401).json({
-          error: 'Authentication Required',
-          message: 'User must be logged in',
-        });
-      }
-
-      const progress =
-        await this.learningService.getUserLearningProgress(userId);
-      res.json({
-        success: true,
-        progress,
-      });
-    } catch (error) {
-      console.error('Get user learning progress API error:', error);
-      res.status(500).json({
-        error: 'Internal Server Error',
-        message: 'Failed to fetch learning progress',
-      });
-    }
-  }
-
-  /**
-   * Like an article (API)
-   * @param {Object} req - Express request object
-   * @param {Object} res - Express response object
-   */
-  async likeArticleAPI(req, res) {
-    try {
-      const { articleId } = req.params;
-      const userId = req.user?.id;
-
-      if (!userId) {
-        return res.status(401).json({
-          error: 'Authentication Required',
-          message: 'User must be logged in',
-        });
-      }
-
-      const article = await this.learningService.likeArticle(
-        userId,
-        parseInt(articleId)
-      );
-      res.json({
-        success: true,
-        likeCount: article.likeCount,
-        message: 'Article liked successfully',
-      });
-    } catch (error) {
-      console.error('Like article API error:', error);
-      res.status(500).json({
-        error: 'Internal Server Error',
-        message: 'Failed to like article',
-      });
-    }
-  }
-
-  /**
-   * Unlike an article (API)
-   * @param {Object} req - Express request object
-   * @param {Object} res - Express response object
-   */
-  async unlikeArticleAPI(req, res) {
-    try {
-      const { articleId } = req.params;
-      const userId = req.user?.id;
-
-      if (!userId) {
-        return res.status(401).json({
-          error: 'Authentication Required',
-          message: 'User must be logged in',
-        });
-      }
-
-      const article = await this.learningService.unlikeArticle(
-        userId,
-        parseInt(articleId)
-      );
-      res.json({
-        success: true,
-        likeCount: article.likeCount,
-        message: 'Article unliked successfully',
-      });
-    } catch (error) {
-      console.error('Unlike article API error:', error);
-      res.status(500).json({
-        error: 'Internal Server Error',
-        message: 'Failed to unlike article',
-      });
-    }
-  }
-
-  /**
-   * Get learning statistics (API)
-   * @param {Object} req - Express request object
-   * @param {Object} res - Express response object
-   */
-  async getLearningStatsAPI(req, res) {
-    try {
-      const stats = await this.learningService.getLearningStats();
+      const stats = await this.helpService.getHelpStats();
       res.json({
         success: true,
         stats,
       });
     } catch (error) {
-      console.error('Get learning stats API error:', error);
+      console.error('Get help stats API error:', error);
       res.status(500).json({
         error: 'Internal Server Error',
         message: 'Failed to fetch statistics',
@@ -605,4 +441,4 @@ class LearningController {
   }
 }
 
-module.exports = LearningController;
+module.exports = HelpController;

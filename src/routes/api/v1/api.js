@@ -47,4 +47,39 @@ router.get('/learning/stats', (req, res) =>
   learningController.getLearningStatsAPI(req, res)
 );
 
+// User progress endpoints (require authentication)
+router.get('/learning/progress/articles/:articleId', requireAuth, (req, res) =>
+  learningController.getUserArticleProgressAPI(req, res)
+);
+router.put('/learning/progress/articles/:articleId', requireAuth, (req, res) =>
+  learningController.updateUserArticleProgressAPI(req, res)
+);
+router.post(
+  '/learning/progress/articles/:articleId/complete',
+  requireAuth,
+  (req, res) => learningController.markArticleCompletedAPI(req, res)
+);
+router.get('/learning/progress', requireAuth, (req, res) =>
+  learningController.getUserLearningProgressAPI(req, res)
+);
+
+// Article interaction endpoints (require authentication)
+router.post('/learning/articles/:articleId/like', requireAuth, (req, res) =>
+  learningController.likeArticleAPI(req, res)
+);
+router.delete('/learning/articles/:articleId/like', requireAuth, (req, res) =>
+  learningController.unlikeArticleAPI(req, res)
+);
+router.put('/learning/progress/articles/:articleId', requireAuth, (req, res) =>
+  learningController.updateUserArticleProgressAPI(req, res)
+);
+router.post(
+  '/learning/progress/articles/:articleId/complete',
+  requireAuth,
+  (req, res) => learningController.markArticleCompletedAPI(req, res)
+);
+router.get('/learning/progress', requireAuth, (req, res) =>
+  learningController.getUserLearningProgressAPI(req, res)
+);
+
 module.exports = router;

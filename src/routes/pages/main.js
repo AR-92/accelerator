@@ -752,32 +752,17 @@ router.get('/learn', (req, res) => {
   learningController.getLearningCenter(req, res);
 });
 
+// GET search results (must come before category route)
+router.get('/learn/search', (req, res) => {
+  const container = require('../../container');
+  const learningController = container.get('learningController');
+  learningController.searchArticles(req, res);
+});
+
 // GET learn category pages
-router.get('/learn/getting-started', (req, res) => {
+router.get('/learn/:categorySlug', (req, res) => {
   const container = require('../../container');
   const learningController = container.get('learningController');
-  req.params.categorySlug = 'getting-started';
-  learningController.getCategoryArticles(req, res);
-});
-
-router.get('/learn/courses', (req, res) => {
-  const container = require('../../container');
-  const learningController = container.get('learningController');
-  req.params.categorySlug = 'courses';
-  learningController.getCategoryArticles(req, res);
-});
-
-router.get('/learn/tutorials', (req, res) => {
-  const container = require('../../container');
-  const learningController = container.get('learningController');
-  req.params.categorySlug = 'tutorials';
-  learningController.getCategoryArticles(req, res);
-});
-
-router.get('/learn/resources', (req, res) => {
-  const container = require('../../container');
-  const learningController = container.get('learningController');
-  req.params.categorySlug = 'resources';
   learningController.getCategoryArticles(req, res);
 });
 
@@ -788,56 +773,26 @@ router.get('/learn/article/:articleSlug', (req, res) => {
   learningController.getArticle(req, res);
 });
 
-// GET search results
-router.get('/learn/search', (req, res) => {
-  const container = require('../../container');
-  const learningController = container.get('learningController');
-  learningController.searchArticles(req, res);
-});
-
 // GET help center overview
 router.get('/help', (req, res) => {
-  res.render('pages/help/help-center', {
-    ...getPageData('Help Center - Accelerator Platform', 'Help'),
-    layout: 'help',
-    activeOverview: true,
-  });
+  const container = require('../../container');
+  const helpController = container.get('helpController');
+  helpController.getHelpCenter(req, res);
 });
 
-// GET help getting started
-router.get('/help/getting-started', (req, res) => {
-  res.render('pages/help/getting-started', {
-    ...getPageData('Getting Started - Help Center', 'Help'),
-    layout: 'help',
-    activeGettingStarted: true,
-  });
+// GET individual help article (must come before category route)
+router.get('/help/article/:articleSlug', (req, res) => {
+  console.log('ARTICLE ROUTE HIT:', req.params.articleSlug);
+  const container = require('../../container');
+  const helpController = container.get('helpController');
+  helpController.getArticle(req, res);
 });
 
-// GET help ai assistant
-router.get('/help/ai-assistant', (req, res) => {
-  res.render('pages/help/ai-assistant', {
-    ...getPageData('AI Assistant - Help Center', 'Help'),
-    layout: 'help',
-    activeAIAssistant: true,
-  });
-});
-
-// GET help account billing
-router.get('/help/account-billing', (req, res) => {
-  res.render('pages/help/account-billing', {
-    ...getPageData('Account & Billing - Help Center', 'Help'),
-    layout: 'help',
-    activeAccountBilling: true,
-  });
-});
-
-// GET help faq
-router.get('/help/faq', (req, res) => {
-  res.render('pages/help/faq', {
-    ...getPageData('FAQ - Help Center', 'Help'),
-    layout: 'help',
-    activeFAQ: true,
-  });
+// GET help category pages
+router.get('/help/:categorySlug', (req, res) => {
+  const container = require('../../container');
+  const helpController = container.get('helpController');
+  helpController.getCategoryArticles(req, res);
 });
 
 // GET buy credits page

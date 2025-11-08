@@ -1,44 +1,44 @@
 const BaseRepository = require('./BaseRepository');
-const LearningContent = require('../models/LearningContent');
-const LearningCategory = require('../models/LearningCategory');
+const HelpContent = require('../models/HelpContent');
+const HelpCategory = require('../models/HelpCategory');
 
 /**
- * Learning Content repository for data access operations
+ * Help Content repository for data access operations
  */
-class LearningContentRepository extends BaseRepository {
+class HelpContentRepository extends BaseRepository {
   constructor(db) {
-    super(db, 'learning_articles');
+    super(db, 'help_articles');
   }
 
   /**
    * Find article by ID
    * @param {number} id - Article ID
-   * @returns {Promise<LearningContent|null>}
+   * @returns {Promise<HelpContent|null>}
    */
   async findById(id) {
     const row = await super.findById(id);
-    return row ? new LearningContent(row) : null;
+    return row ? new HelpContent(row) : null;
   }
 
   /**
    * Find article by slug
    * @param {string} slug - Article slug
-   * @returns {Promise<LearningContent|null>}
+   * @returns {Promise<HelpContent|null>}
    */
   async findBySlug(slug) {
     const sql =
-      'SELECT * FROM learning_articles WHERE slug = ? AND is_published = 1';
+      'SELECT * FROM help_articles WHERE slug = ? AND is_published = 1';
     const row = await this.queryOne(sql, [slug]);
-    return row ? new LearningContent(row) : null;
+    return row ? new HelpContent(row) : null;
   }
 
   /**
    * Find all published articles
    * @param {Object} options - Query options
-   * @returns {Promise<LearningContent[]>}
+   * @returns {Promise<HelpContent[]>}
    */
   async findAllPublished(options = {}) {
-    let sql = 'SELECT * FROM learning_articles WHERE is_published = 1';
+    let sql = 'SELECT * FROM help_articles WHERE is_published = 1';
     const params = [];
 
     if (options.categoryId) {
@@ -79,14 +79,14 @@ class LearningContentRepository extends BaseRepository {
     }
 
     const rows = await this.query(sql, params);
-    return rows.map((row) => new LearningContent(row));
+    return rows.map((row) => new HelpContent(row));
   }
 
   /**
    * Find articles by category
    * @param {number} categoryId - Category ID
    * @param {Object} options - Query options
-   * @returns {Promise<LearningContent[]>}
+   * @returns {Promise<HelpContent[]>}
    */
   async findByCategory(categoryId, options = {}) {
     return await this.findAllPublished({ ...options, categoryId });
@@ -95,7 +95,7 @@ class LearningContentRepository extends BaseRepository {
   /**
    * Find featured articles
    * @param {number} limit - Number of articles to return
-   * @returns {Promise<LearningContent[]>}
+   * @returns {Promise<HelpContent[]>}
    */
   async findFeatured(limit = 6) {
     return await this.findAllPublished({ featured: true, limit });
@@ -105,10 +105,10 @@ class LearningContentRepository extends BaseRepository {
    * Find articles by tags
    * @param {string[]} tags - Tags to search for
    * @param {Object} options - Query options
-   * @returns {Promise<LearningContent[]>}
+   * @returns {Promise<HelpContent[]>}
    */
   async findByTags(tags, options = {}) {
-    let sql = 'SELECT * FROM learning_articles WHERE is_published = 1 AND (';
+    let sql = 'SELECT * FROM help_articles WHERE is_published = 1 AND (';
     const params = [];
 
     const tagConditions = tags.map(() => 'tags LIKE ?').join(' OR ');
@@ -130,7 +130,7 @@ class LearningContentRepository extends BaseRepository {
     }
 
     const rows = await this.query(sql, params);
-    return rows.map((row) => new LearningContent(row));
+    return rows.map((row) => new HelpContent(row));
   }
 
   /**
@@ -139,7 +139,7 @@ class LearningContentRepository extends BaseRepository {
    * @returns {Promise<number>} Created article ID
    */
   async create(articleData) {
-    const article = new LearningContent(articleData);
+    const article = new HelpContent(articleData);
     article.validate();
 
     const data = {
@@ -172,7 +172,7 @@ class LearningContentRepository extends BaseRepository {
    * @returns {Promise<boolean>}
    */
   async update(id, articleData) {
-    const article = new LearningContent(articleData);
+    const article = new HelpContent(articleData);
     article.validate();
 
     const data = {};
@@ -212,33 +212,33 @@ class LearningContentRepository extends BaseRepository {
    */
   async incrementViews(id) {
     const sql =
-      'UPDATE learning_articles SET view_count = view_count + 1, updated_at = ? WHERE id = ?';
+      'UPDATE help_articles SET view_count = view_count + 1, updated_at = ? WHERE id = ?';
     const params = [new Date().toISOString(), id];
     const result = await this.run(sql, params);
     return result.changes > 0;
   }
 
   /**
-   * Increment like count
+   * Increment helpful count
    * @param {number} id - Article ID
    * @returns {Promise<boolean>}
    */
-  async incrementLikes(id) {
+  async incrementHelpful(id) {
     const sql =
-      'UPDATE learning_articles SET like_count = like_count + 1, updated_at = ? WHERE id = ?';
+      'UPDATE help_articles SET helpful_count = helpful_count + 1, updated_at = ? WHERE id = ?';
     const params = [new Date().toISOString(), id];
     const result = await this.run(sql, params);
     return result.changes > 0;
   }
 
   /**
-   * Decrement like count
+   * Decrement helpful count
    * @param {number} id - Article ID
    * @returns {Promise<boolean>}
    */
-  async decrementLikes(id) {
+  async decrementHelpful(id) {
     const sql =
-      'UPDATE learning_articles SET like_count = CASE WHEN like_count > 0 THEN like_count - 1 ELSE 0 END, updated_at = ? WHERE id = ?';
+      'UPDATE help_articles SET helpful_count = CASE WHEN helpful_count > 0 THEN helpful_count - 1 ELSE 0 END, updated_at = ? WHERE id = ?';
     const params = [new Date().toISOString(), id];
     const result = await this.run(sql, params);
     return result.changes > 0;
@@ -251,7 +251,7 @@ class LearningContentRepository extends BaseRepository {
    */
   async countArticles(options = {}) {
     let sql =
-      'SELECT COUNT(*) as count FROM learning_articles WHERE is_published = 1';
+      'SELECT COUNT(*) as count FROM help_articles WHERE is_published = 1';
     const params = [];
 
     if (options.categoryId) {
@@ -280,12 +280,12 @@ class LearningContentRepository extends BaseRepository {
    * @param {number} categoryId - Category ID
    * @param {string[]} tags - Article tags
    * @param {number} limit - Number of related articles to return
-   * @returns {Promise<LearningContent[]>}
+   * @returns {Promise<HelpContent[]>}
    */
   async findRelatedArticles(articleId, categoryId, tags, limit = 4) {
     // First try to find articles in the same category
     let sql = `
-       SELECT * FROM learning_articles
+       SELECT * FROM help_articles
        WHERE is_published = 1 AND id != ? AND category_id = ?
        ORDER BY is_featured DESC, view_count DESC
        LIMIT ?
@@ -299,7 +299,7 @@ class LearningContentRepository extends BaseRepository {
       const remaining = limit - rows.length;
       const tagConditions = tags.map(() => 'tags LIKE ?').join(' OR ');
       sql = `
-         SELECT * FROM learning_articles
+         SELECT * FROM help_articles
          WHERE is_published = 1 AND id != ? AND category_id != ? AND (${tagConditions})
          ORDER BY is_featured DESC, view_count DESC
          LIMIT ?
@@ -319,7 +319,7 @@ class LearningContentRepository extends BaseRepository {
     if (rows.length < limit) {
       const remaining = limit - rows.length;
       sql = `
-         SELECT * FROM learning_articles
+         SELECT * FROM help_articles
          WHERE is_published = 1 AND id != ? AND is_featured = 1
          ORDER BY view_count DESC
          LIMIT ?
@@ -338,162 +338,7 @@ class LearningContentRepository extends BaseRepository {
       )
       .slice(0, limit);
 
-    return uniqueRows.map((row) => new LearningContent(row));
-  }
-
-  /**
-   * Get user progress for an article
-   * @param {number} userId - User ID
-   * @param {number} articleId - Article ID
-   * @returns {Promise<Object|null>} Progress data or null
-   */
-  async getUserProgress(userId, articleId) {
-    const sql = `
-       SELECT * FROM user_learning_progress
-       WHERE user_id = ? AND article_id = ?
-     `;
-    return await this.queryOne(sql, [userId, articleId]);
-  }
-
-  /**
-   * Update or create user progress for an article
-   * @param {number} userId - User ID
-   * @param {number} articleId - Article ID
-   * @param {Object} progressData - Progress data
-   * @returns {Promise<boolean>} Success status
-   */
-  async updateUserProgress(userId, articleId, progressData) {
-    const existing = await this.getUserProgress(userId, articleId);
-
-    if (existing) {
-      // Update existing progress
-      const sql = `
-         UPDATE user_learning_progress
-         SET progress_percentage = ?, time_spent_seconds = ?, last_read_at = ?, completed_at = ?
-         WHERE user_id = ? AND article_id = ?
-       `;
-      const params = [
-        progressData.progressPercentage || existing.progress_percentage,
-        (existing.time_spent_seconds || 0) +
-          (progressData.timeSpentSeconds || 0),
-        new Date().toISOString(),
-        progressData.isCompleted
-          ? new Date().toISOString()
-          : existing.completed_at,
-        userId,
-        articleId,
-      ];
-      const result = await this.run(sql, params);
-      return result.changes > 0;
-    } else {
-      // Create new progress record
-      const sql = `
-         INSERT INTO user_learning_progress
-         (user_id, article_id, progress_percentage, time_spent_seconds, is_completed, last_read_at, completed_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?)
-       `;
-      const params = [
-        userId,
-        articleId,
-        progressData.progressPercentage || 0,
-        progressData.timeSpentSeconds || 0,
-        progressData.isCompleted || false,
-        new Date().toISOString(),
-        progressData.isCompleted ? new Date().toISOString() : null,
-      ];
-      const result = await this.run(sql, params);
-      return result.lastID > 0;
-    }
-  }
-
-  /**
-   * Get all user progress for learning articles
-   * @param {number} userId - User ID
-   * @returns {Promise<Object[]>} Array of progress data
-   */
-  async getUserLearningProgress(userId) {
-    const sql = `
-       SELECT
-         ulp.*,
-         la.title,
-         la.slug,
-         la.read_time_minutes,
-         lc.name as category_name,
-         lc.slug as category_slug
-       FROM user_learning_progress ulp
-       JOIN learning_articles la ON ulp.article_id = la.id
-       JOIN learning_categories lc ON la.category_id = lc.id
-       WHERE ulp.user_id = ?
-       ORDER BY ulp.last_read_at DESC
-     `;
-    const rows = await this.query(sql, [userId]);
-    return rows;
-  }
-
-  /**
-   * Mark article as completed for user
-   * @param {number} userId - User ID
-   * @param {number} articleId - Article ID
-   * @returns {Promise<boolean>} Success status
-   */
-  async markArticleCompleted(userId, articleId) {
-    return await this.updateUserProgress(userId, articleId, {
-      progressPercentage: 100,
-      isCompleted: true,
-    });
-  }
-
-  /**
-   * Check if user liked an article
-   * @param {number} userId - User ID
-   * @param {number} articleId - Article ID
-   * @returns {Promise<boolean>} Whether user liked the article
-   */
-  async hasUserLiked(userId, articleId) {
-    const sql =
-      'SELECT id FROM article_likes WHERE user_id = ? AND article_id = ?';
-    const result = await this.queryOne(sql, [userId, articleId]);
-    return !!result;
-  }
-
-  /**
-   * Add like to article
-   * @param {number} userId - User ID
-   * @param {number} articleId - Article ID
-   * @returns {Promise<boolean>} Success status
-   */
-  async addLike(userId, articleId) {
-    // Check if already liked
-    if (await this.hasUserLiked(userId, articleId)) {
-      return true; // Already liked
-    }
-
-    // Add like record
-    const sql = 'INSERT INTO article_likes (user_id, article_id) VALUES (?, ?)';
-    const result = await this.run(sql, [userId, articleId]);
-
-    // Increment like count
-    await this.incrementLikes(articleId);
-
-    return result.lastID > 0;
-  }
-
-  /**
-   * Remove like from article
-   * @param {number} userId - User ID
-   * @param {number} articleId - Article ID
-   * @returns {Promise<boolean>} Success status
-   */
-  async removeLike(userId, articleId) {
-    // Remove like record
-    const sql =
-      'DELETE FROM article_likes WHERE user_id = ? AND article_id = ?';
-    const result = await this.run(sql, [userId, articleId]);
-
-    // Decrement like count
-    await this.decrementLikes(articleId);
-
-    return result.changes > 0;
+    return uniqueRows.map((row) => new HelpContent(row));
   }
 
   /**
@@ -506,9 +351,9 @@ class LearningContentRepository extends BaseRepository {
          COUNT(*) as total_articles,
          COUNT(CASE WHEN is_featured = 1 THEN 1 END) as featured_articles,
          SUM(view_count) as total_views,
-         SUM(like_count) as total_likes,
+         SUM(helpful_count) as total_helpful,
          AVG(read_time_minutes) as avg_read_time
-       FROM learning_articles
+       FROM help_articles
        WHERE is_published = 1
      `;
 
@@ -517,49 +362,49 @@ class LearningContentRepository extends BaseRepository {
       totalArticles: result.total_articles || 0,
       featuredArticles: result.featured_articles || 0,
       totalViews: result.total_views || 0,
-      totalLikes: result.total_likes || 0,
+      totalHelpful: result.total_helpful || 0,
       avgReadTime: Math.round(result.avg_read_time || 0),
     };
   }
 }
 
 /**
- * Learning Category repository
+ * Help Category repository
  */
-class LearningCategoryRepository extends BaseRepository {
+class HelpCategoryRepository extends BaseRepository {
   constructor(db) {
-    super(db, 'learning_categories');
+    super(db, 'help_categories');
   }
 
   /**
    * Find category by ID
    * @param {number} id - Category ID
-   * @returns {Promise<LearningCategory|null>}
+   * @returns {Promise<HelpCategory|null>}
    */
   async findById(id) {
     const row = await super.findById(id);
-    return row ? new LearningCategory(row) : null;
+    return row ? new HelpCategory(row) : null;
   }
 
   /**
    * Find category by slug
    * @param {string} slug - Category slug
-   * @returns {Promise<LearningCategory|null>}
+   * @returns {Promise<HelpCategory|null>}
    */
   async findBySlug(slug) {
     const sql =
-      'SELECT * FROM learning_categories WHERE slug = ? AND is_active = 1';
+      'SELECT * FROM help_categories WHERE slug = ? AND is_active = 1';
     const row = await this.queryOne(sql, [slug]);
-    return row ? new LearningCategory(row) : null;
+    return row ? new HelpCategory(row) : null;
   }
 
   /**
    * Find all active categories
    * @param {Object} options - Query options
-   * @returns {Promise<LearningCategory[]>}
+   * @returns {Promise<HelpCategory[]>}
    */
   async findAllActive(options = {}) {
-    let sql = 'SELECT * FROM learning_categories WHERE is_active = 1';
+    let sql = 'SELECT * FROM help_categories WHERE is_active = 1';
     const params = [];
 
     if (options.orderBy) {
@@ -569,7 +414,7 @@ class LearningCategoryRepository extends BaseRepository {
     }
 
     const rows = await this.query(sql, params);
-    return rows.map((row) => new LearningCategory(row));
+    return rows.map((row) => new HelpCategory(row));
   }
 
   /**
@@ -578,7 +423,7 @@ class LearningCategoryRepository extends BaseRepository {
    * @returns {Promise<number>} Created category ID
    */
   async create(categoryData) {
-    const category = new LearningCategory(categoryData);
+    const category = new HelpCategory(categoryData);
     category.validate();
 
     const data = {
@@ -601,7 +446,7 @@ class LearningCategoryRepository extends BaseRepository {
    * @returns {Promise<boolean>}
    */
   async update(id, categoryData) {
-    const category = new LearningCategory(categoryData);
+    const category = new HelpCategory(categoryData);
     category.validate();
 
     const data = {};
@@ -620,6 +465,6 @@ class LearningCategoryRepository extends BaseRepository {
 }
 
 module.exports = {
-  LearningContentRepository,
-  LearningCategoryRepository,
+  HelpContentRepository,
+  HelpCategoryRepository,
 };

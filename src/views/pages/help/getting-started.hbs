@@ -1,114 +1,29 @@
 <div class='flex flex-col gap-4 lg:gap-6'>
-  <div class='flex items-center justify-between'>
-    <div class='grid gap-1'>
-      <h1 class='font-heading text-2xl font-semibold dark:text-white'>Getting
-        Started</h1>
-      <p class='text-base text-muted-foreground'>Learn the basics of using our
-        platform to build your startup.</p>
-    </div>
-  </div>
+   <div class='flex items-center justify-between'>
+     <div class='grid gap-1'>
+       <h1 class='font-heading text-2xl font-semibold dark:text-white'>{{category.name}}</h1>
+       <p class='text-base text-muted-foreground'>{{category.description}}</p>
+     </div>
+   </div>
 
-  <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
-    <!-- Creating Your First Project -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <div class='flex items-center gap-3 mb-4'>
-        <div
-          class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'
-        >
-          {{lucide 'Plus' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
-        </div>
-        <h3 class='text-lg font-semibold text-foreground'>Creating Your First
-          Project</h3>
-      </div>
-      <p class='text-muted-foreground mb-4'>
-        Start your entrepreneurial journey by creating your first project. This
-        will be the foundation for all your startup activities.
-      </p>
-      <ol
-        class='list-decimal list-inside space-y-2 text-sm text-muted-foreground'
-      >
-        <li>Click the "New Project" button in the sidebar</li>
-        <li>Enter a descriptive name for your project</li>
-        <li>Add a brief description of your idea</li>
-        <li>Choose your industry category</li>
-        <li>Click "Create Project" to get started</li>
-      </ol>
-    </div>
-
-    <!-- Navigating the Dashboard -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <div class='flex items-center gap-3 mb-4'>
-        <div
-          class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'
-        >
-          {{lucide 'Compass' 'w-5 h-5 text-green-600 dark:text-green-400'}}
-        </div>
-        <h3 class='text-lg font-semibold text-foreground'>Navigating the
-          Dashboard</h3>
-      </div>
-      <p class='text-muted-foreground mb-4'>
-        Familiarize yourself with the main areas of our platform to make the
-        most of your experience.
-      </p>
-      <ul class='space-y-2 text-sm text-muted-foreground'>
-        <li><strong>Sidebar:</strong> Access all main features and tools</li>
-        <li><strong>Dashboard:</strong>
-          Overview of your projects and progress</li>
-        <li><strong>Ideas:</strong> Browse and generate new business ideas</li>
-        <li><strong>AI Assistant:</strong> Get AI-powered recommendations</li>
-        <li><strong>Portfolio:</strong> Track your business development</li>
-      </ul>
-    </div>
-
-    <!-- Setting Up Your Profile -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <div class='flex items-center gap-3 mb-4'>
-        <div
-          class='w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'
-        >
-          {{lucide 'User' 'w-5 h-5 text-purple-600 dark:text-purple-400'}}
-        </div>
-        <h3 class='text-lg font-semibold text-foreground'>Setting Up Your
-          Profile</h3>
-      </div>
-      <p class='text-muted-foreground mb-4'>
-        Complete your profile to personalize your experience and connect with
-        other entrepreneurs.
-      </p>
-      <div class='space-y-2 text-sm text-muted-foreground'>
-        <p><strong>Basic Information:</strong>
-          Add your name, bio, and location</p>
-        <p><strong>Skills & Interests:</strong> Specify your expertise areas</p>
-        <p><strong>Social Links:</strong> Connect your professional profiles</p>
-        <p><strong>Preferences:</strong>
-          Set your notification and privacy settings</p>
-      </div>
-    </div>
-
-    <!-- Understanding the Workspace -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <div class='flex items-center gap-3 mb-4'>
-        <div
-          class='w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center'
-        >
-          {{lucide 'Briefcase' 'w-5 h-5 text-orange-600 dark:text-orange-400'}}
-        </div>
-        <h3 class='text-lg font-semibold text-foreground'>Understanding the
-          Workspace</h3>
-      </div>
-      <p class='text-muted-foreground mb-4'>
-        Learn how to organize and manage your startup development process
-        effectively.
-      </p>
-      <div class='space-y-2 text-sm text-muted-foreground'>
-        <p><strong>Projects:</strong> Main containers for your startup ideas</p>
-        <p><strong>Tasks:</strong> Break down projects into manageable steps</p>
-        <p><strong>Collaboration:</strong>
-          Work with team members and mentors</p>
-        <p><strong>Resources:</strong> Access templates, guides, and tools</p>
-      </div>
-    </div>
-  </div>
+   <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
+     {{#each articles}}
+     <a href='/pages/help/article/{{slug}}' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-colors'>
+       <div class='flex items-center gap-3 mb-4'>
+         <div class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'>
+           {{lucide 'FileText' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
+         </div>
+         <h3 class='text-lg font-semibold text-foreground'>{{title}}</h3>
+       </div>
+       <p class='text-muted-foreground mb-4'>{{excerpt}}</p>
+       <div class='flex items-center gap-2 text-sm text-muted-foreground'>
+         <span>{{readTimeMinutes}} min read</span>
+         <span>•</span>
+         <span>{{viewCount}} views</span>
+       </div>
+     </a>
+     {{/each}}
+   </div>
 
   <!-- Quick Start Guide -->
   <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>

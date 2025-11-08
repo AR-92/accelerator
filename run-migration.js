@@ -4,15 +4,22 @@
  */
 
 const { db } = require('./config/database');
-const migration = require('./src/migrations/001_create_learning_content_tables');
 
 async function runMigration() {
   try {
-    console.log('Running learning content migration...');
+    console.log('Running migrations...');
 
-    await migration.up(db);
+    // Run learning content migration
+    const learningMigration = require('./src/migrations/001_create_learning_content_tables');
+    await learningMigration.up(db);
+    console.log('✅ Learning content migration completed');
 
-    console.log('✅ Migration completed successfully!');
+    // Run help content migration
+    const helpMigration = require('./src/migrations/003_create_help_content_tables');
+    await helpMigration.up(db);
+    console.log('✅ Help content migration completed');
+
+    console.log('✅ All migrations completed successfully!');
     process.exit(0);
   } catch (error) {
     console.error('❌ Migration failed:', error);
