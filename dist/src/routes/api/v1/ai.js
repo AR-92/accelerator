@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { logger } = require('../../../config/logger');
+const { logger } = require('../../../../config/logger');
 
 // Simplified AI endpoint - AI agent removed for simplicity
 router.post('/collaborate', async (req, res) => {

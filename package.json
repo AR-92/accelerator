@@ -15,8 +15,6 @@
     "build:css:optimized": "NODE_ENV=production npx tailwindcss -i ./src/input.css -o ./public/css/main.css --minify --config tailwind.config.js",
     "build:analyze": "NODE_ENV=production npx tailwindcss -i ./src/input.css -o ./public/css/main.css --minify",
     "build:clean": "rm -rf dist && mkdir -p dist && cp -r public src config server.js package*.json .env.example dist/",
-    "lint": "eslint . --ext .js",
-    "lint:fix": "eslint . --ext .js --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "security:audit": "npm audit",
@@ -42,8 +40,6 @@
   "type": "commonjs",
   "devDependencies": {
     "browser-sync": "^3.0.4",
-    "eslint": "^8.57.0",
-    "eslint-plugin-node": "^11.1.0",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "nodemon": "^3.1.10",

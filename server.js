@@ -138,13 +138,11 @@ app.use(errorHandler);
 // Graceful shutdown
 process.on('SIGTERM', () => {
   logger.info('SIGTERM received, shutting down gracefully');
-  // eslint-disable-next-line no-process-exit
   process.exit(0);
 });
 
 process.on('SIGINT', () => {
   logger.info('SIGINT received, shutting down gracefully');
-  // eslint-disable-next-line no-process-exit
   process.exit(0);
 });
 
