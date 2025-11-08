@@ -1,15 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { AIAssistantAgent } = require('../../../ai/agent');
-const { logger } = require('../../../../config/logger');
+const { logger } = require('../../../config/logger');
 
-// Initialize the AI agent
-const aiAgent = new AIAssistantAgent();
-
-// Endpoint to interact with the AI agent
+// Simplified AI endpoint - AI agent removed for simplicity
 router.post('/collaborate', async (req, res) => {
   try {
-    const { query, userId, conversationState } = req.body;
+    const { query, userId } = req.body;
 
     if (!query) {
       return res.status(400).json({
@@ -17,21 +13,26 @@ router.post('/collaborate', async (req, res) => {
       });
     }
 
-    // Run the AI agent with the provided query
-    const result = await aiAgent.run(query, {
-      userId: userId || null,
-      ...conversationState,
-    });
+    // Simple mock response
+    const response = `This is a simplified response to your query: "${query}". AI agent functionality has been removed to streamline the application.`;
 
     res.json({
-      success: result.success,
-      response: result.response,
-      thoughts: result.thoughts,
-      context: result.context,
-      currentStep: result.currentStep,
+      success: true,
+      response: response,
+      thoughts: [
+        'Query received',
+        'Processing simplified',
+        'Response generated',
+      ],
+      context: {
+        query,
+        timestamp: new Date().toISOString(),
+        userId: userId || null,
+      },
+      currentStep: 'complete',
     });
   } catch (error) {
-    logger.error('AI Agent error:', error);
+    logger.error('AI endpoint error:', error);
     res.status(500).json({
       error: 'Internal server error',
       message: error.message,
@@ -39,17 +40,15 @@ router.post('/collaborate', async (req, res) => {
   }
 });
 
-// Health check endpoint for the AI agent
+// Health check endpoint - simplified
 router.get('/health', (req, res) => {
-  try {
-    const health = aiAgent.healthCheck();
-    res.json(health);
-  } catch (error) {
-    res.status(500).json({
-      status: 'unhealthy',
-      error: error.message,
-    });
-  }
+  res.json({
+    status: 'healthy',
+    name: 'Simplified AI Service',
+    version: '1.0.0',
+    timestamp: new Date().toISOString(),
+    note: 'AI agent functionality removed for simplicity',
+  });
 });
 
 // Conversation history endpoint removed - Supabase dependency

@@ -29,7 +29,6 @@
     "express",
     "handlebars",
     "tailwind",
-    "langgraph",
     "ai",
     "agent",
     "template"
@@ -53,12 +52,6 @@
   },
   "dependencies": {
     "@fullhuman/postcss-purgecss": "^7.0.2",
-    "@langchain/community": "^0.3.0",
-    "@langchain/core": "^1.0.1",
-    "@langchain/groq": "^0.1.0",
-    "@langchain/langgraph": "^1.0.1",
-    "@langchain/langgraph-checkpoint": "^1.0.0",
-    "@langchain/openai": "^0.3.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.10",
     "concurrently": "^9.2.1",
