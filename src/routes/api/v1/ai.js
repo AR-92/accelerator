@@ -7,7 +7,7 @@ const { logger } = require('../../../../config/logger');
 const aiAgent = new AIAssistantAgent();
 
 // Endpoint to interact with the AI agent
-router.post('/chat', async (req, res) => {
+router.post('/collaborate', async (req, res) => {
   try {
     const { query, userId, conversationState } = req.body;
 

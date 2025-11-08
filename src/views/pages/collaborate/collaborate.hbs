@@ -1,0 +1,153 @@
+<div class='flex flex-col gap-4 lg:gap-6'>
+    <div class='flex items-center justify-between'>
+      <div class='grid gap-1'>
+        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Collaboration Hub</h1>
+        <p class='text-base text-muted-foreground'>Manage team communication, tasks, and resources in one place.</p>
+      </div>
+    </div>
+
+    <!-- Collaboration Features Grid -->
+    <div class='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+      <!-- Chat -->
+      <a href='/pages/collaborate/chat' class='rounded-md bg-card p-6 text-card-foreground shadow-sm hover:shadow-md transition-shadow'>
+        <div class='flex items-center gap-4'>
+          <div class='flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900'>
+            {{lucide 'MessageCircle' 'w-6 h-6 text-blue-600 dark:text-blue-400'}}
+          </div>
+          <div>
+            <h3 class='font-semibold'>Chat</h3>
+            <p class='text-sm text-muted-foreground'>Team messaging and discussions</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Tasks -->
+      <a href='/pages/collaborate/tasks' class='rounded-md bg-card p-6 text-card-foreground shadow-sm hover:shadow-md transition-shadow'>
+        <div class='flex items-center gap-4'>
+          <div class='flex h-12 w-12 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900'>
+            {{lucide 'CheckSquare' 'w-6 h-6 text-green-600 dark:text-green-400'}}
+          </div>
+          <div>
+            <h3 class='font-semibold'>Tasks</h3>
+            <p class='text-sm text-muted-foreground'>Project management and tracking</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Files -->
+      <a href='/pages/collaborate/files' class='rounded-md bg-card p-6 text-card-foreground shadow-sm hover:shadow-md transition-shadow'>
+        <div class='flex items-center gap-4'>
+          <div class='flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900'>
+            {{lucide 'FileText' 'w-6 h-6 text-purple-600 dark:text-purple-400'}}
+          </div>
+          <div>
+            <h3 class='font-semibold'>Files</h3>
+            <p class='text-sm text-muted-foreground'>Shared documents and resources</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Team -->
+      <a href='/pages/collaborate/team' class='rounded-md bg-card p-6 text-card-foreground shadow-sm hover:shadow-md transition-shadow'>
+        <div class='flex items-center gap-4'>
+          <div class='flex h-12 w-12 items-center justify-center rounded-lg bg-orange-100 dark:bg-orange-900'>
+            {{lucide 'Users' 'w-6 h-6 text-orange-600 dark:text-orange-400'}}
+          </div>
+          <div>
+            <h3 class='font-semibold'>Team</h3>
+            <p class='text-sm text-muted-foreground'>Member directory and roles</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Calendar -->
+      <a href='/pages/collaborate/calendar' class='rounded-md bg-card p-6 text-card-foreground shadow-sm hover:shadow-md transition-shadow'>
+        <div class='flex items-center gap-4'>
+          <div class='flex h-12 w-12 items-center justify-center rounded-lg bg-red-100 dark:bg-red-900'>
+            {{lucide 'Calendar' 'w-6 h-6 text-red-600 dark:text-red-400'}}
+          </div>
+          <div>
+            <h3 class='font-semibold'>Calendar</h3>
+            <p class='text-sm text-muted-foreground'>Meetings and events scheduling</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Activity -->
+      <a href='/pages/collaborate/activity' class='rounded-md bg-card p-6 text-card-foreground shadow-sm hover:shadow-md transition-shadow'>
+        <div class='flex items-center gap-4'>
+          <div class='flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-100 dark:bg-indigo-900'>
+            {{lucide 'Activity' 'w-6 h-6 text-indigo-600 dark:text-indigo-400'}}
+          </div>
+          <div>
+            <h3 class='font-semibold'>Activity</h3>
+            <p class='text-sm text-muted-foreground'>Recent updates and timeline</p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Settings -->
+      <a href='/pages/collaborate/settings' class='rounded-md bg-card p-6 text-card-foreground shadow-sm hover:shadow-md transition-shadow'>
+        <div class='flex items-center gap-4'>
+          <div class='flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800'>
+            {{lucide 'Settings' 'w-6 h-6 text-gray-600 dark:text-gray-400'}}
+          </div>
+          <div>
+            <h3 class='font-semibold'>Settings</h3>
+            <p class='text-sm text-muted-foreground'>Collaboration preferences</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+        <div class='flex items-center justify-between'>
+          <div>
+            <p class='text-sm font-medium text-muted-foreground'>Active Chats</p>
+            <p class='text-2xl font-bold'>5</p>
+          </div>
+          <div class='h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'>
+            {{lucide 'MessageCircle' 'w-4 h-4 text-blue-600 dark:text-blue-400'}}
+          </div>
+        </div>
+      </div>
+
+      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+        <div class='flex items-center justify-between'>
+          <div>
+            <p class='text-sm font-medium text-muted-foreground'>Open Tasks</p>
+            <p class='text-2xl font-bold'>23</p>
+          </div>
+          <div class='h-8 w-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'>
+            {{lucide 'CheckSquare' 'w-4 h-4 text-green-600 dark:text-green-400'}}
+          </div>
+        </div>
+      </div>
+
+      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+        <div class='flex items-center justify-between'>
+          <div>
+            <p class='text-sm font-medium text-muted-foreground'>Shared Files</p>
+            <p class='text-2xl font-bold'>47</p>
+          </div>
+          <div class='h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'>
+            {{lucide 'FileText' 'w-4 h-4 text-purple-600 dark:text-purple-400'}}
+          </div>
+        </div>
+      </div>
+
+      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+        <div class='flex items-center justify-between'>
+          <div>
+            <p class='text-sm font-medium text-muted-foreground'>Team Members</p>
+            <p class='text-2xl font-bold'>12</p>
+          </div>
+          <div class='h-8 w-8 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center'>
+            {{lucide 'Users' 'w-4 h-4 text-orange-600 dark:text-orange-400'}}
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

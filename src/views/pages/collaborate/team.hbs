@@ -1,0 +1,223 @@
+<div class='flex flex-col gap-4 lg:gap-6'>
+    <div class='flex items-center justify-between'>
+      <div class='grid gap-1'>
+        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Team Directory</h1>
+        <p class='text-base text-muted-foreground'>View and manage team members, roles, and contact information.</p>
+      </div>
+      <div class='flex items-center gap-2'>
+        <button class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted'>
+          {{lucide 'Search' 'w-4 h-4'}}
+          Search
+        </button>
+        <button class='flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90'>
+          {{lucide 'UserPlus' 'w-4 h-4'}}
+          Invite Member
+        </button>
+      </div>
+    </div>
+
+    <!-- Team Stats -->
+    <div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+        <div class='flex items-center justify-between'>
+          <div>
+            <p class='text-sm font-medium text-muted-foreground'>Total Members</p>
+            <p class='text-2xl font-bold'>12</p>
+          </div>
+          <div class='h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'>
+            {{lucide 'Users' 'w-4 h-4 text-blue-600 dark:text-blue-400'}}
+          </div>
+        </div>
+      </div>
+
+      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+        <div class='flex items-center justify-between'>
+          <div>
+            <p class='text-sm font-medium text-muted-foreground'>Active Today</p>
+            <p class='text-2xl font-bold'>8</p>
+          </div>
+          <div class='h-8 w-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'>
+            {{lucide 'Activity' 'w-4 h-4 text-green-600 dark:text-green-400'}}
+          </div>
+        </div>
+      </div>
+
+      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+        <div class='flex items-center justify-between'>
+          <div>
+            <p class='text-sm font-medium text-muted-foreground'>Departments</p>
+            <p class='text-2xl font-bold'>4</p>
+          </div>
+          <div class='h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'>
+            {{lucide 'Building' 'w-4 h-4 text-purple-600 dark:text-purple-400'}}
+          </div>
+        </div>
+      </div>
+
+      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+        <div class='flex items-center justify-between'>
+          <div>
+            <p class='text-sm font-medium text-muted-foreground'>New This Month</p>
+            <p class='text-2xl font-bold'>2</p>
+          </div>
+          <div class='h-8 w-8 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center'>
+            {{lucide 'UserPlus' 'w-4 h-4 text-orange-600 dark:text-orange-400'}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Members Grid -->
+    <div class='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
+      <!-- Team Member Card -->
+      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+        <div class='flex items-start gap-4'>
+          <div class='w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg'>
+            JD
+          </div>
+          <div class='flex-1'>
+            <h3 class='font-semibold text-foreground'>John Doe</h3>
+            <p class='text-sm text-muted-foreground mb-2'>Project Manager</p>
+            <div class='space-y-1 text-sm'>
+              <div class='flex items-center gap-2'>
+                {{lucide 'Mail' 'w-4 h-4'}}
+                <span>john.doe@company.com</span>
+              </div>
+              <div class='flex items-center gap-2'>
+                {{lucide 'Phone' 'w-4 h-4'}}
+                <span>+1 (555) 123-4567</span>
+              </div>
+            </div>
+            <div class='mt-3'>
+              <span class='px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full'>Online</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+        <div class='flex items-start gap-4'>
+          <div class='w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white font-bold text-lg'>
+            SM
+          </div>
+          <div class='flex-1'>
+            <h3 class='font-semibold text-foreground'>Sarah Miller</h3>
+            <p class='text-sm text-muted-foreground mb-2'>UI/UX Designer</p>
+            <div class='space-y-1 text-sm'>
+              <div class='flex items-center gap-2'>
+                {{lucide 'Mail' 'w-4 h-4'}}
+                <span>sarah.miller@company.com</span>
+              </div>
+              <div class='flex items-center gap-2'>
+                {{lucide 'Phone' 'w-4 h-4'}}
+                <span>+1 (555) 234-5678</span>
+              </div>
+            </div>
+            <div class='mt-3'>
+              <span class='px-2 py-1 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs rounded-full'>Away</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+        <div class='flex items-start gap-4'>
+          <div class='w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold text-lg'>
+            MR
+          </div>
+          <div class='flex-1'>
+            <h3 class='font-semibold text-foreground'>Mike Ross</h3>
+            <p class='text-sm text-muted-foreground mb-2'>Full Stack Developer</p>
+            <div class='space-y-1 text-sm'>
+              <div class='flex items-center gap-2'>
+                {{lucide 'Mail' 'w-4 h-4'}}
+                <span>mike.ross@company.com</span>
+              </div>
+              <div class='flex items-center gap-2'>
+                {{lucide 'Phone' 'w-4 h-4'}}
+                <span>+1 (555) 345-6789</span>
+              </div>
+            </div>
+            <div class='mt-3'>
+              <span class='px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full'>Online</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+        <div class='flex items-start gap-4'>
+          <div class='w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-lg'>
+            AL
+          </div>
+          <div class='flex-1'>
+            <h3 class='font-semibold text-foreground'>Anna Lee</h3>
+            <p class='text-sm text-muted-foreground mb-2'>DevOps Engineer</p>
+            <div class='space-y-1 text-sm'>
+              <div class='flex items-center gap-2'>
+                {{lucide 'Mail' 'w-4 h-4'}}
+                <span>anna.lee@company.com</span>
+              </div>
+              <div class='flex items-center gap-2'>
+                {{lucide 'Phone' 'w-4 h-4'}}
+                <span>+1 (555) 456-7890</span>
+              </div>
+            </div>
+            <div class='mt-3'>
+              <span class='px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 text-xs rounded-full'>Offline</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+        <div class='flex items-start gap-4'>
+          <div class='w-12 h-12 rounded-full bg-red-500 flex items-center justify-center text-white font-bold text-lg'>
+            EK
+          </div>
+          <div class='flex-1'>
+            <h3 class='font-semibold text-foreground'>Emma Kim</h3>
+            <p class='text-sm text-muted-foreground mb-2'>Product Manager</p>
+            <div class='space-y-1 text-sm'>
+              <div class='flex items-center gap-2'>
+                {{lucide 'Mail' 'w-4 h-4'}}
+                <span>emma.kim@company.com</span>
+              </div>
+              <div class='flex items-center gap-2'>
+                {{lucide 'Phone' 'w-4 h-4'}}
+                <span>+1 (555) 567-8901</span>
+              </div>
+            </div>
+            <div class='mt-3'>
+              <span class='px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full'>Online</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+        <div class='flex items-start gap-4'>
+          <div class='w-12 h-12 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold text-lg'>
+            JS
+          </div>
+          <div class='flex-1'>
+            <h3 class='font-semibold text-foreground'>James Smith</h3>
+            <p class='text-sm text-muted-foreground mb-2'>QA Engineer</p>
+            <div class='space-y-1 text-sm'>
+              <div class='flex items-center gap-2'>
+                {{lucide 'Mail' 'w-4 h-4'}}
+                <span>james.smith@company.com</span>
+              </div>
+              <div class='flex items-center gap-2'>
+                {{lucide 'Phone' 'w-4 h-4'}}
+                <span>+1 (555) 678-9012</span>
+              </div>
+            </div>
+            <div class='mt-3'>
+              <span class='px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full'>Online</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+      <div
+        class='flex w-[90vw] items-center gap-[16px] overflow-x-auto border-b border-gray-200 dark:border-gray-700 lg:w-full lg:gap-[48px]'
+      >
+        <a
+          class='p-[10px] text-[16px] font-[500] {{#if activeDashboard}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+          href='/pages/collaborate'
+        >Dashboard</a>
+        <a
+          class='p-[10px] text-[16px] font-[500] {{#if activeChat}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+          href='/pages/collaborate/chat'
+        >Chat</a>
+       <a
+         class='p-[10px] text-[16px] font-[500] {{#if activeTasks}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+         href='/pages/collaborate/tasks'
+       >Tasks</a>
+       <a
+         class='p-[10px] text-[16px] font-[500] {{#if activeFiles}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+         href='/pages/collaborate/files'
+       >Files</a>
+       <a
+         class='p-[10px] text-[16px] font-[500] {{#if activeTeam}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+         href='/pages/collaborate/team'
+       >Team</a>
+       <a
+         class='p-[10px] text-[16px] font-[500] {{#if activeCalendar}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+         href='/pages/collaborate/calendar'
+       >Calendar</a>
+       <a
+         class='p-[10px] text-[16px] font-[500] {{#if activeActivity}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+         href='/pages/collaborate/activity'
+       >Activity</a>
+       <a
+         class='p-[10px] text-[16px] font-[500] {{#if activeSettings}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+         href='/pages/collaborate/settings'
+       >Settings</a>
+     </div>

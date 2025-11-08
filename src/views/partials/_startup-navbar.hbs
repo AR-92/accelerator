@@ -1,0 +1,40 @@
+      <div
+        class='flex w-[90vw] items-center gap-[16px] overflow-x-auto border-b border-gray-200 dark:border-gray-700 lg:w-full lg:gap-[48px]'
+      >
+        <a
+          class='p-[10px] text-[16px] font-[500] {{#if activeOverview}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+          href='/pages/dashboard'
+        >Overview</a>
+        <a
+          class='p-[10px] text-[16px] font-[500] {{#if activeIdea}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+          href='/pages/dashboard/tab/idea'
+        >Idea</a>
+       <a
+         class='p-[10px] text-[16px] font-[500] {{#if activeBusiness}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+         href='/pages/dashboard/tab/business'
+       >Business</a>
+       <a
+         class='p-[10px] text-[16px] font-[500] {{#if activeFinancial}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+         href='/pages/dashboard/tab/financial'
+       >Financial</a>
+       <a
+         class='p-[10px] text-[16px] font-[500] {{#if activeMarketing}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+         href='/pages/dashboard/tab/marketing'
+       >Marketing</a>
+       <a
+         class='p-[10px] text-[16px] font-[500] {{#if activeFund}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+         href='/pages/dashboard/tab/fund'
+       >Fund</a>
+       <a
+         class='p-[10px] text-[16px] font-[500] {{#if activeTeam}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+         href='/pages/dashboard/tab/team'
+       >Team</a>
+        <a
+          class='p-[10px] text-[16px] font-[500] {{#if activePromote}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+          href='/pages/dashboard/tab/promote'
+        >Promote</a>
+        <a
+          class='p-[10px] text-[16px] font-[500] {{#if activeActivityLog}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+          href='/pages/dashboard/tab/activity-log'
+        >Activity Log</a>
+     </div>

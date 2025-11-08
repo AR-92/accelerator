@@ -136,6 +136,27 @@ if (fs.existsSync(ideaCardPath)) {
   }
 }
 
+const collaborateNavbarPath = path.join(
+  __dirname,
+  '../src/views/partials/_collaborate-navbar.hbs'
+);
+if (fs.existsSync(collaborateNavbarPath)) {
+  const collaborateNavbarTemplate = fs.readFileSync(
+    collaborateNavbarPath,
+    'utf8'
+  );
+  handlebars.registerPartial('_collaborate-navbar', collaborateNavbarTemplate);
+}
+
+const helpNavbarPath = path.join(
+  __dirname,
+  '../src/views/partials/_help-navbar.hbs'
+);
+if (fs.existsSync(helpNavbarPath)) {
+  const helpNavbarTemplate = fs.readFileSync(helpNavbarPath, 'utf8');
+  handlebars.registerPartial('_help-navbar', helpNavbarTemplate);
+}
+
 module.exports = {
   handlebarsConfig,
   handlebars,

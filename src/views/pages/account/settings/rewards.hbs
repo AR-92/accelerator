@@ -1,17 +1,14 @@
-<div class="container mx-auto max-w-7xl px-4 py-6">
-    <div class="flex items-center justify-between">
-        <div class="grid gap-1">
-            <h1 class="font-heading text-2xl font-semibold">Account Settings</h1>
-            <p class="text-base text-muted-foreground">Manage account and website settings.</p>
-        </div>
+<div class='flex flex-col gap-4 lg:gap-6'>
+    <div class='flex items-center justify-between'>
+      <div class='grid gap-1'>
+        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Rewards Settings</h1>
+        <p class='text-base text-muted-foreground'>Track your rewards and redeem points.</p>
+      </div>
     </div>
-    <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-[280px,1fr]">
-        {{> settings-nav}}
-        <div>
-            <div class="overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm">
-                <div class="p-6">
-                    <h2 class="text-xl font-semibold mb-4">Voting Rewards</h2>
-                    <p class="text-muted-foreground">View and manage your voting rewards.</p>
+
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <h2 class='text-xl font-semibold mb-4'>Voting Rewards</h2>
+      <p class='text-muted-foreground mb-6'>View and manage your voting rewards.</p>
         <div class="space-y-6">
             <div>
                 <h3 class="text-lg font-medium mb-4">Current Rewards Balance</h3>
@@ -88,10 +85,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        </div>
+      </div>
     </div>
-</div>
-</div>
-</div>
+  </div>

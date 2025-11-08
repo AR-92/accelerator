@@ -1,0 +1,147 @@
+<div class='flex flex-col gap-4 lg:gap-6'>
+    <div class='flex items-center justify-between'>
+      <div class='grid gap-1'>
+        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Settings</h1>
+        <p class='text-base text-muted-foreground'>Manage your account settings and preferences.</p>
+      </div>
+    </div>
+
+    <!-- Settings Categories -->
+    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+      <!-- Profile -->
+      <a href='/pages/settings/profile' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
+        <div class='flex items-center gap-3 mb-4'>
+          <div class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors'>
+            <span class='w-5 h-5 text-blue-600 dark:text-blue-400'>👤</span>
+          </div>
+          <h3 class='text-lg font-semibold text-foreground'>Profile</h3>
+        </div>
+        <p class='text-muted-foreground mb-4'>Update your personal information and profile settings.</p>
+        <ul class='space-y-1 text-sm text-muted-foreground'>
+          <li>• Personal details</li>
+          <li>• Profile picture</li>
+          <li>• Bio and preferences</li>
+          <li>• Account visibility</li>
+        </ul>
+      </a>
+
+      <!-- Password -->
+      <a href='/pages/settings/password' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
+        <div class='flex items-center gap-3 mb-4'>
+          <div class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center group-hover:bg-green-200 dark:group-hover:bg-green-800 transition-colors'>
+            <span class='w-5 h-5 text-green-600 dark:text-green-400'>🔒</span>
+          </div>
+          <h3 class='text-lg font-semibold text-foreground'>Password</h3>
+        </div>
+        <p class='text-muted-foreground mb-4'>Change your password and security settings.</p>
+        <ul class='space-y-1 text-sm text-muted-foreground'>
+          <li>• Password change</li>
+          <li>• Two-factor authentication</li>
+          <li>• Security questions</li>
+          <li>• Login history</li>
+        </ul>
+      </a>
+
+      <!-- Subscription -->
+      <a href='/pages/settings/subscription' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
+        <div class='flex items-center gap-3 mb-4'>
+          <div class='w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center group-hover:bg-purple-200 dark:group-hover:bg-purple-800 transition-colors'>
+            <span class='w-5 h-5 text-purple-600 dark:text-purple-400'>💳</span>
+          </div>
+          <h3 class='text-lg font-semibold text-foreground'>Subscription</h3>
+        </div>
+        <p class='text-muted-foreground mb-4'>Manage your subscription plan and features.</p>
+        <ul class='space-y-1 text-sm text-muted-foreground'>
+          <li>• Current plan</li>
+          <li>• Upgrade/downgrade</li>
+          <li>• Billing cycle</li>
+          <li>• Feature access</li>
+        </ul>
+      </a>
+
+       <!-- Payment & Billing -->
+       <a href='/pages/settings/payment-billing' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
+         <div class='flex items-center gap-3 mb-4'>
+           <div class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors'>
+             <span class='w-5 h-5 text-blue-600 dark:text-blue-400'>💳</span>
+           </div>
+           <h3 class='text-lg font-semibold text-foreground'>Payment & Billing</h3>
+         </div>
+         <p class='text-muted-foreground mb-4'>Manage payment methods and view billing history.</p>
+         <ul class='space-y-1 text-sm text-muted-foreground'>
+           <li>• Add or remove payment methods</li>
+           <li>• Set default payment method</li>
+           <li>• View invoice history</li>
+           <li>• Download receipts and documents</li>
+         </ul>
+       </a>
+    </div>
+
+    <!-- Additional Settings -->
+    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+      <!-- Votes -->
+      <a href='/pages/settings/votes' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
+        <div class='flex items-center gap-3 mb-4'>
+          <div class='w-10 h-10 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center group-hover:bg-red-200 dark:group-hover:bg-red-800 transition-colors'>
+            <span class='w-5 h-5 text-red-600 dark:text-red-400'>❤️</span>
+          </div>
+          <h3 class='text-lg font-semibold text-foreground'>Votes</h3>
+        </div>
+        <p class='text-muted-foreground mb-4'>Manage your voting preferences and history.</p>
+        <ul class='space-y-1 text-sm text-muted-foreground'>
+          <li>• Voting history</li>
+          <li>• Vote preferences</li>
+          <li>• Community voting</li>
+          <li>• Vote rewards</li>
+        </ul>
+      </a>
+
+      <!-- Rewards -->
+      <a href='/pages/settings/rewards' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
+        <div class='flex items-center gap-3 mb-4'>
+          <div class='w-10 h-10 rounded-full bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center group-hover:bg-yellow-200 dark:group-hover:bg-yellow-800 transition-colors'>
+            <span class='w-5 h-5 text-yellow-600 dark:text-yellow-400'>🎁</span>
+          </div>
+          <h3 class='text-lg font-semibold text-foreground'>Rewards</h3>
+        </div>
+        <p class='text-muted-foreground mb-4'>Track your rewards and redeem points.</p>
+        <ul class='space-y-1 text-sm text-muted-foreground'>
+          <li>• Reward points</li>
+          <li>• Redemption history</li>
+          <li>• Available rewards</li>
+          <li>• Reward preferences</li>
+        </ul>
+      </a>
+
+
+
+       <!-- Credits -->
+       <a href='/pages/settings/credits' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
+         <div class='flex items-center gap-3 mb-4'>
+           <div class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center group-hover:bg-green-200 dark:group-hover:bg-green-800 transition-colors'>
+             <span class='w-5 h-5 text-green-600 dark:text-green-400'>💰</span>
+           </div>
+           <h3 class='text-lg font-semibold text-foreground'>Credits</h3>
+         </div>
+         <p class='text-muted-foreground mb-4'>Manage your credits and purchase history.</p>
+         <ul class='space-y-1 text-sm text-muted-foreground'>
+           <li>• Current balance</li>
+           <li>• Purchase credits</li>
+           <li>• Usage history</li>
+           <li>• Credit management</li>
+         </ul>
+       </a>
+
+       <!-- Support -->
+      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+        <div class='flex items-center gap-3 mb-4'>
+          <div class='w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-900 flex items-center justify-center'>
+            <span class='w-5 h-5 text-gray-600 dark:text-gray-400'>❓</span>
+          </div>
+          <h3 class='text-lg font-semibold text-foreground'>Support</h3>
+        </div>
+        <p class='text-muted-foreground mb-4'>Need help with your settings?</p>
+        <a href='/pages/help' class='text-primary hover:underline text-sm'>Contact Support</a>
+      </div>
+    </div>
+  </div>

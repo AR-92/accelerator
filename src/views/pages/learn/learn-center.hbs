@@ -1,0 +1,280 @@
+<div class='flex flex-col gap-4 lg:gap-6'>
+    <div class='flex items-center justify-between'>
+      <div class='grid gap-1'>
+        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Learning Center</h1>
+        <p class='text-base text-muted-foreground'>Expand your knowledge and skills with our comprehensive learning resources.</p>
+      </div>
+    </div>
+
+    <!-- Learning Categories -->
+    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+      <!-- Getting Started -->
+      <a href='/pages/learn/getting-started' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
+        <div class='flex items-center gap-3 mb-4'>
+          <div class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors'>
+            {{lucide 'Rocket' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
+          </div>
+          <h3 class='text-lg font-semibold text-foreground'>Getting Started</h3>
+        </div>
+        <p class='text-muted-foreground mb-4'>Learn the fundamentals of entrepreneurship</p>
+        <ul class='space-y-1 text-sm text-muted-foreground'>
+          <li>• Startup basics</li>
+          <li>• Idea validation</li>
+          <li>• Market research</li>
+          <li>• Business planning</li>
+        </ul>
+      </a>
+
+      <!-- Courses -->
+      <a href='/pages/learn/courses' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
+        <div class='flex items-center gap-3 mb-4'>
+          <div class='w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center group-hover:bg-purple-200 dark:group-hover:bg-purple-800 transition-colors'>
+            {{lucide 'BookOpen' 'w-5 h-5 text-purple-600 dark:text-purple-400'}}
+          </div>
+          <h3 class='text-lg font-semibold text-foreground'>Courses</h3>
+        </div>
+        <p class='text-muted-foreground mb-4'>Structured learning paths for entrepreneurs</p>
+        <ul class='space-y-1 text-sm text-muted-foreground'>
+          <li>• Business development</li>
+          <li>• Financial modeling</li>
+          <li>• Marketing strategies</li>
+          <li>• Team building</li>
+        </ul>
+      </a>
+
+      <!-- Tutorials -->
+      <a href='/pages/learn/tutorials' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
+        <div class='flex items-center gap-3 mb-4'>
+          <div class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center group-hover:bg-green-200 dark:group-hover:bg-green-800 transition-colors'>
+            {{lucide 'PlayCircle' 'w-5 h-5 text-green-600 dark:text-green-400'}}
+          </div>
+          <h3 class='text-lg font-semibold text-foreground'>Tutorials</h3>
+        </div>
+        <p class='text-muted-foreground mb-4'>Step-by-step guides and video tutorials</p>
+        <ul class='space-y-1 text-sm text-muted-foreground'>
+          <li>• Platform walkthrough</li>
+          <li>• AI tool usage</li>
+          <li>• Project management</li>
+          <li>• Collaboration tips</li>
+        </ul>
+      </a>
+
+      <!-- Resources -->
+      <a href='/pages/learn/resources' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
+        <div class='flex items-center gap-3 mb-4'>
+          <div class='w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center group-hover:bg-orange-200 dark:group-hover:bg-orange-800 transition-colors'>
+            {{lucide 'FileText' 'w-5 h-5 text-orange-600 dark:text-orange-400'}}
+          </div>
+          <h3 class='text-lg font-semibold text-foreground'>Resources</h3>
+        </div>
+        <p class='text-muted-foreground mb-4'>Additional materials and references</p>
+        <ul class='space-y-1 text-sm text-muted-foreground'>
+          <li>• Templates & checklists</li>
+          <li>• Case studies</li>
+          <li>• Industry reports</li>
+          <li>• Best practices</li>
+        </ul>
+      </a>
+    </div>
+
+    <!-- Popular Topics -->
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <h3 class='text-lg font-semibold text-foreground mb-4'>Popular Topics</h3>
+      <div class='grid grid-cols-1 md:grid-cols-2 gap-4'>
+        <div class='space-y-3'>
+          <a href='/pages/learn/getting-started' class='flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors'>
+            <div class='w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'>
+              {{lucide 'Lightbulb' 'w-4 h-4 text-blue-600 dark:text-blue-400'}}
+            </div>
+            <div>
+              <p class='font-medium text-foreground'>From Idea to MVP</p>
+              <p class='text-sm text-muted-foreground'>Building your first product</p>
+            </div>
+          </a>
+          <a href='/pages/learn/courses' class='flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors'>
+            <div class='w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'>
+              {{lucide 'TrendingUp' 'w-4 h-4 text-purple-600 dark:text-purple-400'}}
+            </div>
+            <div>
+              <p class='font-medium text-foreground'>Scaling Your Business</p>
+              <p class='text-sm text-muted-foreground'>Growth strategies and tactics</p>
+            </div>
+          </a>
+        </div>
+        <div class='space-y-3'>
+          <a href='/pages/learn/tutorials' class='flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors'>
+            <div class='w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'>
+              {{lucide 'Users' 'w-4 h-4 text-green-600 dark:text-green-400'}}
+            </div>
+            <div>
+              <p class='font-medium text-foreground'>Building a Strong Team</p>
+              <p class='text-sm text-muted-foreground'>Hiring and team management</p>
+            </div>
+          </a>
+          <a href='/pages/learn/resources' class='flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-colors'>
+            <div class='w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center'>
+              {{lucide 'DollarSign' 'w-4 h-4 text-orange-600 dark:text-orange-400'}}
+            </div>
+            <div>
+              <p class='font-medium text-foreground'>Financial Planning</p>
+              <p class='text-sm text-muted-foreground'>Budgeting and fundraising</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Start Guide -->
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <div class='text-center'>
+        <h3 class='text-lg font-semibold text-foreground mb-2'>Ready to Start Learning?</h3>
+        <p class='text-muted-foreground mb-4'>
+          Begin your entrepreneurial journey with our curated learning paths.
+        </p>
+        <div class='flex flex-wrap justify-center gap-3'>
+          <a href='/pages/learn/getting-started' class='flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90'>
+            {{lucide 'Play' 'w-4 h-4'}}
+            Start Learning
+          </a>
+          <a href='/pages/learn/courses' class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted'>
+            {{lucide 'BookOpen' 'w-4 h-4'}}
+            Browse Courses
+          </a>
+          <a href='/pages/learn/tutorials' class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted'>
+            {{lucide 'Video' 'w-4 h-4'}}
+            Watch Tutorials
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class='space-y-6'>
+      <!-- Learning Tip 1 -->
+      <div class='border-b border-border pb-4'>
+        <h3 class='text-lg font-medium text-foreground mb-2'>What makes a successful startup?</h3>
+        <p class='text-muted-foreground'>
+          Successful startups combine innovative ideas with strong execution. Focus on solving real problems,
+          understanding your market, and building a scalable business model. Our learning resources will guide
+          you through each step of this process.
+        </p>
+      </div>
+
+      <!-- Learning Tip 2 -->
+      <div class='border-b border-border pb-4'>
+        <h3 class='text-lg font-medium text-foreground mb-2'>How to validate your business idea?</h3>
+        <p class='text-muted-foreground'>
+          Idea validation involves talking to potential customers, testing assumptions, and gathering feedback.
+          Use surveys, interviews, and minimum viable products (MVPs) to ensure your idea has market demand
+          before investing significant time and resources.
+        </p>
+      </div>
+
+      <!-- Learning Tip 3 -->
+      <div class='border-b border-border pb-4'>
+        <h3 class='text-lg font-medium text-foreground mb-2'>Understanding financial projections?</h3>
+        <p class='text-muted-foreground'>
+          Financial projections help you plan for the future and make informed decisions. Learn about revenue
+          models, cost structures, break-even analysis, and funding strategies. Our courses cover these topics
+          in detail with practical examples.
+        </p>
+      </div>
+
+      <!-- Learning Tip 4 -->
+      <div class='border-b border-border pb-4'>
+        <h3 class='text-lg font-medium text-foreground mb-2'>Building an effective marketing strategy?</h3>
+        <p class='text-muted-foreground'>
+          Marketing is about reaching the right audience with the right message. Understand customer segmentation,
+          value propositions, and various marketing channels. Our tutorials provide step-by-step guidance on
+          creating and implementing marketing plans.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Learning Community Section -->
+  <div class='mt-8 bg-card border border-border rounded-lg p-6'>
+    <div class='flex items-start gap-4'>
+       <div
+         class='w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0'
+       >
+         {{lucide 'Users' 'w-6 h-6 text-primary'}}
+       </div>
+      <div>
+        <h2 class='text-xl font-semibold text-foreground'>Join the Learning Community</h2>
+        <p class='text-muted-foreground mb-4'>
+          Connect with fellow entrepreneurs, share experiences, and learn together.
+        </p>
+        <div class='flex flex-wrap gap-3'>
+          <button
+            class='px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90 transition-opacity'
+          >
+            Join Community
+          </button>
+          <button
+            class='px-4 py-2 border border-border text-foreground rounded-md hover:bg-muted transition-colors'
+          >
+            Ask Questions
+          </button>
+          <button
+            class='px-4 py-2 border border-border text-foreground rounded-md hover:bg-muted transition-colors'
+          >
+            Share Knowledge
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() { // Add smooth
+  scrolling for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) { e.preventDefault(); const
+  target = document.querySelector(this.getAttribute('href')); if (target) {
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }); }); //
+  Add basic interactivity to learning tip items const tipItems =
+  document.querySelectorAll('.border-b'); tipItems.forEach(item => { const
+  header = item.querySelector('h3'); if (header) { header.style.cursor =
+  'pointer'; header.addEventListener('click', () => { const content =
+  item.querySelector('p'); content.style.display = content.style.display ===
+  'none' ? 'block' : 'none'; }); } }); });
+</script>
+
+<style>
+  .text-primary {
+    color: hsl(var(--primary));
+  }
+
+  .bg-primary\/10 {
+    background-color: hsla(var(--primary), 0.1);
+  }
+
+  .hover\:bg-muted:hover {
+    background-color: hsl(var(--muted));
+  }
+
+  .hover\:opacity-90:hover {
+    opacity: 0.9;
+  }
+
+  .hover\:underline:hover {
+    text-decoration: underline;
+  }
+
+  .bg-card {
+    background-color: hsl(var(--card));
+  }
+
+  .border-border {
+    border-color: hsl(var(--border));
+  }
+
+  .text-foreground {
+    color: hsl(var(--foreground));
+  }
+
+  .text-muted-foreground {
+    color: hsl(var(--muted-foreground));
+  }
+</style>

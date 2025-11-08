@@ -16,9 +16,9 @@ This directory contains all the Handlebars template files organized by functiona
 
 - Authentication-related pages (login, signup, password reset)
 
-### `/chat/`
+### `/collaborate/`
 
-- Communication and collaboration pages (team chat, AI chat)
+- Collaboration pages for team communication and collaboration on the platform
 
 ### `/core/`
 

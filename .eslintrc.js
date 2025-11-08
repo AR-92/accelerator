@@ -9,7 +9,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  ignorePatterns: ['public/js/htmx.min.js'],
+  ignorePatterns: ['public/js/htmx.min.js', 'dist/**/*'],
   overrides: [
     {
       files: ['public/js/**/*.js'],

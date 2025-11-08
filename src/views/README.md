@@ -14,18 +14,23 @@ views/
 │   ├── settings-nav.hbs  # Settings navigation menu
 │   └── subscription-nav.hbs  # Subscription navigation menu
 ├── dashboard/         # Dashboard pages and tabs
-│   ├── dashboard.hbs  # Main dashboard (idea tab)
-│   ├── dashboard-business.hbs
-│   ├── dashboard-financial.hbs
-│   ├── dashboard-marketing.hbs
-│   ├── dashboard-fund.hbs
-│   ├── dashboard-team.hbs
-│   └── dashboard-promote.hbs
+│   ├── corporate/
+│   │   └── corporate.hbs
+│   ├── enterprise/
+│   │   └── enterprise.hbs
+│   └── startup/
+│       ├── business.hbs
+│       ├── financial.hbs
+│       ├── fund.hbs
+│       ├── idea.hbs
+│       ├── marketing.hbs
+│       ├── promote.hbs
+│       └── team.hbs
 ├── portfolio/         # Portfolio-related pages
 │   ├── portfolio.hbs      # Portfolio listing page
 │   └── portfolio-idea.hbs # Individual portfolio item page
-├── chat/              # Chat and communication pages
-│   └── chat.hbs       # Main chat interface
+├── collaborate/       # Team collaboration pages
+│   └── collaborate.hbs # Team collaboration interface
 ├── ideas/             # Idea management pages
 │   └── ideas.hbs      # Ideas submission page
 ├── public/            # Public-facing pages
@@ -80,8 +85,8 @@ views/
 
 The directory structure aligns with the application's route structure:
 
-- `/pages/dashboard` → `views/dashboard/dashboard.hbs`
-- `/pages/dashboard/tab/business` → `views/dashboard/dashboard-business.hbs`
+- `/pages/dashboard` → `views/dashboard/startup/idea.hbs`
+- `/pages/dashboard/tab/business` → `views/dashboard/startup/business.hbs`
 - `/pages/portfolio` → `views/portfolio/portfolio.hbs`
 - `/pages/ideas` → `views/ideas/ideas.hbs`
 - `/pages/business-model` → `views/startup/build/business/business-model.hbs`

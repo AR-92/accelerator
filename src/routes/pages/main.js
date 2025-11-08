@@ -11,439 +11,287 @@ const getPageData = (title, activeKey, padding = 'py-8') => ({
 
 // GET dashboard
 router.get('/dashboard', (req, res) => {
-  res.render('pages/dashboard/dashboard', {
-    ...getPageData('Dashboard - My Ideas', 'Dashboard'),
-    layout: 'main',
+  res.render('pages/dashboard/startup/overview', {
+    ...getPageData('Dashboard - Overview', 'Dashboard'),
+    layout: 'startup',
+    activeOverview: true,
   });
 });
 
 // GET enterprise dashboard
 router.get('/enterprise-dashboard', (req, res) => {
-  res.render('pages/dashboard/enterprise-dashboard', {
-    ...getPageData(
-      'Enterprise Dashboard - Manage Startups',
-      'EnterpriseDashboard'
-    ),
-    layout: 'main',
+  res.render('pages/dashboard/enterprise/overview', {
+    ...getPageData('Enterprise Dashboard - Overview', 'EnterpriseDashboard'),
+    layout: 'enterprise',
+    activeOverview: true,
   });
 });
 
-// GET corporate dashboard
-router.get('/corporate-dashboard', (req, res) => {
-  // Mock data for corporate dashboard - replace with actual database queries
-  const corporateData = {
-    activeEnterprises: 12,
-    totalEnterprises: 15,
-    enterpriseGrowth: '+8.5%',
-    recentEnterprises: 3,
-    pendingApprovals: 2,
-    pendingEnterprises: [
-      {
-        id: 101,
-        name: 'Future Dynamics',
-        description: 'AI-powered logistics optimization platform',
-        requestedBy: 'Sarah Johnson',
-        industry: 'Logistics',
-        budget: '$750K',
-        submittedDate: '3 days ago',
-        daysPending: 3,
-      },
-      {
-        id: 102,
-        name: 'GreenTech Innovations',
-        description: 'Sustainable energy solutions for urban environments',
-        requestedBy: 'Michael Chen',
-        industry: 'Clean Energy',
-        budget: '$1.2M',
-        submittedDate: '5 days ago',
-        daysPending: 5,
-      },
-    ],
-    enterpriseList: [
-      {
-        id: 1,
-        name: 'TechCorp Enterprises',
-        status: 'Active',
-        initiatives: 5,
-        revenue: '$2.5M',
-        employees: 150,
-        lastActivity: '2 hours ago',
-      },
-      {
-        id: 2,
-        name: 'Innovate Solutions',
-        status: 'Active',
-        initiatives: 3,
-        revenue: '$1.8M',
-        employees: 95,
-        lastActivity: '1 day ago',
-      },
-      {
-        id: 3,
-        name: 'Future Dynamics',
-        status: 'Pending Approval',
-        initiatives: 2,
-        revenue: '$750K',
-        employees: 45,
-        lastActivity: '3 days ago',
-      },
-    ],
-    enterpriseStats: {
-      totalRevenue: '$15.2M',
-      avgRevenue: '$1.1M',
-      totalEmployees: 850,
-      avgEmployees: 62,
-    },
-    financialOverview: {
-      totalBudget: '$50M',
-      allocatedBudget: '$42.5M',
-      availableBudget: '$7.5M',
-      budgetUtilization: '85%',
-      costCenters: [
-        {
-          name: 'Technology',
-          allocated: '$15M',
-          spent: '$12.8M',
-          utilization: '85%',
-          status: 'On Track',
-        },
-        {
-          name: 'Operations',
-          allocated: '$12M',
-          spent: '$10.2M',
-          utilization: '85%',
-          status: 'On Track',
-        },
-        {
-          name: 'Marketing',
-          allocated: '$8M',
-          spent: '$7.5M',
-          utilization: '94%',
-          status: 'Over Budget',
-        },
-        {
-          name: 'HR & Talent',
-          allocated: '$7.5M',
-          spent: '$6.8M',
-          utilization: '91%',
-          status: 'On Track',
-        },
-        {
-          name: 'Facilities',
-          allocated: '$5M',
-          spent: '$4.2M',
-          utilization: '84%',
-          status: 'On Track',
-        },
-        {
-          name: 'R&D',
-          allocated: '$2.5M',
-          spent: '$1.0M',
-          utilization: '40%',
-          status: 'Under Budget',
-        },
-      ],
-      roiTracking: [
-        {
-          enterprise: 'TechCorp Enterprises',
-          investment: '$2.5M',
-          revenue: '$8.2M',
-          roi: '228%',
-          status: 'Excellent',
-        },
-        {
-          enterprise: 'Innovate Solutions',
-          investment: '$1.8M',
-          revenue: '$4.1M',
-          roi: '128%',
-          status: 'Good',
-        },
-        {
-          enterprise: 'Future Dynamics',
-          investment: '$750K',
-          revenue: '$1.2M',
-          roi: '60%',
-          status: 'Moderate',
-        },
-      ],
-      budgetVariance: '+2.3%',
-      forecastAccuracy: '94%',
-    },
-    riskCompliance: {
-      overallRiskScore: 'Medium',
-      complianceStatus: '98.5%',
-      activeRisks: 12,
-      criticalRisks: 2,
-      riskRegister: [
-        {
-          id: 1,
-          enterprise: 'TechCorp Enterprises',
-          risk: 'Market Competition',
-          category: 'Strategic',
-          impact: 'High',
-          probability: 'Medium',
-          status: 'Mitigating',
-          owner: 'Sarah Chen',
-        },
-        {
-          id: 2,
-          enterprise: 'Innovate Solutions',
-          risk: 'Technology Obsolescence',
-          category: 'Operational',
-          impact: 'Medium',
-          probability: 'Low',
-          status: 'Monitoring',
-          owner: 'Mike Johnson',
-        },
-        {
-          id: 3,
-          enterprise: 'Future Dynamics',
-          risk: 'Regulatory Changes',
-          category: 'Compliance',
-          impact: 'High',
-          probability: 'High',
-          status: 'Critical',
-          owner: 'Lisa Park',
-        },
-      ],
-      complianceMetrics: [
-        {
-          area: 'Data Privacy',
-          status: 'Compliant',
-          score: '100%',
-          lastAudit: '2 weeks ago',
-        },
-        {
-          area: 'Financial Reporting',
-          status: 'Compliant',
-          score: '98%',
-          lastAudit: '1 week ago',
-        },
-        {
-          area: 'Labor Laws',
-          status: 'Review Needed',
-          score: '85%',
-          lastAudit: '3 weeks ago',
-        },
-        {
-          area: 'Environmental',
-          status: 'Compliant',
-          score: '97%',
-          lastAudit: '1 month ago',
-        },
-        {
-          area: 'Cybersecurity',
-          status: 'Compliant',
-          score: '99%',
-          lastAudit: '1 week ago',
-        },
-      ],
-      auditTrail: [
-        {
-          action: 'Risk assessment completed',
-          enterprise: 'TechCorp Enterprises',
-          date: '2 days ago',
-          status: 'Approved',
-        },
-        {
-          action: 'Compliance audit passed',
-          enterprise: 'All Enterprises',
-          date: '1 week ago',
-          status: 'Completed',
-        },
-        {
-          action: 'New risk identified',
-          enterprise: 'Future Dynamics',
-          date: '3 days ago',
-          status: 'Under Review',
-        },
-      ],
-    },
-    performanceAnalytics: {
-      benchmarkData: {
-        industryAvg: 78,
-        topQuartile: 92,
-        corporateAvg: 85,
-        bestEnterprise: 'TechCorp Enterprises',
-      },
-      performanceHeatmap: [
-        {
-          enterprise: 'TechCorp Enterprises',
-          q1: 95,
-          q2: 88,
-          q3: 92,
-          q4: 96,
-          average: 93,
-        },
-        {
-          enterprise: 'Innovate Solutions',
-          q1: 82,
-          q2: 85,
-          q3: 78,
-          q4: 88,
-          average: 83,
-        },
-        {
-          enterprise: 'Future Dynamics',
-          q1: 75,
-          q2: 80,
-          q3: 82,
-          q4: 85,
-          average: 81,
-        },
-      ],
-      predictiveInsights: [
-        {
-          insight: 'TechCorp Enterprises shows 15% growth potential in Q2',
-          confidence: 'High',
-          impact: 'Positive',
-        },
-        {
-          insight: 'Future Dynamics may face resource constraints',
-          confidence: 'Medium',
-          impact: 'Negative',
-        },
-        {
-          insight: 'Innovate Solutions trending above industry average',
-          confidence: 'High',
-          impact: 'Positive',
-        },
-      ],
-      kpiTracking: [
-        {
-          metric: 'Revenue Growth',
-          target: '25%',
-          actual: '22%',
-          status: 'On Track',
-        },
-        {
-          metric: 'Customer Acquisition',
-          target: '150',
-          actual: '142',
-          status: 'On Track',
-        },
-        {
-          metric: 'Employee Satisfaction',
-          target: '4.2/5',
-          actual: '4.1/5',
-          status: 'Slightly Below',
-        },
-        {
-          metric: 'Innovation Index',
-          target: '85',
-          actual: '88',
-          status: 'Exceeding',
-        },
-      ],
-    },
-    recentActivities: [
-      {
-        action: 'New enterprise approved',
-        enterprise: 'TechCorp Enterprises',
-        time: '2 hours ago',
-      },
-      {
-        action: 'Initiative launched',
-        enterprise: 'Innovate Solutions',
-        time: '5 hours ago',
-      },
-      {
-        action: 'Revenue milestone reached',
-        enterprise: 'Future Dynamics',
-        time: '1 day ago',
-      },
-      {
-        action: 'Budget reallocation approved',
-        enterprise: 'Marketing',
-        time: '3 hours ago',
-      },
-    ],
-  };
+// GET enterprise dashboard startups
+router.get('/enterprise-dashboard/startups', (req, res) => {
+  res.render('pages/dashboard/enterprise/startups', {
+    ...getPageData('Enterprise Dashboard - Startups', 'EnterpriseDashboard'),
+    layout: 'enterprise',
+    activeStartups: true,
+  });
+});
 
-  res.render('pages/dashboard/corporate-dashboard', {
+// GET enterprise dashboard projects
+router.get('/enterprise-dashboard/projects', (req, res) => {
+  res.render('pages/dashboard/enterprise/projects', {
+    ...getPageData('Enterprise Dashboard - Projects', 'EnterpriseDashboard'),
+    layout: 'enterprise',
+    activeProjects: true,
+  });
+});
+
+// GET enterprise dashboard analytics
+router.get('/enterprise-dashboard/analytics', (req, res) => {
+  res.render('pages/dashboard/enterprise/analytics', {
+    ...getPageData('Enterprise Dashboard - Analytics', 'EnterpriseDashboard'),
+    layout: 'enterprise',
+    activeAnalytics: true,
+  });
+});
+
+// GET enterprise dashboard users
+router.get('/enterprise-dashboard/users', (req, res) => {
+  res.render('pages/dashboard/enterprise/users', {
+    ...getPageData('Enterprise Dashboard - Users', 'EnterpriseDashboard'),
+    layout: 'enterprise',
+    activeUsers: true,
+  });
+});
+
+// GET enterprise dashboard activity log
+router.get('/enterprise-dashboard/activity-log', (req, res) => {
+  res.render('pages/dashboard/enterprise/activity-log', {
     ...getPageData(
-      'Corporate Dashboard - Executive Oversight',
-      'CorporateDashboard'
+      'Enterprise Dashboard - Activity Log',
+      'EnterpriseDashboard'
     ),
-    layout: 'main',
-    ...corporateData,
+    layout: 'enterprise',
+    activeActivityLog: true,
+  });
+});
+
+// GET corporate dashboard overview
+router.get('/corporate-dashboard', (req, res) => {
+  res.render('pages/dashboard/corporate/overview', {
+    ...getPageData('Corporate Dashboard - Overview', 'CorporateDashboard'),
+    layout: 'corporate',
+    activeOverview: true,
+  });
+});
+
+// GET corporate dashboard enterprises
+router.get('/corporate-dashboard/enterprises', (req, res) => {
+  res.render('pages/dashboard/corporate/enterprises', {
+    ...getPageData('Corporate Dashboard - Enterprises', 'CorporateDashboard'),
+    layout: 'corporate',
+    activeEnterprises: true,
+  });
+});
+
+// GET corporate dashboard projects
+router.get('/corporate-dashboard/projects', (req, res) => {
+  res.render('pages/dashboard/corporate/projects', {
+    ...getPageData('Corporate Dashboard - Projects', 'CorporateDashboard'),
+    layout: 'corporate',
+    activeProjects: true,
+  });
+});
+
+// GET corporate dashboard analytics
+router.get('/corporate-dashboard/analytics', (req, res) => {
+  res.render('pages/dashboard/corporate/analytics', {
+    ...getPageData('Corporate Dashboard - Analytics', 'CorporateDashboard'),
+    layout: 'corporate',
+    activeAnalytics: true,
+  });
+});
+
+// GET corporate dashboard users
+router.get('/corporate-dashboard/users', (req, res) => {
+  res.render('pages/dashboard/corporate/users', {
+    ...getPageData('Corporate Dashboard - Users', 'CorporateDashboard'),
+    layout: 'corporate',
+    activeUsers: true,
+  });
+});
+
+// GET corporate dashboard activity log
+router.get('/corporate-dashboard/activity-log', (req, res) => {
+  res.render('pages/dashboard/corporate/activity-log', {
+    ...getPageData('Corporate Dashboard - Activity Log', 'CorporateDashboard'),
+    layout: 'corporate',
+    activeActivityLog: true,
   });
 });
 
 // GET dashboard tabs
 router.get('/dashboard/tab/business', (req, res) => {
-  res.render('pages/dashboard/dashboard-business', {
+  res.render('pages/dashboard/startup/business', {
     ...getPageData('Dashboard - Business', 'Dashboard'),
-    layout: 'main',
+    layout: 'startup',
+    activeBusiness: true,
   });
 });
 
 router.get('/dashboard/tab/financial', (req, res) => {
-  res.render('pages/dashboard/dashboard-financial', {
+  res.render('pages/dashboard/startup/financial', {
     ...getPageData('Dashboard - Financial', 'Dashboard'),
-    layout: 'main',
+    layout: 'startup',
+    activeFinancial: true,
   });
 });
 
 router.get('/dashboard/tab/marketing', (req, res) => {
-  res.render('pages/dashboard/dashboard-marketing', {
+  res.render('pages/dashboard/startup/marketing', {
     ...getPageData('Dashboard - Marketing', 'Dashboard'),
-    layout: 'main',
+    layout: 'startup',
+    activeMarketing: true,
   });
 });
 
 router.get('/dashboard/tab/fund', (req, res) => {
-  res.render('pages/dashboard/dashboard-fund', {
+  res.render('pages/dashboard/startup/fund', {
     ...getPageData('Dashboard - Funding', 'Dashboard'),
-    layout: 'main',
+    layout: 'startup',
+    activeFund: true,
   });
 });
 
 router.get('/dashboard/tab/team', (req, res) => {
-  res.render('pages/dashboard/dashboard-team', {
+  res.render('pages/dashboard/startup/team', {
     ...getPageData('Dashboard - Team', 'Dashboard'),
-    layout: 'main',
+    layout: 'startup',
+    activeTeam: true,
   });
 });
 
 router.get('/dashboard/tab/promote', (req, res) => {
-  res.render('pages/dashboard/dashboard-promote', {
+  res.render('pages/dashboard/startup/promote', {
     ...getPageData('Dashboard - Promotion', 'Dashboard'),
-    layout: 'main',
+    layout: 'startup',
+    activePromote: true,
   });
 });
 
-// GET team chat
-router.get('/chat', (req, res) => {
-  res.render('pages/chat/team-chat', {
-    ...getPageData('Team Collaboration - Chat', 'Chat'),
-    layout: 'main',
+router.get('/dashboard/tab/activity-log', (req, res) => {
+  res.render('pages/dashboard/startup/activity-log', {
+    ...getPageData('Dashboard - Activity Log', 'Dashboard'),
+    layout: 'startup',
+    activeActivityLog: true,
+  });
+});
+
+router.get('/dashboard/tab/idea', (req, res) => {
+  res.render('pages/dashboard/startup/idea', {
+    ...getPageData('Dashboard - Ideas', 'Dashboard'),
+    layout: 'startup',
+    activeIdea: true,
+  });
+});
+
+// GET collaborate
+router.get('/collaborate', (req, res) => {
+  res.render('pages/collaborate/collaborate', {
+    ...getPageData('Collaboration Hub', 'Collaborate'),
+    layout: 'collaborate',
+    activeDashboard: true,
+  });
+});
+
+// GET collaborate chat
+router.get('/collaborate/chat', (req, res) => {
+  res.render('pages/collaborate/chat', {
+    ...getPageData('Team Chat', 'Collaborate'),
+    layout: 'collaborate',
+    activeChat: true,
+  });
+});
+
+// GET collaborate tasks
+router.get('/collaborate/tasks', (req, res) => {
+  res.render('pages/collaborate/tasks', {
+    ...getPageData('Task Board', 'Collaborate'),
+    layout: 'collaborate',
+    activeTasks: true,
+  });
+});
+
+// GET collaborate files
+router.get('/collaborate/files', (req, res) => {
+  res.render('pages/collaborate/files', {
+    ...getPageData('File Repository', 'Collaborate'),
+    layout: 'collaborate',
+    activeFiles: true,
+  });
+});
+
+// GET collaborate team
+router.get('/collaborate/team', (req, res) => {
+  res.render('pages/collaborate/team', {
+    ...getPageData('Team Directory', 'Collaborate'),
+    layout: 'collaborate',
+    activeTeam: true,
+  });
+});
+
+// GET collaborate calendar
+router.get('/collaborate/calendar', (req, res) => {
+  res.render('pages/collaborate/calendar', {
+    ...getPageData('Team Calendar', 'Collaborate'),
+    layout: 'collaborate',
+    activeCalendar: true,
+  });
+});
+
+// GET collaborate activity
+router.get('/collaborate/activity', (req, res) => {
+  res.render('pages/collaborate/activity', {
+    ...getPageData('Activity Timeline', 'Collaborate'),
+    layout: 'collaborate',
+    activeActivity: true,
+  });
+});
+
+// GET collaborate settings
+router.get('/collaborate/settings', (req, res) => {
+  res.render('pages/collaborate/settings', {
+    ...getPageData('Collaboration Settings', 'Collaborate'),
+    layout: 'collaborate',
+    activeSettings: true,
   });
 });
 
 // GET AI assistant chat
-router.get('/chat/ai', (req, res) => {
-  res.render('pages/chat/ai-chat', getPageData('AI Assistant - Chat', 'Chat'));
+router.get('/collaborate/ai', (req, res) => {
+  res.render(
+    'pages/collaborate/ai-chat',
+    getPageData('AI Assistant - Chat', 'Collaborate')
+  );
 });
 
 // GET AI assistant detailed chat
-router.get('/chat/ai-new', (req, res) => {
-  res.render('pages/chat/ai-chat-new', {
-    ...getPageData('AI Assistant - Detailed Chat', 'Chat'),
+router.get('/collaborate/ai-new', (req, res) => {
+  res.render('pages/collaborate/ai-chat-new', {
+    ...getPageData('AI Assistant - Detailed Chat', 'Collaborate'),
     layout: 'main',
   });
 });
 
 // GET manus static chat
-router.get('/chat/manus-static', (req, res) => {
+router.get('/collaborate/manus-static', (req, res) => {
   res.render(
-    'pages/chat/manus-chat-static',
-    getPageData('Manus Static Chat', 'Chat')
+    'pages/collaborate/manus-chat-static',
+    getPageData('Manus Static Chat', 'Collaborate')
   );
 });
 
-// POST chat message
-router.post('/chat', (req, res) => {
+// POST collaborate message
+router.post('/collaborate', (req, res) => {
   const { message } = req.body;
   const timestamp = new Date().toLocaleTimeString([], {
     hour: '2-digit',
@@ -467,85 +315,75 @@ router.get('/reports', (req, res) => {
   );
 });
 
-// GET settings (redirect to profile)
+// GET settings overview
 router.get('/settings', (req, res) => {
-  res.redirect('/pages/settings/profile');
+  res.render('pages/account/settings/settings-center', {
+    ...getPageData('Settings - Accelerator Platform', 'Settings'),
+    layout: 'settings',
+    activeOverview: true,
+  });
 });
 
 // GET settings profile
 router.get('/settings/profile', (req, res) => {
   res.render('pages/account/settings/profile', {
-    ...getPageData('Account Settings - Profile', 'Settings'),
-    layout: 'main',
-    activeTab: 'profile',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
+    ...getPageData('Profile Settings', 'Settings'),
+    layout: 'settings',
+    activeProfile: true,
   });
 });
 
 // GET settings password
 router.get('/settings/password', (req, res) => {
   res.render('pages/account/settings/password', {
-    ...getPageData('Account Settings - Password', 'Settings'),
-    layout: 'main',
-    activeTab: 'password',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
+    ...getPageData('Password Settings', 'Settings'),
+    layout: 'settings',
+    activePassword: true,
   });
 });
 
 // GET settings subscription
 router.get('/settings/subscription', (req, res) => {
   res.render('pages/account/subscriptions/index', {
-    ...getPageData('Account Settings - Subscription', 'Settings'),
-    layout: 'main',
-    activeTab: 'subscription',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
+    ...getPageData('Subscription Settings', 'Settings'),
+    layout: 'settings',
+    activeSubscription: true,
   });
 });
 
-// GET settings payment
-router.get('/settings/payment', (req, res) => {
-  res.render('pages/account/payment/methods', {
-    ...getPageData('Account Settings - Payment', 'Settings'),
-    layout: 'main',
-    activeTab: 'payment',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
+// GET settings payment & billing
+router.get('/settings/payment-billing', (req, res) => {
+  res.render('pages/account/settings/payment-billing', {
+    ...getPageData('Payment & Billing', 'Settings'),
+    layout: 'settings',
+    activePaymentBilling: true,
   });
 });
 
 // GET settings votes
 router.get('/settings/votes', (req, res) => {
   res.render('pages/account/settings/votes', {
-    ...getPageData('Account Settings - Votes', 'Settings'),
-    layout: 'main',
-    activeTab: 'votes',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
-  });
-});
-
-// GET settings billing
-router.get('/settings/billing', (req, res) => {
-  res.render('pages/account/billing/history', {
-    ...getPageData('Account Settings - Billing', 'Settings'),
-    layout: 'main',
-    activeTab: 'billing',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
+    ...getPageData('Vote Management', 'Settings'),
+    layout: 'settings',
+    activeVotes: true,
   });
 });
 
 // GET settings rewards
 router.get('/settings/rewards', (req, res) => {
   res.render('pages/account/settings/rewards', {
-    ...getPageData('Account Settings - Rewards', 'Settings'),
-    layout: 'main',
-    activeTab: 'rewards',
-    pageTitle: 'Account Settings',
-    pageDescription: 'Manage account and website settings.',
+    ...getPageData('Voting Rewards', 'Settings'),
+    layout: 'settings',
+    activeRewards: true,
+  });
+});
+
+// GET settings credits
+router.get('/settings/credits', (req, res) => {
+  res.render('pages/account/settings/credits', {
+    ...getPageData('Credits Management', 'Settings'),
+    layout: 'settings',
+    activeCredits: true,
   });
 });
 
@@ -553,6 +391,22 @@ router.get('/settings/rewards', (req, res) => {
 router.get('/subscriptions/billing', (req, res) => {
   res.render('pages/account/billing/history', {
     ...getPageData('Billing History', 'Subscriptions'),
+    layout: 'main',
+  });
+});
+
+// GET subscriptions payment
+router.get('/subscriptions/payment', (req, res) => {
+  res.render('pages/account/payment/methods', {
+    ...getPageData('Payment Methods', 'Subscriptions'),
+    layout: 'main',
+  });
+});
+
+// GET subscriptions
+router.get('/subscriptions', (req, res) => {
+  res.render('pages/account/subscriptions/index', {
+    ...getPageData('Subscriptions', 'Subscriptions'),
     layout: 'main',
   });
 });
@@ -574,7 +428,7 @@ router.post('/settings/preferences', (req, res) => {
 router.get('/subscriptions', (req, res) => {
   res.render('pages/account/subscriptions/index', {
     ...getPageData('Subscriptions', 'Subscriptions'),
-    layout: 'main',
+    layout: 'fullwidth',
   });
 });
 
@@ -705,7 +559,7 @@ router.get('/portfolio', (req, res) => {
             avgVotes: avgVotes,
             tags: totalTags,
           },
-          layout: 'main',
+          layout: 'fullwidth',
         });
       } catch (processingError) {
         logger.error('Error processing portfolio data:', processingError);
@@ -759,7 +613,7 @@ router.get('/portfolio/:id', (req, res) => {
       res.render('pages/portfolio/portfolio-idea', {
         ...getPageData('Idea Details', 'Portfolio'),
         idea: idea,
-        layout: 'main',
+        layout: 'fullwidth',
       });
     })
     .catch((error) => {
@@ -896,19 +750,93 @@ router.get('/upgrade', (req, res) => {
   });
 });
 
-// GET learn page
+// GET learn center overview
 router.get('/learn', (req, res) => {
-  res.render('pages/learning/courses', {
-    ...getPageData('Learn - Accelerator Platform', 'Learn'),
-    layout: 'main',
+  res.render('pages/learn/learn-center', {
+    ...getPageData('Learning Center - Accelerator Platform', 'Learn'),
+    layout: 'learn',
+    activeOverview: true,
   });
 });
 
-// GET help center page
+// GET learn getting started
+router.get('/learn/getting-started', (req, res) => {
+  res.render('pages/learn/getting-started', {
+    ...getPageData('Getting Started - Learning Center', 'Learn'),
+    layout: 'learn',
+    activeGettingStarted: true,
+  });
+});
+
+// GET learn courses
+router.get('/learn/courses', (req, res) => {
+  res.render('pages/learn/courses', {
+    ...getPageData('Courses - Learning Center', 'Learn'),
+    layout: 'learn',
+    activeCourses: true,
+  });
+});
+
+// GET learn tutorials
+router.get('/learn/tutorials', (req, res) => {
+  res.render('pages/learn/tutorials', {
+    ...getPageData('Tutorials - Learning Center', 'Learn'),
+    layout: 'learn',
+    activeTutorials: true,
+  });
+});
+
+// GET learn resources
+router.get('/learn/resources', (req, res) => {
+  res.render('pages/learn/resources', {
+    ...getPageData('Resources - Learning Center', 'Learn'),
+    layout: 'learn',
+    activeResources: true,
+  });
+});
+
+// GET help center overview
 router.get('/help', (req, res) => {
   res.render('pages/help/help-center', {
     ...getPageData('Help Center - Accelerator Platform', 'Help'),
-    layout: 'main',
+    layout: 'help',
+    activeOverview: true,
+  });
+});
+
+// GET help getting started
+router.get('/help/getting-started', (req, res) => {
+  res.render('pages/help/getting-started', {
+    ...getPageData('Getting Started - Help Center', 'Help'),
+    layout: 'help',
+    activeGettingStarted: true,
+  });
+});
+
+// GET help ai assistant
+router.get('/help/ai-assistant', (req, res) => {
+  res.render('pages/help/ai-assistant', {
+    ...getPageData('AI Assistant - Help Center', 'Help'),
+    layout: 'help',
+    activeAIAssistant: true,
+  });
+});
+
+// GET help account billing
+router.get('/help/account-billing', (req, res) => {
+  res.render('pages/help/account-billing', {
+    ...getPageData('Account & Billing - Help Center', 'Help'),
+    layout: 'help',
+    activeAccountBilling: true,
+  });
+});
+
+// GET help faq
+router.get('/help/faq', (req, res) => {
+  res.render('pages/help/faq', {
+    ...getPageData('FAQ - Help Center', 'Help'),
+    layout: 'help',
+    activeFAQ: true,
   });
 });
 
@@ -916,7 +844,7 @@ router.get('/help', (req, res) => {
 router.get('/buy-credits', (req, res) => {
   res.render('pages/account/buy-credits', {
     ...getPageData('Buy Credits - Accelerator Platform', 'BuyCredits'),
-    layout: 'main',
+    layout: 'fullwidth',
   });
 });
 
@@ -924,7 +852,7 @@ router.get('/buy-credits', (req, res) => {
 router.get('/pages/buy-credits', (req, res) => {
   res.render('pages/account/buy-credits', {
     ...getPageData('Buy Credits - Accelerator Platform', 'BuyCredits'),
-    layout: 'main',
+    layout: 'fullwidth',
   });
 });
 

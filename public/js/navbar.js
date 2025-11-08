@@ -74,18 +74,20 @@
   }
 
   function initializeNavbarDropdowns() {
-    // Get the navbar user profile dropdown container
-    const navbarUserProfileDropdown = document.getElementById(
-      'navbar-user-profile-dropdown'
-    );
+    // Initialize user profile dropdown
+    initializeDropdown('navbar-user-profile-dropdown');
 
-    if (navbarUserProfileDropdown) {
+    // Initialize grid dropdown
+    initializeDropdown('navbar-grid-dropdown');
+  }
+
+  function initializeDropdown(dropdownId) {
+    const dropdownContainer = document.getElementById(dropdownId);
+
+    if (dropdownContainer) {
       // Get the dropdown button and menu
-      const dropdownButton = navbarUserProfileDropdown.querySelector(
-        'button[type="button"]'
-      );
-      const dropdownMenu =
-        navbarUserProfileDropdown.querySelector('div.absolute');
+      const dropdownButton = dropdownContainer.querySelector('button');
+      const dropdownMenu = dropdownContainer.querySelector('div.absolute');
 
       if (dropdownButton && dropdownMenu) {
         // Ensure the dropdown is initially closed
@@ -93,7 +95,7 @@
 
         // Close dropdown when clicking outside
         document.addEventListener('click', function (event) {
-          if (!navbarUserProfileDropdown.contains(event.target)) {
+          if (!dropdownContainer.contains(event.target)) {
             closeDropdown(dropdownMenu, dropdownButton);
           }
         });

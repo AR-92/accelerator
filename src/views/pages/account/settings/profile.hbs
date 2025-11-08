@@ -1,19 +1,13 @@
-<div class="container mx-auto max-w-7xl px-4 py-6">
-    <div class="flex items-center justify-between">
-        <div class="grid gap-1">
-            <h1 class="font-heading text-2xl font-semibold">Account Settings</h1>
-            <p class="text-base text-muted-foreground">Manage account and website settings.</p>
-        </div>
+<div class='flex flex-col gap-4 lg:gap-6'>
+    <div class='flex items-center justify-between'>
+      <div class='grid gap-1'>
+        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Profile Settings</h1>
+        <p class='text-base text-muted-foreground'>Update your personal information and profile preferences.</p>
+      </div>
     </div>
-    <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-[280px,1fr]">
-        {{> settings-nav}}
-        <div>
-            <div class="overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm">
-                <div class="p-6">
-                    <form action="/settings/profile" method="post" class="space-y-6">
-                        <div class="mb-6 flex justify-center">
-                            <h2 class="text-xl font-semibold">Profile Settings</h2>
-                        </div>
+
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <form action="/pages/settings/profile" method="post" class="space-y-6">
             <div class="space-y-2">
                 <label
                     class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-primary"
@@ -61,15 +55,11 @@
                         id="bio" name="bio" placeholder="Tell us about yourself"></textarea>
                 </div>
             </div>
-            <div class="flex gap-4">
-                <button
-                    class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md"
-                    type="submit">Update Profile</button>
-            </div>
-        </form>
-    </div>
-</div>
+        <div class='flex gap-4'>
+          <button
+            class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md'
+            type='submit'>Update Profile</button>
         </div>
+      </form>
     </div>
-</div>
-</content>
+  </div>

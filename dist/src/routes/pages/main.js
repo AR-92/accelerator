@@ -60,37 +60,40 @@ router.get('/dashboard/tab/promote', (req, res) => {
   });
 });
 
-// GET team chat
-router.get('/chat', (req, res) => {
-  res.render('pages/chat/team-chat', {
-    ...getPageData('Team Collaboration - Chat', 'Chat'),
+// GET collaborate
+router.get('/collaborate', (req, res) => {
+  res.render('pages/collaborate/collaborate', {
+    ...getPageData('Collaborate', 'Collaborate'),
     layout: 'main',
   });
 });
 
 // GET AI assistant chat
-router.get('/chat/ai', (req, res) => {
-  res.render('pages/chat/ai-chat', getPageData('AI Assistant - Chat', 'Chat'));
+router.get('/collaborate/ai', (req, res) => {
+  res.render(
+    'pages/collaborate/ai-chat',
+    getPageData('AI Assistant - Chat', 'Collaborate')
+  );
 });
 
 // GET AI assistant detailed chat
-router.get('/chat/ai-new', (req, res) => {
-  res.render('pages/chat/ai-chat-new', {
-    ...getPageData('AI Assistant - Detailed Chat', 'Chat'),
+router.get('/collaborate/ai-new', (req, res) => {
+  res.render('pages/collaborate/ai-chat-new', {
+    ...getPageData('AI Assistant - Detailed Chat', 'Collaborate'),
     layout: 'main',
   });
 });
 
 // GET manus static chat
-router.get('/chat/manus-static', (req, res) => {
+router.get('/collaborate/manus-static', (req, res) => {
   res.render(
-    'pages/chat/manus-chat-static',
-    getPageData('Manus Static Chat', 'Chat')
+    'pages/collaborate/manus-chat-static',
+    getPageData('Manus Static Chat', 'Collaborate')
   );
 });
 
-// POST chat message
-router.post('/chat', (req, res) => {
+// POST collaborate message
+router.post('/collaborate', (req, res) => {
   const { message } = req.body;
   const timestamp = new Date().toLocaleTimeString([], {
     hour: '2-digit',

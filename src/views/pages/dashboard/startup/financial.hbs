@@ -1,47 +1,15 @@
-<div class='p-4 w-full'>
-  <div class='flex flex-col gap-4 lg:gap-6'>
-    <div class='flex items-center justify-between'>
-      <div class='grid gap-1'>
-        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Business
-          Dashboard</h1>
-        <p class='text-base text-muted-foreground'>Build and refine your
-          business model.</p>
-      </div>
+<div class='flex flex-col gap-4 lg:gap-6'>
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1
+        class='font-heading text-2xl font-semibold dark:text-white'
+      >Financial Dashboard</h1>
+      <p class='text-base text-muted-foreground'>Track your financial
+        performance and projections.</p>
     </div>
-     <div
-       class='flex w-full items-center gap-[16px] overflow-x-auto border-b border-gray-200 dark:border-gray-700 lg:gap-[48px]'
-     >
-      <a
-        class='p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400'
-        href='/pages/dashboard'
-      >Idea</a>
-      <a
-        class='p-[10px] text-[16px] font-[500] border-b border-primary text-black dark:text-white dark:border-white'
-        href='/pages/dashboard/tab/business'
-      >Business</a>
-      <a
-        class='p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400'
-        href='/pages/dashboard/tab/financial'
-      >Financial</a>
-      <a
-        class='p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400'
-        href='/pages/dashboard/tab/marketing'
-      >Marketing</a>
-      <a
-        class='p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400'
-        href='/pages/dashboard/tab/fund'
-      >Fund</a>
-      <a
-        class='p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400'
-        href='/pages/dashboard/tab/team'
-      >Team</a>
-      <a
-        class='p-[10px] text-[16px] font-[500] text-gray-500 dark:text-gray-400'
-        href='/pages/dashboard/tab/promote'
-      >Promote</a>
-    </div>
+  </div>
 
-    <!-- Business Model Progress -->
+    <!-- Financial Metrics -->
     <div
       class='grid grid-cols-1 gap-[17px] sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5'
     >
@@ -53,15 +21,15 @@
           <div class='flex flex-col gap-[4px]'>
             <h3
               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
-            >Business Model</h3>
+            >Revenue</h3>
             <p
               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
-            >75%</p>
+            >$0</p>
           </div>
            <div>
-              <div style="background:#E3F2FD; border-radius: 6px;">
-                <div style="width:38px; height:38px; background:#E3F2FD; border-radius:50%; position:relative;">
-                  <div class="flex items-center justify-center" style="width:35px; height:35px; background:#2196F3; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Building' 'w-4 h-4 text-white'}}</div>
+              <div style="background:#E8F5E8; border-radius: 6px;">
+                <div style="width:38px; height:38px; background:#E8F5E8; border-radius:50%; position:relative;">
+                  <div class="flex items-center justify-center" style="width:35px; height:35px; background:#4CAF50; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'DollarSign' 'w-4 h-4 text-white'}}</div>
                 </div>
               </div>
            </div>
@@ -70,7 +38,7 @@
           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
         >
 {{lucide 'TrendingUp' 'w-5 h-4' style='color: #4CAF50'}}
-          <span class='text-[#4CAF50] dark:text-green-400'>+15%</span>Since last
+          <span class='text-[#4CAF50] dark:text-green-400'>+0%</span>Since last
           month
         </p>
       </div>
@@ -83,24 +51,24 @@
           <div class='flex flex-col gap-[4px]'>
             <h3
               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
-            >Market Research</h3>
+            >Expenses</h3>
             <p
               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
-            >60%</p>
+            >$0</p>
           </div>
-          <div>
-             <div style="background:#FFF3E0; border-radius: 6px;">
-               <div style="width:38px; height:38px; background:#FFF3E0; border-radius:50%; position:relative;">
-                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#FF9800; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Search' 'w-4 h-4 text-white'}}</div>
-               </div>
-             </div>
-          </div>
+           <div>
+              <div style="background:#FFEBEE; border-radius: 6px;">
+                <div style="width:38px; height:38px; background:#FFEBEE; border-radius:50%; position:relative;">
+                  <div class="flex items-center justify-center" style="width:35px; height:35px; background:#F44336; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Minus' 'w-4 h-4 text-white'}}</div>
+                </div>
+              </div>
+           </div>
         </div>
         <p
           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
         >
-{{lucide 'TrendingUp' 'w-5 h-4' style='color: #4CAF50'}}
-          <span class='text-[#4CAF50] dark:text-green-400'>+8%</span>Since last
+{{lucide 'TrendingDown' 'w-5 h-4' style='color: #F44336'}}
+          <span class='text-[#F44336] dark:text-red-400'>+0%</span>Since last
           month
         </p>
       </div>
@@ -113,24 +81,24 @@
           <div class='flex flex-col gap-[4px]'>
             <h3
               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
-            >Competitive Analysis</h3>
+            >Net Profit</h3>
             <p
               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
-            >45%</p>
+            >$0</p>
           </div>
-          <div>
-             <div style="background:#FCE4EC; border-radius: 6px;">
-               <div style="width:38px; height:38px; background:#FCE4EC; border-radius:50%; position:relative;">
-                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#E91E63; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Users' 'w-4 h-4 text-white'}}</div>
-               </div>
-             </div>
-          </div>
+           <div>
+              <div style="background:#FFF3E0; border-radius: 6px;">
+                <div style="width:38px; height:38px; background:#FFF3E0; border-radius:50%; position:relative;">
+                  <div class="flex items-center justify-center" style="width:35px; height:35px; background:#FF9800; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'TrendingUp' 'w-4 h-4 text-white'}}</div>
+                </div>
+              </div>
+           </div>
         </div>
         <p
           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
         >
-{{lucide 'TrendingUp' 'w-5 h-4' style='color: #4CAF50'}}
-          <span class='text-[#4CAF50] dark:text-green-400'>+12%</span>Since last
+{{lucide 'TrendingUp' 'w-5 h-4' style='color: #FF9800'}}
+          <span class='text-[#FF9800] dark:text-yellow-400'>+0%</span>Since last
           month
         </p>
       </div>
@@ -143,24 +111,24 @@
           <div class='flex flex-col gap-[4px]'>
             <h3
               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
-            >Business Plan</h3>
+            >Cash Flow</h3>
             <p
               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
-            >30%</p>
+            >$0</p>
           </div>
-          <div>
-             <div style="background:#E8F5E8; border-radius: 6px;">
-               <div style="width:38px; height:38px; background:#E8F5E8; border-radius:50%; position:relative;">
-                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#4CAF50; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'FileText' 'w-4 h-4 text-white'}}</div>
-               </div>
-             </div>
-          </div>
+           <div>
+              <div style="background:#E3F2FD; border-radius: 6px;">
+                <div style="width:38px; height:38px; background:#E3F2FD; border-radius:50%; position:relative;">
+                  <div class="flex items-center justify-center" style="width:35px; height:35px; background:#2196F3; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Wallet' 'w-4 h-4 text-white'}}</div>
+                </div>
+              </div>
+           </div>
         </div>
         <p
           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
         >
-{{lucide 'TrendingUp' 'w-5 h-4' style='color: #4CAF50'}}
-          <span class='text-[#4CAF50] dark:text-green-400'>+5%</span>Since last
+{{lucide 'TrendingUp' 'w-5 h-4' style='color: #2196F3'}}
+          <span class='text-[#2196F3] dark:text-blue-400'>+0%</span>Since last
           month
         </p>
       </div>
@@ -173,47 +141,47 @@
           <div class='flex flex-col gap-[4px]'>
             <h3
               class='text-[14px] font-[500] text-gray-500 dark:text-gray-400'
-            >Go-to-Market</h3>
+            >Financial Plan</h3>
             <p
               class='text-[18px] font-[600] text-gray-900 dark:text-gray-100'
-            >20%</p>
+            >25%</p>
           </div>
-          <div>
-             <div style="background:#F3E5F5; border-radius: 6px;">
-               <div style="width:38px; height:38px; background:#F3E5F5; border-radius:50%; position:relative;">
-                 <div class="flex items-center justify-center" style="width:35px; height:35px; background:#9C27B0; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'Rocket' 'w-4 h-4 text-white'}}</div>
-               </div>
-             </div>
-          </div>
+           <div>
+              <div style="background:#F3E5F5; border-radius: 6px;">
+                <div style="width:38px; height:38px; background:#F3E5F5; border-radius:50%; position:relative;">
+                  <div class="flex items-center justify-center" style="width:35px; height:35px; background:#9C27B0; border-radius:50%; position:absolute; top:1.5px; left:1.5px;">{{lucide 'FileText' 'w-4 h-4 text-white'}}</div>
+                </div>
+              </div>
+           </div>
         </div>
         <p
           class='flex items-center gap-[4px] text-[13px] font-[500] text-gray-500 dark:text-gray-400'
         >
-{{lucide 'TrendingUp' 'w-5 h-4' style='color: #4CAF50'}}
-          <span class='text-[#4CAF50] dark:text-green-400'>+3%</span>Since last
-          month
+{{lucide 'TrendingUp' 'w-5 h-4' style='color: #9C27B0'}}
+          <span class='text-[#9C27B0] dark:text-purple-400'>+10%</span>Since
+          last month
         </p>
       </div>
     </div>
 
-    <!-- Business Model Canvas Progress -->
+    <!-- Financial Projections and Charts -->
     <div class='flex flex-col items-stretch gap-[17px] lg:flex-row'>
       <div
         class='w-full rounded-md bg-card px-[26px] py-[20px] text-card-foreground lg:w-[60%] lg:min-w-[60%]'
       >
         <h3
           class='text-[18px] font-[500] text-gray-900 dark:text-gray-100 mb-4'
-        >Business Model Canvas Progress</h3>
-        <div class='grid grid-cols-2 gap-4'>
+        >Financial Projections</h3>
+        <div class='grid grid-cols-1 gap-4 md:grid-cols-2'>
           <div
-            class='p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800'
+            class='p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800'
           >
             <div class='flex items-center gap-3 mb-2'>
               <div
-                class='w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'
+                class='w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'
               >
                 <svg
-                  class='w-4 h-4 text-green-600 dark:text-green-400'
+                  class='w-4 h-4 text-blue-600 dark:text-blue-400'
                   fill='none'
                   stroke='currentColor'
                   viewBox='0 0 24 24'
@@ -222,15 +190,23 @@
                     stroke-linecap='round'
                     stroke-linejoin='round'
                     stroke-width='2'
-                    d='M5 13l4 4L19 7'
+                    d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'
                   ></path>
                 </svg>
               </div>
-              <h4 class='font-medium text-green-800 dark:text-green-400'>Value
-                Propositions</h4>
+              <h4 class='font-medium text-blue-800 dark:text-blue-400'>Revenue
+                Forecast</h4>
             </div>
-            <p class='text-sm text-green-700 dark:text-green-300'>Defined and
-              validated</p>
+            <p class='text-sm text-blue-700 dark:text-blue-300'>3-month
+              projection: $0</p>
+            <div
+              class='mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
+            >
+              <div
+                class='bg-blue-600 h-2 rounded-full'
+                style='width: 25%'
+              ></div>
+            </div>
           </div>
 
           <div
@@ -250,16 +226,24 @@
                     stroke-linecap='round'
                     stroke-linejoin='round'
                     stroke-width='2'
-                    d='M5 13l4 4L19 7'
+                    d='M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1'
                   ></path>
                 </svg>
               </div>
               <h4
                 class='font-medium text-green-800 dark:text-green-400'
-              >Customer Segments</h4>
+              >Break-even Analysis</h4>
             </div>
-            <p class='text-sm text-green-700 dark:text-green-300'>Identified and
-              profiled</p>
+            <p class='text-sm text-green-700 dark:text-green-300'>Target: Q2
+              2024</p>
+            <div
+              class='mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
+            >
+              <div
+                class='bg-green-600 h-2 rounded-full'
+                style='width: 40%'
+              ></div>
+            </div>
           </div>
 
           <div
@@ -279,27 +263,34 @@
                     stroke-linecap='round'
                     stroke-linejoin='round'
                     stroke-width='2'
-                    d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
+                    d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
                   ></path>
                 </svg>
               </div>
-              <h4
-                class='font-medium text-yellow-800 dark:text-yellow-400'
-              >Revenue Streams</h4>
+              <h4 class='font-medium text-yellow-800 dark:text-yellow-400'>Cash
+                Flow Planning</h4>
             </div>
-            <p class='text-sm text-yellow-700 dark:text-yellow-300'>Partially
-              defined</p>
+            <p class='text-sm text-yellow-700 dark:text-yellow-300'>6-month
+              runway</p>
+            <div
+              class='mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
+            >
+              <div
+                class='bg-yellow-600 h-2 rounded-full'
+                style='width: 60%'
+              ></div>
+            </div>
           </div>
 
           <div
-            class='p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800'
+            class='p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800'
           >
             <div class='flex items-center gap-3 mb-2'>
               <div
-                class='w-8 h-8 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center'
+                class='w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center'
               >
                 <svg
-                  class='w-4 h-4 text-red-600 dark:text-red-400'
+                  class='w-4 h-4 text-purple-600 dark:text-purple-400'
                   fill='none'
                   stroke='currentColor'
                   viewBox='0 0 24 24'
@@ -308,14 +299,24 @@
                     stroke-linecap='round'
                     stroke-linejoin='round'
                     stroke-width='2'
-                    d='M6 18L18 6M6 6l12 12'
+                    d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
                   ></path>
                 </svg>
               </div>
-              <h4 class='font-medium text-red-800 dark:text-red-400'>Cost
-                Structure</h4>
+              <h4
+                class='font-medium text-purple-800 dark:text-purple-400'
+              >Financial Statements</h4>
             </div>
-            <p class='text-sm text-red-700 dark:text-red-300'>Needs definition</p>
+            <p class='text-sm text-purple-700 dark:text-purple-300'>Draft
+              completed</p>
+            <div
+              class='mt-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
+            >
+              <div
+                class='bg-purple-600 h-2 rounded-full'
+                style='width: 80%'
+              ></div>
+            </div>
           </div>
         </div>
       </div>
@@ -328,37 +329,73 @@
         >Quick Actions</h3>
         <div class='space-y-3'>
           <a
-            href='/pages/business-model'
+            href='/pages/financial-model'
             class='flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md text-sm font-medium transition'
           >
-{{lucide 'Plus' 'w-4 h-4 mr-2'}}
-            Build Business Model
+            <svg
+              class='w-4 h-4 mr-2'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+            >
+              <path
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                stroke-width='2'
+                d='M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z'
+              ></path>
+            </svg>
+            Create Financial Model
           </a>
           <button
-            class='flex items-center justify-center w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition'
+            class='flex items-center justify-center w-full px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm font-medium transition'
           >
-{{lucide 'FileText' 'w-4 h-4 mr-2'}}
-            Market Research
+            <svg
+              class='w-4 h-4 mr-2'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+            >
+              <path
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                stroke-width='2'
+                d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'
+              ></path>
+            </svg>
+            Revenue Projections
           </button>
           <button
             class='flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md text-sm font-medium transition'
           >
-{{lucide 'BarChart3' 'w-4 h-4 mr-2'}}
-            Competitive Analysis
+            <svg
+              class='w-4 h-4 mr-2'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+            >
+              <path
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                stroke-width='2'
+                d='M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1'
+              ></path>
+            </svg>
+            Cost Analysis
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Recent Business Activities -->
+    <!-- Financial Activities -->
     <div
-      class='rounded-[6px] bg-card px-2 py-[20px] text-card-foreground'
+      class='rounded-[6px] bg-card px-[32px] py-[20px] text-card-foreground'
       style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
     >
       <div
         class='flex flex-col items-center justify-between gap-[16px] lg:flex-row'
       >
-        <h3 class='text-[28px] font-[600] text-primary'>Business Activities</h3>
+        <h3 class='text-[28px] font-[600] text-primary'>Financial Activities</h3>
         <div class='flex items-center gap-[20px]'>
           <button
             class='justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md flex items-center gap-[8px]'
@@ -400,7 +437,7 @@
                 >Status</th>
                 <th
                   class='h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 w-[116px] text-[16px] font-[600] text-primary lg:text-[22px]'
-                >Progress</th>
+                >Amount</th>
                 <th
                   class='h-12 px-4 text-left align-middle [&:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]'
                 >Due Date</th>
@@ -416,13 +453,25 @@
                 <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
                   <div class='flex w-[200px] items-center gap-[10px]'>
                     <div
-                      class='w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center'
+                      class='w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center'
                     >
-{{lucide 'File' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
+                      <svg
+                        class='w-5 h-5 text-green-600 dark:text-green-400'
+                        fill='none'
+                        stroke='currentColor'
+                        viewBox='0 0 24 24'
+                      >
+                        <path
+                          stroke-linecap='round'
+                          stroke-linejoin='round'
+                          stroke-width='2'
+                          d='M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1'
+                        ></path>
+                      </svg>
                     </div>
                     <p
                       class='text-[14px] font-[500] text-foreground lg:text-[16px]'
-                    >Define Value Proposition</p>
+                    >Revenue Model Setup</p>
                   </div>
                 </td>
                 <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
@@ -431,19 +480,14 @@
                   >Completed</span>
                 </td>
                 <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
-                  <div
-                    class='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
-                  >
-                    <div
-                      class='bg-green-600 h-2 rounded-full'
-                      style='width: 100%'
-                    ></div>
-                  </div>
+                  <p
+                    class='text-[14px] font-[500] text-[#2A2A2A] lg:text-[16px]'
+                  >$0</p>
                 </td>
                 <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
                   <p
                     class='text-[14px] font-[500] text-foreground lg:text-[16px]'
-                  >Dec 15, 2023</p>
+                  >Dec 20, 2023</p>
                 </td>
                 <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
                   <div class='flex justify-end'>
@@ -478,11 +522,23 @@
                     <div
                       class='w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center'
                     >
-{{lucide 'User' 'w-5 h-5 text-yellow-600 dark:text-yellow-400'}}
+                      <svg
+                        class='w-5 h-5 text-yellow-600 dark:text-yellow-400'
+                        fill='none'
+                        stroke='currentColor'
+                        viewBox='0 0 24 24'
+                      >
+                        <path
+                          stroke-linecap='round'
+                          stroke-linejoin='round'
+                          stroke-width='2'
+                          d='M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z'
+                        ></path>
+                      </svg>
                     </div>
                     <p
                       class='text-[14px] font-[500] text-foreground lg:text-[16px]'
-                    >Customer Segmentation</p>
+                    >Cost Structure Analysis</p>
                   </div>
                 </td>
                 <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
@@ -491,19 +547,14 @@
                   >In Progress</span>
                 </td>
                 <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
-                  <div
-                    class='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
-                  >
-                    <div
-                      class='bg-yellow-600 h-2 rounded-full'
-                      style='width: 75%'
-                    ></div>
-                  </div>
+                  <p
+                    class='text-[14px] font-[500] text-foreground lg:text-[16px]'
+                  >$0</p>
                 </td>
                 <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
                   <p
                     class='text-[14px] font-[500] text-foreground lg:text-[16px]'
-                  >Jan 20, 2024</p>
+                  >Jan 15, 2024</p>
                 </td>
                 <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
                   <div class='flex justify-end'>
@@ -538,11 +589,23 @@
                     <div
                       class='w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center'
                     >
-{{lucide 'DollarSign' 'w-5 h-5 text-red-600 dark:text-red-400'}}
+                      <svg
+                        class='w-5 h-5 text-red-600 dark:text-red-400'
+                        fill='none'
+                        stroke='currentColor'
+                        viewBox='0 0 24 24'
+                      >
+                        <path
+                          stroke-linecap='round'
+                          stroke-linejoin='round'
+                          stroke-width='2'
+                          d='M13 7h8m0 0v8m0-8l-8 8-4-4-6 6'
+                        ></path>
+                      </svg>
                     </div>
                     <p
                       class='text-[14px] font-[500] text-foreground lg:text-[16px]'
-                    >Revenue Model Design</p>
+                    >Financial Projections</p>
                   </div>
                 </td>
                 <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
@@ -551,19 +614,14 @@
                   >Not Started</span>
                 </td>
                 <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
-                  <div
-                    class='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
-                  >
-                    <div
-                      class='bg-red-600 h-2 rounded-full'
-                      style='width: 0%'
-                    ></div>
-                  </div>
+                  <p
+                    class='text-[14px] font-[500] text-foreground lg:text-[16px]'
+                  >$0</p>
                 </td>
                 <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
                   <p
                     class='text-[14px] font-[500] text-foreground lg:text-[16px]'
-                  >Feb 15, 2024</p>
+                  >Feb 28, 2024</p>
                 </td>
                 <td class='p-4 align-middle [&:has([role=checkbox])]:pr-0'>
                   <div class='flex justify-end'>

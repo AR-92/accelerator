@@ -319,8 +319,99 @@ const authOperations = {
   },
 };
 
+// Chat operations
+const chatOperations = {
+  // Send a message
+  sendMessage: async (messageData) => {
+    if (!isSupabaseAvailable) {
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('messages')
+        .insert([messageData])
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error('Error sending message:', error.message);
+      throw error;
+    }
+  },
+
+  // Get messages (with optional limit and offset for pagination)
+  getMessages: async (limit = 50, offset = 0) => {
+    if (!isSupabaseAvailable) {
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('messages')
+        .select(
+          `
+          *,
+          users:user_id (
+            name,
+            email,
+            avatar_url
+          )
+        `
+        )
+        .order('created_at', { ascending: true })
+        .range(offset, offset + limit - 1);
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error('Error getting messages:', error.message);
+      throw error;
+    }
+  },
+
+  // Get messages since a specific timestamp
+  getMessagesSince: async (sinceTimestamp) => {
+    if (!isSupabaseAvailable) {
+      throw new Error(
+        'Database not available. Please configure Supabase credentials.'
+      );
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('messages')
+        .select(
+          `
+          *,
+          users:user_id (
+            name,
+            email,
+            avatar_url
+          )
+        `
+        )
+        .gte('created_at', sinceTimestamp)
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error('Error getting messages since:', error.message);
+      throw error;
+    }
+  },
+};
+
 module.exports = {
   userOperations,
   productOperations,
   authOperations,
+  chatOperations,
 };
