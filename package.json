@@ -11,7 +11,8 @@
     "dev:browser-sync": "browser-sync start --proxy 'localhost:3000' --port 3002 --files 'src/views/**/*.hbs, public/**/*.js, public/**/*.css' --reload-delay 500",
     "build": "npx tailwindcss -i ./src/input.css -o ./public/css/main.css --minify",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "migrate": "node scripts/migrate-data.js"
   },
   "keywords": [
     "express",
@@ -46,6 +47,7 @@
     "handlebars": "^4.7.8",
     "helmet": "^7.1.0",
     "lucide-static": "^0.548.0",
+    "sqlite3": "^5.1.7",
     "tailwindcss-animate": "^1.0.7"
   }
 }

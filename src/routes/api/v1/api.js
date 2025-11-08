@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 // Supabase operations removed
 const aiRoutes = require('./ai');
+const {
+  getAllIdeas,
+  getVotesForIdea,
+  addVoteForIdea,
+} = require('../../../services/databaseService');
 
 // Include AI routes under /ai endpoint
 router.use('/ai', aiRoutes);
@@ -9,40 +14,33 @@ router.use('/ai', aiRoutes);
 // User and product routes removed - Supabase dependency
 
 // GET ideas list partial for HTMX
-router.get('/ideas-list', (req, res) => {
-  const fs = require('fs');
-  const path = require('path');
-  const ideasPath = path.join(__dirname, '../../../../data/ideas.json');
-  const ideas = JSON.parse(fs.readFileSync(ideasPath, 'utf8'));
-
-  res.render('partials/ideas-list', {
-    layout: null,
-    ideas: ideas,
-  });
+router.get('/ideas-list', async (req, res) => {
+  try {
+    const ideas = await getAllIdeas();
+    res.render('partials/ideas-list', {
+      layout: null,
+      ideas: ideas,
+    });
+  } catch (error) {
+    console.error('Error fetching ideas:', error);
+    res.status(500).json({ error: 'Failed to fetch ideas' });
+  }
 });
 
 // GET votes for an idea
-router.get('/ideas/:ideaSlug/votes', (req, res) => {
+router.get('/ideas/:ideaSlug/votes', async (req, res) => {
   try {
     const { ideaSlug } = req.params;
-    const fs = require('fs');
-    const path = require('path');
-    const votesPath = path.join(__dirname, '../../../../data/votes.json');
-
-    let votes = {};
-    if (fs.existsSync(votesPath)) {
-      votes = JSON.parse(fs.readFileSync(votesPath, 'utf8'));
-    }
-
-    const ideaVotes = votes[ideaSlug] || [];
-    res.json(ideaVotes);
+    const votes = await getVotesForIdea(ideaSlug);
+    res.json(votes);
   } catch (error) {
+    console.error('Error fetching votes:', error);
     res.status(500).json({ error: error.message });
   }
 });
 
 // POST vote for an idea
-router.post('/ideas/:ideaSlug/votes', (req, res) => {
+router.post('/ideas/:ideaSlug/votes', async (req, res) => {
   try {
     const { ideaSlug } = req.params;
     const {
@@ -52,6 +50,7 @@ router.post('/ideas/:ideaSlug/votes', (req, res) => {
       technicalFeasibility,
       scalability,
       marketSurvival,
+      userId,
     } = req.body;
 
     // Validate all required fields
@@ -68,33 +67,25 @@ router.post('/ideas/:ideaSlug/votes', (req, res) => {
         .json({ error: 'All evaluation criteria are required' });
     }
 
-    const fs = require('fs');
-    const path = require('path');
-    const votesPath = path.join(__dirname, '../../../../data/votes.json');
-
-    let votes = {};
-    if (fs.existsSync(votesPath)) {
-      votes = JSON.parse(fs.readFileSync(votesPath, 'utf8'));
-    }
-
-    if (!votes[ideaSlug]) votes[ideaSlug] = [];
-
-    const vote = {
+    const voteData = {
       marketViability: parseInt(marketViability),
       realWorldProblem: parseInt(realWorldProblem),
       innovation: parseInt(innovation),
       technicalFeasibility: parseInt(technicalFeasibility),
       scalability: parseInt(scalability),
       marketSurvival: parseInt(marketSurvival),
-      timestamp: new Date().toISOString(),
+      userId: userId || null,
     };
 
-    votes[ideaSlug].push(vote);
-
-    fs.writeFileSync(votesPath, JSON.stringify(votes, null, 2));
-
+    const result = await addVoteForIdea(ideaSlug, voteData);
+    const vote = {
+      ...voteData,
+      id: result.id,
+      timestamp: new Date().toISOString(),
+    };
     res.status(201).json(vote);
   } catch (error) {
+    console.error('Error adding vote:', error);
     res.status(500).json({ error: error.message });
   }
 });
