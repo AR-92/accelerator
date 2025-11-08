@@ -1,145 +1,188 @@
 <div class='flex flex-col gap-4 lg:gap-6'>
-    <div class='flex items-center justify-between'>
-      <div class='grid gap-1'>
-        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Courses</h1>
-        <p class='text-base text-muted-foreground'>Master the skills to build successful startups with our structured learning paths.</p>
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1
+        class='font-heading text-2xl font-semibold dark:text-white'
+      >Courses</h1>
+      <p class='text-base text-muted-foreground'>Master the skills to build
+        successful startups with our structured learning paths.</p>
+    </div>
+  </div>
+
+  <!-- Learning Paths -->
+  <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+    <!-- Business Fundamentals -->
+    <div
+      class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'
+    >
+      <div class='flex items-center gap-3 mb-4'>
+        <div
+          class='w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center group-hover:bg-purple-200 dark:group-hover:bg-purple-800 transition-colors'
+        >
+          {{lucide 'BookOpen' 'w-5 h-5 text-purple-600 dark:text-purple-400'}}
+        </div>
+        <h3 class='text-lg font-semibold text-foreground'>Business Fundamentals</h3>
       </div>
+      <p class='text-muted-foreground mb-4'>Learn the core principles of
+        starting and running a successful business.</p>
+      <div class='space-y-2 text-sm text-muted-foreground mb-4'>
+        <p><strong>Duration:</strong> 8 modules • 12 hours</p>
+        <p><strong>Level:</strong> Beginner</p>
+      </div>
+      <ul class='space-y-1 text-sm text-muted-foreground'>
+        <li>• Business planning and strategy</li>
+        <li>• Market research techniques</li>
+        <li>• Financial basics for entrepreneurs</li>
+        <li>• Legal considerations for startups</li>
+      </ul>
     </div>
 
-    <!-- Learning Paths -->
-    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-      <!-- Business Fundamentals -->
-      <div class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
-        <div class='flex items-center gap-3 mb-4'>
-          <div class='w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center group-hover:bg-purple-200 dark:group-hover:bg-purple-800 transition-colors'>
-            {{lucide 'BookOpen' 'w-5 h-5 text-purple-600 dark:text-purple-400'}}
-          </div>
-          <h3 class='text-lg font-semibold text-foreground'>Business Fundamentals</h3>
+    <!-- Technical Entrepreneurship -->
+    <div
+      class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'
+    >
+      <div class='flex items-center gap-3 mb-4'>
+        <div
+          class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors'
+        >
+          {{lucide 'Code' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
         </div>
-        <p class='text-muted-foreground mb-4'>Learn the core principles of starting and running a successful business.</p>
-        <div class='space-y-2 text-sm text-muted-foreground mb-4'>
-          <p><strong>Duration:</strong> 8 modules • 12 hours</p>
-          <p><strong>Level:</strong> Beginner</p>
-        </div>
-        <ul class='space-y-1 text-sm text-muted-foreground'>
-          <li>• Business planning and strategy</li>
-          <li>• Market research techniques</li>
-          <li>• Financial basics for entrepreneurs</li>
-          <li>• Legal considerations for startups</li>
-        </ul>
+        <h3 class='text-lg font-semibold text-foreground'>Technical
+          Entrepreneurship</h3>
       </div>
-
-      <!-- Technical Entrepreneurship -->
-      <div class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
-        <div class='flex items-center gap-3 mb-4'>
-          <div class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors'>
-            {{lucide 'Code' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
-          </div>
-          <h3 class='text-lg font-semibold text-foreground'>Technical Entrepreneurship</h3>
-        </div>
-        <p class='text-muted-foreground mb-4'>Build technical products and scale them into successful businesses.</p>
-        <div class='space-y-2 text-sm text-muted-foreground mb-4'>
-          <p><strong>Duration:</strong> 12 modules • 18 hours</p>
-          <p><strong>Level:</strong> Intermediate</p>
-        </div>
-        <ul class='space-y-1 text-sm text-muted-foreground'>
-          <li>• Product development lifecycle</li>
-          <li>• Technology stack selection</li>
-          <li>• Scaling technical infrastructure</li>
-          <li>• Technical team management</li>
-        </ul>
+      <p class='text-muted-foreground mb-4'>Build technical products and scale
+        them into successful businesses.</p>
+      <div class='space-y-2 text-sm text-muted-foreground mb-4'>
+        <p><strong>Duration:</strong> 12 modules • 18 hours</p>
+        <p><strong>Level:</strong> Intermediate</p>
       </div>
-
-      <!-- Team Building & Leadership -->
-      <div class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'>
-        <div class='flex items-center gap-3 mb-4'>
-          <div class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center group-hover:bg-green-200 dark:group-hover:bg-green-800 transition-colors'>
-            {{lucide 'Users' 'w-5 h-5 text-green-600 dark:text-green-400'}}
-          </div>
-          <h3 class='text-lg font-semibold text-foreground'>Team Building & Leadership</h3>
-        </div>
-        <p class='text-muted-foreground mb-4'>Learn to build and lead high-performing startup teams.</p>
-        <div class='space-y-2 text-sm text-muted-foreground mb-4'>
-          <p><strong>Duration:</strong> 6 modules • 8 hours</p>
-          <p><strong>Level:</strong> Beginner</p>
-        </div>
-        <ul class='space-y-1 text-sm text-muted-foreground'>
-          <li>• Hiring strategies for startups</li>
-          <li>• Team culture and dynamics</li>
-          <li>• Leadership skills development</li>
-          <li>• Conflict resolution techniques</li>
-        </ul>
-      </div>
+      <ul class='space-y-1 text-sm text-muted-foreground'>
+        <li>• Product development lifecycle</li>
+        <li>• Technology stack selection</li>
+        <li>• Scaling technical infrastructure</li>
+        <li>• Technical team management</li>
+      </ul>
     </div>
 
-    <!-- Featured Courses -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-semibold text-foreground mb-4'>Featured Courses</h3>
-      <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
-        <div class='flex items-start gap-4 p-4 rounded-lg border border-border'>
-          <div class='w-16 h-16 rounded-lg bg-purple-100 dark:bg-purple-900 flex items-center justify-center flex-shrink-0'>
-            {{lucide 'Presentation' 'w-8 h-8 text-purple-600 dark:text-purple-400'}}
-          </div>
-          <div class='flex-1'>
-            <h4 class='font-medium text-foreground mb-1'>Pitch Perfect: Mastering Investor Presentations</h4>
-            <p class='text-sm text-muted-foreground mb-2'>By Sarah Chen • 4.8 ★ (2,341 reviews)</p>
-            <p class='text-sm text-muted-foreground mb-3'>Learn how to craft compelling pitch decks and deliver presentations that captivate investors.</p>
-            <div class='flex items-center justify-between'>
-              <span class='text-sm text-muted-foreground'>2 hours • Video Course</span>
-              <span class='font-bold text-primary'>$49</span>
-            </div>
-          </div>
+    <!-- Team Building & Leadership -->
+    <div
+      class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow group'
+    >
+      <div class='flex items-center gap-3 mb-4'>
+        <div
+          class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center group-hover:bg-green-200 dark:group-hover:bg-green-800 transition-colors'
+        >
+          {{lucide 'Users' 'w-5 h-5 text-green-600 dark:text-green-400'}}
         </div>
+        <h3 class='text-lg font-semibold text-foreground'>Team Building &
+          Leadership</h3>
+      </div>
+      <p class='text-muted-foreground mb-4'>Learn to build and lead
+        high-performing startup teams.</p>
+      <div class='space-y-2 text-sm text-muted-foreground mb-4'>
+        <p><strong>Duration:</strong> 6 modules • 8 hours</p>
+        <p><strong>Level:</strong> Beginner</p>
+      </div>
+      <ul class='space-y-1 text-sm text-muted-foreground'>
+        <li>• Hiring strategies for startups</li>
+        <li>• Team culture and dynamics</li>
+        <li>• Leadership skills development</li>
+        <li>• Conflict resolution techniques</li>
+      </ul>
+    </div>
+  </div>
 
-        <div class='flex items-start gap-4 p-4 rounded-lg border border-border'>
-          <div class='w-16 h-16 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center flex-shrink-0'>
-            {{lucide 'Calculator' 'w-8 h-8 text-blue-600 dark:text-blue-400'}}
-          </div>
-          <div class='flex-1'>
-            <h4 class='font-medium text-foreground mb-1'>Financial Modeling for Startups</h4>
-            <p class='text-sm text-muted-foreground mb-2'>By Michael Rodriguez • 4.9 ★ (1,892 reviews)</p>
-            <p class='text-sm text-muted-foreground mb-3'>Build comprehensive financial models to plan your startup's growth and fundraising.</p>
-            <div class='flex items-center justify-between'>
-              <span class='text-sm text-muted-foreground'>6 hours • Interactive Course</span>
-              <span class='font-bold text-primary'>$79</span>
-            </div>
+  <!-- Featured Courses -->
+  <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+    <h3 class='text-lg font-semibold text-foreground mb-4'>Featured Courses</h3>
+    <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
+      <div class='flex items-start gap-4 p-4 rounded-lg border border-border'>
+        <div
+          class='w-16 h-16 rounded-lg bg-purple-100 dark:bg-purple-900 flex items-center justify-center flex-shrink-0'
+        >
+          {{lucide
+            'Presentation'
+            'w-8 h-8 text-purple-600 dark:text-purple-400'
+          }}
+        </div>
+        <div class='flex-1'>
+          <h4 class='font-medium text-foreground mb-1'>Pitch Perfect: Mastering
+            Investor Presentations</h4>
+          <p class='text-sm text-muted-foreground mb-2'>By Sarah Chen • 4.8 ★
+            (2,341 reviews)</p>
+          <p class='text-sm text-muted-foreground mb-3'>Learn how to craft
+            compelling pitch decks and deliver presentations that captivate
+            investors.</p>
+          <div class='flex items-center justify-between'>
+            <span class='text-sm text-muted-foreground'>2 hours • Video Course</span>
+            <span class='font-bold text-primary'>$49</span>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Course Categories -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-semibold text-foreground mb-4'>Course Categories</h3>
-      <div class='grid grid-cols-2 md:grid-cols-4 gap-4'>
-        <div class='text-center p-4 rounded-lg hover:bg-muted transition-colors'>
-          <div class='w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center mx-auto mb-3'>
-            {{lucide 'Briefcase' 'w-6 h-6 text-purple-600 dark:text-purple-400'}}
-          </div>
-          <h4 class='font-medium text-foreground mb-1'>Business</h4>
-          <p class='text-xs text-muted-foreground'>Strategy & Planning</p>
+      <div class='flex items-start gap-4 p-4 rounded-lg border border-border'>
+        <div
+          class='w-16 h-16 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center flex-shrink-0'
+        >
+          {{lucide 'Calculator' 'w-8 h-8 text-blue-600 dark:text-blue-400'}}
         </div>
-        <div class='text-center p-4 rounded-lg hover:bg-muted transition-colors'>
-          <div class='w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mx-auto mb-3'>
-            {{lucide 'Code' 'w-6 h-6 text-blue-600 dark:text-blue-400'}}
+        <div class='flex-1'>
+          <h4 class='font-medium text-foreground mb-1'>Financial Modeling for
+            Startups</h4>
+          <p class='text-sm text-muted-foreground mb-2'>By Michael Rodriguez •
+            4.9 ★ (1,892 reviews)</p>
+          <p class='text-sm text-muted-foreground mb-3'>Build comprehensive
+            financial models to plan your startup's growth and fundraising.</p>
+          <div class='flex items-center justify-between'>
+            <span class='text-sm text-muted-foreground'>6 hours • Interactive
+              Course</span>
+            <span class='font-bold text-primary'>$79</span>
           </div>
-          <h4 class='font-medium text-foreground mb-1'>Technical</h4>
-          <p class='text-xs text-muted-foreground'>Development & Tech</p>
-        </div>
-        <div class='text-center p-4 rounded-lg hover:bg-muted transition-colors'>
-          <div class='w-12 h-12 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mx-auto mb-3'>
-            {{lucide 'TrendingUp' 'w-6 h-6 text-green-600 dark:text-green-400'}}
-          </div>
-          <h4 class='font-medium text-foreground mb-1'>Growth</h4>
-          <p class='text-xs text-muted-foreground'>Marketing & Sales</p>
-        </div>
-        <div class='text-center p-4 rounded-lg hover:bg-muted transition-colors'>
-          <div class='w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center mx-auto mb-3'>
-            {{lucide 'Coins' 'w-6 h-6 text-orange-600 dark:text-orange-400'}}
-          </div>
-          <h4 class='font-medium text-foreground mb-1'>Finance</h4>
-          <p class='text-xs text-muted-foreground'>Funding & Investment</p>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Course Categories -->
+  <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+    <h3 class='text-lg font-semibold text-foreground mb-4'>Course Categories</h3>
+    <div class='grid grid-cols-2 md:grid-cols-4 gap-4'>
+      <div class='text-center p-4 rounded-lg hover:bg-muted transition-colors'>
+        <div
+          class='w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center mx-auto mb-3'
+        >
+          {{lucide 'Briefcase' 'w-6 h-6 text-purple-600 dark:text-purple-400'}}
+        </div>
+        <h4 class='font-medium text-foreground mb-1'>Business</h4>
+        <p class='text-xs text-muted-foreground'>Strategy & Planning</p>
+      </div>
+      <div class='text-center p-4 rounded-lg hover:bg-muted transition-colors'>
+        <div
+          class='w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center mx-auto mb-3'
+        >
+          {{lucide 'Code' 'w-6 h-6 text-blue-600 dark:text-blue-400'}}
+        </div>
+        <h4 class='font-medium text-foreground mb-1'>Technical</h4>
+        <p class='text-xs text-muted-foreground'>Development & Tech</p>
+      </div>
+      <div class='text-center p-4 rounded-lg hover:bg-muted transition-colors'>
+        <div
+          class='w-12 h-12 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mx-auto mb-3'
+        >
+          {{lucide 'TrendingUp' 'w-6 h-6 text-green-600 dark:text-green-400'}}
+        </div>
+        <h4 class='font-medium text-foreground mb-1'>Growth</h4>
+        <p class='text-xs text-muted-foreground'>Marketing & Sales</p>
+      </div>
+      <div class='text-center p-4 rounded-lg hover:bg-muted transition-colors'>
+        <div
+          class='w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center mx-auto mb-3'
+        >
+          {{lucide 'Coins' 'w-6 h-6 text-orange-600 dark:text-orange-400'}}
+        </div>
+        <h4 class='font-medium text-foreground mb-1'>Finance</h4>
+        <p class='text-xs text-muted-foreground'>Funding & Investment</p>
+      </div>
+    </div>
+  </div>
+</div>

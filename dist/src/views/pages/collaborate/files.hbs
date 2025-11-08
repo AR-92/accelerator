@@ -1,161 +1,217 @@
 <div class='flex flex-col gap-4 lg:gap-6'>
-    <div class='flex items-center justify-between'>
-      <div class='grid gap-1'>
-        <h1 class='font-heading text-2xl font-semibold dark:text-white'>File Repository</h1>
-        <p class='text-base text-muted-foreground'>Share and manage documents, images, and other files with your team.</p>
-      </div>
-      <div class='flex items-center gap-2'>
-        <button class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted'>
-          {{lucide 'Search' 'w-4 h-4'}}
-          Search
-        </button>
-        <button class='flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90'>
-          {{lucide 'Upload' 'w-4 h-4'}}
-          Upload File
-        </button>
-      </div>
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1 class='font-heading text-2xl font-semibold dark:text-white'>File
+        Repository</h1>
+      <p class='text-base text-muted-foreground'>Share and manage documents,
+        images, and other files with your team.</p>
     </div>
+    <div class='flex items-center gap-2'>
+      <button
+        class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted'
+      >
+        {{lucide 'Search' 'w-4 h-4'}}
+        Search
+      </button>
+      <button
+        class='flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90'
+      >
+        {{lucide 'Upload' 'w-4 h-4'}}
+        Upload File
+      </button>
+    </div>
+  </div>
 
-    <!-- File Stats -->
-    <div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
-      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
-        <div class='flex items-center justify-between'>
-          <div>
-            <p class='text-sm font-medium text-muted-foreground'>Total Files</p>
-            <p class='text-2xl font-bold'>47</p>
-          </div>
-          <div class='h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'>
-            {{lucide 'FileText' 'w-4 h-4 text-blue-600 dark:text-blue-400'}}
-          </div>
+  <!-- File Stats -->
+  <div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+    <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-sm font-medium text-muted-foreground'>Total Files</p>
+          <p class='text-2xl font-bold'>47</p>
         </div>
-      </div>
-
-      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
-        <div class='flex items-center justify-between'>
-          <div>
-            <p class='text-sm font-medium text-muted-foreground'>Storage Used</p>
-            <p class='text-2xl font-bold'>2.4 GB</p>
-          </div>
-          <div class='h-8 w-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'>
-            {{lucide 'HardDrive' 'w-4 h-4 text-green-600 dark:text-green-400'}}
-          </div>
-        </div>
-      </div>
-
-      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
-        <div class='flex items-center justify-between'>
-          <div>
-            <p class='text-sm font-medium text-muted-foreground'>Recent Uploads</p>
-            <p class='text-2xl font-bold'>12</p>
-          </div>
-          <div class='h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'>
-            {{lucide 'Clock' 'w-4 h-4 text-purple-600 dark:text-purple-400'}}
-          </div>
-        </div>
-      </div>
-
-      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
-        <div class='flex items-center justify-between'>
-          <div>
-            <p class='text-sm font-medium text-muted-foreground'>Shared Files</p>
-            <p class='text-2xl font-bold'>23</p>
-          </div>
-          <div class='h-8 w-8 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center'>
-            {{lucide 'Share' 'w-4 h-4 text-orange-600 dark:text-orange-400'}}
-          </div>
+        <div
+          class='h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'
+        >
+          {{lucide 'FileText' 'w-4 h-4 text-blue-600 dark:text-blue-400'}}
         </div>
       </div>
     </div>
 
-    <!-- File List -->
-    <div class='rounded-md bg-card shadow-sm'>
-      <div class='border-b border-border px-6 py-4'>
-        <h3 class='font-semibold text-foreground'>Recent Files</h3>
-      </div>
-      <div class='divide-y divide-border'>
-        <div class='flex items-center justify-between px-6 py-4 hover:bg-muted/50'>
-          <div class='flex items-center gap-4'>
-            <div class='flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900'>
-              {{lucide 'FileText' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
-            </div>
-            <div>
-              <p class='font-medium text-foreground'>Project_Plan.pdf</p>
-              <p class='text-sm text-muted-foreground'>Uploaded by John Doe • 2 hours ago</p>
-            </div>
-          </div>
-          <div class='flex items-center gap-2'>
-            <span class='text-sm text-muted-foreground'>2.3 MB</span>
-            <button class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'>
-              {{lucide 'Download' 'w-4 h-4'}}
-            </button>
-            <button class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'>
-              {{lucide 'MoreVertical' 'w-4 h-4'}}
-            </button>
-          </div>
+    <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-sm font-medium text-muted-foreground'>Storage Used</p>
+          <p class='text-2xl font-bold'>2.4 GB</p>
         </div>
-
-        <div class='flex items-center justify-between px-6 py-4 hover:bg-muted/50'>
-          <div class='flex items-center gap-4'>
-            <div class='flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900'>
-              {{lucide 'Image' 'w-5 h-5 text-green-600 dark:text-green-400'}}
-            </div>
-            <div>
-              <p class='font-medium text-foreground'>Wireframe_Mockup.png</p>
-              <p class='text-sm text-muted-foreground'>Uploaded by Sarah Miller • 4 hours ago</p>
-            </div>
-          </div>
-          <div class='flex items-center gap-2'>
-            <span class='text-sm text-muted-foreground'>5.7 MB</span>
-            <button class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'>
-              {{lucide 'Download' 'w-4 h-4'}}
-            </button>
-            <button class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'>
-              {{lucide 'MoreVertical' 'w-4 h-4'}}
-            </button>
-          </div>
-        </div>
-
-        <div class='flex items-center justify-between px-6 py-4 hover:bg-muted/50'>
-          <div class='flex items-center gap-4'>
-            <div class='flex h-10 w-10 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900'>
-              {{lucide 'FileSpreadsheet' 'w-5 h-5 text-purple-600 dark:text-purple-400'}}
-            </div>
-            <div>
-              <p class='font-medium text-foreground'>Budget_2024.xlsx</p>
-              <p class='text-sm text-muted-foreground'>Uploaded by Mike Ross • 1 day ago</p>
-            </div>
-          </div>
-          <div class='flex items-center gap-2'>
-            <span class='text-sm text-muted-foreground'>1.8 MB</span>
-            <button class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'>
-              {{lucide 'Download' 'w-4 h-4'}}
-            </button>
-            <button class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'>
-              {{lucide 'MoreVertical' 'w-4 h-4'}}
-            </button>
-          </div>
-        </div>
-
-        <div class='flex items-center justify-between px-6 py-4 hover:bg-muted/50'>
-          <div class='flex items-center gap-4'>
-            <div class='flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100 dark:bg-orange-900'>
-              {{lucide 'Presentation' 'w-5 h-5 text-orange-600 dark:text-orange-400'}}
-            </div>
-            <div>
-              <p class='font-medium text-foreground'>Client_Presentation.pptx</p>
-              <p class='text-sm text-muted-foreground'>Uploaded by Emma Lee • 2 days ago</p>
-            </div>
-          </div>
-          <div class='flex items-center gap-2'>
-            <span class='text-sm text-muted-foreground'>8.2 MB</span>
-            <button class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'>
-              {{lucide 'Download' 'w-4 h-4'}}
-            </button>
-            <button class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'>
-              {{lucide 'MoreVertical' 'w-4 h-4'}}
-            </button>
-          </div>
+        <div
+          class='h-8 w-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'
+        >
+          {{lucide 'HardDrive' 'w-4 h-4 text-green-600 dark:text-green-400'}}
         </div>
       </div>
     </div>
+
+    <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-sm font-medium text-muted-foreground'>Recent Uploads</p>
+          <p class='text-2xl font-bold'>12</p>
+        </div>
+        <div
+          class='h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'
+        >
+          {{lucide 'Clock' 'w-4 h-4 text-purple-600 dark:text-purple-400'}}
+        </div>
+      </div>
+    </div>
+
+    <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-sm font-medium text-muted-foreground'>Shared Files</p>
+          <p class='text-2xl font-bold'>23</p>
+        </div>
+        <div
+          class='h-8 w-8 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center'
+        >
+          {{lucide 'Share' 'w-4 h-4 text-orange-600 dark:text-orange-400'}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- File List -->
+  <div class='rounded-md bg-card shadow-sm'>
+    <div class='border-b border-border px-6 py-4'>
+      <h3 class='font-semibold text-foreground'>Recent Files</h3>
+    </div>
+    <div class='divide-y divide-border'>
+      <div
+        class='flex items-center justify-between px-6 py-4 hover:bg-muted/50'
+      >
+        <div class='flex items-center gap-4'>
+          <div
+            class='flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900'
+          >
+            {{lucide 'FileText' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
+          </div>
+          <div>
+            <p class='font-medium text-foreground'>Project_Plan.pdf</p>
+            <p class='text-sm text-muted-foreground'>Uploaded by John Doe • 2
+              hours ago</p>
+          </div>
+        </div>
+        <div class='flex items-center gap-2'>
+          <span class='text-sm text-muted-foreground'>2.3 MB</span>
+          <button
+            class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'
+          >
+            {{lucide 'Download' 'w-4 h-4'}}
+          </button>
+          <button
+            class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'
+          >
+            {{lucide 'MoreVertical' 'w-4 h-4'}}
+          </button>
+        </div>
+      </div>
+
+      <div
+        class='flex items-center justify-between px-6 py-4 hover:bg-muted/50'
+      >
+        <div class='flex items-center gap-4'>
+          <div
+            class='flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900'
+          >
+            {{lucide 'Image' 'w-5 h-5 text-green-600 dark:text-green-400'}}
+          </div>
+          <div>
+            <p class='font-medium text-foreground'>Wireframe_Mockup.png</p>
+            <p class='text-sm text-muted-foreground'>Uploaded by Sarah Miller •
+              4 hours ago</p>
+          </div>
+        </div>
+        <div class='flex items-center gap-2'>
+          <span class='text-sm text-muted-foreground'>5.7 MB</span>
+          <button
+            class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'
+          >
+            {{lucide 'Download' 'w-4 h-4'}}
+          </button>
+          <button
+            class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'
+          >
+            {{lucide 'MoreVertical' 'w-4 h-4'}}
+          </button>
+        </div>
+      </div>
+
+      <div
+        class='flex items-center justify-between px-6 py-4 hover:bg-muted/50'
+      >
+        <div class='flex items-center gap-4'>
+          <div
+            class='flex h-10 w-10 items-center justify-center rounded-lg bg-purple-100 dark:bg-purple-900'
+          >
+            {{lucide
+              'FileSpreadsheet'
+              'w-5 h-5 text-purple-600 dark:text-purple-400'
+            }}
+          </div>
+          <div>
+            <p class='font-medium text-foreground'>Budget_2024.xlsx</p>
+            <p class='text-sm text-muted-foreground'>Uploaded by Mike Ross • 1
+              day ago</p>
+          </div>
+        </div>
+        <div class='flex items-center gap-2'>
+          <span class='text-sm text-muted-foreground'>1.8 MB</span>
+          <button
+            class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'
+          >
+            {{lucide 'Download' 'w-4 h-4'}}
+          </button>
+          <button
+            class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'
+          >
+            {{lucide 'MoreVertical' 'w-4 h-4'}}
+          </button>
+        </div>
+      </div>
+
+      <div
+        class='flex items-center justify-between px-6 py-4 hover:bg-muted/50'
+      >
+        <div class='flex items-center gap-4'>
+          <div
+            class='flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100 dark:bg-orange-900'
+          >
+            {{lucide
+              'Presentation'
+              'w-5 h-5 text-orange-600 dark:text-orange-400'
+            }}
+          </div>
+          <div>
+            <p class='font-medium text-foreground'>Client_Presentation.pptx</p>
+            <p class='text-sm text-muted-foreground'>Uploaded by Emma Lee • 2
+              days ago</p>
+          </div>
+        </div>
+        <div class='flex items-center gap-2'>
+          <span class='text-sm text-muted-foreground'>8.2 MB</span>
+          <button
+            class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'
+          >
+            {{lucide 'Download' 'w-4 h-4'}}
+          </button>
+          <button
+            class='h-8 w-8 flex items-center justify-center hover:bg-muted rounded-md'
+          >
+            {{lucide 'MoreVertical' 'w-4 h-4'}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

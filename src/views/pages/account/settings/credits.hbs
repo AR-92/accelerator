@@ -1,196 +1,343 @@
 <div class='flex flex-col gap-4 lg:gap-6'>
-    <!-- Breadcrumb Navigation -->
-    <nav class='flex items-center space-x-2 text-sm text-muted-foreground'>
-      <a href='/pages/settings' class='hover:text-foreground'>Settings</a>
-      <span>/</span>
-      <a href='/pages/settings/billing' class='hover:text-foreground'>Billing & Payments</a>
-      <span>/</span>
-      <span class='text-foreground'>Credits</span>
-    </nav>
+  <!-- Breadcrumb Navigation -->
+  <nav class='flex items-center space-x-2 text-sm text-muted-foreground'>
+    <a href='/pages/settings' class='hover:text-foreground'>Settings</a>
+    <span>/</span>
+    <a href='/pages/settings/billing' class='hover:text-foreground'>Billing &
+      Payments</a>
+    <span>/</span>
+    <span class='text-foreground'>Credits</span>
+  </nav>
 
-    <div class='flex items-center justify-between'>
-      <div class='grid gap-1'>
-        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Credits Management</h1>
-        <p class='text-base text-muted-foreground'>Manage your credits, view usage history, and purchase additional credits.</p>
-      </div>
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1 class='font-heading text-2xl font-semibold dark:text-white'>Credits
+        Management</h1>
+      <p class='text-base text-muted-foreground'>Manage your credits, view usage
+        history, and purchase additional credits.</p>
     </div>
+  </div>
 
-    <!-- Current Balance Card -->
-    <div class='bg-gradient-to-r from-green-500 to-emerald-600 dark:from-green-600 dark:to-emerald-700 rounded-lg p-6 text-white'>
-      <div class='flex flex-col md:flex-row justify-between items-start md:items-center gap-4'>
-        <div>
-          <h2 class='text-xl font-bold mb-2'>Current Balance</h2>
-          <div class='flex items-baseline gap-2'>
-            <span class='text-4xl font-bold'>42</span>
-            <span class='text-lg'>credits</span>
-          </div>
-          <p class='mt-2 text-green-100'>Estimated usage: ~30% of your current plan</p>
+  <!-- Current Balance Card -->
+  <div
+    class='bg-gradient-to-r from-green-500 to-emerald-600 dark:from-green-600 dark:to-emerald-700 rounded-lg p-6 text-white'
+  >
+    <div
+      class='flex flex-col md:flex-row justify-between items-start md:items-center gap-4'
+    >
+      <div>
+        <h2 class='text-xl font-bold mb-2'>Current Balance</h2>
+        <div class='flex items-baseline gap-2'>
+          <span class='text-4xl font-bold'>42</span>
+          <span class='text-lg'>credits</span>
         </div>
-        <div class='flex gap-3'>
-          <a href='/pages/buy-credits' class='bg-white text-green-600 hover:bg-green-50 px-4 py-2 rounded-lg font-medium transition-colors inline-flex items-center gap-2'>
-            <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
-              <path d='M12 5v14M5 12h14'></path>
-            </svg>
-            Buy Credits
-          </a>
-        </div>
+        <p class='mt-2 text-green-100'>Estimated usage: ~30% of your current
+          plan</p>
       </div>
-    </div>
-
-    <!-- Usage Statistics -->
-    <div class='grid grid-cols-1 md:grid-cols-3 gap-6'>
-      <!-- Monthly Usage -->
-      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-        <div class='flex items-center gap-3 mb-4'>
-          <div class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'>
-            <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='text-blue-600 dark:text-blue-400'>
-              <path d='M3 3v18h18'></path>
-              <path d='m19 9-5 5-4-4-3 3'></path>
-            </svg>
-          </div>
-          <div>
-            <h3 class='font-semibold text-foreground'>Monthly Usage</h3>
-            <p class='text-sm text-muted-foreground'>This month</p>
-          </div>
-        </div>
-        <div class='text-2xl font-bold text-foreground'>28</div>
-        <p class='text-sm text-muted-foreground mt-1'>credits used</p>
-      </div>
-
-      <!-- Average Daily -->
-      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-        <div class='flex items-center gap-3 mb-4'>
-          <div class='w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'>
-            <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='text-purple-600 dark:text-purple-400'>
-              <circle cx='12' cy='12' r='10'></circle>
-              <polyline points='12,6 12,12 16,14'></polyline>
-            </svg>
-          </div>
-          <div>
-            <h3 class='font-semibold text-foreground'>Avg. Daily Usage</h3>
-            <p class='text-sm text-muted-foreground'>Last 30 days</p>
-          </div>
-        </div>
-        <div class='text-2xl font-bold text-foreground'>0.9</div>
-        <p class='text-sm text-muted-foreground mt-1'>credits per day</p>
-      </div>
-
-      <!-- Days Remaining -->
-      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-        <div class='flex items-center gap-3 mb-4'>
-          <div class='w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center'>
-            <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='text-orange-600 dark:text-orange-400'>
-              <rect width='18' height='18' x='3' y='4' rx='2' ry='2'></rect>
-              <line x1='16' x2='16' y1='2' y2='6'></line>
-              <line x1='8' x2='8' y1='2' y2='6'></line>
-              <line x1='3' x2='21' y1='10' y2='10'></line>
-            </svg>
-          </div>
-          <div>
-            <h3 class='font-semibold text-foreground'>Est. Days Left</h3>
-            <p class='text-sm text-muted-foreground'>At current usage</p>
-          </div>
-        </div>
-        <div class='text-2xl font-bold text-foreground'>12</div>
-        <p class='text-sm text-muted-foreground mt-1'>days remaining</p>
-      </div>
-    </div>
-
-    <!-- Recent Transactions -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <div class='flex items-center justify-between mb-6'>
-        <h2 class='text-xl font-semibold text-foreground'>Recent Transactions</h2>
-        <a href='/pages/settings/billing' class='text-sm text-primary hover:underline'>View all transactions</a>
-      </div>
-
-      <div class='space-y-4'>
-        <!-- Transaction Item -->
-        <div class='flex items-center justify-between py-3 border-b border-border last:border-b-0'>
-          <div class='flex items-center gap-3'>
-            <div class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'>
-              <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='text-green-600 dark:text-green-400'>
-                <path d='M12 5v14M5 12h14'></path>
-              </svg>
-            </div>
-            <div>
-              <p class='font-medium text-foreground'>Credit Purchase</p>
-              <p class='text-sm text-muted-foreground'>Growth Plan - 500 credits</p>
-            </div>
-          </div>
-          <div class='text-right'>
-            <p class='font-medium text-green-600'>+$39.99</p>
-            <p class='text-sm text-muted-foreground'>2 days ago</p>
-          </div>
-        </div>
-
-        <!-- Transaction Item -->
-        <div class='flex items-center justify-between py-3 border-b border-border last:border-b-0'>
-          <div class='flex items-center gap-3'>
-            <div class='w-10 h-10 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center'>
-              <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='text-red-600 dark:text-red-400'>
-                <path d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z'></path>
-              </svg>
-            </div>
-            <div>
-              <p class='font-medium text-foreground'>AI Assistant Usage</p>
-              <p class='text-sm text-muted-foreground'>Business model generation</p>
-            </div>
-          </div>
-          <div class='text-right'>
-            <p class='font-medium text-red-600'>-5 credits</p>
-            <p class='text-sm text-muted-foreground'>3 days ago</p>
-          </div>
-        </div>
-
-        <!-- Transaction Item -->
-        <div class='flex items-center justify-between py-3 border-b border-border last:border-b-0'>
-          <div class='flex items-center gap-3'>
-            <div class='w-10 h-10 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center'>
-              <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='text-red-600 dark:text-red-400'>
-                <path d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z'></path>
-              </svg>
-            </div>
-            <div>
-              <p class='font-medium text-foreground'>AI Assistant Usage</p>
-              <p class='text-sm text-muted-foreground'>Financial model analysis</p>
-            </div>
-          </div>
-          <div class='text-right'>
-            <p class='font-medium text-red-600'>-3 credits</p>
-            <p class='text-sm text-muted-foreground'>5 days ago</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Quick Actions -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h2 class='text-xl font-semibold text-foreground mb-4'>Quick Actions</h2>
-      <div class='grid grid-cols-1 md:grid-cols-2 gap-4'>
-        <a href='/pages/buy-credits' class='flex items-center gap-3 p-4 border border-border rounded-lg hover:bg-muted transition-colors'>
-          <div class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'>
-            <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='text-green-600 dark:text-green-400'>
-              <path d='M12 5v14M5 12h14'></path>
-            </svg>
-          </div>
-          <div>
-            <h3 class='font-medium text-foreground'>Buy More Credits</h3>
-            <p class='text-sm text-muted-foreground'>Purchase additional credits</p>
-          </div>
-        </a>
-
-        <a href='/pages/settings/billing' class='flex items-center gap-3 p-4 border border-border rounded-lg hover:bg-muted transition-colors'>
-          <div class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'>
-            <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='text-blue-600 dark:text-blue-400'>
-              <path d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'></path>
-              <polyline points='14,2 14,8 20,8'></polyline>
-            </svg>
-          </div>
-          <div>
-            <h3 class='font-medium text-foreground'>View Billing History</h3>
-            <p class='text-sm text-muted-foreground'>Download invoices and receipts</p>
-          </div>
+      <div class='flex gap-3'>
+        <a
+          href='/pages/buy-credits'
+          class='bg-white text-green-600 hover:bg-green-50 px-4 py-2 rounded-lg font-medium transition-colors inline-flex items-center gap-2'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='16'
+            height='16'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+          >
+            <path d='M12 5v14M5 12h14'></path>
+          </svg>
+          Buy Credits
         </a>
       </div>
     </div>
   </div>
+
+  <!-- Usage Statistics -->
+  <div class='grid grid-cols-1 md:grid-cols-3 gap-6'>
+    <!-- Monthly Usage -->
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <div class='flex items-center gap-3 mb-4'>
+        <div
+          class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='20'
+            height='20'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='text-blue-600 dark:text-blue-400'
+          >
+            <path d='M3 3v18h18'></path>
+            <path d='m19 9-5 5-4-4-3 3'></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class='font-semibold text-foreground'>Monthly Usage</h3>
+          <p class='text-sm text-muted-foreground'>This month</p>
+        </div>
+      </div>
+      <div class='text-2xl font-bold text-foreground'>28</div>
+      <p class='text-sm text-muted-foreground mt-1'>credits used</p>
+    </div>
+
+    <!-- Average Daily -->
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <div class='flex items-center gap-3 mb-4'>
+        <div
+          class='w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='20'
+            height='20'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='text-purple-600 dark:text-purple-400'
+          >
+            <circle cx='12' cy='12' r='10'></circle>
+            <polyline points='12,6 12,12 16,14'></polyline>
+          </svg>
+        </div>
+        <div>
+          <h3 class='font-semibold text-foreground'>Avg. Daily Usage</h3>
+          <p class='text-sm text-muted-foreground'>Last 30 days</p>
+        </div>
+      </div>
+      <div class='text-2xl font-bold text-foreground'>0.9</div>
+      <p class='text-sm text-muted-foreground mt-1'>credits per day</p>
+    </div>
+
+    <!-- Days Remaining -->
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <div class='flex items-center gap-3 mb-4'>
+        <div
+          class='w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='20'
+            height='20'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='text-orange-600 dark:text-orange-400'
+          >
+            <rect width='18' height='18' x='3' y='4' rx='2' ry='2'></rect>
+            <line x1='16' x2='16' y1='2' y2='6'></line>
+            <line x1='8' x2='8' y1='2' y2='6'></line>
+            <line x1='3' x2='21' y1='10' y2='10'></line>
+          </svg>
+        </div>
+        <div>
+          <h3 class='font-semibold text-foreground'>Est. Days Left</h3>
+          <p class='text-sm text-muted-foreground'>At current usage</p>
+        </div>
+      </div>
+      <div class='text-2xl font-bold text-foreground'>12</div>
+      <p class='text-sm text-muted-foreground mt-1'>days remaining</p>
+    </div>
+  </div>
+
+  <!-- Recent Transactions -->
+  <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+    <div class='flex items-center justify-between mb-6'>
+      <h2 class='text-xl font-semibold text-foreground'>Recent Transactions</h2>
+      <a
+        href='/pages/settings/billing'
+        class='text-sm text-primary hover:underline'
+      >View all transactions</a>
+    </div>
+
+    <div class='space-y-4'>
+      <!-- Transaction Item -->
+      <div
+        class='flex items-center justify-between py-3 border-b border-border last:border-b-0'
+      >
+        <div class='flex items-center gap-3'>
+          <div
+            class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='16'
+              height='16'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              class='text-green-600 dark:text-green-400'
+            >
+              <path d='M12 5v14M5 12h14'></path>
+            </svg>
+          </div>
+          <div>
+            <p class='font-medium text-foreground'>Credit Purchase</p>
+            <p class='text-sm text-muted-foreground'>Growth Plan - 500 credits</p>
+          </div>
+        </div>
+        <div class='text-right'>
+          <p class='font-medium text-green-600'>+$39.99</p>
+          <p class='text-sm text-muted-foreground'>2 days ago</p>
+        </div>
+      </div>
+
+      <!-- Transaction Item -->
+      <div
+        class='flex items-center justify-between py-3 border-b border-border last:border-b-0'
+      >
+        <div class='flex items-center gap-3'>
+          <div
+            class='w-10 h-10 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='16'
+              height='16'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              class='text-red-600 dark:text-red-400'
+            >
+              <path
+                d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z'
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <p class='font-medium text-foreground'>AI Assistant Usage</p>
+            <p class='text-sm text-muted-foreground'>Business model generation</p>
+          </div>
+        </div>
+        <div class='text-right'>
+          <p class='font-medium text-red-600'>-5 credits</p>
+          <p class='text-sm text-muted-foreground'>3 days ago</p>
+        </div>
+      </div>
+
+      <!-- Transaction Item -->
+      <div
+        class='flex items-center justify-between py-3 border-b border-border last:border-b-0'
+      >
+        <div class='flex items-center gap-3'>
+          <div
+            class='w-10 h-10 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='16'
+              height='16'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              class='text-red-600 dark:text-red-400'
+            >
+              <path
+                d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z'
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <p class='font-medium text-foreground'>AI Assistant Usage</p>
+            <p class='text-sm text-muted-foreground'>Financial model analysis</p>
+          </div>
+        </div>
+        <div class='text-right'>
+          <p class='font-medium text-red-600'>-3 credits</p>
+          <p class='text-sm text-muted-foreground'>5 days ago</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+    <h2 class='text-xl font-semibold text-foreground mb-4'>Quick Actions</h2>
+    <div class='grid grid-cols-1 md:grid-cols-2 gap-4'>
+      <a
+        href='/pages/buy-credits'
+        class='flex items-center gap-3 p-4 border border-border rounded-lg hover:bg-muted transition-colors'
+      >
+        <div
+          class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='20'
+            height='20'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='text-green-600 dark:text-green-400'
+          >
+            <path d='M12 5v14M5 12h14'></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class='font-medium text-foreground'>Buy More Credits</h3>
+          <p class='text-sm text-muted-foreground'>Purchase additional credits</p>
+        </div>
+      </a>
+
+      <a
+        href='/pages/settings/billing'
+        class='flex items-center gap-3 p-4 border border-border rounded-lg hover:bg-muted transition-colors'
+      >
+        <div
+          class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            width='20'
+            height='20'
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            stroke-width='2'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            class='text-blue-600 dark:text-blue-400'
+          >
+            <path
+              d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'
+            ></path>
+            <polyline points='14,2 14,8 20,8'></polyline>
+          </svg>
+        </div>
+        <div>
+          <h3 class='font-medium text-foreground'>View Billing History</h3>
+          <p class='text-sm text-muted-foreground'>Download invoices and
+            receipts</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

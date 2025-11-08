@@ -1,278 +1,422 @@
 <div class='flex flex-col gap-4 lg:gap-6'>
-    <div class='flex items-center justify-between'>
-      <div class='grid gap-1'>
-        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Billing & Payments</h1>
-        <p class='text-base text-muted-foreground'>Manage your subscription, payment methods, and billing history.</p>
-      </div>
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1 class='font-heading text-2xl font-semibold dark:text-white'>Billing &
+        Payments</h1>
+      <p class='text-base text-muted-foreground'>Manage your subscription,
+        payment methods, and billing history.</p>
     </div>
+  </div>
 
-    <!-- Quick Stats Cards -->
-    <div class='grid grid-cols-1 md:grid-cols-4 gap-6' aria-labelledby='billing-stats-heading'>
-      <h2 id='billing-stats-heading' class='sr-only'>Billing Statistics</h2>
-      <div class='bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white'>
-        <div class='flex items-center justify-between'>
-          <div>
-            <p class='text-blue-100 text-sm font-medium'>Active Cards</p>
-            <p class='text-2xl font-bold'>2</p>
-          </div>
-          <div class='w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center'>
-            <svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
-              <rect width='20' height='14' x='2' y='5' rx='2'/>
-              <line x1='2' x2='22' y1='10' y2='10'/>
-            </svg>
-          </div>
+  <!-- Quick Stats Cards -->
+  <div
+    class='grid grid-cols-1 md:grid-cols-4 gap-6'
+    aria-labelledby='billing-stats-heading'
+  >
+    <h2 id='billing-stats-heading' class='sr-only'>Billing Statistics</h2>
+    <div
+      class='bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white'
+    >
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-blue-100 text-sm font-medium'>Active Cards</p>
+          <p class='text-2xl font-bold'>2</p>
         </div>
-      </div>
-
-      <div class='bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white'>
-        <div class='flex items-center justify-between'>
-          <div>
-            <p class='text-green-100 text-sm font-medium'>Total Spent</p>
-            <p class='text-2xl font-bold'>$127.99</p>
-          </div>
-          <div class='w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center'>
-            <svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
-              <circle cx='12' cy='12' r='8'/>
-              <path d='M12 6v6l4 2'/>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <div class='bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white'>
-        <div class='flex items-center justify-between'>
-          <div>
-            <p class='text-purple-100 text-sm font-medium'>Current Plan</p>
-            <p class='text-2xl font-bold'>Pro</p>
-          </div>
-          <div class='w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center'>
-            <svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
-              <path d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'/>
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      <div class='bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-6 text-white'>
-        <div class='flex items-center justify-between'>
-          <div>
-            <p class='text-orange-100 text-sm font-medium'>Credits Balance</p>
-            <p class='text-2xl font-bold'>42</p>
-          </div>
-          <div class='w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center'>
-            <svg class='w-6 h-6' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
-              <circle cx='12' cy='12' r='8'/>
-              <path d='M12 6v6l4 2'/>
-            </svg>
-          </div>
+        <div
+          class='w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center'
+        >
+          <svg
+            class='w-6 h-6'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+            aria-hidden='true'
+          >
+            <rect width='20' height='14' x='2' y='5' rx='2' />
+            <line x1='2' x2='22' y1='10' y2='10' />
+          </svg>
         </div>
       </div>
     </div>
 
-    <!-- Subscription Section -->
-    <section class='bg-card rounded-xl border border-border overflow-hidden' aria-labelledby='subscription-heading'>
-      <div class='p-6 border-b border-border'>
-        <div class='flex items-center justify-between'>
-          <h2 id='subscription-heading' class='text-xl font-semibold text-foreground'>Current Subscription</h2>
-          <a href='/pages/subscriptions' class='text-sm text-primary hover:text-primary/80 font-medium'>Manage Plan</a>
+    <div
+      class='bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white'
+    >
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-green-100 text-sm font-medium'>Total Spent</p>
+          <p class='text-2xl font-bold'>$127.99</p>
+        </div>
+        <div
+          class='w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center'
+        >
+          <svg
+            class='w-6 h-6'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+            aria-hidden='true'
+          >
+            <circle cx='12' cy='12' r='8' />
+            <path d='M12 6v6l4 2' />
+          </svg>
         </div>
       </div>
+    </div>
 
-      <div class='p-6'>
-        <div class='flex items-center justify-between mb-4'>
-          <div>
-            <h3 class='text-lg font-semibold text-foreground'>Pro Plan</h3>
-            <p class='text-muted-foreground'>$29/month - Billed monthly</p>
-          </div>
-          <div class='text-right'>
-            <span class='inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'>
-              Active
+    <div
+      class='bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white'
+    >
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-purple-100 text-sm font-medium'>Current Plan</p>
+          <p class='text-2xl font-bold'>Pro</p>
+        </div>
+        <div
+          class='w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center'
+        >
+          <svg
+            class='w-6 h-6'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+            aria-hidden='true'
+          >
+            <path d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class='bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-6 text-white'
+    >
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-orange-100 text-sm font-medium'>Credits Balance</p>
+          <p class='text-2xl font-bold'>42</p>
+        </div>
+        <div
+          class='w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center'
+        >
+          <svg
+            class='w-6 h-6'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+            aria-hidden='true'
+          >
+            <circle cx='12' cy='12' r='8' />
+            <path d='M12 6v6l4 2' />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Subscription Section -->
+  <section
+    class='bg-card rounded-xl border border-border overflow-hidden'
+    aria-labelledby='subscription-heading'
+  >
+    <div class='p-6 border-b border-border'>
+      <div class='flex items-center justify-between'>
+        <h2
+          id='subscription-heading'
+          class='text-xl font-semibold text-foreground'
+        >Current Subscription</h2>
+        <a
+          href='/pages/subscriptions'
+          class='text-sm text-primary hover:text-primary/80 font-medium'
+        >Manage Plan</a>
+      </div>
+    </div>
+
+    <div class='p-6'>
+      <div class='flex items-center justify-between mb-4'>
+        <div>
+          <h3 class='text-lg font-semibold text-foreground'>Pro Plan</h3>
+          <p class='text-muted-foreground'>$29/month - Billed monthly</p>
+        </div>
+        <div class='text-right'>
+          <span
+            class='inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+          >
+            Active
+          </span>
+        </div>
+      </div>
+      <div class='grid grid-cols-1 md:grid-cols-3 gap-4 text-sm'>
+        <div>
+          <span class='text-muted-foreground'>Next billing:</span>
+          <span class='font-medium ml-2'>April 15, 2024</span>
+        </div>
+        <div>
+          <span class='text-muted-foreground'>Auto-renewal:</span>
+          <span class='font-medium ml-2'>Enabled</span>
+        </div>
+        <div>
+          <span class='text-muted-foreground'>Payment method:</span>
+          <span class='font-medium ml-2'>•••• 4242</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Payment Methods Section -->
+  <section
+    class='bg-card rounded-xl border border-border overflow-hidden'
+    aria-labelledby='payment-methods-heading'
+  >
+    <div class='p-6 border-b border-border'>
+      <div class='flex items-center justify-between'>
+        <h2
+          id='payment-methods-heading'
+          class='text-xl font-semibold text-foreground'
+        >Payment Methods</h2>
+        <button
+          class='text-sm text-primary hover:text-primary/80 font-medium'
+        >Manage All</button>
+      </div>
+    </div>
+
+    <div class='p-6'>
+      <div class='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+        <!-- Default Card -->
+        <div
+          class='relative border-2 border-primary rounded-xl p-6 bg-gradient-to-br from-primary/5 to-primary/10'
+        >
+          <div class='absolute top-4 right-4'>
+            <span
+              class='inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary text-primary-foreground'
+            >
+              Default
             </span>
           </div>
-        </div>
-        <div class='grid grid-cols-1 md:grid-cols-3 gap-4 text-sm'>
-          <div>
-            <span class='text-muted-foreground'>Next billing:</span>
-            <span class='font-medium ml-2'>April 15, 2024</span>
-          </div>
-          <div>
-            <span class='text-muted-foreground'>Auto-renewal:</span>
-            <span class='font-medium ml-2'>Enabled</span>
-          </div>
-          <div>
-            <span class='text-muted-foreground'>Payment method:</span>
-            <span class='font-medium ml-2'>•••• 4242</span>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Payment Methods Section -->
-    <section class='bg-card rounded-xl border border-border overflow-hidden' aria-labelledby='payment-methods-heading'>
-      <div class='p-6 border-b border-border'>
-        <div class='flex items-center justify-between'>
-          <h2 id='payment-methods-heading' class='text-xl font-semibold text-foreground'>Payment Methods</h2>
-          <button class='text-sm text-primary hover:text-primary/80 font-medium'>Manage All</button>
-        </div>
-      </div>
-
-      <div class='p-6'>
-        <div class='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-          <!-- Default Card -->
-          <div class='relative border-2 border-primary rounded-xl p-6 bg-gradient-to-br from-primary/5 to-primary/10'>
-            <div class='absolute top-4 right-4'>
-              <span class='inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary text-primary-foreground'>
-                Default
-              </span>
+          <div class='flex items-center gap-4 mb-4'>
+            <div
+              class='w-12 h-8 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg flex items-center justify-center'
+            >
+              <span class='text-white text-xs font-bold'>VISA</span>
             </div>
-
-            <div class='flex items-center gap-4 mb-4'>
-              <div class='w-12 h-8 bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg flex items-center justify-center'>
-                <span class='text-white text-xs font-bold'>VISA</span>
-              </div>
-              <div>
-                <p class='font-semibold text-foreground'>•••• •••• •••• 4242</p>
-                <p class='text-sm text-muted-foreground'>Expires 12/25</p>
-              </div>
+            <div>
+              <p class='font-semibold text-foreground'>•••• •••• •••• 4242</p>
+              <p class='text-sm text-muted-foreground'>Expires 12/25</p>
             </div>
+          </div>
 
+          <div class='flex gap-2'>
+            <button
+              class='text-sm text-muted-foreground hover:text-foreground'
+            >Edit</button>
+            <button
+              class='text-sm text-red-500 hover:text-red-600'
+            >Remove</button>
+          </div>
+        </div>
+
+        <!-- Secondary Card -->
+        <div
+          class='border border-border rounded-xl p-6 hover:shadow-md transition-shadow'
+        >
+          <div class='flex items-center gap-4 mb-4'>
+            <div
+              class='w-12 h-8 bg-gradient-to-r from-red-600 to-red-700 rounded-lg flex items-center justify-center'
+            >
+              <span class='text-white text-xs font-bold'>MC</span>
+            </div>
+            <div>
+              <p class='font-semibold text-foreground'>•••• •••• •••• 8888</p>
+              <p class='text-sm text-muted-foreground'>Expires 08/26</p>
+            </div>
+          </div>
+
+          <div class='flex items-center justify-between'>
+            <button
+              class='text-sm text-primary hover:text-primary/80 font-medium'
+            >Set as Default</button>
             <div class='flex gap-2'>
-              <button class='text-sm text-muted-foreground hover:text-foreground'>Edit</button>
-              <button class='text-sm text-red-500 hover:text-red-600'>Remove</button>
-            </div>
-          </div>
-
-          <!-- Secondary Card -->
-          <div class='border border-border rounded-xl p-6 hover:shadow-md transition-shadow'>
-            <div class='flex items-center gap-4 mb-4'>
-              <div class='w-12 h-8 bg-gradient-to-r from-red-600 to-red-700 rounded-lg flex items-center justify-center'>
-                <span class='text-white text-xs font-bold'>MC</span>
-              </div>
-              <div>
-                <p class='font-semibold text-foreground'>•••• •••• •••• 8888</p>
-                <p class='text-sm text-muted-foreground'>Expires 08/26</p>
-              </div>
-            </div>
-
-            <div class='flex items-center justify-between'>
-              <button class='text-sm text-primary hover:text-primary/80 font-medium'>Set as Default</button>
-              <div class='flex gap-2'>
-                <button class='text-sm text-muted-foreground hover:text-foreground'>Edit</button>
-                <button class='text-sm text-red-500 hover:text-red-600'>Remove</button>
-              </div>
+              <button
+                class='text-sm text-muted-foreground hover:text-foreground'
+              >Edit</button>
+              <button
+                class='text-sm text-red-500 hover:text-red-600'
+              >Remove</button>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Credits Section -->
-    <section class='bg-card rounded-xl border border-border overflow-hidden' aria-labelledby='credits-heading'>
-      <div class='p-6 border-b border-border'>
+  <!-- Credits Section -->
+  <section
+    class='bg-card rounded-xl border border-border overflow-hidden'
+    aria-labelledby='credits-heading'
+  >
+    <div class='p-6 border-b border-border'>
+      <div class='flex items-center justify-between'>
+        <h2
+          id='credits-heading'
+          class='text-xl font-semibold text-foreground'
+        >Credits Balance</h2>
+        <a
+          href='/pages/buy-credits'
+          class='text-sm text-primary hover:text-primary/80 font-medium'
+        >Buy Credits</a>
+      </div>
+    </div>
+
+    <div class='p-6'>
+      <div class='flex items-center justify-between mb-6'>
+        <div>
+          <div class='flex items-baseline gap-2'>
+            <span class='text-3xl font-bold text-foreground'>42</span>
+            <span class='text-lg text-muted-foreground'>credits</span>
+          </div>
+          <p class='text-sm text-muted-foreground mt-1'>Estimated usage: ~30% of
+            your current plan</p>
+        </div>
+        <div class='text-right'>
+          <p class='text-sm text-muted-foreground'>Last purchase: 2 days ago</p>
+          <p class='text-sm font-medium text-green-600'>+$39.99</p>
+        </div>
+      </div>
+
+      <div class='grid grid-cols-1 md:grid-cols-3 gap-4 mb-6'>
+        <div class='text-center p-4 bg-muted/50 rounded-lg'>
+          <div class='text-2xl font-bold text-foreground'>28</div>
+          <p class='text-sm text-muted-foreground'>Used this month</p>
+        </div>
+        <div class='text-center p-4 bg-muted/50 rounded-lg'>
+          <div class='text-2xl font-bold text-foreground'>0.9</div>
+          <p class='text-sm text-muted-foreground'>Avg. daily usage</p>
+        </div>
+        <div class='text-center p-4 bg-muted/50 rounded-lg'>
+          <div class='text-2xl font-bold text-foreground'>12</div>
+          <p class='text-sm text-muted-foreground'>Days remaining</p>
+        </div>
+      </div>
+
+      <div class='flex gap-3'>
+        <a
+          href='/pages/buy-credits'
+          class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md'
+        >
+          Buy More Credits
+        </a>
+        <a
+          href='/pages/settings/credits'
+          class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4 rounded-md'
+        >
+          View Details
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Billing History -->
+  <section
+    class='bg-card rounded-xl border border-border overflow-hidden'
+    aria-labelledby='billing-history-heading'
+  >
+    <div class='p-6 border-b border-border'>
+      <div class='flex items-center justify-between'>
+        <h2
+          id='billing-history-heading'
+          class='text-xl font-semibold text-foreground'
+        >Recent Billing History</h2>
+        <a
+          href='/pages/settings/billing'
+          class='text-sm text-primary hover:text-primary/80 font-medium'
+        >View All</a>
+      </div>
+    </div>
+
+    <div class='divide-y divide-border'>
+      <div class='p-6 hover:bg-muted/50 transition-colors'>
         <div class='flex items-center justify-between'>
-          <h2 id='credits-heading' class='text-xl font-semibold text-foreground'>Credits Balance</h2>
-          <a href='/pages/buy-credits' class='text-sm text-primary hover:text-primary/80 font-medium'>Buy Credits</a>
-        </div>
-      </div>
-
-      <div class='p-6'>
-        <div class='flex items-center justify-between mb-6'>
-          <div>
-            <div class='flex items-baseline gap-2'>
-              <span class='text-3xl font-bold text-foreground'>42</span>
-              <span class='text-lg text-muted-foreground'>credits</span>
+          <div class='flex items-center gap-4'>
+            <div
+              class='w-10 h-10 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center'
+            >
+              <svg
+                class='w-5 h-5 text-green-600 dark:text-green-400'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+                aria-hidden='true'
+              >
+                <path
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  stroke-width='2'
+                  d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
+                ></path>
+              </svg>
             </div>
-            <p class='text-sm text-muted-foreground mt-1'>Estimated usage: ~30% of your current plan</p>
+            <div>
+              <p class='font-medium text-foreground'>Invoice #INV-2024-004</p>
+              <p class='text-sm text-muted-foreground'>Credit Purchase - 500
+                credits</p>
+              <p class='text-xs text-muted-foreground'>Paid on Mar 20, 2024</p>
+            </div>
           </div>
           <div class='text-right'>
-            <p class='text-sm text-muted-foreground'>Last purchase: 2 days ago</p>
-            <p class='text-sm font-medium text-green-600'>+$39.99</p>
+            <p class='text-lg font-semibold text-foreground'>$39.99</p>
+            <div class='flex gap-2 mt-2'>
+              <button
+                class='text-sm text-primary hover:text-primary/80'
+              >Download PDF</button>
+              <button
+                class='text-sm text-muted-foreground hover:text-foreground'
+              >View Details</button>
+            </div>
           </div>
-        </div>
-
-        <div class='grid grid-cols-1 md:grid-cols-3 gap-4 mb-6'>
-          <div class='text-center p-4 bg-muted/50 rounded-lg'>
-            <div class='text-2xl font-bold text-foreground'>28</div>
-            <p class='text-sm text-muted-foreground'>Used this month</p>
-          </div>
-          <div class='text-center p-4 bg-muted/50 rounded-lg'>
-            <div class='text-2xl font-bold text-foreground'>0.9</div>
-            <p class='text-sm text-muted-foreground'>Avg. daily usage</p>
-          </div>
-          <div class='text-center p-4 bg-muted/50 rounded-lg'>
-            <div class='text-2xl font-bold text-foreground'>12</div>
-            <p class='text-sm text-muted-foreground'>Days remaining</p>
-          </div>
-        </div>
-
-        <div class='flex gap-3'>
-          <a href='/pages/buy-credits' class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md'>
-            Buy More Credits
-          </a>
-          <a href='/pages/settings/credits' class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4 rounded-md'>
-            View Details
-          </a>
         </div>
       </div>
-    </section>
 
-    <!-- Recent Billing History -->
-    <section class='bg-card rounded-xl border border-border overflow-hidden' aria-labelledby='billing-history-heading'>
-      <div class='p-6 border-b border-border'>
+      <div class='p-6 hover:bg-muted/50 transition-colors'>
         <div class='flex items-center justify-between'>
-          <h2 id='billing-history-heading' class='text-xl font-semibold text-foreground'>Recent Billing History</h2>
-          <a href='/pages/settings/billing' class='text-sm text-primary hover:text-primary/80 font-medium'>View All</a>
-        </div>
-      </div>
-
-      <div class='divide-y divide-border'>
-        <div class='p-6 hover:bg-muted/50 transition-colors'>
-          <div class='flex items-center justify-between'>
-            <div class='flex items-center gap-4'>
-              <div class='w-10 h-10 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center'>
-                <svg class='w-5 h-5 text-green-600 dark:text-green-400' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
-                </svg>
-              </div>
-              <div>
-                <p class='font-medium text-foreground'>Invoice #INV-2024-004</p>
-                <p class='text-sm text-muted-foreground'>Credit Purchase - 500 credits</p>
-                <p class='text-xs text-muted-foreground'>Paid on Mar 20, 2024</p>
-              </div>
+          <div class='flex items-center gap-4'>
+            <div
+              class='w-10 h-10 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center'
+            >
+              <svg
+                class='w-5 h-5 text-green-600 dark:text-green-400'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+                aria-hidden='true'
+              >
+                <path
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  stroke-width='2'
+                  d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
+                ></path>
+              </svg>
             </div>
-            <div class='text-right'>
-              <p class='text-lg font-semibold text-foreground'>$39.99</p>
-              <div class='flex gap-2 mt-2'>
-                <button class='text-sm text-primary hover:text-primary/80'>Download PDF</button>
-                <button class='text-sm text-muted-foreground hover:text-foreground'>View Details</button>
-              </div>
+            <div>
+              <p class='font-medium text-foreground'>Invoice #INV-2024-003</p>
+              <p class='text-sm text-muted-foreground'>Pro Plan - March 2024</p>
+              <p class='text-xs text-muted-foreground'>Paid on Mar 15, 2024</p>
             </div>
           </div>
-        </div>
-
-        <div class='p-6 hover:bg-muted/50 transition-colors'>
-          <div class='flex items-center justify-between'>
-            <div class='flex items-center gap-4'>
-              <div class='w-10 h-10 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center'>
-                <svg class='w-5 h-5 text-green-600 dark:text-green-400' fill='none' stroke='currentColor' viewBox='0 0 24 24' aria-hidden='true'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
-                </svg>
-              </div>
-              <div>
-                <p class='font-medium text-foreground'>Invoice #INV-2024-003</p>
-                <p class='text-sm text-muted-foreground'>Pro Plan - March 2024</p>
-                <p class='text-xs text-muted-foreground'>Paid on Mar 15, 2024</p>
-              </div>
-            </div>
-            <div class='text-right'>
-              <p class='text-lg font-semibold text-foreground'>$29.00</p>
-              <div class='flex gap-2 mt-2'>
-                <button class='text-sm text-primary hover:text-primary/80'>Download PDF</button>
-                <button class='text-sm text-muted-foreground hover:text-foreground'>View Details</button>
-              </div>
+          <div class='text-right'>
+            <p class='text-lg font-semibold text-foreground'>$29.00</p>
+            <div class='flex gap-2 mt-2'>
+              <button
+                class='text-sm text-primary hover:text-primary/80'
+              >Download PDF</button>
+              <button
+                class='text-sm text-muted-foreground hover:text-foreground'
+              >View Details</button>
             </div>
           </div>
         </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
+</div>

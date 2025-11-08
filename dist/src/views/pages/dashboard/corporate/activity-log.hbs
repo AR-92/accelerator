@@ -1,205 +1,382 @@
 <div class='flex flex-col gap-4 lg:gap-6'>
-    <div class='flex items-center justify-between'>
-      <div class='grid gap-1'>
-        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Activity
-          Log</h1>
-        <p class='text-base text-muted-foreground'>Comprehensive audit trail of all corporate activities and enterprise operations.</p>
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1 class='font-heading text-2xl font-semibold dark:text-white'>Activity
+        Log</h1>
+      <p class='text-base text-muted-foreground'>Comprehensive audit trail of
+        all corporate activities and enterprise operations.</p>
+    </div>
+    <div class='flex items-center gap-2'>
+      <button
+        class='flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90'
+      >
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          width='16'
+          height='16'
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='2'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+        >
+          <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4' />
+          <polyline points='7,10 12,15 17,10' />
+          <line x1='12' y1='15' x2='12' y2='3' />
+        </svg>
+        Export Audit Log
+      </button>
+    </div>
+  </div>
+
+  <!-- Activity Filters -->
+  <div
+    class='flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between'
+  >
+    <div class='flex flex-wrap items-center gap-2'>
+      <span class='text-sm font-medium text-muted-foreground'>Filter by:</span>
+      <select
+        class='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-800'
+      >
+        <option>All Activities</option>
+        <option>Enterprise Management</option>
+        <option>Financial Operations</option>
+        <option>Compliance & Security</option>
+        <option>Strategic Initiatives</option>
+        <option>System Administration</option>
+      </select>
+      <select
+        class='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-800'
+      >
+        <option>All Enterprises</option>
+        <option>Tech Enterprises Inc</option>
+        <option>Healthcare Ventures</option>
+        <option>Green Solutions Corp</option>
+        <option>Financial Services Group</option>
+      </select>
+      <select
+        class='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-800'
+      >
+        <option>All Users</option>
+        <option>Corporate Executives</option>
+        <option>Enterprise Admins</option>
+        <option>Department Heads</option>
+        <option>System Administrators</option>
+      </select>
+      <select
+        class='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-800'
+      >
+        <option>Last 7 days</option>
+        <option>Last 30 days</option>
+        <option>Last 90 days</option>
+        <option>All time</option>
+      </select>
+    </div>
+    <div class='flex items-center gap-2'>
+      <input
+        type='text'
+        placeholder='Search audit logs...'
+        class='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-800 w-64'
+      />
+      <button
+        class='px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md text-sm hover:bg-gray-200 dark:hover:bg-gray-600'
+      >
+        Search
+      </button>
+    </div>
+  </div>
+
+  <!-- Activity Log -->
+  <div class='rounded-md bg-card border border-gray-200 dark:border-gray-700'>
+    <div class='p-6'>
+      <div class='space-y-6'>
+        <!-- Today's Activities -->
+        <div>
+          <h3 class='text-lg font-semibold mb-4 text-foreground'>Today</h3>
+          <div class='space-y-4'>
+            <div
+              class='flex items-start gap-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800'
+            >
+              <div
+                class='w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0'
+              >
+                <svg
+                  class='w-5 h-5 text-blue-600 dark:text-blue-400'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'
+                  />
+                </svg>
+              </div>
+              <div class='flex-1 min-w-0'>
+                <div class='flex items-center gap-2 mb-1'>
+                  <span
+                    class='font-medium text-blue-800 dark:text-blue-400'
+                  >Corporate Executive</span>
+                  <span
+                    class='text-sm text-blue-600 dark:text-blue-500'
+                  >approved enterprise acquisition</span>
+                  <span class='text-xs text-muted-foreground'>1 hour ago</span>
+                </div>
+                <p class='text-sm text-blue-700 dark:text-blue-300'>Approved
+                  acquisition of "InnovateLabs" enterprise for $50M, expanding
+                  healthcare portfolio</p>
+              </div>
+            </div>
+
+            <div
+              class='flex items-start gap-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800'
+            >
+              <div
+                class='w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0'
+              >
+                <svg
+                  class='w-5 h-5 text-green-600 dark:text-green-400'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1'
+                  />
+                </svg>
+              </div>
+              <div class='flex-1 min-w-0'>
+                <div class='flex items-center gap-2 mb-1'>
+                  <span
+                    class='font-medium text-green-800 dark:text-green-400'
+                  >Finance Department</span>
+                  <span
+                    class='text-sm text-green-600 dark:text-green-500'
+                  >allocated investment funds</span>
+                  <span class='text-xs text-muted-foreground'>4 hours ago</span>
+                </div>
+                <p class='text-sm text-green-700 dark:text-green-300'>Allocated
+                  $25M in strategic investment funds to Tech Enterprises Inc for
+                  Q1 2025</p>
+              </div>
+            </div>
+
+            <div
+              class='flex items-start gap-4 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800'
+            >
+              <div
+                class='w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center flex-shrink-0'
+              >
+                <svg
+                  class='w-5 h-5 text-purple-600 dark:text-purple-400'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
+                  />
+                </svg>
+              </div>
+              <div class='flex-1 min-w-0'>
+                <div class='flex items-center gap-2 mb-1'>
+                  <span
+                    class='font-medium text-purple-800 dark:text-purple-400'
+                  >Compliance Officer</span>
+                  <span
+                    class='text-sm text-purple-600 dark:text-purple-500'
+                  >completed regulatory audit</span>
+                  <span class='text-xs text-muted-foreground'>6 hours ago</span>
+                </div>
+                <p
+                  class='text-sm text-purple-700 dark:text-purple-300'
+                >Successfully completed annual regulatory compliance audit for
+                  all enterprise operations</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Yesterday's Activities -->
+        <div>
+          <h3 class='text-lg font-semibold mb-4 text-foreground'>Yesterday</h3>
+          <div class='space-y-4'>
+            <div
+              class='flex items-start gap-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800'
+            >
+              <div
+                class='w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center flex-shrink-0'
+              >
+                <svg
+                  class='w-5 h-5 text-yellow-600 dark:text-yellow-400'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'
+                  />
+                </svg>
+              </div>
+              <div class='flex-1 min-w-0'>
+                <div class='flex items-center gap-2 mb-1'>
+                  <span
+                    class='font-medium text-yellow-800 dark:text-yellow-400'
+                  >HR Department</span>
+                  <span
+                    class='text-sm text-yellow-600 dark:text-yellow-500'
+                  >executive hiring approved</span>
+                  <span class='text-xs text-muted-foreground'>1 day ago</span>
+                </div>
+                <p class='text-sm text-yellow-700 dark:text-yellow-300'>Approved
+                  hiring of new CTO for Healthcare Ventures enterprise at
+                  executive level compensation</p>
+              </div>
+            </div>
+
+            <div
+              class='flex items-start gap-4 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800'
+            >
+              <div
+                class='w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center flex-shrink-0'
+              >
+                <svg
+                  class='w-5 h-5 text-red-600 dark:text-red-400'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z'
+                  />
+                </svg>
+              </div>
+              <div class='flex-1 min-w-0'>
+                <div class='flex items-center gap-2 mb-1'>
+                  <span
+                    class='font-medium text-red-800 dark:text-red-400'
+                  >Security Alert</span>
+                  <span
+                    class='text-sm text-red-600 dark:text-red-500'
+                  >unauthorized access blocked</span>
+                  <span class='text-xs text-muted-foreground'>1 day ago</span>
+                </div>
+                <p class='text-sm text-red-700 dark:text-red-300'>Blocked
+                  suspicious login attempt from unrecognized IP address
+                  targeting executive accounts</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Days Ago -->
+        <div>
+          <h3 class='text-lg font-semibold mb-4 text-foreground'>3 days ago</h3>
+          <div class='space-y-4'>
+            <div
+              class='flex items-start gap-4 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border border-indigo-200 dark:border-indigo-800'
+            >
+              <div
+                class='w-10 h-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center flex-shrink-0'
+              >
+                <svg
+                  class='w-5 h-5 text-indigo-600 dark:text-indigo-400'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
+                  />
+                </svg>
+              </div>
+              <div class='flex-1 min-w-0'>
+                <div class='flex items-center gap-2 mb-1'>
+                  <span
+                    class='font-medium text-indigo-800 dark:text-indigo-400'
+                  >Board Meeting</span>
+                  <span
+                    class='text-sm text-indigo-600 dark:text-indigo-500'
+                  >strategic planning approved</span>
+                  <span class='text-xs text-muted-foreground'>3 days ago</span>
+                </div>
+                <p class='text-sm text-indigo-700 dark:text-indigo-300'>Board
+                  approved 5-year strategic plan focusing on AI and sustainable
+                  technology investments</p>
+              </div>
+            </div>
+
+            <div
+              class='flex items-start gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700'
+            >
+              <div
+                class='w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0'
+              >
+                <svg
+                  class='w-5 h-5 text-gray-600 dark:text-gray-400'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z'
+                  />
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
+                  />
+                </svg>
+              </div>
+              <div class='flex-1 min-w-0'>
+                <div class='flex items-center gap-2 mb-1'>
+                  <span
+                    class='font-medium text-gray-800 dark:text-gray-400'
+                  >System</span>
+                  <span
+                    class='text-sm text-gray-600 dark:text-gray-500'
+                  >quarterly backup completed</span>
+                  <span class='text-xs text-muted-foreground'>3 days ago</span>
+                </div>
+                <p class='text-sm text-gray-700 dark:text-gray-300'>Quarterly
+                  full system backup and disaster recovery test completed
+                  successfully</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class='flex items-center gap-2'>
-        <button class='flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90'>
-          <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
-            <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/>
-            <polyline points='7,10 12,15 17,10'/>
-            <line x1='12' y1='15' x2='12' y2='3'/>
-          </svg>
-          Export Audit Log
+
+      <!-- Load More -->
+      <div class='mt-6 text-center'>
+        <button
+          class='px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 text-sm font-medium'
+        >
+          Load More Audit Entries
         </button>
       </div>
     </div>
-
-     <!-- Activity Filters -->
-     <div class='flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between'>
-       <div class='flex flex-wrap items-center gap-2'>
-         <span class='text-sm font-medium text-muted-foreground'>Filter by:</span>
-         <select class='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-800'>
-           <option>All Activities</option>
-           <option>Enterprise Management</option>
-           <option>Financial Operations</option>
-           <option>Compliance & Security</option>
-           <option>Strategic Initiatives</option>
-           <option>System Administration</option>
-         </select>
-         <select class='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-800'>
-           <option>All Enterprises</option>
-           <option>Tech Enterprises Inc</option>
-           <option>Healthcare Ventures</option>
-           <option>Green Solutions Corp</option>
-           <option>Financial Services Group</option>
-         </select>
-         <select class='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-800'>
-           <option>All Users</option>
-           <option>Corporate Executives</option>
-           <option>Enterprise Admins</option>
-           <option>Department Heads</option>
-           <option>System Administrators</option>
-         </select>
-         <select class='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-800'>
-           <option>Last 7 days</option>
-           <option>Last 30 days</option>
-           <option>Last 90 days</option>
-           <option>All time</option>
-         </select>
-       </div>
-       <div class='flex items-center gap-2'>
-         <input type='text' placeholder='Search audit logs...' class='px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-800 w-64'>
-         <button class='px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md text-sm hover:bg-gray-200 dark:hover:bg-gray-600'>
-           Search
-         </button>
-       </div>
-     </div>
-
-     <!-- Activity Log -->
-     <div class='rounded-md bg-card border border-gray-200 dark:border-gray-700'>
-       <div class='p-6'>
-         <div class='space-y-6'>
-           <!-- Today's Activities -->
-           <div>
-             <h3 class='text-lg font-semibold mb-4 text-foreground'>Today</h3>
-             <div class='space-y-4'>
-               <div class='flex items-start gap-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800'>
-                 <div class='w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0'>
-                   <svg class='w-5 h-5 text-blue-600 dark:text-blue-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'/>
-                   </svg>
-                 </div>
-                 <div class='flex-1 min-w-0'>
-                   <div class='flex items-center gap-2 mb-1'>
-                     <span class='font-medium text-blue-800 dark:text-blue-400'>Corporate Executive</span>
-                     <span class='text-sm text-blue-600 dark:text-blue-500'>approved enterprise acquisition</span>
-                     <span class='text-xs text-muted-foreground'>1 hour ago</span>
-                   </div>
-                   <p class='text-sm text-blue-700 dark:text-blue-300'>Approved acquisition of "InnovateLabs" enterprise for $50M, expanding healthcare portfolio</p>
-                 </div>
-               </div>
-
-               <div class='flex items-start gap-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800'>
-                 <div class='w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center flex-shrink-0'>
-                   <svg class='w-5 h-5 text-green-600 dark:text-green-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1'/>
-                   </svg>
-                 </div>
-                 <div class='flex-1 min-w-0'>
-                   <div class='flex items-center gap-2 mb-1'>
-                     <span class='font-medium text-green-800 dark:text-green-400'>Finance Department</span>
-                     <span class='text-sm text-green-600 dark:text-green-500'>allocated investment funds</span>
-                     <span class='text-xs text-muted-foreground'>4 hours ago</span>
-                   </div>
-                   <p class='text-sm text-green-700 dark:text-green-300'>Allocated $25M in strategic investment funds to Tech Enterprises Inc for Q1 2025</p>
-                 </div>
-               </div>
-
-               <div class='flex items-start gap-4 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800'>
-                 <div class='w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center flex-shrink-0'>
-                   <svg class='w-5 h-5 text-purple-600 dark:text-purple-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'/>
-                   </svg>
-                 </div>
-                 <div class='flex-1 min-w-0'>
-                   <div class='flex items-center gap-2 mb-1'>
-                     <span class='font-medium text-purple-800 dark:text-purple-400'>Compliance Officer</span>
-                     <span class='text-sm text-purple-600 dark:text-purple-500'>completed regulatory audit</span>
-                     <span class='text-xs text-muted-foreground'>6 hours ago</span>
-                   </div>
-                   <p class='text-sm text-purple-700 dark:text-purple-300'>Successfully completed annual regulatory compliance audit for all enterprise operations</p>
-                 </div>
-               </div>
-             </div>
-           </div>
-
-           <!-- Yesterday's Activities -->
-           <div>
-             <h3 class='text-lg font-semibold mb-4 text-foreground'>Yesterday</h3>
-             <div class='space-y-4'>
-               <div class='flex items-start gap-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800'>
-                 <div class='w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center flex-shrink-0'>
-                   <svg class='w-5 h-5 text-yellow-600 dark:text-yellow-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'/>
-                   </svg>
-                 </div>
-                 <div class='flex-1 min-w-0'>
-                   <div class='flex items-center gap-2 mb-1'>
-                     <span class='font-medium text-yellow-800 dark:text-yellow-400'>HR Department</span>
-                     <span class='text-sm text-yellow-600 dark:text-yellow-500'>executive hiring approved</span>
-                     <span class='text-xs text-muted-foreground'>1 day ago</span>
-                   </div>
-                   <p class='text-sm text-yellow-700 dark:text-yellow-300'>Approved hiring of new CTO for Healthcare Ventures enterprise at executive level compensation</p>
-                 </div>
-               </div>
-
-               <div class='flex items-start gap-4 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800'>
-                 <div class='w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center flex-shrink-0'>
-                   <svg class='w-5 h-5 text-red-600 dark:text-red-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z'/>
-                   </svg>
-                 </div>
-                 <div class='flex-1 min-w-0'>
-                   <div class='flex items-center gap-2 mb-1'>
-                     <span class='font-medium text-red-800 dark:text-red-400'>Security Alert</span>
-                     <span class='text-sm text-red-600 dark:text-red-500'>unauthorized access blocked</span>
-                     <span class='text-xs text-muted-foreground'>1 day ago</span>
-                   </div>
-                   <p class='text-sm text-red-700 dark:text-red-300'>Blocked suspicious login attempt from unrecognized IP address targeting executive accounts</p>
-                 </div>
-               </div>
-             </div>
-           </div>
-
-           <!-- 3 Days Ago -->
-           <div>
-             <h3 class='text-lg font-semibold mb-4 text-foreground'>3 days ago</h3>
-             <div class='space-y-4'>
-               <div class='flex items-start gap-4 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border border-indigo-200 dark:border-indigo-800'>
-                 <div class='w-10 h-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-full flex items-center justify-center flex-shrink-0'>
-                   <svg class='w-5 h-5 text-indigo-600 dark:text-indigo-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'/>
-                   </svg>
-                 </div>
-                 <div class='flex-1 min-w-0'>
-                   <div class='flex items-center gap-2 mb-1'>
-                     <span class='font-medium text-indigo-800 dark:text-indigo-400'>Board Meeting</span>
-                     <span class='text-sm text-indigo-600 dark:text-indigo-500'>strategic planning approved</span>
-                     <span class='text-xs text-muted-foreground'>3 days ago</span>
-                   </div>
-                   <p class='text-sm text-indigo-700 dark:text-indigo-300'>Board approved 5-year strategic plan focusing on AI and sustainable technology investments</p>
-                 </div>
-               </div>
-
-               <div class='flex items-start gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700'>
-                 <div class='w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0'>
-                   <svg class='w-5 h-5 text-gray-600 dark:text-gray-400' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z'/>
-                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'/>
-                   </svg>
-                 </div>
-                 <div class='flex-1 min-w-0'>
-                   <div class='flex items-center gap-2 mb-1'>
-                     <span class='font-medium text-gray-800 dark:text-gray-400'>System</span>
-                     <span class='text-sm text-gray-600 dark:text-gray-500'>quarterly backup completed</span>
-                     <span class='text-xs text-muted-foreground'>3 days ago</span>
-                   </div>
-                   <p class='text-sm text-gray-700 dark:text-gray-300'>Quarterly full system backup and disaster recovery test completed successfully</p>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </div>
-
-         <!-- Load More -->
-         <div class='mt-6 text-center'>
-           <button class='px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 text-sm font-medium'>
-             Load More Audit Entries
-           </button>
-         </div>
-       </div>
-     </div>
+  </div>
 </div>

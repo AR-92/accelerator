@@ -1,643 +1,888 @@
 <div class='flex flex-col gap-4 lg:gap-6'>
-    <div class='flex items-center justify-between'>
-      <div class='grid gap-1'>
-        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Other Settings</h1>
-        <p class='text-base text-muted-foreground'>Manage your voting preferences and rewards.</p>
-      </div>
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1 class='font-heading text-2xl font-semibold dark:text-white'>Other
+        Settings</h1>
+      <p class='text-base text-muted-foreground'>Manage your voting preferences
+        and rewards.</p>
     </div>
+  </div>
 
-     <!-- Tab Navigation -->
-     <div class='border-b border-border'>
-       <nav class='flex space-x-8' aria-label='Tabs'>
-         <button id='votes-tab' class='tab-button border-b-2 border-primary py-2 px-1 text-sm font-medium text-primary' data-tab='votes'>
-           Voting Preferences
-         </button>
-         <button id='rewards-tab' class='tab-button border-b-2 border-transparent py-2 px-1 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-gray-300' data-tab='rewards'>
-           Rewards & Points
-         </button>
-         <button id='buy-credits-tab' class='tab-button border-b-2 border-transparent py-2 px-1 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-gray-300' data-tab='buy-credits'>
-           Buy Voting Credits
-         </button>
-         <button id='dashboard-tab' class='tab-button border-b-2 border-transparent py-2 px-1 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-gray-300' data-tab='dashboard'>
-           Credits & Votes Dashboard
-         </button>
-       </nav>
-     </div>
+  <!-- Tab Navigation -->
+  <div class='border-b border-border'>
+    <nav class='flex space-x-8' aria-label='Tabs'>
+      <button
+        id='votes-tab'
+        class='tab-button border-b-2 border-primary py-2 px-1 text-sm font-medium text-primary'
+        data-tab='votes'
+      >
+        Voting Preferences
+      </button>
+      <button
+        id='rewards-tab'
+        class='tab-button border-b-2 border-transparent py-2 px-1 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-gray-300'
+        data-tab='rewards'
+      >
+        Rewards & Points
+      </button>
+      <button
+        id='buy-credits-tab'
+        class='tab-button border-b-2 border-transparent py-2 px-1 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-gray-300'
+        data-tab='buy-credits'
+      >
+        Buy Voting Credits
+      </button>
+      <button
+        id='dashboard-tab'
+        class='tab-button border-b-2 border-transparent py-2 px-1 text-sm font-medium text-muted-foreground hover:text-foreground hover:border-gray-300'
+        data-tab='dashboard'
+      >
+        Credits & Votes Dashboard
+      </button>
+    </nav>
+  </div>
 
-    <!-- Votes Tab Content -->
-    <div id='votes-content' class='tab-content'>
-      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-        <div class="space-y-6">
-          <div>
-            <h3 class="text-lg font-medium mb-4">Current Rewards Balance</h3>
-            <div class="border rounded-lg p-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
-              <div class="flex items-center justify-between">
+  <!-- Votes Tab Content -->
+  <div id='votes-content' class='tab-content'>
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <div class='space-y-6'>
+        <div>
+          <h3 class='text-lg font-medium mb-4'>Current Rewards Balance</h3>
+          <div
+            class='border rounded-lg p-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20'
+          >
+            <div class='flex items-center justify-between'>
+              <div>
+                <p class='font-medium'>Total Rewards Points</p>
+                <p class='text-sm text-muted-foreground'>Earned from voting on
+                  proposals</p>
+              </div>
+              <span class='text-3xl font-bold text-purple-600'>150</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class='text-lg font-medium mb-4'>Rewards History</h3>
+          <div class='space-y-4'>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
                 <div>
-                  <p class="font-medium">Total Rewards Points</p>
-                  <p class="text-sm text-muted-foreground">Earned from voting on proposals</p>
+                  <p class='font-medium'>Proposal: New Feature Request</p>
+                  <p class='text-sm text-muted-foreground'>Earned: 10 points • 2
+                    days ago</p>
                 </div>
-                <span class="text-3xl font-bold text-purple-600">150</span>
+                <span class='text-green-600 font-medium'>Completed</span>
+              </div>
+            </div>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div>
+                  <p class='font-medium'>Budget Allocation Q1</p>
+                  <p class='text-sm text-muted-foreground'>Earned: 5 points • 1
+                    week ago</p>
+                </div>
+                <span class='text-green-600 font-medium'>Completed</span>
+              </div>
+            </div>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div>
+                  <p class='font-medium'>Team Expansion</p>
+                  <p class='text-sm text-muted-foreground'>Earned: 15 points • 2
+                    weeks ago</p>
+                </div>
+                <span class='text-yellow-600 font-medium'>Pending</span>
               </div>
             </div>
           </div>
+        </div>
 
-          <div>
-            <h3 class="text-lg font-medium mb-4">Rewards History</h3>
-            <div class="space-y-4">
-              <div class="border rounded-lg p-4">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="font-medium">Proposal: New Feature Request</p>
-                    <p class="text-sm text-muted-foreground">Earned: 10 points • 2 days ago</p>
-                  </div>
-                  <span class="text-green-600 font-medium">Completed</span>
+        <div>
+          <h3 class='text-lg font-medium mb-4'>Available Rewards</h3>
+          <div class='space-y-4'>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div>
+                  <p class='font-medium'>Premium Feature Access</p>
+                  <p class='text-sm text-muted-foreground'>Unlock advanced
+                    analytics • Cost: 50 points</p>
                 </div>
-              </div>
-              <div class="border rounded-lg p-4">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="font-medium">Budget Allocation Q1</p>
-                    <p class="text-sm text-muted-foreground">Earned: 5 points • 1 week ago</p>
-                  </div>
-                  <span class="text-green-600 font-medium">Completed</span>
-                </div>
-              </div>
-              <div class="border rounded-lg p-4">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="font-medium">Team Expansion</p>
-                    <p class="text-sm text-muted-foreground">Earned: 15 points • 2 weeks ago</p>
-                  </div>
-                  <span class="text-yellow-600 font-medium">Pending</span>
-                </div>
+                <button
+                  class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md'
+                  type='button'
+                >Redeem</button>
               </div>
             </div>
-          </div>
-
-          <div>
-            <h3 class="text-lg font-medium mb-4">Available Rewards</h3>
-            <div class="space-y-4">
-              <div class="border rounded-lg p-4">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="font-medium">Premium Feature Access</p>
-                    <p class="text-sm text-muted-foreground">Unlock advanced analytics • Cost: 50 points</p>
-                  </div>
-                  <button class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md" type="button">Redeem</button>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div>
+                  <p class='font-medium'>Exclusive Badge</p>
+                  <p class='text-sm text-muted-foreground'>Get a special voting
+                    badge • Cost: 20 points</p>
                 </div>
+                <button
+                  class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md'
+                  type='button'
+                >Redeem</button>
               </div>
-              <div class="border rounded-lg p-4">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="font-medium">Exclusive Badge</p>
-                    <p class="text-sm text-muted-foreground">Get a special voting badge • Cost: 20 points</p>
-                  </div>
-                  <button class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md" type="button">Redeem</button>
+            </div>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div>
+                  <p class='font-medium'>Discount Voucher</p>
+                  <p class='text-sm text-muted-foreground'>10% off subscription
+                    • Cost: 30 points</p>
                 </div>
-              </div>
-              <div class="border rounded-lg p-4">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <p class="font-medium">Discount Voucher</p>
-                    <p class="text-sm text-muted-foreground">10% off subscription • Cost: 30 points</p>
-                  </div>
-                  <button class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md" type="button">Redeem</button>
-                </div>
+                <button
+                  class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md'
+                  type='button'
+                >Redeem</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-     <!-- Rewards Tab Content -->
-     <div id='rewards-content' class='tab-content hidden'>
-       <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-         <div class="space-y-6">
-           <div>
-             <h3 class="text-lg font-medium mb-4">Current Rewards Balance</h3>
-             <div class="border rounded-lg p-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
-               <div class="flex items-center justify-between">
-                 <div>
-                   <p class="font-medium">Total Rewards Points</p>
-                   <p class="text-sm text-muted-foreground">Earned from voting on proposals</p>
-                 </div>
-                 <span class="text-3xl font-bold text-purple-600">150</span>
-               </div>
-             </div>
-           </div>
-
-           <div>
-             <h3 class="text-lg font-medium mb-4">Rewards History</h3>
-             <div class="space-y-4">
-               <div class="border rounded-lg p-4">
-                 <div class="flex items-center justify-between">
-                   <div>
-                     <p class="font-medium">Proposal: New Feature Request</p>
-                     <p class="text-sm text-muted-foreground">Earned: 10 points • 2 days ago</p>
-                   </div>
-                   <span class="text-green-600 font-medium">Completed</span>
-                 </div>
-               </div>
-               <div class="border rounded-lg p-4">
-                 <div class="flex items-center justify-between">
-                   <div>
-                     <p class="font-medium">Budget Allocation Q1</p>
-                     <p class="text-sm text-muted-foreground">Earned: 5 points • 1 week ago</p>
-                   </div>
-                   <span class="text-green-600 font-medium">Completed</span>
-                 </div>
-               </div>
-               <div class="border rounded-lg p-4">
-                 <div class="flex items-center justify-between">
-                   <div>
-                     <p class="font-medium">Team Expansion</p>
-                     <p class="text-sm text-muted-foreground">Earned: 15 points • 2 weeks ago</p>
-                   </div>
-                   <span class="text-yellow-600 font-medium">Pending</span>
-                 </div>
-               </div>
-             </div>
-           </div>
-
-           <div>
-             <h3 class="text-lg font-medium mb-4">Available Rewards</h3>
-             <div class="space-y-4">
-               <div class="border rounded-lg p-4">
-                 <div class="flex items-center justify-between">
-                   <div>
-                     <p class="font-medium">Premium Feature Access</p>
-                     <p class="text-sm text-muted-foreground">Unlock advanced analytics • Cost: 50 points</p>
-                   </div>
-                   <button class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md" type="button">Redeem</button>
-                 </div>
-               </div>
-               <div class="border rounded-lg p-4">
-                 <div class="flex items-center justify-between">
-                   <div>
-                     <p class="font-medium">Exclusive Badge</p>
-                     <p class="text-sm text-muted-foreground">Get a special voting badge • Cost: 20 points</p>
-                   </div>
-                   <button class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md" type="button">Redeem</button>
-                 </div>
-               </div>
-               <div class="border rounded-lg p-4">
-                 <div class="flex items-center justify-between">
-                   <div>
-                     <p class="font-medium">Discount Voucher</p>
-                     <p class="text-sm text-muted-foreground">10% off subscription • Cost: 30 points</p>
-                   </div>
-                   <button class="inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md" type="button">Redeem</button>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
-
-     <!-- Buy Voting Credits Tab Content -->
-     <div id='buy-credits-content' class='tab-content hidden'>
-       <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-         <div class="space-y-6">
-           <!-- Credit Balance Card -->
-           <div class='bg-gradient-to-r from-primary to-purple-600 dark:from-black dark:to-purple-900 rounded-2xl p-6 text-white'>
-             <div class='flex flex-col md:flex-row justify-between items-center'>
-               <div>
-                 <h2 class='text-2xl font-bold mb-2'>Your Current Balance</h2>
-                 <div class='flex items-baseline'>
-                   <span class='text-5xl font-bold mr-3' id='current-credits'>25</span>
-                   <span class='text-xl'>credits</span>
-                 </div>
-                 <p class='mt-3 text-white/90'>Each credit = 1 riyal for voting</p>
-               </div>
-               <div class='mt-6 md:mt-0'>
-                 <div class='bg-white/20 backdrop-blur-sm rounded-xl p-4 inline-block'>
-                   <div class='text-center'>
-                     <div class='text-sm text-white'>Est. Votes Remaining</div>
-                     <div class='text-2xl font-bold text-white' id='votes-remaining'>25</div>
-                   </div>
-                 </div>
-               </div>
-             </div>
-           </div>
-
-           <!-- Credit Packages -->
-           <div>
-             <h2 class='text-2xl font-bold text-foreground mb-8 text-center'>Choose Your Voting Credits Bundle</h2>
-             <div class='grid grid-cols-1 md:grid-cols-3 gap-8'>
-               <!-- Starter Package -->
-               <div class='border border-border rounded-2xl p-6 bg-card flex flex-col hover:shadow-lg transition-shadow package-card' data-credits='50' data-price='50'>
-                 <div class='text-center mb-6'>
-                   <h3 class='text-xl font-semibold text-foreground'>Starter</h3>
-                   <div class='text-sm text-muted-foreground'>Perfect for getting started</div>
-                 </div>
-                 <div class='text-center mb-6'>
-                   <span class='text-4xl font-bold text-primary'>50</span>
-                   <span class='text-muted-foreground'> credits</span>
-                 </div>
-                 <div class='text-center mb-6'>
-                   <span class='text-3xl font-bold'>50 riyal</span>
-                 </div>
-                 <ul class='space-y-3 mb-8 flex-1'>
-                   <li class='flex items-center'>
-                     <svg class='w-5 h-5 mr-2 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                     </svg>
-                     Instant voting access
-                   </li>
-                   <li class='flex items-center'>
-                     <svg class='w-5 h-5 mr-2 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                     </svg>
-                     Earn 0.5 riyal per vote
-                   </li>
-                   <li class='flex items-center'>
-                     <svg class='w-5 h-5 mr-2 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                     </svg>
-                     No expiration
-                   </li>
-                 </ul>
-                 <button class='py-3 bg-muted text-foreground rounded-lg hover:bg-accent transition-colors font-medium select-package' data-package='starter'>Select Bundle</button>
-               </div>
-
-               <!-- Growth Package -->
-               <div class='border-2 border-primary rounded-2xl p-6 bg-card flex flex-col relative overflow-hidden hover:shadow-xl transition-shadow package-card selected' data-credits='100' data-price='90'>
-                 <div class='absolute top-0 right-0 bg-primary text-primary-foreground text-xs px-4 py-1 rounded-bl-lg font-medium'>MOST POPULAR</div>
-                 <div class='text-center mb-6 pt-2'>
-                   <h3 class='text-xl font-semibold text-foreground'>Growth</h3>
-                   <div class='text-sm text-muted-foreground'>For active voters</div>
-                 </div>
-                 <div class='text-center mb-6'>
-                   <span class='text-4xl font-bold text-primary'>100</span>
-                   <span class='text-muted-foreground'> credits</span>
-                 </div>
-                 <div class='text-center mb-6'>
-                   <span class='text-3xl font-bold'>90 riyal</span>
-                   <span class='text-sm text-muted-foreground line-through'>100 riyal</span>
-                 </div>
-                 <ul class='space-y-3 mb-8 flex-1'>
-                   <li class='flex items-center'>
-                     <svg class='w-5 h-5 mr-2 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                     </svg>
-                     Instant voting access
-                   </li>
-                   <li class='flex items-center'>
-                     <svg class='w-5 h-5 mr-2 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                     </svg>
-                     Earn 0.5 riyal per vote
-                   </li>
-                   <li class='flex items-center'>
-                     <svg class='w-5 h-5 mr-2 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                     </svg>
-                     10% discount
-                   </li>
-                   <li class='flex items-center'>
-                     <svg class='w-5 h-5 mr-2 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                     </svg>
-                     Priority support
-                   </li>
-                 </ul>
-                 <button class='py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity font-medium select-package' data-package='growth'>Select Bundle</button>
-               </div>
-
-               <!-- Professional Package -->
-               <div class='border border-border rounded-2xl p-6 bg-card flex flex-col hover:shadow-lg transition-shadow package-card' data-credits='200' data-price='160'>
-                 <div class='text-center mb-6'>
-                   <h3 class='text-xl font-semibold text-foreground'>Professional</h3>
-                   <div class='text-sm text-muted-foreground'>For power voters</div>
-                 </div>
-                 <div class='text-center mb-6'>
-                   <span class='text-4xl font-bold text-primary'>200</span>
-                   <span class='text-muted-foreground'> credits</span>
-                 </div>
-                 <div class='text-center mb-6'>
-                   <span class='text-3xl font-bold'>160 riyal</span>
-                   <span class='text-sm text-muted-foreground line-through'>200 riyal</span>
-                 </div>
-                 <ul class='space-y-3 mb-8 flex-1'>
-                   <li class='flex items-center'>
-                     <svg class='w-5 h-5 mr-2 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                     </svg>
-                     Instant voting access
-                   </li>
-                   <li class='flex items-center'>
-                     <svg class='w-5 h-5 mr-2 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                     </svg>
-                     Earn 0.5 riyal per vote
-                   </li>
-                   <li class='flex items-center'>
-                     <svg class='w-5 h-5 mr-2 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                     </svg>
-                     20% discount
-                   </li>
-                   <li class='flex items-center'>
-                     <svg class='w-5 h-5 mr-2 text-green-500' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                       <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                     </svg>
-                     24/7 premium support
-                   </li>
-                 </ul>
-                 <button class='py-3 bg-muted text-foreground rounded-lg hover:bg-accent transition-colors font-medium select-package' data-package='professional'>Select Bundle</button>
-               </div>
-             </div>
-           </div>
-
-           <!-- Payment Form (hidden initially) -->
-           <div id='payment-form' class='hidden bg-muted rounded-2xl p-8'>
-             <h3 class='text-xl font-bold mb-6 text-center'>Complete Your Purchase</h3>
-             <form id='credit-payment-form' class='space-y-6'>
-               <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                 <div>
-                   <label class='block text-sm font-medium mb-2'>Card Number</label>
-                   <input type='text' placeholder='1234 5678 9012 3456' class='w-full p-3 border border-border rounded-lg'>
-                 </div>
-                 <div>
-                   <label class='block text-sm font-medium mb-2'>Expiry Date</label>
-                   <input type='text' placeholder='MM/YY' class='w-full p-3 border border-border rounded-lg'>
-                 </div>
-                 <div>
-                   <label class='block text-sm font-medium mb-2'>CVV</label>
-                   <input type='text' placeholder='123' class='w-full p-3 border border-border rounded-lg'>
-                 </div>
-                 <div>
-                   <label class='block text-sm font-medium mb-2'>Cardholder Name</label>
-                   <input type='text' placeholder='John Doe' class='w-full p-3 border border-border rounded-lg'>
-                 </div>
-               </div>
-               <div class='text-center'>
-                 <p class='text-lg mb-4'>Total: <span id='payment-total'>90 riyal</span></p>
-                 <button type='submit' class='py-3 px-8 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity font-medium'>Pay Now</button>
-               </div>
-             </form>
-           </div>
-         </div>
-       </div>
-     </div>
-
-     <!-- Credits & Votes Dashboard Tab Content -->
-     <div id='dashboard-content' class='tab-content hidden'>
-       <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-         <div class="space-y-6">
-           <!-- Balance Overview -->
-           <div class='grid grid-cols-1 md:grid-cols-3 gap-6'>
-             <div class='border rounded-lg p-6 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20'>
-               <div class='flex items-center justify-between'>
-                 <div>
-                   <p class='font-medium text-lg'>Total Credits</p>
-                   <p class='text-sm text-muted-foreground'>Available for voting</p>
-                 </div>
-                 <span class='text-3xl font-bold text-blue-600' id='dashboard-credits'>25</span>
-               </div>
-             </div>
-             <div class='border rounded-lg p-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20'>
-               <div class='flex items-center justify-between'>
-                 <div>
-                   <p class='font-medium text-lg'>Total Votes Cast</p>
-                   <p class='text-sm text-muted-foreground'>Across all ideas</p>
-                 </div>
-                 <span class='text-3xl font-bold text-green-600' id='total-votes'>47</span>
-               </div>
-             </div>
-             <div class='border rounded-lg p-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20'>
-               <div class='flex items-center justify-between'>
-                 <div>
-                   <p class='font-medium text-lg'>Total Earnings</p>
-                   <p class='text-sm text-muted-foreground'>From voting rewards</p>
-                 </div>
-                 <span class='text-3xl font-bold text-purple-600' id='total-earnings'>23.5 riyal</span>
-               </div>
-             </div>
-           </div>
-
-           <!-- Stats & Metrics -->
-           <div>
-             <h3 class="text-lg font-medium mb-4">Voting Activity (Last 7 Days)</h3>
-             <div class='border rounded-lg p-6'>
-               <div class='flex items-center justify-center h-64 bg-muted rounded-lg'>
-                 <div class='text-center'>
-                   <svg class='w-16 h-16 mx-auto mb-4 text-muted-foreground' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                     <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'></path>
-                   </svg>
-                   <p class='text-muted-foreground'>Chart: 5 votes yesterday, 3 votes 2 days ago, etc.</p>
-                 </div>
-               </div>
-             </div>
-           </div>
-
-           <!-- Activity Feed -->
-           <div>
-             <h3 class="text-lg font-medium mb-4">Recent Activity</h3>
-             <div class="space-y-4">
-               <div class="border rounded-lg p-4">
-                 <div class="flex items-center justify-between">
-                   <div class='flex items-center'>
-                     <div class='w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4'>
-                       <svg class='w-5 h-5 text-green-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                       </svg>
-                     </div>
-                     <div>
-                       <p class="font-medium">Voted on "AI-Powered Analytics Tool"</p>
-                       <p class="text-sm text-muted-foreground">Earned 0.5 riyal • 2 hours ago</p>
-                     </div>
-                   </div>
-                   <span class="text-green-600 font-medium">+0.5 riyal</span>
-                 </div>
-               </div>
-               <div class="border rounded-lg p-4">
-                 <div class="flex items-center justify-between">
-                   <div class='flex items-center'>
-                     <div class='w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4'>
-                       <svg class='w-5 h-5 text-blue-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1'></path>
-                       </svg>
-                     </div>
-                     <div>
-                       <p class="font-medium">Purchased 50 credits</p>
-                       <p class="text-sm text-muted-foreground">50 riyal • 3 days ago</p>
-                     </div>
-                   </div>
-                   <span class="text-blue-600 font-medium">+50 credits</span>
-                 </div>
-               </div>
-               <div class="border rounded-lg p-4">
-                 <div class="flex items-center justify-between">
-                   <div class='flex items-center'>
-                     <div class='w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4'>
-                       <svg class='w-5 h-5 text-green-600' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
-                       </svg>
-                     </div>
-                     <div>
-                       <p class="font-medium">Voted on "Mobile App Redesign"</p>
-                       <p class="text-sm text-muted-foreground">Earned 0.5 riyal • 1 week ago</p>
-                     </div>
-                   </div>
-                   <span class="text-green-600 font-medium">+0.5 riyal</span>
-                 </div>
-               </div>
-             </div>
-           </div>
-
-           <!-- Top Performing Ideas -->
-           <div>
-             <h3 class="text-lg font-medium mb-4">Your Top Voted Ideas</h3>
-             <div class="border rounded-lg overflow-hidden">
-               <table class="w-full">
-                 <thead class="bg-muted">
-                   <tr>
-                     <th class="px-4 py-3 text-left font-medium">Idea</th>
-                     <th class="px-4 py-3 text-left font-medium">Your Votes</th>
-                     <th class="px-4 py-3 text-left font-medium">Earnings</th>
-                     <th class="px-4 py-3 text-left font-medium">Status</th>
-                   </tr>
-                 </thead>
-                 <tbody>
-                   <tr class="border-t">
-                     <td class="px-4 py-3">AI-Powered Analytics Tool</td>
-                     <td class="px-4 py-3">3</td>
-                     <td class="px-4 py-3">1.5 riyal</td>
-                     <td class="px-4 py-3"><span class="text-green-600 font-medium">Active</span></td>
-                   </tr>
-                   <tr class="border-t">
-                     <td class="px-4 py-3">Mobile App Redesign</td>
-                     <td class="px-4 py-3">2</td>
-                     <td class="px-4 py-3">1.0 riyal</td>
-                     <td class="px-4 py-3"><span class="text-yellow-600 font-medium">Pending</span></td>
-                   </tr>
-                   <tr class="border-t">
-                     <td class="px-4 py-3">Cloud Migration Strategy</td>
-                     <td class="px-4 py-3">1</td>
-                     <td class="px-4 py-3">0.5 riyal</td>
-                     <td class="px-4 py-3"><span class="text-green-600 font-medium">Completed</span></td>
-                   </tr>
-                 </tbody>
-               </table>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
   </div>
 
-   <script>
-     // Tab switching functionality
-     document.addEventListener('DOMContentLoaded', function() {
-       const tabButtons = document.querySelectorAll('.tab-button');
-       const tabContents = document.querySelectorAll('.tab-content');
+  <!-- Rewards Tab Content -->
+  <div id='rewards-content' class='tab-content hidden'>
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <div class='space-y-6'>
+        <div>
+          <h3 class='text-lg font-medium mb-4'>Current Rewards Balance</h3>
+          <div
+            class='border rounded-lg p-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20'
+          >
+            <div class='flex items-center justify-between'>
+              <div>
+                <p class='font-medium'>Total Rewards Points</p>
+                <p class='text-sm text-muted-foreground'>Earned from voting on
+                  proposals</p>
+              </div>
+              <span class='text-3xl font-bold text-purple-600'>150</span>
+            </div>
+          </div>
+        </div>
 
-       tabButtons.forEach(button => {
-         button.addEventListener('click', function() {
-           const tabName = this.getAttribute('data-tab');
+        <div>
+          <h3 class='text-lg font-medium mb-4'>Rewards History</h3>
+          <div class='space-y-4'>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div>
+                  <p class='font-medium'>Proposal: New Feature Request</p>
+                  <p class='text-sm text-muted-foreground'>Earned: 10 points • 2
+                    days ago</p>
+                </div>
+                <span class='text-green-600 font-medium'>Completed</span>
+              </div>
+            </div>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div>
+                  <p class='font-medium'>Budget Allocation Q1</p>
+                  <p class='text-sm text-muted-foreground'>Earned: 5 points • 1
+                    week ago</p>
+                </div>
+                <span class='text-green-600 font-medium'>Completed</span>
+              </div>
+            </div>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div>
+                  <p class='font-medium'>Team Expansion</p>
+                  <p class='text-sm text-muted-foreground'>Earned: 15 points • 2
+                    weeks ago</p>
+                </div>
+                <span class='text-yellow-600 font-medium'>Pending</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-           // Remove active state from all tabs
-           tabButtons.forEach(btn => {
-             btn.classList.remove('border-primary', 'text-primary');
-             btn.classList.add('border-transparent', 'text-muted-foreground');
-           });
+        <div>
+          <h3 class='text-lg font-medium mb-4'>Available Rewards</h3>
+          <div class='space-y-4'>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div>
+                  <p class='font-medium'>Premium Feature Access</p>
+                  <p class='text-sm text-muted-foreground'>Unlock advanced
+                    analytics • Cost: 50 points</p>
+                </div>
+                <button
+                  class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md'
+                  type='button'
+                >Redeem</button>
+              </div>
+            </div>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div>
+                  <p class='font-medium'>Exclusive Badge</p>
+                  <p class='text-sm text-muted-foreground'>Get a special voting
+                    badge • Cost: 20 points</p>
+                </div>
+                <button
+                  class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md'
+                  type='button'
+                >Redeem</button>
+              </div>
+            </div>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div>
+                  <p class='font-medium'>Discount Voucher</p>
+                  <p class='text-sm text-muted-foreground'>10% off subscription
+                    • Cost: 30 points</p>
+                </div>
+                <button
+                  class='inline-flex items-center justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md'
+                  type='button'
+                >Redeem</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-           // Hide all tab contents
-           tabContents.forEach(content => {
-             content.classList.add('hidden');
-           });
+  <!-- Buy Voting Credits Tab Content -->
+  <div id='buy-credits-content' class='tab-content hidden'>
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <div class='space-y-6'>
+        <!-- Credit Balance Card -->
+        <div
+          class='bg-gradient-to-r from-primary to-purple-600 dark:from-black dark:to-purple-900 rounded-2xl p-6 text-white'
+        >
+          <div class='flex flex-col md:flex-row justify-between items-center'>
+            <div>
+              <h2 class='text-2xl font-bold mb-2'>Your Current Balance</h2>
+              <div class='flex items-baseline'>
+                <span
+                  class='text-5xl font-bold mr-3'
+                  id='current-credits'
+                >25</span>
+                <span class='text-xl'>credits</span>
+              </div>
+              <p class='mt-3 text-white/90'>Each credit = 1 riyal for voting</p>
+            </div>
+            <div class='mt-6 md:mt-0'>
+              <div
+                class='bg-white/20 backdrop-blur-sm rounded-xl p-4 inline-block'
+              >
+                <div class='text-center'>
+                  <div class='text-sm text-white'>Est. Votes Remaining</div>
+                  <div
+                    class='text-2xl font-bold text-white'
+                    id='votes-remaining'
+                  >25</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-           // Activate clicked tab
-           this.classList.remove('border-transparent', 'text-muted-foreground');
-           this.classList.add('border-primary', 'text-primary');
+        <!-- Credit Packages -->
+        <div>
+          <h2 class='text-2xl font-bold text-foreground mb-8 text-center'>Choose
+            Your Voting Credits Bundle</h2>
+          <div class='grid grid-cols-1 md:grid-cols-3 gap-8'>
+            <!-- Starter Package -->
+            <div
+              class='border border-border rounded-2xl p-6 bg-card flex flex-col hover:shadow-lg transition-shadow package-card'
+              data-credits='50'
+              data-price='50'
+            >
+              <div class='text-center mb-6'>
+                <h3 class='text-xl font-semibold text-foreground'>Starter</h3>
+                <div class='text-sm text-muted-foreground'>Perfect for getting
+                  started</div>
+              </div>
+              <div class='text-center mb-6'>
+                <span class='text-4xl font-bold text-primary'>50</span>
+                <span class='text-muted-foreground'> credits</span>
+              </div>
+              <div class='text-center mb-6'>
+                <span class='text-3xl font-bold'>50 riyal</span>
+              </div>
+              <ul class='space-y-3 mb-8 flex-1'>
+                <li class='flex items-center'>
+                  <svg
+                    class='w-5 h-5 mr-2 text-green-500'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'
+                    ></path>
+                  </svg>
+                  Instant voting access
+                </li>
+                <li class='flex items-center'>
+                  <svg
+                    class='w-5 h-5 mr-2 text-green-500'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'
+                    ></path>
+                  </svg>
+                  Earn 0.5 riyal per vote
+                </li>
+                <li class='flex items-center'>
+                  <svg
+                    class='w-5 h-5 mr-2 text-green-500'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'
+                    ></path>
+                  </svg>
+                  No expiration
+                </li>
+              </ul>
+              <button
+                class='py-3 bg-muted text-foreground rounded-lg hover:bg-accent transition-colors font-medium select-package'
+                data-package='starter'
+              >Select Bundle</button>
+            </div>
 
-           // Show corresponding content
-           document.getElementById(tabName + '-content').classList.remove('hidden');
-         });
-       });
+            <!-- Growth Package -->
+            <div
+              class='border-2 border-primary rounded-2xl p-6 bg-card flex flex-col relative overflow-hidden hover:shadow-xl transition-shadow package-card selected'
+              data-credits='100'
+              data-price='90'
+            >
+              <div
+                class='absolute top-0 right-0 bg-primary text-primary-foreground text-xs px-4 py-1 rounded-bl-lg font-medium'
+              >MOST POPULAR</div>
+              <div class='text-center mb-6 pt-2'>
+                <h3 class='text-xl font-semibold text-foreground'>Growth</h3>
+                <div class='text-sm text-muted-foreground'>For active voters</div>
+              </div>
+              <div class='text-center mb-6'>
+                <span class='text-4xl font-bold text-primary'>100</span>
+                <span class='text-muted-foreground'> credits</span>
+              </div>
+              <div class='text-center mb-6'>
+                <span class='text-3xl font-bold'>90 riyal</span>
+                <span class='text-sm text-muted-foreground line-through'>100
+                  riyal</span>
+              </div>
+              <ul class='space-y-3 mb-8 flex-1'>
+                <li class='flex items-center'>
+                  <svg
+                    class='w-5 h-5 mr-2 text-green-500'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'
+                    ></path>
+                  </svg>
+                  Instant voting access
+                </li>
+                <li class='flex items-center'>
+                  <svg
+                    class='w-5 h-5 mr-2 text-green-500'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'
+                    ></path>
+                  </svg>
+                  Earn 0.5 riyal per vote
+                </li>
+                <li class='flex items-center'>
+                  <svg
+                    class='w-5 h-5 mr-2 text-green-500'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'
+                    ></path>
+                  </svg>
+                  10% discount
+                </li>
+                <li class='flex items-center'>
+                  <svg
+                    class='w-5 h-5 mr-2 text-green-500'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'
+                    ></path>
+                  </svg>
+                  Priority support
+                </li>
+              </ul>
+              <button
+                class='py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity font-medium select-package'
+                data-package='growth'
+              >Select Bundle</button>
+            </div>
 
-       // Package selection functionality
-       const selectButtons = document.querySelectorAll('.select-package');
-       const packageCards = document.querySelectorAll('.package-card');
-       const paymentForm = document.getElementById('payment-form');
-       const paymentTotal = document.getElementById('payment-total');
-       let selectedPackage = null;
+            <!-- Professional Package -->
+            <div
+              class='border border-border rounded-2xl p-6 bg-card flex flex-col hover:shadow-lg transition-shadow package-card'
+              data-credits='200'
+              data-price='160'
+            >
+              <div class='text-center mb-6'>
+                <h3
+                  class='text-xl font-semibold text-foreground'
+                >Professional</h3>
+                <div class='text-sm text-muted-foreground'>For power voters</div>
+              </div>
+              <div class='text-center mb-6'>
+                <span class='text-4xl font-bold text-primary'>200</span>
+                <span class='text-muted-foreground'> credits</span>
+              </div>
+              <div class='text-center mb-6'>
+                <span class='text-3xl font-bold'>160 riyal</span>
+                <span class='text-sm text-muted-foreground line-through'>200
+                  riyal</span>
+              </div>
+              <ul class='space-y-3 mb-8 flex-1'>
+                <li class='flex items-center'>
+                  <svg
+                    class='w-5 h-5 mr-2 text-green-500'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'
+                    ></path>
+                  </svg>
+                  Instant voting access
+                </li>
+                <li class='flex items-center'>
+                  <svg
+                    class='w-5 h-5 mr-2 text-green-500'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'
+                    ></path>
+                  </svg>
+                  Earn 0.5 riyal per vote
+                </li>
+                <li class='flex items-center'>
+                  <svg
+                    class='w-5 h-5 mr-2 text-green-500'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'
+                    ></path>
+                  </svg>
+                  20% discount
+                </li>
+                <li class='flex items-center'>
+                  <svg
+                    class='w-5 h-5 mr-2 text-green-500'
+                    fill='none'
+                    stroke='currentColor'
+                    viewBox='0 0 24 24'
+                  >
+                    <path
+                      stroke-linecap='round'
+                      stroke-linejoin='round'
+                      stroke-width='2'
+                      d='M5 13l4 4L19 7'
+                    ></path>
+                  </svg>
+                  24/7 premium support
+                </li>
+              </ul>
+              <button
+                class='py-3 bg-muted text-foreground rounded-lg hover:bg-accent transition-colors font-medium select-package'
+                data-package='professional'
+              >Select Bundle</button>
+            </div>
+          </div>
+        </div>
 
-       selectButtons.forEach(button => {
-         button.addEventListener('click', function() {
-           const packageType = this.getAttribute('data-package');
-           selectedPackage = packageCards[Array.from(selectButtons).indexOf(this)];
+        <!-- Payment Form (hidden initially) -->
+        <div id='payment-form' class='hidden bg-muted rounded-2xl p-8'>
+          <h3 class='text-xl font-bold mb-6 text-center'>Complete Your Purchase</h3>
+          <form id='credit-payment-form' class='space-y-6'>
+            <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
+              <div>
+                <label class='block text-sm font-medium mb-2'>Card Number</label>
+                <input
+                  type='text'
+                  placeholder='1234 5678 9012 3456'
+                  class='w-full p-3 border border-border rounded-lg'
+                />
+              </div>
+              <div>
+                <label class='block text-sm font-medium mb-2'>Expiry Date</label>
+                <input
+                  type='text'
+                  placeholder='MM/YY'
+                  class='w-full p-3 border border-border rounded-lg'
+                />
+              </div>
+              <div>
+                <label class='block text-sm font-medium mb-2'>CVV</label>
+                <input
+                  type='text'
+                  placeholder='123'
+                  class='w-full p-3 border border-border rounded-lg'
+                />
+              </div>
+              <div>
+                <label class='block text-sm font-medium mb-2'>Cardholder Name</label>
+                <input
+                  type='text'
+                  placeholder='John Doe'
+                  class='w-full p-3 border border-border rounded-lg'
+                />
+              </div>
+            </div>
+            <div class='text-center'>
+              <p class='text-lg mb-4'>Total:
+                <span id='payment-total'>90 riyal</span></p>
+              <button
+                type='submit'
+                class='py-3 px-8 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity font-medium'
+              >Pay Now</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-           // Remove selected class from all packages
-           packageCards.forEach(card => {
-             card.classList.remove('border-primary', 'border-2');
-             card.classList.add('border-border');
-           });
+  <!-- Credits & Votes Dashboard Tab Content -->
+  <div id='dashboard-content' class='tab-content hidden'>
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <div class='space-y-6'>
+        <!-- Balance Overview -->
+        <div class='grid grid-cols-1 md:grid-cols-3 gap-6'>
+          <div
+            class='border rounded-lg p-6 bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20'
+          >
+            <div class='flex items-center justify-between'>
+              <div>
+                <p class='font-medium text-lg'>Total Credits</p>
+                <p class='text-sm text-muted-foreground'>Available for voting</p>
+              </div>
+              <span
+                class='text-3xl font-bold text-blue-600'
+                id='dashboard-credits'
+              >25</span>
+            </div>
+          </div>
+          <div
+            class='border rounded-lg p-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20'
+          >
+            <div class='flex items-center justify-between'>
+              <div>
+                <p class='font-medium text-lg'>Total Votes Cast</p>
+                <p class='text-sm text-muted-foreground'>Across all ideas</p>
+              </div>
+              <span
+                class='text-3xl font-bold text-green-600'
+                id='total-votes'
+              >47</span>
+            </div>
+          </div>
+          <div
+            class='border rounded-lg p-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20'
+          >
+            <div class='flex items-center justify-between'>
+              <div>
+                <p class='font-medium text-lg'>Total Earnings</p>
+                <p class='text-sm text-muted-foreground'>From voting rewards</p>
+              </div>
+              <span
+                class='text-3xl font-bold text-purple-600'
+                id='total-earnings'
+              >23.5 riyal</span>
+            </div>
+          </div>
+        </div>
 
-           // Add selected class to clicked package
-           selectedPackage.classList.remove('border-border');
-           selectedPackage.classList.add('border-primary', 'border-2');
+        <!-- Stats & Metrics -->
+        <div>
+          <h3 class='text-lg font-medium mb-4'>Voting Activity (Last 7 Days)</h3>
+          <div class='border rounded-lg p-6'>
+            <div
+              class='flex items-center justify-center h-64 bg-muted rounded-lg'
+            >
+              <div class='text-center'>
+                <svg
+                  class='w-16 h-16 mx-auto mb-4 text-muted-foreground'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
+                  ></path>
+                </svg>
+                <p class='text-muted-foreground'>Chart: 5 votes yesterday, 3
+                  votes 2 days ago, etc.</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-           // Update payment total
-           const price = selectedPackage.getAttribute('data-price');
-           paymentTotal.textContent = price + ' riyal';
+        <!-- Activity Feed -->
+        <div>
+          <h3 class='text-lg font-medium mb-4'>Recent Activity</h3>
+          <div class='space-y-4'>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div class='flex items-center'>
+                  <div
+                    class='w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4'
+                  >
+                    <svg
+                      class='w-5 h-5 text-green-600'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        stroke-width='2'
+                        d='M5 13l4 4L19 7'
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class='font-medium'>Voted on "AI-Powered Analytics Tool"</p>
+                    <p class='text-sm text-muted-foreground'>Earned 0.5 riyal •
+                      2 hours ago</p>
+                  </div>
+                </div>
+                <span class='text-green-600 font-medium'>+0.5 riyal</span>
+              </div>
+            </div>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div class='flex items-center'>
+                  <div
+                    class='w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4'
+                  >
+                    <svg
+                      class='w-5 h-5 text-blue-600'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        stroke-width='2'
+                        d='M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1'
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class='font-medium'>Purchased 50 credits</p>
+                    <p class='text-sm text-muted-foreground'>50 riyal • 3 days
+                      ago</p>
+                  </div>
+                </div>
+                <span class='text-blue-600 font-medium'>+50 credits</span>
+              </div>
+            </div>
+            <div class='border rounded-lg p-4'>
+              <div class='flex items-center justify-between'>
+                <div class='flex items-center'>
+                  <div
+                    class='w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4'
+                  >
+                    <svg
+                      class='w-5 h-5 text-green-600'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        stroke-width='2'
+                        d='M5 13l4 4L19 7'
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class='font-medium'>Voted on "Mobile App Redesign"</p>
+                    <p class='text-sm text-muted-foreground'>Earned 0.5 riyal •
+                      1 week ago</p>
+                  </div>
+                </div>
+                <span class='text-green-600 font-medium'>+0.5 riyal</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-           // Show payment form
-           paymentForm.classList.remove('hidden');
-           paymentForm.scrollIntoView({ behavior: 'smooth' });
-         });
-       });
+        <!-- Top Performing Ideas -->
+        <div>
+          <h3 class='text-lg font-medium mb-4'>Your Top Voted Ideas</h3>
+          <div class='border rounded-lg overflow-hidden'>
+            <table class='w-full'>
+              <thead class='bg-muted'>
+                <tr>
+                  <th class='px-4 py-3 text-left font-medium'>Idea</th>
+                  <th class='px-4 py-3 text-left font-medium'>Your Votes</th>
+                  <th class='px-4 py-3 text-left font-medium'>Earnings</th>
+                  <th class='px-4 py-3 text-left font-medium'>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class='border-t'>
+                  <td class='px-4 py-3'>AI-Powered Analytics Tool</td>
+                  <td class='px-4 py-3'>3</td>
+                  <td class='px-4 py-3'>1.5 riyal</td>
+                  <td class='px-4 py-3'><span
+                      class='text-green-600 font-medium'
+                    >Active</span></td>
+                </tr>
+                <tr class='border-t'>
+                  <td class='px-4 py-3'>Mobile App Redesign</td>
+                  <td class='px-4 py-3'>2</td>
+                  <td class='px-4 py-3'>1.0 riyal</td>
+                  <td class='px-4 py-3'><span
+                      class='text-yellow-600 font-medium'
+                    >Pending</span></td>
+                </tr>
+                <tr class='border-t'>
+                  <td class='px-4 py-3'>Cloud Migration Strategy</td>
+                  <td class='px-4 py-3'>1</td>
+                  <td class='px-4 py-3'>0.5 riyal</td>
+                  <td class='px-4 py-3'><span
+                      class='text-green-600 font-medium'
+                    >Completed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-       // Payment form submission
-       const paymentFormEl = document.getElementById('credit-payment-form');
-       paymentFormEl.addEventListener('submit', function(e) {
-         e.preventDefault();
-
-         // Simulate payment processing
-         const submitButton = paymentFormEl.querySelector('button[type="submit"]');
-         const originalText = submitButton.textContent;
-         submitButton.textContent = 'Processing...';
-         submitButton.disabled = true;
-
-         setTimeout(() => {
-           // Update credits
-           const creditsToAdd = parseInt(selectedPackage.getAttribute('data-credits'));
-           const currentCredits = parseInt(document.getElementById('current-credits').textContent);
-           const newCredits = currentCredits + creditsToAdd;
-
-           document.getElementById('current-credits').textContent = newCredits;
-           document.getElementById('votes-remaining').textContent = newCredits;
-           document.getElementById('dashboard-credits').textContent = newCredits;
-
-           // Update total votes (simulate some votes)
-           const totalVotesEl = document.getElementById('total-votes');
-           const currentVotes = parseInt(totalVotesEl.textContent);
-           totalVotesEl.textContent = currentVotes + Math.floor(Math.random() * 5) + 1;
-
-           // Update earnings
-           const totalEarningsEl = document.getElementById('total-earnings');
-           const currentEarnings = parseFloat(totalEarningsEl.textContent);
-           const newEarnings = currentEarnings + (creditsToAdd * 0.1); // Simulate some earnings
-           totalEarningsEl.textContent = newEarnings.toFixed(1) + ' riyal';
-
-           // Show success message
-           submitButton.textContent = 'Payment Successful!';
-           submitButton.classList.remove('bg-primary', 'text-primary-foreground');
-           submitButton.classList.add('bg-green-600', 'text-white');
-
-           setTimeout(() => {
-             // Reset form
-             paymentForm.classList.add('hidden');
-             submitButton.textContent = originalText;
-             submitButton.disabled = false;
-             submitButton.classList.remove('bg-green-600', 'text-white');
-             submitButton.classList.add('bg-primary', 'text-primary-foreground');
-             paymentFormEl.reset();
-           }, 3000);
-         }, 2000);
-       });
-     });
-   </script>
+<script>
+  // Tab switching functionality document.addEventListener('DOMContentLoaded',
+  function() { const tabButtons = document.querySelectorAll('.tab-button');
+  const tabContents = document.querySelectorAll('.tab-content');
+  tabButtons.forEach(button => { button.addEventListener('click', function() {
+  const tabName = this.getAttribute('data-tab'); // Remove active state from all
+  tabs tabButtons.forEach(btn => { btn.classList.remove('border-primary',
+  'text-primary'); btn.classList.add('border-transparent',
+  'text-muted-foreground'); }); // Hide all tab contents
+  tabContents.forEach(content => { content.classList.add('hidden'); }); //
+  Activate clicked tab this.classList.remove('border-transparent',
+  'text-muted-foreground'); this.classList.add('border-primary',
+  'text-primary'); // Show corresponding content document.getElementById(tabName
+  + '-content').classList.remove('hidden'); }); }); // Package selection
+  functionality const selectButtons =
+  document.querySelectorAll('.select-package'); const packageCards =
+  document.querySelectorAll('.package-card'); const paymentForm =
+  document.getElementById('payment-form'); const paymentTotal =
+  document.getElementById('payment-total'); let selectedPackage = null;
+  selectButtons.forEach(button => { button.addEventListener('click', function()
+  { const packageType = this.getAttribute('data-package'); selectedPackage =
+  packageCards[Array.from(selectButtons).indexOf(this)]; // Remove selected
+  class from all packages packageCards.forEach(card => {
+  card.classList.remove('border-primary', 'border-2');
+  card.classList.add('border-border'); }); // Add selected class to clicked
+  package selectedPackage.classList.remove('border-border');
+  selectedPackage.classList.add('border-primary', 'border-2'); // Update payment
+  total const price = selectedPackage.getAttribute('data-price');
+  paymentTotal.textContent = price + ' riyal'; // Show payment form
+  paymentForm.classList.remove('hidden'); paymentForm.scrollIntoView({ behavior:
+  'smooth' }); }); }); // Payment form submission const paymentFormEl =
+  document.getElementById('credit-payment-form');
+  paymentFormEl.addEventListener('submit', function(e) { e.preventDefault(); //
+  Simulate payment processing const submitButton =
+  paymentFormEl.querySelector('button[type="submit"]'); const originalText =
+  submitButton.textContent; submitButton.textContent = 'Processing...';
+  submitButton.disabled = true; setTimeout(() => { // Update credits const
+  creditsToAdd = parseInt(selectedPackage.getAttribute('data-credits')); const
+  currentCredits =
+  parseInt(document.getElementById('current-credits').textContent); const
+  newCredits = currentCredits + creditsToAdd;
+  document.getElementById('current-credits').textContent = newCredits;
+  document.getElementById('votes-remaining').textContent = newCredits;
+  document.getElementById('dashboard-credits').textContent = newCredits; //
+  Update total votes (simulate some votes) const totalVotesEl =
+  document.getElementById('total-votes'); const currentVotes =
+  parseInt(totalVotesEl.textContent); totalVotesEl.textContent = currentVotes +
+  Math.floor(Math.random() * 5) + 1; // Update earnings const totalEarningsEl =
+  document.getElementById('total-earnings'); const currentEarnings =
+  parseFloat(totalEarningsEl.textContent); const newEarnings = currentEarnings +
+  (creditsToAdd * 0.1); // Simulate some earnings totalEarningsEl.textContent =
+  newEarnings.toFixed(1) + ' riyal'; // Show success message
+  submitButton.textContent = 'Payment Successful!';
+  submitButton.classList.remove('bg-primary', 'text-primary-foreground');
+  submitButton.classList.add('bg-green-600', 'text-white'); setTimeout(() => {
+  // Reset form paymentForm.classList.add('hidden'); submitButton.textContent =
+  originalText; submitButton.disabled = false;
+  submitButton.classList.remove('bg-green-600', 'text-white');
+  submitButton.classList.add('bg-primary', 'text-primary-foreground');
+  paymentFormEl.reset(); }, 3000); }, 2000); }); });
+</script>

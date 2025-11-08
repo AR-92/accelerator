@@ -1,277 +1,505 @@
 <div class='flex flex-col gap-4 lg:gap-6'>
-    <div class='flex items-center justify-between'>
-      <div class='grid gap-1'>
-        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Startup
-          Management</h1>
-        <p class='text-base text-muted-foreground'>Manage and monitor all startups in your enterprise.</p>
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1 class='font-heading text-2xl font-semibold dark:text-white'>Startup
+        Management</h1>
+      <p class='text-base text-muted-foreground'>Manage and monitor all startups
+        in your enterprise.</p>
+    </div>
+  </div>
+
+  <div class='mb-8'>
+    <div class='flex items-center justify-between mb-4'>
+      <h3
+        class='text-xl font-semibold text-gray-900 dark:text-gray-100'
+      >Startups</h3>
+      <div class='flex items-center gap-2 flex-wrap sm:flex-nowrap'>
+        <!-- Search Input -->
+        <div class='relative'>
+          <input
+            type='text'
+            placeholder='Search startups...'
+            class='pl-9 pr-4 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 min-w-[180px]'
+          />
+          <div class='absolute left-2.5 top-1.5 text-gray-400'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='16'
+              height='16'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='2'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              class='lucide lucide-search'
+            >
+              <circle cx='11' cy='11' r='8' />
+              <path d='m21 21-4.3-4.3' />
+            </svg>
+          </div>
+        </div>
+
+        <select
+          class='px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 min-w-[120px]'
+        >
+          <option>All Startups</option>
+          <option>Active Startups</option>
+          <option>Under Review</option>
+          <option>Completed</option>
+        </select>
+        <button
+          class='px-3 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600'
+        >
+          View All
+        </button>
       </div>
     </div>
 
-     <div class='mb-8'>
-       <div class='flex items-center justify-between mb-4'>
-         <h3 class='text-xl font-semibold text-gray-900 dark:text-gray-100'>Startups</h3>
-         <div class='flex items-center gap-2 flex-wrap sm:flex-nowrap'>
-           <!-- Search Input -->
-           <div class='relative'>
-             <input
-               type='text'
-               placeholder='Search startups...'
-               class='pl-9 pr-4 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 min-w-[180px]'
-             />
-             <div class='absolute left-2.5 top-1.5 text-gray-400'>
-               <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-search'>
-                 <circle cx='11' cy='11' r='8'/>
-                 <path d='m21 21-4.3-4.3'/>
-               </svg>
-             </div>
-           </div>
-
-           <select class='px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 min-w-[120px]'>
-             <option>All Startups</option>
-             <option>Active Startups</option>
-             <option>Under Review</option>
-             <option>Completed</option>
-           </select>
-           <button class='px-3 py-1.5 text-sm bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600'>
-             View All
-           </button>
-         </div>
-       </div>
-
-        <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-          <!-- Startup 1 -->
-          <div class='border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow'>
-            <div class='flex items-start justify-between'>
-              <div>
-                <h4 class='font-medium text-lg'>EcoTech Solutions</h4>
-                <p class='text-sm text-gray-500 dark:text-gray-400'>Sustainable energy monitoring platform</p>
-                <div class='mt-2 flex items-center gap-2'>
-                  <span class='text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full'>Active</span>
-                  <span class='text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 rounded-full'>MVP</span>
-                </div>
-              </div>
-              <div class='flex gap-1'>
-                <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='View'>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-eye'>
-                    <path d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'/>
-                    <circle cx='12' cy='12' r='1'/>
-                  </svg>
-                </button>
-                <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='Edit'>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-edit'>
-                    <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/>
-                    <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z'/>
-                  </svg>
-                </button>
-                <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='More options'>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-more-horizontal'>
-                    <circle cx='12' cy='12' r='1'/>
-                    <circle cx='19' cy='12' r='1'/>
-                    <circle cx='5' cy='12' r='1'/>
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <div class='mt-4 grid grid-cols-2 gap-2'>
-              <div>
-                <p class='text-xs text-gray-500 dark:text-gray-400'>Projects</p>
-                <p class='font-medium'>8</p>
-              </div>
-              <div>
-                <p class='text-xs text-gray-500 dark:text-gray-400'>Team Size</p>
-                <p class='font-medium'>12</p>
-              </div>
-              <div>
-                <p class='text-xs text-gray-500 dark:text-gray-400'>Idea Score</p>
-                <p class='font-medium'>8.7/10</p>
-              </div>
-              <div>
-                <p class='text-xs text-gray-500 dark:text-gray-400'>Last Activity</p>
-                <p class='font-medium'>2h ago</p>
-              </div>
-            </div>
-
-            <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
-              <div class='flex justify-between text-sm'>
-                <span class='text-gray-500 dark:text-gray-400'>Progress</span>
-                <span>85%</span>
-              </div>
-              <div class='mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
-                <div class='bg-blue-600 h-2 rounded-full' style='width: 85%'></div>
-              </div>
-            </div>
-
-            <!-- Role Management for this Startup -->
-            <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
-              <div class='flex justify-between items-center mb-2'>
-                <h5 class='text-sm font-medium text-gray-700 dark:text-gray-300'>Team Roles</h5>
-                <button class='text-xs text-blue-600 dark:text-blue-400 hover:underline'>Manage</button>
-              </div>
-              <div class='flex -space-x-2'>
-                <div class='w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Sarah Chen - CEO'>SC</div>
-                <div class='w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Mike Johnson - CTO'>MJ</div>
-                <div class='w-6 h-6 rounded-full bg-purple-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Lisa Wong - Designer'>LW</div>
-                <div class='w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600'>+9</div>
-              </div>
+    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+      <!-- Startup 1 -->
+      <div
+        class='border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow'
+      >
+        <div class='flex items-start justify-between'>
+          <div>
+            <h4 class='font-medium text-lg'>EcoTech Solutions</h4>
+            <p class='text-sm text-gray-500 dark:text-gray-400'>Sustainable
+              energy monitoring platform</p>
+            <div class='mt-2 flex items-center gap-2'>
+              <span
+                class='text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full'
+              >Active</span>
+              <span
+                class='text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 rounded-full'
+              >MVP</span>
             </div>
           </div>
-
-          <!-- Startup 2 -->
-          <div class='border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow'>
-            <div class='flex items-start justify-between'>
-              <div>
-                <h4 class='font-medium text-lg'>HealthAI Diagnostics</h4>
-                <p class='text-sm text-gray-500 dark:text-gray-400'>AI-powered medical imaging analysis</p>
-                <div class='mt-2 flex items-center gap-2'>
-                  <span class='text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full'>Active</span>
-                  <span class='text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 rounded-full'>Prototype</span>
-                </div>
-              </div>
-              <div class='flex gap-1'>
-                <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='View'>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-eye'>
-                    <path d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'/>
-                    <circle cx='12' cy='12' r='1'/>
-                  </svg>
-                </button>
-                <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='Edit'>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-edit'>
-                    <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/>
-                    <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z'/>
-                  </svg>
-                </button>
-                <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='More options'>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-more-horizontal'>
-                    <circle cx='12' cy='12' r='1'/>
-                    <circle cx='19' cy='12' r='1'/>
-                    <circle cx='5' cy='12' r='1'/>
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <div class='mt-4 grid grid-cols-2 gap-2'>
-              <div>
-                <p class='text-xs text-gray-500 dark:text-gray-400'>Projects</p>
-                <p class='font-medium'>6</p>
-              </div>
-              <div>
-                <p class='text-xs text-gray-500 dark:text-gray-400'>Team Size</p>
-                <p class='font-medium'>15</p>
-              </div>
-              <div>
-                <p class='text-xs text-gray-500 dark:text-gray-400'>Idea Score</p>
-                <p class='font-medium'>9.2/10</p>
-              </div>
-              <div>
-                <p class='text-xs text-gray-500 dark:text-gray-400'>Last Activity</p>
-                <p class='font-medium'>1d ago</p>
-              </div>
-            </div>
-
-            <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
-              <div class='flex justify-between text-sm'>
-                <span class='text-gray-500 dark:text-gray-400'>Progress</span>
-                <span>72%</span>
-              </div>
-              <div class='mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
-                <div class='bg-blue-600 h-2 rounded-full' style='width: 72%'></div>
-              </div>
-            </div>
-
-            <!-- Role Management for this Startup -->
-            <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
-              <div class='flex justify-between items-center mb-2'>
-                <h5 class='text-sm font-medium text-gray-700 dark:text-gray-300'>Team Roles</h5>
-                <button class='text-xs text-blue-600 dark:text-blue-400 hover:underline'>Manage</button>
-              </div>
-              <div class='flex -space-x-2'>
-                <div class='w-6 h-6 rounded-full bg-red-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Dr. Emily Davis - CEO'>ED</div>
-                <div class='w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Alex Kumar - Lead Developer'>AK</div>
-                <div class='w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Rachel Green - ML Engineer'>RG</div>
-                <div class='w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600'>+12</div>
-              </div>
-            </div>
+          <div class='flex gap-1'>
+            <button
+              class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700'
+              title='View'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-eye'
+              >
+                <path
+                  d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'
+                />
+                <circle cx='12' cy='12' r='1' />
+              </svg>
+            </button>
+            <button
+              class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700'
+              title='Edit'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-edit'
+              >
+                <path
+                  d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'
+                />
+                <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z' />
+              </svg>
+            </button>
+            <button
+              class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700'
+              title='More options'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-more-horizontal'
+              >
+                <circle cx='12' cy='12' r='1' />
+                <circle cx='19' cy='12' r='1' />
+                <circle cx='5' cy='12' r='1' />
+              </svg>
+            </button>
           </div>
+        </div>
 
-          <!-- Startup 3 -->
-          <div class='border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow'>
-            <div class='flex items-start justify-between'>
-              <div>
-                <h4 class='font-medium text-lg'>FinFlow Analytics</h4>
-                <p class='text-sm text-gray-500 dark:text-gray-400'>Personal finance management with AI insights</p>
-                <div class='mt-2 flex items-center gap-2'>
-                  <span class='text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 rounded-full'>Under Review</span>
-                  <span class='text-xs px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 rounded-full'>Beta</span>
-                </div>
-              </div>
-              <div class='flex gap-1'>
-                <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='View'>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-eye'>
-                    <path d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'/>
-                    <circle cx='12' cy='12' r='1'/>
-                  </svg>
-                </button>
-                <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='Edit'>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-edit'>
-                    <path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/>
-                    <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z'/>
-                  </svg>
-                </button>
-                <button class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700' title='More options'>
-                  <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-more-horizontal'>
-                    <circle cx='12' cy='12' r='1'/>
-                    <circle cx='19' cy='12' r='1'/>
-                    <circle cx='5' cy='12' r='1'/>
-                  </svg>
-                </button>
-              </div>
-            </div>
+        <div class='mt-4 grid grid-cols-2 gap-2'>
+          <div>
+            <p class='text-xs text-gray-500 dark:text-gray-400'>Projects</p>
+            <p class='font-medium'>8</p>
+          </div>
+          <div>
+            <p class='text-xs text-gray-500 dark:text-gray-400'>Team Size</p>
+            <p class='font-medium'>12</p>
+          </div>
+          <div>
+            <p class='text-xs text-gray-500 dark:text-gray-400'>Idea Score</p>
+            <p class='font-medium'>8.7/10</p>
+          </div>
+          <div>
+            <p class='text-xs text-gray-500 dark:text-gray-400'>Last Activity</p>
+            <p class='font-medium'>2h ago</p>
+          </div>
+        </div>
 
-            <div class='mt-4 grid grid-cols-2 gap-2'>
-              <div>
-                <p class='text-xs text-gray-500 dark:text-gray-400'>Projects</p>
-                <p class='font-medium'>4</p>
-              </div>
-              <div>
-                <p class='text-xs text-gray-500 dark:text-gray-400'>Team Size</p>
-                <p class='font-medium'>8</p>
-              </div>
-              <div>
-                <p class='text-xs text-gray-500 dark:text-gray-400'>Idea Score</p>
-                <p class='font-medium'>7.8/10</p>
-              </div>
-              <div>
-                <p class='text-xs text-gray-500 dark:text-gray-400'>Last Activity</p>
-                <p class='font-medium'>3d ago</p>
-              </div>
-            </div>
+        <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+          <div class='flex justify-between text-sm'>
+            <span class='text-gray-500 dark:text-gray-400'>Progress</span>
+            <span>85%</span>
+          </div>
+          <div
+            class='mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
+          >
+            <div class='bg-blue-600 h-2 rounded-full' style='width: 85%'></div>
+          </div>
+        </div>
 
-            <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
-              <div class='flex justify-between text-sm'>
-                <span class='text-gray-500 dark:text-gray-400'>Progress</span>
-                <span>45%</span>
-              </div>
-              <div class='mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
-                <div class='bg-blue-600 h-2 rounded-full' style='width: 45%'></div>
-              </div>
-            </div>
-
-            <!-- Role Management for this Startup -->
-            <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
-              <div class='flex justify-between items-center mb-2'>
-                <h5 class='text-sm font-medium text-gray-700 dark:text-gray-300'>Team Roles</h5>
-                <button class='text-xs text-blue-600 dark:text-blue-400 hover:underline'>Manage</button>
-              </div>
-              <div class='flex -space-x-2'>
-                <div class='w-6 h-6 rounded-full bg-purple-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Tom Wilson - CEO'>TW</div>
-                <div class='w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='Nina Patel - Product Manager'>NP</div>
-                <div class='w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white' title='David Kim - Developer'>DK</div>
-                <div class='w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600'>+5</div>
-              </div>
-            </div>
+        <!-- Role Management for this Startup -->
+        <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+          <div class='flex justify-between items-center mb-2'>
+            <h5
+              class='text-sm font-medium text-gray-700 dark:text-gray-300'
+            >Team Roles</h5>
+            <button
+              class='text-xs text-blue-600 dark:text-blue-400 hover:underline'
+            >Manage</button>
+          </div>
+          <div class='flex -space-x-2'>
+            <div
+              class='w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white'
+              title='Sarah Chen - CEO'
+            >SC</div>
+            <div
+              class='w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white'
+              title='Mike Johnson - CTO'
+            >MJ</div>
+            <div
+              class='w-6 h-6 rounded-full bg-purple-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white'
+              title='Lisa Wong - Designer'
+            >LW</div>
+            <div
+              class='w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600'
+            >+9</div>
           </div>
         </div>
       </div>
+
+      <!-- Startup 2 -->
+      <div
+        class='border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow'
+      >
+        <div class='flex items-start justify-between'>
+          <div>
+            <h4 class='font-medium text-lg'>HealthAI Diagnostics</h4>
+            <p class='text-sm text-gray-500 dark:text-gray-400'>AI-powered
+              medical imaging analysis</p>
+            <div class='mt-2 flex items-center gap-2'>
+              <span
+                class='text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full'
+              >Active</span>
+              <span
+                class='text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 rounded-full'
+              >Prototype</span>
+            </div>
+          </div>
+          <div class='flex gap-1'>
+            <button
+              class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700'
+              title='View'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-eye'
+              >
+                <path
+                  d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'
+                />
+                <circle cx='12' cy='12' r='1' />
+              </svg>
+            </button>
+            <button
+              class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700'
+              title='Edit'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-edit'
+              >
+                <path
+                  d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'
+                />
+                <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z' />
+              </svg>
+            </button>
+            <button
+              class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700'
+              title='More options'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-more-horizontal'
+              >
+                <circle cx='12' cy='12' r='1' />
+                <circle cx='19' cy='12' r='1' />
+                <circle cx='5' cy='12' r='1' />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class='mt-4 grid grid-cols-2 gap-2'>
+          <div>
+            <p class='text-xs text-gray-500 dark:text-gray-400'>Projects</p>
+            <p class='font-medium'>6</p>
+          </div>
+          <div>
+            <p class='text-xs text-gray-500 dark:text-gray-400'>Team Size</p>
+            <p class='font-medium'>15</p>
+          </div>
+          <div>
+            <p class='text-xs text-gray-500 dark:text-gray-400'>Idea Score</p>
+            <p class='font-medium'>9.2/10</p>
+          </div>
+          <div>
+            <p class='text-xs text-gray-500 dark:text-gray-400'>Last Activity</p>
+            <p class='font-medium'>1d ago</p>
+          </div>
+        </div>
+
+        <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+          <div class='flex justify-between text-sm'>
+            <span class='text-gray-500 dark:text-gray-400'>Progress</span>
+            <span>72%</span>
+          </div>
+          <div
+            class='mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
+          >
+            <div class='bg-blue-600 h-2 rounded-full' style='width: 72%'></div>
+          </div>
+        </div>
+
+        <!-- Role Management for this Startup -->
+        <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+          <div class='flex justify-between items-center mb-2'>
+            <h5
+              class='text-sm font-medium text-gray-700 dark:text-gray-300'
+            >Team Roles</h5>
+            <button
+              class='text-xs text-blue-600 dark:text-blue-400 hover:underline'
+            >Manage</button>
+          </div>
+          <div class='flex -space-x-2'>
+            <div
+              class='w-6 h-6 rounded-full bg-red-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white'
+              title='Dr. Emily Davis - CEO'
+            >ED</div>
+            <div
+              class='w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white'
+              title='Alex Kumar - Lead Developer'
+            >AK</div>
+            <div
+              class='w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white'
+              title='Rachel Green - ML Engineer'
+            >RG</div>
+            <div
+              class='w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600'
+            >+12</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Startup 3 -->
+      <div
+        class='border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow'
+      >
+        <div class='flex items-start justify-between'>
+          <div>
+            <h4 class='font-medium text-lg'>FinFlow Analytics</h4>
+            <p class='text-sm text-gray-500 dark:text-gray-400'>Personal finance
+              management with AI insights</p>
+            <div class='mt-2 flex items-center gap-2'>
+              <span
+                class='text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 rounded-full'
+              >Under Review</span>
+              <span
+                class='text-xs px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 rounded-full'
+              >Beta</span>
+            </div>
+          </div>
+          <div class='flex gap-1'>
+            <button
+              class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700'
+              title='View'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-eye'
+              >
+                <path
+                  d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0'
+                />
+                <circle cx='12' cy='12' r='1' />
+              </svg>
+            </button>
+            <button
+              class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700'
+              title='Edit'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-edit'
+              >
+                <path
+                  d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'
+                />
+                <path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z' />
+              </svg>
+            </button>
+            <button
+              class='p-1.5 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700'
+              title='More options'
+            >
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='16'
+                height='16'
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                stroke-width='2'
+                stroke-linecap='round'
+                stroke-linejoin='round'
+                class='lucide lucide-more-horizontal'
+              >
+                <circle cx='12' cy='12' r='1' />
+                <circle cx='19' cy='12' r='1' />
+                <circle cx='5' cy='12' r='1' />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class='mt-4 grid grid-cols-2 gap-2'>
+          <div>
+            <p class='text-xs text-gray-500 dark:text-gray-400'>Projects</p>
+            <p class='font-medium'>4</p>
+          </div>
+          <div>
+            <p class='text-xs text-gray-500 dark:text-gray-400'>Team Size</p>
+            <p class='font-medium'>8</p>
+          </div>
+          <div>
+            <p class='text-xs text-gray-500 dark:text-gray-400'>Idea Score</p>
+            <p class='font-medium'>7.8/10</p>
+          </div>
+          <div>
+            <p class='text-xs text-gray-500 dark:text-gray-400'>Last Activity</p>
+            <p class='font-medium'>3d ago</p>
+          </div>
+        </div>
+
+        <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+          <div class='flex justify-between text-sm'>
+            <span class='text-gray-500 dark:text-gray-400'>Progress</span>
+            <span>45%</span>
+          </div>
+          <div
+            class='mt-1 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'
+          >
+            <div class='bg-blue-600 h-2 rounded-full' style='width: 45%'></div>
+          </div>
+        </div>
+
+        <!-- Role Management for this Startup -->
+        <div class='mt-4 pt-4 border-t border-gray-100 dark:border-gray-700'>
+          <div class='flex justify-between items-center mb-2'>
+            <h5
+              class='text-sm font-medium text-gray-700 dark:text-gray-300'
+            >Team Roles</h5>
+            <button
+              class='text-xs text-blue-600 dark:text-blue-400 hover:underline'
+            >Manage</button>
+          </div>
+          <div class='flex -space-x-2'>
+            <div
+              class='w-6 h-6 rounded-full bg-purple-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white'
+              title='Tom Wilson - CEO'
+            >TW</div>
+            <div
+              class='w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white'
+              title='Nina Patel - Product Manager'
+            >NP</div>
+            <div
+              class='w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white'
+              title='David Kim - Developer'
+            >DK</div>
+            <div
+              class='w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600'
+            >+5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

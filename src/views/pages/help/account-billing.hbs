@@ -1,150 +1,189 @@
 <div class='flex flex-col gap-4 lg:gap-6'>
-    <div class='flex items-center justify-between'>
-      <div class='grid gap-1'>
-        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Account & Billing</h1>
-        <p class='text-base text-muted-foreground'>Manage your account settings, subscription, and billing information.</p>
-      </div>
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1 class='font-heading text-2xl font-semibold dark:text-white'>Account &
+        Billing</h1>
+      <p class='text-base text-muted-foreground'>Manage your account settings,
+        subscription, and billing information.</p>
     </div>
+  </div>
 
-    <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
-      <!-- Managing Your Subscription -->
-      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-        <div class='flex items-center gap-3 mb-4'>
-          <div class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'>
-            {{lucide 'CreditCard' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
-          </div>
-          <h3 class='text-lg font-semibold text-foreground'>Managing Your Subscription</h3>
-        </div>
-        <p class='text-muted-foreground mb-4'>
-          Keep track of your subscription status and make changes as needed.
-        </p>
-        <div class='space-y-2 text-sm text-muted-foreground'>
-          <p><strong>Current Plan:</strong> View your active subscription details</p>
-          <p><strong>Usage Limits:</strong> Monitor your credits and feature usage</p>
-          <p><strong>Upgrade/Downgrade:</strong> Change your plan at any time</p>
-          <p><strong>Billing Cycle:</strong> Monthly or annual payment options</p>
-        </div>
-      </div>
-
-      <!-- Payment Methods -->
-      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-        <div class='flex items-center gap-3 mb-4'>
-          <div class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'>
-            {{lucide 'Wallet' 'w-5 h-5 text-green-600 dark:text-green-400'}}
-          </div>
-          <h3 class='text-lg font-semibold text-foreground'>Payment Methods</h3>
-        </div>
-        <p class='text-muted-foreground mb-4'>
-          Securely manage your payment information and billing preferences.
-        </p>
-        <div class='space-y-2 text-sm text-muted-foreground'>
-          <p><strong>Add Cards:</strong> Support for major credit cards</p>
-          <p><strong>Default Payment:</strong> Set your preferred payment method</p>
-          <p><strong>Security:</strong> PCI-compliant payment processing</p>
-          <p><strong>Receipts:</strong> Automatic email receipts for all transactions</p>
-        </div>
-      </div>
-
-      <!-- Credits and Usage -->
-      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-        <div class='flex items-center gap-3 mb-4'>
-          <div class='w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'>
-            {{lucide 'Coins' 'w-5 h-5 text-purple-600 dark:text-purple-400'}}
-          </div>
-          <h3 class='text-lg font-semibold text-foreground'>Credits and Usage</h3>
-        </div>
-        <p class='text-muted-foreground mb-4'>
-          Understand how credits work and monitor your platform usage.
-        </p>
-        <div class='space-y-2 text-sm text-muted-foreground'>
-          <p><strong>Credit System:</strong> Pay-as-you-go for AI features</p>
-          <p><strong>Usage Tracking:</strong> Real-time monitoring of credit consumption</p>
-          <p><strong>Top-up Options:</strong> Purchase additional credits anytime</p>
-          <p><strong>Bonus Credits:</strong> Earn credits through platform activities</p>
-        </div>
-      </div>
-
-      <!-- Updating Profile Settings -->
-      <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-        <div class='flex items-center gap-3 mb-4'>
-          <div class='w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center'>
-            {{lucide 'Settings' 'w-5 h-5 text-orange-600 dark:text-orange-400'}}
-          </div>
-          <h3 class='text-lg font-semibold text-foreground'>Updating Profile Settings</h3>
-        </div>
-        <p class='text-muted-foreground mb-4'>
-          Customize your account preferences and personal information.
-        </p>
-        <div class='space-y-2 text-sm text-muted-foreground'>
-          <p><strong>Personal Info:</strong> Update name, bio, and contact details</p>
-          <p><strong>Privacy Settings:</strong> Control profile visibility and data sharing</p>
-          <p><strong>Notification Preferences:</strong> Manage email and in-app alerts</p>
-          <p><strong>Security:</strong> Change password and enable two-factor auth</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Billing History -->
+  <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
+    <!-- Managing Your Subscription -->
     <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-semibold text-foreground mb-4'>Billing History & Invoices</h3>
-      <div class='space-y-4'>
-        <p class='text-muted-foreground'>
-          Access your complete billing history and download invoices for your records.
-        </p>
-        <div class='grid grid-cols-1 md:grid-cols-3 gap-4 text-sm'>
-          <div class='flex items-center gap-2'>
-            <div class='w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'>
-              {{lucide 'Download' 'w-4 h-4 text-blue-600 dark:text-blue-400'}}
-            </div>
-            <div>
-              <p class='font-medium text-foreground'>Download Invoices</p>
-              <p class='text-muted-foreground'>PDF format available</p>
-            </div>
-          </div>
-          <div class='flex items-center gap-2'>
-            <div class='w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'>
-              {{lucide 'Mail' 'w-4 h-4 text-green-600 dark:text-green-400'}}
-            </div>
-            <div>
-              <p class='font-medium text-foreground'>Email Receipts</p>
-              <p class='text-muted-foreground'>Automatic delivery</p>
-            </div>
-          </div>
-          <div class='flex items-center gap-2'>
-            <div class='w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'>
-              {{lucide 'Calendar' 'w-4 h-4 text-purple-600 dark:text-purple-400'}}
-            </div>
-            <div>
-              <p class='font-medium text-foreground'>Payment Schedule</p>
-              <p class='text-muted-foreground'>View upcoming charges</p>
-            </div>
-          </div>
+      <div class='flex items-center gap-3 mb-4'>
+        <div
+          class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'
+        >
+          {{lucide 'CreditCard' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
         </div>
+        <h3 class='text-lg font-semibold text-foreground'>Managing Your
+          Subscription</h3>
+      </div>
+      <p class='text-muted-foreground mb-4'>
+        Keep track of your subscription status and make changes as needed.
+      </p>
+      <div class='space-y-2 text-sm text-muted-foreground'>
+        <p><strong>Current Plan:</strong>
+          View your active subscription details</p>
+        <p><strong>Usage Limits:</strong>
+          Monitor your credits and feature usage</p>
+        <p><strong>Upgrade/Downgrade:</strong> Change your plan at any time</p>
+        <p><strong>Billing Cycle:</strong> Monthly or annual payment options</p>
       </div>
     </div>
 
-    <!-- Support Contact -->
+    <!-- Payment Methods -->
     <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-semibold text-foreground mb-4'>Need Help with Billing?</h3>
-      <div class='flex items-start gap-4'>
-        <div class='w-10 h-10 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center flex-shrink-0'>
-          {{lucide 'HelpCircle' 'w-5 h-5 text-red-600 dark:text-red-400'}}
+      <div class='flex items-center gap-3 mb-4'>
+        <div
+          class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'
+        >
+          {{lucide 'Wallet' 'w-5 h-5 text-green-600 dark:text-green-400'}}
         </div>
-        <div class='flex-1'>
-          <p class='text-muted-foreground mb-3'>
-            Our billing support team is here to help with any questions about your account, payments, or subscription.
-          </p>
-          <div class='flex flex-wrap gap-3'>
-            <button class='flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 text-sm'>
-              {{lucide 'MessageCircle' 'w-4 h-4'}}
-              Contact Support
-            </button>
-            <button class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted text-sm'>
-              {{lucide 'ExternalLink' 'w-4 h-4'}}
-              Billing FAQ
-            </button>
+        <h3 class='text-lg font-semibold text-foreground'>Payment Methods</h3>
+      </div>
+      <p class='text-muted-foreground mb-4'>
+        Securely manage your payment information and billing preferences.
+      </p>
+      <div class='space-y-2 text-sm text-muted-foreground'>
+        <p><strong>Add Cards:</strong> Support for major credit cards</p>
+        <p><strong>Default Payment:</strong>
+          Set your preferred payment method</p>
+        <p><strong>Security:</strong> PCI-compliant payment processing</p>
+        <p><strong>Receipts:</strong>
+          Automatic email receipts for all transactions</p>
+      </div>
+    </div>
+
+    <!-- Credits and Usage -->
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <div class='flex items-center gap-3 mb-4'>
+        <div
+          class='w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'
+        >
+          {{lucide 'Coins' 'w-5 h-5 text-purple-600 dark:text-purple-400'}}
+        </div>
+        <h3 class='text-lg font-semibold text-foreground'>Credits and Usage</h3>
+      </div>
+      <p class='text-muted-foreground mb-4'>
+        Understand how credits work and monitor your platform usage.
+      </p>
+      <div class='space-y-2 text-sm text-muted-foreground'>
+        <p><strong>Credit System:</strong> Pay-as-you-go for AI features</p>
+        <p><strong>Usage Tracking:</strong>
+          Real-time monitoring of credit consumption</p>
+        <p><strong>Top-up Options:</strong>
+          Purchase additional credits anytime</p>
+        <p><strong>Bonus Credits:</strong>
+          Earn credits through platform activities</p>
+      </div>
+    </div>
+
+    <!-- Updating Profile Settings -->
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <div class='flex items-center gap-3 mb-4'>
+        <div
+          class='w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center'
+        >
+          {{lucide 'Settings' 'w-5 h-5 text-orange-600 dark:text-orange-400'}}
+        </div>
+        <h3 class='text-lg font-semibold text-foreground'>Updating Profile
+          Settings</h3>
+      </div>
+      <p class='text-muted-foreground mb-4'>
+        Customize your account preferences and personal information.
+      </p>
+      <div class='space-y-2 text-sm text-muted-foreground'>
+        <p><strong>Personal Info:</strong>
+          Update name, bio, and contact details</p>
+        <p><strong>Privacy Settings:</strong>
+          Control profile visibility and data sharing</p>
+        <p><strong>Notification Preferences:</strong>
+          Manage email and in-app alerts</p>
+        <p><strong>Security:</strong>
+          Change password and enable two-factor auth</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Billing History -->
+  <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+    <h3 class='text-lg font-semibold text-foreground mb-4'>Billing History &
+      Invoices</h3>
+    <div class='space-y-4'>
+      <p class='text-muted-foreground'>
+        Access your complete billing history and download invoices for your
+        records.
+      </p>
+      <div class='grid grid-cols-1 md:grid-cols-3 gap-4 text-sm'>
+        <div class='flex items-center gap-2'>
+          <div
+            class='w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'
+          >
+            {{lucide 'Download' 'w-4 h-4 text-blue-600 dark:text-blue-400'}}
+          </div>
+          <div>
+            <p class='font-medium text-foreground'>Download Invoices</p>
+            <p class='text-muted-foreground'>PDF format available</p>
+          </div>
+        </div>
+        <div class='flex items-center gap-2'>
+          <div
+            class='w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'
+          >
+            {{lucide 'Mail' 'w-4 h-4 text-green-600 dark:text-green-400'}}
+          </div>
+          <div>
+            <p class='font-medium text-foreground'>Email Receipts</p>
+            <p class='text-muted-foreground'>Automatic delivery</p>
+          </div>
+        </div>
+        <div class='flex items-center gap-2'>
+          <div
+            class='w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'
+          >
+            {{lucide 'Calendar' 'w-4 h-4 text-purple-600 dark:text-purple-400'}}
+          </div>
+          <div>
+            <p class='font-medium text-foreground'>Payment Schedule</p>
+            <p class='text-muted-foreground'>View upcoming charges</p>
           </div>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Support Contact -->
+  <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+    <h3 class='text-lg font-semibold text-foreground mb-4'>Need Help with
+      Billing?</h3>
+    <div class='flex items-start gap-4'>
+      <div
+        class='w-10 h-10 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center flex-shrink-0'
+      >
+        {{lucide 'HelpCircle' 'w-5 h-5 text-red-600 dark:text-red-400'}}
+      </div>
+      <div class='flex-1'>
+        <p class='text-muted-foreground mb-3'>
+          Our billing support team is here to help with any questions about your
+          account, payments, or subscription.
+        </p>
+        <div class='flex flex-wrap gap-3'>
+          <button
+            class='flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 text-sm'
+          >
+            {{lucide 'MessageCircle' 'w-4 h-4'}}
+            Contact Support
+          </button>
+          <button
+            class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted text-sm'
+          >
+            {{lucide 'ExternalLink' 'w-4 h-4'}}
+            Billing FAQ
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

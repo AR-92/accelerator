@@ -1,202 +1,260 @@
 <div class='flex flex-col gap-4 lg:gap-6'>
-    <div class='flex items-center justify-between'>
-      <div class='grid gap-1'>
-        <h1 class='font-heading text-2xl font-semibold dark:text-white'>Activity Timeline</h1>
-        <p class='text-base text-muted-foreground'>Track recent team activities, updates, and changes.</p>
-      </div>
-      <div class='flex items-center gap-2'>
-        <button class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted'>
-          {{lucide 'Filter' 'w-4 h-4'}}
-          Filter
-        </button>
-        <button class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted'>
-          {{lucide 'Download' 'w-4 h-4'}}
-          Export
-        </button>
-      </div>
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1 class='font-heading text-2xl font-semibold dark:text-white'>Activity
+        Timeline</h1>
+      <p class='text-base text-muted-foreground'>Track recent team activities,
+        updates, and changes.</p>
     </div>
+    <div class='flex items-center gap-2'>
+      <button
+        class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted'
+      >
+        {{lucide 'Filter' 'w-4 h-4'}}
+        Filter
+      </button>
+      <button
+        class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted'
+      >
+        {{lucide 'Download' 'w-4 h-4'}}
+        Export
+      </button>
+    </div>
+  </div>
 
-    <!-- Activity Stats -->
-    <div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
-      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
-        <div class='flex items-center justify-between'>
-          <div>
-            <p class='text-sm font-medium text-muted-foreground'>Today's Activities</p>
-            <p class='text-2xl font-bold'>24</p>
-          </div>
-          <div class='h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'>
-            {{lucide 'Activity' 'w-4 h-4 text-blue-600 dark:text-blue-400'}}
-          </div>
+  <!-- Activity Stats -->
+  <div class='grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'>
+    <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-sm font-medium text-muted-foreground'>Today's
+            Activities</p>
+          <p class='text-2xl font-bold'>24</p>
         </div>
-      </div>
-
-      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
-        <div class='flex items-center justify-between'>
-          <div>
-            <p class='text-sm font-medium text-muted-foreground'>This Week</p>
-            <p class='text-2xl font-bold'>156</p>
-          </div>
-          <div class='h-8 w-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'>
-            {{lucide 'Calendar' 'w-4 h-4 text-green-600 dark:text-green-400'}}
-          </div>
-        </div>
-      </div>
-
-      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
-        <div class='flex items-center justify-between'>
-          <div>
-            <p class='text-sm font-medium text-muted-foreground'>Active Users</p>
-            <p class='text-2xl font-bold'>8</p>
-          </div>
-          <div class='h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'>
-            {{lucide 'Users' 'w-4 h-4 text-purple-600 dark:text-purple-400'}}
-          </div>
-        </div>
-      </div>
-
-      <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
-        <div class='flex items-center justify-between'>
-          <div>
-            <p class='text-sm font-medium text-muted-foreground'>Files Modified</p>
-            <p class='text-2xl font-bold'>12</p>
-          </div>
-          <div class='h-8 w-8 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center'>
-            {{lucide 'FileText' 'w-4 h-4 text-orange-600 dark:text-orange-400'}}
-          </div>
+        <div
+          class='h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'
+        >
+          {{lucide 'Activity' 'w-4 h-4 text-blue-600 dark:text-blue-400'}}
         </div>
       </div>
     </div>
 
-    <!-- Activity Timeline -->
-    <div class='bg-card rounded-lg shadow-sm border border-border'>
-      <div class='p-6'>
-        <div class='space-y-6'>
-          <!-- Activity Item -->
-          <div class='flex gap-4'>
-            <div class='flex flex-col items-center'>
-              <div class='w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-bold'>
-                JD
-              </div>
-              <div class='w-0.5 h-16 bg-border mt-2'></div>
+    <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-sm font-medium text-muted-foreground'>This Week</p>
+          <p class='text-2xl font-bold'>156</p>
+        </div>
+        <div
+          class='h-8 w-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'
+        >
+          {{lucide 'Calendar' 'w-4 h-4 text-green-600 dark:text-green-400'}}
+        </div>
+      </div>
+    </div>
+
+    <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-sm font-medium text-muted-foreground'>Active Users</p>
+          <p class='text-2xl font-bold'>8</p>
+        </div>
+        <div
+          class='h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'
+        >
+          {{lucide 'Users' 'w-4 h-4 text-purple-600 dark:text-purple-400'}}
+        </div>
+      </div>
+    </div>
+
+    <div class='rounded-md bg-card p-4 text-card-foreground shadow-sm'>
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-sm font-medium text-muted-foreground'>Files Modified</p>
+          <p class='text-2xl font-bold'>12</p>
+        </div>
+        <div
+          class='h-8 w-8 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center'
+        >
+          {{lucide 'FileText' 'w-4 h-4 text-orange-600 dark:text-orange-400'}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity Timeline -->
+  <div class='bg-card rounded-lg shadow-sm border border-border'>
+    <div class='p-6'>
+      <div class='space-y-6'>
+        <!-- Activity Item -->
+        <div class='flex gap-4'>
+          <div class='flex flex-col items-center'>
+            <div
+              class='w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-bold'
+            >
+              JD
             </div>
-            <div class='flex-1 pb-6'>
-              <div class='flex items-center gap-2 mb-2'>
-                <span class='font-medium text-foreground'>John Doe</span>
-                <span class='text-sm text-muted-foreground'>updated the project timeline</span>
-                <span class='text-xs text-muted-foreground'>2 hours ago</span>
-              </div>
-              <p class='text-sm text-muted-foreground'>Modified 3 tasks and added new milestones for Q1 2025</p>
-              <div class='mt-2 flex gap-2'>
-                <span class='px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full'>Project Update</span>
-              </div>
+            <div class='w-0.5 h-16 bg-border mt-2'></div>
+          </div>
+          <div class='flex-1 pb-6'>
+            <div class='flex items-center gap-2 mb-2'>
+              <span class='font-medium text-foreground'>John Doe</span>
+              <span class='text-sm text-muted-foreground'>updated the project
+                timeline</span>
+              <span class='text-xs text-muted-foreground'>2 hours ago</span>
+            </div>
+            <p class='text-sm text-muted-foreground'>Modified 3 tasks and added
+              new milestones for Q1 2025</p>
+            <div class='mt-2 flex gap-2'>
+              <span
+                class='px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full'
+              >Project Update</span>
             </div>
           </div>
+        </div>
 
-          <div class='flex gap-4'>
-            <div class='flex flex-col items-center'>
-              <div class='w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white text-sm font-bold'>
-                SM
-              </div>
-              <div class='w-0.5 h-16 bg-border mt-2'></div>
+        <div class='flex gap-4'>
+          <div class='flex flex-col items-center'>
+            <div
+              class='w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white text-sm font-bold'
+            >
+              SM
             </div>
-            <div class='flex-1 pb-6'>
-              <div class='flex items-center gap-2 mb-2'>
-                <span class='font-medium text-foreground'>Sarah Miller</span>
-                <span class='text-sm text-muted-foreground'>uploaded new design files</span>
-                <span class='text-xs text-muted-foreground'>4 hours ago</span>
-              </div>
-              <p class='text-sm text-muted-foreground'>Added wireframes and mockups for the mobile app redesign</p>
-              <div class='mt-2 flex gap-2'>
-                <span class='px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full'>File Upload</span>
-                <span class='px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-xs rounded-full'>Design</span>
-              </div>
+            <div class='w-0.5 h-16 bg-border mt-2'></div>
+          </div>
+          <div class='flex-1 pb-6'>
+            <div class='flex items-center gap-2 mb-2'>
+              <span class='font-medium text-foreground'>Sarah Miller</span>
+              <span class='text-sm text-muted-foreground'>uploaded new design
+                files</span>
+              <span class='text-xs text-muted-foreground'>4 hours ago</span>
+            </div>
+            <p class='text-sm text-muted-foreground'>Added wireframes and
+              mockups for the mobile app redesign</p>
+            <div class='mt-2 flex gap-2'>
+              <span
+                class='px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full'
+              >File Upload</span>
+              <span
+                class='px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-xs rounded-full'
+              >Design</span>
             </div>
           </div>
+        </div>
 
-          <div class='flex gap-4'>
-            <div class='flex flex-col items-center'>
-              <div class='w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-sm font-bold'>
-                MR
-              </div>
-              <div class='w-0.5 h-16 bg-border mt-2'></div>
+        <div class='flex gap-4'>
+          <div class='flex flex-col items-center'>
+            <div
+              class='w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-sm font-bold'
+            >
+              MR
             </div>
-            <div class='flex-1 pb-6'>
-              <div class='flex items-center gap-2 mb-2'>
-                <span class='font-medium text-foreground'>Mike Ross</span>
-                <span class='text-sm text-muted-foreground'>completed task</span>
-                <span class='text-xs text-muted-foreground'>6 hours ago</span>
-              </div>
-              <p class='text-sm text-muted-foreground'>Finished implementing user authentication with JWT tokens</p>
-              <div class='mt-2 flex gap-2'>
-                <span class='px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full'>Task Completed</span>
-                <span class='px-2 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 text-xs rounded-full'>Development</span>
-              </div>
+            <div class='w-0.5 h-16 bg-border mt-2'></div>
+          </div>
+          <div class='flex-1 pb-6'>
+            <div class='flex items-center gap-2 mb-2'>
+              <span class='font-medium text-foreground'>Mike Ross</span>
+              <span class='text-sm text-muted-foreground'>completed task</span>
+              <span class='text-xs text-muted-foreground'>6 hours ago</span>
+            </div>
+            <p class='text-sm text-muted-foreground'>Finished implementing user
+              authentication with JWT tokens</p>
+            <div class='mt-2 flex gap-2'>
+              <span
+                class='px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full'
+              >Task Completed</span>
+              <span
+                class='px-2 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 text-xs rounded-full'
+              >Development</span>
             </div>
           </div>
+        </div>
 
-          <div class='flex gap-4'>
-            <div class='flex flex-col items-center'>
-              <div class='w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-white text-sm font-bold'>
-                AL
-              </div>
-              <div class='w-0.5 h-16 bg-border mt-2'></div>
+        <div class='flex gap-4'>
+          <div class='flex flex-col items-center'>
+            <div
+              class='w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-white text-sm font-bold'
+            >
+              AL
             </div>
-            <div class='flex-1 pb-6'>
-              <div class='flex items-center gap-2 mb-2'>
-                <span class='font-medium text-foreground'>Anna Lee</span>
-                <span class='text-sm text-muted-foreground'>commented on database optimization</span>
-                <span class='text-xs text-muted-foreground'>8 hours ago</span>
-              </div>
-              <p class='text-sm text-muted-foreground'>Added suggestions for improving query performance</p>
-              <div class='mt-2 flex gap-2'>
-                <span class='px-2 py-1 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 text-xs rounded-full'>Comment</span>
-                <span class='px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full'>Database</span>
-              </div>
+            <div class='w-0.5 h-16 bg-border mt-2'></div>
+          </div>
+          <div class='flex-1 pb-6'>
+            <div class='flex items-center gap-2 mb-2'>
+              <span class='font-medium text-foreground'>Anna Lee</span>
+              <span class='text-sm text-muted-foreground'>commented on database
+                optimization</span>
+              <span class='text-xs text-muted-foreground'>8 hours ago</span>
+            </div>
+            <p class='text-sm text-muted-foreground'>Added suggestions for
+              improving query performance</p>
+            <div class='mt-2 flex gap-2'>
+              <span
+                class='px-2 py-1 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 text-xs rounded-full'
+              >Comment</span>
+              <span
+                class='px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full'
+              >Database</span>
             </div>
           </div>
+        </div>
 
-          <div class='flex gap-4'>
-            <div class='flex flex-col items-center'>
-              <div class='w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-white text-sm font-bold'>
-                EK
-              </div>
-              <div class='w-0.5 h-16 bg-border mt-2'></div>
+        <div class='flex gap-4'>
+          <div class='flex flex-col items-center'>
+            <div
+              class='w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-white text-sm font-bold'
+            >
+              EK
             </div>
-            <div class='flex-1 pb-6'>
-              <div class='flex items-center gap-2 mb-2'>
-                <span class='font-medium text-foreground'>Emma Kim</span>
-                <span class='text-sm text-muted-foreground'>scheduled team meeting</span>
-                <span class='text-xs text-muted-foreground'>1 day ago</span>
-              </div>
-              <p class='text-sm text-muted-foreground'>Set up weekly sync meeting for project updates</p>
-              <div class='mt-2 flex gap-2'>
-                <span class='px-2 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 text-xs rounded-full'>Meeting</span>
-                <span class='px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs rounded-full'>Planning</span>
-              </div>
+            <div class='w-0.5 h-16 bg-border mt-2'></div>
+          </div>
+          <div class='flex-1 pb-6'>
+            <div class='flex items-center gap-2 mb-2'>
+              <span class='font-medium text-foreground'>Emma Kim</span>
+              <span class='text-sm text-muted-foreground'>scheduled team meeting</span>
+              <span class='text-xs text-muted-foreground'>1 day ago</span>
+            </div>
+            <p class='text-sm text-muted-foreground'>Set up weekly sync meeting
+              for project updates</p>
+            <div class='mt-2 flex gap-2'>
+              <span
+                class='px-2 py-1 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 text-xs rounded-full'
+              >Meeting</span>
+              <span
+                class='px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs rounded-full'
+              >Planning</span>
             </div>
           </div>
+        </div>
 
-          <div class='flex gap-4'>
-            <div class='flex flex-col items-center'>
-              <div class='w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-sm font-bold'>
-                JS
-              </div>
-              <div class='w-0.5 h-0 bg-border mt-2'></div>
+        <div class='flex gap-4'>
+          <div class='flex flex-col items-center'>
+            <div
+              class='w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-sm font-bold'
+            >
+              JS
             </div>
-            <div class='flex-1 pb-6'>
-              <div class='flex items-center gap-2 mb-2'>
-                <span class='font-medium text-foreground'>James Smith</span>
-                <span class='text-sm text-muted-foreground'>created new test cases</span>
-                <span class='text-xs text-muted-foreground'>1 day ago</span>
-              </div>
-              <p class='text-sm text-muted-foreground'>Added comprehensive test coverage for the new features</p>
-              <div class='mt-2 flex gap-2'>
-                <span class='px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs rounded-full'>Testing</span>
-                <span class='px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full'>Quality Assurance</span>
-              </div>
+            <div class='w-0.5 h-0 bg-border mt-2'></div>
+          </div>
+          <div class='flex-1 pb-6'>
+            <div class='flex items-center gap-2 mb-2'>
+              <span class='font-medium text-foreground'>James Smith</span>
+              <span class='text-sm text-muted-foreground'>created new test cases</span>
+              <span class='text-xs text-muted-foreground'>1 day ago</span>
+            </div>
+            <p class='text-sm text-muted-foreground'>Added comprehensive test
+              coverage for the new features</p>
+            <div class='mt-2 flex gap-2'>
+              <span
+                class='px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs rounded-full'
+              >Testing</span>
+              <span
+                class='px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full'
+              >Quality Assurance</span>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </div>
