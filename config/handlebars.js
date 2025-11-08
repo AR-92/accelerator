@@ -157,6 +157,18 @@ if (fs.existsSync(helpNavbarPath)) {
   handlebars.registerPartial('_help-navbar', helpNavbarTemplate);
 }
 
+const ideaRatingWidgetPath = path.join(
+  __dirname,
+  '../src/views/partials/_idea-rating-widget.hbs'
+);
+if (fs.existsSync(ideaRatingWidgetPath)) {
+  const ideaRatingWidgetTemplate = fs.readFileSync(
+    ideaRatingWidgetPath,
+    'utf8'
+  );
+  handlebars.registerPartial('_idea-rating-widget', ideaRatingWidgetTemplate);
+}
+
 module.exports = {
   handlebarsConfig,
   handlebars,

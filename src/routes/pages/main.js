@@ -324,11 +324,38 @@ router.get('/settings', (req, res) => {
   });
 });
 
+// GET settings accounts
+router.get('/settings/accounts', (req, res) => {
+  res.render('pages/account/settings/settings-accounts', {
+    ...getPageData('Account Settings', 'Settings'),
+    layout: 'settings-accounts',
+    activeAccounts: true,
+  });
+});
+
+// GET settings billing
+router.get('/settings/billing', (req, res) => {
+  res.render('pages/account/settings/settings-billing', {
+    ...getPageData('Billing & Payments', 'Settings'),
+    layout: 'settings-billing',
+    activeBilling: true,
+  });
+});
+
+// GET settings other
+router.get('/settings/other', (req, res) => {
+  res.render('pages/account/settings/settings-other', {
+    ...getPageData('Other Settings', 'Settings'),
+    layout: 'settings-other',
+    activeOther: true,
+  });
+});
+
 // GET settings profile
 router.get('/settings/profile', (req, res) => {
   res.render('pages/account/settings/profile', {
     ...getPageData('Profile Settings', 'Settings'),
-    layout: 'settings',
+    layout: 'settings-accounts',
     activeProfile: true,
   });
 });
@@ -337,7 +364,7 @@ router.get('/settings/profile', (req, res) => {
 router.get('/settings/password', (req, res) => {
   res.render('pages/account/settings/password', {
     ...getPageData('Password Settings', 'Settings'),
-    layout: 'settings',
+    layout: 'settings-accounts',
     activePassword: true,
   });
 });
@@ -346,7 +373,7 @@ router.get('/settings/password', (req, res) => {
 router.get('/settings/subscription', (req, res) => {
   res.render('pages/account/subscriptions/index', {
     ...getPageData('Subscription Settings', 'Settings'),
-    layout: 'settings',
+    layout: 'settings-billing',
     activeSubscription: true,
   });
 });
@@ -355,7 +382,7 @@ router.get('/settings/subscription', (req, res) => {
 router.get('/settings/payment-billing', (req, res) => {
   res.render('pages/account/settings/payment-billing', {
     ...getPageData('Payment & Billing', 'Settings'),
-    layout: 'settings',
+    layout: 'settings-billing',
     activePaymentBilling: true,
   });
 });
@@ -364,7 +391,7 @@ router.get('/settings/payment-billing', (req, res) => {
 router.get('/settings/votes', (req, res) => {
   res.render('pages/account/settings/votes', {
     ...getPageData('Vote Management', 'Settings'),
-    layout: 'settings',
+    layout: 'settings-other',
     activeVotes: true,
   });
 });
@@ -373,7 +400,7 @@ router.get('/settings/votes', (req, res) => {
 router.get('/settings/rewards', (req, res) => {
   res.render('pages/account/settings/rewards', {
     ...getPageData('Voting Rewards', 'Settings'),
-    layout: 'settings',
+    layout: 'settings-other',
     activeRewards: true,
   });
 });
@@ -382,7 +409,7 @@ router.get('/settings/rewards', (req, res) => {
 router.get('/settings/credits', (req, res) => {
   res.render('pages/account/settings/credits', {
     ...getPageData('Credits Management', 'Settings'),
-    layout: 'settings',
+    layout: 'settings-billing',
     activeCredits: true,
   });
 });
@@ -407,7 +434,7 @@ router.get('/subscriptions/payment', (req, res) => {
 router.get('/subscriptions', (req, res) => {
   res.render('pages/account/subscriptions/index', {
     ...getPageData('Subscriptions', 'Subscriptions'),
-    layout: 'main',
+    layout: 'settings-billing',
   });
 });
 
@@ -428,7 +455,7 @@ router.post('/settings/preferences', (req, res) => {
 router.get('/subscriptions', (req, res) => {
   res.render('pages/account/subscriptions/index', {
     ...getPageData('Subscriptions', 'Subscriptions'),
-    layout: 'fullwidth',
+    layout: 'settings-billing',
   });
 });
 
@@ -559,7 +586,7 @@ router.get('/portfolio', (req, res) => {
             avgVotes: avgVotes,
             tags: totalTags,
           },
-          layout: 'fullwidth',
+          layout: 'main',
         });
       } catch (processingError) {
         logger.error('Error processing portfolio data:', processingError);
@@ -613,7 +640,7 @@ router.get('/portfolio/:id', (req, res) => {
       res.render('pages/portfolio/portfolio-idea', {
         ...getPageData('Idea Details', 'Portfolio'),
         idea: idea,
-        layout: 'fullwidth',
+        layout: 'main',
       });
     })
     .catch((error) => {
@@ -844,7 +871,7 @@ router.get('/help/faq', (req, res) => {
 router.get('/buy-credits', (req, res) => {
   res.render('pages/account/buy-credits', {
     ...getPageData('Buy Credits - Accelerator Platform', 'BuyCredits'),
-    layout: 'fullwidth',
+    layout: 'main',
   });
 });
 
@@ -852,7 +879,7 @@ router.get('/buy-credits', (req, res) => {
 router.get('/pages/buy-credits', (req, res) => {
   res.render('pages/account/buy-credits', {
     ...getPageData('Buy Credits - Accelerator Platform', 'BuyCredits'),
-    layout: 'fullwidth',
+    layout: 'main',
   });
 });
 
