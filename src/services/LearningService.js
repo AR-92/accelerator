@@ -1,0 +1,218 @@
+/**
+ * Learning service handling business logic for learning content
+ */
+class LearningService {
+  constructor(learningContentRepository, learningCategoryRepository) {
+    this.contentRepo = learningContentRepository;
+    this.categoryRepo = learningCategoryRepository;
+  }
+
+  /**
+   * Get all learning categories
+   * @returns {Promise<Object[]>} Array of category data
+   */
+  async getAllCategories() {
+    const categories = await this.categoryRepo.findAllActive();
+    return categories.map((category) => category.toPublicJSON());
+  }
+
+  /**
+   * Get category by slug
+   * @param {string} slug - Category slug
+   * @returns {Promise<Object>} Category data
+   */
+  async getCategoryBySlug(slug) {
+    const category = await this.categoryRepo.findBySlug(slug);
+    if (!category) {
+      const NotFoundError = require('../utils/errors/NotFoundError');
+      throw new NotFoundError('Learning category not found');
+    }
+    return category.toPublicJSON();
+  }
+
+  /**
+   * Get all published articles
+   * @param {Object} filters - Filter options
+   * @returns {Promise<Object[]>} Array of article data
+   */
+  async getAllArticles(filters = {}) {
+    const articles = await this.contentRepo.findAllPublished(filters);
+    return articles.map((article) => article.toPublicJSON());
+  }
+
+  /**
+   * Get article by slug
+   * @param {string} slug - Article slug
+   * @returns {Promise<Object>} Article data
+   */
+  async getArticleBySlug(slug) {
+    const article = await this.contentRepo.findBySlug(slug);
+    if (!article) {
+      const NotFoundError = require('../utils/errors/NotFoundError');
+      throw new NotFoundError('Learning article not found');
+    }
+
+    // Increment view count asynchronously (don't wait for it)
+    this.contentRepo
+      .incrementViews(article.id)
+      .catch((err) => console.error('Failed to increment view count:', err));
+
+    return article.toPublicJSON();
+  }
+
+  /**
+   * Get articles by category
+   * @param {string} categorySlug - Category slug
+   * @param {Object} filters - Additional filters
+   * @returns {Promise<Object[]>} Array of article data
+   */
+  async getArticlesByCategory(categorySlug, filters = {}) {
+    const category = await this.categoryRepo.findBySlug(categorySlug);
+    if (!category) {
+      const NotFoundError = require('../utils/errors/NotFoundError');
+      throw new NotFoundError('Learning category not found');
+    }
+
+    const articles = await this.contentRepo.findByCategory(
+      category.id,
+      filters
+    );
+    return articles.map((article) => article.toPublicJSON());
+  }
+
+  /**
+   * Get featured articles
+   * @param {number} limit - Number of articles to return
+   * @returns {Promise<Object[]>} Array of featured article data
+   */
+  async getFeaturedArticles(limit = 6) {
+    const articles = await this.contentRepo.findFeatured(limit);
+    return articles.map((article) => article.toPublicJSON());
+  }
+
+  /**
+   * Search articles
+   * @param {string} query - Search query
+   * @param {Object} filters - Additional filters
+   * @returns {Promise<Object[]>} Array of article data
+   */
+  async searchArticles(query, filters = {}) {
+    if (!query || query.trim().length < 2) {
+      return [];
+    }
+
+    const articles = await this.contentRepo.findAllPublished({
+      ...filters,
+      search: query.trim(),
+    });
+
+    return articles.map((article) => article.toPublicJSON());
+  }
+
+  /**
+   * Get articles by tags
+   * @param {string[]} tags - Tags to filter by
+   * @param {Object} filters - Additional filters
+   * @returns {Promise<Object[]>} Array of article data
+   */
+  async getArticlesByTags(tags, filters = {}) {
+    const articles = await this.contentRepo.findByTags(tags, filters);
+    return articles.map((article) => article.toPublicJSON());
+  }
+
+  /**
+   * Get learning content statistics
+   * @returns {Promise<Object>} Statistics object
+   */
+  async getLearningStats() {
+    const [articleStats, categories] = await Promise.all([
+      this.contentRepo.getStats(),
+      this.categoryRepo.findAllActive(),
+    ]);
+
+    return {
+      ...articleStats,
+      totalCategories: categories.length,
+    };
+  }
+
+  /**
+   * Create a new article (admin function)
+   * @param {Object} articleData - Article data
+   * @returns {Promise<Object>} Created article data
+   */
+  async createArticle(articleData) {
+    const articleId = await this.contentRepo.create(articleData);
+    return await this.getArticleBySlug(articleData.slug);
+  }
+
+  /**
+   * Update an article (admin function)
+   * @param {number} id - Article ID
+   * @param {Object} articleData - Updated article data
+   * @returns {Promise<Object>} Updated article data
+   */
+  async updateArticle(id, articleData) {
+    const updated = await this.contentRepo.update(id, articleData);
+    if (!updated) {
+      const NotFoundError = require('../utils/errors/NotFoundError');
+      throw new NotFoundError('Learning article not found');
+    }
+
+    // Find the updated article by slug if provided, otherwise by ID
+    if (articleData.slug) {
+      return await this.getArticleBySlug(articleData.slug);
+    } else {
+      const article = await this.contentRepo.findById(id);
+      return article ? article.toPublicJSON() : null;
+    }
+  }
+
+  /**
+   * Delete an article (admin function)
+   * @param {number} id - Article ID
+   * @returns {Promise<boolean>} Success status
+   */
+  async deleteArticle(id) {
+    return await this.contentRepo.delete(id);
+  }
+
+  /**
+   * Create a new category (admin function)
+   * @param {Object} categoryData - Category data
+   * @returns {Promise<Object>} Created category data
+   */
+  async createCategory(categoryData) {
+    const categoryId = await this.categoryRepo.create(categoryData);
+    const category = await this.categoryRepo.findById(categoryId);
+    return category ? category.toPublicJSON() : null;
+  }
+
+  /**
+   * Update a category (admin function)
+   * @param {number} id - Category ID
+   * @param {Object} categoryData - Updated category data
+   * @returns {Promise<Object>} Updated category data
+   */
+  async updateCategory(id, categoryData) {
+    const updated = await this.categoryRepo.update(id, categoryData);
+    if (!updated) {
+      const NotFoundError = require('../utils/errors/NotFoundError');
+      throw new NotFoundError('Learning category not found');
+    }
+
+    const category = await this.categoryRepo.findById(id);
+    return category ? category.toPublicJSON() : null;
+  }
+
+  /**
+   * Delete a category (admin function)
+   * @param {number} id - Category ID
+   * @returns {Promise<boolean>} Success status
+   */
+  async deleteCategory(id) {
+    return await this.categoryRepo.delete(id);
+  }
+}
+
+module.exports = LearningService;

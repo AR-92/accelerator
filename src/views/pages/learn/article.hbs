@@ -1,0 +1,106 @@
+<div class='flex flex-col gap-6'>
+  <div class='flex items-center gap-4'>
+    <a href='/pages/learn' class='flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors'>
+      {{lucide 'ArrowLeft' 'w-4 h-4'}}
+      Back to Learning Center
+    </a>
+  </div>
+
+  <article class='bg-card p-8 rounded-lg shadow-sm border border-border'>
+    <header class='mb-8'>
+      <div class='flex items-center gap-2 mb-4'>
+        <span class='px-3 py-1 bg-primary/10 text-primary text-sm rounded-full'>
+          {{article.difficultyLevel}}
+        </span>
+        <span class='text-muted-foreground'>•</span>
+        <span class='text-muted-foreground text-sm'>{{article.readTimeMinutes}} min read</span>
+        <span class='text-muted-foreground'>•</span>
+        <span class='text-muted-foreground text-sm'>{{article.viewCount}} views</span>
+      </div>
+
+      <h1 class='text-3xl font-bold text-foreground mb-4'>{{article.title}}</h1>
+
+      {{#if article.excerpt}}
+      <p class='text-xl text-muted-foreground mb-6'>{{article.excerpt}}</p>
+      {{/if}}
+
+      <div class='flex items-center gap-4'>
+        {{#if article.authorImage}}
+        <img src='{{article.authorImage}}' alt='{{article.authorName}}' class='w-12 h-12 rounded-full'>
+        {{/if}}
+        <div>
+          <p class='font-medium text-foreground'>{{article.authorName}}</p>
+          {{#if article.authorBio}}
+          <p class='text-sm text-muted-foreground'>{{article.authorBio}}</p>
+          {{/if}}
+        </div>
+      </div>
+    </header>
+
+    <div class='prose prose-lg max-w-none dark:prose-invert'>
+      {{{article.content}}}
+    </div>
+
+    {{#if article.tags}}
+    <div class='mt-8 pt-8 border-t border-border'>
+      <h3 class='text-lg font-semibold text-foreground mb-4'>Tags</h3>
+      <div class='flex flex-wrap gap-2'>
+        {{#each article.tags}}
+        <span class='px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full'>
+          {{this}}
+        </span>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+  </article>
+
+  {{#if relatedArticles}}
+  <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+    <h3 class='text-lg font-semibold text-foreground mb-4'>Related Articles</h3>
+    <div class='grid grid-cols-1 md:grid-cols-2 gap-4'>
+      {{#each relatedArticles}}
+      <a href='/pages/learn/article/{{slug}}' class='p-4 rounded-lg border border-border hover:bg-muted transition-colors'>
+        <h4 class='font-medium text-foreground mb-2'>{{title}}</h4>
+        <p class='text-sm text-muted-foreground'>{{excerpt}}</p>
+      </a>
+      {{/each}}
+    </div>
+  </div>
+  {{/if}}
+</div>
+
+<style>
+  .prose {
+    color: hsl(var(--foreground));
+  }
+
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    color: hsl(var(--foreground));
+  }
+
+  .prose p {
+    color: hsl(var(--muted-foreground));
+  }
+
+  .prose strong {
+    color: hsl(var(--foreground));
+  }
+
+  .prose a {
+    color: hsl(var(--primary));
+  }
+
+  .prose blockquote {
+    border-left-color: hsl(var(--border));
+  }
+
+  .prose code {
+    background-color: hsl(var(--muted));
+    color: hsl(var(--foreground));
+  }
+
+  .prose pre {
+    background-color: hsl(var(--muted));
+  }
+</style>

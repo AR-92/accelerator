@@ -12,79 +12,117 @@
             </p>
           </div>
 
-          <div class='grid gap-4'>
-            <div class='grid grid-cols-2 gap-8'>
-              <div class='grid gap-2'>
-                <label
-                  class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                  for='first-name'
-                >
-                  First name
-                </label>
-                <input
-                  class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
-                  id='first-name'
-                  placeholder='Max'
-                  required=''
-                />
-              </div>
+           <form action='/auth/signup' method='POST' class='grid gap-4'>
+             <div class='grid grid-cols-2 gap-8'>
+               <div class='grid gap-2'>
+                 <label
+                   class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                   for='first-name'
+                 >
+                   First name
+                 </label>
+                 <input
+                   name='firstName'
+                   class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                   id='first-name'
+                   placeholder='Max'
+                   required=''
+                 />
+               </div>
 
-              <div class='grid gap-2'>
-                <label
-                  class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                  for='last-name'
-                >
-                  Last name
-                </label>
-                <input
-                  class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
-                  id='last-name'
-                  placeholder='Robinson'
-                  required=''
-                />
-              </div>
-            </div>
+               <div class='grid gap-2'>
+                 <label
+                   class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                   for='last-name'
+                 >
+                   Last name
+                 </label>
+                 <input
+                   name='lastName'
+                   class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                   id='last-name'
+                   placeholder='Robinson'
+                   required=''
+                 />
+               </div>
+             </div>
 
-            <div class='grid gap-2'>
-              <label
-                class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                for='email'
-              >
-                Email
-              </label>
-              <input
-                type='email'
-                class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
-                id='email'
-                placeholder='m@example.com'
-                required=''
-              />
-            </div>
+             <div class='grid gap-2'>
+               <label
+                 class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                 for='email'
+               >
+                 Email
+               </label>
+               <input
+                 type='email'
+                 name='email'
+                 class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                 id='email'
+                 placeholder='m@example.com'
+                 required=''
+               />
+             </div>
 
-            <div class='grid gap-2'>
-              <label
-                class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                for='password'
-              >
-                Password
-              </label>
-              <input
-                type='password'
-                class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
-                id='password'
-                placeholder='Enter your password'
-              />
-            </div>
+             <div class='grid gap-2'>
+               <label
+                 class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                 for='password'
+               >
+                 Password
+               </label>
+               <input
+                 type='password'
+                 name='password'
+                 class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                 id='password'
+                 placeholder='Enter your password'
+                 required=''
+               />
+             </div>
 
-            <button
-              class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full'
-              type='submit'
-            >
-              Create an account
-            </button>
+             <div class='grid gap-2'>
+               <label
+                 class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                 for='confirm-password'
+               >
+                 Confirm Password
+               </label>
+               <input
+                 type='password'
+                 name='confirmPassword'
+                 class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                 id='confirm-password'
+                 placeholder='Confirm your password'
+                 required=''
+               />
+             </div>
+
+             <div class='flex items-center space-x-2'>
+               <input
+                 type='checkbox'
+                 name='terms'
+                 id='terms'
+                 class='h-4 w-4 rounded border border-input'
+                 required=''
+               />
+               <label
+                 class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                 for='terms'
+               >
+                 I agree to the <a href='/pages/terms' class='underline'>Terms and Conditions</a>
+               </label>
+             </div>
+
+             <button
+               class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full'
+               type='submit'
+             >
+               Create an account
+             </button>
 
 
-          </div>
+           </form>
 
           <div class='mt-4 text-center text-sm'>
             Already have an account?

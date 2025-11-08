@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { requireAuth, optionalAuth } = require('../../middleware/auth');
 
 // Helper function for page data
 const getPageData = (title, activeKey, padding = 'py-8') => ({
@@ -9,7 +10,7 @@ const getPageData = (title, activeKey, padding = 'py-8') => ({
 });
 
 // GET dashboard
-router.get('/dashboard', (req, res) => {
+router.get('/dashboard', requireAuth, (req, res) => {
   res.render('pages/dashboard/startup/overview', {
     ...getPageData('Dashboard - Overview', 'Dashboard'),
     layout: 'reports',
@@ -18,7 +19,7 @@ router.get('/dashboard', (req, res) => {
 });
 
 // GET enterprise dashboard
-router.get('/enterprise-dashboard', (req, res) => {
+router.get('/enterprise-dashboard', requireAuth, (req, res) => {
   res.render('pages/dashboard/enterprise/overview', {
     ...getPageData('Enterprise Dashboard - Overview', 'EnterpriseDashboard'),
     layout: 'enterprise',
@@ -27,7 +28,7 @@ router.get('/enterprise-dashboard', (req, res) => {
 });
 
 // GET enterprise dashboard startups
-router.get('/enterprise-dashboard/startups', (req, res) => {
+router.get('/enterprise-dashboard/startups', requireAuth, (req, res) => {
   res.render('pages/dashboard/enterprise/startups', {
     ...getPageData('Enterprise Dashboard - Startups', 'EnterpriseDashboard'),
     layout: 'enterprise',
@@ -129,7 +130,7 @@ router.get('/corporate-dashboard/activity-log', (req, res) => {
 });
 
 // GET dashboard tabs
-router.get('/dashboard/tab/business', (req, res) => {
+router.get('/dashboard/tab/business', requireAuth, (req, res) => {
   res.render('pages/dashboard/startup/business', {
     ...getPageData('Dashboard - Business', 'Dashboard'),
     layout: 'reports',
@@ -137,7 +138,7 @@ router.get('/dashboard/tab/business', (req, res) => {
   });
 });
 
-router.get('/dashboard/tab/financial', (req, res) => {
+router.get('/dashboard/tab/financial', requireAuth, (req, res) => {
   res.render('pages/dashboard/startup/financial', {
     ...getPageData('Dashboard - Financial', 'Dashboard'),
     layout: 'reports',
@@ -145,7 +146,7 @@ router.get('/dashboard/tab/financial', (req, res) => {
   });
 });
 
-router.get('/dashboard/tab/marketing', (req, res) => {
+router.get('/dashboard/tab/marketing', requireAuth, (req, res) => {
   res.render('pages/dashboard/startup/marketing', {
     ...getPageData('Dashboard - Marketing', 'Dashboard'),
     layout: 'reports',
@@ -153,7 +154,7 @@ router.get('/dashboard/tab/marketing', (req, res) => {
   });
 });
 
-router.get('/dashboard/tab/fund', (req, res) => {
+router.get('/dashboard/tab/fund', requireAuth, (req, res) => {
   res.render('pages/dashboard/startup/fund', {
     ...getPageData('Dashboard - Funding', 'Dashboard'),
     layout: 'reports',
@@ -161,7 +162,7 @@ router.get('/dashboard/tab/fund', (req, res) => {
   });
 });
 
-router.get('/dashboard/tab/team', (req, res) => {
+router.get('/dashboard/tab/team', requireAuth, (req, res) => {
   res.render('pages/dashboard/startup/team', {
     ...getPageData('Dashboard - Team', 'Dashboard'),
     layout: 'reports',
@@ -169,7 +170,7 @@ router.get('/dashboard/tab/team', (req, res) => {
   });
 });
 
-router.get('/dashboard/tab/promote', (req, res) => {
+router.get('/dashboard/tab/promote', requireAuth, (req, res) => {
   res.render('pages/dashboard/startup/promote', {
     ...getPageData('Dashboard - Promotion', 'Dashboard'),
     layout: 'reports',
@@ -177,7 +178,7 @@ router.get('/dashboard/tab/promote', (req, res) => {
   });
 });
 
-router.get('/dashboard/tab/activity-log', (req, res) => {
+router.get('/dashboard/tab/activity-log', requireAuth, (req, res) => {
   res.render('pages/dashboard/startup/activity-log', {
     ...getPageData('Dashboard - Activity Log', 'Dashboard'),
     layout: 'reports',
@@ -185,7 +186,7 @@ router.get('/dashboard/tab/activity-log', (req, res) => {
   });
 });
 
-router.get('/dashboard/tab/idea', (req, res) => {
+router.get('/dashboard/tab/idea', requireAuth, (req, res) => {
   res.render('pages/dashboard/startup/idea', {
     ...getPageData('Dashboard - Ideas', 'Dashboard'),
     layout: 'reports',
@@ -290,7 +291,7 @@ router.get('/collaborate/manus-static', (req, res) => {
 });
 
 // POST collaborate message
-router.post('/collaborate', (req, res) => {
+router.post('/pages/collaborate', (req, res) => {
   const { message } = req.body;
   const timestamp = new Date().toLocaleTimeString([], {
     hour: '2-digit',
@@ -486,10 +487,10 @@ router.post('/settings/preferences', (req, res) => {
 });
 
 // GET portfolio
-router.get('/portfolio', async (req, res) => {
+router.get('/portfolio', requireAuth, async (req, res) => {
   try {
     const { getAllPortfolio } = require('../../services/databaseService');
-    let portfolioData = await getAllPortfolio();
+    let portfolioData = await getAllPortfolio(req.user.id);
 
     // Handle filtering, sorting, grouping, and search
     const { category, sort, group, search } = req.query;
@@ -708,10 +709,10 @@ router.get('/new-project', (req, res) => {
 });
 
 // GET explore ideas page
-router.get('/explore-ideas', async (req, res) => {
+router.get('/explore-ideas', optionalAuth, async (req, res) => {
   try {
     const { getAllIdeas } = require('../../services/databaseService');
-    const ideas = await getAllIdeas();
+    const ideas = await getAllIdeas(); // Show all ideas for exploration
 
     res.render('pages/content/browse-ideas', {
       ...getPageData('Explore Ideas - Accelerator Platform', 'ExploreIdeas'),
@@ -736,49 +737,62 @@ router.get('/upgrade', (req, res) => {
   });
 });
 
+// GET terms and conditions
+router.get('/terms', (req, res) => {
+  res.render('pages/legal/terms', {
+    title: 'Terms and Conditions - Accelerator Platform',
+    layout: 'main',
+  });
+});
+
 // GET learn center overview
 router.get('/learn', (req, res) => {
-  res.render('pages/learn/learn-center', {
-    ...getPageData('Learning Center - Accelerator Platform', 'Learn'),
-    layout: 'learn',
-    activeOverview: true,
-  });
+  const container = require('../../container');
+  const learningController = container.get('learningController');
+  learningController.getLearningCenter(req, res);
 });
 
-// GET learn getting started
+// GET learn category pages
 router.get('/learn/getting-started', (req, res) => {
-  res.render('pages/learn/getting-started', {
-    ...getPageData('Getting Started - Learning Center', 'Learn'),
-    layout: 'learn',
-    activeGettingStarted: true,
-  });
+  const container = require('../../container');
+  const learningController = container.get('learningController');
+  req.params.categorySlug = 'getting-started';
+  learningController.getCategoryArticles(req, res);
 });
 
-// GET learn courses
 router.get('/learn/courses', (req, res) => {
-  res.render('pages/learn/courses', {
-    ...getPageData('Courses - Learning Center', 'Learn'),
-    layout: 'learn',
-    activeCourses: true,
-  });
+  const container = require('../../container');
+  const learningController = container.get('learningController');
+  req.params.categorySlug = 'courses';
+  learningController.getCategoryArticles(req, res);
 });
 
-// GET learn tutorials
 router.get('/learn/tutorials', (req, res) => {
-  res.render('pages/learn/tutorials', {
-    ...getPageData('Tutorials - Learning Center', 'Learn'),
-    layout: 'learn',
-    activeTutorials: true,
-  });
+  const container = require('../../container');
+  const learningController = container.get('learningController');
+  req.params.categorySlug = 'tutorials';
+  learningController.getCategoryArticles(req, res);
 });
 
-// GET learn resources
 router.get('/learn/resources', (req, res) => {
-  res.render('pages/learn/resources', {
-    ...getPageData('Resources - Learning Center', 'Learn'),
-    layout: 'learn',
-    activeResources: true,
-  });
+  const container = require('../../container');
+  const learningController = container.get('learningController');
+  req.params.categorySlug = 'resources';
+  learningController.getCategoryArticles(req, res);
+});
+
+// GET individual article
+router.get('/learn/article/:articleSlug', (req, res) => {
+  const container = require('../../container');
+  const learningController = container.get('learningController');
+  learningController.getArticle(req, res);
+});
+
+// GET search results
+router.get('/learn/search', (req, res) => {
+  const container = require('../../container');
+  const learningController = container.get('learningController');
+  learningController.searchArticles(req, res);
 });
 
 // GET help center overview
@@ -835,7 +849,7 @@ router.get('/buy-credits', (req, res) => {
 });
 
 // GET buy credits page with /pages prefix
-router.get('/pages/buy-credits', (req, res) => {
+router.get('/buy-credits', (req, res) => {
   res.render('pages/account/buy-credits', {
     ...getPageData('Buy Credits - Accelerator Platform', 'BuyCredits'),
     layout: 'main',

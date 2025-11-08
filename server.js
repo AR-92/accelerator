@@ -2,14 +2,17 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const session = require('express-session');
+const SQLiteStore = require('connect-sqlite3')(session);
 const { handlebarsConfig } = require('./config/handlebars');
 const {
   errorHandler,
   notFoundHandler,
-} = require('./src/middleware/errorHandler');
+} = require('./src/middlewares/errorHandler');
 const { getSecuritySettings } = require('./config/security');
 
-// Import routes
+// Import container and routes
+const container = require('./src/container');
 const authRoutes = require('./src/routes/pages/auth');
 const pageRoutes = require('./src/routes/pages/main');
 const aiAssistantModelsRoutes = require('./src/routes/pages/ai-assistant-models');
@@ -17,6 +20,21 @@ const apiRoutes = require('./src/routes/api/v1/api');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Session configuration
+app.use(
+  session({
+    store: new SQLiteStore({ db: 'sessions.db', dir: __dirname }),
+    secret:
+      process.env.SESSION_SECRET || 'your-secret-key-change-in-production',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    },
+  })
+);
 
 // Get security settings based on environment
 const securitySettings = getSecuritySettings();
@@ -147,17 +165,17 @@ app.listen(port, async () => {
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`Node version: ${process.version}`);
 
-  // Test Supabase connection
+  // Test SQLite connection
   try {
     const { testConnection } = require('./config/database');
     const isConnected = await testConnection();
     if (isConnected) {
-      console.log('Supabase connection established successfully');
+      console.log('SQLite connection established successfully');
     } else {
-      console.warn('Warning: Supabase connection failed');
+      console.warn('Warning: SQLite connection failed');
     }
   } catch (error) {
-    console.error('Warning: Supabase connection test failed:', {
+    console.error('Warning: SQLite connection test failed:', {
       error: error.message,
     });
   }
