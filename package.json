@@ -46,7 +46,6 @@
     "handlebars": "^4.7.8",
     "helmet": "^7.1.0",
     "lucide-static": "^0.548.0",
-    "tailwindcss-animate": "^1.0.7",
-    "winston": "^3.18.3"
+    "tailwindcss-animate": "^1.0.7"
   }
 }

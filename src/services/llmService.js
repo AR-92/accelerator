@@ -1,5 +1,4 @@
 require('dotenv').config();
-const { logger } = require('../../config/logger');
 
 class LLMService {
   constructor() {
@@ -27,7 +26,7 @@ class LLMService {
           return await this.getMockResponse(userMessage);
       }
     } catch (error) {
-      logger.error(`Error with ${this.provider} API:`, error);
+      console.error(`Error with ${this.provider} API:`, error);
       // Fallback to mock if primary provider fails
       return await this.getMockResponse(userMessage);
     }

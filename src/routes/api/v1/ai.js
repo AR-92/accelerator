@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { logger } = require('../../../../config/logger');
 
 // Simplified AI endpoint - AI agent removed for simplicity
 router.post('/collaborate', async (req, res) => {
@@ -32,7 +31,7 @@ router.post('/collaborate', async (req, res) => {
       currentStep: 'complete',
     });
   } catch (error) {
-    logger.error('AI endpoint error:', error);
+    console.error('AI endpoint error:', error);
     res.status(500).json({
       error: 'Internal server error',
       message: error.message,

@@ -1,9 +1,7 @@
 // Error handling middleware
 
-const { logger } = require('../../config/logger');
-
 const errorHandler = (err, req, res) => {
-  logger.error(err.stack);
+  console.error(err.stack);
 
   // In development, send full error details
   if (process.env.NODE_ENV === 'development') {

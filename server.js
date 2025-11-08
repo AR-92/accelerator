@@ -8,7 +8,6 @@ const {
   notFoundHandler,
 } = require('./src/middleware/errorHandler');
 const { getSecuritySettings } = require('./config/security');
-const { logger, logRequest } = require('./config/logger');
 
 // Import routes
 const authRoutes = require('./src/routes/pages/auth');
@@ -44,9 +43,6 @@ app.use(
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-// Logging middleware
-app.use(logRequest);
 
 // Set up Handlebars as the templating engine
 app.engine('hbs', handlebarsConfig);
@@ -95,7 +91,7 @@ app.get('/health', async (req, res) => {
 
     res.status(200).json(healthCheck);
   } catch (error) {
-    logger.error('Health check error:', error);
+    console.error('Health check error:', error);
     res.status(500).json({
       status: 'ERROR',
       timestamp: new Date().toISOString(),
@@ -132,37 +128,36 @@ app.get('/idea-detail', (req, res) => {
 app.use('*', notFoundHandler);
 
 // Error handler
-app.use(require('./config/logger').logError);
 app.use(errorHandler);
 
 // Graceful shutdown
 process.on('SIGTERM', () => {
-  logger.info('SIGTERM received, shutting down gracefully');
+  console.log('SIGTERM received, shutting down gracefully');
   process.exit(0);
 });
 
 process.on('SIGINT', () => {
-  logger.info('SIGINT received, shutting down gracefully');
+  console.log('SIGINT received, shutting down gracefully');
   process.exit(0);
 });
 
 // Start the server
 app.listen(port, async () => {
-  logger.info(`Server running at http://localhost:${port}`);
-  logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  logger.info(`Node version: ${process.version}`);
+  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`Node version: ${process.version}`);
 
   // Test Supabase connection
   try {
     const { testConnection } = require('./config/database');
     const isConnected = await testConnection();
     if (isConnected) {
-      logger.info('Supabase connection established successfully');
+      console.log('Supabase connection established successfully');
     } else {
-      logger.warn('Warning: Supabase connection failed');
+      console.warn('Warning: Supabase connection failed');
     }
   } catch (error) {
-    logger.error('Warning: Supabase connection test failed:', {
+    console.error('Warning: Supabase connection test failed:', {
       error: error.message,
     });
   }

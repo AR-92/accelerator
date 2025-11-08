@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { logger } = require('../../../config/logger');
 
 // Helper function for page data
 const getPageData = (title, activeKey, padding = 'py-8') => ({
@@ -503,7 +502,7 @@ router.get('/portfolio', (req, res) => {
       try {
         portfolioData = JSON.parse(data);
       } catch (parseError) {
-        logger.error('Error parsing portfolio data:', parseError);
+        console.error('Error parsing portfolio data:', parseError);
         return res.render('pages/portfolio/portfolio', {
           ...getPageData('Idea Portfolio', 'Portfolio'),
           ideas: [],
@@ -589,7 +588,7 @@ router.get('/portfolio', (req, res) => {
           layout: 'main',
         });
       } catch (processingError) {
-        logger.error('Error processing portfolio data:', processingError);
+        console.error('Error processing portfolio data:', processingError);
         res.render('pages/portfolio/portfolio', {
           ...getPageData('Idea Portfolio', 'Portfolio'),
           ideas: [],
@@ -604,7 +603,7 @@ router.get('/portfolio', (req, res) => {
       }
     })
     .catch((error) => {
-      logger.error('Error reading portfolio data:', error);
+      console.error('Error reading portfolio data:', error);
       res.render('pages/portfolio/portfolio', {
         ...getPageData('Idea Portfolio', 'Portfolio'),
         ideas: [],
@@ -644,7 +643,7 @@ router.get('/portfolio/:id', (req, res) => {
       });
     })
     .catch((error) => {
-      logger.error('Error reading portfolio data:', error);
+      console.error('Error reading portfolio data:', error);
       res
         .status(500)
         .render(

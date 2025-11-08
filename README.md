@@ -1,15 +1,51 @@
 # Accelerator
 
-A web application for managing ideas, portfolios, and business development processes.
+A comprehensive web application accelerator for startups, enterprises, and businesses. Features AI-powered business modeling, collaboration tools, project management, and comprehensive reporting capabilities.
 
 ## Features
 
-- Dashboard with idea management
-- Portfolio tracking
-- Chat functionality
-- Report generation
-- Settings management
-- Idea creation and voting system
+### AI-Powered Business Tools
+
+- Business model generation and analysis
+- Financial modeling and forecasting
+- Funding strategy development
+- Legal document assistance
+- Marketing strategy planning
+- Team building and recruitment tools
+
+### Collaboration & Communication
+
+- Real-time chat and messaging
+- Team collaboration spaces
+- File sharing and management
+- Task and project management
+- Calendar and scheduling
+- Activity tracking and notifications
+
+### Idea Management
+
+- Idea creation and submission
+- Community voting system
+- Idea browsing and discovery
+- Portfolio management
+- Idea-to-business conversion tools
+
+### Enterprise Features
+
+- Multi-tenant dashboards (Corporate, Enterprise, Startup)
+- Analytics and reporting
+- User management and permissions
+- Billing and subscription management
+- Account settings and profile management
+
+### Learning & Resources
+
+- Interactive tutorials and courses
+- Getting started guides
+- Help center and FAQ
+- Business plan generation
+- Pitch deck creation
+- Company valuation tools
 
 ## Getting Started
 
@@ -60,109 +96,89 @@ To run the application in production mode:
 npm start
 ```
 
-## Deployment
-
-### PM2 Process Management
-
-For production deployments, use PM2 for process management:
-
-1. Install PM2 globally:
-
-   ```bash
-   npm install -g pm2
-   ```
-
-2. Start the application with PM2:
-
-   ```bash
-   pm2 start ecosystem.config.js
-   ```
-
-3. Other useful PM2 commands:
-   ```bash
-   pm2 stop ecosystem.config.js      # Stop the application
-   pm2 restart ecosystem.config.js   # Restart the application
-   pm2 reload ecosystem.config.js    # Reload the application
-   pm2 logs accelerator             # View logs
-   pm2 monit                        # Monitor resources
-   ```
-
 ### Build Process
 
-Before deploying, build the application assets:
+Build the application assets for production:
 
 ```bash
 npm run build
 ```
 
-This creates a production-ready build in the `dist` directory.
+This compiles and minifies the CSS for production deployment.
 
-### Environment Configurations
+### Environment Configuration
 
-The application supports different environments:
+Create a `.env` file based on `.env.example`:
 
-- `.env` - Development environment
-- `.env.staging` - Staging environment
-- `.env.production` - Production environment
+```bash
+cp .env.example .env
+```
+
+Configure the following environment variables:
+
+- `PORT` - Server port (default: 3000)
+- `BASE_URL` - Base URL for CORS
+- `ALLOWED_ORIGINS` - Comma-separated list of allowed origins
 
 ## Development Scripts
 
-- `npm run dev` - Start the development server with hot reloading
+- `npm run dev` - Start development environment with hot reloading, CSS watching, and browser sync
+- `npm run dev:server` - Start the development server with nodemon
+- `npm run dev:tailwind` - Watch and compile Tailwind CSS
+- `npm run dev:browser-sync` - Start browser sync for automatic reloading
 - `npm start` - Start the production server
-- `npm run build:css` - Build the CSS files
-- `npm run build` - Build the entire application for production
-- `npm run pm2:start` - Start the application with PM2
-- `npm run pm2:stop` - Stop the application with PM2
-- `npm run pm2:restart` - Restart the application with PM2
+- `npm run build` - Build and minify CSS for production
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting
 
 ## Project Structure
 
 ```
 accelerator/
 ├── config/                   # Configuration files
-├── data/                     # Data files (e.g., portfolio.json)
-├── public/                   # Static assets (CSS, JS, images, icons)
-│   ├── css/                  # Compiled CSS files
-│   ├── js/                   # Client-side JavaScript
-│   ├── images/               # Image assets
-│   ├── icons/                # Icon files
-│   └── uploads/              # User uploaded files
-├── src/                      # Source files
-│   ├── controllers/          # Route controllers
-│   ├── middleware/           # Express middleware
-│   ├── models/               # Data models
-│   ├── routes/               # Express routes
-│   │   ├── pages/            # Page routes (HTML)
-│   │   └── api/              # API routes (JSON)
-│   │       └── v1/           # API version 1
-│   ├── services/             # Business logic services
-│   ├── utils/                # Utility functions
-│   ├── views/                # Handlebars templates
-│   │   ├── layouts/          # Template layouts
-│   │   ├── partials/         # Reusable template components
-│   │   ├── pages/            # Page-specific templates
-│   │   └── components/       # UI components
-│   └── styles/               # Source CSS/SCSS files
-├── tests/                    # Test files
-│   ├── unit/                 # Unit tests
-│   ├── integration/          # Integration tests
-│   └── fixtures/             # Test fixtures
-├── ecosystem.config.js       # PM2 configuration
-├── server.js                 # Main server file
-└── package.json              # Project dependencies and scripts
+│   ├── database.js          # Database configuration
+│   ├── handlebars.js        # Handlebars templating config
+│   └── security.js          # Security middleware config
+├── data/                     # JSON data files
+│   ├── ideas.json           # Idea storage
+│   ├── portfolio.json       # Portfolio data
+│   └── votes.json           # Voting data
+├── public/                   # Static assets
+│   ├── css/                 # Compiled CSS files
+│   ├── js/                  # Client-side JavaScript
+│   └── images/              # Image assets
+├── src/                     # Source code
+│   ├── components/          # Handlebars components
+│   ├── middleware/          # Express middleware
+│   │   ├── auth.js          # Authentication middleware
+│   │   ├── errorHandler.js  # Error handling
+│   │   └── validation.js    # Input validation
+│   ├── routes/              # Express routes
+│   │   ├── api/v1/          # API endpoints
+│   │   └── pages/           # Page routes
+│   ├── services/            # Business logic services
+│   │   └── llmService.js    # AI/LLM integration
+│   ├── styles/              # CSS source files
+│   ├── utils/               # Utility functions
+│   └── views/               # Handlebars templates
+│       ├── layouts/         # Page layouts
+│       ├── pages/           # Page templates
+│       └── partials/        # Reusable components
+├── .env.example             # Environment variables template
+├── package.json             # Dependencies and scripts
+├── server.js                # Main application server
+└── tailwind.config.js       # Tailwind CSS configuration
 ```
 
 ## Technologies Used
 
-- Node.js
-- Express.js
-- Handlebars templating engine
-- Tailwind CSS
-- Winston logging
-- PM2 process manager
-- Docker containerization
-- HTML5 & CSS3
-- JavaScript (ES6+)
+- **Backend**: Node.js, Express.js
+- **Frontend**: Handlebars templating, HTMX, Tailwind CSS
+- **Database**: JSON file storage (configurable)
+- **AI Integration**: Custom LLM service integration
+- **Development**: Nodemon, Browser-sync, Prettier
+- **Security**: Helmet, CORS, Rate limiting
+- **Build Tools**: Tailwind CSS CLI
 
 ## Health Check
 
