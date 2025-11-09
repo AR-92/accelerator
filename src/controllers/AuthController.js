@@ -16,10 +16,21 @@ class AuthController {
       const { email, password } = req.body;
 
       if (!email || !password) {
+        const errorMessage = 'Email and password are required';
+
+        // Check if this is an HTMX request
+        if (req.headers['hx-request']) {
+          return res.status(400).json({
+            success: false,
+            error: errorMessage,
+            type: 'validation',
+          });
+        }
+
         return res.status(400).render('pages/auth/auth', {
           title: 'Sign In - Accelerator Platform',
           layout: 'auth',
-          error: 'Email and password are required',
+          error: errorMessage,
         });
       }
 
@@ -29,23 +40,54 @@ class AuthController {
       req.session.userId = user.id;
       req.session.user = user;
 
+      // Check if this is an HTMX request
+      if (req.headers['hx-request']) {
+        return res.json({
+          success: true,
+          message: 'Login successful! Redirecting...',
+          redirect: '/pages/dashboard',
+        });
+      }
+
       // Redirect to dashboard on successful login
       res.redirect('/pages/dashboard');
     } catch (error) {
       console.error('Login error:', error);
 
       if (error.name === 'ValidationError') {
+        const errorMessage = error.firstError;
+
+        // Check if this is an HTMX request
+        if (req.headers['hx-request']) {
+          return res.status(error.statusCode).json({
+            success: false,
+            error: errorMessage,
+            type: 'validation',
+          });
+        }
+
         return res.status(error.statusCode).render('pages/auth/auth', {
           title: 'Sign In - Accelerator Platform',
           layout: 'auth',
-          error: error.firstError,
+          error: errorMessage,
+        });
+      }
+
+      const errorMessage = 'An error occurred during login';
+
+      // Check if this is an HTMX request
+      if (req.headers['hx-request']) {
+        return res.status(500).json({
+          success: false,
+          error: errorMessage,
+          type: 'server',
         });
       }
 
       res.status(500).render('pages/auth/auth', {
         title: 'Sign In - Accelerator Platform',
         layout: 'auth',
-        error: 'An error occurred during login',
+        error: errorMessage,
       });
     }
   }
@@ -66,9 +108,20 @@ class AuthController {
       } = req.body;
 
       if (!email || !password || !firstName || !lastName) {
+        const errorMessage = 'All fields are required';
+
+        // Check if this is an HTMX request
+        if (req.headers['hx-request']) {
+          return res.status(400).json({
+            success: false,
+            error: errorMessage,
+            type: 'validation',
+          });
+        }
+
         return res.status(400).json({
           error: 'Validation Error',
-          message: 'All fields are required',
+          message: errorMessage,
         });
       }
 
@@ -80,6 +133,20 @@ class AuthController {
         role,
       });
 
+      // Check if this is an HTMX request
+      if (req.headers['hx-request']) {
+        return res.json({
+          success: true,
+          message: 'Registration successful! You can now log in.',
+          user: {
+            id: user.id,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+          },
+        });
+      }
+
       res.status(201).json({
         success: true,
         user,
@@ -89,16 +156,38 @@ class AuthController {
       console.error('Registration error:', error);
 
       if (error.name === 'ValidationError') {
+        const errorMessage = error.firstError;
+
+        // Check if this is an HTMX request
+        if (req.headers['hx-request']) {
+          return res.status(error.statusCode).json({
+            success: false,
+            error: errorMessage,
+            type: 'validation',
+          });
+        }
+
         return res.status(error.statusCode).json({
           error: error.name,
-          message: error.firstError,
+          message: errorMessage,
           details: error.errors,
+        });
+      }
+
+      const errorMessage = 'An error occurred during registration';
+
+      // Check if this is an HTMX request
+      if (req.headers['hx-request']) {
+        return res.status(500).json({
+          success: false,
+          error: errorMessage,
+          type: 'server',
         });
       }
 
       res.status(500).json({
         error: 'Internal Server Error',
-        message: 'An error occurred during registration',
+        message: errorMessage,
       });
     }
   }

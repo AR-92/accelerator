@@ -11,29 +11,14 @@
     const themeToggle = document.getElementById('navbar-theme-toggle');
 
     if (themeToggle) {
-      // Check for saved theme preference or respect system preference
-      const savedTheme = localStorage.getItem('theme');
-      const systemPrefersDark = window.matchMedia(
-        '(prefers-color-scheme: dark)'
-      ).matches;
-
-      // Set the initial theme based on saved preference or system preference
-      const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-
-      // Apply theme to document
-      document.documentElement.classList.remove('light', 'dark');
-      document.documentElement.classList.add(initialTheme);
-
-      // Add 'dark' class for Tailwind CSS
-      if (initialTheme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-
       // Add click event listener to theme toggle button
-      themeToggle.addEventListener('click', function () {
-        toggleTheme();
+      themeToggle.addEventListener('click', async function () {
+        if (window.themeManager) {
+          await window.themeManager.toggleTheme();
+        } else {
+          // Fallback to simple toggle
+          toggleTheme();
+        }
       });
     }
   }

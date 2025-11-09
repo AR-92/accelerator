@@ -1,100 +1,151 @@
 <div class='flex flex-col gap-6'>
-    <!-- Header -->
-    <div class='flex items-center justify-between'>
-      <div class='grid gap-1'>
-        <h1 class='font-heading text-2xl font-semibold dark:text-white'>{{category.name}}</h1>
-        <p class='text-base text-muted-foreground'>{{category.description}}</p>
-      </div>
+  <!-- Header -->
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1
+        class='font-heading text-2xl font-semibold dark:text-white'
+      >{{category.name}}</h1>
+      <p class='text-base text-muted-foreground'>{{category.description}}</p>
     </div>
+  </div>
 
-    <!-- Articles Grid -->
-    <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
-      {{#each articles}}
-      <a href='/pages/help/article/{{slug}}' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md hover:border-primary/20 transition-all duration-200 group'>
+  <!-- Articles Grid -->
+  <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
+    {{#each articles}}
+      <a
+        href='/pages/help/article/{{slug}}'
+        class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md hover:border-primary/20 transition-all duration-200 group'
+      >
         <div class='flex items-start gap-3 mb-4'>
-          <div class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors'>
+          <div
+            class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-800 transition-colors'
+          >
             {{lucide 'CreditCard' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
           </div>
           <div class='flex-1'>
-            <h3 class='text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors'>{{title}}</h3>
+            <h3
+              class='text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors'
+            >{{title}}</h3>
             <p class='text-muted-foreground mb-3'>{{excerpt}}</p>
             <div class='flex items-center gap-4 text-sm text-muted-foreground'>
               <span class='flex items-center gap-1'>
-                <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+                <svg
+                  class='w-4 h-4'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
+                  ></path>
                 </svg>
-                {{readTimeMinutes}} min read
+                {{readTimeMinutes}}
+                min read
               </span>
               <span class='flex items-center gap-1'>
-                <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'></path>
-                  <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'></path>
+                <svg
+                  class='w-4 h-4'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
+                  ></path>
+                  <path
+                    stroke-linecap='round'
+                    stroke-linejoin='round'
+                    stroke-width='2'
+                    d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
+                  ></path>
                 </svg>
-                {{viewCount}} views
+                {{viewCount}}
+                views
               </span>
             </div>
           </div>
         </div>
       </a>
-      {{/each}}
-    </div>
+    {{/each}}
+  </div>
 
-    <!-- Billing Features -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-semibold text-foreground mb-6'>Billing & Account Features</h3>
-      <div class='grid grid-cols-1 md:grid-cols-3 gap-6'>
-        <div class='flex items-center gap-3'>
-          <div class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'>
-            {{lucide 'Download' 'w-5 h-5 text-green-600 dark:text-green-400'}}
-          </div>
-          <div>
-            <p class='font-medium text-foreground'>Download Invoices</p>
-            <p class='text-muted-foreground text-sm'>PDF format available</p>
-          </div>
+  <!-- Billing Features -->
+  <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+    <h3 class='text-lg font-semibold text-foreground mb-6'>Billing & Account
+      Features</h3>
+    <div class='grid grid-cols-1 md:grid-cols-3 gap-6'>
+      <div class='flex items-center gap-3'>
+        <div
+          class='w-10 h-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center'
+        >
+          {{lucide 'Download' 'w-5 h-5 text-green-600 dark:text-green-400'}}
         </div>
-        <div class='flex items-center gap-3'>
-          <div class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'>
-            {{lucide 'Mail' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
-          </div>
-          <div>
-            <p class='font-medium text-foreground'>Email Receipts</p>
-            <p class='text-muted-foreground text-sm'>Automatic delivery</p>
-          </div>
-        </div>
-        <div class='flex items-center gap-3'>
-          <div class='w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'>
-            {{lucide 'Calendar' 'w-5 h-5 text-purple-600 dark:text-purple-400'}}
-          </div>
-          <div>
-            <p class='font-medium text-foreground'>Payment Schedule</p>
-            <p class='text-muted-foreground text-sm'>View upcoming charges</p>
-          </div>
+        <div>
+          <p class='font-medium text-foreground'>Download Invoices</p>
+          <p class='text-muted-foreground text-sm'>PDF format available</p>
         </div>
       </div>
-    </div>
-
-    <!-- Support Contact -->
-    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-      <h3 class='text-lg font-semibold text-foreground mb-4'>Need Help with Billing?</h3>
-      <div class='flex items-start gap-4'>
-        <div class='w-10 h-10 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center flex-shrink-0'>
-          {{lucide 'HelpCircle' 'w-5 h-5 text-red-600 dark:text-red-400'}}
+      <div class='flex items-center gap-3'>
+        <div
+          class='w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center'
+        >
+          {{lucide 'Mail' 'w-5 h-5 text-blue-600 dark:text-blue-400'}}
         </div>
-        <div class='flex-1'>
-          <p class='text-muted-foreground mb-4'>
-            Our billing support team is here to help with any questions about your account, payments, or subscription.
-          </p>
-          <div class='flex flex-wrap gap-3'>
-            <button class='flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 text-sm'>
-              {{lucide 'MessageCircle' 'w-4 h-4'}}
-              Contact Support
-            </button>
-            <button class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted text-sm'>
-              {{lucide 'ExternalLink' 'w-4 h-4'}}
-              Billing FAQ
-            </button>
-          </div>
+        <div>
+          <p class='font-medium text-foreground'>Email Receipts</p>
+          <p class='text-muted-foreground text-sm'>Automatic delivery</p>
+        </div>
+      </div>
+      <div class='flex items-center gap-3'>
+        <div
+          class='w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'
+        >
+          {{lucide 'Calendar' 'w-5 h-5 text-purple-600 dark:text-purple-400'}}
+        </div>
+        <div>
+          <p class='font-medium text-foreground'>Payment Schedule</p>
+          <p class='text-muted-foreground text-sm'>View upcoming charges</p>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Support Contact -->
+  <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+    <h3 class='text-lg font-semibold text-foreground mb-4'>Need Help with
+      Billing?</h3>
+    <div class='flex items-start gap-4'>
+      <div
+        class='w-10 h-10 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center flex-shrink-0'
+      >
+        {{lucide 'HelpCircle' 'w-5 h-5 text-red-600 dark:text-red-400'}}
+      </div>
+      <div class='flex-1'>
+        <p class='text-muted-foreground mb-4'>
+          Our billing support team is here to help with any questions about your
+          account, payments, or subscription.
+        </p>
+        <div class='flex flex-wrap gap-3'>
+          <button
+            class='flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 text-sm'
+          >
+            {{lucide 'MessageCircle' 'w-4 h-4'}}
+            Contact Support
+          </button>
+          <button
+            class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted text-sm'
+          >
+            {{lucide 'ExternalLink' 'w-4 h-4'}}
+            Billing FAQ
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

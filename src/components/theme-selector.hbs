@@ -8,8 +8,8 @@
   <div id="theme-dropdown" class="theme-dropdown absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-popover text-popover-foreground z-50 hidden">
     <div class="py-1">
       {{#each themes}}
-      <button 
-        data-theme="{{this.id}}" 
+      <button
+        data-theme="{{this.id}}"
         class="theme-option block w-full text-left px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground {{#if (eq this.id ../currentTheme)}}bg-accent text-accent-foreground{{/if}}"
       >
         {{this.name}}
@@ -18,3 +18,38 @@
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeDropdown = document.getElementById('theme-dropdown');
+  const themeOptions = document.querySelectorAll('.theme-option');
+
+  // Toggle dropdown
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      themeDropdown.classList.toggle('hidden');
+    });
+  }
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function() {
+    themeDropdown.classList.add('hidden');
+  });
+
+  // Handle theme selection
+  themeOptions.forEach(option => {
+    option.addEventListener('click', async function() {
+      const selectedTheme = this.getAttribute('data-theme');
+      if (window.themeManager) {
+        await window.themeManager.applyTheme(selectedTheme);
+        themeDropdown.classList.add('hidden');
+        // Update active state
+        themeOptions.forEach(opt => opt.classList.remove('bg-accent', 'text-accent-foreground'));
+        this.classList.add('bg-accent', 'text-accent-foreground');
+      }
+    });
+  });
+});
+</script>

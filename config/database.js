@@ -11,7 +11,7 @@ const db = new sqlite3.Database('./accelerator.db', (err) => {
 });
 
 // Initialize database tables
-const initializeDatabase = async () => {
+const initializeDatabase = () => {
   const createUsersTable = `
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,6 +20,9 @@ const initializeDatabase = async () => {
       first_name TEXT,
       last_name TEXT,
       role TEXT DEFAULT 'startup',
+      theme TEXT DEFAULT 'system',
+      bio TEXT DEFAULT '',
+      credits INTEGER DEFAULT 0,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
@@ -54,16 +57,12 @@ const initializeDatabase = async () => {
   const createPortfolioTable = `
     CREATE TABLE IF NOT EXISTS portfolio (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER,
+      user_id INTEGER NOT NULL,
       title TEXT NOT NULL,
       description TEXT,
-      category TEXT NOT NULL,
-      tags TEXT,
-      votes INTEGER DEFAULT 0,
-      isPublic BOOLEAN DEFAULT TRUE,
-      image TEXT,
-      createdDate DATE,
-      updatedDate DATE,
+      image_url TEXT,
+      project_url TEXT,
+      technologies TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (user_id) REFERENCES users (id)
@@ -73,9 +72,9 @@ const initializeDatabase = async () => {
   const createVotesTable = `
     CREATE TABLE IF NOT EXISTS votes (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER,
-      ideaSlug TEXT NOT NULL,
-      marketViability INTEGER NOT NULL,
+      user_id INTEGER NOT NULL,
+      idea_id INTEGER NOT NULL,
+      vote_type TEXT NOT NULL,
       realWorldProblem INTEGER NOT NULL,
       innovation INTEGER NOT NULL,
       technicalFeasibility INTEGER NOT NULL,
@@ -106,16 +105,16 @@ const initializeDatabase = async () => {
       user_id INTEGER NOT NULL,
       role TEXT DEFAULT 'member',
       joined_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (project_id) REFERENCES projects (id),
-      FOREIGN KEY (user_id) REFERENCES users (id)
+      FOREIGN KEY (user_id) REFERENCES users (id),
+      FOREIGN KEY (project_id) REFERENCES projects (id)
     );
   `;
 
   const createCollaborationsTable = `
     CREATE TABLE IF NOT EXISTS collaborations (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      project_id INTEGER NOT NULL,
       user_id INTEGER NOT NULL,
-      project_id INTEGER,
       message TEXT NOT NULL,
       timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (user_id) REFERENCES users (id),
@@ -169,23 +168,35 @@ const initializeDatabase = async () => {
     );
   `;
 
-  try {
-    await db.run(createUsersTable);
-    await db.run(createSessionsTable);
-    await db.run(createIdeasTable);
-    await db.run(createPortfolioTable);
-    await db.run(createVotesTable);
-    await db.run(createProjectsTable);
-    await db.run(createTeamsTable);
-    await db.run(createCollaborationsTable);
-    await db.run(createAiInteractionsTable);
-    await db.run(createReportsTable);
-    await db.run(createSubscriptionsTable);
-    await db.run(createNotificationsTable);
-    console.log('Database tables initialized successfully');
-  } catch (error) {
-    console.error('Error initializing database:', error);
-  }
+  const tables = [
+    createUsersTable,
+    createSessionsTable,
+    createIdeasTable,
+    createPortfolioTable,
+    createVotesTable,
+    createProjectsTable,
+    createTeamsTable,
+    createCollaborationsTable,
+    createAiInteractionsTable,
+    createReportsTable,
+    createSubscriptionsTable,
+    createNotificationsTable,
+  ];
+
+  let completed = 0;
+  const total = tables.length;
+
+  tables.forEach((sql) => {
+    db.run(sql, (err) => {
+      completed++;
+      if (err) {
+        console.error('Error creating table:', err);
+      }
+      if (completed === total) {
+        console.log('Database tables initialized successfully');
+      }
+    });
+  });
 };
 
 // Initialize tables on startup

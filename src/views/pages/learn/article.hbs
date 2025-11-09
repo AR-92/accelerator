@@ -1,6 +1,9 @@
 <div class='flex flex-col gap-6'>
   <div class='flex items-center gap-4'>
-    <a href='/pages/learn' class='flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors'>
+    <a
+      href='/pages/learn'
+      class='flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors'
+    >
       {{lucide 'ArrowLeft' 'w-4 h-4'}}
       Back to Learning Center
     </a>
@@ -13,91 +16,115 @@
           {{article.difficultyLevel}}
         </span>
         <span class='text-muted-foreground'>•</span>
-        <span class='text-muted-foreground text-sm'>{{article.readTimeMinutes}} min read</span>
+        <span class='text-muted-foreground text-sm'>{{article.readTimeMinutes}}
+          min read</span>
         <span class='text-muted-foreground'>•</span>
-        <span class='text-muted-foreground text-sm'>{{article.viewCount}} views</span>
+        <span class='text-muted-foreground text-sm'>{{article.viewCount}}
+          views</span>
       </div>
 
       <h1 class='text-3xl font-bold text-foreground mb-4'>{{article.title}}</h1>
 
       {{#if article.excerpt}}
-      <p class='text-xl text-muted-foreground mb-6'>{{article.excerpt}}</p>
+        <p class='text-xl text-muted-foreground mb-6'>{{article.excerpt}}</p>
       {{/if}}
 
       <div class='flex items-center gap-4'>
         {{#if article.authorImage}}
-        <img src='{{article.authorImage}}' alt='{{article.authorName}}' class='w-12 h-12 rounded-full'>
+          <img
+            src='{{article.authorImage}}'
+            alt='{{article.authorName}}'
+            class='w-12 h-12 rounded-full'
+          />
         {{/if}}
         <div>
           <p class='font-medium text-foreground'>{{article.authorName}}</p>
           {{#if article.authorBio}}
-          <p class='text-sm text-muted-foreground'>{{article.authorBio}}</p>
+            <p class='text-sm text-muted-foreground'>{{article.authorBio}}</p>
           {{/if}}
         </div>
       </div>
     </header>
 
-      <!-- Reading Progress -->
-      <div id='reading-progress' class='mb-6'>
-        <div class='flex items-center justify-between mb-2'>
-          <span class='text-sm text-muted-foreground'>Reading Progress</span>
-          <span id='progress-text' class='text-sm text-muted-foreground'>0%</span>
-        </div>
-        <div class='w-full bg-muted rounded-full h-2'>
-          <div id='progress-bar' class='bg-primary h-2 rounded-full transition-all duration-300' style='width: 0%'></div>
-        </div>
+    <!-- Reading Progress -->
+    <div id='reading-progress' class='mb-6'>
+      <div class='flex items-center justify-between mb-2'>
+        <span class='text-sm text-muted-foreground'>Reading Progress</span>
+        <span id='progress-text' class='text-sm text-muted-foreground'>0%</span>
       </div>
-
-     <div class='prose prose-lg max-w-none dark:prose-invert'>
-       {{{article.content}}}
-     </div>
-
-      <!-- Article Actions -->
-      <div class='mt-8 pt-8 border-t border-border'>
-        <div class='flex items-center justify-between'>
-          <div class='flex items-center gap-4'>
-            <button id='like-btn' class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted transition-colors'>
-              {{lucide 'Heart' 'w-4 h-4'}}
-              <span id='like-count'>{{article.likeCount}}</span>
-            </button>
-            <button id='bookmark-btn' class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted transition-colors'>
-              {{lucide 'Bookmark' 'w-4 h-4'}}
-              Bookmark
-            </button>
-          </div>
-          <button id='complete-btn' class='flex items-center gap-2 px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50'>
-            {{lucide 'CheckCircle' 'w-4 h-4'}}
-            Mark as Complete
-          </button>
-        </div>
-      </div>
-
-    {{#if article.tags}}
-    <div class='mt-8 pt-8 border-t border-border'>
-      <h3 class='text-lg font-semibold text-foreground mb-4'>Tags</h3>
-      <div class='flex flex-wrap gap-2'>
-        {{#each article.tags}}
-        <span class='px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full'>
-          {{this}}
-        </span>
-        {{/each}}
+      <div class='w-full bg-muted rounded-full h-2'>
+        <div
+          id='progress-bar'
+          class='bg-primary h-2 rounded-full transition-all duration-300'
+          style='width: 0%'
+        ></div>
       </div>
     </div>
+
+    <div class='prose prose-lg max-w-none dark:prose-invert'>
+      {{{article.content}}}
+    </div>
+
+    <!-- Article Actions -->
+    <div class='mt-8 pt-8 border-t border-border'>
+      <div class='flex items-center justify-between'>
+        <div class='flex items-center gap-4'>
+          <button
+            id='like-btn'
+            class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted transition-colors'
+          >
+            {{lucide 'Heart' 'w-4 h-4'}}
+            <span id='like-count'>{{article.likeCount}}</span>
+          </button>
+          <button
+            id='bookmark-btn'
+            class='flex items-center gap-2 px-4 py-2 border border-border rounded-md hover:bg-muted transition-colors'
+          >
+            {{lucide 'Bookmark' 'w-4 h-4'}}
+            Bookmark
+          </button>
+        </div>
+        <button
+          id='complete-btn'
+          class='flex items-center gap-2 px-6 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50'
+        >
+          {{lucide 'CheckCircle' 'w-4 h-4'}}
+          Mark as Complete
+        </button>
+      </div>
+    </div>
+
+    {{#if article.tags}}
+      <div class='mt-8 pt-8 border-t border-border'>
+        <h3 class='text-lg font-semibold text-foreground mb-4'>Tags</h3>
+        <div class='flex flex-wrap gap-2'>
+          {{#each article.tags}}
+            <span
+              class='px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full'
+            >
+              {{this}}
+            </span>
+          {{/each}}
+        </div>
+      </div>
     {{/if}}
   </article>
 
   {{#if relatedArticles}}
-  <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
-    <h3 class='text-lg font-semibold text-foreground mb-4'>Related Articles</h3>
-    <div class='grid grid-cols-1 md:grid-cols-2 gap-4'>
-      {{#each relatedArticles}}
-      <a href='/pages/learn/article/{{slug}}' class='p-4 rounded-lg border border-border hover:bg-muted transition-colors'>
-        <h4 class='font-medium text-foreground mb-2'>{{title}}</h4>
-        <p class='text-sm text-muted-foreground'>{{excerpt}}</p>
-      </a>
-      {{/each}}
+    <div class='bg-card p-6 rounded-lg shadow-sm border border-border'>
+      <h3 class='text-lg font-semibold text-foreground mb-4'>Related Articles</h3>
+      <div class='grid grid-cols-1 md:grid-cols-2 gap-4'>
+        {{#each relatedArticles}}
+          <a
+            href='/pages/learn/article/{{slug}}'
+            class='p-4 rounded-lg border border-border hover:bg-muted transition-colors'
+          >
+            <h4 class='font-medium text-foreground mb-2'>{{title}}</h4>
+            <p class='text-sm text-muted-foreground'>{{excerpt}}</p>
+          </a>
+        {{/each}}
+      </div>
     </div>
-  </div>
   {{/if}}
 </div>
 
@@ -106,7 +133,12 @@
     color: hsl(var(--foreground));
   }
 
-  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
     color: hsl(var(--foreground));
   }
 
@@ -131,97 +163,78 @@
     color: hsl(var(--foreground));
   }
 
-   .prose pre {
-     background-color: hsl(var(--muted));
-   }
- </style>
+  .prose pre {
+    background-color: hsl(var(--muted));
+  }
 
- <script>
-   document.addEventListener('DOMContentLoaded', function() {
-     const progressBar = document.getElementById('progress-bar');
-     const progressText = document.getElementById('progress-text');
-     const completeBtn = document.getElementById('complete-btn');
+  .prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+  }
 
-     let readingTime = 0;
-     let lastUpdate = Date.now();
-     let isReading = false;
+  .prose ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+  }
 
-     function updateReadingProgress() {
-       const scrollTop = window.pageYOffset;
-       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-       const scrollPercent = (scrollTop / docHeight) * 100;
-       const progress = Math.min(100, Math.max(0, scrollPercent));
+  .prose li {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+  }
 
-       if (progressBar) progressBar.style.width = progress + '%';
-       if (progressText) progressText.textContent = Math.round(progress) + '%';
+  .prose li::marker {
+    color: hsl(var(--primary));
+    font-weight: 600;
+  }
 
-       if (isReading && Date.now() - lastUpdate > 5000) {
-         fetch(`/api/v1/learning/progress/articles/{{article.id}}`, {
-           method: 'PUT',
-           headers: { 'Content-Type': 'application/json' },
-           body: JSON.stringify({
-             progressPercentage: Math.round(progress),
-             timeSpentSeconds: Math.floor(readingTime / 1000)
-           })
-         }).catch(console.error);
-         lastUpdate = Date.now();
-       }
-     }
+  .prose ul ul {
+    list-style-type: circle;
+    margin: 0.5rem 0 0.5rem 1.5rem;
+  }
 
-     function startReadingTimer() {
-       isReading = true;
-       setInterval(() => { if (isReading) readingTime += 1000; }, 1000);
-     }
+  .prose ol ol {
+    list-style-type: lower-alpha;
+    margin: 0.5rem 0 0.5rem 1.5rem;
+  }
+</style>
 
-     const likeBtn = document.getElementById('like-btn');
-     const likeCount = document.getElementById('like-count');
-
-     if (completeBtn) {
-       completeBtn.addEventListener('click', async function() {
-         completeBtn.disabled = true;
-         completeBtn.textContent = 'Completing...';
-         try {
-           const response = await fetch(`/api/v1/learning/progress/articles/{{article.id}}/complete`, {
-             method: 'POST'
-           });
-           if (response.ok) {
-             completeBtn.textContent = 'Completed!';
-             completeBtn.classList.add('bg-green-600');
-           }
-         } catch (error) {
-           completeBtn.disabled = false;
-           completeBtn.textContent = 'Mark as Complete';
-         }
-       });
-     }
-
-     if (likeBtn) {
-       likeBtn.addEventListener('click', async function() {
-         likeBtn.disabled = true;
-         const isLiked = likeBtn.classList.contains('text-red-500');
-         try {
-           const response = await fetch(`/api/v1/learning/articles/{{article.id}}/like`, {
-             method: isLiked ? 'DELETE' : 'POST'
-           });
-           if (response.ok) {
-             const data = await response.json();
-             likeCount.textContent = data.likeCount;
-             if (isLiked) {
-               likeBtn.classList.remove('text-red-500');
-             } else {
-               likeBtn.classList.add('text-red-500');
-             }
-           }
-         } catch (error) {
-           console.error('Error toggling like');
-         } finally {
-           likeBtn.disabled = false;
-         }
-       });
-     }
-
-     window.addEventListener('scroll', updateReadingProgress);
-     startReadingTimer();
-     updateReadingProgress();
-   });
- </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() { const progressBar =
+  document.getElementById('progress-bar'); const progressText =
+  document.getElementById('progress-text'); const completeBtn =
+  document.getElementById('complete-btn'); let readingTime = 0; let lastUpdate =
+  Date.now(); let isReading = false; function updateReadingProgress() { const
+  scrollTop = window.pageYOffset; const docHeight =
+  document.documentElement.scrollHeight - window.innerHeight; const
+  scrollPercent = (scrollTop / docHeight) * 100; const progress = Math.min(100,
+  Math.max(0, scrollPercent)); if (progressBar) progressBar.style.width =
+  progress + '%'; if (progressText) progressText.textContent =
+  Math.round(progress) + '%'; if (isReading && Date.now() - lastUpdate > 5000) {
+  fetch(`/api/v1/learning/progress/articles/{{article.id}}`, { method: 'PUT',
+  headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+  progressPercentage: Math.round(progress), timeSpentSeconds:
+  Math.floor(readingTime / 1000) }) }).catch(console.error); lastUpdate =
+  Date.now(); } } function startReadingTimer() { isReading = true;
+  setInterval(() => { if (isReading) readingTime += 1000; }, 1000); } const
+  likeBtn = document.getElementById('like-btn'); const likeCount =
+  document.getElementById('like-count'); if (completeBtn) {
+  completeBtn.addEventListener('click', async function() { completeBtn.disabled
+  = true; completeBtn.textContent = 'Completing...'; try { const response =
+  await fetch(`/api/v1/learning/progress/articles/{{article.id}}/complete`, {
+  method: 'POST' }); if (response.ok) { completeBtn.textContent = 'Completed!';
+  completeBtn.classList.add('bg-green-600'); } } catch (error) {
+  completeBtn.disabled = false; completeBtn.textContent = 'Mark as Complete'; }
+  }); } if (likeBtn) { likeBtn.addEventListener('click', async function() {
+  likeBtn.disabled = true; const isLiked =
+  likeBtn.classList.contains('text-red-500'); try { const response = await
+  fetch(`/api/v1/learning/articles/{{article.id}}/like`, { method: isLiked ?
+  'DELETE' : 'POST' }); if (response.ok) { const data = await response.json();
+  likeCount.textContent = data.likeCount; if (isLiked) {
+  likeBtn.classList.remove('text-red-500'); } else {
+  likeBtn.classList.add('text-red-500'); } } } catch (error) {
+  console.error('Error toggling like'); } finally { likeBtn.disabled = false; }
+  }); } window.addEventListener('scroll', updateReadingProgress);
+  startReadingTimer(); updateReadingProgress(); });
+</script>

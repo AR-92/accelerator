@@ -1,29 +1,35 @@
 <div class='flex flex-col gap-4 lg:gap-6'>
-   <div class='flex items-center justify-between'>
-     <div class='grid gap-1'>
-       <h1 class='font-heading text-2xl font-semibold dark:text-white'>{{category.name}}</h1>
-       <p class='text-base text-muted-foreground'>{{category.description}}</p>
-     </div>
-   </div>
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1
+        class='font-heading text-2xl font-semibold dark:text-white'
+      >{{category.name}}</h1>
+      <p class='text-base text-muted-foreground'>{{category.description}}</p>
+    </div>
+  </div>
 
-   <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
-     {{#each articles}}
-     <a href='/pages/help/article/{{slug}}' class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-colors'>
-       <div class='flex items-center gap-3 mb-4'>
-         <div class='w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'>
-           {{lucide 'Bot' 'w-5 h-5 text-purple-600 dark:text-purple-400'}}
-         </div>
-         <h3 class='text-lg font-semibold text-foreground'>{{title}}</h3>
-       </div>
-       <p class='text-muted-foreground mb-4'>{{excerpt}}</p>
-       <div class='flex items-center gap-2 text-sm text-muted-foreground'>
-         <span>{{readTimeMinutes}} min read</span>
-         <span>•</span>
-         <span>{{viewCount}} views</span>
-       </div>
-     </a>
-     {{/each}}
-   </div>
-
+  <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
+    {{#each articles}}
+      <a
+        href='/pages/help/article/{{slug}}'
+        class='bg-card p-6 rounded-lg shadow-sm border border-border hover:shadow-md transition-colors'
+      >
+        <div class='flex items-center gap-3 mb-4'>
+          <div
+            class='w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center'
+          >
+            {{lucide 'Bot' 'w-5 h-5 text-purple-600 dark:text-purple-400'}}
+          </div>
+          <h3 class='text-lg font-semibold text-foreground'>{{title}}</h3>
+        </div>
+        <p class='text-muted-foreground mb-4'>{{excerpt}}</p>
+        <div class='flex items-center gap-2 text-sm text-muted-foreground'>
+          <span>{{readTimeMinutes}} min read</span>
+          <span>•</span>
+          <span>{{viewCount}} views</span>
+        </div>
+      </a>
+    {{/each}}
+  </div>
 
 </div>

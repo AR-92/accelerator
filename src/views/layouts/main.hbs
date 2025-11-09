@@ -31,14 +31,35 @@
             {{> navbar}}
         </div>
 
-         <!-- Main Content -->
-         <div class="flex-1 flex overflow-auto">
-             {{{body}}}
-         </div>
-     </div>
+          <!-- Main Content -->
+          <div class="flex-1 flex overflow-auto">
+              {{{body}}}
+          </div>
+      </div>
 
-      <script src="/js/sidebar-toggle.js"></script>
-      <script src="/js/framework-utils.js"></script>
+      <!-- Toast Notifications -->
+      {{> _toast}}
+
+        <script src="/js/sidebar-toggle.js"></script>
+        <script src="/js/framework-utils.js"></script>
+        <script src="/js/toast.js"></script>
+        <script>
+          // Load user settings for theme management
+          async function loadUserSettings() {
+            try {
+              const response = await fetch('/api/settings');
+              if (response.ok) {
+                const data = await response.json();
+                window.userSettings = data.settings;
+              }
+            } catch (error) {
+              console.warn('Failed to load user settings:', error);
+            }
+          }
+          // Load settings if user is authenticated
+          {{#if user}}loadUserSettings();{{/if}}
+        </script>
+        <script src="/src/utils/theme.js"></script>
 
 
  </html>

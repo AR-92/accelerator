@@ -1,0 +1,1166 @@
+<div class='flex flex-col gap-4 lg:gap-6'>
+   <!-- Header -->
+   <div class='flex items-center justify-between'>
+     <div class='grid gap-1'>
+       <h1 class='font-heading text-2xl font-semibold text-foreground dark:text-white'>User Management</h1>
+       <p class='text-base text-muted-foreground'>Total users: {{pagination.total}}</p>
+     </div>
+     <div class='flex gap-2'>
+        <button onclick="exportToCSV()" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
+          {{lucide 'Download' 'w-4 h-4 mr-2'}}
+          Export CSV
+        </button>
+        <button onclick="openCreateUserModal()" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
+          {{lucide 'Plus' 'w-4 h-4 mr-2'}}
+          Create User
+        </button>
+     </div>
+   </div>
+
+  <!-- Filters -->
+  <div class='rounded-md bg-card text-card-foreground shadow-sm p-6' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+    <div class='flex flex-wrap gap-4'>
+      <div>
+        <label class='block text-sm font-medium text-foreground mb-2'>Role</label>
+        <select id="roleFilter" class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+          <option value="">All Roles</option>
+          <option value="startup">Startup</option>
+          <option value="corporate">Corporate</option>
+          <option value="enterprise">Enterprise</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div>
+        <label class='block text-sm font-medium text-foreground mb-2'>Search</label>
+        <input type="text" id="searchInput" placeholder="Search by name or email"
+               class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+      </div>
+      <div class="flex items-end">
+        <button id="applyFilters" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
+          Apply Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+   <!-- Users Table -->
+    <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+     <div class='px-6 py-4 border-b border-border'>
+       <h2 class='text-lg font-medium text-foreground'>Users ({{pagination.total}})</h2>
+     </div>
+
+     <div class='overflow-x-auto'>
+       <table class='min-w-full divide-y divide-border table-fixed sm:table-auto'>
+         <thead class='bg-muted/50'>
+           <tr>
+             <th class='w-12 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
+               <input type="checkbox" id="selectAll" class='rounded border-gray-300 text-primary focus:ring-primary'>
+             </th>
+             <th class='min-w-48 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
+               <button onclick="sortBy('first_name')" class='hover:text-foreground transition-colors flex items-center gap-1'>
+                 User
+                 {{#if (eq filters.sortBy 'first_name')}}
+                   {{#if (eq filters.sortOrder 'asc')}}↑{{else}}↓{{/if}}
+                 {{/if}}
+               </button>
+             </th>
+             <th class='w-20 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
+               <button onclick="sortBy('role')" class='hover:text-foreground transition-colors flex items-center gap-1'>
+                 Role
+                 {{#if (eq filters.sortBy 'role')}}
+                   {{#if (eq filters.sortOrder 'asc')}}↑{{else}}↓{{/if}}
+                 {{/if}}
+               </button>
+             </th>
+             <th class='w-24 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Status</th>
+             <th class='w-20 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
+               <button onclick="sortBy('credits')" class='hover:text-foreground transition-colors flex items-center gap-1'>
+                 Credits
+                 {{#if (eq filters.sortBy 'credits')}}
+                   {{#if (eq filters.sortOrder 'asc')}}↑{{else}}↓{{/if}}
+                 {{/if}}
+               </button>
+             </th>
+              <th class='w-32 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider hidden md:table-cell'>
+                <button onclick="sortBy('created_at')" class='hover:text-foreground transition-colors flex items-center gap-1'>
+                  Created
+                  {{#if (eq filters.sortBy 'created_at')}}
+                    {{#if (eq filters.sortOrder 'asc')}}↑{{else}}↓{{/if}}
+                  {{/if}}
+                </button>
+              </th>
+             <th class='w-48 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Actions</th>
+           </tr>
+         </thead>
+          <tbody class='bg-card divide-y divide-border'>
+            {{#each users}}
+            <tr class='hover:bg-muted/50'>
+              <td class='w-12 px-4 py-4 whitespace-nowrap'>
+                <input type="checkbox" class="userCheckbox" value="{{id}}" data-user-id="{{id}}" class='rounded border-gray-300 text-primary focus:ring-primary'>
+              </td>
+              <td class='w-1/4 px-4 py-4 whitespace-nowrap'>
+               <div class='text-sm font-medium text-foreground'>{{fullName}}</div>
+               <div class='text-sm text-muted-foreground'>{{email}}</div>
+             </td>
+              <td class='w-20 px-4 py-4 whitespace-nowrap'>
+                <span class='text-sm text-foreground'>{{role}}</span>
+              </td>
+               <td class='w-24 px-4 py-4 whitespace-nowrap'>
+                 <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{#if (eq status 'active')}}bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400{{else}}bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400{{/if}}'>
+                   {{status}}
+                 </span>
+                 {{#if banned}}
+                 <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400 ml-1'>
+                   BANNED
+                 </span>
+                 {{/if}}
+               </td>
+              <td class='w-20 px-4 py-4 whitespace-nowrap text-sm text-foreground'>
+                <span class='font-medium'>{{credits}}</span>
+              </td>
+               <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-muted-foreground hidden md:table-cell'>
+                 {{formatDate createdAt}}
+               </td>
+               <td class='px-4 py-4 whitespace-nowrap text-sm font-medium'>
+                 <div class='relative'>
+                   <button data-user-id="{{id}}" class='inline-flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors' title='Actions'>
+                     {{lucide 'MoreVertical' 'w-4 h-4'}}
+                   </button>
+                    <div id="dropdown-{{id}}" class='fixed w-48 bg-card rounded-md shadow-lg border border-border z-50 hidden'>
+                     <div class='py-1'>
+                       <button onclick="window.location.href='/admin/users/{{id}}'" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                         {{lucide 'Eye' 'w-4 h-4 mr-2'}}
+                         View Details
+                       </button>
+                       <button onclick="editUser({{id}})" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                         {{lucide 'Edit' 'w-4 h-4 mr-2'}}
+                         Edit Role
+                       </button>
+                       <button onclick="manageCredits({{id}}, '{{fullName}}', {{credits}})" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                         {{lucide 'DollarSign' 'w-4 h-4 mr-2'}}
+                         Manage Credits
+                       </button>
+                       <button onclick="toggleStatus({{id}}, '{{status}}')" class='flex items-center w-full px-4 py-2 text-sm {{#if (eq status 'active')}}text-orange-600{{else}}text-green-600{{/if}} hover:bg-muted hover:text-foreground transition-colors'>
+                         {{#if (eq status 'active')}}
+                         {{lucide 'CircleX' 'w-4 h-4 mr-2'}}
+                         {{else}}
+                         {{lucide 'CheckCircle' 'w-4 h-4 mr-2'}}
+                         {{/if}}
+                         {{#if (eq status 'active')}}Deactivate{{else}}Activate{{/if}}
+                       </button>
+                       {{#unless (eq role 'admin')}}
+                       <button onclick="toggleBan({{id}}, {{banned}}, '{{fullName}}')" class='flex items-center w-full px-4 py-2 text-sm {{#if banned}}text-green-600{{else}}text-red-600{{/if}} hover:bg-muted hover:text-foreground transition-colors'>
+                         {{#if banned}}
+                         {{lucide 'CheckCircle' 'w-4 h-4 mr-2'}}
+                         {{else}}
+                         {{lucide 'AlertTriangle' 'w-4 h-4 mr-2'}}
+                         {{/if}}
+                         {{#if banned}}Unban{{else}}Ban{{/if}}
+                       </button>
+                       <button onclick="deleteUser({{id}}, '{{fullName}}')" class='flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-muted hover:text-foreground transition-colors'>
+                         {{lucide 'Trash2' 'w-4 h-4 mr-2'}}
+                         Delete User
+                       </button>
+                       {{/unless}}
+                     </div>
+                   </div>
+                 </div>
+               </td>
+          </tr>
+          {{/each}}
+        </tbody>
+       </table>
+     </div>
+
+     <!-- Bulk Actions -->
+     <div id="bulkActions" class='px-6 py-4 border-t border-border bg-muted/30 hidden'>
+       <div class='flex items-center justify-between'>
+         <div class='flex items-center gap-3'>
+           <span class='text-sm font-medium text-foreground' id="selectedCount">0 users selected</span>
+           <span class='text-xs text-muted-foreground'>Select users above to perform bulk actions</span>
+         </div>
+         <div class='flex gap-2'>
+            <button onclick="openBulkRoleModal()" id="bulkRoleBtn" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-blue-600 text-white shadow hover:bg-blue-700 h-9 px-4 py-2' disabled>
+              {{lucide 'Edit' 'w-4 h-4 mr-2'}}
+              Update Role
+            </button>
+            <button onclick="openBulkCreditsModal()" id="bulkCreditsBtn" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-green-600 text-white shadow hover:bg-green-700 h-9 px-4 py-2' disabled>
+              {{lucide 'DollarSign' 'w-4 h-4 mr-2'}}
+              Update Credits
+            </button>
+            <button onclick="bulkDelete()" id="bulkDeleteBtn" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-red-600 text-white shadow hover:bg-red-700 h-9 px-4 py-2' disabled>
+              {{lucide 'Trash2' 'w-4 h-4 mr-2'}}
+              Delete Selected
+            </button>
+         </div>
+       </div>
+     </div>
+
+     <!-- Pagination -->
+    {{#if (gt pagination.pages 1)}}
+    <div class='px-6 py-4 border-t border-border flex items-center justify-between'>
+      <div class='text-sm text-muted-foreground'>
+        Showing {{pagination.limit}} of {{pagination.total}} users
+      </div>
+      <div class='flex gap-2'>
+        {{#if (gt pagination.page 1)}}
+        <a href="?page={{subtract pagination.page 1}}&role={{filters.role}}&search={{filters.search}}"
+           class='px-3 py-1 border border-border rounded-md text-sm hover:bg-muted transition-colors'>Previous</a>
+        {{/if}}
+
+        {{#each (range 1 pagination.pages)}}
+        <a href="?page={{this}}&role={{filters.role}}&search={{filters.search}}"
+           class='px-3 py-1 border {{#if (eq this ../pagination.page)}}border-primary bg-primary/10 text-primary{{else}}border-border hover:bg-muted{{/if}} rounded-md text-sm transition-colors'>
+          {{this}}
+        </a>
+        {{/each}}
+
+        {{#if (lt pagination.page pagination.pages)}}
+        <a href="?page={{add pagination.page 1}}&role={{filters.role}}&search={{filters.search}}"
+           class='px-3 py-1 border border-border rounded-md text-sm hover:bg-muted transition-colors'>Next</a>
+        {{/if}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>
+
+<!-- Edit User Modal -->
+<div id="editUserModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
+  <div class="relative top-20 mx-auto p-5 border border-border w-96 shadow-lg rounded-md bg-card">
+    <div class="mt-3">
+      <h3 class="text-lg font-medium text-foreground mb-4">Edit User</h3>
+      <form id="editUserForm">
+        <input type="hidden" id="editUserId">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Role</label>
+          <select id="editUserRole" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+            <option value="startup">Startup</option>
+            <option value="corporate">Corporate</option>
+            <option value="enterprise">Enterprise</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeEditModal()" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Cancel</button>
+          <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Manage Credits Modal -->
+<div id="creditsModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
+  <div class="relative top-20 mx-auto p-5 border border-border w-96 shadow-lg rounded-md bg-card">
+    <div class="mt-3">
+      <h3 class="text-lg font-medium text-foreground mb-4">Manage Credits</h3>
+      <p id="creditsUserName" class="text-sm text-muted-foreground mb-4"></p>
+      <form id="creditsForm">
+        <input type="hidden" id="creditsUserId">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Current Credits</label>
+          <p id="currentCredits" class="text-lg font-semibold text-foreground"></p>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">New Credits Amount</label>
+          <input type="number" id="newCredits" min="0" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeCreditsModal()" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Cancel</button>
+          <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">Update Credits</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Ban User Modal -->
+<div id="banModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
+  <div class="relative top-20 mx-auto p-5 border border-border w-96 shadow-lg rounded-md bg-card">
+    <div class="mt-3">
+      <h3 class="text-lg font-medium text-foreground mb-4" id="banModalTitle">Ban User</h3>
+      <p id="banUserName" class="text-sm text-muted-foreground mb-4"></p>
+      <form id="banForm">
+        <input type="hidden" id="banUserId">
+        <input type="hidden" id="banAction">
+        <div class="mb-4" id="banReasonDiv">
+          <label class="block text-sm font-medium text-foreground mb-2">Reason for ban</label>
+          <textarea id="banReason" rows="3" class="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" placeholder="Enter reason for banning this user..."></textarea>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeBanModal()" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Cancel</button>
+          <button type="submit" id="banSubmitBtn" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground shadow hover:bg-destructive/90 h-9 px-4 py-2">Ban User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Create User Modal -->
+<div id="createUserModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
+  <div class="relative top-20 mx-auto p-5 border border-border w-96 shadow-lg rounded-md bg-card">
+    <div class="mt-3">
+      <h3 class="text-lg font-medium text-foreground mb-4">Create New User</h3>
+      <form id="createUserForm">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Email</label>
+          <input type="email" id="createUserEmail" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">First Name</label>
+          <input type="text" id="createUserFirstName" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Last Name</label>
+          <input type="text" id="createUserLastName" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Password</label>
+          <input type="password" id="createUserPassword" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Role</label>
+          <select id="createUserRole" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+            <option value="startup">Startup</option>
+            <option value="corporate">Corporate</option>
+            <option value="enterprise">Enterprise</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Initial Credits</label>
+          <input type="number" id="createUserCredits" min="0" value="0" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeCreateUserModal()" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Cancel</button>
+          <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">Create User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Bulk Role Update Modal -->
+<div id="bulkRoleModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
+  <div class="relative top-20 mx-auto p-5 border border-border w-96 shadow-lg rounded-md bg-card">
+    <div class="mt-3">
+      <h3 class="text-lg font-medium text-foreground mb-4">Bulk Update Role</h3>
+      <p class="text-sm text-muted-foreground mb-4" id="bulkRoleCount"></p>
+      <form id="bulkRoleForm">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">New Role</label>
+          <select id="bulkRoleSelect" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+            <option value="startup">Startup</option>
+            <option value="corporate">Corporate</option>
+            <option value="enterprise">Enterprise</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeBulkRoleModal()" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Cancel</button>
+          <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">Update Roles</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Bulk Credits Update Modal -->
+<div id="bulkCreditsModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
+  <div class="relative top-20 mx-auto p-5 border border-border w-96 shadow-lg rounded-md bg-card">
+    <div class="mt-3">
+      <h3 class="text-lg font-medium text-foreground mb-4">Bulk Update Credits</h3>
+      <p class="text-sm text-muted-foreground mb-4" id="bulkCreditsCount"></p>
+      <form id="bulkCreditsForm">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Credits Operation</label>
+          <select id="bulkCreditsOperation" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+            <option value="set">Set to</option>
+            <option value="add">Add</option>
+            <option value="subtract">Subtract</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Credits Amount</label>
+          <input type="number" id="bulkCreditsAmount" min="0" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeBulkCreditsModal()" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Cancel</button>
+          <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">Update Credits</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// Helper functions for date formatting
+function formatDate(dateString) {
+  return new Date(dateString).toLocaleDateString();
+}
+
+function range(start, end) {
+  const result = [];
+  for (let i = start; i <= end; i++) {
+    result.push(i);
+  }
+  return result;
+}
+
+// Modal functions
+function editUser(userId) {
+  // Fetch user data and populate modal
+  fetch(`/admin/api/users/${userId}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById('editUserId').value = data.user.id;
+        document.getElementById('editUserRole').value = data.user.role;
+        document.getElementById('editUserModal').classList.remove('hidden');
+      }
+    });
+}
+
+function closeEditModal() {
+  document.getElementById('editUserModal').classList.add('hidden');
+}
+
+function manageCredits(userId, userName, currentCredits) {
+  document.getElementById('creditsUserId').value = userId;
+  document.getElementById('creditsUserName').textContent = `User: ${userName}`;
+  document.getElementById('currentCredits').textContent = currentCredits;
+  document.getElementById('newCredits').value = currentCredits;
+  document.getElementById('creditsModal').classList.remove('hidden');
+}
+
+function closeCreditsModal() {
+  document.getElementById('creditsModal').classList.add('hidden');
+}
+
+function toggleStatus(userId, currentStatus) {
+  const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+  const action = newStatus === 'active' ? 'activate' : 'deactivate';
+
+  if (confirm(`Are you sure you want to ${action} this user?`)) {
+    fetch(`/admin/api/users/${userId}/status`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: newStatus }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        location.reload();
+      } else {
+        alert('Error updating user status: ' + data.error);
+      }
+    });
+  }
+}
+
+function toggleBan(userId, currentlyBanned, userName) {
+  document.getElementById('banUserId').value = userId;
+  document.getElementById('banUserName').textContent = `User: ${userName}`;
+  document.getElementById('banAction').value = currentlyBanned ? 'unban' : 'ban';
+
+  if (currentlyBanned) {
+    document.getElementById('banModalTitle').textContent = 'Unban User';
+    document.getElementById('banReasonDiv').style.display = 'none';
+    document.getElementById('banSubmitBtn').textContent = 'Unban User';
+    document.getElementById('banSubmitBtn').className = document.getElementById('banSubmitBtn').className.replace('bg-destructive', 'bg-green-600').replace('hover:bg-destructive/90', 'hover:bg-green-700');
+  } else {
+    document.getElementById('banModalTitle').textContent = 'Ban User';
+    document.getElementById('banReasonDiv').style.display = 'block';
+    document.getElementById('banSubmitBtn').textContent = 'Ban User';
+    document.getElementById('banSubmitBtn').className = document.getElementById('banSubmitBtn').className.replace('bg-green-600', 'bg-destructive').replace('hover:bg-green-700', 'hover:bg-destructive/90');
+  }
+
+  document.getElementById('banModal').classList.remove('hidden');
+}
+
+function closeBanModal() {
+  document.getElementById('banModal').classList.add('hidden');
+}
+
+function openCreateUserModal() {
+  document.getElementById('createUserModal').classList.remove('hidden');
+}
+
+function closeCreateUserModal() {
+  document.getElementById('createUserModal').classList.add('hidden');
+  document.getElementById('createUserForm').reset();
+}
+
+// Bulk actions functions
+function updateBulkActions() {
+  const checkboxes = document.querySelectorAll('.userCheckbox:checked');
+  const count = checkboxes.length;
+  const bulkActions = document.getElementById('bulkActions');
+  const selectedCount = document.getElementById('selectedCount');
+
+  if (count > 0) {
+    bulkActions.classList.remove('hidden');
+    selectedCount.textContent = `${count} user${count > 1 ? 's' : ''} selected`;
+    document.getElementById('bulkRoleBtn').disabled = false;
+    document.getElementById('bulkCreditsBtn').disabled = false;
+    document.getElementById('bulkDeleteBtn').disabled = false;
+  } else {
+    bulkActions.classList.add('hidden');
+    document.getElementById('bulkRoleBtn').disabled = true;
+    document.getElementById('bulkCreditsBtn').disabled = true;
+    document.getElementById('bulkDeleteBtn').disabled = true;
+  }
+}
+
+function openBulkRoleModal() {
+  const checkboxes = document.querySelectorAll('.userCheckbox:checked');
+  const count = checkboxes.length;
+  document.getElementById('bulkRoleCount').textContent = `Update role for ${count} user${count > 1 ? 's' : ''}`;
+  document.getElementById('bulkRoleModal').classList.remove('hidden');
+}
+
+function closeBulkRoleModal() {
+  document.getElementById('bulkRoleModal').classList.add('hidden');
+  document.getElementById('bulkRoleForm').reset();
+}
+
+function openBulkCreditsModal() {
+  const checkboxes = document.querySelectorAll('.userCheckbox:checked');
+  const count = checkboxes.length;
+  document.getElementById('bulkCreditsCount').textContent = `Update credits for ${count} user${count > 1 ? 's' : ''}`;
+  document.getElementById('bulkCreditsModal').classList.remove('hidden');
+}
+
+function closeBulkCreditsModal() {
+  document.getElementById('bulkCreditsModal').classList.add('hidden');
+  document.getElementById('bulkCreditsForm').reset();
+}
+
+function bulkDelete() {
+  const checkboxes = document.querySelectorAll('.userCheckbox:checked');
+  const count = checkboxes.length;
+
+  if (confirm(`Are you sure you want to delete ${count} user${count > 1 ? 's' : ''}? This action cannot be undone.`)) {
+    const userIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+
+    // Delete users one by one
+    Promise.all(userIds.map(userId =>
+      fetch(`/admin/api/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(response => response.json())
+    )).then(results => {
+      const successCount = results.filter(r => r.success).length;
+      alert(`Successfully deleted ${successCount} out of ${count} users`);
+      location.reload();
+    });
+  }
+}
+
+function deleteUser(userId, userName) {
+  if (confirm(`Are you sure you want to delete user ${userName}? This action cannot be undone.`)) {
+    fetch(`/admin/api/users/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        location.reload();
+      } else {
+        alert('Error deleting user: ' + data.error);
+      }
+    });
+  }
+}
+
+// Form handlers
+document.getElementById('editUserForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const userId = document.getElementById('editUserId').value;
+  const role = document.getElementById('editUserRole').value;
+
+  fetch(`/admin/api/users/${userId}/role`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ role }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      closeEditModal();
+      location.reload();
+    } else {
+      alert('Error updating user: ' + data.error);
+    }
+  });
+});
+
+document.getElementById('creditsForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  clearFormErrors('creditsForm');
+
+  const userId = document.getElementById('creditsUserId').value;
+  const credits = parseInt(document.getElementById('newCredits').value);
+
+  // Validation
+  if (isNaN(credits) || credits < 0) {
+    showFormErrors('creditsForm', { newCredits: 'Please enter a valid number of credits (0 or more)' });
+    return;
+  }
+
+  fetch(`/admin/api/users/${userId}/credits`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ credits }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      closeCreditsModal();
+      location.reload();
+    } else {
+      alert('Error updating credits: ' + data.error);
+    }
+  })
+  .catch(error => {
+    alert('Network error occurred. Please try again.');
+  });
+});
+
+document.getElementById('banForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const userId = document.getElementById('banUserId').value;
+  const action = document.getElementById('banAction').value;
+  const reason = document.getElementById('banReason').value;
+
+  const banned = action === 'ban';
+
+  fetch(`/admin/api/users/${userId}/banned`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ banned, reason }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      closeBanModal();
+      location.reload();
+    } else {
+      alert('Error updating ban status: ' + data.error);
+    }
+  });
+});
+
+document.getElementById('createUserForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // Clear previous errors
+  clearFormErrors('createUserForm');
+
+  const email = document.getElementById('createUserEmail').value.trim();
+  const firstName = document.getElementById('createUserFirstName').value.trim();
+  const lastName = document.getElementById('createUserLastName').value.trim();
+  const password = document.getElementById('createUserPassword').value;
+  const role = document.getElementById('createUserRole').value;
+  const credits = parseInt(document.getElementById('createUserCredits').value) || 0;
+
+  // Client-side validation
+  let isValid = true;
+  const errors = {};
+
+  if (!email || !email.includes('@')) {
+    errors.email = 'Please enter a valid email address';
+    isValid = false;
+  }
+
+  if (!firstName || firstName.length < 2) {
+    errors.firstName = 'First name must be at least 2 characters';
+    isValid = false;
+  }
+
+  if (!lastName || lastName.length < 2) {
+    errors.lastName = 'Last name must be at least 2 characters';
+    isValid = false;
+  }
+
+  if (!password || password.length < 6) {
+    errors.password = 'Password must be at least 6 characters';
+    isValid = false;
+  }
+
+  if (credits < 0) {
+    errors.credits = 'Credits cannot be negative';
+    isValid = false;
+  }
+
+  if (!isValid) {
+    showFormErrors('createUserForm', errors);
+    return;
+  }
+
+  fetch('/admin/api/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, firstName, lastName, password, role, credits }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      closeCreateUserModal();
+      location.reload();
+    } else {
+      alert('Error creating user: ' + data.error);
+    }
+  })
+  .catch(error => {
+    alert('Network error occurred. Please try again.');
+  });
+});
+
+// Bulk actions form handlers
+document.getElementById('bulkRoleForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const checkboxes = document.querySelectorAll('.userCheckbox:checked');
+  const role = document.getElementById('bulkRoleSelect').value;
+  const userIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+
+  Promise.all(userIds.map(userId =>
+    fetch(`/admin/api/users/${userId}/role`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ role }),
+    }).then(response => response.json())
+  )).then(results => {
+    const successCount = results.filter(r => r.success).length;
+    alert(`Successfully updated ${successCount} out of ${userIds.length} users`);
+    closeBulkRoleModal();
+    location.reload();
+  });
+});
+
+document.getElementById('bulkCreditsForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const checkboxes = document.querySelectorAll('.userCheckbox:checked');
+  const operation = document.getElementById('bulkCreditsOperation').value;
+  const amount = parseInt(document.getElementById('bulkCreditsAmount').value);
+  const userIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+
+  // For bulk credits, we need to get current credits and calculate new amounts
+  Promise.all(userIds.map(userId =>
+    fetch(`/admin/api/users/${userId}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        let newCredits;
+        switch (operation) {
+          case 'set':
+            newCredits = amount;
+            break;
+          case 'add':
+            newCredits = data.user.credits + amount;
+            break;
+          case 'subtract':
+            newCredits = Math.max(0, data.user.credits - amount);
+            break;
+        }
+
+        return fetch(`/admin/api/users/${userId}/credits`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ credits: newCredits }),
+        }).then(response => response.json());
+      }
+    })
+  )).then(results => {
+    const successCount = results.filter(r => r && r.success).length;
+    alert(`Successfully updated ${successCount} out of ${userIds.length} users`);
+    closeBulkCreditsModal();
+    location.reload();
+  });
+});
+
+// Form validation helpers
+function clearFormErrors(formId) {
+  const form = document.getElementById(formId);
+  const errorElements = form.querySelectorAll('.form-error');
+  errorElements.forEach(el => el.remove());
+
+  const inputs = form.querySelectorAll('input, select, textarea');
+  inputs.forEach(input => {
+    input.classList.remove('border-red-500');
+  });
+}
+
+function showFormErrors(formId, errors) {
+  const form = document.getElementById(formId);
+
+  Object.keys(errors).forEach(field => {
+    const input = document.getElementById(`${formId.replace('Form', '')}${field.charAt(0).toUpperCase() + field.slice(1)}`);
+    if (input) {
+      input.classList.add('border-red-500');
+
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'form-error text-red-600 text-sm mt-1';
+      errorDiv.textContent = errors[field];
+      input.parentNode.appendChild(errorDiv);
+    }
+  });
+}
+
+// Checkbox event listeners
+document.addEventListener('change', function(e) {
+  if (e.target.classList.contains('userCheckbox')) {
+    updateBulkActions();
+  }
+});
+
+document.addEventListener('change', function(e) {
+  if (e.target.classList.contains('userCheckbox')) {
+    updateBulkActions();
+  }
+});
+
+// Sorting functionality
+function sortBy(field) {
+  const url = new URL(window.location);
+  const currentSortBy = url.searchParams.get('sortBy');
+  const currentSortOrder = url.searchParams.get('sortOrder') || 'desc';
+
+  let newSortOrder = 'asc';
+  if (currentSortBy === field && currentSortOrder === 'asc') {
+    newSortOrder = 'desc';
+  }
+
+  url.searchParams.set('sortBy', field);
+  url.searchParams.set('sortOrder', newSortOrder);
+  url.searchParams.set('page', '1'); // Reset to first page
+  window.location.href = url.toString();
+}
+
+// Export functionality
+function exportToCSV() {
+  const role = document.getElementById('roleFilter').value;
+  const search = document.getElementById('searchInput').value;
+  let url = '/admin/api/users/export/csv';
+
+  const params = new URLSearchParams();
+  if (role) params.append('role', role);
+  if (search) params.append('search', search);
+
+  if (params.toString()) {
+    url += '?' + params.toString();
+  }
+
+  // Create a temporary link and click it to download
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'users_export.csv';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// AJAX search functionality
+let searchTimeout;
+document.getElementById('searchInput').addEventListener('input', function() {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    loadUsers(1); // Reset to first page when searching
+  }, 300); // Debounce for 300ms
+});
+
+document.getElementById('roleFilter').addEventListener('change', function() {
+  loadUsers(1); // Reset to first page when filtering
+});
+
+function loadUsers(page = 1) {
+  const role = document.getElementById('roleFilter').value;
+  const search = document.getElementById('searchInput').value;
+  const sortBy = new URLSearchParams(window.location.search).get('sortBy') || 'created_at';
+  const sortOrder = new URLSearchParams(window.location.search).get('sortOrder') || 'desc';
+
+  const params = new URLSearchParams({
+    page: page.toString(),
+    limit: '20',
+    role: role,
+    search: search,
+    sortBy: sortBy,
+    sortOrder: sortOrder,
+    ajax: 'true'
+  });
+
+  fetch(`/admin/users?${params}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        // Update the table body
+        updateTableBody(data.users);
+
+        // Update pagination
+        updatePagination(data.pagination, data.filters);
+
+        // Update total count
+        document.querySelector('p.text-base.text-muted-foreground').textContent = `Total users: ${data.pagination.total}`;
+
+        // Update URL without page reload
+        const url = new URL(window.location);
+        url.searchParams.set('page', page.toString());
+        url.searchParams.set('role', role);
+        url.searchParams.set('search', search);
+        url.searchParams.set('sortBy', sortBy);
+        url.searchParams.set('sortOrder', sortOrder);
+        window.history.replaceState({}, '', url.toString());
+      }
+    })
+    .catch(error => {
+      console.error('Error loading users:', error);
+    });
+}
+
+function updateTableBody(users) {
+  const tbody = document.querySelector('tbody');
+  tbody.innerHTML = users.map(user => `
+    <tr class='hover:bg-muted/50'>
+      <td class='w-12 px-4 py-4 whitespace-nowrap'>
+        <input type="checkbox" class="userCheckbox" value="${user.id}" data-user-id="${user.id}" class='rounded border-gray-300 text-primary focus:ring-primary'>
+      </td>
+      <td class='w-1/4 px-4 py-4 whitespace-nowrap'>
+        <div class='text-sm font-medium text-foreground'>${user.firstName} ${user.lastName}</div>
+        <div class='text-sm text-muted-foreground'>${user.email}</div>
+      </td>
+      <td class='w-20 px-4 py-4 whitespace-nowrap'>
+        <span class='text-sm text-foreground'>${user.role}</span>
+      </td>
+      <td class='w-24 px-4 py-4 whitespace-nowrap'>
+        <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${user.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}'>
+          ${user.status}
+        </span>
+        ${user.banned ? `<span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 ml-1'>
+          BANNED
+        </span>` : ''}
+      </td>
+      <td class='w-20 px-4 py-4 whitespace-nowrap text-sm text-foreground'>
+        <span class='font-medium'>${user.credits}</span>
+      </td>
+      <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-muted-foreground hidden sm:table-cell'>
+        ${new Date(user.createdAt).toLocaleDateString()}
+        </td>
+       <td class='px-4 py-4 whitespace-nowrap text-sm font-medium'>
+          <div class='relative'>
+            <button data-user-id="${user.id}" class='inline-flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors' title='Actions'>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+              </svg>
+            </button>
+            <div id="dropdown-${user.id}" class='fixed w-48 bg-card rounded-md shadow-lg border border-border z-50 hidden'>
+              <div class='py-1'>
+                <button onclick="window.location.href='/admin/users/${user.id}'" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                  View Details
+                </button>
+                <button onclick="editUser(${user.id})" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                  </svg>
+                  Edit Role
+                </button>
+                <button onclick="manageCredits(${user.id}, '${user.fullName}', ${user.credits})" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                  </svg>
+                  Manage Credits
+                </button>
+                <button onclick="toggleStatus(${user.id}, '${user.status}')" class='flex items-center w-full px-4 py-2 text-sm ${user.status === 'active' ? 'text-orange-600' : 'text-green-600'} hover:bg-muted hover:text-foreground transition-colors'>
+                  ${user.status === 'active' ?
+                    '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' :
+                    '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+                  }
+                  ${user.status === 'active' ? 'Deactivate' : 'Activate'}
+                </button>
+                ${user.role !== 'admin' ? `
+                <button onclick="toggleBan(${user.id}, ${user.banned}, '${user.fullName}')" class='flex items-center w-full px-4 py-2 text-sm ${user.banned ? 'text-green-600' : 'text-red-600'} hover:bg-muted hover:text-foreground transition-colors'>
+                  ${user.banned ?
+                    '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' :
+                    '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path></svg>'
+                  }
+                  ${user.banned ? 'Unban' : 'Ban'}
+                </button>
+                <button onclick="deleteUser(${user.id}, '${user.fullName}')" class='flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-muted hover:text-foreground transition-colors'>
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                  </svg>
+                  Delete User
+                </button>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        </td>
+    </tr>
+  `).join('');
+}
+
+function updatePagination(pagination, filters) {
+  const paginationContainer = document.querySelector('.flex.items-center.justify-between');
+  if (!paginationContainer) return;
+
+  let paginationHTML = `
+    <div class='text-sm text-muted-foreground'>
+      Showing 20 of ${pagination.total} users
+    </div>
+    <div class='flex gap-2'>
+  `;
+
+  if (pagination.page > 1) {
+    paginationHTML += `<a href="?page=${pagination.page - 1}&role=${filters.role || ''}&search=${filters.search || ''}&sortBy=${filters.sortBy}&sortOrder=${filters.sortOrder}"
+        onclick="loadUsers(${pagination.page - 1}); return false;"
+        class='px-3 py-1 border border-border rounded-md text-sm hover:bg-muted transition-colors'>Previous</a>`;
+  }
+
+  for (let i = 1; i <= pagination.pages; i++) {
+    if (i === pagination.page) {
+      paginationHTML += `<span class='px-3 py-1 border border-primary bg-primary/10 text-primary rounded-md text-sm'>${i}</span>`;
+    } else {
+      paginationHTML += `<a href="?page=${i}&role=${filters.role || ''}&search=${filters.search || ''}&sortBy=${filters.sortBy}&sortOrder=${filters.sortOrder}"
+          onclick="loadUsers(${i}); return false;"
+          class='px-3 py-1 border border-border hover:bg-muted rounded-md text-sm transition-colors'>${i}</a>`;
+    }
+  }
+
+  if (pagination.page < pagination.pages) {
+    paginationHTML += `<a href="?page=${pagination.page + 1}&role=${filters.role || ''}&search=${filters.search || ''}&sortBy=${filters.sortBy}&sortOrder=${filters.sortOrder}"
+        onclick="loadUsers(${pagination.page + 1}); return false;"
+        class='px-3 py-1 border border-border rounded-md text-sm hover:bg-muted transition-colors'>Next</a>`;
+  }
+
+  paginationHTML += '</div>';
+  paginationContainer.innerHTML = paginationHTML;
+}
+
+// Action dropdown functionality - hover based
+document.addEventListener('DOMContentLoaded', function() {
+  // Add hover event listeners to all dropdown triggers
+  document.querySelectorAll('button[data-user-id]').forEach(button => {
+    const userId = button.getAttribute('data-user-id');
+    const dropdown = document.getElementById(`dropdown-${userId}`);
+    const container = button.parentElement;
+
+    // Show dropdown on hover
+    container.addEventListener('mouseenter', function() {
+      // Close all other dropdowns first
+      document.querySelectorAll('[id^="dropdown-"]').forEach(d => {
+        if (d !== dropdown) {
+          d.classList.add('hidden');
+        }
+      });
+
+      // Position the dropdown relative to the button
+      const buttonRect = button.getBoundingClientRect();
+      const dropdownHeight = dropdown.offsetHeight || 200; // Estimated height if not yet rendered
+      const viewportHeight = window.innerHeight;
+      const spaceBelow = viewportHeight - buttonRect.bottom;
+      const spaceAbove = buttonRect.top;
+
+      // Temporarily show dropdown to measure its dimensions, then hide it again
+      const wasHidden = dropdown.classList.contains('hidden');
+      if (wasHidden) {
+        dropdown.classList.remove('hidden');
+        dropdown.style.visibility = 'hidden'; // Make it invisible but measurable
+        dropdown.style.position = 'fixed';
+        dropdown.style.left = '-9999px'; // Move off-screen temporarily
+        dropdown.style.top = '-9999px';
+      }
+
+      // Get actual dimensions
+      const dropdownWidth = dropdown.offsetWidth || 192; // 192px = w-48 (12rem)
+      const actualDropdownHeight = dropdown.offsetHeight || 200;
+
+      // Position horizontally (right-aligned with button)
+      dropdown.style.left = `${buttonRect.right - dropdownWidth}px`;
+
+      // Restore visibility if it was hidden
+      if (wasHidden) {
+        dropdown.style.visibility = 'visible';
+        dropdown.style.position = 'fixed';
+      }
+
+      // Position vertically (prefer below, but go above if not enough space)
+      if (spaceBelow >= actualDropdownHeight + 4) {
+        // Enough space below
+        dropdown.style.top = `${buttonRect.bottom + 1}px`;
+      } else if (spaceAbove >= actualDropdownHeight + 4) {
+        // Enough space above
+        dropdown.style.top = `${buttonRect.top - actualDropdownHeight - 1}px`;
+      } else {
+        // Not enough space above or below, position below and let page scroll
+        dropdown.style.top = `${buttonRect.bottom + 1}px`;
+        // Ensure page can scroll to show dropdown
+        const dropdownBottom = buttonRect.bottom + 1 + actualDropdownHeight;
+        if (dropdownBottom > viewportHeight) {
+          window.scrollBy(0, dropdownBottom - viewportHeight + 20);
+        }
+      }
+
+      // Show current dropdown
+      dropdown.classList.remove('hidden');
+    });
+
+    // Hide dropdown when mouse leaves the container
+    container.addEventListener('mouseleave', function() {
+      // Add a small delay to prevent flickering
+      setTimeout(() => {
+        if (!container.matches(':hover') && !dropdown.matches(':hover')) {
+          dropdown.classList.add('hidden');
+        }
+      }, 100);
+    });
+
+    // Also hide when mouse leaves the dropdown itself
+    dropdown.addEventListener('mouseleave', function() {
+      setTimeout(() => {
+        if (!container.matches(':hover') && !dropdown.matches(':hover')) {
+          dropdown.classList.add('hidden');
+        }
+      }, 100);
+    });
+  });
+
+  // Close dropdowns when clicking outside (fallback for accessibility)
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('[id^="dropdown-"]') && !e.target.closest('button[data-user-id]')) {
+      document.querySelectorAll('[id^="dropdown-"]').forEach(dropdown => {
+        dropdown.classList.add('hidden');
+      });
+    }
+  });
+});
+
+// Filter functionality (fallback)
+document.getElementById('applyFilters').addEventListener('click', function() {
+  loadUsers(1);
+});
+</script>

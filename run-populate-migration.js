@@ -18,7 +18,12 @@ async function runMigration() {
     await helpMigration.up(db);
     console.log('✅ Help articles populated');
 
-    console.log('✅ All articles populated successfully!');
+    // Run corporates population
+    const corporatesMigration = require('./src/migrations/013_populate_corporates');
+    await corporatesMigration.up(db);
+    console.log('✅ Corporates populated');
+
+    console.log('✅ All data populated successfully!');
     process.exit(0);
   } catch (error) {
     console.error('❌ Migration failed:', error);

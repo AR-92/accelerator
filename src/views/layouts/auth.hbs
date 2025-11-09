@@ -34,12 +34,16 @@
       }
     </style>
   </head>
-  <body
-    class='h-screen flex justify-center items-center bg-background font-sans text-foreground'
-  >
-    {{{body}}}
+   <body
+     class='h-screen flex justify-center items-center bg-background font-sans text-foreground'
+   >
+     {{{body}}}
 
-    <script src='/js/main.js'></script>
-    <script src='/js/framework-utils.js'></script>
-  </body>
+     <!-- Toast Notifications -->
+     {{> _toast}}
+
+     <script src='/js/main.js'></script>
+     <script src='/js/framework-utils.js'></script>
+     <script src='/js/toast.js'></script>
+   </body>
 </html>

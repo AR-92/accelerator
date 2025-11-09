@@ -455,10 +455,10 @@
    async function submitVote(ideaSlug) {
      const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
 
-     if (checkedBoxes.length === 0) {
-       alert('Please check at least one question before submitting your evaluation.');
-       return;
-     }
+      if (checkedBoxes.length === 0) {
+        Toast.warning('Please check at least one question before submitting your evaluation.');
+        return;
+      }
 
      // Convert checkbox selections to the API format (1 for checked, 0 for unchecked)
      const voteData = {
@@ -489,14 +489,14 @@
 
          // Show success message
          showSuccessMessage();
-       } else {
-         const error = await response.json();
-         alert('Error submitting evaluation: ' + error.error);
-       }
-     } catch (error) {
-       console.error('Error submitting vote:', error);
-       alert('Error submitting evaluation. Please try again.');
-     }
+        } else {
+          const error = await response.json();
+          Toast.error('Error submitting evaluation: ' + error.error);
+        }
+      } catch (error) {
+        console.error('Error submitting vote:', error);
+        Toast.error('Error submitting evaluation. Please try again.');
+      }
    }
 
    function showSuccessMessage() {

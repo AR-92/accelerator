@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="icon" type="image/svg+xml" href="/images/favcon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/css/charts.css" rel="stylesheet">
+    <link href="/css/scroll.css" rel="stylesheet">
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <script src="/js/htmx.min.js"></script>
+    <script src="/js/theme.js"></script>
+    <style>
+        body {
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+    </style>
+</head>
+
+<body class="h-screen flex bg-background font-sans text-foreground overflow-auto">
+    {{#if user}}
+    <!-- Mobile Sidebar Overlay -->
+    <div class="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 hidden md:hidden" id="mobile-sidebar-overlay"></div>
+
+    <!-- Mobile Sidebar -->
+    <div class="fixed inset-y-0 left-0 w-64 bg-card text-card-foreground border-r border-border flex flex-col transform -translate-x-full hidden z-50 shadow-xl" id="mobile-sidebar">
+        <!-- Mobile Logo -->
+        <div class="p-6 border-b border-border">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-sm">
+                    {{lucide 'Shield' 'w-6 h-6 text-primary-foreground'}}
+                </div>
+                <div>
+                    <h1 class="text-lg font-semibold text-foreground">Admin</h1>
+                    <p class="text-xs text-muted-foreground">Platform</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <nav class="flex-1 p-4">
+            <ul class="space-y-1">
+                <li>
+                    <a href="/admin/dashboard"
+                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeDashboard}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                        <div class="flex items-center justify-center w-8 h-8 {{#if activeDashboard}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                            {{lucide 'LayoutDashboard' 'w-4 h-4'}}
+                        </div>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/users"
+                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeUsers}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                        <div class="flex items-center justify-center w-8 h-8 {{#if activeUsers}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                            {{lucide 'Users' 'w-4 h-4'}}
+                        </div>
+                        <span class="font-medium">Users</span>
+                    </a>
+                </li>
+                 <li>
+                     <a href="/admin/startups"
+                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeStartups}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                         <div class="flex items-center justify-center w-8 h-8 {{#if activeStartups}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                             {{lucide 'Building2' 'w-4 h-4'}}
+                         </div>
+                         <span class="font-medium">Startups</span>
+                     </a>
+                 </li>
+                  <li>
+                      <a href="/admin/enterprises"
+                         class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeEnterprises}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                          <div class="flex items-center justify-center w-8 h-8 {{#if activeEnterprises}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                              {{lucide 'Building' 'w-4 h-4'}}
+                          </div>
+                          <span class="font-medium">Enterprises</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="/admin/corporates"
+                         class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeCorporates}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                          <div class="flex items-center justify-center w-8 h-8 {{#if activeCorporates}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                              {{lucide 'Briefcase' 'w-4 h-4'}}
+                          </div>
+                          <span class="font-medium">Corporates</span>
+                      </a>
+                  </li>
+                <li>
+                    <a href="/admin/content"
+                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeContent}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                        <div class="flex items-center justify-center w-8 h-8 {{#if activeContent}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                            {{lucide 'FileText' 'w-4 h-4'}}
+                        </div>
+                        <span class="font-medium">Content</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/settings"
+                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeSettings}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                        <div class="flex items-center justify-center w-8 h-8 {{#if activeSettings}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                            {{lucide 'Settings' 'w-4 h-4'}}
+                        </div>
+                        <span class="font-medium">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Mobile User Info & Logout -->
+        <div class="p-4 border-t border-border">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                    <span class="text-primary-foreground text-xs font-medium">{{charAt user.firstName 0}}{{charAt user.lastName 0}}</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="text-sm font-medium text-foreground truncate">{{user.firstName}} {{user.lastName}}</div>
+                    <div class="text-xs text-muted-foreground truncate">{{user.email}}</div>
+                </div>
+            </div>
+            <form action="/admin/logout" method="POST">
+                <button type="submit"
+                        class="w-full flex items-center px-3 py-2 text-sm text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
+                    {{lucide 'LogOut' 'w-4 h-4 mr-2'}}
+                    Logout
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Desktop Sidebar -->
+    <div class="w-64 bg-card/50 backdrop-blur-sm text-card-foreground border-r border-border/50 flex flex-col flex-shrink-0 shadow-sm">
+        <!-- Logo -->
+        <div class="p-6 border-b border-border/50">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-sm">
+                    {{lucide 'Shield' 'w-6 h-6 text-primary-foreground'}}
+                </div>
+                <div>
+                    <h1 class="text-lg font-semibold text-foreground">Admin</h1>
+                    <p class="text-xs text-muted-foreground">Platform</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 p-4">
+            <ul class="space-y-1">
+                <li>
+                    <a href="/admin/dashboard"
+                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeDashboard}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                        <div class="flex items-center justify-center w-8 h-8 {{#if activeDashboard}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                            {{lucide 'LayoutDashboard' 'w-4 h-4'}}
+                        </div>
+                        <span class="font-medium">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/users"
+                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeUsers}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                        <div class="flex items-center justify-center w-8 h-8 {{#if activeUsers}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                            {{lucide 'Users' 'w-4 h-4'}}
+                        </div>
+                        <span class="font-medium">Users</span>
+                    </a>
+                </li>
+                  <li>
+                      <a href="/admin/enterprises"
+                         class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeEnterprises}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                          <div class="flex items-center justify-center w-8 h-8 {{#if activeEnterprises}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                              {{lucide 'Building' 'w-4 h-4'}}
+                          </div>
+                          <span class="font-medium">Enterprises</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="/admin/corporates"
+                         class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeCorporates}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                          <div class="flex items-center justify-center w-8 h-8 {{#if activeCorporates}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                              {{lucide 'Briefcase' 'w-4 h-4'}}
+                          </div>
+                          <span class="font-medium">Corporates</span>
+                      </a>
+                  </li>
+                 <li>
+                     <a href="/admin/startups"
+                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeStartups}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                         <div class="flex items-center justify-center w-8 h-8 {{#if activeStartups}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                             {{lucide 'Building2' 'w-4 h-4'}}
+                         </div>
+                         <span class="font-medium">Startups</span>
+                     </a>
+                 </li>
+                <li>
+                    <a href="/admin/content"
+                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeContent}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                        <div class="flex items-center justify-center w-8 h-8 {{#if activeContent}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                            {{lucide 'FileText' 'w-4 h-4'}}
+                        </div>
+                        <span class="font-medium">Content</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/settings"
+                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeSettings}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                        <div class="flex items-center justify-center w-8 h-8 {{#if activeSettings}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                            {{lucide 'Settings' 'w-4 h-4'}}
+                        </div>
+                        <span class="font-medium">Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- User Info & Logout -->
+        <div class="p-4 border-t border-border/50">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                    <span class="text-primary-foreground text-xs font-medium">{{charAt user.firstName 0}}{{charAt user.lastName 0}}</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="text-sm font-medium text-foreground truncate">{{user.firstName}} {{user.lastName}}</div>
+                    <div class="text-xs text-muted-foreground truncate">{{user.email}}</div>
+                </div>
+            </div>
+            <form action="/admin/logout" method="POST">
+                <button type="submit"
+                        class="w-full flex items-center px-3 py-2 text-sm text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
+                    {{lucide 'LogOut' 'w-4 h-4 mr-2'}}
+                    Logout
+                </button>
+            </form>
+        </div>
+    </div>
+    {{/if}}
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        {{#if user}}
+        <!-- Top Navbar -->
+        <header class="bg-background/95 backdrop-blur-sm border-b border-border/50 px-4 lg:px-6 py-3 sticky top-0 z-40">
+            <div class="flex items-center justify-between">
+                <!-- Left Section -->
+                <div class="flex items-center gap-3">
+                    <!-- Mobile menu button -->
+                    <button class="md:hidden h-9 w-9 flex items-center justify-center hover:bg-muted rounded-lg transition-colors" id="mobile-menu-button">
+                        {{lucide 'Menu' 'w-5 h-5'}}
+                    </button>
+
+                    <!-- Compact Branding -->
+                    <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-sm">
+                                {{lucide 'Shield' 'w-5 h-5 text-primary-foreground'}}
+                            </div>
+                            <div class="hidden sm:block">
+                                <h1 class="text-lg font-semibold text-foreground">Admin</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page Title -->
+                    <div class="hidden md:block h-6 w-px bg-border mx-2"></div>
+                    <h2 class="text-sm font-medium text-muted-foreground truncate max-w-xs lg:max-w-none hidden sm:block">{{title}}</h2>
+                </div>
+
+                <!-- Right Section -->
+                <div class="flex items-center gap-2">
+                    <!-- Quick Actions -->
+                    <div class="hidden lg:flex items-center gap-1">
+                        <button class="h-9 w-9 flex items-center justify-center hover:bg-muted rounded-lg transition-colors" title="Notifications">
+                            {{lucide 'Bell' 'w-4 h-4'}}
+                        </button>
+                        <button class="h-9 w-9 flex items-center justify-center hover:bg-muted rounded-lg transition-colors" title="Search">
+                            {{lucide 'Search' 'w-4 h-4'}}
+                        </button>
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <button id="admin-theme-toggle" class="h-9 w-9 flex items-center justify-center hover:bg-muted rounded-lg transition-colors" title="Toggle theme">
+                        {{lucide 'Sun' 'w-4 h-4 hidden dark:block'}}
+                        {{lucide 'Moon' 'w-4 h-4 block dark:hidden'}}
+                    </button>
+
+                    <!-- User Menu -->
+                    <div class="relative" id="admin-user-menu">
+                        <button class="flex items-center gap-2 h-9 px-3 rounded-lg hover:bg-muted transition-colors" id="admin-user-menu-button">
+                            <div class="w-7 h-7 bg-primary rounded-full flex items-center justify-center">
+                                <span class="text-primary-foreground text-xs font-medium">{{charAt user.firstName 0}}{{charAt user.lastName 0}}</span>
+                            </div>
+                            <span class="hidden md:block text-sm font-medium text-foreground">{{user.firstName}}</span>
+                            <svg class="w-4 h-4 text-muted-foreground transition-transform duration-200" id="admin-user-menu-arrow">
+                                <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+
+                        <!-- User Dropdown -->
+                        <div class="absolute right-0 mt-2 w-56 bg-card border border-border rounded-lg shadow-lg hidden opacity-0 invisible transition-all duration-200" id="admin-user-dropdown">
+                            <div class="p-3 border-b border-border">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                                        <span class="text-primary-foreground text-sm font-medium">{{charAt user.firstName 0}}{{charAt user.lastName 0}}</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-foreground">{{user.firstName}} {{user.lastName}}</div>
+                                        <div class="text-xs text-muted-foreground">{{user.email}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-1">
+                                <a href="/admin/settings" class="flex items-center gap-2 px-3 py-2 text-sm text-foreground hover:bg-muted rounded-md transition-colors">
+                                    {{lucide 'Settings' 'w-4 h-4'}}
+                                    Settings
+                                </a>
+                                <a href="/" class="flex items-center gap-2 px-3 py-2 text-sm text-foreground hover:bg-muted rounded-md transition-colors">
+                                    {{lucide 'ArrowLeft' 'w-4 h-4'}}
+                                    Back to Site
+                                </a>
+                                <div class="border-t border-border my-1"></div>
+                                <form action="/admin/logout" method="POST">
+                                    <button type="submit" class="w-full flex items-center gap-2 px-3 py-2 text-sm text-destructive hover:bg-muted rounded-md transition-colors">
+                                        {{lucide 'LogOut' 'w-4 h-4'}}
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        {{/if}}
+
+        <!-- Content Area -->
+        <main class="flex-1 overflow-auto {{#if user}}p-4 lg:p-6{{else}}p-0{{/if}} bg-background">
+            {{{body}}}
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    {{> _toast}}
+
+    <script src="/js/framework-utils.js"></script>
+    <script src="/js/toast.js"></script>
+    <script>
+        // Admin theme toggle
+        document.getElementById('admin-theme-toggle')?.addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Mobile sidebar toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const mobileSidebarOverlay = document.getElementById('mobile-sidebar-overlay');
+
+        mobileMenuButton?.addEventListener('click', function() {
+            const isOpen = !mobileSidebar.classList.contains('-translate-x-full');
+
+            if (isOpen) {
+                // Close sidebar
+                mobileSidebar.classList.add('-translate-x-full');
+                mobileSidebarOverlay.classList.add('hidden');
+            } else {
+                // Open sidebar
+                mobileSidebar.classList.remove('-translate-x-full');
+                mobileSidebarOverlay.classList.remove('hidden');
+            }
+        });
+
+        // Close mobile sidebar when clicking overlay
+        mobileSidebarOverlay?.addEventListener('click', function() {
+            mobileSidebar.classList.add('-translate-x-full');
+            mobileSidebarOverlay.classList.add('hidden');
+        });
+
+        // User menu dropdown
+        const userMenuButton = document.getElementById('admin-user-menu-button');
+        const userDropdown = document.getElementById('admin-user-dropdown');
+        const userMenuArrow = document.getElementById('admin-user-menu-arrow');
+
+        userMenuButton?.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isHidden = userDropdown.classList.contains('hidden');
+
+            // Close mobile sidebar if open
+            mobileSidebar?.classList.add('-translate-x-full');
+            mobileSidebarOverlay?.classList.add('hidden');
+
+            if (isHidden) {
+                userDropdown.classList.remove('hidden');
+                setTimeout(() => {
+                    userDropdown.classList.remove('opacity-0', 'invisible');
+                }, 10);
+                userMenuArrow.style.transform = 'rotate(180deg)';
+            } else {
+                userDropdown.classList.add('opacity-0', 'invisible');
+                setTimeout(() => {
+                    userDropdown.classList.add('hidden');
+                }, 200);
+                userMenuArrow.style.transform = 'rotate(0deg)';
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!userMenuButton?.contains(e.target) && !userDropdown?.contains(e.target)) {
+                userDropdown?.classList.add('opacity-0', 'invisible');
+                setTimeout(() => {
+                    userDropdown?.classList.add('hidden');
+                }, 200);
+                userMenuArrow.style.transform = 'rotate(0deg)';
+            }
+        });
+
+        // Close dropdown on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                userDropdown?.classList.add('opacity-0', 'invisible');
+                setTimeout(() => {
+                    userDropdown?.classList.add('hidden');
+                }, 200);
+                userMenuArrow.style.transform = 'rotate(0deg)';
+            }
+        });
+    </script>
+</body>
+
+</html>

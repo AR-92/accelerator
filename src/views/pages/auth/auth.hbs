@@ -12,60 +12,90 @@
             </p>
           </div>
 
-           <form action='/auth/login' method='POST' class='grid gap-4'>
-             <div class='grid gap-2'>
-               <label
-                 class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                 for='email'
-               >
-                 Email
-               </label>
-               <input
-                 type='email'
-                 name='email'
-                 class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
-                 id='email'
-                 placeholder='m@example.com'
-                 required=''
-               />
-             </div>
+          <form
+            hx-post='/auth/login'
+            hx-target='#toast-container'
+            hx-swap='beforeend'
+            hx-on:htmx:after-request='handleLoginResponse(event)'
+            class='grid gap-4'
+          >
+            <div class='grid gap-2'>
+              <label
+                class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                for='email'
+              >
+                Email
+              </label>
+              <input
+                type='email'
+                name='email'
+                class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                id='email'
+                placeholder='m@example.com'
+                required=''
+              />
+            </div>
 
-             <div class='grid gap-2'>
-               <div class='flex items-center gap-6'>
-                 <label
-                   class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
-                   for='password'
-                 >
-                   Password
-                 </label>
-                 <a
-                   class='ml-auto inline-block text-sm underline text-muted-foreground hover:text-foreground'
-                   href='/forgot-password'
-                 >
-                   Forgot your password?
-                 </a>
-               </div>
-               <input
-                 type='password'
-                 name='password'
-                 class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
-                 id='password'
-                 placeholder='Enter your password'
-                 required=''
-               />
-             </div>
+            <div class='grid gap-2'>
+              <div class='flex items-center gap-6'>
+                <label
+                  class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                  for='password'
+                >
+                  Password
+                </label>
+                <a
+                  class='ml-auto inline-block text-sm underline text-muted-foreground hover:text-foreground'
+                  href='/forgot-password'
+                >
+                  Forgot your password?
+                </a>
+              </div>
+              <input
+                type='password'
+                name='password'
+                class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                id='password'
+                placeholder='Enter your password'
+                required=''
+              />
+            </div>
 
-             <div class='w-full flex justify-center'>
-               <button
-                 type='submit'
-                 class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-3/4 max-w-[200px]'
-               >
-                 Login
-               </button>
-             </div>
+            <div class='w-full flex justify-center'>
+              <button
+                type='submit'
+                class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-3/4 max-w-[200px]'
+                hx-indicator='this'
+                hx-disabled-elt='this'
+              >
+                <span class='htmx-indicator'>
+                  <svg
+                    class='animate-spin -ml-1 mr-2 h-4 w-4 text-white'
+                    xmlns='http://www.w3.org/2000/svg'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                  >
+                    <circle
+                      class='opacity-25'
+                      cx='12'
+                      cy='12'
+                      r='10'
+                      stroke='currentColor'
+                      stroke-width='4'
+                    ></circle>
+                    <path
+                      class='opacity-75'
+                      fill='currentColor'
+                      d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+                    ></path>
+                  </svg>
+                  Logging in...
+                </span>
+                <span class='htmx-non-indicator'>Login</span>
+              </button>
+            </div>
 
-
-           </form>
+          </form>
 
           <div class='mt-4 text-center text-sm'>
             Don't have an account?
@@ -76,22 +106,15 @@
           </div>
         </div>
       </div>
-
-      <div
-        class='flex items-center justify-center h-[calc(100vh-100px)] bg-muted p-4 rounded-md overflow-hidden place-self-center'
-      >
-        <img
-          alt='Image'
-          loading='lazy'
-          width='1920'
-          height='1080'
-          decoding='async'
-          data-nimg='1'
-          class='w-full h-full'
-          style='color: transparent'
-          src='/images/accelerator_logo.svg'
-        />
-      </div>
     </div>
   </div>
 </section>
+
+<script>
+  function handleLoginResponse(event) { const xhr = event.detail.xhr; const
+  response = JSON.parse(xhr.responseText); if (xhr.status === 200 &&
+  response.success) { // Success - show toast and redirect
+  Toast.success(response.message); setTimeout(() => { window.location.href =
+  response.redirect; }, 1500); } else if (response.error) { // Error - show
+  toast Toast.error(response.error); } }
+</script>

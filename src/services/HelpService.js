@@ -55,6 +55,39 @@ class HelpService {
   }
 
   /**
+   * Get articles for admin (including unpublished)
+   * @param {Object} filters - Filter options
+   * @returns {Promise<Object[]>} Array of article data
+   */
+  async getArticles(filters = {}) {
+    const articles = await this.contentRepo.findAll({
+      ...filters,
+      includeUnpublished: true,
+    });
+    return articles.map((article) => article.toPublicJSON());
+  }
+
+  /**
+   * Get all categories
+   * @returns {Promise<Object[]>} Array of category data
+   */
+  async getCategories() {
+    return await this.getAllCategories();
+  }
+
+  /**
+   * Count articles with filters
+   * @param {Object} filters - Filter options
+   * @returns {Promise<number>} Number of articles
+   */
+  async countArticles(filters = {}) {
+    return await this.contentRepo.countArticles({
+      ...filters,
+      includeUnpublished: true,
+    });
+  }
+
+  /**
    * Get article by slug
    * @param {string} slug - Article slug
    * @returns {Promise<Object>} Article data

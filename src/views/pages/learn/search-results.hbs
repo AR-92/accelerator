@@ -193,10 +193,10 @@
        const category = categoryFilter.value;
        const difficulty = difficultyFilter.value;
 
-       if (query.length < 2) {
-         alert('Search query must be at least 2 characters');
-         return;
-       }
+        if (query.length < 2) {
+          Toast.warning('Search query must be at least 2 characters');
+          return;
+        }
 
        // Build URL with parameters
        const params = new URLSearchParams();

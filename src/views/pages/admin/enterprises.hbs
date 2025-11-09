@@ -1,0 +1,712 @@
+<div class='flex flex-col gap-4 lg:gap-6'>
+  <!-- Header -->
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1 class='font-heading text-2xl font-semibold text-foreground dark:text-white'>Enterprise Management</h1>
+      <p class='text-base text-muted-foreground'>Total enterprises: {{pagination.total}}</p>
+    </div>
+    <div class='flex gap-2'>
+      <button onclick="exportToCSV()" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
+        {{lucide 'Download' 'w-4 h-4 mr-2'}}
+        Export CSV
+      </button>
+      <button onclick="openCreateEnterpriseModal()" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
+        {{lucide 'Plus' 'w-4 h-4 mr-2'}}
+        Create Enterprise
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class='rounded-md bg-card text-card-foreground shadow-sm p-6' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+    <div class='flex flex-wrap gap-4'>
+      <div>
+        <label class='block text-sm font-medium text-foreground mb-2'>Industry</label>
+        <input type="text" id="industryFilter" placeholder="Filter by industry"
+               class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+      </div>
+      <div>
+        <label class='block text-sm font-medium text-foreground mb-2'>Status</label>
+        <select id="statusFilter" class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+          <option value="">All Statuses</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+          <option value="acquired">Acquired</option>
+          <option value="failed">Failed</option>
+        </select>
+      </div>
+      <div>
+        <label class='block text-sm font-medium text-foreground mb-2'>Company Size</label>
+        <select id="companySizeFilter" class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+          <option value="">All Sizes</option>
+          <option value="small">Small</option>
+          <option value="medium">Medium</option>
+          <option value="large">Large</option>
+          <option value="enterprise">Enterprise</option>
+        </select>
+      </div>
+      <div>
+        <label class='block text-sm font-medium text-foreground mb-2'>Search</label>
+        <input type="text" id="searchInput" placeholder="Search by name or description"
+               class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+      </div>
+      <div class="flex items-end">
+        <button id="applyFilters" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
+          Apply Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bulk Actions -->
+  <div id="bulkActions" class='hidden rounded-md bg-card text-card-foreground shadow-sm p-4' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+    <div class='flex items-center justify-between'>
+      <span id="selectedCount" class='text-sm text-foreground'>0 enterprises selected</span>
+      <div class='flex gap-2'>
+        <select id="bulkStatusSelect" class='flex h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+          <option value="">Change Status</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+          <option value="acquired">Acquired</option>
+          <option value="failed">Failed</option>
+        </select>
+        <button onclick="bulkUpdateStatus()" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
+          Update Status
+        </button>
+        <button id="bulkDeleteBtn" onclick="bulkDelete()" disabled class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground shadow hover:bg-destructive/90 h-9 px-4 py-2'>
+          Delete Selected
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enterprises Table -->
+  <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+    <div class='px-6 py-4 border-b border-border'>
+      <h2 class='text-lg font-medium text-foreground'>Enterprises ({{pagination.total}})</h2>
+    </div>
+
+    <div class='overflow-x-auto'>
+      <table class='min-w-full divide-y divide-border table-fixed sm:table-auto'>
+        <thead class='bg-muted/50'>
+          <tr>
+            <th class='w-12 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
+              <input type="checkbox" id="selectAll" class='rounded border-gray-300 text-primary focus:ring-primary'>
+            </th>
+            <th class='min-w-48 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
+              <button onclick="sortBy('name')" class='hover:text-foreground transition-colors flex items-center gap-1'>
+                Enterprise
+                {{#if (eq filters.sortBy 'name')}}
+                  {{#if (eq filters.sortOrder 'asc')}}↑{{else}}↓{{/if}}
+                {{/if}}
+              </button>
+            </th>
+            <th class='w-24 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
+              <button onclick="sortBy('industry')" class='hover:text-foreground transition-colors flex items-center gap-1'>
+                Industry
+                {{#if (eq filters.sortBy 'industry')}}
+                  {{#if (eq filters.sortOrder 'asc')}}↑{{else}}↓{{/if}}
+                {{/if}}
+              </button>
+            </th>
+            <th class='w-20 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Size</th>
+            <th class='w-20 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Status</th>
+            <th class='w-32 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider hidden md:table-cell'>
+              <button onclick="sortBy('created_at')" class='hover:text-foreground transition-colors flex items-center gap-1'>
+                Created
+                {{#if (eq filters.sortBy 'created_at')}}
+                  {{#if (eq filters.sortOrder 'asc')}}↑{{else}}↓{{/if}}
+                {{/if}}
+              </button>
+            </th>
+            <th class='w-48 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Actions</th>
+          </tr>
+        </thead>
+        <tbody class='bg-card divide-y divide-border'>
+          {{#each enterprises}}
+          <tr class='hover:bg-muted/50'>
+            <td class='w-12 px-4 py-4 whitespace-nowrap'>
+              <input type="checkbox" class="enterpriseCheckbox" value="{{id}}" data-enterprise-id="{{id}}" class='rounded border-gray-300 text-primary focus:ring-primary'>
+            </td>
+            <td class='w-1/4 px-4 py-4 whitespace-nowrap'>
+              <div class='text-sm font-medium text-foreground'>{{name}}</div>
+              <div class='text-sm text-muted-foreground'>{{description}}</div>
+              {{#if website}}
+              <a href="{{website}}" target="_blank" class='text-xs text-blue-600 hover:text-blue-800'>{{website}}</a>
+              {{/if}}
+            </td>
+            <td class='w-24 px-4 py-4 whitespace-nowrap'>
+              <span class='text-sm text-foreground'>{{industry}}</span>
+            </td>
+            <td class='w-20 px-4 py-4 whitespace-nowrap'>
+              <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{#if (eq companySize 'small')}}bg-blue-100 text-blue-800{{else if (eq companySize 'medium')}}bg-green-100 text-green-800{{else if (eq companySize 'large')}}bg-yellow-100 text-yellow-800{{else}}bg-purple-100 text-purple-800{{/if}}'>
+                {{companySize}}
+              </span>
+            </td>
+            <td class='w-20 px-4 py-4 whitespace-nowrap'>
+              <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{#if (eq status 'active')}}bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400{{else if (eq status 'inactive')}}bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400{{else if (eq status 'acquired')}}bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400{{else}}bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400{{/if}}'>
+                {{status}}
+              </span>
+            </td>
+            <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-muted-foreground hidden md:table-cell'>
+              {{formatDate createdAt}}
+            </td>
+            <td class='px-4 py-4 whitespace-nowrap text-sm font-medium'>
+              <div class='relative'>
+                <button data-enterprise-id="{{id}}" class='inline-flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors' title='Actions'>
+                  {{lucide 'MoreVertical' 'w-4 h-4'}}
+                </button>
+                <div id="dropdown-{{id}}" class='fixed w-48 bg-card rounded-md shadow-lg border border-border z-50 hidden'>
+                  <div class='py-1'>
+                    <a href="/admin/enterprises/{{id}}" class='block px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                      View Details
+                    </a>
+                    <button onclick="editEnterprise({{id}})" class='block w-full text-left px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                      Edit
+                    </button>
+                    <button onclick="deleteEnterprise({{id}}, '{{name}}')" class='block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors'>
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    {{#if (gt pagination.pages 1)}}
+    <div class='px-6 py-4 border-t border-border flex items-center justify-between'>
+      <div class='text-sm text-muted-foreground'>
+        Showing {{pagination.limit}} of {{pagination.total}} enterprises
+      </div>
+      <div class='flex gap-2'>
+        {{#if (gt pagination.page 1)}}
+        <button onclick="changePage({{subtract pagination.page 1}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
+          Previous
+        </button>
+        {{/if}}
+        <span class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2'>
+          Page {{pagination.page}} of {{pagination.pages}}
+        </span>
+        {{#if (lt pagination.page pagination.pages)}}
+        <button onclick="changePage({{add pagination.page 1}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
+          Next
+        </button>
+        {{/if}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</div>
+
+<!-- Create Enterprise Modal -->
+<div id="createEnterpriseModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
+  <div class="relative top-20 mx-auto p-5 border border-border w-96 shadow-lg rounded-md bg-card">
+    <div class="mt-3">
+      <h3 class="text-lg font-medium text-foreground mb-4">Create New Enterprise</h3>
+      <form id="createEnterpriseForm">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">User ID</label>
+          <input type="number" id="createEnterpriseUserId" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Name</label>
+          <input type="text" id="createEnterpriseName" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Industry</label>
+          <input type="text" id="createEnterpriseIndustry" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Company Size</label>
+          <select id="createEnterpriseCompanySize" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+            <option value="enterprise">Enterprise</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Status</label>
+          <select id="createEnterpriseStatus" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="acquired">Acquired</option>
+            <option value="failed">Failed</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Description</label>
+          <textarea id="createEnterpriseDescription" rows="3" class="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"></textarea>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Website</label>
+          <input type="url" id="createEnterpriseWebsite" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Location</label>
+          <input type="text" id="createEnterpriseLocation" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Revenue</label>
+          <input type="number" id="createEnterpriseRevenue" min="0" step="0.01" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Founded Date</label>
+          <input type="date" id="createEnterpriseFoundedDate" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeCreateEnterpriseModal()" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Cancel</button>
+          <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Enterprise Modal -->
+<div id="editEnterpriseModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
+  <div class="relative top-20 mx-auto p-5 border border-border w-96 shadow-lg rounded-md bg-card">
+    <div class="mt-3">
+      <h3 class="text-lg font-medium text-foreground mb-4">Edit Enterprise</h3>
+      <form id="editEnterpriseForm">
+        <input type="hidden" id="editEnterpriseId">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Name</label>
+          <input type="text" id="editEnterpriseName" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Industry</label>
+          <input type="text" id="editEnterpriseIndustry" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Company Size</label>
+          <select id="editEnterpriseCompanySize" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+            <option value="enterprise">Enterprise</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Status</label>
+          <select id="editEnterpriseStatus" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="acquired">Acquired</option>
+            <option value="failed">Failed</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Description</label>
+          <textarea id="editEnterpriseDescription" rows="3" class="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"></textarea>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Website</label>
+          <input type="url" id="editEnterpriseWebsite" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Location</label>
+          <input type="text" id="editEnterpriseLocation" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Revenue</label>
+          <input type="number" id="editEnterpriseRevenue" min="0" step="0.01" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Founded Date</label>
+          <input type="date" id="editEnterpriseFoundedDate" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeEditEnterpriseModal()" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Cancel</button>
+          <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+  loadEnterprises();
+  setupEventListeners();
+});
+
+// Load enterprises with current filters
+function loadEnterprises() {
+  const url = new URL(window.location);
+  url.pathname = '/admin/enterprises';
+  url.searchParams.set('ajax', 'true');
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        updateTable(data.enterprises);
+        updatePagination(data.pagination);
+      }
+    });
+}
+
+// Update table with new data
+function updateTable(enterprises) {
+  const tbody = document.querySelector('tbody');
+  tbody.innerHTML = enterprises.map(enterprise => `
+    <tr class='hover:bg-muted/50'>
+      <td class='w-12 px-4 py-4 whitespace-nowrap'>
+        <input type="checkbox" class="enterpriseCheckbox" value="${enterprise.id}" data-enterprise-id="${enterprise.id}" class='rounded border-gray-300 text-primary focus:ring-primary'>
+      </td>
+      <td class='w-1/4 px-4 py-4 whitespace-nowrap'>
+        <div class='text-sm font-medium text-foreground'>${enterprise.name}</div>
+        <div class='text-sm text-muted-foreground'>${enterprise.description || ''}</div>
+        ${enterprise.website ? `<a href="${enterprise.website}" target="_blank" class='text-xs text-blue-600 hover:text-blue-800'>${enterprise.website}</a>` : ''}
+      </td>
+      <td class='w-24 px-4 py-4 whitespace-nowrap'>
+        <span class='text-sm text-foreground'>${enterprise.industry}</span>
+      </td>
+      <td class='w-20 px-4 py-4 whitespace-nowrap'>
+        <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getCompanySizeClass(enterprise.companySize)}'>
+          ${enterprise.companySize || 'N/A'}
+        </span>
+      </td>
+      <td class='w-20 px-4 py-4 whitespace-nowrap'>
+        <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusClass(enterprise.status)}'>
+          ${enterprise.status}
+        </span>
+      </td>
+      <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-muted-foreground hidden md:table-cell'>
+        ${formatDate(enterprise.createdAt)}
+      </td>
+      <td class='px-4 py-4 whitespace-nowrap text-sm font-medium'>
+        <div class='relative'>
+          <button data-enterprise-id="${enterprise.id}" class='inline-flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors' title='Actions'>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+            </svg>
+          </button>
+          <div id="dropdown-${enterprise.id}" class='fixed w-48 bg-card rounded-md shadow-lg border border-border z-50 hidden'>
+            <div class='py-1'>
+              <a href="/admin/enterprises/${enterprise.id}" class='block px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                View Details
+              </a>
+              <button onclick="editEnterprise(${enterprise.id})" class='block w-full text-left px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                Edit
+              </button>
+              <button onclick="deleteEnterprise(${enterprise.id}, '${enterprise.name}')" class='block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors'>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+
+  setupDropdownListeners();
+}
+
+// Update pagination
+function updatePagination(pagination) {
+  const paginationEl = document.querySelector('.pagination-info');
+  if (paginationEl) {
+    paginationEl.textContent = `Showing ${pagination.limit} of ${pagination.total} enterprises`;
+  }
+}
+
+// Setup event listeners
+function setupEventListeners() {
+  // Filters
+  document.getElementById('applyFilters').addEventListener('click', applyFilters);
+
+  // Select all checkbox
+  document.getElementById('selectAll').addEventListener('change', function(e) {
+    const checkboxes = document.querySelectorAll('.enterpriseCheckbox');
+    checkboxes.forEach(cb => cb.checked = e.target.checked);
+    updateBulkActions();
+  });
+
+  // Individual checkboxes
+  document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('enterpriseCheckbox')) {
+      updateBulkActions();
+    }
+  });
+
+  // Form submissions
+  document.getElementById('createEnterpriseForm').addEventListener('submit', createEnterprise);
+  document.getElementById('editEnterpriseForm').addEventListener('submit', updateEnterprise);
+
+  setupDropdownListeners();
+}
+
+// Apply filters
+function applyFilters() {
+  const industry = document.getElementById('industryFilter').value;
+  const status = document.getElementById('statusFilter').value;
+  const companySize = document.getElementById('companySizeFilter').value;
+  const search = document.getElementById('searchInput').value;
+
+  const url = new URL(window.location);
+  url.searchParams.set('industry', industry);
+  url.searchParams.set('status', status);
+  url.searchParams.set('companySize', companySize);
+  url.searchParams.set('search', search);
+
+  window.location.href = url.toString();
+}
+
+// Sort by column
+function sortBy(column) {
+  const url = new URL(window.location);
+  const currentSort = url.searchParams.get('sortBy');
+  const currentOrder = url.searchParams.get('sortOrder') || 'desc';
+
+  let newOrder = 'asc';
+  if (currentSort === column && currentOrder === 'asc') {
+    newOrder = 'desc';
+  }
+
+  url.searchParams.set('sortBy', column);
+  url.searchParams.set('sortOrder', newOrder);
+
+  window.location.href = url.toString();
+}
+
+// Change page
+function changePage(page) {
+  const url = new URL(window.location);
+  url.searchParams.set('page', page);
+  window.location.href = url.toString();
+}
+
+// Modal functions
+function openCreateEnterpriseModal() {
+  document.getElementById('createEnterpriseModal').classList.remove('hidden');
+}
+
+function closeCreateEnterpriseModal() {
+  document.getElementById('createEnterpriseModal').classList.add('hidden');
+  document.getElementById('createEnterpriseForm').reset();
+}
+
+function closeEditEnterpriseModal() {
+  document.getElementById('editEnterpriseModal').classList.add('hidden');
+}
+
+// CRUD operations
+function createEnterprise(e) {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
+
+  fetch('/admin/api/enterprises', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      closeCreateEnterpriseModal();
+      location.reload();
+    } else {
+      alert('Error creating enterprise: ' + data.error);
+    }
+  });
+}
+
+function editEnterprise(enterpriseId) {
+  fetch(`/admin/api/enterprises/${enterpriseId}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById('editEnterpriseId').value = data.enterprise.id;
+        document.getElementById('editEnterpriseName').value = data.enterprise.name;
+        document.getElementById('editEnterpriseIndustry').value = data.enterprise.industry;
+        document.getElementById('editEnterpriseCompanySize').value = data.enterprise.companySize;
+        document.getElementById('editEnterpriseStatus').value = data.enterprise.status;
+        document.getElementById('editEnterpriseDescription').value = data.enterprise.description || '';
+        document.getElementById('editEnterpriseWebsite').value = data.enterprise.website || '';
+        document.getElementById('editEnterpriseLocation').value = data.enterprise.location || '';
+        document.getElementById('editEnterpriseRevenue').value = data.enterprise.revenue || '';
+        document.getElementById('editEnterpriseFoundedDate').value = data.enterprise.foundedDate || '';
+        document.getElementById('editEnterpriseModal').classList.remove('hidden');
+      }
+    });
+}
+
+function updateEnterprise(e) {
+  e.preventDefault();
+
+  const enterpriseId = document.getElementById('editEnterpriseId').value;
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
+
+  fetch(`/admin/api/enterprises/${enterpriseId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      closeEditEnterpriseModal();
+      location.reload();
+    } else {
+      alert('Error updating enterprise: ' + data.error);
+    }
+  });
+}
+
+function deleteEnterprise(enterpriseId, enterpriseName) {
+  if (confirm(`Are you sure you want to delete enterprise "${enterpriseName}"? This action cannot be undone.`)) {
+    fetch(`/admin/api/enterprises/${enterpriseId}`, {
+      method: 'DELETE',
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        location.reload();
+      } else {
+        alert('Error deleting enterprise: ' + data.error);
+      }
+    });
+  }
+}
+
+// Bulk operations
+function updateBulkActions() {
+  const checkboxes = document.querySelectorAll('.enterpriseCheckbox:checked');
+  const count = checkboxes.length;
+  const bulkActions = document.getElementById('bulkActions');
+  const selectedCount = document.getElementById('selectedCount');
+
+  if (count > 0) {
+    bulkActions.classList.remove('hidden');
+    selectedCount.textContent = `${count} enterprise${count > 1 ? 's' : ''} selected`;
+    document.getElementById('bulkDeleteBtn').disabled = false;
+  } else {
+    bulkActions.classList.add('hidden');
+    document.getElementById('bulkDeleteBtn').disabled = true;
+  }
+}
+
+function bulkUpdateStatus() {
+  const status = document.getElementById('bulkStatusSelect').value;
+  if (!status) return;
+
+  const checkboxes = document.querySelectorAll('.enterpriseCheckbox:checked');
+  const enterpriseIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+
+  if (enterpriseIds.length === 0) return;
+
+  fetch('/admin/api/enterprises/bulk/status', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ enterpriseIds, status }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      location.reload();
+    } else {
+      alert('Error updating enterprises: ' + data.error);
+    }
+  });
+}
+
+function bulkDelete() {
+  const checkboxes = document.querySelectorAll('.enterpriseCheckbox:checked');
+  const enterpriseIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+
+  if (enterpriseIds.length === 0) return;
+
+  if (confirm(`Are you sure you want to delete ${enterpriseIds.length} enterprise${enterpriseIds.length > 1 ? 's' : ''}? This action cannot be undone.`)) {
+    fetch('/admin/api/enterprises/bulk/delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ enterpriseIds }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        location.reload();
+      } else {
+        alert('Error deleting enterprises: ' + data.error);
+      }
+    });
+  }
+}
+
+// Export to CSV
+function exportToCSV() {
+  window.location.href = '/admin/api/enterprises/export/csv';
+}
+
+// Dropdown listeners
+function setupDropdownListeners() {
+  document.querySelectorAll('[data-enterprise-id]').forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const enterpriseId = this.dataset.enterpriseId;
+      const dropdown = document.getElementById(`dropdown-${enterpriseId}`);
+
+      // Hide all dropdowns
+      document.querySelectorAll('[id^="dropdown-"]').forEach(d => {
+        if (d !== dropdown) d.classList.add('hidden');
+      });
+
+      // Toggle current dropdown
+      dropdown.classList.toggle('hidden');
+    });
+  });
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', function() {
+    document.querySelectorAll('[id^="dropdown-"]').forEach(d => d.classList.add('hidden'));
+  });
+}
+
+// Utility functions
+function formatDate(dateString) {
+  return new Date(dateString).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+}
+
+function getStatusClass(status) {
+  switch (status) {
+    case 'active': return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400';
+    case 'inactive': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400';
+    case 'acquired': return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400';
+    case 'failed': return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400';
+    default: return 'bg-gray-100 text-gray-800';
+  }
+}
+
+function getCompanySizeClass(size) {
+  switch (size) {
+    case 'small': return 'bg-blue-100 text-blue-800';
+    case 'medium': return 'bg-green-100 text-green-800';
+    case 'large': return 'bg-yellow-100 text-yellow-800';
+    case 'enterprise': return 'bg-purple-100 text-purple-800';
+    default: return 'bg-gray-100 text-gray-800';
+  }
+}
+</script>

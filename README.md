@@ -47,6 +47,49 @@ A comprehensive web application accelerator for startups, enterprises, and busin
 - Pitch deck creation
 - Company valuation tools
 
+### Admin Panel
+
+The application includes a comprehensive admin panel for system administration and content management.
+
+#### Features
+
+- **User Management**: View, edit, and manage user accounts, roles, and credits
+- **Content Management**: Manage help articles and learning content
+- **Dashboard Analytics**: System statistics, user metrics, and activity monitoring
+- **Security Features**: Rate limiting, audit logging, and secure authentication
+
+#### Admin Panel Navigation
+
+The admin panel features a responsive navigation system with:
+
+- **Top Navbar**: Displays current page title, user information, and logout functionality
+- **Sidebar Navigation**: Quick access to dashboard, users, content, and settings
+- **Back to Site Link**: Easy navigation back to the main application
+- **User Profile Display**: Shows admin user name, email, and avatar
+
+#### Admin Access
+
+To access the admin panel:
+
+1. Create an admin user (if not already created):
+
+   ```bash
+   node create-admin.js
+   ```
+
+2. Login credentials:
+   - Email: `admin@accelerator.com`
+   - Password: `admin123`
+
+3. Navigate to `/admin/login` and sign in
+
+#### Admin Routes
+
+- `/admin/dashboard` - Main dashboard with system statistics
+- `/admin/users` - User management interface
+- `/admin/content` - Content management (help and learning articles)
+- `/admin/settings` - System settings and configuration
+
 ## Getting Started
 
 ### Prerequisites

@@ -34,12 +34,20 @@ class AuthService {
     }
 
     // Create user
-    const userId = await this.userRepository.create({
+    const newUser = new (require('../models/User'))({
       email,
-      password,
       firstName,
       lastName,
       role,
+    });
+    await newUser.setPassword(password);
+
+    const userId = await this.userRepository.create({
+      email: newUser.email,
+      password_hash: newUser.passwordHash,
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      role: newUser.role,
     });
 
     // Return user data without password

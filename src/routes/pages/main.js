@@ -1,6 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth, optionalAuth } = require('../../middleware/auth');
+const SettingsController = require('../../controllers/SettingsController');
+const AuthService = require('../../services/AuthService');
+const UserRepository = require('../../repositories/UserRepository');
+const { db } = require('../../../config/database');
+
+// Initialize dependencies
+const userRepository = new UserRepository(db);
+const authService = new AuthService(userRepository);
+const settingsController = new SettingsController(authService);
 
 // Helper function for page data
 const getPageData = (title, activeKey, padding = 'py-8') => ({
@@ -352,12 +361,19 @@ router.get('/settings/other', (req, res) => {
 });
 
 // GET settings profile
-router.get('/settings/profile', (req, res) => {
-  res.render('pages/account/settings/profile', {
-    ...getPageData('Profile Settings', 'Settings'),
-    layout: 'settings-accounts',
-    activeProfile: true,
-  });
+router.get('/settings/profile', requireAuth, async (req, res) => {
+  try {
+    const user = await authService.getUserById(req.user.id);
+    res.render('pages/account/settings/profile', {
+      ...getPageData('Profile Settings', 'Settings'),
+      layout: 'settings-accounts',
+      activeProfile: true,
+      user: user,
+    });
+  } catch (error) {
+    console.error('Error loading profile:', error);
+    res.redirect('/auth');
+  }
 });
 
 // GET settings password
@@ -460,31 +476,35 @@ router.get('/subscriptions', (req, res) => {
 });
 
 // POST profile settings
-router.post('/settings/profile', (req, res) => {
-  res.send('<div class="text-green-500">Profile updated successfully!</div>');
-});
+router.post(
+  '/settings/profile',
+  requireAuth,
+  settingsController.updateProfile.bind(settingsController)
+);
 
 // POST security settings
-router.post('/settings/security', (req, res) => {
-  const { newPassword, confirmNewPassword } = req.body;
-
-  if (newPassword !== confirmNewPassword) {
-    res.send('<div class="text-red-500">New passwords do not match.</div>');
-  } else if (newPassword.length < 6) {
-    res.send(
-      '<div class="text-red-500">Password must be at least 6 characters.</div>'
-    );
-  } else {
-    res.send(
-      '<div class="text-green-500">Password updated successfully!</div>'
-    );
-  }
-});
+router.post(
+  '/settings/security',
+  requireAuth,
+  settingsController.changePassword.bind(settingsController)
+);
 
 // POST preference settings
 router.post('/settings/preferences', (req, res) => {
   res.send('<div class="text-green-500">Preferences saved successfully!</div>');
 });
+
+// API routes for settings
+router.post(
+  '/api/settings/theme',
+  requireAuth,
+  settingsController.updateTheme.bind(settingsController)
+);
+router.get(
+  '/api/settings',
+  requireAuth,
+  settingsController.getSettings.bind(settingsController)
+);
 
 // GET portfolio
 router.get('/portfolio', requireAuth, async (req, res) => {

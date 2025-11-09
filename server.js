@@ -17,6 +17,7 @@ const authRoutes = require('./src/routes/pages/auth');
 const pageRoutes = require('./src/routes/pages/main');
 const aiAssistantModelsRoutes = require('./src/routes/pages/ai-assistant-models');
 const apiRoutes = require('./src/routes/api/v1/api');
+const adminRoutes = require('./src/routes/admin');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -47,6 +48,9 @@ app.use(securitySettings.rateLimit);
 
 // API rate limiting (stricter)
 app.use('/api/', securitySettings.apiRateLimit);
+
+// Admin rate limiting
+app.use('/admin/', securitySettings.adminRateLimit);
 
 // CORS configuration
 app.use(
@@ -80,6 +84,7 @@ app.use('/auth', authRoutes);
 app.use('/pages', pageRoutes);
 app.use('/pages', aiAssistantModelsRoutes);
 app.use('/api', apiRoutes);
+app.use('/admin', adminRoutes);
 
 // Health check endpoint
 app.get('/health', async (req, res) => {
@@ -149,18 +154,18 @@ app.use('*', notFoundHandler);
 app.use(errorHandler);
 
 // Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('SIGTERM received, shutting down gracefully');
-  process.exit(0);
-});
+// process.on('SIGTERM', () => {
+//   console.log('SIGTERM received, shutting down gracefully');
+//   process.exit(0);
+// });
 
-process.on('SIGINT', () => {
-  console.log('SIGINT received, shutting down gracefully');
-  process.exit(0);
-});
+// process.on('SIGINT', () => {
+//   console.log('SIGINT received, shutting down gracefully');
+//   process.exit(0);
+// });
 
 // Start the server
-app.listen(port, async () => {
+const server = app.listen(port, async () => {
   console.log(`Server running at http://localhost:${port}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`Node version: ${process.version}`);
@@ -179,4 +184,8 @@ app.listen(port, async () => {
       error: error.message,
     });
   }
+});
+
+server.on('error', (error) => {
+  console.error('Server error:', error);
 });

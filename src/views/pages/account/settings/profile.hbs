@@ -34,6 +34,7 @@
               required=''
               name='firstName'
               placeholder='Enter your first name'
+              value='{{user.firstName}}'
             />
           </div>
         </div>
@@ -52,6 +53,7 @@
               required=''
               name='lastName'
               placeholder='Enter your last name'
+              value='{{user.lastName}}'
             />
           </div>
         </div>
@@ -70,6 +72,7 @@
               required=''
               name='email'
               placeholder='Enter your email'
+              value='{{user.email}}'
             />
           </div>
         </div>
@@ -85,7 +88,7 @@
             id='bio'
             name='bio'
             placeholder='Tell us about yourself'
-          ></textarea>
+          >{{user.bio}}</textarea>
         </div>
       </div>
       <div class='flex gap-4'>

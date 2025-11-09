@@ -33,40 +33,27 @@ class LearningContentRepository extends BaseRepository {
   }
 
   /**
-   * Find all published articles
+   * Find all articles (including unpublished for admin)
    * @param {Object} options - Query options
    * @returns {Promise<LearningContent[]>}
    */
-  async findAllPublished(options = {}) {
-    let sql = 'SELECT * FROM learning_articles WHERE is_published = 1';
+  async findAll(options = {}) {
+    let sql =
+      'SELECT la.*, lc.name as category_name, lc.slug as category_slug FROM learning_articles la LEFT JOIN learning_categories lc ON la.category_id = lc.id WHERE 1=1';
     const params = [];
 
     if (options.categoryId) {
-      sql += ' AND category_id = ?';
+      sql += ' AND la.category_id = ?';
       params.push(options.categoryId);
     }
 
-    if (options.difficultyLevel) {
-      sql += ' AND difficulty_level = ?';
-      params.push(options.difficultyLevel);
-    }
-
-    if (options.featured !== undefined) {
-      sql += ' AND is_featured = ?';
-      params.push(options.featured ? 1 : 0);
-    }
-
     if (options.search) {
-      sql += ' AND (title LIKE ? OR content LIKE ? OR excerpt LIKE ?)';
+      sql += ' AND (la.title LIKE ? OR la.content LIKE ? OR la.summary LIKE ?)';
       const searchTerm = `%${options.search}%`;
       params.push(searchTerm, searchTerm, searchTerm);
     }
 
-    if (options.orderBy) {
-      sql += ` ORDER BY ${options.orderBy}`;
-    } else {
-      sql += ' ORDER BY is_featured DESC, created_at DESC';
-    }
+    sql += ' ORDER BY la.created_at DESC';
 
     if (options.limit) {
       sql += ' LIMIT ?';
@@ -79,7 +66,57 @@ class LearningContentRepository extends BaseRepository {
     }
 
     const rows = await this.query(sql, params);
-    return rows.map((row) => new LearningContent(row));
+    return rows.map((row) => {
+      const article = new LearningContent(row);
+      article.category = { name: row.category_name, slug: row.category_slug };
+      return article;
+    });
+  }
+
+  /**
+   * Find all published articles
+   * @param {Object} options - Query options
+   * @returns {Promise<LearningContent[]>}
+   */
+  async findAllPublished(options = {}) {
+    let sql =
+      'SELECT la.*, lc.name as category_name, lc.slug as category_slug FROM learning_articles la LEFT JOIN learning_categories lc ON la.category_id = lc.id WHERE la.is_published = 1';
+    const params = [];
+
+    if (options.categoryId) {
+      sql += ' AND la.category_id = ?';
+      params.push(options.categoryId);
+    }
+
+    if (options.difficultyLevel) {
+      sql += ' AND la.difficulty_level = ?';
+      params.push(options.difficultyLevel);
+    }
+
+    if (options.search) {
+      sql += ' AND (la.title LIKE ? OR la.content LIKE ? OR la.summary LIKE ?)';
+      const searchTerm = `%${options.search}%`;
+      params.push(searchTerm, searchTerm, searchTerm);
+    }
+
+    sql += ' ORDER BY la.created_at DESC';
+
+    if (options.limit) {
+      sql += ' LIMIT ?';
+      params.push(options.limit);
+    }
+
+    if (options.offset) {
+      sql += ' OFFSET ?';
+      params.push(options.offset);
+    }
+
+    const rows = await this.query(sql, params);
+    return rows.map((row) => {
+      const article = new LearningContent(row);
+      article.category = { name: row.category_name, slug: row.category_slug };
+      return article;
+    });
   }
 
   /**
@@ -250,9 +287,12 @@ class LearningContentRepository extends BaseRepository {
    * @returns {Promise<number>} Number of articles
    */
   async countArticles(options = {}) {
-    let sql =
-      'SELECT COUNT(*) as count FROM learning_articles WHERE is_published = 1';
+    let sql = 'SELECT COUNT(*) as count FROM learning_articles WHERE 1=1';
     const params = [];
+
+    if (!options.includeUnpublished) {
+      sql += ' AND is_published = 1';
+    }
 
     if (options.categoryId) {
       sql += ' AND category_id = ?';
@@ -270,8 +310,8 @@ class LearningContentRepository extends BaseRepository {
       params.push(searchTerm, searchTerm, searchTerm);
     }
 
-    const result = await this.queryOne(sql, params);
-    return result.count || 0;
+    const row = await this.queryOne(sql, params);
+    return row.count || 0;
   }
 
   /**

@@ -3575,7 +3575,7 @@
        
        // In a real implementation, this would trigger the actual export
        // For now, just show a success message and close the modal
-       alert(`Export started: ${section} data as ${format.toUpperCase()}`);
+        Toast.success(`Export started: ${section} data as ${format.toUpperCase()}`);
        document.getElementById('export-modal').classList.add('hidden');
      });
    }
@@ -3643,7 +3643,7 @@
        
        // In a real implementation, this would update the user's permissions
        // For now, just show a success message and close the modal
-       alert(`Permissions updated for user. Role: ${newRole}, Permissions: ${permissions.join(', ')}`);
+        Toast.success(`Permissions updated for user. Role: ${newRole}, Permissions: ${permissions.join(', ')}`);
        document.getElementById('permissions-modal').classList.add('hidden');
      });
    }
@@ -3665,7 +3665,7 @@
           if (confirm('Are you sure you want to approve this enterprise?')) {
             console.log(`Approving enterprise: ${enterpriseId}`);
             // In a real implementation, this would make an API call
-            alert('Enterprise approved successfully!');
+            Toast.success('Enterprise approved successfully!');
             enterpriseCard.remove();
             updatePendingCount();
           }
@@ -3682,7 +3682,7 @@
           if (reason !== null && reason.trim() !== '') {
             console.log(`Rejecting enterprise: ${enterpriseId}, Reason: ${reason}`);
             // In a real implementation, this would make an API call
-            alert('Enterprise rejected.');
+            Toast.error('Enterprise rejected.');
             enterpriseCard.remove();
             updatePendingCount();
           }
@@ -3722,7 +3722,7 @@
         allocateBudgetBtn.addEventListener('click', function() {
           // Open budget allocation modal or navigate to allocation page
           console.log('Opening budget allocation interface...');
-          alert('Budget allocation interface would open here');
+          Toast.info('Budget allocation interface would open here');
         });
       }
 
@@ -3731,7 +3731,7 @@
       if (manageCentersBtn) {
         manageCentersBtn.addEventListener('click', function() {
           console.log('Opening cost center management...');
-          alert('Cost center management interface would open here');
+          Toast.info('Cost center management interface would open here');
         });
       }
 
@@ -3740,7 +3740,7 @@
       if (roiDetailsBtn) {
         roiDetailsBtn.addEventListener('click', function() {
           console.log('Opening ROI details...');
-          alert('ROI tracking details would open here');
+          Toast.info('ROI tracking details would open here');
         });
       }
     }
@@ -3752,7 +3752,7 @@
       if (riskAssessmentBtn) {
         riskAssessmentBtn.addEventListener('click', function() {
           console.log('Opening risk assessment interface...');
-          alert('Risk assessment interface would open here');
+          Toast.info('Risk assessment interface would open here');
         });
       }
 
@@ -3761,7 +3761,7 @@
       if (viewAllRisksBtn) {
         viewAllRisksBtn.addEventListener('click', function() {
           console.log('Opening full risk register...');
-          alert('Full risk register would open here');
+          Toast.info('Full risk register would open here');
         });
       }
 
@@ -3770,7 +3770,7 @@
       if (runAuditBtn) {
         runAuditBtn.addEventListener('click', function() {
           console.log('Running compliance audit...');
-          alert('Compliance audit initiated');
+          Toast.success('Compliance audit initiated');
         });
       }
 
@@ -3779,7 +3779,7 @@
         button.addEventListener('click', function() {
           const riskId = this.dataset.riskId;
           console.log(`Opening mitigation plan for risk: ${riskId}`);
-          alert('Risk mitigation interface would open here');
+          Toast.info('Risk mitigation interface would open here');
         });
       });
 
@@ -3788,7 +3788,7 @@
       if (viewTrailBtn) {
         viewTrailBtn.addEventListener('click', function() {
           console.log('Opening full audit trail...');
-          alert('Full audit trail would open here');
+          Toast.info('Full audit trail would open here');
         });
       }
     }
@@ -3800,7 +3800,7 @@
       if (viewAnalyticsBtn) {
         viewAnalyticsBtn.addEventListener('click', function() {
           console.log('Opening full analytics dashboard...');
-          alert('Full analytics dashboard would open here');
+          Toast.info('Full analytics dashboard would open here');
         });
       }
 
@@ -3809,7 +3809,7 @@
       if (viewMapBtn) {
         viewMapBtn.addEventListener('click', function() {
           console.log('Opening full performance heatmap...');
-          alert('Full performance heatmap would open here');
+          Toast.info('Full performance heatmap would open here');
         });
       }
 
@@ -3818,7 +3818,7 @@
       if (viewInsightsBtn) {
         viewInsightsBtn.addEventListener('click', function() {
           console.log('Opening all predictive insights...');
-          alert('All predictive insights would open here');
+          Toast.info('All predictive insights would open here');
         });
       }
 
@@ -3827,7 +3827,7 @@
       if (manageKPIsBtn) {
         manageKPIsBtn.addEventListener('click', function() {
           console.log('Opening KPI management interface...');
-          alert('KPI management interface would open here');
+          Toast.info('KPI management interface would open here');
         });
       }
     }

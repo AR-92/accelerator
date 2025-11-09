@@ -1191,7 +1191,7 @@
   ${userId} to role ${newRole} with permissions:`, permissions, 'and enterprise
   access:', enterpriseAccess); // In a real implementation, this would update
   the user's permissions // For now, just show a success message and close the
-  modal alert(`Corporate permissions updated for user. Role: ${newRole},
+  modal Toast.success(`Corporate permissions updated for user. Role: ${newRole},
   Permissions: ${permissions.join(', ')}, Enterprise Access:
   ${enterpriseAccess.join(', ')}`);
   document.getElementById('corporate-permissions-modal').classList.add('hidden');
@@ -1218,7 +1218,8 @@
   console.log(`Exporting corporate ${section} data in ${format} format. Include
   filters: ${includeFilters}`); // In a real implementation, this would trigger
   the actual export // For now, just show a success message and close the modal
-  alert(`Corporate export started: ${section} data as ${format.toUpperCase()}`);
+  Toast.success(`Corporate export started: ${section} data as
+  ${format.toUpperCase()}`);
   document.getElementById('corporate-export-modal').classList.add('hidden'); });
   } // Initialize when page loads document.addEventListener('DOMContentLoaded',
   initCorporateUserManagement);

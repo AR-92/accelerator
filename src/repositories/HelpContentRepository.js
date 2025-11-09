@@ -33,40 +33,27 @@ class HelpContentRepository extends BaseRepository {
   }
 
   /**
-   * Find all published articles
+   * Find all articles (including unpublished for admin)
    * @param {Object} options - Query options
    * @returns {Promise<HelpContent[]>}
    */
-  async findAllPublished(options = {}) {
-    let sql = 'SELECT * FROM help_articles WHERE is_published = 1';
+  async findAll(options = {}) {
+    let sql =
+      'SELECT ha.*, hc.name as category_name, hc.slug as category_slug FROM help_articles ha LEFT JOIN help_categories hc ON ha.category_id = hc.id WHERE 1=1';
     const params = [];
 
     if (options.categoryId) {
-      sql += ' AND category_id = ?';
+      sql += ' AND ha.category_id = ?';
       params.push(options.categoryId);
     }
 
-    if (options.difficultyLevel) {
-      sql += ' AND difficulty_level = ?';
-      params.push(options.difficultyLevel);
-    }
-
-    if (options.featured !== undefined) {
-      sql += ' AND is_featured = ?';
-      params.push(options.featured ? 1 : 0);
-    }
-
     if (options.search) {
-      sql += ' AND (title LIKE ? OR content LIKE ? OR excerpt LIKE ?)';
+      sql += ' AND (ha.title LIKE ? OR ha.content LIKE ? OR ha.summary LIKE ?)';
       const searchTerm = `%${options.search}%`;
       params.push(searchTerm, searchTerm, searchTerm);
     }
 
-    if (options.orderBy) {
-      sql += ` ORDER BY ${options.orderBy}`;
-    } else {
-      sql += ' ORDER BY is_featured DESC, created_at DESC';
-    }
+    sql += ' ORDER BY ha.created_at DESC';
 
     if (options.limit) {
       sql += ' LIMIT ?';
@@ -79,7 +66,57 @@ class HelpContentRepository extends BaseRepository {
     }
 
     const rows = await this.query(sql, params);
-    return rows.map((row) => new HelpContent(row));
+    return rows.map((row) => {
+      const article = new HelpContent(row);
+      article.category = { name: row.category_name, slug: row.category_slug };
+      return article;
+    });
+  }
+
+  /**
+   * Find all published articles
+   * @param {Object} options - Query options
+   * @returns {Promise<HelpContent[]>}
+   */
+  async findAllPublished(options = {}) {
+    let sql =
+      'SELECT ha.*, hc.name as category_name, hc.slug as category_slug FROM help_articles ha LEFT JOIN help_categories hc ON ha.category_id = hc.id WHERE ha.is_published = 1';
+    const params = [];
+
+    if (options.categoryId) {
+      sql += ' AND ha.category_id = ?';
+      params.push(options.categoryId);
+    }
+
+    if (options.difficultyLevel) {
+      sql += ' AND ha.difficulty_level = ?';
+      params.push(options.difficultyLevel);
+    }
+
+    if (options.search) {
+      sql += ' AND (ha.title LIKE ? OR ha.content LIKE ? OR ha.summary LIKE ?)';
+      const searchTerm = `%${options.search}%`;
+      params.push(searchTerm, searchTerm, searchTerm);
+    }
+
+    sql += ' ORDER BY ha.created_at DESC';
+
+    if (options.limit) {
+      sql += ' LIMIT ?';
+      params.push(options.limit);
+    }
+
+    if (options.offset) {
+      sql += ' OFFSET ?';
+      params.push(options.offset);
+    }
+
+    const rows = await this.query(sql, params);
+    return rows.map((row) => {
+      const article = new HelpContent(row);
+      article.category = { name: row.category_name, slug: row.category_slug };
+      return article;
+    });
   }
 
   /**
@@ -250,9 +287,12 @@ class HelpContentRepository extends BaseRepository {
    * @returns {Promise<number>} Number of articles
    */
   async countArticles(options = {}) {
-    let sql =
-      'SELECT COUNT(*) as count FROM help_articles WHERE is_published = 1';
+    let sql = 'SELECT COUNT(*) as count FROM help_articles WHERE 1=1';
     const params = [];
+
+    if (!options.includeUnpublished) {
+      sql += ' AND is_published = 1';
+    }
 
     if (options.categoryId) {
       sql += ' AND category_id = ?';
@@ -270,8 +310,8 @@ class HelpContentRepository extends BaseRepository {
       params.push(searchTerm, searchTerm, searchTerm);
     }
 
-    const result = await this.queryOne(sql, params);
-    return result.count || 0;
+    const row = await this.queryOne(sql, params);
+    return row.count || 0;
   }
 
   /**

@@ -91,6 +91,27 @@ handlebars.registerHelper('not', function (a) {
   return !a;
 });
 
+handlebars.registerHelper('subtract', function (a, b) {
+  return a - b;
+});
+
+handlebars.registerHelper('add', function (a, b) {
+  return a + b;
+});
+
+handlebars.registerHelper('range', function (start, end) {
+  const result = [];
+  for (let i = start; i <= end; i++) {
+    result.push(i);
+  }
+  return result;
+});
+
+handlebars.registerHelper('formatDate', function (dateString) {
+  if (!dateString) return '';
+  return new Date(dateString).toLocaleDateString();
+});
+
 handlebars.registerHelper('categoryIcon', function (category) {
   const iconMap = {
     'Web Design': 'Globe',
@@ -99,6 +120,12 @@ handlebars.registerHelper('categoryIcon', function (category) {
     'E-commerce': 'ShoppingCart',
   };
   return iconMap[category] || 'Code';
+});
+
+// Helper to get character at index
+handlebars.registerHelper('charAt', function (str, index) {
+  if (typeof str !== 'string') return '';
+  return str.charAt(index);
 });
 
 const handlebarsConfig = engine({

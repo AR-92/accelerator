@@ -45,6 +45,9 @@ class UserRepository extends BaseRepository {
       first_name: user.firstName,
       last_name: user.lastName,
       role: user.role,
+      theme: user.theme,
+      bio: user.bio,
+      credits: user.credits,
     };
 
     return await super.create(data);
@@ -61,9 +64,11 @@ class UserRepository extends BaseRepository {
     user.validate();
 
     const data = {};
-    if (user.firstName) data.first_name = user.firstName;
-    if (user.lastName) data.last_name = user.lastName;
-    if (user.role) data.role = user.role;
+    if (user.firstName !== undefined) data.first_name = user.firstName;
+    if (user.lastName !== undefined) data.last_name = user.lastName;
+    if (user.role !== undefined) data.role = user.role;
+    if (user.theme !== undefined) data.theme = user.theme;
+    if (user.bio !== undefined) data.bio = user.bio;
     data.updated_at = new Date().toISOString();
 
     return await super.update(id, data);
@@ -109,6 +114,199 @@ class UserRepository extends BaseRepository {
     `;
     const rows = await this.query(sql, [searchTerm, searchTerm, searchTerm]);
     return rows.map((row) => new User(row));
+  }
+
+  /**
+   * Count users by role
+   * @returns {Promise<Object>} Role counts
+   */
+  async countByRole() {
+    const sql = 'SELECT role, COUNT(*) as count FROM users GROUP BY role';
+    const rows = await this.query(sql);
+    const result = {};
+    rows.forEach((row) => {
+      result[row.role] = row.count;
+    });
+    return result;
+  }
+
+  /**
+   * Find recent users (last N days)
+   * @param {number} days - Number of days
+   * @returns {Promise<User[]>}
+   */
+  async findRecent(days = 7) {
+    const date = new Date();
+    date.setDate(date.getDate() - days);
+    const sql =
+      'SELECT * FROM users WHERE created_at >= ? ORDER BY created_at DESC';
+    const rows = await this.query(sql, [date.toISOString()]);
+    return rows.map((row) => new User(row));
+  }
+
+  /**
+   * Update user credits
+   * @param {number} id - User ID
+   * @param {number} credits - New credits amount
+   * @returns {Promise<User>}
+   */
+  async updateCredits(id, credits) {
+    const data = {
+      credits: credits,
+      updated_at: new Date().toISOString(),
+    };
+    const success = await super.update(id, data);
+    if (success) {
+      return await this.findById(id);
+    }
+    return null;
+  }
+
+  /**
+   * Update user role
+   * @param {number} id - User ID
+   * @param {string} role - New role
+   * @returns {Promise<User>}
+   */
+  async updateRole(id, role) {
+    const data = {
+      role: role,
+      updated_at: new Date().toISOString(),
+    };
+    const success = await super.update(id, data);
+    if (success) {
+      return await this.findById(id);
+    }
+    return null;
+  }
+
+  /**
+   * Update user status
+   * @param {number} id - User ID
+   * @param {string} status - New status
+   * @returns {Promise<User>}
+   */
+  async updateStatus(id, status) {
+    const data = {
+      status: status,
+      updated_at: new Date().toISOString(),
+    };
+    const success = await super.update(id, data);
+    if (success) {
+      return await this.findById(id);
+    }
+    return null;
+  }
+
+  /**
+   * Ban or unban user
+   * @param {number} id - User ID
+   * @param {boolean} banned - Ban status
+   * @param {string} reason - Ban reason (optional)
+   * @returns {Promise<User>}
+   */
+  async updateBanned(id, banned, reason = '') {
+    const data = {
+      banned: banned,
+      banned_reason: reason,
+      banned_at: banned ? new Date().toISOString() : null,
+      updated_at: new Date().toISOString(),
+    };
+    const success = await super.update(id, data);
+    if (success) {
+      return await this.findById(id);
+    }
+    return null;
+  }
+
+  /**
+   * Get total credits across all users
+   * @returns {Promise<number>}
+   */
+  async getTotalCredits() {
+    const sql = 'SELECT SUM(credits) as total FROM users';
+    const row = await this.queryOne(sql);
+    return row.total || 0;
+  }
+
+  /**
+   * Get users with pagination and filtering
+   * @param {Object} options - Query options
+   * @returns {Promise<User[]>}
+   */
+  async findAll(options = {}) {
+    const {
+      limit = 20,
+      offset = 0,
+      role,
+      search,
+      sortBy = 'created_at',
+      sortOrder = 'desc',
+    } = options;
+
+    // Validate sortBy to prevent SQL injection
+    const allowedSortFields = [
+      'id',
+      'email',
+      'first_name',
+      'last_name',
+      'role',
+      'credits',
+      'created_at',
+      'updated_at',
+    ];
+    const validSortBy = allowedSortFields.includes(sortBy)
+      ? sortBy
+      : 'created_at';
+    const validSortOrder = ['asc', 'desc'].includes(sortOrder.toLowerCase())
+      ? sortOrder.toUpperCase()
+      : 'DESC';
+
+    let sql = 'SELECT * FROM users WHERE 1=1';
+    const params = [];
+
+    if (role) {
+      sql += ' AND role = ?';
+      params.push(role);
+    }
+
+    if (search && search.trim()) {
+      sql += ' AND (email LIKE ? OR first_name LIKE ? OR last_name LIKE ?)';
+      const searchTerm = `%${search.trim()}%`;
+      params.push(searchTerm, searchTerm, searchTerm);
+    }
+
+    sql += ` ORDER BY ${validSortBy} ${validSortOrder} LIMIT ? OFFSET ?`;
+    params.push(limit, offset);
+
+    const rows = await this.query(sql, params);
+    return rows.map((row) => new User(row));
+  }
+
+  /**
+   * Count users with filtering
+   * @param {Object} options - Filter options
+   * @returns {Promise<number>}
+   */
+  async countFiltered(options = {}) {
+    const { role, search } = options;
+
+    let sql = 'SELECT COUNT(*) as count FROM users WHERE 1=1';
+    const params = [];
+
+    if (role) {
+      sql += ' AND role = ?';
+      params.push(role);
+    }
+
+    if (search && search.trim()) {
+      sql += ' AND (email LIKE ? OR first_name LIKE ? OR last_name LIKE ?)';
+      const searchTerm = `%${search.trim()}%`;
+      params.push(searchTerm, searchTerm, searchTerm);
+    }
+
+    const result = await this.queryOne(sql, params);
+    return result.count;
   }
 }
 

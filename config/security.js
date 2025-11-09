@@ -67,6 +67,16 @@ const productionSecurity = {
     standardHeaders: true,
     legacyHeaders: false,
   }),
+
+  // Admin rate limiting (very strict)
+  adminRateLimit: rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 20, // limit each IP to 20 admin requests per windowMs
+    message: 'Too many admin requests from this IP, please try again later.',
+    standardHeaders: true,
+    legacyHeaders: false,
+    skip: (req) => req.user && req.user.role === 'admin', // Skip for logged-in admins
+  }),
 };
 
 // Development security settings (less restrictive)
@@ -94,6 +104,12 @@ const developmentSecurity = {
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 200, // higher limit in development
     message: 'Too many API requests from this IP, please try again later.',
+  }),
+  adminRateLimit: rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // higher limit in development
+    message: 'Too many admin requests from this IP, please try again later.',
+    skip: (req) => req.user && req.user.role === 'admin', // Skip for logged-in admins
   }),
 };
 

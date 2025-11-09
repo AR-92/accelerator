@@ -12,6 +12,13 @@ class User extends BaseModel {
     this.firstName = data.first_name || data.firstName;
     this.lastName = data.last_name || data.lastName;
     this.role = data.role || 'startup';
+    this.theme = data.theme || 'system';
+    this.bio = data.bio || '';
+    this.credits = data.credits || 0;
+    this.status = data.status || 'active';
+    this.banned = data.banned || false;
+    this.bannedReason = data.banned_reason || data.bannedReason || '';
+    this.bannedAt = data.banned_at || data.bannedAt;
   }
 
   /**
@@ -60,6 +67,13 @@ class User extends BaseModel {
       firstName: this.firstName,
       lastName: this.lastName,
       role: this.role,
+      theme: this.theme,
+      bio: this.bio,
+      credits: this.credits,
+      status: this.status,
+      banned: this.banned,
+      bannedReason: this.bannedReason,
+      bannedAt: this.bannedAt,
       fullName: this.fullName,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
@@ -85,8 +99,16 @@ class User extends BaseModel {
       errors.push('Last name must be at least 2 characters');
     }
 
-    if (!['startup', 'corporate', 'enterprise'].includes(this.role)) {
+    if (!['startup', 'corporate', 'enterprise', 'admin'].includes(this.role)) {
       errors.push('Invalid role');
+    }
+
+    if (!['active', 'inactive'].includes(this.status)) {
+      errors.push('Invalid status');
+    }
+
+    if (this.credits < 0) {
+      errors.push('Credits cannot be negative');
     }
 
     if (errors.length > 0) {
@@ -105,7 +127,17 @@ class User extends BaseModel {
       firstName: { required: true, minLength: 2 },
       lastName: { required: true, minLength: 2 },
       password: { required: true, minLength: 6 },
-      role: { required: false, enum: ['startup', 'corporate', 'enterprise'] },
+      role: {
+        required: false,
+        enum: ['startup', 'corporate', 'enterprise', 'admin'],
+      },
+      credits: { required: false, type: 'number', min: 0 },
+      status: {
+        required: false,
+        enum: ['active', 'inactive'],
+      },
+      banned: { required: false, type: 'boolean' },
+      bannedReason: { required: false, type: 'string' },
     };
   }
 }
