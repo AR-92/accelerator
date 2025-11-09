@@ -43,71 +43,80 @@
 
         <!-- Mobile Navigation -->
         <nav class="flex-1 p-4">
-            <ul class="space-y-1">
-                <li>
-                    <a href="/admin/dashboard"
-                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeDashboard}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                        <div class="flex items-center justify-center w-8 h-8 {{#if activeDashboard}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                            {{lucide 'LayoutDashboard' 'w-4 h-4'}}
-                        </div>
-                        <span class="font-medium">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/users"
-                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeUsers}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                        <div class="flex items-center justify-center w-8 h-8 {{#if activeUsers}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                            {{lucide 'Users' 'w-4 h-4'}}
-                        </div>
-                        <span class="font-medium">Users</span>
-                    </a>
-                </li>
+             <ul class="space-y-1">
                  <li>
-                     <a href="/admin/startups"
-                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeStartups}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                         <div class="flex items-center justify-center w-8 h-8 {{#if activeStartups}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                             {{lucide 'Building2' 'w-4 h-4'}}
+                     <a href="/admin/dashboard"
+                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeDashboard}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                         <div class="flex items-center justify-center w-8 h-8 {{#if activeDashboard}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                             {{lucide 'LayoutDashboard' 'w-4 h-4'}}
                          </div>
-                         <span class="font-medium">Startups</span>
+                         <span class="font-medium">Dashboard</span>
+                     </a>
+                 </li>
+                 <li>
+                     <a href="/admin/users"
+                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeUsers}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                         <div class="flex items-center justify-center w-8 h-8 {{#if activeUsers}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                             {{lucide 'Users' 'w-4 h-4'}}
+                         </div>
+                         <span class="font-medium">Users</span>
                      </a>
                  </li>
                   <li>
-                      <a href="/admin/enterprises"
-                         class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeEnterprises}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                          <div class="flex items-center justify-center w-8 h-8 {{#if activeEnterprises}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                              {{lucide 'Building' 'w-4 h-4'}}
+                      <a href="/admin/startups"
+                         class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeStartups}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                          <div class="flex items-center justify-center w-8 h-8 {{#if activeStartups}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                              {{lucide 'Building2' 'w-4 h-4'}}
                           </div>
-                          <span class="font-medium">Enterprises</span>
+                          <span class="font-medium">Startups</span>
                       </a>
                   </li>
-                  <li>
-                      <a href="/admin/corporates"
-                         class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeCorporates}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                          <div class="flex items-center justify-center w-8 h-8 {{#if activeCorporates}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                              {{lucide 'Briefcase' 'w-4 h-4'}}
-                          </div>
-                          <span class="font-medium">Corporates</span>
-                      </a>
-                  </li>
-                <li>
-                    <a href="/admin/content"
-                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeContent}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                        <div class="flex items-center justify-center w-8 h-8 {{#if activeContent}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                            {{lucide 'FileText' 'w-4 h-4'}}
-                        </div>
-                        <span class="font-medium">Content</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/settings"
-                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeSettings}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                        <div class="flex items-center justify-center w-8 h-8 {{#if activeSettings}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                            {{lucide 'Settings' 'w-4 h-4'}}
-                        </div>
-                        <span class="font-medium">Settings</span>
-                    </a>
-                </li>
-            </ul>
+                   <li>
+                       <a href="/admin/enterprises"
+                          class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeEnterprises}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                           <div class="flex items-center justify-center w-8 h-8 {{#if activeEnterprises}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                               {{lucide 'Building' 'w-4 h-4'}}
+                           </div>
+                           <span class="font-medium">Enterprises</span>
+                       </a>
+                   </li>
+                   <li>
+                       <a href="/admin/corporates"
+                          class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeCorporates}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                           <div class="flex items-center justify-center w-8 h-8 {{#if activeCorporates}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                               {{lucide 'Briefcase' 'w-4 h-4'}}
+                           </div>
+                           <span class="font-medium">Corporates</span>
+                       </a>
+                   </li>
+                 <li>
+                     <a href="/admin/content"
+                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeContent}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                         <div class="flex items-center justify-center w-8 h-8 {{#if activeContent}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                             {{lucide 'FileText' 'w-4 h-4'}}
+                         </div>
+                         <span class="font-medium">Content</span>
+                     </a>
+                 </li>
+                 <li>
+                     <a href="/admin/settings"
+                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeSettings}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                         <div class="flex items-center justify-center w-8 h-8 {{#if activeSettings}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                             {{lucide 'Settings' 'w-4 h-4'}}
+                         </div>
+                         <span class="font-medium">Settings</span>
+                     </a>
+                 </li>
+                 <li>
+                     <a href="/admin/system-health"
+                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeSystemHealth}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                         <div class="flex items-center justify-center w-8 h-8 {{#if activeSystemHealth}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                             {{lucide 'Activity' 'w-4 h-4'}}
+                         </div>
+                         <span class="font-medium">System Health</span>
+                     </a>
+                 </li>
+             </ul>
         </nav>
 
         <!-- Mobile User Info & Logout -->
@@ -147,73 +156,82 @@
         </div>
 
         <!-- Navigation -->
-        <nav class="flex-1 p-4">
-            <ul class="space-y-1">
-                <li>
-                    <a href="/admin/dashboard"
-                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeDashboard}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                        <div class="flex items-center justify-center w-8 h-8 {{#if activeDashboard}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                            {{lucide 'LayoutDashboard' 'w-4 h-4'}}
-                        </div>
-                        <span class="font-medium">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/users"
-                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeUsers}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                        <div class="flex items-center justify-center w-8 h-8 {{#if activeUsers}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                            {{lucide 'Users' 'w-4 h-4'}}
-                        </div>
-                        <span class="font-medium">Users</span>
-                    </a>
-                </li>
+         <nav class="flex-1 p-4">
+             <ul class="space-y-1">
+                 <li>
+                     <a href="/admin/dashboard"
+                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeDashboard}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                         <div class="flex items-center justify-center w-8 h-8 {{#if activeDashboard}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                             {{lucide 'LayoutDashboard' 'w-4 h-4'}}
+                         </div>
+                         <span class="font-medium">Dashboard</span>
+                     </a>
+                 </li>
+                 <li>
+                     <a href="/admin/users"
+                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeUsers}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                         <div class="flex items-center justify-center w-8 h-8 {{#if activeUsers}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                             {{lucide 'Users' 'w-4 h-4'}}
+                         </div>
+                         <span class="font-medium">Users</span>
+                     </a>
+                 </li>
+                   <li>
+                       <a href="/admin/enterprises"
+                          class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeEnterprises}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                           <div class="flex items-center justify-center w-8 h-8 {{#if activeEnterprises}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                               {{lucide 'Building' 'w-4 h-4'}}
+                           </div>
+                           <span class="font-medium">Enterprises</span>
+                       </a>
+                   </li>
+                   <li>
+                       <a href="/admin/corporates"
+                          class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeCorporates}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                           <div class="flex items-center justify-center w-8 h-8 {{#if activeCorporates}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                               {{lucide 'Briefcase' 'w-4 h-4'}}
+                           </div>
+                           <span class="font-medium">Corporates</span>
+                       </a>
+                   </li>
                   <li>
-                      <a href="/admin/enterprises"
-                         class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeEnterprises}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                          <div class="flex items-center justify-center w-8 h-8 {{#if activeEnterprises}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                              {{lucide 'Building' 'w-4 h-4'}}
+                      <a href="/admin/startups"
+                         class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeStartups}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                          <div class="flex items-center justify-center w-8 h-8 {{#if activeStartups}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                              {{lucide 'Building2' 'w-4 h-4'}}
                           </div>
-                          <span class="font-medium">Enterprises</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="/admin/corporates"
-                         class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeCorporates}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                          <div class="flex items-center justify-center w-8 h-8 {{#if activeCorporates}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                              {{lucide 'Briefcase' 'w-4 h-4'}}
-                          </div>
-                          <span class="font-medium">Corporates</span>
+                          <span class="font-medium">Startups</span>
                       </a>
                   </li>
                  <li>
-                     <a href="/admin/startups"
-                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeStartups}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                         <div class="flex items-center justify-center w-8 h-8 {{#if activeStartups}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                             {{lucide 'Building2' 'w-4 h-4'}}
+                     <a href="/admin/content"
+                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeContent}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                         <div class="flex items-center justify-center w-8 h-8 {{#if activeContent}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                             {{lucide 'FileText' 'w-4 h-4'}}
                          </div>
-                         <span class="font-medium">Startups</span>
+                         <span class="font-medium">Content</span>
                      </a>
                  </li>
-                <li>
-                    <a href="/admin/content"
-                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeContent}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                        <div class="flex items-center justify-center w-8 h-8 {{#if activeContent}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                            {{lucide 'FileText' 'w-4 h-4'}}
-                        </div>
-                        <span class="font-medium">Content</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/admin/settings"
-                       class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeSettings}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
-                        <div class="flex items-center justify-center w-8 h-8 {{#if activeSettings}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
-                            {{lucide 'Settings' 'w-4 h-4'}}
-                        </div>
-                        <span class="font-medium">Settings</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+                 <li>
+                     <a href="/admin/settings"
+                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeSettings}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                         <div class="flex items-center justify-center w-8 h-8 {{#if activeSettings}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                             {{lucide 'Settings' 'w-4 h-4'}}
+                         </div>
+                         <span class="font-medium">Settings</span>
+                     </a>
+                 </li>
+                 <li>
+                     <a href="/admin/system-health"
+                        class="group flex items-center px-3 py-2.5 rounded-lg {{#if activeSystemHealth}}bg-primary text-primary-foreground shadow-sm{{else}}text-muted-foreground hover:text-foreground hover:bg-muted/50{{/if}} transition-all duration-200">
+                         <div class="flex items-center justify-center w-8 h-8 {{#if activeSystemHealth}}bg-primary-foreground/20{{else}}group-hover:bg-muted{{/if}} rounded-md mr-3 transition-colors">
+                             {{lucide 'Activity' 'w-4 h-4'}}
+                         </div>
+                         <span class="font-medium">System Health</span>
+                     </a>
+                 </li>
+             </ul>
+         </nav>
 
         <!-- User Info & Logout -->
         <div class="p-4 border-t border-border/50">

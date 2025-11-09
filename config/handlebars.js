@@ -87,6 +87,18 @@ handlebars.registerHelper('gt', function (a, b) {
   return a > b;
 });
 
+handlebars.registerHelper('lt', function (a, b) {
+  return a < b;
+});
+
+handlebars.registerHelper('gte', function (a, b) {
+  return a >= b;
+});
+
+handlebars.registerHelper('lte', function (a, b) {
+  return a <= b;
+});
+
 handlebars.registerHelper('not', function (a) {
   return !a;
 });
@@ -97,6 +109,31 @@ handlebars.registerHelper('subtract', function (a, b) {
 
 handlebars.registerHelper('add', function (a, b) {
   return a + b;
+});
+
+handlebars.registerHelper('math', function (lvalue, operator, rvalue) {
+  lvalue = parseFloat(lvalue);
+  rvalue = parseFloat(rvalue);
+
+  return {
+    '+': lvalue + rvalue,
+    '-': lvalue - rvalue,
+    '*': lvalue * rvalue,
+    '/': lvalue / rvalue,
+    '%': lvalue % rvalue,
+  }[operator];
+});
+
+handlebars.registerHelper('divide', function (a, b) {
+  return a / b;
+});
+
+handlebars.registerHelper('multiply', function (a, b) {
+  return a * b;
+});
+
+handlebars.registerHelper('round', function (a) {
+  return Math.round(a);
 });
 
 handlebars.registerHelper('range', function (start, end) {

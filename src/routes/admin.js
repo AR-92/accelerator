@@ -1,6 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const { requireAdminAuth } = require('../middleware/adminAuth');
+const rateLimit = require('express-rate-limit');
+
+// Rate limiter for system stats API (60 requests per minute)
+const systemStatsLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 60, // 60 requests per minute (1 per second)
+  message: {
+    success: false,
+    error:
+      'Too many requests for system stats. Please wait before trying again.',
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // Import controllers and services
 const container = require('../container');
@@ -51,6 +65,17 @@ router.get(
   '/settings',
   requireAdminAuth,
   adminController.showSettings.bind(adminController)
+);
+router.get(
+  '/system-health',
+  requireAdminAuth,
+  adminController.showSystemHealth.bind(adminController)
+);
+router.get(
+  '/api/system-stats',
+  systemStatsLimiter,
+  requireAdminAuth,
+  adminController.getSystemStatsAPI.bind(adminController)
 );
 router.get(
   '/startups',

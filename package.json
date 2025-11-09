@@ -54,6 +54,7 @@
     "helmet": "^7.1.0",
     "lucide-static": "^0.548.0",
     "sqlite3": "^5.1.7",
+    "systeminformation": "^5.27.11",
     "tailwindcss-animate": "^1.0.7"
   }
 }
