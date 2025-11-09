@@ -73,7 +73,6 @@ router.get(
 );
 router.get(
   '/api/system-stats',
-  systemStatsLimiter,
   requireAdminAuth,
   adminController.getSystemStatsAPI.bind(adminController)
 );
