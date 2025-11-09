@@ -3,10 +3,10 @@ const router = express.Router();
 const { requireAdminAuth } = require('../middleware/adminAuth');
 const rateLimit = require('express-rate-limit');
 
-// Rate limiter for system stats API (60 requests per minute)
+// Rate limiter for system stats API (120 requests per minute)
 const systemStatsLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
-  max: 60, // 60 requests per minute (1 per second)
+  max: 120, // 120 requests per minute (2 per second)
   message: {
     success: false,
     error:
