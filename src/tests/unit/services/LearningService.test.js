@@ -1,4 +1,5 @@
 const LearningService = require('../../../services/content/LearningService');
+const LearningContent = require('../../../models/content/LearningContent');
 
 // Mock repositories
 const mockContentRepo = {
@@ -12,6 +13,7 @@ const mockContentRepo = {
   update: jest.fn(),
   delete: jest.fn(),
   getStats: jest.fn(),
+  incrementViews: jest.fn().mockResolvedValue(true),
 };
 
 const mockCategoryRepo = {
@@ -79,7 +81,7 @@ describe('LearningService', () => {
       expect(mockCategoryRepo.findBySlug).toHaveBeenCalledWith(
         'getting-started'
       );
-      expect(result).toBe(mockCategory.toPublicJSON());
+      expect(result).toStrictEqual(mockCategory.toPublicJSON());
     });
 
     it('should throw NotFoundError when category not found', async () => {
@@ -94,8 +96,20 @@ describe('LearningService', () => {
   describe('getAllArticles', () => {
     it('should return all published articles', async () => {
       const mockArticles = [
-        { id: 1, title: 'Article 1', slug: 'article-1' },
-        { id: 2, title: 'Article 2', slug: 'article-2' },
+        new LearningContent({
+          id: 1,
+          title: 'Article 1',
+          slug: 'article-1',
+          content: 'content',
+          category_id: 1,
+        }),
+        new LearningContent({
+          id: 2,
+          title: 'Article 2',
+          slug: 'article-2',
+          content: 'content',
+          category_id: 1,
+        }),
       ];
 
       mockContentRepo.findAllPublished.mockResolvedValue(mockArticles);
@@ -110,7 +124,15 @@ describe('LearningService', () => {
 
     it('should pass filters to repository', async () => {
       const filters = { categoryId: 1, difficultyLevel: 'beginner' };
-      const mockArticles = [{ id: 1, title: 'Filtered Article' }];
+      const mockArticles = [
+        new LearningContent({
+          id: 1,
+          title: 'Filtered Article',
+          slug: 'slug',
+          content: 'content',
+          category_id: 1,
+        }),
+      ];
 
       mockContentRepo.findAllPublished.mockResolvedValue(mockArticles);
 
@@ -125,20 +147,21 @@ describe('LearningService', () => {
 
   describe('getArticleBySlug', () => {
     it('should return article by slug and increment views', async () => {
-      const mockArticle = {
+      const mockArticle = new LearningContent({
         id: 1,
         title: 'Test Article',
         slug: 'test-article',
-        incrementViews: jest.fn(),
-      };
+        content: 'content',
+        category_id: 1,
+      });
 
       mockContentRepo.findBySlug.mockResolvedValue(mockArticle);
 
       const result = await service.getArticleBySlug('test-article');
 
       expect(mockContentRepo.findBySlug).toHaveBeenCalledWith('test-article');
-      expect(mockArticle.incrementViews).toHaveBeenCalled();
-      expect(result).toBe(mockArticle.toPublicJSON());
+      expect(mockContentRepo.incrementViews).toHaveBeenCalledWith(1);
+      expect(result).toStrictEqual(mockArticle.toPublicJSON());
     });
 
     it('should throw NotFoundError when article not found', async () => {
@@ -153,7 +176,15 @@ describe('LearningService', () => {
   describe('getArticlesByCategory', () => {
     it('should return articles for a category', async () => {
       const mockCategory = { id: 1, name: 'Getting Started' };
-      const mockArticles = [{ id: 1, title: 'Category Article' }];
+      const mockArticles = [
+        new LearningContent({
+          id: 1,
+          title: 'Category Article',
+          slug: 'category-article',
+          content: 'content',
+          category_id: 1,
+        }),
+      ];
 
       mockCategoryRepo.findBySlug.mockResolvedValue(mockCategory);
       mockContentRepo.findByCategory.mockResolvedValue(mockArticles);
@@ -171,7 +202,15 @@ describe('LearningService', () => {
 
     it('should pass filters to repository', async () => {
       const mockCategory = { id: 1, name: 'Getting Started' };
-      const mockArticles = [{ id: 1, title: 'Category Article' }];
+      const mockArticles = [
+        new LearningContent({
+          id: 1,
+          title: 'Category Article',
+          slug: 'category-article',
+          content: 'content',
+          category_id: 1,
+        }),
+      ];
       const filters = { limit: 10 };
 
       mockCategoryRepo.findBySlug.mockResolvedValue(mockCategory);
@@ -182,15 +221,35 @@ describe('LearningService', () => {
         filters
       );
 
+      expect(mockCategoryRepo.findBySlug).toHaveBeenCalledWith(
+        'getting-started'
+      );
       expect(mockContentRepo.findByCategory).toHaveBeenCalledWith(1, filters);
+      expect(result).toEqual(
+        mockArticles.map((article) => article.toPublicJSON())
+      );
     });
   });
 
   describe('getFeaturedArticles', () => {
     it('should return featured articles', async () => {
       const mockArticles = [
-        { id: 1, title: 'Featured 1', isFeatured: true },
-        { id: 2, title: 'Featured 2', isFeatured: true },
+        new LearningContent({
+          id: 1,
+          title: 'Featured 1',
+          slug: 'featured-1',
+          content: 'content',
+          category_id: 1,
+          is_featured: true,
+        }),
+        new LearningContent({
+          id: 2,
+          title: 'Featured 2',
+          slug: 'featured-2',
+          content: 'content',
+          category_id: 1,
+          is_featured: true,
+        }),
       ];
 
       mockContentRepo.findFeatured.mockResolvedValue(mockArticles);
@@ -206,7 +265,15 @@ describe('LearningService', () => {
 
   describe('searchArticles', () => {
     it('should search articles with valid query', async () => {
-      const mockArticles = [{ id: 1, title: 'Search Result' }];
+      const mockArticles = [
+        new LearningContent({
+          id: 1,
+          title: 'Search Result',
+          slug: 'search-result',
+          content: 'content',
+          category_id: 1,
+        }),
+      ];
       mockContentRepo.findAllPublished.mockResolvedValue(mockArticles);
 
       const result = await service.searchArticles('test query');
@@ -220,7 +287,7 @@ describe('LearningService', () => {
     });
 
     it('should return empty array for short query', async () => {
-      const result = await service.searchArticles('hi');
+      const result = await service.searchArticles('h');
 
       expect(mockContentRepo.findAllPublished).not.toHaveBeenCalled();
       expect(result).toEqual([]);
@@ -229,7 +296,15 @@ describe('LearningService', () => {
 
   describe('getArticlesByTags', () => {
     it('should return articles by tags', async () => {
-      const mockArticles = [{ id: 1, title: 'Tagged Article' }];
+      const mockArticles = [
+        new LearningContent({
+          id: 1,
+          title: 'Tagged Article',
+          slug: 'tagged-article',
+          content: 'content',
+          category_id: 1,
+        }),
+      ];
       const tags = ['javascript', 'tutorial'];
 
       mockContentRepo.findByTags.mockResolvedValue(mockArticles);
@@ -279,7 +354,7 @@ describe('LearningService', () => {
       };
 
       mockContentRepo.create.mockResolvedValue(123);
-      mockContentRepo.findById = jest.fn().mockResolvedValue({
+      mockContentRepo.findBySlug.mockResolvedValue({
         id: 123,
         ...articleData,
         toPublicJSON: () => ({ id: 123, ...articleData }),

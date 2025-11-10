@@ -48,7 +48,7 @@ class LearningContentRepository extends BaseRepository {
     }
 
     if (options.search) {
-      sql += ' AND (la.title LIKE ? OR la.content LIKE ? OR la.summary LIKE ?)';
+      sql += ' AND (la.title LIKE ? OR la.content LIKE ? OR la.excerpt LIKE ?)';
       const searchTerm = `%${options.search}%`;
       params.push(searchTerm, searchTerm, searchTerm);
     }
@@ -94,9 +94,14 @@ class LearningContentRepository extends BaseRepository {
     }
 
     if (options.search) {
-      sql += ' AND (la.title LIKE ? OR la.content LIKE ? OR la.summary LIKE ?)';
+      sql += ' AND (la.title LIKE ? OR la.content LIKE ? OR la.excerpt LIKE ?)';
       const searchTerm = `%${options.search}%`;
       params.push(searchTerm, searchTerm, searchTerm);
+    }
+
+    if (options.featured) {
+      sql += ' AND la.is_featured = ?';
+      params.push(1);
     }
 
     sql += ' ORDER BY la.created_at DESC';
@@ -305,7 +310,7 @@ class LearningContentRepository extends BaseRepository {
     }
 
     if (options.search) {
-      sql += ' AND (title LIKE ? OR content LIKE ? OR excerpt LIKE ?)';
+      sql += ' AND (la.title LIKE ? OR la.content LIKE ? OR la.excerpt LIKE ?)';
       const searchTerm = `%${options.search}%`;
       params.push(searchTerm, searchTerm, searchTerm);
     }

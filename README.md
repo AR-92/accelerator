@@ -192,17 +192,28 @@ accelerator/
 │   └── images/              # Image assets
 ├── src/                     # Source code
 │   ├── components/          # Handlebars components
+│   ├── controllers/         # Express controllers (organized by domain)
+│   │   ├── admin/           # Admin controllers
+│   │   ├── auth/            # Authentication controllers
+│   │   ├── business/        # Business-related controllers
+│   │   ├── content/         # Content management controllers
+│   │   ├── idea/            # Idea management controllers
+│   │   └── user/            # User management controllers
 │   ├── middleware/          # Express middleware
-│   │   ├── auth.js          # Authentication middleware
-│   │   ├── errorHandler.js  # Error handling
-│   │   └── validation.js    # Input validation
+│   │   ├── auth/            # Authentication middleware
+│   │   └── error/           # Error handling middleware
+│   ├── migrations/          # Database migrations
+│   ├── models/              # Data models
+│   ├── plugins/             # Tailwind plugins
+│   ├── repositories/        # Data access repositories
 │   ├── routes/              # Express routes
 │   │   ├── api/v1/          # API endpoints
 │   │   └── pages/           # Page routes
 │   ├── services/            # Business logic services
-│   │   └── llmService.js    # AI/LLM integration
 │   ├── styles/              # CSS source files
+│   ├── tests/               # Test files
 │   ├── utils/               # Utility functions
+│   ├── validators/          # Input validation
 │   └── views/               # Handlebars templates
 │       ├── layouts/         # Page layouts
 │       ├── pages/           # Page templates

@@ -47,6 +47,15 @@ class IdeaService {
   }
 
   /**
+   * Get total count of ideas
+   * @param {Object} options - Query options
+   * @returns {Promise<number>} Total count
+   */
+  async getIdeasCount(options = {}) {
+    return await this.ideaRepository.count(null, options);
+  }
+
+  /**
    * Create a new idea
    * @param {number} userId - User ID
    * @param {Object} ideaData - Idea data

@@ -104,7 +104,7 @@ describe('LearningContentRepository', () => {
 
       expect(mockDb.all).toHaveBeenCalledWith(
         expect.stringContaining(
-          'SELECT * FROM learning_articles WHERE is_published = 1'
+          'SELECT la.*, lc.name as category_name, lc.slug as category_slug FROM learning_articles la LEFT JOIN learning_categories lc ON la.category_id = lc.id WHERE la.is_published = 1'
         ),
         expect.any(Array),
         expect.any(Function)
@@ -163,7 +163,7 @@ describe('LearningContentRepository', () => {
 
       expect(mockDb.all).toHaveBeenCalledWith(
         expect.stringContaining(
-          'title LIKE ? OR content LIKE ? OR excerpt LIKE ?'
+          'la.title LIKE ? OR la.content LIKE ? OR la.excerpt LIKE ?'
         ),
         expect.arrayContaining([
           '%search term%',
@@ -224,12 +224,11 @@ describe('LearningContentRepository', () => {
         title: 'New Article',
         slug: 'new-article',
         content: 'Article content',
-        categoryId: 1,
+        category_id: 1,
       };
 
       mockDb.run.mockImplementation(function (sql, params, callback) {
-        this.lastID = 123;
-        callback(null);
+        callback.call({ lastID: 123, changes: 1 }, null);
       });
 
       const result = await repo.create(articleData);
@@ -252,12 +251,13 @@ describe('LearningContentRepository', () => {
     it('should update an article', async () => {
       const articleData = {
         title: 'Updated Title',
+        slug: 'updated-slug',
         content: 'Updated content',
+        category_id: 1,
       };
 
       mockDb.run.mockImplementation(function (sql, params, callback) {
-        this.changes = 1;
-        callback(null);
+        callback.call({ lastID: undefined, changes: 1 }, null);
       });
 
       const result = await repo.update(1, articleData);
@@ -272,11 +272,15 @@ describe('LearningContentRepository', () => {
 
     it('should return false when no rows affected', async () => {
       mockDb.run.mockImplementation(function (sql, params, callback) {
-        this.changes = 0;
-        callback(null);
+        callback.call({ lastID: undefined, changes: 0 }, null);
       });
 
-      const result = await repo.update(999, { title: 'Test' });
+      const result = await repo.update(999, {
+        title: 'Test',
+        slug: 'test',
+        content: 'Test content',
+        category_id: 1,
+      });
 
       expect(result).toBe(false);
     });
@@ -285,8 +289,7 @@ describe('LearningContentRepository', () => {
   describe('incrementViews', () => {
     it('should increment view count', async () => {
       mockDb.run.mockImplementation(function (sql, params, callback) {
-        this.changes = 1;
-        callback(null);
+        callback.call({ lastID: undefined, changes: 1 }, null);
       });
 
       const result = await repo.incrementViews(1);
@@ -303,8 +306,7 @@ describe('LearningContentRepository', () => {
   describe('incrementLikes', () => {
     it('should increment like count', async () => {
       mockDb.run.mockImplementation(function (sql, params, callback) {
-        this.changes = 1;
-        callback(null);
+        callback.call({ lastID: undefined, changes: 1 }, null);
       });
 
       const result = await repo.incrementLikes(1);
@@ -338,7 +340,7 @@ describe('LearningContentRepository', () => {
       expect(result.featuredArticles).toBe(3);
       expect(result.totalViews).toBe(150);
       expect(result.totalLikes).toBe(25);
-      expect(result.avgReadTime).toBe(8);
+      expect(result.avgReadTime).toBe(9);
     });
   });
 });

@@ -2,7 +2,7 @@
  * Script to create an admin user for initial setup
  */
 require('dotenv').config();
-const container = require('./src/container');
+const container = require('../src/container');
 const adminService = container.get('adminService');
 
 async function createAdminUser() {

@@ -39,10 +39,20 @@ class IdeaRepository extends BaseRepository {
   async findAll(userId = null, options = {}) {
     let sql = 'SELECT * FROM ideas';
     const params = [];
+    const conditions = [];
 
     if (userId) {
-      sql += ' WHERE user_id = ?';
+      conditions.push('user_id = ?');
       params.push(userId);
+    }
+
+    if (options.search) {
+      conditions.push('(title LIKE ? OR description LIKE ?)');
+      params.push(`%${options.search}%`, `%${options.search}%`);
+    }
+
+    if (conditions.length > 0) {
+      sql += ' WHERE ' + conditions.join(' AND ');
     }
 
     if (options.orderBy) {
@@ -56,8 +66,42 @@ class IdeaRepository extends BaseRepository {
       params.push(options.limit);
     }
 
+    if (options.offset) {
+      sql += ' OFFSET ?';
+      params.push(options.offset);
+    }
+
     const rows = await this.query(sql, params);
     return rows.map((row) => new Idea(row));
+  }
+
+  /**
+   * Count ideas with optional filters
+   * @param {number} userId - Optional user ID filter
+   * @param {Object} options - Query options
+   * @returns {Promise<number>}
+   */
+  async count(userId = null, options = {}) {
+    let sql = 'SELECT COUNT(*) as count FROM ideas';
+    const params = [];
+    const conditions = [];
+
+    if (userId) {
+      conditions.push('user_id = ?');
+      params.push(userId);
+    }
+
+    if (options.search) {
+      conditions.push('(title LIKE ? OR description LIKE ?)');
+      params.push(`%${options.search}%`, `%${options.search}%`);
+    }
+
+    if (conditions.length > 0) {
+      sql += ' WHERE ' + conditions.join(' AND ');
+    }
+
+    const result = await this.queryOne(sql, params);
+    return result.count;
   }
 
   /**

@@ -14,7 +14,8 @@ class AdminService {
     packageRepository,
     billingRepository,
     rewardRepository,
-    voteRepository
+    voteRepository,
+    collaborationRepository
   ) {
     this.systemMonitoringService = systemMonitoringService;
     this.userManagementService = userManagementService;
@@ -28,6 +29,7 @@ class AdminService {
     this.billingRepository = billingRepository;
     this.rewardRepository = rewardRepository;
     this.voteRepository = voteRepository;
+    this.collaborationRepository = collaborationRepository;
   }
 
   // System Monitoring Methods
@@ -281,6 +283,8 @@ class AdminService {
           credits: pkg.credits,
           status: pkg.status,
           sortOrder: pkg.sort_order,
+          isPopular: pkg.is_popular,
+          isRecommended: pkg.is_recommended,
           createdAt: pkg.created_at,
           updatedAt: pkg.updated_at,
         })),
@@ -289,6 +293,8 @@ class AdminService {
           limit,
           total: totalCount,
           pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
         },
       };
     } catch (error) {
@@ -356,6 +362,8 @@ class AdminService {
           limit,
           total: totalCount,
           pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
         },
       };
     } catch (error) {
@@ -399,13 +407,14 @@ class AdminService {
       const limit = options.limit || 20;
       const offset = (page - 1) * limit;
 
-      const [rewards, totalCount] = await Promise.all([
+      const [rewards, totalCount, stats] = await Promise.all([
         this.rewardRepository.findAll({
           limit,
           offset,
           orderBy: 'created_at DESC',
         }),
         this.rewardRepository.count(),
+        this.rewardRepository.getStats(),
       ]);
 
       const totalPages = Math.ceil(totalCount / limit);
@@ -423,11 +432,22 @@ class AdminService {
           createdAt: reward.created_at,
           updatedAt: reward.updated_at,
         })),
+        stats: {
+          totalRewards: stats.total_rewards,
+          activeRewards: stats.active_rewards,
+          usedRewards: stats.used_rewards,
+          expiredRewards: stats.expired_rewards,
+          totalCreditsGranted: stats.total_credits_granted,
+          avgCreditsPerReward: Math.round(stats.avg_credits_per_reward || 0),
+          uniqueUsersRewarded: stats.unique_users_rewarded,
+        },
         pagination: {
           page,
           limit,
           total: totalCount,
           pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
         },
       };
     } catch (error) {
@@ -472,9 +492,24 @@ class AdminService {
       const page = options.page || 1;
       const limit = options.limit || 20;
       const offset = (page - 1) * limit;
+      const search = options.search;
+      const sortBy = options.sortBy || 'created_at';
+      const sortOrder = options.sortOrder || 'desc';
 
-      const ideas = await this.ideaService.getAllIdeas(null, { limit, offset });
-      const totalCount = ideas.length; // This is approximate, would need a count method
+      // Construct orderBy clause
+      const orderBy = `${sortBy} ${sortOrder.toUpperCase()}`;
+
+      const queryOptions = {
+        limit,
+        offset,
+        search,
+        orderBy,
+      };
+
+      const [ideas, totalCount] = await Promise.all([
+        this.ideaService.getAllIdeas(null, queryOptions),
+        this.ideaService.getIdeasCount({ search }),
+      ]);
 
       const totalPages = Math.ceil(totalCount / limit);
 
@@ -482,8 +517,11 @@ class AdminService {
         ideas: ideas.map((idea) => ({
           id: idea.id,
           title: idea.title,
+          href: idea.href,
           description: idea.description,
-          status: idea.status,
+          type: idea.type,
+          rating: idea.rating,
+          isFavorite: idea.isFavorite,
           userId: idea.userId,
           createdAt: idea.createdAt,
           updatedAt: idea.updatedAt,
@@ -493,6 +531,8 @@ class AdminService {
           limit,
           total: totalCount,
           pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
         },
       };
     } catch (error) {
@@ -529,17 +569,103 @@ class AdminService {
           technicalFeasibility: vote.technical_feasibility,
           scalability: vote.scalability,
           marketSurvival: vote.market_survival,
-          timestamp: vote.timestamp,
+          createdAt: vote.timestamp,
         })),
         pagination: {
           page,
           limit,
           total: totalCount,
           pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
         },
       };
     } catch (error) {
       console.error('Error getting votes:', error);
+      throw error;
+    }
+  }
+
+  async getCollaborations(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = (page - 1) * limit;
+      const search = options.search || '';
+      const sortBy = options.sortBy || 'timestamp';
+      const sortOrder = options.sortOrder || 'desc';
+
+      // Build where clause for search (search in message or project title)
+      let whereClause = '';
+      const params = [];
+
+      if (search) {
+        whereClause = `WHERE (c.message LIKE ? OR p.title LIKE ?)`;
+        params.push(`%${search}%`, `%${search}%`);
+      }
+
+      // Get total count with join
+      const countSql = `
+        SELECT COUNT(*) as count
+        FROM collaborations c
+        LEFT JOIN projects p ON c.project_id = p.id
+        ${whereClause}
+      `;
+      const countResult = await this.collaborationRepository.queryOne(
+        countSql,
+        params
+      );
+      const totalCount = countResult.count;
+
+      // Get collaborations with sorting and pagination
+      let orderBy = 'c.timestamp DESC';
+      if (sortBy === 'message') {
+        orderBy = `c.message ${sortOrder.toUpperCase()}`;
+      } else if (sortBy === 'timestamp') {
+        orderBy = `c.timestamp ${sortOrder.toUpperCase()}`;
+      } else if (sortBy === 'project') {
+        orderBy = `p.title ${sortOrder.toUpperCase()}`;
+      }
+
+      const sql = `
+        SELECT c.*, p.title as project_title
+        FROM collaborations c
+        LEFT JOIN projects p ON c.project_id = p.id
+        ${whereClause}
+        ORDER BY ${orderBy}
+        LIMIT ? OFFSET ?
+      `;
+      params.push(limit, offset);
+
+      const rows = await this.collaborationRepository.query(sql, params);
+
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        collaborations: rows.map((row) => ({
+          id: row.id,
+          projectId: row.project_id,
+          projectTitle: row.project_title,
+          userId: row.user_id,
+          message: row.message,
+          timestamp: row.timestamp,
+        })),
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+        filters: {
+          search,
+          sortBy,
+          sortOrder,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting collaborations:', error);
       throw error;
     }
   }
@@ -573,7 +699,11 @@ class AdminService {
 
       return {
         sections: result.sections,
-        pagination: result.pagination,
+        pagination: {
+          ...result.pagination,
+          hasPrev: result.pagination.page > 1,
+          hasNext: result.pagination.page < result.pagination.pages,
+        },
       };
     } catch (error) {
       console.error('Error getting landing page sections:', error);

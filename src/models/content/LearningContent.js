@@ -127,8 +127,8 @@ class LearningContent extends BaseModel {
       seoTitle: this.seoTitle,
       seoDescription: this.seoDescription,
       seoKeywords: this._seoKeywords,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
+      createdAt: this.createdAt.toISOString(),
+      updatedAt: this.updatedAt.toISOString(),
     };
   }
 
@@ -168,8 +168,8 @@ class LearningContent extends BaseModel {
     }
 
     if (errors.length > 0) {
-      const ValidationError = require('../utils/errors/ValidationError');
-      throw new ValidationError('Learning content validation failed', errors);
+      const ValidationError = require('../../utils/errors/ValidationError');
+      throw new ValidationError(errors[0], errors);
     }
   }
 

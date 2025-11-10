@@ -16,6 +16,7 @@ const StartupRepository = require('./repositories/business/StartupRepository');
 const EnterpriseRepository = require('./repositories/business/EnterpriseRepository');
 const CorporateRepository = require('./repositories/business/CorporateRepository');
 const ProjectRepository = require('./repositories/project/ProjectRepository');
+const CollaborationRepository = require('./repositories/project/CollaborationRepository');
 const TeamRepository = require('./repositories/user/TeamRepository');
 const LandingPageRepository = require('./repositories/content/LandingPageRepository');
 const PackageRepository = require('./repositories/billing/PackageRepository');
@@ -46,16 +47,30 @@ const ProjectManagementService = require('./services/admin/ProjectManagementServ
 const AdminService = require('./services/admin/AdminService');
 
 // Import controllers
-const AuthController = require('./controllers/AuthController');
-const IdeaController = require('./controllers/IdeaController');
-const VoteController = require('./controllers/VoteController');
-const StartupController = require('./controllers/StartupController');
-const EnterpriseController = require('./controllers/EnterpriseController');
-const CorporateController = require('./controllers/CorporateController');
-const LearningController = require('./controllers/LearningController');
-const HelpController = require('./controllers/HelpController');
-const AdminController = require('./controllers/AdminController');
-const AdminAuthController = require('./controllers/AdminAuthController');
+const AuthControllerPart1 = require('./controllers/auth/AuthControllerPart1');
+const AuthControllerPart2 = require('./controllers/auth/AuthControllerPart2');
+const IdeaController = require('./controllers/idea/IdeaControllerPart1');
+const VoteControllerPart1 = require('./controllers/idea/VoteControllerPart1');
+const VoteControllerPart2 = require('./controllers/idea/VoteControllerPart2');
+const StartupControllerPart1 = require('./controllers/business/StartupControllerPart1');
+const StartupControllerPart2 = require('./controllers/business/StartupControllerPart2');
+const EnterpriseControllerPart1 = require('./controllers/business/EnterpriseControllerPart1');
+const EnterpriseControllerPart2 = require('./controllers/business/EnterpriseControllerPart2');
+const CorporateControllerPart1 = require('./controllers/business/CorporateControllerPart1');
+const CorporateControllerPart2 = require('./controllers/business/CorporateControllerPart2');
+const LearningControllerPart1 = require('./controllers/content/LearningControllerPart1');
+const LearningControllerPart2 = require('./controllers/content/LearningControllerPart2');
+const LearningControllerPart3 = require('./controllers/content/LearningControllerPart3');
+const LearningControllerPart4 = require('./controllers/content/LearningControllerPart4');
+const HelpControllerPart1 = require('./controllers/content/HelpControllerPart1');
+const HelpControllerPart2 = require('./controllers/content/HelpControllerPart2');
+const HelpControllerPart3 = require('./controllers/content/HelpControllerPart3');
+const AdminDashboardController = require('./controllers/admin/AdminDashboardController');
+const AdminSystemStatsController = require('./controllers/admin/AdminSystemStatsController');
+const AdminUserViewController = require('./controllers/admin/AdminUserViewController');
+const AdminUserActionController = require('./controllers/admin/AdminUserActionController');
+const AdminBusinessController = require('./controllers/admin/AdminBusinessController');
+const AdminAuthController = require('./controllers/admin/AdminAuthController');
 
 // Create container instance
 const container = new Container();
@@ -106,6 +121,10 @@ container.register(
 container.register(
   'projectRepository',
   (c) => new ProjectRepository(c.get('db'))
+);
+container.register(
+  'collaborationRepository',
+  (c) => new CollaborationRepository(c.get('db'))
 );
 container.register('teamRepository', (c) => new TeamRepository(c.get('db')));
 container.register(
@@ -234,47 +253,213 @@ container.register(
       c.get('packageRepository'),
       c.get('billingRepository'),
       c.get('rewardRepository'),
-      c.get('voteRepository')
+      c.get('voteRepository'),
+      c.get('collaborationRepository')
     )
 );
 
 // Register controllers
-container.register(
-  'authController',
-  (c) => new AuthController(c.get('authService'))
-);
+container.register('authController', (c) => {
+  const authService = c.get('authService');
+  const part1 = new AuthControllerPart1(authService);
+  const part2 = new AuthControllerPart2(authService);
+  return {
+    login: part1.login.bind(part1),
+    register: part1.register.bind(part1),
+    logout: part2.logout.bind(part2),
+    // Add other methods if needed
+  };
+});
 container.register(
   'ideaController',
   (c) => new IdeaController(c.get('ideaService'))
 );
-container.register(
-  'voteController',
-  (c) => new VoteController(c.get('voteService'))
-);
-container.register(
-  'startupController',
-  (c) => new StartupController(c.get('startupService'))
-);
-container.register(
-  'enterpriseController',
-  (c) => new EnterpriseController(c.get('enterpriseService'))
-);
-container.register(
-  'corporateController',
-  (c) => new CorporateController(c.get('corporateService'))
-);
-container.register(
-  'learningController',
-  (c) => new LearningController(c.get('learningService'))
-);
-container.register(
-  'helpController',
-  (c) => new HelpController(c.get('helpService'))
-);
-container.register(
-  'adminController',
-  (c) => new AdminController(c.get('adminService'))
-);
+container.register('voteController', (c) => {
+  const voteService = c.get('voteService');
+  const part1 = new VoteControllerPart1(voteService);
+  const part2 = new VoteControllerPart2(voteService);
+  return {
+    getVotesForIdea: part1.getVotesForIdea.bind(part1),
+    addVote: part1.addVote.bind(part1),
+    getVoteStats: part1.getVoteStats.bind(part1),
+    getUserVotes: part1.getUserVotes.bind(part1),
+    updateVote: part2.updateVote.bind(part2),
+    deleteVote: part2.deleteVote.bind(part2),
+  };
+});
+container.register('startupController', (c) => {
+  const startupService = c.get('startupService');
+  const part1 = new StartupControllerPart1(startupService);
+  const part2 = new StartupControllerPart2(startupService);
+  return {
+    getAllStartups: part1.getAllStartups.bind(part1),
+    searchStartups: part2.searchStartups.bind(part2),
+    getStartupsFiltered: part2.getStartupsFiltered.bind(part2),
+    getStartupById: part1.getStartupById.bind(part1),
+    createStartup: part1.createStartup.bind(part1),
+    updateStartup: part1.updateStartup.bind(part1),
+    deleteStartup: part1.deleteStartup.bind(part1),
+  };
+});
+container.register('enterpriseController', (c) => {
+  const enterpriseService = c.get('enterpriseService');
+  const part1 = new EnterpriseControllerPart1(enterpriseService);
+  const part2 = new EnterpriseControllerPart2(enterpriseService);
+  return {
+    getAllEnterprises: part1.getAllEnterprises.bind(part1),
+    searchEnterprises: part1.searchEnterprises.bind(part1),
+    getEnterprisesFiltered: part1.getEnterprisesFiltered.bind(part1),
+    getEnterpriseById: part1.getEnterpriseById.bind(part1),
+    createEnterprise: part1.createEnterprise.bind(part1),
+    updateEnterprise: part1.updateEnterprise.bind(part1),
+    deleteEnterprise: part2.deleteEnterprise.bind(part2),
+    getStatistics: part2.getStatistics.bind(part2),
+    bulkUpdateStatus: part2.bulkUpdateStatus.bind(part2),
+    bulkDelete: part2.bulkDelete.bind(part2),
+    exportToCSV: part2.exportToCSV.bind(part2),
+  };
+});
+container.register('corporateController', (c) => {
+  const corporateService = c.get('corporateService');
+  const part1 = new CorporateControllerPart1(corporateService);
+  const part2 = new CorporateControllerPart2(corporateService);
+  return {
+    getAllCorporates: part1.getAllCorporates.bind(part1),
+    searchCorporates: part1.searchCorporates.bind(part1),
+    getCorporatesFiltered: part1.getCorporatesFiltered.bind(part1),
+    getCorporateById: part1.getCorporateById.bind(part1),
+    createCorporate: part1.createCorporate.bind(part1),
+    updateCorporate: part1.updateCorporate.bind(part1),
+    deleteCorporate: part2.deleteCorporate.bind(part2),
+    getStatistics: part2.getStatistics.bind(part2),
+    bulkUpdateStatus: part2.bulkUpdateStatus.bind(part2),
+    bulkDelete: part2.bulkDelete.bind(part2),
+    exportToCSV: part2.exportToCSV.bind(part2),
+  };
+});
+container.register('learningController', (c) => {
+  const learningService = c.get('learningService');
+  const part1 = new LearningControllerPart1(learningService);
+  const part2 = new LearningControllerPart2(learningService);
+  const part3 = new LearningControllerPart3(learningService);
+  const part4 = new LearningControllerPart4(learningService);
+  return {
+    getLearningCenter: part1.getLearningCenter.bind(part1),
+    getCategoryArticles: part1.getCategoryArticles.bind(part1),
+    getArticle: part2.getArticle.bind(part2),
+    searchArticles: part2.searchArticles.bind(part2),
+    getCategoriesAPI: part3.getCategoriesAPI.bind(part3),
+    getCategoryArticlesAPI: part3.getCategoryArticlesAPI.bind(part3),
+    getArticleAPI: part3.getArticleAPI.bind(part3),
+    searchArticlesAPI: part3.searchArticlesAPI.bind(part3),
+    getUserArticleProgressAPI: part3.getUserArticleProgressAPI.bind(part3),
+    updateUserArticleProgressAPI:
+      part4.updateUserArticleProgressAPI.bind(part4),
+    markArticleCompletedAPI: part4.markArticleCompletedAPI.bind(part4),
+    getUserLearningProgressAPI: part4.getUserLearningProgressAPI.bind(part4),
+    likeArticleAPI: part4.likeArticleAPI.bind(part4),
+    unlikeArticleAPI: part4.unlikeArticleAPI.bind(part4),
+    getLearningStatsAPI: part4.getLearningStatsAPI.bind(part4),
+  };
+});
+container.register('helpController', (c) => {
+  const helpService = c.get('helpService');
+  const part1 = new HelpControllerPart1(helpService);
+  const part2 = new HelpControllerPart2(helpService);
+  const part3 = new HelpControllerPart3(helpService);
+  return {
+    getHelpCenter: part1.getHelpCenter.bind(part1),
+    getCategoryArticles: part1.getCategoryArticles.bind(part1),
+    getArticle: part2.getArticle.bind(part2),
+    searchArticles: part2.searchArticles.bind(part2),
+    getCategoriesAPI: part3.getCategoriesAPI.bind(part3),
+    getCategoryArticlesAPI: part3.getCategoryArticlesAPI.bind(part3),
+    getArticleAPI: part3.getArticleAPI.bind(part3),
+    searchArticlesAPI: part3.searchArticlesAPI.bind(part3),
+    markArticleHelpfulAPI: part3.markArticleHelpfulAPI.bind(part3),
+    getHelpStatsAPI: part3.getHelpStatsAPI.bind(part3),
+  };
+});
+container.register('adminController', (c) => {
+  const adminService = c.get('adminService');
+  const dashboard = new AdminDashboardController(adminService);
+  const systemStats = new AdminSystemStatsController(adminService);
+  const userView = new AdminUserViewController(adminService);
+  const userAction = new AdminUserActionController(adminService);
+  const business = new AdminBusinessController(adminService);
+  return {
+    showDashboard: dashboard.showDashboard.bind(dashboard),
+    showUsers: userView.showUsers.bind(userView),
+    showUserDetails: userView.showUserDetails.bind(userView),
+    showContent: dashboard.showContent.bind(dashboard),
+    showHelpContent: dashboard.showHelpContent.bind(dashboard),
+    showLearningContent: dashboard.showLearningContent.bind(dashboard),
+    showSettings: dashboard.showSettings.bind(dashboard),
+    showSystemHealth: dashboard.showSystemHealth.bind(dashboard),
+    showIdeas: dashboard.showIdeas.bind(dashboard),
+    showVotes: dashboard.showVotes.bind(dashboard),
+    showCollaborations: dashboard.showCollaborations.bind(dashboard),
+    showPackages: dashboard.showPackages.bind(dashboard),
+    showBilling: dashboard.showBilling.bind(dashboard),
+    showRewards: dashboard.showRewards.bind(dashboard),
+    showLandingPage: dashboard.showLandingPage.bind(dashboard),
+    getSystemStatsAPI: systemStats.getSystemStatsAPI.bind(systemStats),
+    createUser: userAction.createUser.bind(userAction),
+    getUser: userView.getUser.bind(userView),
+    updateUserCredits: userAction.updateUserCredits.bind(userAction),
+    updateUserRole: userAction.updateUserRole.bind(userAction),
+    updateUserStatus: userAction.updateUserStatus.bind(userAction),
+    updateUserBanned: userAction.updateUserBanned.bind(userAction),
+    resetUserPassword: userAction.resetUserPassword.bind(userAction),
+    exportUsersToCSV: userView.exportUsersToCSV.bind(userView),
+    deleteUser: userAction.deleteUser.bind(userAction),
+    bulkUpdateCredits: userAction.bulkUpdateCredits.bind(userAction),
+    bulkUpdateRoles: userAction.bulkUpdateRoles.bind(userAction),
+    createStartup: business.createStartup.bind(business),
+    getStartup: business.getStartup.bind(business),
+    updateStartup: business.updateStartup.bind(business),
+    deleteStartup: business.deleteStartup.bind(business),
+    showStartups: business.showStartups.bind(business),
+    showStartupDetails: business.showStartupDetails.bind(business),
+    showEnterprises: business.showEnterprises.bind(business),
+    showEnterpriseDetails: business.showEnterpriseDetails.bind(business),
+    createEnterprise: business.createEnterprise.bind(business),
+    getEnterprise: business.getEnterprise.bind(business),
+    updateEnterprise: business.updateEnterprise.bind(business),
+    deleteEnterprise: business.deleteEnterprise.bind(business),
+    bulkUpdateEnterpriseStatus:
+      business.bulkUpdateEnterpriseStatus.bind(business),
+    bulkDeleteEnterprises: business.bulkDeleteEnterprises.bind(business),
+    exportEnterprisesToCSV: business.exportEnterprisesToCSV.bind(business),
+    showCorporates: business.showCorporates.bind(business),
+    showCorporateDetails: business.showCorporateDetails.bind(business),
+    createCorporate: business.createCorporate.bind(business),
+    getCorporate: business.getCorporate.bind(business),
+    updateCorporate: business.updateCorporate.bind(business),
+    deleteCorporate: business.deleteCorporate.bind(business),
+    bulkUpdateCorporateStatus:
+      business.bulkUpdateCorporateStatus.bind(business),
+    bulkDeleteCorporates: business.bulkDeleteCorporates.bind(business),
+    exportCorporatesToCSV: business.exportCorporatesToCSV.bind(business),
+    showIdeas: business.showIdeas.bind(business),
+    showIdeaDetails: business.showIdeaDetails.bind(business),
+    getIdea: business.getIdea.bind(business),
+    showCollaborations: business.showCollaborations.bind(business),
+    showCollaborationDetails: business.showCollaborationDetails.bind(business),
+    getProject: business.getProject.bind(business),
+    updateProjectStatus: business.updateProjectStatus.bind(business),
+    removeUserFromProject: business.removeUserFromProject.bind(business),
+    deleteProject: business.deleteProject.bind(business),
+    updateLandingPageSectionOrder:
+      business.updateLandingPageSectionOrder.bind(business),
+    showCollaborations: business.showCollaborations.bind(business),
+    showCollaborationDetails: business.showCollaborationDetails.bind(business),
+    getProject: business.getProject.bind(business),
+    updateProjectStatus: business.updateProjectStatus.bind(business),
+    removeUserFromProject: business.removeUserFromProject.bind(business),
+    deleteProject: business.deleteProject.bind(business),
+  };
+});
 container.register(
   'adminAuthController',
   (c) => new AdminAuthController(c.get('authService'))

@@ -1,4 +1,4 @@
-const { db } = require('../../config/database');
+const { db } = require('../../../config/database');
 const bcrypt = require('bcrypt');
 
 // User operations
@@ -100,8 +100,8 @@ const createIdea = (userId, ideaData) => {
 // Portfolio operations
 const getAllPortfolio = (userId = null) => {
   const query = userId
-    ? 'SELECT * FROM portfolio WHERE user_id = ? ORDER BY updatedDate DESC'
-    : 'SELECT * FROM portfolio ORDER BY updatedDate DESC';
+    ? 'SELECT * FROM portfolio WHERE user_id = ? ORDER BY updated_at DESC'
+    : 'SELECT * FROM portfolio ORDER BY updated_at DESC';
   const params = userId ? [userId] : [];
   return new Promise((resolve, reject) => {
     db.all(query, params, (err, rows) => {

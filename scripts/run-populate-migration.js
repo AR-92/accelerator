@@ -2,7 +2,7 @@
  * Migration runner script for populating articles
  */
 
-const { db } = require('./config/database');
+const { db } = require('../config/database');
 
 async function runMigration() {
   try {

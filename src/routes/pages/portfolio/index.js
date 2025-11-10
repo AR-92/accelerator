@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { requireAuth } = require('../../../middleware/auth/auth');
+const { optionalAuth } = require('../../../middleware/auth/auth');
 
 // Helper function for page data
 const getPageData = (title, activeKey, padding = 'py-8') => ({
@@ -10,12 +10,12 @@ const getPageData = (title, activeKey, padding = 'py-8') => ({
 });
 
 // GET portfolio
-router.get('/portfolio', requireAuth, async (req, res) => {
+router.get('/portfolio', optionalAuth, async (req, res) => {
   try {
     const {
       getAllPortfolio,
     } = require('../../../services/core/databaseService');
-    let portfolioData = await getAllPortfolio(req.user.id);
+    let portfolioData = await getAllPortfolio(req.user ? req.user.id : null);
 
     // Handle filtering, sorting, grouping, and search
     const { category, sort, group, search } = req.query;
@@ -41,7 +41,7 @@ router.get('/portfolio', requireAuth, async (req, res) => {
         portfolioData = portfolioData.sort((a, b) => b.votes - a.votes);
       } else if (sort === 'date') {
         portfolioData = portfolioData.sort(
-          (a, b) => new Date(b.createdDate) - new Date(a.createdDate)
+          (a, b) => new Date(b.created_at) - new Date(a.created_at)
         );
       }
     }
@@ -102,7 +102,7 @@ router.get('/portfolio', requireAuth, async (req, res) => {
 });
 
 // GET individual portfolio idea
-router.get('/portfolio/:id', async (req, res) => {
+router.get('/portfolio/:id', optionalAuth, async (req, res) => {
   try {
     const {
       getPortfolioById,

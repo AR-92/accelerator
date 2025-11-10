@@ -3,6 +3,9 @@ const express = require('express');
 const container = require('../../../container');
 const { requireAuth } = require('../../../middleware/auth/auth');
 
+// Get the mocked container get function
+const mockContainerGet = container.get;
+
 // Mock the container to return mock services
 jest.mock('../../../container', () => ({
   get: jest.fn(),
@@ -36,7 +39,40 @@ describe('Learning Routes Integration', () => {
     };
 
     // Mock container to return our mock controller
-    container.get.mockReturnValue(mockLearningController);
+    mockContainerGet.mockImplementation((serviceName) => {
+      if (serviceName === 'learningController') {
+        return mockLearningController;
+      }
+      if (serviceName === 'adminController') {
+        return {
+          showDashboard: jest.fn(),
+          showUsers: jest.fn(),
+          showUserDetails: jest.fn(),
+          showStartups: jest.fn(),
+          showStartupDetails: jest.fn(),
+          showEnterprises: jest.fn(),
+          showEnterpriseDetails: jest.fn(),
+          showCorporates: jest.fn(),
+          showCorporateDetails: jest.fn(),
+          showIdeas: jest.fn(),
+          showIdeaDetails: jest.fn(),
+          showCollaborations: jest.fn(),
+          showCollaborationDetails: jest.fn(),
+          showContent: jest.fn(),
+          showLearningContent: jest.fn(),
+          showHelpContent: jest.fn(),
+          showSettings: jest.fn(),
+          showSystemHealth: jest.fn(),
+          getSystemStatsAPI: jest.fn(),
+        };
+      }
+      // Return a mock object for other services to prevent undefined errors
+      return {
+        login: jest.fn(),
+        logout: jest.fn(),
+        // Add other methods as needed
+      };
+    });
 
     // Create express app with routes
     app = express();
@@ -47,7 +83,7 @@ describe('Learning Routes Integration', () => {
     app.use('/', learningRoutes);
 
     // API routes
-    const apiRoutes = require('../../../routes/api/v1/api');
+    const apiRoutes = require('../../../routes/api/v1');
     app.use('/api', apiRoutes);
   });
 

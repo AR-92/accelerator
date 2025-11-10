@@ -18,6 +18,7 @@ const pageRoutes = require('./src/routes/pages');
 const aiAssistantModelsRoutes = require('./src/routes/pages/ai-assistant-models');
 const apiRoutes = require('./src/routes/api/v1');
 const adminRoutes = require('./src/routes/api/v1/admin');
+const adminPageRoutes = require('./src/routes/pages/admin');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -84,7 +85,8 @@ app.use('/auth', authRoutes);
 app.use('/pages', pageRoutes);
 app.use('/pages', aiAssistantModelsRoutes);
 app.use('/api', apiRoutes);
-app.use('/admin', adminRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/admin', adminPageRoutes);
 
 // Health check endpoint
 app.get('/health', async (req, res) => {

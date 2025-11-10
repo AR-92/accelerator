@@ -55,19 +55,21 @@ const initializeDatabase = () => {
   `;
 
   const createPortfolioTable = `
-    CREATE TABLE IF NOT EXISTS portfolio (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER NOT NULL,
-      title TEXT NOT NULL,
-      description TEXT,
-      image_url TEXT,
-      project_url TEXT,
-      technologies TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users (id)
-    );
-  `;
+     CREATE TABLE IF NOT EXISTS portfolio (
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       user_id INTEGER NOT NULL,
+       title TEXT NOT NULL,
+       description TEXT,
+       category TEXT NOT NULL,
+       tags TEXT,
+       votes INTEGER DEFAULT 0,
+       isPublic BOOLEAN DEFAULT TRUE,
+       image TEXT,
+       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+       FOREIGN KEY (user_id) REFERENCES users (id)
+     );
+   `;
 
   const createVotesTable = `
     CREATE TABLE IF NOT EXISTS votes (

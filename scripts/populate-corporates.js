@@ -2,11 +2,24 @@
  * Script to populate corporates table with sample data
  */
 
-const { db } = require('./config/database');
+const { db } = require('../config/database');
+
+// Promisify db.run
+const dbRun = (sql, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.run(sql, params, function (err) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve({ id: this.lastID, changes: this.changes });
+      }
+    });
+  });
+};
 
 const corporates = [
   {
-    user_id: 1,
+    user_id: 13,
     name: 'TechCorp Solutions',
     description:
       'Leading provider of enterprise software solutions and digital transformation services.',
@@ -22,7 +35,7 @@ const corporates = [
     founded_date: '2010-03-15',
   },
   {
-    user_id: 1,
+    user_id: 14,
     name: 'Global Manufacturing Inc',
     description:
       'Worldwide manufacturer of industrial equipment and automation systems.',
@@ -174,25 +187,22 @@ async function populateCorporates() {
     for (const corporate of corporates) {
       const sql = `
         INSERT INTO corporates (
-          user_id, name, description, industry, sector, company_size, status,
-          headquarters, employee_count, revenue, location, website, founded_date
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          user_id, name, description, industry, founded_date, website, status,
+          company_size, revenue, location
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `;
 
-      await db.run(sql, [
+      await dbRun(sql, [
         corporate.user_id,
         corporate.name,
         corporate.description,
         corporate.industry,
-        corporate.sector,
-        corporate.company_size,
+        corporate.founded_date,
+        corporate.website,
         corporate.status,
-        corporate.headquarters,
-        corporate.employee_count,
+        corporate.company_size,
         corporate.revenue,
         corporate.location,
-        corporate.website,
-        corporate.founded_date,
       ]);
 
       console.log(`Inserted: ${corporate.name}`);

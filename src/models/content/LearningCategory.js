@@ -38,8 +38,8 @@ class LearningCategory extends BaseModel {
       color: this.color,
       sortOrder: this.sortOrder,
       isActive: this.isActive,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
+      createdAt: this.createdAt.toISOString(),
+      updatedAt: this.updatedAt.toISOString(),
     };
   }
 
@@ -70,8 +70,8 @@ class LearningCategory extends BaseModel {
     }
 
     if (errors.length > 0) {
-      const ValidationError = require('../utils/errors/ValidationError');
-      throw new ValidationError('Learning category validation failed', errors);
+      const ValidationError = require('../../utils/errors/ValidationError');
+      throw new ValidationError(errors[0], errors);
     }
   }
 

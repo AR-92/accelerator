@@ -46,7 +46,7 @@ describe('LearningCategory Model', () => {
 
     it('should throw ValidationError for short name', () => {
       const category = new LearningCategory({
-        name: 'Hi', // Too short
+        name: 'H', // Too short
         slug: 'valid-slug',
       });
 

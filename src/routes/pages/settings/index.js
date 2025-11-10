@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth } = require('../../../middleware/auth/auth');
-const SettingsController = require('../../../controllers/SettingsController');
+const SettingsController = require('../../../controllers/user/SettingsController');
 const AuthService = require('../../../services/auth/AuthService');
 const UserRepository = require('../../../repositories/user/UserRepository');
 const { db } = require('../../../../config/database');

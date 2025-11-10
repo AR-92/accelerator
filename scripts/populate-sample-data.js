@@ -2,7 +2,7 @@
  * Script to populate billing, rewards, votes, and credits tables with sample data
  */
 
-const { db } = require('./config/database');
+const { db } = require('../config/database');
 
 // Promisify db.run
 const dbRun = (sql, params = []) => {
@@ -291,8 +291,8 @@ async function populateSampleData() {
     for (const vote of votesData) {
       const sql = `
         INSERT INTO votes (
-          user_id, ideaSlug, marketViability, realWorldProblem,
-          innovation, technicalFeasibility, scalability, marketSurvival
+          user_id, idea_slug, market_viability, real_world_problem,
+          innovation, technical_feasibility, scalability, market_survival
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       `;
 

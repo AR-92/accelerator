@@ -77,7 +77,7 @@ describe('LearningContent Model', () => {
         title: 'Valid Title',
         slug: 'valid-slug',
         content: 'Valid content that is long enough',
-        categoryId: 1,
+        category_id: 1,
       });
 
       expect(() => article.validate()).not.toThrow();
@@ -88,7 +88,7 @@ describe('LearningContent Model', () => {
         title: 'Hi', // Too short
         slug: 'valid-slug',
         content: 'Valid content',
-        categoryId: 1,
+        category_id: 1,
       });
 
       expect(() => article.validate()).toThrow(
@@ -100,7 +100,7 @@ describe('LearningContent Model', () => {
       const article = new LearningContent({
         title: 'Valid Title',
         content: 'Valid content',
-        categoryId: 1,
+        category_id: 1,
       });
 
       expect(() => article.validate()).toThrow('Slug is required');
@@ -111,7 +111,7 @@ describe('LearningContent Model', () => {
         title: 'Valid Title',
         slug: 'valid-slug',
         content: 'Hi', // Too short
-        categoryId: 1,
+        category_id: 1,
       });
 
       expect(() => article.validate()).toThrow(
@@ -124,7 +124,7 @@ describe('LearningContent Model', () => {
         title: 'Valid Title',
         slug: 'valid-slug',
         content: 'Valid content that is long enough',
-        categoryId: 1,
+        category_id: 1,
         difficulty_level: 'invalid',
       });
 
@@ -138,7 +138,7 @@ describe('LearningContent Model', () => {
         title: 'Valid Title',
         slug: 'valid-slug',
         content: 'Valid content that is long enough',
-        categoryId: 1,
+        category_id: 1,
         read_time_minutes: 200, // Too high
       });
 
