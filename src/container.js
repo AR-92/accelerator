@@ -7,28 +7,24 @@ const Container = require('./utils/container');
 const { db } = require('../config/database');
 
 // Import repositories
-const UserRepository = require('./repositories/UserRepository');
-const AdminActivityRepository = require('./repositories/AdminActivityRepository');
-const IdeaRepository = require('./repositories/IdeaRepository');
-const PortfolioRepository = require('./repositories/PortfolioRepository');
-const VoteRepository = require('./repositories/VoteRepository');
-const StartupRepository = require('./repositories/StartupRepository');
-const EnterpriseRepository = require('./repositories/EnterpriseRepository');
-const CorporateRepository = require('./repositories/CorporateRepository');
-const ProjectRepository = require('./repositories/ProjectRepository');
-const TeamRepository = require('./repositories/TeamRepository');
-const LandingPageRepository = require('./repositories/LandingPageRepository');
-const PackageRepository = require('./repositories/PackageRepository');
-const BillingRepository = require('./repositories/BillingRepository');
-const RewardRepository = require('./repositories/RewardRepository');
-const {
-  LearningContentRepository,
-  LearningCategoryRepository,
-} = require('./repositories/LearningContentRepository');
-const {
-  HelpContentRepository,
-  HelpCategoryRepository,
-} = require('./repositories/HelpContentRepository');
+const UserRepository = require('./repositories/user/UserRepository');
+const AdminActivityRepository = require('./repositories/admin/AdminActivityRepository');
+const IdeaRepository = require('./repositories/idea/IdeaRepository');
+const PortfolioRepository = require('./repositories/project/PortfolioRepository');
+const VoteRepository = require('./repositories/idea/VoteRepository');
+const StartupRepository = require('./repositories/business/StartupRepository');
+const EnterpriseRepository = require('./repositories/business/EnterpriseRepository');
+const CorporateRepository = require('./repositories/business/CorporateRepository');
+const ProjectRepository = require('./repositories/project/ProjectRepository');
+const TeamRepository = require('./repositories/user/TeamRepository');
+const LandingPageRepository = require('./repositories/content/LandingPageRepository');
+const PackageRepository = require('./repositories/billing/PackageRepository');
+const BillingRepository = require('./repositories/billing/BillingRepository');
+const RewardRepository = require('./repositories/billing/RewardRepository');
+const LearningContentRepository = require('./repositories/content/learning/LearningContentRepository');
+const LearningCategoryRepository = require('./repositories/content/learning/LearningCategoryRepository');
+const HelpContentRepository = require('./repositories/content/help/HelpContentRepository');
+const HelpCategoryRepository = require('./repositories/content/help/HelpCategoryRepository');
 
 // Import services
 const AuthService = require('./services/auth/AuthService');

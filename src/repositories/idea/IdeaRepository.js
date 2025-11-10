@@ -1,5 +1,5 @@
-const BaseRepository = require('./BaseRepository');
-const Idea = require('../models/Idea');
+const BaseRepository = require('../common/BaseRepository');
+const Idea = require('../../models/Idea');
 
 /**
  * Idea repository for data access operations

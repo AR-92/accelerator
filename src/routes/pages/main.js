@@ -3,7 +3,7 @@ const router = express.Router();
 const { requireAuth, optionalAuth } = require('../../middleware/auth');
 const SettingsController = require('../../controllers/SettingsController');
 const AuthService = require('../../services/auth/AuthService');
-const UserRepository = require('../../repositories/UserRepository');
+const UserRepository = require('../../repositories/user/UserRepository');
 const { db } = require('../../../config/database');
 
 // Initialize dependencies

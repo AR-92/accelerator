@@ -1,5 +1,5 @@
-const BaseRepository = require('./BaseRepository');
-const Vote = require('../models/Vote');
+const BaseRepository = require('../common/BaseRepository');
+const Vote = require('../../models/Vote');
 
 /**
  * Vote repository for data access operations

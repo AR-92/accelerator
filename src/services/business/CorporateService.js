@@ -1,7 +1,7 @@
 /**
  * Corporate service handling corporate-specific business logic
  */
-const CorporateRepository = require('../../repositories/CorporateRepository');
+const CorporateRepository = require('../../repositories/business/CorporateRepository');
 
 class CorporateService {
   constructor(corporateRepository) {

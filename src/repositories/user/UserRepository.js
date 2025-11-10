@@ -1,5 +1,5 @@
-const BaseRepository = require('./BaseRepository');
-const User = require('../models/User');
+const BaseRepository = require('../common/BaseRepository');
+const User = require('../../models/User');
 
 /**
  * User repository for data access operations

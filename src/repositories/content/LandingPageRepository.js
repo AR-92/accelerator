@@ -1,5 +1,5 @@
-const LandingPage = require('../models/LandingPage');
-const BaseRepository = require('./BaseRepository');
+const LandingPage = require('../../models/LandingPage');
+const BaseRepository = require('../common/BaseRepository');
 
 /**
  * LandingPage repository for data access operations

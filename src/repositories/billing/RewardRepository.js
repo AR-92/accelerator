@@ -1,4 +1,4 @@
-const BaseRepository = require('./BaseRepository');
+const BaseRepository = require('../common/BaseRepository');
 
 /**
  * Reward repository for managing user rewards and achievements

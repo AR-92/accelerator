@@ -1,5 +1,5 @@
-const BaseRepository = require('./BaseRepository');
-const Team = require('../models/Team');
+const BaseRepository = require('../common/BaseRepository');
+const Team = require('../../models/Team');
 
 /**
  * Team repository for data access operations

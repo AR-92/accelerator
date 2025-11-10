@@ -1,7 +1,5 @@
-const {
-  LearningContentRepository,
-  LearningCategoryRepository,
-} = require('../../../repositories/LearningContentRepository');
+const LearningContentRepository = require('../../../repositories/content/learning/LearningContentRepository');
+const LearningCategoryRepository = require('../../../repositories/content/learning/LearningCategoryRepository');
 const LearningContent = require('../../../models/LearningContent');
 const LearningCategory = require('../../../models/LearningCategory');
 

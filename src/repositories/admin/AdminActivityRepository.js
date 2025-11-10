@@ -1,4 +1,4 @@
-const BaseRepository = require('./BaseRepository');
+const BaseRepository = require('../common/BaseRepository');
 
 class AdminActivityRepository extends BaseRepository {
   constructor(db) {

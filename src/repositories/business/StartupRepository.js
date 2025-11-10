@@ -1,5 +1,5 @@
-const BaseRepository = require('./BaseRepository');
-const Startup = require('../models/Startup');
+const BaseRepository = require('../common/BaseRepository');
+const Startup = require('../../models/Startup');
 
 /**
  * Startup repository for data access operations

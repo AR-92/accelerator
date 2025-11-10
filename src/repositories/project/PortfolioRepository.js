@@ -1,5 +1,5 @@
-const BaseRepository = require('./BaseRepository');
-const Portfolio = require('../models/Portfolio');
+const BaseRepository = require('../common/BaseRepository');
+const Portfolio = require('../../models/Portfolio');
 
 /**
  * Portfolio repository for data access operations

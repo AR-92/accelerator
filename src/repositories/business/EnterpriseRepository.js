@@ -1,18 +1,18 @@
 /**
- * Corporate repository handling database operations for corporates
+ * Enterprise repository handling database operations for enterprises
  */
-const BaseRepository = require('./BaseRepository');
-const Corporate = require('../models/Corporate');
+const BaseRepository = require('../common/BaseRepository');
+const Enterprise = require('../../models/Enterprise');
 
-class CorporateRepository extends BaseRepository {
+class EnterpriseRepository extends BaseRepository {
   constructor(db) {
-    super(db, 'corporates');
+    super(db, 'enterprises');
   }
 
   /**
-   * Find all corporates with optional filtering
+   * Find all enterprises with optional filtering
    * @param {Object} filters - Filter options
-   * @returns {Promise<Array>} Array of Corporate instances
+   * @returns {Promise<Array>} Array of Enterprise instances
    */
   async findAllFiltered(filters = {}) {
     let sql = `SELECT * FROM ${this.tableName} WHERE 1=1`;
@@ -28,19 +28,14 @@ class CorporateRepository extends BaseRepository {
       params.push(filters.status);
     }
 
-    if (filters.sector) {
-      sql += ' AND sector LIKE ?';
-      params.push(`%${filters.sector}%`);
+    if (filters.search) {
+      sql += ' AND (name LIKE ? OR description LIKE ?)';
+      params.push(`%${filters.search}%`, `%${filters.search}%`);
     }
 
     if (filters.companySize) {
       sql += ' AND company_size = ?';
       params.push(filters.companySize);
-    }
-
-    if (filters.search) {
-      sql += ' AND (name LIKE ? OR description LIKE ?)';
-      params.push(`%${filters.search}%`, `%${filters.search}%`);
     }
 
     if (filters.userId) {
@@ -65,13 +60,13 @@ class CorporateRepository extends BaseRepository {
     }
 
     const rows = await this.query(sql, params);
-    return rows.map((row) => new Corporate(row));
+    return rows.map((row) => new Enterprise(row));
   }
 
   /**
-   * Count corporates with optional filtering
+   * Count enterprises with optional filtering
    * @param {Object} filters - Filter options
-   * @returns {Promise<number>} Count of corporates
+   * @returns {Promise<number>} Count of enterprises
    */
   async countFiltered(filters = {}) {
     let sql = `SELECT COUNT(*) as count FROM ${this.tableName} WHERE 1=1`;
@@ -87,19 +82,14 @@ class CorporateRepository extends BaseRepository {
       params.push(filters.status);
     }
 
-    if (filters.sector) {
-      sql += ' AND sector LIKE ?';
-      params.push(`%${filters.sector}%`);
+    if (filters.search) {
+      sql += ' AND (name LIKE ? OR description LIKE ?)';
+      params.push(`%${filters.search}%`, `%${filters.search}%`);
     }
 
     if (filters.companySize) {
       sql += ' AND company_size = ?';
       params.push(filters.companySize);
-    }
-
-    if (filters.search) {
-      sql += ' AND (name LIKE ? OR description LIKE ?)';
-      params.push(`%${filters.search}%`, `%${filters.search}%`);
     }
 
     if (filters.userId) {
@@ -112,67 +102,61 @@ class CorporateRepository extends BaseRepository {
   }
 
   /**
-   * Get corporate by ID
-   * @param {number} id - Corporate ID
-   * @returns {Promise<Corporate|null>} Corporate instance or null
+   * Get enterprise by ID
+   * @param {number} id - Enterprise ID
+   * @returns {Promise<Enterprise|null>} Enterprise instance or null
    */
   async getById(id) {
     const sql = `SELECT * FROM ${this.tableName} WHERE id = ?`;
     const rows = await this.query(sql, [id]);
-    return rows.length > 0 ? new Corporate(rows[0]) : null;
+    return rows.length > 0 ? new Enterprise(rows[0]) : null;
   }
 
   /**
-   * Create a new corporate
-   * @param {Object} corporateData - Corporate data
-   * @returns {Promise<number>} Created corporate ID
+   * Create a new enterprise
+   * @param {Object} enterpriseData - Enterprise data
+   * @returns {Promise<number>} Created enterprise ID
    */
-  async create(corporateData) {
-    const corporate = new Corporate(corporateData);
-    corporate.validate();
+  async create(enterpriseData) {
+    const enterprise = new Enterprise(enterpriseData);
+    enterprise.validate();
 
     const data = {
-      user_id: corporate.userId,
-      name: corporate.name,
-      description: corporate.description,
-      industry: corporate.industry,
-      founded_date: corporate.foundedDate,
-      website: corporate.website,
-      status: corporate.status,
-      company_size: corporate.companySize,
-      revenue: corporate.revenue,
-      location: corporate.location,
-      headquarters: corporate.headquarters,
-      employee_count: corporate.employeeCount,
-      sector: corporate.sector,
+      user_id: enterprise.userId,
+      name: enterprise.name,
+      description: enterprise.description,
+      industry: enterprise.industry,
+      founded_date: enterprise.foundedDate,
+      website: enterprise.website,
+      status: enterprise.status,
+      company_size: enterprise.companySize,
+      revenue: enterprise.revenue,
+      location: enterprise.location,
     };
 
     return await super.create(data);
   }
 
   /**
-   * Update a corporate
-   * @param {number} id - Corporate ID
-   * @param {Object} corporateData - Updated corporate data
+   * Update an enterprise
+   * @param {number} id - Enterprise ID
+   * @param {Object} enterpriseData - Updated enterprise data
    * @returns {Promise<boolean>} Success status
    */
-  async update(id, corporateData) {
-    const corporate = new Corporate(corporateData);
-    corporate.validate();
+  async update(id, enterpriseData) {
+    const enterprise = new Enterprise(enterpriseData);
+    enterprise.validate();
 
     const data = {
-      name: corporate.name,
-      description: corporate.description,
-      industry: corporate.industry,
-      founded_date: corporate.foundedDate,
-      website: corporate.website,
-      status: corporate.status,
-      company_size: corporate.companySize,
-      revenue: corporate.revenue,
-      location: corporate.location,
-      headquarters: corporate.headquarters,
-      employee_count: corporate.employeeCount,
-      sector: corporate.sector,
+      name: enterprise.name,
+      description: enterprise.description,
+      industry: enterprise.industry,
+      founded_date: enterprise.foundedDate,
+      website: enterprise.website,
+      status: enterprise.status,
+      company_size: enterprise.companySize,
+      revenue: enterprise.revenue,
+      location: enterprise.location,
       updated_at: new Date().toISOString(),
     };
 
@@ -180,8 +164,8 @@ class CorporateRepository extends BaseRepository {
   }
 
   /**
-   * Delete a corporate
-   * @param {number} id - Corporate ID
+   * Delete an enterprise
+   * @param {number} id - Enterprise ID
    * @returns {Promise<boolean>} Success status
    */
   async delete(id) {
@@ -189,18 +173,18 @@ class CorporateRepository extends BaseRepository {
   }
 
   /**
-   * Get corporates by user ID
+   * Get enterprises by user ID
    * @param {number} userId - User ID
-   * @returns {Promise<Array>} Array of Corporate instances
+   * @returns {Promise<Array>} Array of Enterprise instances
    */
   async getByUserId(userId) {
     const sql = `SELECT * FROM ${this.tableName} WHERE user_id = ? ORDER BY created_at DESC`;
     const rows = await this.query(sql, [userId]);
-    return rows.map((row) => new Corporate(row));
+    return rows.map((row) => new Enterprise(row));
   }
 
   /**
-   * Get corporate statistics
+   * Get enterprise statistics
    * @returns {Promise<Object>} Statistics object
    */
   async getStatistics() {
@@ -211,10 +195,7 @@ class CorporateRepository extends BaseRepository {
         SUM(CASE WHEN status = 'inactive' THEN 1 ELSE 0 END) as inactive,
         SUM(CASE WHEN status = 'acquired' THEN 1 ELSE 0 END) as acquired,
         SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed,
-        COUNT(DISTINCT industry) as industries,
-        COUNT(DISTINCT sector) as sectors,
-        AVG(employee_count) as avgEmployeeCount,
-        SUM(revenue) as totalRevenue
+        COUNT(DISTINCT industry) as industries
       FROM ${this.tableName}
     `;
 
@@ -223,12 +204,12 @@ class CorporateRepository extends BaseRepository {
   }
 
   /**
-   * Count corporates by status
+   * Count enterprises by status
    * @returns {Promise<Object>} Status counts
    */
   async countByStatus() {
     const sql =
-      'SELECT status, COUNT(*) as count FROM corporates GROUP BY status';
+      'SELECT status, COUNT(*) as count FROM enterprises GROUP BY status';
     const rows = await this.query(sql);
     const result = {};
     rows.forEach((row) => {
@@ -238,4 +219,4 @@ class CorporateRepository extends BaseRepository {
   }
 }
 
-module.exports = CorporateRepository;
+module.exports = EnterpriseRepository;
