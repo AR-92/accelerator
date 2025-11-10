@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { requireAuth, optionalAuth } = require('../../middleware/auth');
+const { requireAuth, optionalAuth } = require('../../../middleware/auth/auth');
 const SettingsController = require('../../controllers/SettingsController');
 const AuthService = require('../../services/auth/AuthService');
 const UserRepository = require('../../repositories/user/UserRepository');

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { requireAdminAuth } = require('../../../../middleware/adminAuth');
+const { requireAdminAuth } = require('../../../../middleware/auth/adminAuth');
 const rateLimit = require('express-rate-limit');
 
 // Rate limiter for system stats API (120 requests per minute)

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { requireAuth } = require('../../../middleware/auth');
+const { requireAuth } = require('../../../middleware/auth/auth');
 
 // Helper function for page data
 const getPageData = (title, activeKey, padding = 'py-8') => ({

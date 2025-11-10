@@ -1,7 +1,7 @@
 const request = require('supertest');
 const express = require('express');
 const container = require('../../../container');
-const { requireAuth } = require('../../../middleware/auth');
+const { requireAuth } = require('../../../middleware/auth/auth');
 
 // Mock the container to return mock services
 jest.mock('../../../container', () => ({
@@ -9,7 +9,7 @@ jest.mock('../../../container', () => ({
 }));
 
 // Mock the auth middleware
-jest.mock('../../../middleware/auth', () => ({
+jest.mock('../../../middleware/auth/auth', () => ({
   requireAuth: jest.fn((req, res, next) => next()),
   optionalAuth: jest.fn((req, res, next) => next()),
 }));

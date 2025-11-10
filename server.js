@@ -8,7 +8,7 @@ const { handlebarsConfig } = require('./config/handlebars');
 const {
   errorHandler,
   notFoundHandler,
-} = require('./src/middlewares/errorHandler');
+} = require('./src/middleware/error/errorHandler');
 const { getSecuritySettings } = require('./config/security');
 
 // Import container and routes
