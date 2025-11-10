@@ -343,12 +343,12 @@
           if (data.success) {
             location.reload();
           } else {
-            alert('Error: ' + data.error);
+            Toast.error('Error: ' + data.error);
           }
         })
         .catch(error => {
           console.error('Error updating status:', error);
-          alert('An error occurred');
+          Toast.error('An error occurred');
         });
       }
     }
@@ -371,12 +371,12 @@
           if (data.success) {
             location.reload();
           } else {
-            alert('Error: ' + data.error);
+            Toast.error('Error: ' + data.error);
           }
         })
         .catch(error => {
           console.error('Error processing refund:', error);
-          alert('An error occurred');
+          Toast.error('An error occurred');
         });
       }
     }
@@ -405,12 +405,12 @@
           closeTransactionModal();
           location.reload();
         } else {
-          alert('Error: ' + data.error);
+          Toast.error('Error: ' + data.error);
         }
       })
       .catch(error => {
         console.error('Error saving transaction:', error);
-        alert('An error occurred');
+        Toast.error('An error occurred');
       });
     }
 

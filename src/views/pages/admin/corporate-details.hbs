@@ -261,24 +261,23 @@ function closeEditCorporateModal() {
   document.getElementById('editCorporateModal').classList.add('hidden');
 }
 
-function deleteCorporate(corporateId, corporateName) {
-  if (confirm(`Are you sure you want to delete corporate "${corporateName}"? This action cannot be undone.`)) {
-    fetch(`/admin/api/corporates/${corporateId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        window.location.href = '/admin/corporates';
-      } else {
-        alert('Error deleting corporate: ' + data.error);
-      }
-    });
-  }
-}
+ function deleteCorporate(corporateId, corporateName) {
+   Toast.warning(`Are you sure you want to delete corporate "${corporateName}"? This action cannot be undone.`);
+   fetch(`/admin/api/corporates/${corporateId}`, {
+     method: 'DELETE',
+     headers: {
+       'Content-Type': 'application/json',
+     },
+   })
+   .then(response => response.json())
+   .then(data => {
+     if (data.success) {
+       window.location.href = '/admin/corporates';
+     } else {
+       Toast.error('Error deleting corporate: ' + data.error);
+     }
+   });
+ }
 
 // Form handler
 document.getElementById('editCorporateForm').addEventListener('submit', function(e) {
@@ -318,13 +317,13 @@ document.getElementById('editCorporateForm').addEventListener('submit', function
     }),
   })
   .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      closeEditCorporateModal();
-      location.reload();
-    } else {
-      alert('Error updating corporate: ' + data.error);
-    }
-  });
+   .then(data => {
+     if (data.success) {
+       closeEditCorporateModal();
+       location.reload();
+     } else {
+       Toast.error('Error updating corporate: ' + data.error);
+     }
+   });
 });
 </script>

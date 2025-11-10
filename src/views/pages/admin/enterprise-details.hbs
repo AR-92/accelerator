@@ -228,24 +228,23 @@ function closeEditEnterpriseModal() {
   document.getElementById('editEnterpriseModal').classList.add('hidden');
 }
 
-function deleteEnterprise(enterpriseId, enterpriseName) {
-  if (confirm(`Are you sure you want to delete enterprise "${enterpriseName}"? This action cannot be undone.`)) {
-    fetch(`/admin/api/enterprises/${enterpriseId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        window.location.href = '/admin/enterprises';
-      } else {
-        alert('Error deleting enterprise: ' + data.error);
-      }
-    });
-  }
-}
+ function deleteEnterprise(enterpriseId, enterpriseName) {
+   Toast.warning(`Are you sure you want to delete enterprise "${enterpriseName}"? This action cannot be undone.`);
+   fetch(`/admin/api/enterprises/${enterpriseId}`, {
+     method: 'DELETE',
+     headers: {
+       'Content-Type': 'application/json',
+     },
+   })
+   .then(response => response.json())
+   .then(data => {
+     if (data.success) {
+       window.location.href = '/admin/enterprises';
+     } else {
+       Toast.error('Error deleting enterprise: ' + data.error);
+     }
+   });
+ }
 
 // Form handler
 document.getElementById('editEnterpriseForm').addEventListener('submit', function(e) {
@@ -279,13 +278,13 @@ document.getElementById('editEnterpriseForm').addEventListener('submit', functio
     }),
   })
   .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      closeEditEnterpriseModal();
-      location.reload();
-    } else {
-      alert('Error updating enterprise: ' + data.error);
-    }
-  });
+   .then(data => {
+     if (data.success) {
+       closeEditEnterpriseModal();
+       location.reload();
+     } else {
+       Toast.error('Error updating enterprise: ' + data.error);
+     }
+   });
 });
 </script>

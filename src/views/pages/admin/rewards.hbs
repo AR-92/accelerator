@@ -451,23 +451,22 @@
     }
 
     function deleteReward(id, title) {
-      if (confirm(`Are you sure you want to delete the reward "${title}"?`)) {
-        fetch(`/admin/api/rewards/${id}`, {
-          method: 'DELETE'
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            loadRewards();
-          } else {
-            alert('Error: ' + data.error);
-          }
-        })
-        .catch(error => {
-          console.error('Error deleting reward:', error);
-          alert('An error occurred');
-        });
-      }
+      Toast.warning(`Are you sure you want to delete the reward "${title}"?`);
+      fetch(`/admin/api/rewards/${id}`, {
+        method: 'DELETE'
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          loadRewards();
+        } else {
+          Toast.error('Error: ' + data.error);
+        }
+      })
+      .catch(error => {
+        console.error('Error deleting reward:', error);
+        Toast.error('An error occurred');
+      });
     }
 
     function saveReward(event) {
@@ -499,12 +498,12 @@
           closeRewardModal();
           location.reload();
         } else {
-          alert('Error: ' + data.error);
+          Toast.error('Error: ' + data.error);
         }
       })
       .catch(error => {
         console.error('Error saving reward:', error);
-        alert('An error occurred');
+        Toast.error('An error occurred');
       });
     }
 
@@ -530,12 +529,12 @@
           closeGrantRewardModal();
           location.reload();
         } else {
-          alert('Error: ' + data.error);
+          Toast.error('Error: ' + data.error);
         }
       })
       .catch(error => {
         console.error('Error granting reward:', error);
-        alert('An error occurred');
+        Toast.error('An error occurred');
       });
     }
 

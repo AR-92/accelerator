@@ -42,7 +42,7 @@ router.get(
   adminController.showUsers.bind(adminController)
 );
 router.get(
-  '/users/:userId',
+  '/users/:id',
   requireAdminAuth,
   adminController.showUserDetails.bind(adminController)
 );

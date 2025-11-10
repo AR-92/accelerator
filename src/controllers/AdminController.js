@@ -106,11 +106,11 @@ class AdminController {
    */
   async showUserDetails(req, res) {
     try {
-      const { userId } = req.params;
-      const user = await this.adminService.getUserById(parseInt(userId));
+      const { id } = req.params;
+      const user = await this.adminService.getUserById(parseInt(id));
 
       res.render('pages/admin/user-details', {
-        title: `User Details - ${user.fullName} - Admin Panel`,
+        title: `User Details - ${user.firstName} ${user.lastName} - Admin Panel`,
         layout: 'admin',
         user,
         activeUsers: true,
@@ -472,50 +472,6 @@ class AdminController {
     });
 
     return csvRows.join('\n');
-  }
-
-  /**
-   * Reset user password
-   * @param {Object} req - Express request object
-   * @param {Object} res - Express response object
-   */
-  async resetUserPassword(req, res) {
-    try {
-      const { userId } = req.params;
-
-      const adminInfo = {
-        id: req.user.id,
-        email: req.user.email,
-        ip: req.ip || req.connection.remoteAddress,
-      };
-
-      const user = await this.adminService.updateUserBanned(
-        parseInt(userId),
-        banned,
-        reason || '',
-        adminInfo
-      );
-
-      res.json({
-        success: true,
-        user,
-        message: `User ${banned ? 'banned' : 'unbanned'} successfully`,
-      });
-    } catch (error) {
-      console.error('Error updating user banned status:', error);
-
-      if (error.name === 'ValidationError') {
-        return res.status(error.statusCode).json({
-          success: false,
-          error: error.firstError,
-        });
-      }
-
-      res.status(500).json({
-        success: false,
-        error: 'An error occurred while updating user banned status',
-      });
-    }
   }
 
   /**

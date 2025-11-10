@@ -198,22 +198,21 @@
   }
 
   function deleteIdea(ideaId, ideaTitle) {
-    if (confirm(`Are you sure you want to delete the idea "${ideaTitle}"? This action cannot be undone.`)) {
-      fetch(`/admin/api/ideas/${ideaId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          window.location.href = '/admin/ideas';
-        } else {
-          alert('Error deleting idea: ' + data.error);
-        }
-      });
-    }
+    Toast.warning(`Are you sure you want to delete the idea "${ideaTitle}"? This action cannot be undone.`);
+    fetch(`/admin/api/ideas/${ideaId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        window.location.href = '/admin/ideas';
+      } else {
+        Toast.error('Error deleting idea: ' + data.error);
+      }
+    });
   }
 
   // Form handlers
@@ -237,7 +236,7 @@
       if (data.success) {
         location.reload();
       } else {
-        alert('Error updating idea: ' + data.error);
+          Toast.error('Error updating idea: ' + data.error);
       }
     });
   });

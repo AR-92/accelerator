@@ -3662,13 +3662,12 @@
           const enterpriseId = this.dataset.enterpriseId;
           const enterpriseCard = this.closest('.border');
 
-          if (confirm('Are you sure you want to approve this enterprise?')) {
-            console.log(`Approving enterprise: ${enterpriseId}`);
-            // In a real implementation, this would make an API call
-            Toast.success('Enterprise approved successfully!');
-            enterpriseCard.remove();
-            updatePendingCount();
-          }
+          Toast.warning('Are you sure you want to approve this enterprise?');
+          console.log(`Approving enterprise: ${enterpriseId}`);
+          // In a real implementation, this would make an API call
+          Toast.success('Enterprise approved successfully!');
+          enterpriseCard.remove();
+          updatePendingCount();
         });
       });
 

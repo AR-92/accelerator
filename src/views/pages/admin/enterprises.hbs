@@ -513,14 +513,14 @@ function createEnterprise(e) {
     body: JSON.stringify(data),
   })
   .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      closeCreateEnterpriseModal();
-      location.reload();
-    } else {
-      alert('Error creating enterprise: ' + data.error);
-    }
-  });
+   .then(data => {
+     if (data.success) {
+       closeCreateEnterpriseModal();
+       location.reload();
+     } else {
+       Toast.error('Error creating enterprise: ' + data.error);
+     }
+   });
 }
 
 function editEnterprise(enterpriseId) {
@@ -558,31 +558,30 @@ function updateEnterprise(e) {
     body: JSON.stringify(data),
   })
   .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      closeEditEnterpriseModal();
-      location.reload();
-    } else {
-      alert('Error updating enterprise: ' + data.error);
-    }
-  });
+   .then(data => {
+     if (data.success) {
+       closeEditEnterpriseModal();
+       location.reload();
+     } else {
+       Toast.error('Error updating enterprise: ' + data.error);
+     }
+   });
 }
 
-function deleteEnterprise(enterpriseId, enterpriseName) {
-  if (confirm(`Are you sure you want to delete enterprise "${enterpriseName}"? This action cannot be undone.`)) {
-    fetch(`/admin/api/enterprises/${enterpriseId}`, {
-      method: 'DELETE',
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        location.reload();
-      } else {
-        alert('Error deleting enterprise: ' + data.error);
-      }
-    });
-  }
-}
+ function deleteEnterprise(enterpriseId, enterpriseName) {
+   Toast.warning(`Are you sure you want to delete enterprise "${enterpriseName}"? This action cannot be undone.`);
+   fetch(`/admin/api/enterprises/${enterpriseId}`, {
+     method: 'DELETE',
+   })
+   .then(response => response.json())
+   .then(data => {
+     if (data.success) {
+       location.reload();
+     } else {
+       Toast.error('Error deleting enterprise: ' + data.error);
+     }
+   });
+ }
 
 // Bulk operations
 function updateBulkActions() {
@@ -618,39 +617,38 @@ function bulkUpdateStatus() {
     body: JSON.stringify({ enterpriseIds, status }),
   })
   .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      location.reload();
-    } else {
-      alert('Error updating enterprises: ' + data.error);
-    }
-  });
+   .then(data => {
+     if (data.success) {
+       location.reload();
+     } else {
+       Toast.error('Error updating enterprises: ' + data.error);
+     }
+   });
 }
 
-function bulkDelete() {
-  const checkboxes = document.querySelectorAll('.enterpriseCheckbox:checked');
-  const enterpriseIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+ function bulkDelete() {
+   const checkboxes = document.querySelectorAll('.enterpriseCheckbox:checked');
+   const enterpriseIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
 
-  if (enterpriseIds.length === 0) return;
+   if (enterpriseIds.length === 0) return;
 
-  if (confirm(`Are you sure you want to delete ${enterpriseIds.length} enterprise${enterpriseIds.length > 1 ? 's' : ''}? This action cannot be undone.`)) {
-    fetch('/admin/api/enterprises/bulk/delete', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ enterpriseIds }),
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        location.reload();
-      } else {
-        alert('Error deleting enterprises: ' + data.error);
-      }
-    });
-  }
-}
+   Toast.warning(`Are you sure you want to delete ${enterpriseIds.length} enterprise${enterpriseIds.length > 1 ? 's' : ''}? This action cannot be undone.`);
+   fetch('/admin/api/enterprises/bulk/delete', {
+     method: 'POST',
+     headers: {
+       'Content-Type': 'application/json',
+     },
+     body: JSON.stringify({ enterpriseIds }),
+   })
+   .then(response => response.json())
+   .then(data => {
+     if (data.success) {
+       location.reload();
+     } else {
+       Toast.error('Error deleting enterprises: ' + data.error);
+     }
+   });
+ }
 
 // Export to CSV
 function exportToCSV() {

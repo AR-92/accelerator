@@ -343,47 +343,45 @@
    }
  }
 
- function bulkDelete() {
-   const checkboxes = document.querySelectorAll('.startupCheckbox:checked');
-   const count = checkboxes.length;
+  function bulkDelete() {
+    const checkboxes = document.querySelectorAll('.startupCheckbox:checked');
+    const count = checkboxes.length;
 
-   if (confirm(`Are you sure you want to delete ${count} startup${count > 1 ? 's' : ''}? This action cannot be undone.`)) {
-     const startupIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+    Toast.warning(`Are you sure you want to delete ${count} startup${count > 1 ? 's' : ''}? This action cannot be undone.`);
+    const startupIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
 
-     // Delete startups one by one
-     Promise.all(startupIds.map(startupId =>
-       fetch(`/admin/api/startups/${startupId}`, {
-         method: 'DELETE',
-         headers: {
-           'Content-Type': 'application/json',
-         },
-       }).then(response => response.json())
-     )).then(results => {
-       const successCount = results.filter(r => r.success).length;
-       alert(`Successfully deleted ${successCount} out of ${count} startups`);
-       location.reload();
-     });
-   }
- }
+    // Delete startups one by one
+    Promise.all(startupIds.map(startupId =>
+      fetch(`/admin/api/startups/${startupId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(response => response.json())
+    )).then(results => {
+      const successCount = results.filter(r => r.success).length;
+      Toast.success(`Successfully deleted ${successCount} out of ${count} startups`);
+      location.reload();
+    });
+  }
 
- function deleteStartup(startupId, startupName) {
-   if (confirm(`Are you sure you want to delete startup "${startupName}"? This action cannot be undone.`)) {
-     fetch(`/admin/api/startups/${startupId}`, {
-       method: 'DELETE',
-       headers: {
-         'Content-Type': 'application/json',
-       },
-     })
-     .then(response => response.json())
-     .then(data => {
-       if (data.success) {
-         location.reload();
-       } else {
-         alert('Error deleting startup: ' + data.error);
-       }
-     });
-   }
- }
+  function deleteStartup(startupId, startupName) {
+    Toast.warning(`Are you sure you want to delete startup "${startupName}"? This action cannot be undone.`);
+    fetch(`/admin/api/startups/${startupId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        location.reload();
+      } else {
+        Toast.error('Error deleting startup: ' + data.error);
+      }
+    });
+  }
 
  // Form handlers
  document.getElementById('editStartupForm').addEventListener('submit', function(e) {
@@ -404,14 +402,14 @@
      body: JSON.stringify({ name, industry, status, description, website, foundedDate }),
    })
    .then(response => response.json())
-   .then(data => {
-     if (data.success) {
-       closeEditStartupModal();
-       location.reload();
-     } else {
-       alert('Error updating startup: ' + data.error);
-     }
-   });
+    .then(data => {
+      if (data.success) {
+        closeEditStartupModal();
+        location.reload();
+      } else {
+        Toast.error('Error updating startup: ' + data.error);
+      }
+    });
  });
 
  document.getElementById('createStartupForm').addEventListener('submit', function(e) {
@@ -460,17 +458,17 @@
      body: JSON.stringify({ userId, name, industry, status, description, website, foundedDate }),
    })
    .then(response => response.json())
-   .then(data => {
-     if (data.success) {
-       closeCreateStartupModal();
-       location.reload();
-     } else {
-       alert('Error creating startup: ' + data.error);
-     }
-   })
-   .catch(error => {
-     alert('Network error occurred. Please try again.');
-   });
+    .then(data => {
+      if (data.success) {
+        closeCreateStartupModal();
+        location.reload();
+      } else {
+        Toast.error('Error creating startup: ' + data.error);
+      }
+    })
+    .catch(error => {
+      Toast.error('Network error occurred. Please try again.');
+    });
  });
 
  // Form validation helpers

@@ -118,19 +118,18 @@
 // Helper functions
 function editArticle(articleId) {
   // TODO: Implement edit functionality
-  alert('Edit functionality coming soon');
+  Toast.info('Edit functionality coming soon');
 }
 
 function togglePublish(articleId, currentlyPublished) {
   // TODO: Implement publish/unpublish functionality
-  alert('Publish toggle functionality coming soon');
+  Toast.info('Publish toggle functionality coming soon');
 }
 
 function deleteArticle(articleId, title) {
-  if (confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) {
-    // TODO: Implement delete functionality
-    alert('Delete functionality coming soon');
-  }
+  Toast.warning(`Are you sure you want to delete "${title}"? This action cannot be undone.`);
+  // TODO: Implement delete functionality
+  Toast.info('Delete functionality coming soon');
 }
 
 // Filter functionality

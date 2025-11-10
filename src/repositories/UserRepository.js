@@ -30,6 +30,13 @@ class UserRepository extends BaseRepository {
     return row ? new User(row) : null;
   }
 
+  async findByRowid(rowid) {
+    const sql =
+      'SELECT id, email, first_name, last_name, role, credits, status, banned, banned_reason, banned_at, theme, bio, created_at, updated_at, rowid FROM users WHERE rowid = ?';
+    const row = await this.queryOne(sql, [rowid]);
+    return row ? new User(row) : null;
+  }
+
   /**
    * Create a new user
    * @param {Object|User} userData - User data or User instance
@@ -271,7 +278,8 @@ class UserRepository extends BaseRepository {
       ? sortOrder.toUpperCase()
       : 'DESC';
 
-    let sql = 'SELECT * FROM users WHERE 1=1';
+    let sql =
+      'SELECT id, email, first_name, last_name, role, credits, status, banned, banned_reason, banned_at, theme, bio, created_at, updated_at, rowid FROM users WHERE 1=1';
     const params = [];
 
     if (role) {

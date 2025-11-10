@@ -392,12 +392,11 @@
        e.preventDefault();
        document.getElementById('manual-refresh').click();
        break;
-     case 'q':
-       e.preventDefault();
-       if (confirm('Quit monitoring?')) {
-         window.location.href = '/admin/dashboard';
-       }
-       break;
+      case 'q':
+        e.preventDefault();
+        Toast.warning('Quit monitoring?');
+        window.location.href = '/admin/dashboard';
+        break;
    }
  });
 

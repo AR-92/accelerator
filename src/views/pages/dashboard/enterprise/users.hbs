@@ -995,7 +995,7 @@
 
       // In a real implementation, this would update the user's permissions
       // For now, just show a success message and close the modal
-      alert(`Permissions updated for user. Role: ${newRole}, Permissions: ${permissions.join(', ')}`);
+      Toast.success(`Permissions updated for user. Role: ${newRole}, Permissions: ${permissions.join(', ')}`);
       document.getElementById('permissions-modal').classList.add('hidden');
     });
   }
@@ -1030,7 +1030,7 @@
 
       // In a real implementation, this would trigger the actual export
       // For now, just show a success message and close the modal
-      alert(`Export started: ${section} data as ${format.toUpperCase()}`);
+      Toast.success(`Export started: ${section} data as ${format.toUpperCase()}`);
       document.getElementById('export-modal').classList.add('hidden');
     });
   }

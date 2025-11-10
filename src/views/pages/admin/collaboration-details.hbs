@@ -222,9 +222,7 @@
 <script>
 // Change project status
 async function changeProjectStatus(projectId, status) {
-  if (!confirm(`Are you sure you want to change this project's status to ${status}?`)) {
-    return;
-  }
+  Toast.warning(`Are you sure you want to change this project's status to ${status}?`);
 
   try {
     const response = await fetch(`/admin/api/collaborations/${projectId}/status`, {
@@ -242,19 +240,17 @@ async function changeProjectStatus(projectId, status) {
       // Reload the page to show updated data
       window.location.reload();
     } else {
-      alert('Error: ' + (data.error || 'Failed to update project status'));
+      Toast.error('Error: ' + (data.error || 'Failed to update project status'));
     }
   } catch (error) {
     console.error('Error:', error);
-    alert('An error occurred while updating the project status');
+    Toast.error('An error occurred while updating the project status');
   }
 }
 
 // Remove user from project
 async function removeUserFromProject(projectId, userId) {
-  if (!confirm('Are you sure you want to remove this user from the project?')) {
-    return;
-  }
+  Toast.warning('Are you sure you want to remove this user from the project?');
 
   try {
     const response = await fetch(`/admin/api/collaborations/${projectId}/users/${userId}`, {
@@ -270,19 +266,17 @@ async function removeUserFromProject(projectId, userId) {
       // Reload the page to show updated data
       window.location.reload();
     } else {
-      alert('Error: ' + (data.error || 'Failed to remove user from project'));
+      Toast.error('Error: ' + (data.error || 'Failed to remove user from project'));
     }
   } catch (error) {
     console.error('Error:', error);
-    alert('An error occurred while removing the user from the project');
+    Toast.error('An error occurred while removing the user from the project');
   }
 }
 
 // Delete project
 async function deleteProject(projectId) {
-  if (!confirm('Are you sure you want to delete this project? This action cannot be undone and will remove all team members.')) {
-    return;
-  }
+  Toast.warning('Are you sure you want to delete this project? This action cannot be undone and will remove all team members.');
 
   try {
     const response = await fetch(`/admin/api/collaborations/${projectId}`, {
@@ -298,11 +292,11 @@ async function deleteProject(projectId) {
       // Redirect to collaborations list
       window.location.href = '/admin/collaborations';
     } else {
-      alert('Error: ' + (data.error || 'Failed to delete project'));
+      Toast.error('Error: ' + (data.error || 'Failed to delete project'));
     }
   } catch (error) {
     console.error('Error:', error);
-    alert('An error occurred while deleting the project');
+    Toast.error('An error occurred while deleting the project');
   }
 }
 

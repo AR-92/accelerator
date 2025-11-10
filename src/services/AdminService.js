@@ -637,6 +637,7 @@ class AdminService {
       return {
         users: users.map((user) => ({
           id: user.id,
+          rowid: user.rowid,
           email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
@@ -669,6 +670,17 @@ class AdminService {
    */
   async createUser(userData, adminInfo) {
     try {
+      // Check if user already exists
+      const existingUser = await this.userRepository.findByEmail(
+        userData.email
+      );
+      if (existingUser) {
+        const ValidationError = require('../utils/errors/ValidationError');
+        throw new ValidationError('User creation failed', [
+          'Email already registered',
+        ]);
+      }
+
       const user = new (require('../models/User'))(userData);
       await user.setPassword(userData.password);
       user.validate();
@@ -737,6 +749,36 @@ class AdminService {
       };
     } catch (error) {
       console.error('Error getting user by ID:', error);
+      throw error;
+    }
+  }
+
+  async getUserByRowid(rowid) {
+    try {
+      const user = await this.userRepository.findByRowid(rowid);
+      if (!user) {
+        const NotFoundError = require('../utils/errors/NotFoundError');
+        throw new NotFoundError('User not found');
+      }
+
+      return {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        role: user.role,
+        credits: user.credits,
+        status: user.status,
+        banned: user.banned,
+        bannedReason: user.bannedReason,
+        bannedAt: user.bannedAt,
+        theme: user.theme,
+        bio: user.bio,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      };
+    } catch (error) {
+      console.error('Error getting user by rowid:', error);
       throw error;
     }
   }
@@ -1165,12 +1207,17 @@ class AdminService {
         throw new NotFoundError('User not found');
       }
 
-      // Generate a temporary password
-      const tempPassword =
-        Math.random().toString(36).slice(-12) +
-        Math.random().toString(36).slice(-12);
+      // Generate a temporary password using crypto for better randomness
+      const crypto = require('crypto');
+      const tempPassword = crypto.randomBytes(16).toString('hex');
       await user.setPassword(tempPassword);
-      await this.userRepository.updatePassword(userId, user.passwordHash);
+      const updated = await this.userRepository.updatePassword(
+        userId,
+        user.passwordHash
+      );
+      if (!updated) {
+        throw new Error('Failed to update user password');
+      }
 
       // Log admin action
       this.logAdminAction({

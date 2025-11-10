@@ -128,10 +128,10 @@
                    </button>
                     <div id="dropdown-{{id}}" class='fixed w-48 bg-card rounded-md shadow-lg border border-border z-50 hidden'>
                      <div class='py-1'>
-                       <button onclick="window.location.href='/admin/users/{{id}}'" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
-                         {{lucide 'Eye' 'w-4 h-4 mr-2'}}
-                         View Details
-                       </button>
+                        <button onclick="window.location.href='/admin/users/{{id}}'" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                          {{lucide 'Eye' 'w-4 h-4 mr-2'}}
+                          View Details
+                        </button>
                        <button onclick="editUser({{id}})" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
                          {{lucide 'Edit' 'w-4 h-4 mr-2'}}
                          Edit Role
@@ -438,28 +438,27 @@ function closeCreditsModal() {
   document.getElementById('creditsModal').classList.add('hidden');
 }
 
-function toggleStatus(userId, currentStatus) {
-  const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
-  const action = newStatus === 'active' ? 'activate' : 'deactivate';
+ function toggleStatus(userId, currentStatus) {
+   const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+   const action = newStatus === 'active' ? 'activate' : 'deactivate';
 
-  if (confirm(`Are you sure you want to ${action} this user?`)) {
-    fetch(`/admin/api/users/${userId}/status`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ status: newStatus }),
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        location.reload();
-      } else {
-        alert('Error updating user status: ' + data.error);
-      }
-    });
-  }
-}
+   Toast.warning(`Are you sure you want to ${action} this user?`);
+   fetch(`/admin/api/users/${userId}/status`, {
+     method: 'PUT',
+     headers: {
+       'Content-Type': 'application/json',
+     },
+     body: JSON.stringify({ status: newStatus }),
+   })
+   .then(response => response.json())
+   .then(data => {
+     if (data.success) {
+       location.reload();
+     } else {
+       Toast.error('Error updating user status: ' + data.error);
+     }
+   });
+ }
 
 function toggleBan(userId, currentlyBanned, userName) {
   document.getElementById('banUserId').value = userId;
@@ -539,47 +538,45 @@ function closeBulkCreditsModal() {
   document.getElementById('bulkCreditsForm').reset();
 }
 
-function bulkDelete() {
-  const checkboxes = document.querySelectorAll('.userCheckbox:checked');
-  const count = checkboxes.length;
+ function bulkDelete() {
+   const checkboxes = document.querySelectorAll('.userCheckbox:checked');
+   const count = checkboxes.length;
 
-  if (confirm(`Are you sure you want to delete ${count} user${count > 1 ? 's' : ''}? This action cannot be undone.`)) {
-    const userIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+   Toast.warning(`Are you sure you want to delete ${count} user${count > 1 ? 's' : ''}? This action cannot be undone.`);
+   const userIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
 
-    // Delete users one by one
-    Promise.all(userIds.map(userId =>
-      fetch(`/admin/api/users/${userId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then(response => response.json())
-    )).then(results => {
-      const successCount = results.filter(r => r.success).length;
-      alert(`Successfully deleted ${successCount} out of ${count} users`);
-      location.reload();
-    });
-  }
-}
+   // Delete users one by one
+   Promise.all(userIds.map(userId =>
+     fetch(`/admin/api/users/${userId}`, {
+       method: 'DELETE',
+       headers: {
+         'Content-Type': 'application/json',
+       },
+     }).then(response => response.json())
+   )).then(results => {
+     const successCount = results.filter(r => r.success).length;
+     Toast.success(`Successfully deleted ${successCount} out of ${count} users`);
+     location.reload();
+   });
+ }
 
-function deleteUser(userId, userName) {
-  if (confirm(`Are you sure you want to delete user ${userName}? This action cannot be undone.`)) {
-    fetch(`/admin/api/users/${userId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        location.reload();
-      } else {
-        alert('Error deleting user: ' + data.error);
-      }
-    });
-  }
-}
+ function deleteUser(userId, userName) {
+   Toast.warning(`Are you sure you want to delete user ${userName}? This action cannot be undone.`);
+   fetch(`/admin/api/users/${userId}`, {
+     method: 'DELETE',
+     headers: {
+       'Content-Type': 'application/json',
+     },
+   })
+   .then(response => response.json())
+   .then(data => {
+     if (data.success) {
+       location.reload();
+     } else {
+       Toast.error('Error deleting user: ' + data.error);
+     }
+   });
+ }
 
 // Form handlers
 document.getElementById('editUserForm').addEventListener('submit', function(e) {
@@ -595,14 +592,14 @@ document.getElementById('editUserForm').addEventListener('submit', function(e) {
     body: JSON.stringify({ role }),
   })
   .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      closeEditModal();
-      location.reload();
-    } else {
-      alert('Error updating user: ' + data.error);
-    }
-  });
+   .then(data => {
+     if (data.success) {
+       closeEditModal();
+       location.reload();
+     } else {
+       Toast.error('Error updating user: ' + data.error);
+     }
+   });
 });
 
 document.getElementById('creditsForm').addEventListener('submit', function(e) {
@@ -627,17 +624,17 @@ document.getElementById('creditsForm').addEventListener('submit', function(e) {
     body: JSON.stringify({ credits }),
   })
   .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      closeCreditsModal();
-      location.reload();
-    } else {
-      alert('Error updating credits: ' + data.error);
-    }
-  })
-  .catch(error => {
-    alert('Network error occurred. Please try again.');
-  });
+   .then(data => {
+     if (data.success) {
+       closeCreditsModal();
+       location.reload();
+     } else {
+       Toast.error('Error updating credits: ' + data.error);
+     }
+   })
+   .catch(error => {
+     Toast.error('Network error occurred. Please try again.');
+   });
 });
 
 document.getElementById('banForm').addEventListener('submit', function(e) {
@@ -656,14 +653,14 @@ document.getElementById('banForm').addEventListener('submit', function(e) {
     body: JSON.stringify({ banned, reason }),
   })
   .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      closeBanModal();
-      location.reload();
-    } else {
-      alert('Error updating ban status: ' + data.error);
-    }
-  });
+   .then(data => {
+     if (data.success) {
+       closeBanModal();
+       location.reload();
+     } else {
+       Toast.error('Error updating ban status: ' + data.error);
+     }
+   });
 });
 
 document.getElementById('createUserForm').addEventListener('submit', function(e) {
@@ -721,17 +718,17 @@ document.getElementById('createUserForm').addEventListener('submit', function(e)
     body: JSON.stringify({ email, firstName, lastName, password, role, credits }),
   })
   .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      closeCreateUserModal();
-      location.reload();
-    } else {
-      alert('Error creating user: ' + data.error);
-    }
-  })
-  .catch(error => {
-    alert('Network error occurred. Please try again.');
-  });
+   .then(data => {
+     if (data.success) {
+       closeCreateUserModal();
+       location.reload();
+     } else {
+       Toast.error('Error creating user: ' + data.error);
+     }
+   })
+   .catch(error => {
+     Toast.error('Network error occurred. Please try again.');
+   });
 });
 
 // Bulk actions form handlers
@@ -749,12 +746,12 @@ document.getElementById('bulkRoleForm').addEventListener('submit', function(e) {
       },
       body: JSON.stringify({ role }),
     }).then(response => response.json())
-  )).then(results => {
-    const successCount = results.filter(r => r.success).length;
-    alert(`Successfully updated ${successCount} out of ${userIds.length} users`);
-    closeBulkRoleModal();
-    location.reload();
-  });
+   )).then(results => {
+     const successCount = results.filter(r => r.success).length;
+     Toast.success(`Successfully updated ${successCount} out of ${userIds.length} users`);
+     closeBulkRoleModal();
+     location.reload();
+   });
 });
 
 document.getElementById('bulkCreditsForm').addEventListener('submit', function(e) {
@@ -792,12 +789,12 @@ document.getElementById('bulkCreditsForm').addEventListener('submit', function(e
         }).then(response => response.json());
       }
     })
-  )).then(results => {
-    const successCount = results.filter(r => r && r.success).length;
-    alert(`Successfully updated ${successCount} out of ${userIds.length} users`);
-    closeBulkCreditsModal();
-    location.reload();
-  });
+   )).then(results => {
+     const successCount = results.filter(r => r && r.success).length;
+     Toast.success(`Successfully updated ${successCount} out of ${userIds.length} users`);
+     closeBulkCreditsModal();
+     location.reload();
+   });
 });
 
 // Form validation helpers

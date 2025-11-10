@@ -264,24 +264,23 @@
    document.getElementById('editIdeaModal').classList.add('hidden');
  }
 
- function deleteIdea(ideaId, ideaTitle) {
-   if (confirm(`Are you sure you want to delete the idea "${ideaTitle}"? This action cannot be undone.`)) {
-     fetch(`/admin/api/ideas/${ideaId}`, {
-       method: 'DELETE',
-       headers: {
-         'Content-Type': 'application/json',
-       },
-     })
-     .then(response => response.json())
-     .then(data => {
-       if (data.success) {
-         location.reload();
-       } else {
-         alert('Error deleting idea: ' + data.error);
-       }
-     });
-   }
- }
+  function deleteIdea(ideaId, ideaTitle) {
+    Toast.warning(`Are you sure you want to delete the idea "${ideaTitle}"? This action cannot be undone.`);
+    fetch(`/admin/api/ideas/${ideaId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        },
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          location.reload();
+        } else {
+          Toast.error('Error deleting idea: ' + data.error);
+        }
+      });
+  }
 
  // Bulk actions functions
  function updateBulkActions() {
@@ -300,28 +299,27 @@
    }
  }
 
- function bulkDelete() {
-   const checkboxes = document.querySelectorAll('.ideaCheckbox:checked');
-   const count = checkboxes.length;
+  function bulkDelete() {
+    const checkboxes = document.querySelectorAll('.ideaCheckbox:checked');
+    const count = checkboxes.length;
 
-   if (confirm(`Are you sure you want to delete ${count} idea${count > 1 ? 's' : ''}? This action cannot be undone.`)) {
-     const ideaIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+    Toast.warning(`Are you sure you want to delete ${count} idea${count > 1 ? 's' : ''}? This action cannot be undone.`);
+    const ideaIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
 
-     // Delete ideas one by one
-     Promise.all(ideaIds.map(ideaId =>
-       fetch(`/admin/api/ideas/${ideaId}`, {
-         method: 'DELETE',
-         headers: {
-           'Content-Type': 'application/json',
-         },
-       }).then(response => response.json())
-     )).then(results => {
-       const successCount = results.filter(r => r.success).length;
-       alert(`Successfully deleted ${successCount} out of ${count} ideas`);
-       location.reload();
-     });
-   }
- }
+    // Delete ideas one by one
+    Promise.all(ideaIds.map(ideaId =>
+      fetch(`/admin/api/ideas/${ideaId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(response => response.json())
+    )).then(results => {
+      const successCount = results.filter(r => r.success).length;
+      Toast.success(`Successfully deleted ${successCount} out of ${count} ideas`);
+      location.reload();
+    });
+  }
 
  // Form handlers
  document.getElementById('editIdeaForm').addEventListener('submit', function(e) {
@@ -345,7 +343,7 @@
        closeEditModal();
        location.reload();
      } else {
-       alert('Error updating idea: ' + data.error);
+        Toast.error('Error updating idea: ' + data.error);
      }
    });
  });

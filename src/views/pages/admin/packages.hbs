@@ -374,34 +374,33 @@
           loadPackages();
           // Show success toast
         } else {
-          alert('Error: ' + data.error);
+          Toast.error('Error: ' + data.error);
         }
       })
       .catch(error => {
         console.error('Error saving package:', error);
-        alert('An error occurred while saving the package');
+        Toast.error('An error occurred while saving the package');
       });
     }
 
     function deletePackage(id, name) {
-      if (confirm(`Are you sure you want to delete the package "${name}"?`)) {
-        fetch(`/admin/api/packages/${id}`, {
-          method: 'DELETE'
-        })
-        .then(response => response.json())
+      Toast.warning(`Are you sure you want to delete the package "${name}"?`);
+      fetch(`/admin/api/packages/${id}`, {
+        method: 'DELETE'
+      })
+      .then(response => response.json())
         .then(data => {
           if (data.success) {
             loadPackages();
             // Show success toast
           } else {
-            alert('Error: ' + data.error);
+            Toast.error('Error: ' + data.error);
           }
         })
         .catch(error => {
           console.error('Error deleting package:', error);
-          alert('An error occurred while deleting the package');
+          Toast.error('An error occurred while deleting the package');
         });
-      }
     }
 
     // Initialize filters

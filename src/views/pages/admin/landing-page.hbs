@@ -293,22 +293,21 @@
   }
 
   function deleteSection(sectionId, sectionTitle) {
-    if (confirm(`Are you sure you want to delete the section "${sectionTitle}"? This action cannot be undone.`)) {
-      fetch(`/admin/api/landing-page/${sectionId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          location.reload();
-        } else {
-          alert('Error deleting section: ' + data.error);
-        }
-      });
-    }
+    Toast.warning(`Are you sure you want to delete the section "${sectionTitle}"? This action cannot be undone.`);
+    fetch(`/admin/api/landing-page/${sectionId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        location.reload();
+      } else {
+        Toast.error('Error deleting section: ' + data.error);
+      }
+    });
   }
 
   function toggleStatus(sectionId) {
@@ -323,7 +322,7 @@
       if (data.success) {
         location.reload();
       } else {
-        alert('Error toggling section status: ' + data.error);
+        Toast.error('Error toggling section status: ' + data.error);
       }
     });
   }
@@ -339,7 +338,7 @@
     .then(response => response.json())
     .then(data => {
       if (!data.success) {
-        alert('Error updating section order: ' + data.error);
+        Toast.error('Error updating section order: ' + data.error);
       }
     });
   }
@@ -363,50 +362,48 @@
     }
   }
 
-  function bulkToggleStatus() {
-    const checkboxes = document.querySelectorAll('.sectionCheckbox:checked');
-    const count = checkboxes.length;
+   function bulkToggleStatus() {
+     const checkboxes = document.querySelectorAll('.sectionCheckbox:checked');
+     const count = checkboxes.length;
 
-    if (confirm(`Are you sure you want to toggle the status of ${count} section${count > 1 ? 's' : ''}?`)) {
-      const sectionIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+     Toast.warning(`Are you sure you want to toggle the status of ${count} section${count > 1 ? 's' : ''}?`);
+     const sectionIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
 
-      // Toggle sections one by one
-      Promise.all(sectionIds.map(sectionId =>
-        fetch(`/admin/api/landing-page/${sectionId}/toggle`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }).then(response => response.json())
-      )).then(results => {
-        const successCount = results.filter(r => r.success).length;
-        alert(`Successfully toggled ${successCount} out of ${count} sections`);
-        location.reload();
-      });
-    }
-  }
+     // Toggle sections one by one
+     Promise.all(sectionIds.map(sectionId =>
+       fetch(`/admin/api/landing-page/${sectionId}/toggle`, {
+         method: 'PATCH',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+       }).then(response => response.json())
+     )).then(results => {
+       const successCount = results.filter(r => r.success).length;
+       Toast.success(`Successfully toggled ${successCount} out of ${count} sections`);
+       location.reload();
+     });
+   }
 
   function bulkDelete() {
     const checkboxes = document.querySelectorAll('.sectionCheckbox:checked');
     const count = checkboxes.length;
 
-    if (confirm(`Are you sure you want to delete ${count} section${count > 1 ? 's' : ''}? This action cannot be undone.`)) {
-      const sectionIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+    Toast.warning(`Are you sure you want to delete ${count} section${count > 1 ? 's' : ''}? This action cannot be undone.`);
+    const sectionIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
 
-      // Delete sections one by one
-      Promise.all(sectionIds.map(sectionId =>
-        fetch(`/admin/api/landing-page/${sectionId}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }).then(response => response.json())
-      )).then(results => {
-        const successCount = results.filter(r => r.success).length;
-        alert(`Successfully deleted ${successCount} out of ${count} sections`);
-        location.reload();
-      });
-    }
+    // Delete sections one by one
+    Promise.all(sectionIds.map(sectionId =>
+      fetch(`/admin/api/landing-page/${sectionId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(response => response.json())
+    )).then(results => {
+      const successCount = results.filter(r => r.success).length;
+      Toast.success(`Successfully deleted ${successCount} out of ${count} sections`);
+      location.reload();
+    });
   }
 
   // Form handlers
@@ -443,7 +440,7 @@
         closeModal();
         location.reload();
       } else {
-        alert('Error saving section: ' + data.error);
+        Toast.error('Error saving section: ' + data.error);
       }
     });
   });

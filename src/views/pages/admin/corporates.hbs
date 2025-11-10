@@ -672,7 +672,7 @@ function updateBulkActions() {
 async function bulkUpdateStatus() {
   const status = document.getElementById('bulkStatusSelect').value;
   if (!status) {
-    alert('Please select a status');
+    Toast.warning('Please select a status');
     return;
   }
 
@@ -690,21 +690,19 @@ async function bulkUpdateStatus() {
     const result = await response.json();
 
     if (result.success) {
-      alert(result.message);
+      Toast.success(result.message);
       location.reload();
     } else {
-      alert('Error: ' + result.error);
+      Toast.error('Error: ' + result.error);
     }
   } catch (error) {
     console.error('Error updating corporates:', error);
-    alert('An error occurred while updating corporates');
+    Toast.error('An error occurred while updating corporates');
   }
 }
 
 async function bulkDelete() {
-  if (!confirm('Are you sure you want to delete the selected corporates? This action cannot be undone.')) {
-    return;
-  }
+  Toast.warning('Are you sure you want to delete the selected corporates? This action cannot be undone.');
 
   const corporateIds = Array.from(document.querySelectorAll('.corporateCheckbox:checked')).map(cb => parseInt(cb.value));
 
@@ -720,14 +718,14 @@ async function bulkDelete() {
     const result = await response.json();
 
     if (result.success) {
-      alert(result.message);
+      Toast.success(result.message);
       location.reload();
     } else {
-      alert('Error: ' + result.error);
+      Toast.error('Error: ' + result.error);
     }
   } catch (error) {
     console.error('Error deleting corporates:', error);
-    alert('An error occurred while deleting corporates');
+    Toast.error('An error occurred while deleting corporates');
   }
 }
 
@@ -758,15 +756,15 @@ async function createCorporate() {
     const result = await response.json();
 
     if (result.success) {
-      alert('Corporate created successfully');
+      Toast.success('Corporate created successfully');
       closeCreateCorporateModal();
       location.reload();
     } else {
-      alert('Error: ' + (result.error || 'Unknown error'));
+      Toast.error('Error: ' + (result.error || 'Unknown error'));
     }
   } catch (error) {
     console.error('Error creating corporate:', error);
-    alert('An error occurred while creating the corporate');
+    Toast.error('An error occurred while creating the corporate');
   }
 }
 
@@ -790,12 +788,12 @@ function editCorporate(id) {
 
         openEditCorporateModal();
       } else {
-        alert('Error loading corporate data');
+        Toast.error('Error loading corporate data');
       }
     })
     .catch(error => {
       console.error('Error loading corporate:', error);
-      alert('An error occurred while loading corporate data');
+      Toast.error('An error occurred while loading corporate data');
     });
 }
 
@@ -825,39 +823,37 @@ async function updateCorporate() {
     const result = await response.json();
 
     if (result.success) {
-      alert('Corporate updated successfully');
+      Toast.success('Corporate updated successfully');
       closeEditCorporateModal();
       location.reload();
     } else {
-      alert('Error: ' + (result.error || 'Unknown error'));
+      Toast.error('Error: ' + (result.error || 'Unknown error'));
     }
   } catch (error) {
     console.error('Error updating corporate:', error);
-    alert('An error occurred while updating the corporate');
+    Toast.error('An error occurred while updating the corporate');
   }
 }
 
 function deleteCorporate(id, name) {
-  if (!confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`)) {
-    return;
-  }
+  Toast.warning(`Are you sure you want to delete "${name}"? This action cannot be undone.`);
 
   fetch(`/admin/api/corporates/${id}`, {
     method: 'DELETE',
   })
-    .then(response => response.json())
-    .then(result => {
-      if (result.success) {
-        alert('Corporate deleted successfully');
-        location.reload();
-      } else {
-        alert('Error: ' + result.error);
-      }
-    })
-    .catch(error => {
-      console.error('Error deleting corporate:', error);
-      alert('An error occurred while deleting the corporate');
-    });
+  .then(response => response.json())
+  .then(result => {
+    if (result.success) {
+      Toast.success('Corporate deleted successfully');
+      location.reload();
+    } else {
+      Toast.error('Error: ' + result.error);
+    }
+  })
+  .catch(error => {
+    console.error('Error deleting corporate:', error);
+    Toast.error('An error occurred while deleting the corporate');
+  });
 }
 
 function exportToCSV() {

@@ -19,6 +19,7 @@ class User extends BaseModel {
     this.banned = data.banned || false;
     this.bannedReason = data.banned_reason || data.bannedReason || '';
     this.bannedAt = data.banned_at || data.bannedAt;
+    this.rowid = data.rowid;
   }
 
   /**
