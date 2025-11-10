@@ -1,4 +1,4 @@
-const BaseModel = require('./BaseModel');
+const BaseModel = require('../common/BaseModel');
 
 /**
  * Project model representing a collaborative project

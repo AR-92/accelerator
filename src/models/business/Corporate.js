@@ -1,9 +1,9 @@
 /**
- * Enterprise model representing an enterprise company
+ * Corporate model representing a corporate company
  */
-const BaseModel = require('./BaseModel');
+const BaseModel = require('../common/BaseModel');
 
-class Enterprise extends BaseModel {
+class Corporate extends BaseModel {
   constructor(data = {}) {
     super(data);
     this.userId = data.user_id || data.userId;
@@ -16,6 +16,9 @@ class Enterprise extends BaseModel {
     this.companySize = data.company_size || data.companySize;
     this.revenue = data.revenue;
     this.location = data.location;
+    this.headquarters = data.headquarters;
+    this.employeeCount = data.employee_count || data.employeeCount;
+    this.sector = data.sector;
   }
 
   /**
@@ -28,7 +31,7 @@ class Enterprise extends BaseModel {
   }
 
   /**
-   * Validate enterprise data
+   * Validate corporate data
    * @throws {ValidationError}
    */
   validate() {
@@ -57,14 +60,21 @@ class Enterprise extends BaseModel {
       errors.push('Invalid company size');
     }
 
+    if (
+      this.employeeCount &&
+      (isNaN(this.employeeCount) || this.employeeCount < 0)
+    ) {
+      errors.push('Employee count must be a positive number');
+    }
+
     if (errors.length > 0) {
       const ValidationError = require('../utils/errors/ValidationError');
-      throw new ValidationError('Enterprise validation failed', errors);
+      throw new ValidationError('Corporate validation failed', errors);
     }
   }
 
   /**
-   * Get validation rules for enterprise creation
+   * Get validation rules for corporate creation
    * @returns {Object}
    */
   static getValidationRules() {
@@ -105,8 +115,20 @@ class Enterprise extends BaseModel {
         type: 'string',
         maxLength: 255,
       },
+      headquarters: {
+        type: 'string',
+        maxLength: 255,
+      },
+      employeeCount: {
+        type: 'number',
+        min: 0,
+      },
+      sector: {
+        type: 'string',
+        maxLength: 100,
+      },
     };
   }
 }
 
-module.exports = Enterprise;
+module.exports = Corporate;

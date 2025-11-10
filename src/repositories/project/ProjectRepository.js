@@ -1,5 +1,5 @@
 const BaseRepository = require('../common/BaseRepository');
-const Project = require('../../models/Project');
+const Project = require('../../models/project/Project');
 
 /**
  * Project repository for data access operations

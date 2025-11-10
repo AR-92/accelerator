@@ -1,4 +1,4 @@
-const BaseModel = require('./BaseModel');
+const BaseModel = require('../common/BaseModel');
 
 /**
  * Billing model representing transactions, invoices, and payments

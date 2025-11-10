@@ -1,5 +1,5 @@
 const BaseRepository = require('../../common/BaseRepository');
-const LearningCategory = require('../../../models/LearningCategory');
+const LearningCategory = require('../../../models/content/LearningCategory');
 
 /**
  * Learning Category repository

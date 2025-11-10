@@ -1,9 +1,9 @@
-const BaseModel = require('./BaseModel');
+const BaseModel = require('../common/BaseModel');
 
 /**
- * Help Category model representing categories for help content
+ * Learning Category model representing categories for learning content
  */
-class HelpCategory extends BaseModel {
+class LearningCategory extends BaseModel {
   constructor(data = {}) {
     super(data);
     this.name = data.name;
@@ -44,7 +44,7 @@ class HelpCategory extends BaseModel {
   }
 
   /**
-   * Validate help category data
+   * Validate learning category data
    * @throws {ValidationError}
    */
   validate() {
@@ -71,12 +71,12 @@ class HelpCategory extends BaseModel {
 
     if (errors.length > 0) {
       const ValidationError = require('../utils/errors/ValidationError');
-      throw new ValidationError('Help category validation failed', errors);
+      throw new ValidationError('Learning category validation failed', errors);
     }
   }
 
   /**
-   * Get validation rules for help category creation
+   * Get validation rules for learning category creation
    * @returns {Object}
    */
   static getValidationRules() {
@@ -92,4 +92,4 @@ class HelpCategory extends BaseModel {
   }
 }
 
-module.exports = HelpCategory;
+module.exports = LearningCategory;

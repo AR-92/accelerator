@@ -1,4 +1,4 @@
-const BaseModel = require('./BaseModel');
+const BaseModel = require('../common/BaseModel');
 
 /**
  * Team model representing a team member in a project

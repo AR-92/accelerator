@@ -1,6 +1,6 @@
 const BaseRepository = require('../../common/BaseRepository');
-const LearningContent = require('../../../models/LearningContent');
-const LearningCategory = require('../../../models/LearningCategory');
+const LearningContent = require('../../../models/content/LearningContent');
+const LearningCategory = require('../../../models/content/LearningCategory');
 
 /**
  * Learning Content repository for data access operations

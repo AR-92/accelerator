@@ -1,4 +1,4 @@
-const BaseModel = require('./BaseModel');
+const BaseModel = require('../common/BaseModel');
 
 /**
  * Reward model representing user rewards, achievements, and bonuses

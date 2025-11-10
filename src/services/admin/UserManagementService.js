@@ -95,7 +95,7 @@ class UserManagementService {
         ]);
       }
 
-      const user = new (require('../../models/User'))(userData);
+      const user = new (require('../../models/user/User'))(userData);
       await user.setPassword(userData.password);
       user.validate();
 

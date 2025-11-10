@@ -1,35 +1,28 @@
-const BaseModel = require('./BaseModel');
+const BaseModel = require('../common/BaseModel');
 
 /**
- * Portfolio model representing a portfolio item
+ * Idea model representing a business idea
  */
-class Portfolio extends BaseModel {
+class Idea extends BaseModel {
   constructor(data = {}) {
     super(data);
     this.userId = data.user_id;
+    this.href = data.href;
     this.title = data.title;
+    this.type = data.type;
+    this.typeIcon = data.typeIcon;
+    this.rating = data.rating || 0;
     this.description = data.description;
-    this.category = data.category;
     this.tags = data.tags
       ? Array.isArray(data.tags)
         ? data.tags
         : JSON.parse(data.tags)
       : [];
-    this.votes = data.votes || 0;
-    this.isPublic = data.isPublic || data.is_public || true;
-    this.image = data.image;
-    this.createdDate =
-      data.createdDate || data.created_date
-        ? new Date(data.createdDate || data.created_date)
-        : new Date();
-    this.updatedDate =
-      data.updatedDate || data.updated_date
-        ? new Date(data.updatedDate || data.updated_date)
-        : new Date();
+    this.isFavorite = data.isFavorite || data.is_favorite || false;
   }
 
   /**
-   * Add a tag to the portfolio
+   * Add a tag to the idea
    * @param {string} tag
    */
   addTag(tag) {
@@ -40,7 +33,7 @@ class Portfolio extends BaseModel {
   }
 
   /**
-   * Remove a tag from the portfolio
+   * Remove a tag from the idea
    * @param {string} tag
    */
   removeTag(tag) {
@@ -52,7 +45,7 @@ class Portfolio extends BaseModel {
   }
 
   /**
-   * Check if portfolio has a specific tag
+   * Check if idea has a specific tag
    * @param {string} tag
    * @returns {boolean}
    */
@@ -80,37 +73,17 @@ class Portfolio extends BaseModel {
   }
 
   /**
-   * Increment vote count
-   */
-  incrementVotes() {
-    this.votes += 1;
-    this.touch();
-  }
-
-  /**
-   * Decrement vote count
-   */
-  decrementVotes() {
-    if (this.votes > 0) {
-      this.votes -= 1;
-      this.touch();
-    }
-  }
-
-  /**
    * Convert to JSON
    * @returns {Object}
    */
   toJSON() {
     const obj = super.toJSON();
     obj.tags = this.tags;
-    obj.createdDate = this.createdDate.toISOString();
-    obj.updatedDate = this.updatedDate.toISOString();
     return obj;
   }
 
   /**
-   * Validate portfolio data
+   * Validate idea data
    * @throws {ValidationError}
    */
   validate() {
@@ -120,34 +93,39 @@ class Portfolio extends BaseModel {
       errors.push('Title must be at least 3 characters');
     }
 
-    if (!this.category || this.category.trim().length === 0) {
-      errors.push('Category is required');
+    if (!this.href || this.href.trim().length === 0) {
+      errors.push('Href is required');
     }
 
-    if (this.votes < 0) {
-      errors.push('Votes cannot be negative');
+    if (!this.type || this.type.trim().length === 0) {
+      errors.push('Type is required');
+    }
+
+    if (this.rating < 0 || this.rating > 5) {
+      errors.push('Rating must be between 0 and 5');
     }
 
     if (errors.length > 0) {
       const ValidationError = require('../utils/errors/ValidationError');
-      throw new ValidationError('Portfolio validation failed', errors);
+      throw new ValidationError('Idea validation failed', errors);
     }
   }
 
   /**
-   * Get validation rules for portfolio creation
+   * Get validation rules for idea creation
    * @returns {Object}
    */
   static getValidationRules() {
     return {
       title: { required: true, minLength: 3 },
+      href: { required: true },
+      type: { required: true },
+      typeIcon: { required: true },
+      rating: { required: false, min: 0, max: 5 },
       description: { required: false },
-      category: { required: true },
       tags: { required: false, type: 'array' },
-      isPublic: { required: false, type: 'boolean' },
-      image: { required: false },
     };
   }
 }
 
-module.exports = Portfolio;
+module.exports = Idea;

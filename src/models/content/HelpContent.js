@@ -1,9 +1,9 @@
-const BaseModel = require('./BaseModel');
+const BaseModel = require('../common/BaseModel');
 
 /**
- * Learning Content model representing articles and learning materials
+ * Help Content model representing help articles and support materials
  */
-class LearningContent extends BaseModel {
+class HelpContent extends BaseModel {
   constructor(data = {}) {
     super(data);
     this.categoryId = data.category_id;
@@ -12,7 +12,7 @@ class LearningContent extends BaseModel {
     this.excerpt = data.excerpt;
     this.content = data.content;
     this.featuredImage = data.featured_image;
-    this.readTimeMinutes = data.read_time_minutes || 5;
+    this.readTimeMinutes = data.read_time_minutes || 3;
     this.difficultyLevel = data.difficulty_level || 'beginner';
     this.tags = data.tags
       ? Array.isArray(data.tags)
@@ -22,7 +22,7 @@ class LearningContent extends BaseModel {
     this.isFeatured = data.is_featured || false;
     this.isPublished = data.is_published !== false; // Default to true
     this.viewCount = data.view_count || 0;
-    this.likeCount = data.like_count || 0;
+    this.helpfulCount = data.helpful_count || 0;
     this.authorName = data.author_name;
     this.authorBio = data.author_bio;
     this.authorImage = data.author_image;
@@ -59,19 +59,19 @@ class LearningContent extends BaseModel {
   }
 
   /**
-   * Increment like count
+   * Increment helpful count
    */
-  incrementLikes() {
-    this.likeCount += 1;
+  incrementHelpful() {
+    this.helpfulCount += 1;
     this.touch();
   }
 
   /**
-   * Decrement like count
+   * Decrement helpful count
    */
-  decrementLikes() {
-    if (this.likeCount > 0) {
-      this.likeCount -= 1;
+  decrementHelpful() {
+    if (this.helpfulCount > 0) {
+      this.helpfulCount -= 1;
       this.touch();
     }
   }
@@ -113,6 +113,7 @@ class LearningContent extends BaseModel {
       title: this.title,
       slug: this.slug,
       excerpt: this.excerpt,
+      content: this.content,
       featuredImage: this.featuredImage,
       readTimeMinutes: this.readTimeMinutes,
       difficultyLevel: this.difficultyLevel,
@@ -120,7 +121,7 @@ class LearningContent extends BaseModel {
       isFeatured: this.isFeatured,
       isPublished: this.isPublished,
       viewCount: this.viewCount,
-      likeCount: this.likeCount,
+      helpfulCount: this.helpfulCount,
       authorName: this.authorName,
       authorBio: this.authorBio,
       authorImage: this.authorImage,
@@ -133,7 +134,7 @@ class LearningContent extends BaseModel {
   }
 
   /**
-   * Validate learning content data
+   * Validate help content data
    * @throws {ValidationError}
    */
   validate() {
@@ -163,18 +164,18 @@ class LearningContent extends BaseModel {
       );
     }
 
-    if (this.readTimeMinutes < 1 || this.readTimeMinutes > 120) {
-      errors.push('Read time must be between 1 and 120 minutes');
+    if (this.readTimeMinutes < 1 || this.readTimeMinutes > 60) {
+      errors.push('Read time must be between 1 and 60 minutes');
     }
 
     if (errors.length > 0) {
       const ValidationError = require('../utils/errors/ValidationError');
-      throw new ValidationError('Learning content validation failed', errors);
+      throw new ValidationError('Help content validation failed', errors);
     }
   }
 
   /**
-   * Get validation rules for learning content creation
+   * Get validation rules for help content creation
    * @returns {Object}
    */
   static getValidationRules() {
@@ -184,7 +185,7 @@ class LearningContent extends BaseModel {
       content: { required: true, minLength: 10 },
       categoryId: { required: true },
       excerpt: { required: false },
-      readTimeMinutes: { required: false, min: 1, max: 120 },
+      readTimeMinutes: { required: false, min: 1, max: 60 },
       difficultyLevel: {
         required: false,
         enum: ['beginner', 'intermediate', 'advanced'],
@@ -197,4 +198,4 @@ class LearningContent extends BaseModel {
   }
 }
 
-module.exports = LearningContent;
+module.exports = HelpContent;

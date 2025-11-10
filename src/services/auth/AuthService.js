@@ -34,7 +34,7 @@ class AuthService {
     }
 
     // Create user
-    const newUser = new (require('../models/User'))({
+    const newUser = new (require('../models/user/User'))({
       email,
       firstName,
       lastName,

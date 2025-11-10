@@ -1,6 +1,6 @@
 const BaseRepository = require('../../common/BaseRepository');
-const HelpContent = require('../../../models/HelpContent');
-const HelpCategory = require('../../../models/HelpCategory');
+const HelpContent = require('../../../models/content/HelpContent');
+const HelpCategory = require('../../../models/content/HelpCategory');
 
 /**
  * Help Content repository for data access operations

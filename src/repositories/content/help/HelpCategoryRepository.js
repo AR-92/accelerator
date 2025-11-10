@@ -1,5 +1,5 @@
 const BaseRepository = require('../../common/BaseRepository');
-const HelpCategory = require('../../../models/HelpCategory');
+const HelpCategory = require('../../../models/content/HelpCategory');
 
 /**
  * Help Category repository

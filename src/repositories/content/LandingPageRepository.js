@@ -1,4 +1,4 @@
-const LandingPage = require('../../models/LandingPage');
+const LandingPage = require('../../models/content/LandingPage');
 const BaseRepository = require('../common/BaseRepository');
 
 /**
