@@ -1455,10 +1455,6 @@ body {
   margin-inline-end: -6px;
 }
 
-.-ml-1 {
-  margin-left: -0.25rem;
-}
-
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -4498,14 +4494,6 @@ body {
 
 .opacity-20 {
   opacity: 0.2;
-}
-
-.opacity-25 {
-  opacity: 0.25;
-}
-
-.opacity-75 {
-  opacity: 0.75;
 }
 
 .shadow {

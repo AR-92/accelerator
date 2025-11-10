@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { requireAuth, optionalAuth } = require('../../middleware/auth');
 const SettingsController = require('../../controllers/SettingsController');
-const AuthService = require('../../services/AuthService');
+const AuthService = require('../../services/auth/AuthService');
 const UserRepository = require('../../repositories/UserRepository');
 const { db } = require('../../../config/database');
 
@@ -509,7 +509,7 @@ router.get(
 // GET portfolio
 router.get('/portfolio', requireAuth, async (req, res) => {
   try {
-    const { getAllPortfolio } = require('../../services/databaseService');
+    const { getAllPortfolio } = require('../../services/core/databaseService');
     let portfolioData = await getAllPortfolio(req.user.id);
 
     // Handle filtering, sorting, grouping, and search
@@ -599,7 +599,7 @@ router.get('/portfolio', requireAuth, async (req, res) => {
 // GET individual portfolio idea
 router.get('/portfolio/:id', async (req, res) => {
   try {
-    const { getPortfolioById } = require('../../services/databaseService');
+    const { getPortfolioById } = require('../../services/core/databaseService');
     const idea = await getPortfolioById(req.params.id);
 
     if (!idea) {
@@ -731,7 +731,7 @@ router.get('/new-project', (req, res) => {
 // GET explore ideas page
 router.get('/explore-ideas', optionalAuth, async (req, res) => {
   try {
-    const { getAllIdeas } = require('../../services/databaseService');
+    const { getAllIdeas } = require('../../services/core/databaseService');
     const ideas = await getAllIdeas(); // Show all ideas for exploration
 
     res.render('pages/content/browse-ideas', {

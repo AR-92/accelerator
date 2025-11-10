@@ -79,7 +79,7 @@ class LandingPageService {
 
       const rows = await this.landingPageRepository.query(sql, params);
       const sections = rows.map(
-        (row) => new (require('../models/LandingPage'))(row)
+        (row) => new (require('../../models/LandingPage'))(row)
       );
 
       return {

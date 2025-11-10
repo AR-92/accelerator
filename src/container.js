@@ -31,16 +31,23 @@ const {
 } = require('./repositories/HelpContentRepository');
 
 // Import services
-const AuthService = require('./services/AuthService');
-const IdeaService = require('./services/IdeaService');
-const VoteService = require('./services/VoteService');
-const StartupService = require('./services/StartupService');
-const EnterpriseService = require('./services/EnterpriseService');
-const CorporateService = require('./services/CorporateService');
-const LandingPageService = require('./services/LandingPageService');
-const LearningService = require('./services/LearningService');
-const HelpService = require('./services/HelpService');
-const AdminService = require('./services/AdminService');
+const AuthService = require('./services/auth/AuthService');
+const IdeaService = require('./services/idea/IdeaService');
+const VoteService = require('./services/idea/VoteService');
+const StartupService = require('./services/business/StartupService');
+const EnterpriseService = require('./services/business/EnterpriseService');
+const CorporateService = require('./services/business/CorporateService');
+const LandingPageService = require('./services/content/LandingPageService');
+const LearningService = require('./services/content/LearningService');
+const HelpService = require('./services/content/HelpService');
+
+// Import admin sub-services
+const SystemMonitoringService = require('./services/admin/SystemMonitoringService');
+const UserManagementService = require('./services/admin/UserManagementService');
+const ContentManagementService = require('./services/admin/ContentManagementService');
+const BusinessManagementService = require('./services/admin/BusinessManagementService');
+const ProjectManagementService = require('./services/admin/ProjectManagementService');
+const AdminService = require('./services/admin/AdminService');
 
 // Import controllers
 const AuthController = require('./controllers/AuthController');
@@ -169,9 +176,9 @@ container.register(
     )
 );
 container.register(
-  'adminService',
+  'systemMonitoringService',
   (c) =>
-    new AdminService(
+    new SystemMonitoringService(
       c.get('userRepository'),
       c.get('helpService'),
       c.get('learningService'),
@@ -179,10 +186,54 @@ container.register(
       c.get('startupService'),
       c.get('enterpriseService'),
       c.get('corporateService'),
+      c.get('packageRepository'),
+      c.get('billingRepository'),
+      c.get('rewardRepository')
+    )
+);
+container.register(
+  'userManagementService',
+  (c) =>
+    new UserManagementService(
+      c.get('userRepository'),
+      c.get('adminActivityRepository')
+    )
+);
+container.register(
+  'contentManagementService',
+  (c) =>
+    new ContentManagementService(c.get('helpService'), c.get('learningService'))
+);
+container.register(
+  'businessManagementService',
+  (c) =>
+    new BusinessManagementService(
+      c.get('startupService'),
+      c.get('enterpriseService'),
+      c.get('corporateService'),
+      c.get('adminActivityRepository')
+    )
+);
+container.register(
+  'projectManagementService',
+  (c) =>
+    new ProjectManagementService(
       c.get('projectRepository'),
       c.get('teamRepository'),
+      c.get('adminActivityRepository')
+    )
+);
+container.register(
+  'adminService',
+  (c) =>
+    new AdminService(
+      c.get('systemMonitoringService'),
+      c.get('userManagementService'),
+      c.get('contentManagementService'),
+      c.get('businessManagementService'),
+      c.get('projectManagementService'),
       c.get('ideaService'),
-      c.get('ideaRepository'),
+      c.get('voteService'),
       c.get('landingPageService'),
       c.get('packageRepository'),
       c.get('billingRepository'),

@@ -1,7 +1,7 @@
 /**
  * Enterprise service handling enterprise-specific business logic
  */
-const EnterpriseRepository = require('../repositories/EnterpriseRepository');
+const EnterpriseRepository = require('../../repositories/EnterpriseRepository');
 
 class EnterpriseService {
   constructor(enterpriseRepository) {
