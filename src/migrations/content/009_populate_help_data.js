@@ -1,55 +1,10 @@
 /**
- * Migration: Create help content tables
- * Creates tables for help categories and articles
+ * Migration: Populate help data
+ * Inserts default categories and sample articles for help content
  */
 
 module.exports = {
   up: async (db) => {
-    // Create help categories table
-    const createCategoriesTable = `
-      CREATE TABLE IF NOT EXISTS help_categories (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL UNIQUE,
-        slug TEXT NOT NULL UNIQUE,
-        description TEXT,
-        icon TEXT,
-        color TEXT DEFAULT '#3B82F6',
-        sort_order INTEGER DEFAULT 0,
-        is_active BOOLEAN DEFAULT TRUE,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-      );
-    `;
-
-    // Create help articles table
-    const createArticlesTable = `
-      CREATE TABLE IF NOT EXISTS help_articles (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        category_id INTEGER NOT NULL,
-        title TEXT NOT NULL,
-        slug TEXT NOT NULL UNIQUE,
-        excerpt TEXT,
-        content TEXT NOT NULL,
-        featured_image TEXT,
-        read_time_minutes INTEGER DEFAULT 3,
-        difficulty_level TEXT DEFAULT 'beginner' CHECK (difficulty_level IN ('beginner', 'intermediate', 'advanced')),
-        tags TEXT, -- JSON array of tags
-        is_featured BOOLEAN DEFAULT FALSE,
-        is_published BOOLEAN DEFAULT TRUE,
-        view_count INTEGER DEFAULT 0,
-        helpful_count INTEGER DEFAULT 0,
-        author_name TEXT,
-        author_bio TEXT,
-        author_image TEXT,
-        seo_title TEXT,
-        seo_description TEXT,
-        seo_keywords TEXT,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (category_id) REFERENCES help_categories (id) ON DELETE CASCADE
-      );
-    `;
-
     // Insert default categories
     const insertCategories = `
       INSERT OR IGNORE INTO help_categories (name, slug, description, icon, color, sort_order) VALUES
@@ -107,26 +62,26 @@ module.exports = {
     `;
 
     try {
-      await db.run(createCategoriesTable);
-      await db.run(createArticlesTable);
       await db.run(insertCategories);
       await db.run(insertArticles);
-
-      console.log('Help content tables created successfully');
+      console.log('Help data populated successfully');
     } catch (error) {
-      console.error('Error creating help content tables:', error);
+      console.error('Error populating help data:', error);
       throw error;
     }
   },
 
   down: async (db) => {
     try {
-      await db.run('DROP TABLE IF EXISTS help_articles');
-      await db.run('DROP TABLE IF EXISTS help_categories');
-
-      console.log('Help content tables dropped successfully');
+      await db.run(
+        'DELETE FROM help_articles WHERE category_id IN (SELECT id FROM help_categories WHERE slug IN ("getting-started", "ai-assistant", "account-billing", "faq"))'
+      );
+      await db.run(
+        'DELETE FROM help_categories WHERE slug IN ("getting-started", "ai-assistant", "account-billing", "faq")'
+      );
+      console.log('Help data removed successfully');
     } catch (error) {
-      console.error('Error dropping help content tables:', error);
+      console.error('Error removing help data:', error);
       throw error;
     }
   },
