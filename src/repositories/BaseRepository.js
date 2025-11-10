@@ -80,7 +80,7 @@ class BaseRepository {
     let sql = `SELECT * FROM ${this.tableName}`;
     const params = [];
 
-    if (options.where) {
+    if (options.where && Object.keys(options.where).length > 0) {
       const whereClause = Object.keys(options.where)
         .map((key) => `${key} = ?`)
         .join(' AND ');

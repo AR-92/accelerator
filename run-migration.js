@@ -54,6 +54,21 @@ async function runMigration() {
     await corporatesMigration.up(db);
     console.log('✅ Corporates table migration completed');
 
+    // Run landing pages table migration
+    const landingPagesMigration = require('./src/migrations/014_create_landing_pages_table');
+    await landingPagesMigration.up(db);
+    console.log('✅ Landing pages table migration completed');
+
+    // Run landing pages sample data migration
+    const landingPagesDataMigration = require('./src/migrations/015_populate_landing_pages');
+    await landingPagesDataMigration.up(db);
+    console.log('✅ Landing pages sample data migration completed');
+
+    // Run packages, billing, and rewards migration
+    const packagesBillingRewardsMigration = require('./src/migrations/016_create_packages_billing_rewards_tables');
+    await packagesBillingRewardsMigration.up(db);
+    console.log('✅ Packages, billing, and rewards tables migration completed');
+
     console.log('✅ All migrations completed successfully!');
     process.exit(0);
   } catch (error) {

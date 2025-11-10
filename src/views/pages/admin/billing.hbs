@@ -1,0 +1,422 @@
+
+<div class='flex flex-col gap-4 lg:gap-6'>
+  <!-- Header -->
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1 class='font-heading text-2xl font-semibold text-foreground dark:text-white'>Billing Management</h1>
+      <p class='text-base text-muted-foreground'>Total transactions: {{pagination.total}}</p>
+    </div>
+    <div class='flex gap-2'>
+      <button onclick="openCreateTransactionModal()" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
+        {{lucide 'Plus' 'w-4 h-4 mr-2'}}
+        Create Transaction
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class='grid grid-cols-1 md:grid-cols-4 gap-6 mb-6'>
+    <div class='rounded-md bg-card text-card-foreground shadow-sm p-6'>
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-sm font-medium text-muted-foreground'>Total Revenue</p>
+          <p class='text-2xl font-bold'>${{formatNumber ../billing.totalRevenue 2}}</p>
+        </div>
+        <div class='h-8 w-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center'>
+          {{lucide 'DollarSign' 'h-4 w-4 text-green-600'}}
+        </div>
+      </div>
+    </div>
+
+    <div class='rounded-md bg-card text-card-foreground shadow-sm p-6'>
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-sm font-medium text-muted-foreground'>Total Transactions</p>
+          <p class='text-2xl font-bold'>{{../billing.totalTransactions}}</p>
+        </div>
+        <div class='h-8 w-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center'>
+          {{lucide 'CreditCard' 'h-4 w-4 text-blue-600'}}
+        </div>
+      </div>
+    </div>
+
+    <div class='rounded-md bg-card text-card-foreground shadow-sm p-6'>
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-sm font-medium text-muted-foreground'>Unique Customers</p>
+          <p class='text-2xl font-bold'>{{../billing.uniqueCustomers}}</p>
+        </div>
+        <div class='h-8 w-8 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center'>
+          {{lucide 'Users' 'h-4 w-4 text-purple-600'}}
+        </div>
+      </div>
+    </div>
+
+    <div class='rounded-md bg-card text-card-foreground shadow-sm p-6'>
+      <div class='flex items-center justify-between'>
+        <div>
+          <p class='text-sm font-medium text-muted-foreground'>Pending Transactions</p>
+          <p class='text-2xl font-bold'>{{../billing.pendingTransactions}}</p>
+        </div>
+        <div class='h-8 w-8 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center'>
+          {{lucide 'Clock' 'h-4 w-4 text-yellow-600'}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class='rounded-md bg-card text-card-foreground shadow-sm p-6' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+    <div class='flex flex-wrap gap-4'>
+      <div>
+        <label class='block text-sm font-medium text-foreground mb-2'>Status</label>
+        <select id="statusFilter" class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+          <option value="">All Status</option>
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="completed">Completed</option>
+          <option value="failed">Failed</option>
+          <option value="refunded">Refunded</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div>
+        <label class='block text-sm font-medium text-foreground mb-2'>User ID</label>
+        <input type="number" id="userIdFilter" placeholder="Filter by user ID"
+               class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+      </div>
+      <div class="flex items-end">
+        <button id="applyFilters" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
+          Apply Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transactions Table -->
+  <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+    <div class='px-6 py-4 border-b border-border'>
+      <h2 class='text-lg font-medium text-foreground'>Transactions ({{pagination.total}})</h2>
+    </div>
+
+    <div class='overflow-x-auto'>
+      <table class='w-full'>
+        <thead>
+          <tr class='border-b border-border'>
+            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>ID</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>User</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Amount</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Status</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Payment Method</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Transaction ID</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Created</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each transactions}}
+          <tr class='border-b border-border hover:bg-muted/50'>
+            <td class='p-4 align-middle font-medium'>#{{id}}</td>
+            <td class='p-4 align-middle'>
+              <div class='font-medium'>User #{{userId}}</div>
+            </td>
+            <td class='p-4 align-middle'>
+              <div class='font-medium'>{{currency}} {{amount}}</div>
+              {{#if refundAmount}}
+              <div class='text-sm text-red-600'>Refunded: {{currency}} {{refundAmount}}</div>
+              {{/if}}
+            </td>
+            <td class='p-4 align-middle'>
+              <span class='inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
+                {{#eq status "completed"}}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300
+                {{else if (eq status "pending")}}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300
+                {{else if (eq status "processing")}}bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300
+                {{else if (eq status "failed")}}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300
+                {{else if (eq status "refunded")}}bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300
+                {{else}}bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300{{/eq}}'>
+                {{status}}
+              </span>
+            </td>
+            <td class='p-4 align-middle'>{{paymentMethod}}</td>
+            <td class='p-4 align-middle text-sm font-mono'>{{transactionId}}</td>
+            <td class='p-4 align-middle text-sm text-muted-foreground'>{{formatDate createdAt}}</td>
+            <td class='p-4 align-middle'>
+              <div class='flex items-center gap-2'>
+                <button onclick="viewTransaction({{id}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0'>
+                  {{lucide 'Eye' 'w-4 h-4'}}
+                </button>
+                {{#if (eq status "completed")}}
+                <button onclick="processRefund({{id}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0 text-orange-600 hover:text-orange-700'>
+                  {{lucide 'Undo2' 'w-4 h-4'}}
+                </button>
+                {{/if}}
+                <button onclick="updateTransactionStatus({{id}}, '{{status}}')" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0'>
+                  {{lucide 'Edit' 'w-4 h-4'}}
+                </button>
+              </div>
+            </td>
+          </tr>
+          {{else}}
+          <tr>
+            <td colspan="8" class='p-8 text-center text-muted-foreground'>
+              No transactions found.
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    {{#if (gt pagination.pages 1)}}
+    <div class='flex items-center justify-between px-6 py-4 border-t border-border'>
+      <div class='text-sm text-muted-foreground'>
+        Showing {{pagination.limit}} of {{pagination.total}} transactions
+      </div>
+      <div class='flex items-center gap-2'>
+        {{#if pagination.hasPrev}}
+        <button onclick="loadPage({{subtract pagination.page 1}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-3'>
+          Previous
+        </button>
+        {{/if}}
+
+        <span class='text-sm text-muted-foreground'>
+          Page {{pagination.page}} of {{pagination.pages}}
+        </span>
+
+        {{#if pagination.hasNext}}
+        <button onclick="loadPage({{add pagination.page 1}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-3'>
+          Next
+        </button>
+        {{/if}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+
+  <!-- Transaction Modal -->
+  <div id="transactionModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white" id="transactionModalTitle">Create Transaction</h3>
+            <button onclick="closeTransactionModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+              {{lucide 'X' 'w-6 h-6'}}
+            </button>
+          </div>
+
+          <form id="transactionForm" onsubmit="saveTransaction(event)">
+            <input type="hidden" id="transactionId" name="id">
+
+            <div class="space-y-4">
+              <div>
+                <label for="transactionUserId" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">User ID *</label>
+                <input type="number" id="transactionUserId" name="user_id" required
+                       class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+              </div>
+
+              <div>
+                <label for="transactionAmount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Amount *</label>
+                <input type="number" id="transactionAmount" name="amount" step="0.01" min="0" required
+                       class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label for="transactionCurrency" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Currency</label>
+                  <select id="transactionCurrency" name="currency"
+                          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="transactionStatus" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
+                  <select id="transactionStatus" name="status"
+                          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+                    <option value="pending">Pending</option>
+                    <option value="processing">Processing</option>
+                    <option value="completed">Completed</option>
+                    <option value="failed">Failed</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label for="transactionPaymentMethod" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Payment Method</label>
+                <select id="transactionPaymentMethod" name="payment_method"
+                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+                  <option value="">Select method</option>
+                  <option value="credit_card">Credit Card</option>
+                  <option value="paypal">PayPal</option>
+                  <option value="bank_transfer">Bank Transfer</option>
+                  <option value="crypto">Cryptocurrency</option>
+                  <option value="admin_grant">Admin Grant</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="transactionDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+                <textarea id="transactionDescription" name="description" rows="2"
+                          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"></textarea>
+              </div>
+            </div>
+
+            <div class="flex justify-end gap-3 mt-6">
+              <button type="button" onclick="closeTransactionModal()"
+                      class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600">
+                Cancel
+              </button>
+              <button type="submit"
+                      class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                Save Transaction
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentPage = {{pagination.page}};
+    let currentFilters = {{{json filters}}};
+
+    function loadPage(page) {
+      currentPage = page;
+      loadTransactions();
+    }
+
+    function applyFilters() {
+      currentFilters.status = document.getElementById('statusFilter').value;
+      currentFilters.userId = document.getElementById('userIdFilter').value;
+      currentPage = 1;
+      loadTransactions();
+    }
+
+    function loadTransactions() {
+      const params = new URLSearchParams({
+        page: currentPage,
+        ...currentFilters
+      });
+
+      fetch(`/admin/billing?${params}&ajax=true`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Update table content - similar to packages
+            location.reload(); // Simple reload for now
+          }
+        })
+        .catch(error => console.error('Error loading transactions:', error));
+    }
+
+    function openCreateTransactionModal() {
+      document.getElementById('transactionModalTitle').textContent = 'Create Transaction';
+      document.getElementById('transactionForm').reset();
+      document.getElementById('transactionId').value = '';
+      document.getElementById('transactionModal').classList.remove('hidden');
+    }
+
+    function closeTransactionModal() {
+      document.getElementById('transactionModal').classList.add('hidden');
+    }
+
+    function viewTransaction(id) {
+      window.location.href = `/admin/billing/${id}`;
+    }
+
+    function updateTransactionStatus(id, currentStatus) {
+      const newStatus = prompt('Enter new status (pending, processing, completed, failed, refunded, cancelled):', currentStatus);
+      if (newStatus && newStatus !== currentStatus) {
+        fetch(`/admin/api/billing/${id}/status`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            location.reload();
+          } else {
+            alert('Error: ' + data.error);
+          }
+        })
+        .catch(error => {
+          console.error('Error updating status:', error);
+          alert('An error occurred');
+        });
+      }
+    }
+
+    function processRefund(id) {
+      const refundAmount = prompt('Enter refund amount:');
+      const refundReason = prompt('Enter refund reason:');
+
+      if (refundAmount && refundReason) {
+        fetch(`/admin/api/billing/${id}/refund`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            refundAmount: parseFloat(refundAmount),
+            refundReason
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            location.reload();
+          } else {
+            alert('Error: ' + data.error);
+          }
+        })
+        .catch(error => {
+          console.error('Error processing refund:', error);
+          alert('An error occurred');
+        });
+      }
+    }
+
+    function saveTransaction(event) {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+      const transactionData = {
+        user_id: parseInt(formData.get('user_id')),
+        amount: parseFloat(formData.get('amount')),
+        currency: formData.get('currency'),
+        status: formData.get('status'),
+        payment_method: formData.get('payment_method'),
+        description: formData.get('description')
+      };
+
+      fetch('/admin/api/billing', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(transactionData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          closeTransactionModal();
+          location.reload();
+        } else {
+          alert('Error: ' + data.error);
+        }
+      })
+      .catch(error => {
+        console.error('Error saving transaction:', error);
+        alert('An error occurred');
+      });
+    }
+
+    // Initialize filters
+    document.getElementById('statusFilter').value = currentFilters.status || '';
+    document.getElementById('userIdFilter').value = currentFilters.userId || '';
+    document.getElementById('applyFilters').addEventListener('click', applyFilters);
+  </script>
+</div>

@@ -54,52 +54,144 @@
       </p>
     </div>
 
-    <!-- Total Credits -->
-    <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-      <div class='flex items-center justify-between px-[10px] py-[4px]'>
-        <div class='flex flex-col gap-[4px]'>
-          <h3 class='text-[14px] font-[500] text-muted-foreground'>Total Credits</h3>
-          <p class='text-[18px] font-[600] text-foreground dark:text-gray-100'>{{stats.credits.total}}</p>
-        </div>
-        <div>
-          <div style='background:#FFF3E0; border-radius: 6px;'>
-            <div style='width:38px; height:38px; background:#FFF3E0; border-radius:50%; position:relative;'>
-              <div class='flex items-center justify-center' style='width:35px; height:35px; background:#FF9800; border-radius:50%; position:absolute; top:1.5px; left:1.5px;'>
-                {{lucide 'Coins' 'w-4 h-4 text-white'}}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <p class='flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground'>
-        {{lucide 'TrendingUp' 'w-5 h-4' style='color: #FF9800'}}
-        <span class='text-[#FF9800] dark:text-yellow-400'>+15%</span>Since last month
-      </p>
-    </div>
+     <!-- Total Credits -->
+     <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+       <div class='flex items-center justify-between px-[10px] py-[4px]'>
+         <div class='flex flex-col gap-[4px]'>
+           <h3 class='text-[14px] font-[500] text-muted-foreground'>Total Credits</h3>
+           <p class='text-[18px] font-[600] text-foreground dark:text-gray-100'>{{stats.credits.total}}</p>
+         </div>
+         <div>
+           <div style='background:#FFF3E0; border-radius: 6px;'>
+             <div style='width:38px; height:38px; background:#FFF3E0; border-radius:50%; position:relative;'>
+               <div class='flex items-center justify-center' style='width:35px; height:35px; background:#FF9800; border-radius:50%; position:absolute; top:1.5px; left:1.5px;'>
+                 {{lucide 'Coins' 'w-4 h-4 text-white'}}
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <p class='flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground'>
+         {{lucide 'TrendingUp' 'w-5 h-4' style='color: #FF9800'}}
+         <span class='text-[#FF9800] dark:text-yellow-400'>+15%</span>Since last month
+       </p>
+     </div>
 
-    <!-- Help Articles -->
-    <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-      <div class='flex items-center justify-between px-[10px] py-[4px]'>
-        <div class='flex flex-col gap-[4px]'>
-          <h3 class='text-[14px] font-[500] text-muted-foreground'>Help Articles</h3>
-          <p class='text-[18px] font-[600] text-foreground dark:text-gray-100'>{{stats.content.help.total}}</p>
-        </div>
-        <div>
-          <div style='background:#F3E5F5; border-radius: 6px;'>
-            <div style='width:38px; height:38px; background:#F3E5F5; border-radius:50%; position:relative;'>
-              <div class='flex items-center justify-center' style='width:35px; height:35px; background:#9C27B0; border-radius:50%; position:absolute; top:1.5px; left:1.5px;'>
-                {{lucide 'BookOpen' 'w-4 h-4 text-white'}}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <p class='flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground'>
-        {{lucide 'TrendingUp' 'w-5 h-4' style='color: #9C27B0'}}
-        <span class='text-[#9C27B0] dark:text-purple-400'>+3</span>Since last month
-      </p>
-    </div>
-  </div>
+     <!-- Active Projects -->
+     <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+       <div class='flex items-center justify-between px-[10px] py-[4px]'>
+         <div class='flex flex-col gap-[4px]'>
+           <h3 class='text-[14px] font-[500] text-muted-foreground'>Active Projects</h3>
+           <p class='text-[18px] font-[600] text-foreground dark:text-gray-100'>{{stats.collaborations.totalProjects}}</p>
+         </div>
+         <div>
+           <div style='background:#E1F5FE; border-radius: 6px;'>
+             <div style='width:38px; height:38px; background:#E1F5FE; border-radius:50%; position:relative;'>
+               <div class='flex items-center justify-center' style='width:35px; height:35px; background:#03A9F4; border-radius:50%; position:absolute; top:1.5px; left:1.5px;'>
+                 {{lucide 'FolderOpen' 'w-4 h-4 text-white'}}
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <p class='flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground'>
+         {{lucide 'Users' 'w-5 h-4' style='color: #03A9F4'}}
+         <span class='text-[#03A9F4] dark:text-blue-400'>{{stats.collaborations.totalTeamMembers}} members</span> collaborating
+       </p>
+     </div>
+
+     <!-- Help Articles -->
+     <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+       <div class='flex items-center justify-between px-[10px] py-[4px]'>
+         <div class='flex flex-col gap-[4px]'>
+           <h3 class='text-[14px] font-[500] text-muted-foreground'>Help Articles</h3>
+           <p class='text-[18px] font-[600] text-foreground dark:text-gray-100'>{{stats.content.help.total}}</p>
+         </div>
+         <div>
+           <div style='background:#F3E5F5; border-radius: 6px;'>
+             <div style='width:38px; height:38px; background:#F3E5F5; border-radius:50%; position:relative;'>
+               <div class='flex items-center justify-center' style='width:35px; height:35px; background:#9C27B0; border-radius:50%; position:absolute; top:1.5px; left:1.5px;'>
+                 {{lucide 'BookOpen' 'w-4 h-4 text-white'}}
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <p class='flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground'>
+         {{lucide 'TrendingUp' 'w-5 h-4' style='color: #9C27B0'}}
+         <span class='text-[#9C27B0] dark:text-purple-400'>+3</span>Since last month
+       </p>
+     </div>
+
+     <!-- Total Packages -->
+     <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+       <div class='flex items-center justify-between px-[10px] py-[4px]'>
+         <div class='flex flex-col gap-[4px]'>
+           <h3 class='text-[14px] font-[500] text-muted-foreground'>Total Packages</h3>
+           <p class='text-[18px] font-[600] text-foreground dark:text-gray-100'>{{stats.packages.total}}</p>
+         </div>
+         <div>
+           <div style='background:#E8EAF6; border-radius: 6px;'>
+             <div style='width:38px; height:38px; background:#E8EAF6; border-radius:50%; position:relative;'>
+               <div class='flex items-center justify-center' style='width:35px; height:35px; background:#3F51B5; border-radius:50%; position:absolute; top:1.5px; left:1.5px;'>
+                 {{lucide 'Package' 'w-4 h-4 text-white'}}
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <p class='flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground'>
+         {{lucide 'TrendingUp' 'w-5 h-4' style='color: #3F51B5'}}
+         <span class='text-[#3F51B5] dark:text-indigo-400'>+2</span>Since last month
+       </p>
+     </div>
+
+     <!-- Total Revenue -->
+     <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+       <div class='flex items-center justify-between px-[10px] py-[4px]'>
+         <div class='flex flex-col gap-[4px]'>
+           <h3 class='text-[14px] font-[500] text-muted-foreground'>Total Revenue</h3>
+           <p class='text-[18px] font-[600] text-foreground dark:text-gray-100'>${{stats.billing.totalRevenue}}</p>
+         </div>
+         <div>
+           <div style='background:#E8F5E8; border-radius: 6px;'>
+             <div style='width:38px; height:38px; background:#E8F5E8; border-radius:50%; position:relative;'>
+               <div class='flex items-center justify-center' style='width:35px; height:35px; background:#4CAF50; border-radius:50%; position:absolute; top:1.5px; left:1.5px;'>
+                 {{lucide 'DollarSign' 'w-4 h-4 text-white'}}
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <p class='flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground'>
+         {{lucide 'TrendingUp' 'w-5 h-4' style='color: #4CAF50'}}
+         <span class='text-[#4CAF50] dark:text-green-400'>+12%</span>Since last month
+       </p>
+     </div>
+
+     <!-- Active Rewards -->
+     <div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+       <div class='flex items-center justify-between px-[10px] py-[4px]'>
+         <div class='flex flex-col gap-[4px]'>
+           <h3 class='text-[14px] font-[500] text-muted-foreground'>Active Rewards</h3>
+           <p class='text-[18px] font-[600] text-foreground dark:text-gray-100'>{{stats.rewards.activeRewards}}</p>
+         </div>
+         <div>
+           <div style='background:#FFF3E0; border-radius: 6px;'>
+             <div style='width:38px; height:38px; background:#FFF3E0; border-radius:50%; position:relative;'>
+               <div class='flex items-center justify-center' style='width:35px; height:35px; background:#FF9800; border-radius:50%; position:absolute; top:1.5px; left:1.5px;'>
+                 {{lucide 'Gift' 'w-4 h-4 text-white'}}
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <p class='flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground'>
+         {{lucide 'TrendingUp' 'w-5 h-4' style='color: #FF9800'}}
+         <span class='text-[#FF9800] dark:text-yellow-400'>+5</span>Since last month
+       </p>
+     </div>
+   </div>
 
   <!-- User Roles Breakdown -->
   <div class='rounded-md bg-card text-card-foreground shadow-sm p-6' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
@@ -213,46 +305,48 @@
     <div class='rounded-md bg-card text-card-foreground shadow-sm p-6' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
       <h3 class='text-lg font-medium text-foreground mb-4'>Recent Activity</h3>
        <div class='space-y-3'>
-         {{#each stats.activity}}
-         <div class='flex items-start gap-3'>
-           <div class='flex-shrink-0'>
-             <div class='w-8 h-8 {{#if (eq action "CREATE_USER")}}bg-green-100 dark:bg-green-900/20{{else if (eq action "UPDATE_USER_ROLE")}}bg-blue-100 dark:bg-blue-900/20{{else if (eq action "BAN_USER")}}bg-red-100 dark:bg-red-900/20{{else if (eq action "DELETE_USER")}}bg-red-100 dark:bg-red-900/20{{else}}bg-gray-100 dark:bg-gray-900/20{{/if}} rounded-full flex items-center justify-center'>
-             {{#if (eq action "CREATE_USER")}}
-               {{lucide 'UserPlus' 'w-4 h-4 text-green-600 dark:text-green-400'}}
-             {{else if (eq action "UPDATE_USER_ROLE")}}
-               {{lucide 'Settings' 'w-4 h-4 text-blue-600 dark:text-blue-400'}}
-             {{else if (eq action "BAN_USER")}}
-               {{lucide 'Ban' 'w-4 h-4 text-red-600 dark:text-red-400'}}
-             {{else if (eq action "DELETE_USER")}}
-               {{lucide 'Trash2' 'w-4 h-4 text-red-600 dark:text-red-400'}}
-             {{else}}
-               {{lucide 'Activity' 'w-4 h-4 text-gray-600 dark:text-gray-400'}}
-             {{/if}}
-           </div>
-           <div class='flex-1 min-w-0'>
-             <p class='text-sm text-foreground'>
-               <span class='font-medium'>{{adminEmail}}</span>
-               {{#if (eq action "CREATE_USER")}}
-                 created a new user account
-               {{else if (eq action "UPDATE_USER_ROLE")}}
-                 updated user role to {{details.newRole}}
-               {{else if (eq action "UPDATE_USER_CREDITS")}}
-                 updated user credits
-               {{else if (eq action "BAN_USER")}}
-                 banned user{{#if details.reason}} ({{details.reason}}){{/if}}
-               {{else if (eq action "UNBAN_USER")}}
-                 unbanned user
-               {{else if (eq action "DELETE_USER")}}
-                 deleted user account
-               {{else if (eq action "RESET_USER_PASSWORD")}}
-                 reset user password
-               {{else}}
-                 performed {{action}}
-               {{/if}}
-             </p>
-             <p class='text-xs text-muted-foreground'>{{formatDate timestamp}}</p>
-           </div>
-         </div>
+          {{#each stats.activity}}
+          <div class='flex items-center gap-3'>
+            <div class='flex-shrink-0'>
+              <div class='w-8 h-8 {{#if (eq action "CREATE_USER")}}bg-green-100 dark:bg-green-900/20{{else if (eq action "UPDATE_USER_ROLE")}}bg-blue-100 dark:bg-blue-900/20{{else if (eq action "BAN_USER")}}bg-red-100 dark:bg-red-900/20{{else if (eq action "DELETE_USER")}}bg-red-100 dark:bg-red-900/20{{else}}bg-gray-100 dark:bg-gray-900/20{{/if}} rounded-full flex items-center justify-center'>
+              {{#if (eq action "CREATE_USER")}}
+                {{lucide 'UserPlus' 'w-4 h-4 text-green-600 dark:text-green-400'}}
+              {{else if (eq action "UPDATE_USER_ROLE")}}
+                {{lucide 'Settings' 'w-4 h-4 text-blue-600 dark:text-blue-400'}}
+              {{else if (eq action "BAN_USER")}}
+                {{lucide 'Ban' 'w-4 h-4 text-red-600 dark:text-red-400'}}
+              {{else if (eq action "DELETE_USER")}}
+                {{lucide 'Trash2' 'w-4 h-4 text-red-600 dark:text-red-400'}}
+              {{else}}
+                {{lucide 'Activity' 'w-4 h-4 text-gray-600 dark:text-gray-400'}}
+              {{/if}}
+            </div>
+            <div class='flex-1 min-w-0'>
+              <p class='text-sm text-foreground'>
+                <span class='font-medium'>{{adminEmail}}</span>
+                {{#if (eq action "CREATE_USER")}}
+                  created a new user account
+                {{else if (eq action "UPDATE_USER_ROLE")}}
+                  updated user role to {{details.newRole}}
+                {{else if (eq action "UPDATE_USER_CREDITS")}}
+                  updated user credits
+                {{else if (eq action "BAN_USER")}}
+                  banned user{{#if details.reason}} ({{details.reason}}){{/if}}
+                {{else if (eq action "UNBAN_USER")}}
+                  unbanned user
+                {{else if (eq action "DELETE_USER")}}
+                  deleted user account
+                {{else if (eq action "RESET_USER_PASSWORD")}}
+                  reset user password
+                {{else}}
+                  performed {{action}}
+                {{/if}}
+              </p>
+            </div>
+            <div class='text-xs text-muted-foreground flex-shrink-0'>
+              {{formatDate timestamp}}
+            </div>
+          </div>
          {{else}}
          <p class='text-sm text-muted-foreground'>No recent activity</p>
          {{/each}}
@@ -305,13 +399,37 @@
         </div>
       </a>
 
-      <a href='/admin/settings' class='flex items-center p-4 border border-border rounded-lg hover:bg-muted transition-colors'>
-        {{lucide 'Settings' 'w-8 h-8 text-primary mr-3'}}
-        <div>
-          <p class='font-medium text-foreground'>System Settings</p>
-          <p class='text-sm text-muted-foreground'>Configure application settings</p>
-        </div>
-      </a>
-    </div>
+       <a href='/admin/settings' class='flex items-center p-4 border border-border rounded-lg hover:bg-muted transition-colors'>
+         {{lucide 'Settings' 'w-8 h-8 text-primary mr-3'}}
+         <div>
+           <p class='font-medium text-foreground'>System Settings</p>
+           <p class='text-sm text-muted-foreground'>Configure application settings</p>
+         </div>
+       </a>
+
+       <a href='/admin/packages' class='flex items-center p-4 border border-border rounded-lg hover:bg-muted transition-colors'>
+         {{lucide 'Package' 'w-8 h-8 text-primary mr-3'}}
+         <div>
+           <p class='font-medium text-foreground'>Manage Packages</p>
+           <p class='text-sm text-muted-foreground'>Create and edit credit packages</p>
+         </div>
+       </a>
+
+       <a href='/admin/billing' class='flex items-center p-4 border border-border rounded-lg hover:bg-muted transition-colors'>
+         {{lucide 'CreditCard' 'w-8 h-8 text-primary mr-3'}}
+         <div>
+           <p class='font-medium text-foreground'>Manage Billing</p>
+           <p class='text-sm text-muted-foreground'>View transactions and refunds</p>
+         </div>
+       </a>
+
+       <a href='/admin/rewards' class='flex items-center p-4 border border-border rounded-lg hover:bg-muted transition-colors'>
+         {{lucide 'Gift' 'w-8 h-8 text-primary mr-3'}}
+         <div>
+           <p class='font-medium text-foreground'>Manage Rewards</p>
+           <p class='text-sm text-muted-foreground'>Grant rewards to users</p>
+         </div>
+       </a>
+     </div>
   </div>
 </div>

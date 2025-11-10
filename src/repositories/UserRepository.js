@@ -32,11 +32,20 @@ class UserRepository extends BaseRepository {
 
   /**
    * Create a new user
-   * @param {Object} userData - User data
+   * @param {Object|User} userData - User data or User instance
    * @returns {Promise<number>} Created user ID
    */
   async create(userData) {
-    const user = new User(userData);
+    let user;
+    if (userData instanceof User) {
+      user = userData;
+    } else {
+      user = new User(userData);
+      // If password is provided, hash it
+      if (userData.password) {
+        await user.setPassword(userData.password);
+      }
+    }
     user.validate();
 
     const data = {

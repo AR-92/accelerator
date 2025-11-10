@@ -968,6 +968,814 @@ class AdminController {
   }
 
   /**
+   * Show collaboration management page
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async showCollaborations(req, res) {
+    try {
+      // Check if this is an AJAX request
+      const isAjax =
+        req.headers['x-requested-with'] === 'XMLHttpRequest' ||
+        req.query.ajax === 'true';
+
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 20;
+      const status = req.query.status;
+      const search = req.query.search;
+      const sortBy = req.query.sortBy || 'created_at';
+      const sortOrder = req.query.sortOrder || 'desc';
+
+      const result = await this.adminService.getProjects({
+        page,
+        limit,
+        status,
+        search,
+        sortBy,
+        sortOrder,
+      });
+
+      if (isAjax) {
+        // Return JSON for AJAX requests
+        res.json({
+          success: true,
+          projects: result.projects,
+          pagination: result.pagination,
+          filters: { status, search, sortBy, sortOrder },
+        });
+      } else {
+        // Render full page for regular requests
+        res.render('pages/admin/collaborations', {
+          title: 'Collaboration Management - Admin Panel',
+          layout: 'admin',
+          projects: result.projects,
+          pagination: result.pagination,
+          filters: { status, search, sortBy, sortOrder },
+          activeCollaborations: true,
+          user: req.user,
+        });
+      }
+    } catch (error) {
+      console.error('Error loading collaborations page:', error);
+      if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
+        res.status(500).json({
+          success: false,
+          error: 'An error occurred while loading collaborations.',
+        });
+      } else {
+        res.status(500).render('pages/error/page-not-found', {
+          title: 'Error - Admin Panel',
+          layout: 'admin',
+          message: 'An error occurred while loading collaborations.',
+          user: req.user,
+        });
+      }
+    }
+  }
+
+  /**
+   * Show collaboration details page
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async showCollaborationDetails(req, res) {
+    try {
+      const { projectId } = req.params;
+      const project = await this.adminService.getProjectById(
+        parseInt(projectId)
+      );
+
+      res.render('pages/admin/collaboration-details', {
+        title: `Collaboration Details - ${project.title} - Admin Panel`,
+        layout: 'admin',
+        project,
+        activeCollaborations: true,
+        user: req.user,
+      });
+    } catch (error) {
+      console.error('Error loading collaboration details page:', error);
+      res.status(500).render('pages/error/page-not-found', {
+        title: 'Error - Admin Panel',
+        layout: 'admin',
+        message: 'An error occurred while loading collaboration details.',
+        user: req.user,
+      });
+    }
+  }
+
+  // ===== PACKAGE MANAGEMENT =====
+
+  /**
+   * Show packages management page
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async showPackages(req, res) {
+    try {
+      // Check if this is an AJAX request
+      const isAjax =
+        req.headers['x-requested-with'] === 'XMLHttpRequest' ||
+        req.query.ajax === 'true';
+
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 20;
+      const status = req.query.status;
+      const search = req.query.search;
+
+      const result = await this.adminService.getPackages({
+        page,
+        limit,
+        status,
+        search,
+      });
+
+      if (isAjax) {
+        // Return JSON for AJAX requests
+        res.json({
+          success: true,
+          packages: result.packages,
+          pagination: result.pagination,
+          filters: { status, search },
+        });
+      } else {
+        // Render full page for regular requests
+        res.render('pages/admin/packages', {
+          title: 'Package Management - Admin Panel',
+          layout: 'admin',
+          packages: result.packages,
+          pagination: result.pagination,
+          filters: { status, search },
+          activePackages: true,
+          user: req.user,
+        });
+      }
+    } catch (error) {
+      console.error('Error loading packages page:', error);
+      if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
+        res.status(500).json({
+          success: false,
+          error: 'An error occurred while loading packages.',
+        });
+      } else {
+        res.status(500).render('pages/error/page-not-found', {
+          title: 'Error - Admin Panel',
+          layout: 'admin',
+          message: 'An error occurred while loading packages.',
+          user: req.user,
+        });
+      }
+    }
+  }
+
+  /**
+   * Show package details page
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async showPackageDetails(req, res) {
+    try {
+      const { packageId } = req.params;
+      const pkg = await this.adminService.getPackageById(parseInt(packageId));
+
+      res.render('pages/admin/package-details', {
+        title: `Package Details - ${pkg.name} - Admin Panel`,
+        layout: 'admin',
+        package: pkg,
+        activePackages: true,
+        user: req.user,
+      });
+    } catch (error) {
+      console.error('Error loading package details page:', error);
+      res.status(500).render('pages/error/page-not-found', {
+        title: 'Error - Admin Panel',
+        layout: 'admin',
+        message: 'An error occurred while loading package details.',
+        user: req.user,
+      });
+    }
+  }
+
+  /**
+   * Create a new package
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async createPackage(req, res) {
+    try {
+      const packageData = req.body;
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const pkg = await this.adminService.createPackage(packageData, adminInfo);
+
+      res.status(201).json({
+        success: true,
+        package: pkg,
+        message: 'Package created successfully',
+      });
+    } catch (error) {
+      console.error('Error creating package:', error);
+
+      if (error.name === 'ValidationError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while creating package',
+      });
+    }
+  }
+
+  /**
+   * Update a package
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async updatePackage(req, res) {
+    try {
+      const { packageId } = req.params;
+      const packageData = req.body;
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const pkg = await this.adminService.updatePackage(
+        parseInt(packageId),
+        packageData,
+        adminInfo
+      );
+
+      res.json({
+        success: true,
+        package: pkg,
+        message: 'Package updated successfully',
+      });
+    } catch (error) {
+      console.error('Error updating package:', error);
+
+      if (error.name === 'NotFoundError' || error.name === 'ValidationError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while updating package',
+      });
+    }
+  }
+
+  /**
+   * Delete a package
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async deletePackage(req, res) {
+    try {
+      const { packageId } = req.params;
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const success = await this.adminService.deletePackage(
+        parseInt(packageId),
+        adminInfo
+      );
+
+      if (success) {
+        res.json({
+          success: true,
+          message: 'Package deleted successfully',
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          error: 'Package not found',
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting package:', error);
+
+      if (error.name === 'NotFoundError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while deleting package',
+      });
+    }
+  }
+
+  // ===== BILLING MANAGEMENT =====
+
+  /**
+   * Show billing management page
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async showBilling(req, res) {
+    try {
+      // Check if this is an AJAX request
+      const isAjax =
+        req.headers['x-requested-with'] === 'XMLHttpRequest' ||
+        req.query.ajax === 'true';
+
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 20;
+      const status = req.query.status;
+      const userId = req.query.userId;
+
+      const result = await this.adminService.getBillingTransactions({
+        page,
+        limit,
+        status,
+        userId,
+      });
+
+      if (isAjax) {
+        // Return JSON for AJAX requests
+        res.json({
+          success: true,
+          transactions: result.transactions,
+          pagination: result.pagination,
+          filters: { status, userId },
+        });
+      } else {
+        // Render full page for regular requests
+        res.render('pages/admin/billing', {
+          title: 'Billing Management - Admin Panel',
+          layout: 'admin',
+          transactions: result.transactions,
+          pagination: result.pagination,
+          filters: { status, userId },
+          activeBilling: true,
+          user: req.user,
+        });
+      }
+    } catch (error) {
+      console.error('Error loading billing page:', error);
+      if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
+        res.status(500).json({
+          success: false,
+          error: 'An error occurred while loading billing transactions.',
+        });
+      } else {
+        res.status(500).render('pages/error/page-not-found', {
+          title: 'Error - Admin Panel',
+          layout: 'admin',
+          message: 'An error occurred while loading billing transactions.',
+          user: req.user,
+        });
+      }
+    }
+  }
+
+  /**
+   * Show billing transaction details page
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async showBillingDetails(req, res) {
+    try {
+      const { billingId } = req.params;
+      const transaction = await this.adminService.getBillingTransactionById(
+        parseInt(billingId)
+      );
+
+      res.render('pages/admin/billing-details', {
+        title: `Billing Details - Transaction ${billingId} - Admin Panel`,
+        layout: 'admin',
+        transaction,
+        activeBilling: true,
+        user: req.user,
+      });
+    } catch (error) {
+      console.error('Error loading billing details page:', error);
+      res.status(500).render('pages/error/page-not-found', {
+        title: 'Error - Admin Panel',
+        layout: 'admin',
+        message: 'An error occurred while loading billing details.',
+        user: req.user,
+      });
+    }
+  }
+
+  /**
+   * Create a billing transaction
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async createBillingTransaction(req, res) {
+    try {
+      const billingData = req.body;
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const transaction = await this.adminService.createBillingTransaction(
+        billingData,
+        adminInfo
+      );
+
+      res.status(201).json({
+        success: true,
+        transaction,
+        message: 'Billing transaction created successfully',
+      });
+    } catch (error) {
+      console.error('Error creating billing transaction:', error);
+
+      if (error.name === 'ValidationError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while creating billing transaction',
+      });
+    }
+  }
+
+  /**
+   * Update billing transaction status
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async updateBillingStatus(req, res) {
+    try {
+      const { billingId } = req.params;
+      const { status } = req.body;
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const transaction =
+        await this.adminService.updateBillingTransactionStatus(
+          parseInt(billingId),
+          status,
+          adminInfo
+        );
+
+      res.json({
+        success: true,
+        transaction,
+        message: 'Billing transaction status updated successfully',
+      });
+    } catch (error) {
+      console.error('Error updating billing status:', error);
+
+      if (error.name === 'NotFoundError' || error.name === 'ValidationError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while updating billing status',
+      });
+    }
+  }
+
+  /**
+   * Process refund
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async processRefund(req, res) {
+    try {
+      const { billingId } = req.params;
+      const { refundAmount, refundReason } = req.body;
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const transaction = await this.adminService.processRefund(
+        parseInt(billingId),
+        refundAmount,
+        refundReason,
+        adminInfo
+      );
+
+      res.json({
+        success: true,
+        transaction,
+        message: 'Refund processed successfully',
+      });
+    } catch (error) {
+      console.error('Error processing refund:', error);
+
+      if (error.name === 'NotFoundError' || error.name === 'ValidationError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while processing refund',
+      });
+    }
+  }
+
+  // ===== REWARD MANAGEMENT =====
+
+  /**
+   * Show rewards management page
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async showRewards(req, res) {
+    try {
+      // Check if this is an AJAX request
+      const isAjax =
+        req.headers['x-requested-with'] === 'XMLHttpRequest' ||
+        req.query.ajax === 'true';
+
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 20;
+      const status = req.query.status;
+      const type = req.query.type;
+      const userId = req.query.userId;
+
+      const result = await this.adminService.getRewards({
+        page,
+        limit,
+        status,
+        type,
+        userId,
+      });
+
+      if (isAjax) {
+        // Return JSON for AJAX requests
+        res.json({
+          success: true,
+          rewards: result.rewards,
+          pagination: result.pagination,
+          filters: { status, type, userId },
+        });
+      } else {
+        // Render full page for regular requests
+        res.render('pages/admin/rewards', {
+          title: 'Reward Management - Admin Panel',
+          layout: 'admin',
+          rewards: result.rewards,
+          pagination: result.pagination,
+          filters: { status, type, userId },
+          activeRewards: true,
+          user: req.user,
+        });
+      }
+    } catch (error) {
+      console.error('Error loading rewards page:', error);
+      if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
+        res.status(500).json({
+          success: false,
+          error: 'An error occurred while loading rewards.',
+        });
+      } else {
+        res.status(500).render('pages/error/page-not-found', {
+          title: 'Error - Admin Panel',
+          layout: 'admin',
+          message: 'An error occurred while loading rewards.',
+          user: req.user,
+        });
+      }
+    }
+  }
+
+  /**
+   * Show reward details page
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async showRewardDetails(req, res) {
+    try {
+      const { rewardId } = req.params;
+      const reward = await this.adminService.getRewardById(parseInt(rewardId));
+
+      res.render('pages/admin/reward-details', {
+        title: `Reward Details - ${reward.title} - Admin Panel`,
+        layout: 'admin',
+        reward,
+        activeRewards: true,
+        user: req.user,
+      });
+    } catch (error) {
+      console.error('Error loading reward details page:', error);
+      res.status(500).render('pages/error/page-not-found', {
+        title: 'Error - Admin Panel',
+        layout: 'admin',
+        message: 'An error occurred while loading reward details.',
+        user: req.user,
+      });
+    }
+  }
+
+  /**
+   * Create a reward
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async createReward(req, res) {
+    try {
+      const rewardData = req.body;
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const reward = await this.adminService.createReward(
+        rewardData,
+        adminInfo
+      );
+
+      res.status(201).json({
+        success: true,
+        reward,
+        message: 'Reward created successfully',
+      });
+    } catch (error) {
+      console.error('Error creating reward:', error);
+
+      if (error.name === 'ValidationError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while creating reward',
+      });
+    }
+  }
+
+  /**
+   * Update a reward
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async updateReward(req, res) {
+    try {
+      const { rewardId } = req.params;
+      const rewardData = req.body;
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const reward = await this.adminService.updateReward(
+        parseInt(rewardId),
+        rewardData,
+        adminInfo
+      );
+
+      res.json({
+        success: true,
+        reward,
+        message: 'Reward updated successfully',
+      });
+    } catch (error) {
+      console.error('Error updating reward:', error);
+
+      if (error.name === 'NotFoundError' || error.name === 'ValidationError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while updating reward',
+      });
+    }
+  }
+
+  /**
+   * Delete a reward
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async deleteReward(req, res) {
+    try {
+      const { rewardId } = req.params;
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const success = await this.adminService.deleteReward(
+        parseInt(rewardId),
+        adminInfo
+      );
+
+      if (success) {
+        res.json({
+          success: true,
+          message: 'Reward deleted successfully',
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          error: 'Reward not found',
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting reward:', error);
+
+      if (error.name === 'NotFoundError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while deleting reward',
+      });
+    }
+  }
+
+  /**
+   * Grant reward to user
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async grantReward(req, res) {
+    try {
+      const { userId, type, title, credits } = req.body;
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const reward = await this.adminService.grantRewardToUser(
+        parseInt(userId),
+        type,
+        title,
+        parseInt(credits),
+        adminInfo
+      );
+
+      res.status(201).json({
+        success: true,
+        reward,
+        message: 'Reward granted successfully',
+      });
+    } catch (error) {
+      console.error('Error granting reward:', error);
+
+      if (error.name === 'ValidationError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while granting reward',
+      });
+    }
+  }
+
+  /**
    * Get system stats for HTMX polling (API endpoint)
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
@@ -1908,6 +2716,434 @@ class AdminController {
   }
 
   /**
+   * Show ideas management page
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async showIdeas(req, res) {
+    try {
+      // Check if this is an AJAX request
+      const isAjax =
+        req.headers['x-requested-with'] === 'XMLHttpRequest' ||
+        req.query.ajax === 'true';
+
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 20;
+      const search = req.query.search;
+      const sortBy = req.query.sortBy || 'created_at';
+      const sortOrder = req.query.sortOrder || 'desc';
+
+      const result = await this.adminService.getIdeas({
+        page,
+        limit,
+        search,
+        sortBy,
+        sortOrder,
+      });
+
+      if (isAjax) {
+        // Return JSON for AJAX requests
+        res.json({
+          success: true,
+          ideas: result.ideas,
+          pagination: result.pagination,
+          filters: { search, sortBy, sortOrder },
+        });
+      } else {
+        // Render full page for regular requests
+        res.render('pages/admin/ideas', {
+          title: 'Ideas Management - Admin Panel',
+          layout: 'admin',
+          ideas: result.ideas,
+          pagination: result.pagination,
+          filters: { search, sortBy, sortOrder },
+          activeIdeas: true,
+          user: req.user,
+        });
+      }
+    } catch (error) {
+      console.error('Error loading ideas page:', error);
+      if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
+        res.status(500).json({
+          success: false,
+          error: 'An error occurred while loading ideas.',
+        });
+      } else {
+        res.status(500).render('pages/error/page-not-found', {
+          title: 'Error - Admin Panel',
+          layout: 'admin',
+          message: 'An error occurred while loading ideas.',
+          user: req.user,
+        });
+      }
+    }
+  }
+
+  /**
+   * Show idea details page
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async showIdeaDetails(req, res) {
+    try {
+      const { ideaId } = req.params;
+      const idea = await this.adminService.getIdeaById(parseInt(ideaId));
+
+      res.render('pages/admin/idea-details', {
+        title: `Idea Details - ${idea.title} - Admin Panel`,
+        layout: 'admin',
+        idea,
+        activeIdeas: true,
+        user: req.user,
+      });
+    } catch (error) {
+      console.error('Error loading idea details page:', error);
+      res.status(500).render('pages/error/page-not-found', {
+        title: 'Error - Admin Panel',
+        layout: 'admin',
+        message: 'An error occurred while loading idea details.',
+        user: req.user,
+      });
+    }
+  }
+
+  /**
+   * Get idea by ID (API endpoint)
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async getIdea(req, res) {
+    try {
+      const { ideaId } = req.params;
+      const idea = await this.adminService.getIdeaById(parseInt(ideaId));
+
+      res.json({
+        success: true,
+        idea,
+      });
+    } catch (error) {
+      console.error('Error getting idea:', error);
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while fetching idea details',
+      });
+    }
+  }
+
+  /**
+   * Show votes management page
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async showVotes(req, res) {
+    try {
+      // Check if this is an AJAX request
+      const isAjax =
+        req.headers['x-requested-with'] === 'XMLHttpRequest' ||
+        req.query.ajax === 'true';
+
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 20;
+
+      const result = await this.adminService.getVotes({
+        page,
+        limit,
+      });
+
+      if (isAjax) {
+        // Return JSON for AJAX requests
+        res.json({
+          success: true,
+          votes: result.votes,
+          pagination: result.pagination,
+        });
+      } else {
+        // Render full page for regular requests
+        res.render('pages/admin/votes', {
+          title: 'Votes Management - Admin Panel',
+          layout: 'admin',
+          votes: result.votes,
+          pagination: result.pagination,
+          activeVotes: true,
+          user: req.user,
+        });
+      }
+    } catch (error) {
+      console.error('Error loading votes page:', error);
+      if (req.headers['x-requested-with'] === 'XMLHttpRequest') {
+        res.status(500).json({
+          success: false,
+          error: 'An error occurred while loading votes.',
+        });
+      } else {
+        res.status(500).render('pages/error/page-not-found', {
+          title: 'Error - Admin Panel',
+          layout: 'admin',
+          message: 'An error occurred while loading votes.',
+          user: req.user,
+        });
+      }
+    }
+  }
+
+  /**
+   * Update an idea
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async updateIdea(req, res) {
+    try {
+      const { ideaId } = req.params;
+      const ideaData = req.body;
+
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const idea = await this.adminService.updateIdea(
+        parseInt(ideaId),
+        ideaData,
+        adminInfo
+      );
+
+      res.json({
+        success: true,
+        idea,
+        message: 'Idea updated successfully',
+      });
+    } catch (error) {
+      console.error('Error updating idea:', error);
+
+      if (error.name === 'NotFoundError' || error.name === 'ValidationError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while updating idea',
+      });
+    }
+  }
+
+  /**
+   * Delete an idea
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async deleteIdea(req, res) {
+    try {
+      const { ideaId } = req.params;
+
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const success = await this.adminService.deleteIdea(
+        parseInt(ideaId),
+        adminInfo
+      );
+
+      if (success) {
+        res.json({
+          success: true,
+          message: 'Idea deleted successfully',
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          error: 'Idea not found',
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting idea:', error);
+
+      if (error.name === 'NotFoundError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while deleting idea',
+      });
+    }
+  }
+
+  /**
+   * Get project by ID (API endpoint)
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async getProject(req, res) {
+    try {
+      const { projectId } = req.params;
+      const project = await this.adminService.getProjectById(
+        parseInt(projectId)
+      );
+
+      res.json({
+        success: true,
+        project,
+      });
+    } catch (error) {
+      console.error('Error getting project:', error);
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while fetching project details',
+      });
+    }
+  }
+
+  /**
+   * Update project status
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async updateProjectStatus(req, res) {
+    try {
+      const { projectId } = req.params;
+      const { status } = req.body;
+
+      if (!status) {
+        return res.status(400).json({
+          success: false,
+          error: 'Status is required',
+        });
+      }
+
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const project = await this.adminService.updateProjectStatus(
+        parseInt(projectId),
+        status,
+        adminInfo
+      );
+
+      res.json({
+        success: true,
+        project,
+        message: 'Project status updated successfully',
+      });
+    } catch (error) {
+      console.error('Error updating project status:', error);
+
+      if (error.name === 'NotFoundError' || error.name === 'ValidationError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while updating project status',
+      });
+    }
+  }
+
+  /**
+   * Remove user from project
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async removeUserFromProject(req, res) {
+    try {
+      const { projectId, userId } = req.params;
+
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const success = await this.adminService.removeUserFromProject(
+        parseInt(projectId),
+        parseInt(userId),
+        adminInfo
+      );
+
+      if (success) {
+        res.json({
+          success: true,
+          message: 'User removed from project successfully',
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          error: 'User not found in project',
+        });
+      }
+    } catch (error) {
+      console.error('Error removing user from project:', error);
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while removing user from project',
+      });
+    }
+  }
+
+  /**
+   * Delete project
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async deleteProject(req, res) {
+    try {
+      const { projectId } = req.params;
+
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const success = await this.adminService.deleteProject(
+        parseInt(projectId),
+        adminInfo
+      );
+
+      if (success) {
+        res.json({
+          success: true,
+          message: 'Project deleted successfully',
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          error: 'Project not found',
+        });
+      }
+    } catch (error) {
+      console.error('Error deleting project:', error);
+
+      if (error.name === 'NotFoundError') {
+        return res.status(error.statusCode).json({
+          success: false,
+          error: error.firstError,
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while deleting project',
+      });
+    }
+  }
+
+  /**
    * Bulk update enterprise status
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
@@ -2361,6 +3597,427 @@ class AdminController {
       res.status(500).json({
         success: false,
         error: 'An error occurred while exporting corporates',
+      });
+    }
+  }
+
+  /**
+   * Show landing page management page
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async showLandingPage(req, res) {
+    try {
+      // Check if this is an AJAX request
+      const isAjax =
+        req.headers['x-requested-with'] === 'XMLHttpRequest' ||
+        req.query.ajax === 'true';
+
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 20;
+      const sectionType = req.query.sectionType;
+      const search = req.query.search;
+
+      const result = await this.adminService.getLandingPageSections({
+        page,
+        limit,
+        sectionType,
+        search,
+      });
+
+      const sectionTypes = this.adminService.getLandingPageSectionTypes();
+
+      if (isAjax) {
+        return res.json({
+          success: true,
+          sections: result.sections.map((section) => section.toJSON()),
+          pagination: result.pagination,
+          filters: { sectionType, search },
+        });
+      }
+
+      res.render('pages/admin/landing-page', {
+        title: 'Landing Page Management - Admin Panel',
+        layout: 'admin',
+        sections: result.sections,
+        pagination: result.pagination,
+        sectionTypes,
+        filters: { sectionType, search },
+        activeLandingPage: true,
+        user: req.user,
+      });
+    } catch (error) {
+      console.error('Error loading landing page management:', error);
+      res.status(500).render('pages/error/page-not-found', {
+        title: 'Error - Admin Panel',
+        layout: 'admin',
+        message: 'An error occurred while loading landing page management.',
+        user: req.user,
+      });
+    }
+  }
+
+  /**
+   * Show landing page section details
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async showLandingPageSection(req, res) {
+    try {
+      const { sectionId } = req.params;
+      const section =
+        await this.adminService.getLandingPageSectionById(sectionId);
+
+      if (!section) {
+        return res.status(404).render('pages/error/page-not-found', {
+          title: 'Section Not Found - Admin Panel',
+          layout: 'admin',
+          message: 'The requested landing page section was not found.',
+          user: req.user,
+        });
+      }
+
+      const sectionTypes = this.adminService.getLandingPageSectionTypes();
+
+      res.render('pages/admin/landing-page-section', {
+        title: `Landing Page Section - ${section.title} - Admin Panel`,
+        layout: 'admin',
+        section,
+        sectionTypes,
+        activeLandingPage: true,
+        user: req.user,
+      });
+    } catch (error) {
+      console.error('Error loading landing page section:', error);
+      res.status(500).render('pages/error/page-not-found', {
+        title: 'Error - Admin Panel',
+        layout: 'admin',
+        message: 'An error occurred while loading the landing page section.',
+        user: req.user,
+      });
+    }
+  }
+
+  /**
+   * Get landing page section data (API)
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async getLandingPageSection(req, res) {
+    try {
+      const { sectionId } = req.params;
+      const section =
+        await this.adminService.getLandingPageSectionById(sectionId);
+
+      if (!section) {
+        return res.status(404).json({
+          success: false,
+          error: 'Landing page section not found',
+        });
+      }
+
+      res.json({
+        success: true,
+        section,
+      });
+    } catch (error) {
+      console.error('Error fetching landing page section:', error);
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while fetching the landing page section',
+      });
+    }
+  }
+
+  /**
+   * Create landing page section
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async createLandingPageSection(req, res) {
+    try {
+      const sectionData = {
+        sectionType: req.body.sectionType,
+        title: req.body.title,
+        subtitle: req.body.subtitle,
+        content: req.body.content,
+        imageUrl: req.body.imageUrl,
+        buttonText: req.body.buttonText,
+        buttonUrl: req.body.buttonUrl,
+        order: parseInt(req.body.order) || 0,
+        isActive: req.body.isActive === 'on' || req.body.isActive === true,
+        metadata: req.body.metadata || {},
+      };
+
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const sectionId = await this.adminService.createLandingPageSection(
+        sectionData,
+        adminInfo
+      );
+
+      res.json({
+        success: true,
+        sectionId,
+        message: 'Landing page section created successfully',
+      });
+    } catch (error) {
+      console.error('Error creating landing page section:', error);
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while creating the landing page section',
+      });
+    }
+  }
+
+  /**
+   * Update landing page section
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async updateLandingPageSection(req, res) {
+    try {
+      const { sectionId } = req.params;
+      const sectionData = {
+        sectionType: req.body.sectionType,
+        title: req.body.title,
+        subtitle: req.body.subtitle,
+        content: req.body.content,
+        imageUrl: req.body.imageUrl,
+        buttonText: req.body.buttonText,
+        buttonUrl: req.body.buttonUrl,
+        order: parseInt(req.body.order) || 0,
+        isActive: req.body.isActive === 'on' || req.body.isActive === true,
+        metadata: req.body.metadata || {},
+      };
+
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const success = await this.adminService.updateLandingPageSection(
+        sectionId,
+        sectionData,
+        adminInfo
+      );
+
+      if (!success) {
+        return res.status(404).json({
+          success: false,
+          error: 'Landing page section not found or could not be updated',
+        });
+      }
+
+      res.json({
+        success: true,
+        message: 'Landing page section updated successfully',
+      });
+    } catch (error) {
+      console.error('Error updating landing page section:', error);
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while updating the landing page section',
+      });
+    }
+  }
+
+  /**
+   * Delete landing page section
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async deleteLandingPageSection(req, res) {
+    try {
+      const { sectionId } = req.params;
+
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const success = await this.adminService.deleteLandingPageSection(
+        sectionId,
+        adminInfo
+      );
+
+      if (!success) {
+        return res.status(404).json({
+          success: false,
+          error: 'Landing page section not found or could not be deleted',
+        });
+      }
+
+      res.json({
+        success: true,
+        message: 'Landing page section deleted successfully',
+      });
+    } catch (error) {
+      console.error('Error deleting landing page section:', error);
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while deleting the landing page section',
+      });
+    }
+  }
+
+  /**
+   * Toggle landing page section status
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async toggleLandingPageSectionStatus(req, res) {
+    try {
+      const { sectionId } = req.params;
+
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const success = await this.adminService.toggleLandingPageSectionStatus(
+        sectionId,
+        adminInfo
+      );
+
+      if (!success) {
+        return res.status(404).json({
+          success: false,
+          error: 'Landing page section not found or could not be toggled',
+        });
+      }
+
+      res.json({
+        success: true,
+        message: 'Landing page section status updated successfully',
+      });
+    } catch (error) {
+      console.error('Error toggling landing page section status:', error);
+      res.status(500).json({
+        success: false,
+        error:
+          'An error occurred while updating the landing page section status',
+      });
+    }
+  }
+
+  /**
+   * Update landing page section order
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async updateLandingPageSectionOrder(req, res) {
+    try {
+      const { sectionId } = req.params;
+      const { order } = req.body;
+
+      const adminInfo = {
+        id: req.user.id,
+        email: req.user.email,
+        ip: req.ip || req.connection.remoteAddress,
+      };
+
+      const success = await this.adminService.updateLandingPageSectionOrder(
+        sectionId,
+        parseInt(order),
+        adminInfo
+      );
+
+      if (!success) {
+        return res.status(404).json({
+          success: false,
+          error: 'Landing page section not found or could not be reordered',
+        });
+      }
+
+      res.json({
+        success: true,
+        message: 'Landing page section order updated successfully',
+      });
+    } catch (error) {
+      console.error('Error updating landing page section order:', error);
+      res.status(500).json({
+        success: false,
+        error:
+          'An error occurred while updating the landing page section order',
+      });
+    }
+  }
+
+  /**
+   * Get package details (API endpoint)
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async getPackage(req, res) {
+    try {
+      const { packageId } = req.params;
+      const pkg = await this.adminService.getPackageById(parseInt(packageId));
+
+      res.json({
+        success: true,
+        package: pkg,
+      });
+    } catch (error) {
+      console.error('Error getting package:', error);
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while fetching package details',
+      });
+    }
+  }
+
+  /**
+   * Get billing transaction details (API endpoint)
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async getBillingTransaction(req, res) {
+    try {
+      const { billingId } = req.params;
+      const transaction = await this.adminService.getBillingTransactionById(
+        parseInt(billingId)
+      );
+
+      res.json({
+        success: true,
+        transaction,
+      });
+    } catch (error) {
+      console.error('Error getting billing transaction:', error);
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while fetching billing transaction details',
+      });
+    }
+  }
+
+  /**
+   * Get reward details (API endpoint)
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async getReward(req, res) {
+    try {
+      const { rewardId } = req.params;
+      const reward = await this.adminService.getRewardById(parseInt(rewardId));
+
+      res.json({
+        success: true,
+        reward,
+      });
+    } catch (error) {
+      console.error('Error getting reward:', error);
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while fetching reward details',
       });
     }
   }

@@ -178,6 +178,18 @@ router.get(
   adminController.showEnterpriseDetails.bind(adminController)
 );
 
+// Collaboration management routes
+router.get(
+  '/collaborations',
+  requireAdminAuth,
+  adminController.showCollaborations.bind(adminController)
+);
+router.get(
+  '/collaborations/:projectId',
+  requireAdminAuth,
+  adminController.showCollaborationDetails.bind(adminController)
+);
+
 // Enterprise API routes
 router.post(
   '/api/enterprises',
@@ -213,6 +225,28 @@ router.get(
   '/api/enterprises/export/csv',
   requireAdminAuth,
   adminController.exportEnterprisesToCSV.bind(adminController)
+);
+
+// Collaboration API routes
+router.get(
+  '/api/collaborations/:projectId',
+  requireAdminAuth,
+  adminController.getProject.bind(adminController)
+);
+router.put(
+  '/api/collaborations/:projectId/status',
+  requireAdminAuth,
+  adminController.updateProjectStatus.bind(adminController)
+);
+router.delete(
+  '/api/collaborations/:projectId/users/:userId',
+  requireAdminAuth,
+  adminController.removeUserFromProject.bind(adminController)
+);
+router.delete(
+  '/api/collaborations/:projectId',
+  requireAdminAuth,
+  adminController.deleteProject.bind(adminController)
 );
 
 // Corporate management routes
@@ -262,6 +296,193 @@ router.get(
   '/api/corporates/export/csv',
   requireAdminAuth,
   adminController.exportCorporatesToCSV.bind(adminController)
+);
+
+// Ideas management routes
+router.get(
+  '/ideas',
+  requireAdminAuth,
+  adminController.showIdeas.bind(adminController)
+);
+router.get(
+  '/ideas/:ideaId',
+  requireAdminAuth,
+  adminController.showIdeaDetails.bind(adminController)
+);
+
+// Ideas API routes
+router.get(
+  '/api/ideas/:ideaId',
+  requireAdminAuth,
+  adminController.getIdea.bind(adminController)
+);
+router.put(
+  '/api/ideas/:ideaId',
+  requireAdminAuth,
+  adminController.updateIdea.bind(adminController)
+);
+router.delete(
+  '/api/ideas/:ideaId',
+  requireAdminAuth,
+  adminController.deleteIdea.bind(adminController)
+);
+
+// Votes management routes
+router.get(
+  '/votes',
+  requireAdminAuth,
+  adminController.showVotes.bind(adminController)
+);
+
+// Package management routes
+router.get(
+  '/packages',
+  requireAdminAuth,
+  adminController.showPackages.bind(adminController)
+);
+router.get(
+  '/packages/:packageId',
+  requireAdminAuth,
+  adminController.showPackageDetails.bind(adminController)
+);
+
+// Package API routes
+router.post(
+  '/api/packages',
+  requireAdminAuth,
+  adminController.createPackage.bind(adminController)
+);
+router.get(
+  '/api/packages/:packageId',
+  requireAdminAuth,
+  adminController.getPackage.bind(adminController)
+);
+router.put(
+  '/api/packages/:packageId',
+  requireAdminAuth,
+  adminController.updatePackage.bind(adminController)
+);
+router.delete(
+  '/api/packages/:packageId',
+  requireAdminAuth,
+  adminController.deletePackage.bind(adminController)
+);
+
+// Billing management routes
+router.get(
+  '/billing',
+  requireAdminAuth,
+  adminController.showBilling.bind(adminController)
+);
+router.get(
+  '/billing/:billingId',
+  requireAdminAuth,
+  adminController.showBillingDetails.bind(adminController)
+);
+
+// Billing API routes
+router.post(
+  '/api/billing',
+  requireAdminAuth,
+  adminController.createBillingTransaction.bind(adminController)
+);
+router.get(
+  '/api/billing/:billingId',
+  requireAdminAuth,
+  adminController.getBillingTransaction.bind(adminController)
+);
+router.put(
+  '/api/billing/:billingId/status',
+  requireAdminAuth,
+  adminController.updateBillingStatus.bind(adminController)
+);
+router.post(
+  '/api/billing/:billingId/refund',
+  requireAdminAuth,
+  adminController.processRefund.bind(adminController)
+);
+
+// Reward management routes
+router.get(
+  '/rewards',
+  requireAdminAuth,
+  adminController.showRewards.bind(adminController)
+);
+router.get(
+  '/rewards/:rewardId',
+  requireAdminAuth,
+  adminController.showRewardDetails.bind(adminController)
+);
+
+// Reward API routes
+router.post(
+  '/api/rewards',
+  requireAdminAuth,
+  adminController.createReward.bind(adminController)
+);
+router.post(
+  '/api/rewards/grant',
+  requireAdminAuth,
+  adminController.grantReward.bind(adminController)
+);
+router.get(
+  '/api/rewards/:rewardId',
+  requireAdminAuth,
+  adminController.getReward.bind(adminController)
+);
+router.put(
+  '/api/rewards/:rewardId',
+  requireAdminAuth,
+  adminController.updateReward.bind(adminController)
+);
+router.delete(
+  '/api/rewards/:rewardId',
+  requireAdminAuth,
+  adminController.deleteReward.bind(adminController)
+);
+
+// Landing page management routes
+router.get(
+  '/landing-page',
+  requireAdminAuth,
+  adminController.showLandingPage.bind(adminController)
+);
+router.get(
+  '/landing-page/:sectionId',
+  requireAdminAuth,
+  adminController.showLandingPageSection.bind(adminController)
+);
+
+// Landing page API routes
+router.get(
+  '/api/landing-page/:sectionId',
+  requireAdminAuth,
+  adminController.getLandingPageSection.bind(adminController)
+);
+router.post(
+  '/api/landing-page',
+  requireAdminAuth,
+  adminController.createLandingPageSection.bind(adminController)
+);
+router.put(
+  '/api/landing-page/:sectionId',
+  requireAdminAuth,
+  adminController.updateLandingPageSection.bind(adminController)
+);
+router.delete(
+  '/api/landing-page/:sectionId',
+  requireAdminAuth,
+  adminController.deleteLandingPageSection.bind(adminController)
+);
+router.patch(
+  '/api/landing-page/:sectionId/toggle',
+  requireAdminAuth,
+  adminController.toggleLandingPageSectionStatus.bind(adminController)
+);
+router.patch(
+  '/api/landing-page/:sectionId/order',
+  requireAdminAuth,
+  adminController.updateLandingPageSectionOrder.bind(adminController)
 );
 
 module.exports = router;

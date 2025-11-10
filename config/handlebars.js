@@ -165,6 +165,53 @@ handlebars.registerHelper('charAt', function (str, index) {
   return str.charAt(index);
 });
 
+// Helper to get substring
+handlebars.registerHelper('substr', function (str, start, length) {
+  if (typeof str !== 'string') return '';
+  return str.substr(start, length);
+});
+
+// Helper to capitalize first letter
+handlebars.registerHelper('capitalize', function (str) {
+  if (typeof str !== 'string') return '';
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+});
+
+// Helper to calculate days since a date
+handlebars.registerHelper('daysSince', function (dateString) {
+  if (!dateString) return 0;
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffTime = Math.abs(now - date);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+});
+
+// Helper to stringify JSON
+handlebars.registerHelper('json', function (obj) {
+  return JSON.stringify(obj);
+});
+
+// Helper to format numbers
+handlebars.registerHelper('formatNumber', function (num) {
+  if (num === null || num === undefined) return '0';
+  return Number(num).toLocaleString();
+});
+
+// Helper to get section type label
+handlebars.registerHelper('sectionTypeLabel', function (sectionType) {
+  const sectionTypeMap = {
+    hero: 'Hero Section',
+    features: 'Features',
+    testimonials: 'Testimonials',
+    cta: 'Call to Action',
+    about: 'About',
+    pricing: 'Pricing',
+    contact: 'Contact',
+  };
+  return sectionTypeMap[sectionType] || sectionType;
+});
+
 const handlebarsConfig = engine({
   extname: '.hbs',
   defaultLayout: 'main',

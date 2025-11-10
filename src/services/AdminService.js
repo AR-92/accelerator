@@ -9,7 +9,16 @@ class AdminService {
     adminActivityRepository,
     startupService,
     enterpriseService,
-    corporateService
+    corporateService,
+    projectRepository,
+    teamRepository,
+    ideaService,
+    ideaRepository,
+    landingPageService,
+    packageRepository,
+    billingRepository,
+    rewardRepository,
+    voteRepository
   ) {
     this.userRepository = userRepository;
     this.helpService = helpService;
@@ -18,6 +27,15 @@ class AdminService {
     this.startupService = startupService;
     this.enterpriseService = enterpriseService;
     this.corporateService = corporateService;
+    this.projectRepository = projectRepository;
+    this.teamRepository = teamRepository;
+    this.ideaService = ideaService;
+    this.ideaRepository = ideaRepository;
+    this.landingPageService = landingPageService;
+    this.packageRepository = packageRepository;
+    this.billingRepository = billingRepository;
+    this.rewardRepository = rewardRepository;
+    this.voteRepository = voteRepository;
   }
 
   /**
@@ -74,8 +92,20 @@ class AdminService {
       const corporateCountByStatus =
         await this.corporateService.countByStatus();
 
+      // Get collaboration statistics
+      const collaborationStats = await this.getCollaborationStats();
+
       // Calculate credit statistics
       const totalCredits = await this.userRepository.getTotalCredits();
+
+      // Get package statistics
+      const packageStats = await this.packageRepository.getStats();
+
+      // Get billing statistics
+      const billingStats = await this.billingRepository.getStats();
+
+      // Get reward statistics
+      const rewardStats = await this.rewardRepository.getStats();
 
       // Get recent activity (last 10 actions)
       const recentActivity = await this.getRecentActivity(10);
@@ -132,6 +162,27 @@ class AdminService {
         credits: {
           total: totalCredits,
         },
+        packages: {
+          total: packageStats.total || 0,
+          active: packageStats.active || 0,
+          avgPrice: packageStats.avg_price || 0,
+          avgCredits: packageStats.avg_credits || 0,
+        },
+        billing: {
+          totalTransactions: billingStats.total_transactions || 0,
+          totalRevenue: billingStats.total_revenue || 0,
+          totalRefunds: billingStats.total_refunds || 0,
+          avgTransaction: billingStats.avg_transaction || 0,
+          uniqueCustomers: billingStats.unique_customers || 0,
+          pendingTransactions: billingStats.pending_transactions || 0,
+        },
+        rewards: {
+          totalRewards: rewardStats.total_rewards || 0,
+          activeRewards: rewardStats.active_rewards || 0,
+          totalCreditsGranted: rewardStats.total_credits_granted || 0,
+          uniqueUsersRewarded: rewardStats.unique_users_rewarded || 0,
+        },
+        collaborations: collaborationStats,
         activity: recentActivity,
         system: systemStats,
       };
@@ -1731,6 +1782,1225 @@ class AdminService {
       console.error('Error exporting corporates to CSV:', error);
       throw error;
     }
+  }
+
+  /**
+   * Get projects with pagination and filtering
+   * @param {Object} options - Query options
+   * @returns {Promise<Object>} Projects data with pagination
+   */
+  async getProjects(options = {}) {
+    try {
+      const {
+        page = 1,
+        limit = 20,
+        userId,
+        status,
+        search,
+        sortBy = 'created_at',
+        sortOrder = 'desc',
+      } = options;
+
+      const offset = (page - 1) * limit;
+
+      const projects = await this.projectRepository.findAll({
+        limit,
+        offset,
+        userId,
+        status,
+        search,
+        sortBy,
+        sortOrder,
+      });
+
+      const total = await this.projectRepository.countFiltered({
+        userId,
+        status,
+        search,
+      });
+
+      const totalPages = Math.ceil(total / limit);
+
+      return {
+        projects,
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages,
+          hasNext: page < totalPages,
+          hasPrev: page > 1,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting projects:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get project by ID with team information
+   * @param {number} projectId - Project ID
+   * @returns {Promise<Object>} Project data with team
+   */
+  async getProjectById(projectId) {
+    try {
+      const project = await this.projectRepository.findById(projectId);
+      if (!project) {
+        const NotFoundError = require('../utils/errors/NotFoundError');
+        throw new NotFoundError('Project not found');
+      }
+
+      const team = await this.teamRepository.getTeamWithUsers(projectId);
+
+      return {
+        ...project.toPublicJSON(),
+        team,
+        teamCount: team.length,
+      };
+    } catch (error) {
+      console.error('Error getting project by ID:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Update project status
+   * @param {number} projectId - Project ID
+   * @param {string} status - New status
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<Object>} Updated project data
+   */
+  async updateProjectStatus(projectId, status, adminInfo) {
+    try {
+      const project = await this.projectRepository.update(projectId, {
+        status,
+      });
+      if (!project) {
+        const NotFoundError = require('../utils/errors/NotFoundError');
+        throw new NotFoundError('Project not found');
+      }
+
+      // Log admin action
+      await this.logAdminAction({
+        adminId: adminInfo.id,
+        action: 'update_project_status',
+        targetType: 'project',
+        targetId: projectId,
+        details: { newStatus: status },
+        ip: adminInfo.ip,
+      });
+
+      return await this.getProjectById(projectId);
+    } catch (error) {
+      console.error('Error updating project status:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Delete project
+   * @param {number} projectId - Project ID
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<boolean>} Success status
+   */
+  async deleteProject(projectId, adminInfo) {
+    try {
+      const project = await this.projectRepository.findById(projectId);
+      if (!project) {
+        const NotFoundError = require('../utils/errors/NotFoundError');
+        throw new NotFoundError('Project not found');
+      }
+
+      // Delete team members first
+      await this.teamRepository.query(
+        'DELETE FROM teams WHERE project_id = ?',
+        [projectId]
+      );
+
+      // Delete project
+      const success = await this.projectRepository.delete(projectId);
+
+      if (success) {
+        // Log admin action
+        await this.logAdminAction({
+          adminId: adminInfo.id,
+          action: 'delete_project',
+          targetType: 'project',
+          targetId: projectId,
+          details: { projectTitle: project.title },
+          ip: adminInfo.ip,
+        });
+      }
+
+      return success;
+    } catch (error) {
+      console.error('Error deleting project:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Remove user from project team
+   * @param {number} projectId - Project ID
+   * @param {number} userId - User ID
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<boolean>} Success status
+   */
+  async removeUserFromProject(projectId, userId, adminInfo) {
+    try {
+      const success = await this.teamRepository.removeUserFromProject(
+        projectId,
+        userId
+      );
+
+      if (success) {
+        // Log admin action
+        await this.logAdminAction({
+          adminId: adminInfo.id,
+          action: 'remove_user_from_project',
+          targetType: 'project_team',
+          targetId: projectId,
+          details: { removedUserId: userId },
+          ip: adminInfo.ip,
+        });
+      }
+
+      return success;
+    } catch (error) {
+      console.error('Error removing user from project:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get collaboration statistics for dashboard
+   * @returns {Promise<Object>} Collaboration stats
+   */
+  async getCollaborationStats() {
+    try {
+      const totalProjects = await this.projectRepository.count();
+      const projectsByStatus = await this.projectRepository.countByStatus();
+
+      // Get total team members
+      const teamCountResult = await this.teamRepository.queryOne(
+        'SELECT COUNT(*) as count FROM teams'
+      );
+      const totalTeamMembers = teamCountResult.count;
+
+      // Get average team size
+      const avgTeamSizeResult = await this.teamRepository.queryOne(`
+        SELECT AVG(team_count) as avg_size
+        FROM (
+          SELECT project_id, COUNT(*) as team_count
+          FROM teams
+          GROUP BY project_id
+        ) t
+      `);
+      const avgTeamSize = avgTeamSizeResult.avg_size || 0;
+
+      return {
+        totalProjects,
+        projectsByStatus: Object.entries(projectsByStatus).map(
+          ([status, count]) => ({
+            status,
+            count: parseInt(count),
+          })
+        ),
+        totalTeamMembers,
+        avgTeamSize: Math.round(avgTeamSize * 100) / 100,
+      };
+    } catch (error) {
+      console.error('Error getting collaboration stats:', error);
+      return {
+        totalProjects: 0,
+        projectsByStatus: [],
+        totalTeamMembers: 0,
+        avgTeamSize: 0,
+      };
+    }
+  }
+
+  // ===== PACKAGE MANAGEMENT METHODS =====
+
+  /**
+   * Get packages with pagination and filtering
+   * @param {Object} options - Query options
+   * @returns {Promise<Object>} Packages data with pagination
+   */
+  async getPackages(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = (page - 1) * limit;
+
+      let where = {};
+      if (options.status) where.status = options.status;
+      if (options.search) {
+        // Handle search separately since it requires LIKE queries
+        const packages = await this.packageRepository.search(options.search);
+        const totalCount = packages.length;
+        const paginatedPackages = packages.slice(offset, offset + limit);
+
+        return {
+          packages: paginatedPackages,
+          pagination: {
+            page,
+            limit,
+            total: totalCount,
+            pages: Math.ceil(totalCount / limit),
+          },
+        };
+      }
+
+      const [packages, totalCount] = await Promise.all([
+        this.packageRepository.findAll({
+          where,
+          limit,
+          offset,
+          orderBy: 'sort_order ASC, created_at DESC',
+        }),
+        this.packageRepository.count(where),
+      ]);
+
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        packages,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          pages: totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting packages:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get package by ID
+   * @param {number} packageId - Package ID
+   * @returns {Promise<Object>} Package data
+   */
+  async getPackageById(packageId) {
+    try {
+      const pkg = await this.packageRepository.findById(packageId);
+      if (!pkg) {
+        const NotFoundError = require('../utils/errors/NotFoundError');
+        throw new NotFoundError('Package not found');
+      }
+      return pkg;
+    } catch (error) {
+      console.error('Error getting package by ID:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Create a new package
+   * @param {Object} packageData - Package data
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<Object>} Created package data
+   */
+  async createPackage(packageData, adminInfo) {
+    try {
+      const Package = require('../models/Package');
+      const pkg = new Package(packageData);
+      pkg.validate();
+
+      const packageId = await this.packageRepository.create(pkg);
+
+      // Log admin action
+      this.logAdminAction({
+        adminId: adminInfo.id,
+        adminEmail: adminInfo.email,
+        action: 'CREATE_PACKAGE',
+        targetType: 'package',
+        targetId: packageId,
+        details: {
+          name: pkg.name,
+          price: pkg.price,
+          credits: pkg.credits,
+        },
+        ip: adminInfo.ip,
+      });
+
+      const createdPackage = await this.packageRepository.findById(packageId);
+      return createdPackage;
+    } catch (error) {
+      console.error('Error creating package:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Update a package
+   * @param {number} packageId - Package ID
+   * @param {Object} packageData - Updated package data
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<Object>} Updated package data
+   */
+  async updatePackage(packageId, packageData, adminInfo) {
+    try {
+      const Package = require('../models/Package');
+      const existingPackage = await this.packageRepository.findById(packageId);
+      if (!existingPackage) {
+        const NotFoundError = require('../utils/errors/NotFoundError');
+        throw new NotFoundError('Package not found');
+      }
+
+      const updatedPackage = new Package({
+        ...existingPackage,
+        ...packageData,
+      });
+      updatedPackage.validate();
+
+      const success = await this.packageRepository.update(
+        packageId,
+        packageData
+      );
+      if (!success) {
+        throw new Error('Failed to update package');
+      }
+
+      // Log admin action
+      this.logAdminAction({
+        adminId: adminInfo.id,
+        adminEmail: adminInfo.email,
+        action: 'UPDATE_PACKAGE',
+        targetType: 'package',
+        targetId: packageId,
+        details: {
+          name: updatedPackage.name,
+          changes: Object.keys(packageData),
+        },
+        ip: adminInfo.ip,
+      });
+
+      return await this.packageRepository.findById(packageId);
+    } catch (error) {
+      console.error('Error updating package:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Delete a package
+   * @param {number} packageId - Package ID
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<boolean>} Success status
+   */
+  async deletePackage(packageId, adminInfo) {
+    try {
+      const pkg = await this.packageRepository.findById(packageId);
+      if (!pkg) {
+        const NotFoundError = require('../utils/errors/NotFoundError');
+        throw new NotFoundError('Package not found');
+      }
+
+      const success = await this.packageRepository.delete(packageId);
+
+      if (success) {
+        // Log admin action
+        this.logAdminAction({
+          adminId: adminInfo.id,
+          adminEmail: adminInfo.email,
+          action: 'DELETE_PACKAGE',
+          targetType: 'package',
+          targetId: packageId,
+          details: { deletedPackageName: pkg.name },
+          ip: adminInfo.ip,
+        });
+      }
+
+      return success;
+    } catch (error) {
+      console.error('Error deleting package:', error);
+      throw error;
+    }
+  }
+
+  // ===== BILLING MANAGEMENT METHODS =====
+
+  /**
+   * Get billing transactions with pagination and filtering
+   * @param {Object} options - Query options
+   * @returns {Promise<Object>} Billing data with pagination
+   */
+  async getBillingTransactions(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = (page - 1) * limit;
+
+      let where = {};
+      if (options.status) where.status = options.status;
+      if (options.userId) where.user_id = options.userId;
+
+      const [transactions, totalCount] = await Promise.all([
+        this.billingRepository.findAll({
+          where,
+          limit,
+          offset,
+          orderBy: 'created_at DESC',
+        }),
+        this.billingRepository.count(where),
+      ]);
+
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        transactions,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          pages: totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting billing transactions:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get billing transaction by ID
+   * @param {number} billingId - Billing transaction ID
+   * @returns {Promise<Object>} Billing transaction data
+   */
+  async getBillingTransactionById(billingId) {
+    try {
+      const transaction = await this.billingRepository.findById(billingId);
+      if (!transaction) {
+        const NotFoundError = require('../utils/errors/NotFoundError');
+        throw new NotFoundError('Billing transaction not found');
+      }
+      return transaction;
+    } catch (error) {
+      console.error('Error getting billing transaction by ID:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Create a billing transaction
+   * @param {Object} billingData - Billing data
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<Object>} Created billing transaction
+   */
+  async createBillingTransaction(billingData, adminInfo) {
+    try {
+      const Billing = require('../models/Billing');
+      const billing = new Billing(billingData);
+      billing.validate();
+
+      const billingId = await this.billingRepository.create(billing);
+
+      // Log admin action
+      this.logAdminAction({
+        adminId: adminInfo.id,
+        adminEmail: adminInfo.email,
+        action: 'CREATE_BILLING_TRANSACTION',
+        targetType: 'billing',
+        targetId: billingId,
+        details: { amount: billing.amount, status: billing.status },
+        ip: adminInfo.ip,
+      });
+
+      const createdTransaction =
+        await this.billingRepository.findById(billingId);
+      return createdTransaction;
+    } catch (error) {
+      console.error('Error creating billing transaction:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Update billing transaction status
+   * @param {number} billingId - Billing transaction ID
+   * @param {string} status - New status
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<Object>} Updated billing transaction
+   */
+  async updateBillingTransactionStatus(billingId, status, adminInfo) {
+    try {
+      const transaction = await this.billingRepository.findById(billingId);
+      if (!transaction) {
+        const NotFoundError = require('../utils/errors/NotFoundError');
+        throw new NotFoundError('Billing transaction not found');
+      }
+
+      const success = await this.billingRepository.updateStatus(
+        billingId,
+        status
+      );
+      if (!success) {
+        throw new Error('Failed to update billing transaction status');
+      }
+
+      // Log admin action
+      this.logAdminAction({
+        adminId: adminInfo.id,
+        adminEmail: adminInfo.email,
+        action: 'UPDATE_BILLING_STATUS',
+        targetType: 'billing',
+        targetId: billingId,
+        details: { oldStatus: transaction.status, newStatus: status },
+        ip: adminInfo.ip,
+      });
+
+      return await this.billingRepository.findById(billingId);
+    } catch (error) {
+      console.error('Error updating billing transaction status:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Process refund for billing transaction
+   * @param {number} billingId - Billing transaction ID
+   * @param {number} refundAmount - Refund amount
+   * @param {string} refundReason - Refund reason
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<Object>} Updated billing transaction
+   */
+  async processRefund(billingId, refundAmount, refundReason, adminInfo) {
+    try {
+      const transaction = await this.billingRepository.findById(billingId);
+      if (!transaction) {
+        const NotFoundError = require('../utils/errors/NotFoundError');
+        throw new NotFoundError('Billing transaction not found');
+      }
+
+      if (transaction.status !== 'completed') {
+        throw new Error('Can only refund completed transactions');
+      }
+
+      const success = await this.billingRepository.processRefund(
+        billingId,
+        refundAmount,
+        refundReason
+      );
+      if (!success) {
+        throw new Error('Failed to process refund');
+      }
+
+      // Log admin action
+      this.logAdminAction({
+        adminId: adminInfo.id,
+        adminEmail: adminInfo.email,
+        action: 'PROCESS_REFUND',
+        targetType: 'billing',
+        targetId: billingId,
+        details: { refundAmount, refundReason },
+        ip: adminInfo.ip,
+      });
+
+      return await this.billingRepository.findById(billingId);
+    } catch (error) {
+      console.error('Error processing refund:', error);
+      throw error;
+    }
+  }
+
+  // ===== REWARD MANAGEMENT METHODS =====
+
+  /**
+   * Get rewards with pagination and filtering
+   * @param {Object} options - Query options
+   * @returns {Promise<Object>} Rewards data with pagination
+   */
+  async getRewards(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = (page - 1) * limit;
+
+      let where = {};
+      if (options.status) where.status = options.status;
+      if (options.type) where.type = options.type;
+      if (options.userId) where.user_id = options.userId;
+
+      const [rewards, totalCount] = await Promise.all([
+        this.rewardRepository.findAll({
+          where,
+          limit,
+          offset,
+          orderBy: 'created_at DESC',
+        }),
+        this.rewardRepository.count(where),
+      ]);
+
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        rewards,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          pages: totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting rewards:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get reward by ID
+   * @param {number} rewardId - Reward ID
+   * @returns {Promise<Object>} Reward data
+   */
+  async getRewardById(rewardId) {
+    try {
+      const reward = await this.rewardRepository.findById(rewardId);
+      if (!reward) {
+        const NotFoundError = require('../utils/errors/NotFoundError');
+        throw new NotFoundError('Reward not found');
+      }
+      return reward;
+    } catch (error) {
+      console.error('Error getting reward by ID:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Create a reward
+   * @param {Object} rewardData - Reward data
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<Object>} Created reward data
+   */
+  async createReward(rewardData, adminInfo) {
+    try {
+      const Reward = require('../models/Reward');
+      const reward = new Reward({ ...rewardData, adminId: adminInfo.id });
+      reward.validate();
+
+      const rewardId = await this.rewardRepository.create(reward);
+
+      // Log admin action
+      this.logAdminAction({
+        adminId: adminInfo.id,
+        adminEmail: adminInfo.email,
+        action: 'CREATE_REWARD',
+        targetType: 'reward',
+        targetId: rewardId,
+        details: {
+          type: reward.type,
+          credits: reward.credits,
+          userId: reward.userId,
+        },
+        ip: adminInfo.ip,
+      });
+
+      const createdReward = await this.rewardRepository.findById(rewardId);
+      return createdReward;
+    } catch (error) {
+      console.error('Error creating reward:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Update a reward
+   * @param {number} rewardId - Reward ID
+   * @param {Object} rewardData - Updated reward data
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<Object>} Updated reward data
+   */
+  async updateReward(rewardId, rewardData, adminInfo) {
+    try {
+      const Reward = require('../models/Reward');
+      const existingReward = await this.rewardRepository.findById(rewardId);
+      if (!existingReward) {
+        const NotFoundError = require('../utils/errors/NotFoundError');
+        throw new NotFoundError('Reward not found');
+      }
+
+      const updatedReward = new Reward({ ...existingReward, ...rewardData });
+      updatedReward.validate();
+
+      const success = await this.rewardRepository.update(rewardId, rewardData);
+      if (!success) {
+        throw new Error('Failed to update reward');
+      }
+
+      // Log admin action
+      this.logAdminAction({
+        adminId: adminInfo.id,
+        adminEmail: adminInfo.email,
+        action: 'UPDATE_REWARD',
+        targetType: 'reward',
+        targetId: rewardId,
+        details: { changes: Object.keys(rewardData) },
+        ip: adminInfo.ip,
+      });
+
+      return await this.rewardRepository.findById(rewardId);
+    } catch (error) {
+      console.error('Error updating reward:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Delete a reward
+   * @param {number} rewardId - Reward ID
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<boolean>} Success status
+   */
+  async deleteReward(rewardId, adminInfo) {
+    try {
+      const reward = await this.rewardRepository.findById(rewardId);
+      if (!reward) {
+        const NotFoundError = require('../utils/errors/NotFoundError');
+        throw new NotFoundError('Reward not found');
+      }
+
+      const success = await this.rewardRepository.delete(rewardId);
+
+      if (success) {
+        // Log admin action
+        this.logAdminAction({
+          adminId: adminInfo.id,
+          adminEmail: adminInfo.email,
+          action: 'DELETE_REWARD',
+          targetType: 'reward',
+          targetId: rewardId,
+          details: {
+            deletedRewardType: reward.type,
+            deletedRewardCredits: reward.credits,
+          },
+          ip: adminInfo.ip,
+        });
+      }
+
+      return success;
+    } catch (error) {
+      console.error('Error deleting reward:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Grant reward to user (convenience method)
+   * @param {number} userId - User ID
+   * @param {string} type - Reward type
+   * @param {string} title - Reward title
+   * @param {number} credits - Credits to grant
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<Object>} Created reward
+   */
+  async grantRewardToUser(userId, type, title, credits, adminInfo) {
+    return await this.createReward(
+      {
+        userId,
+        type,
+        title,
+        credits,
+        status: 'active',
+      },
+      adminInfo
+    );
+  }
+
+  /**
+   * Get ideas with pagination and filtering for admin
+   * @param {Object} options - Query options
+   * @returns {Promise<Object>} Ideas data with pagination
+   */
+  async getIdeas(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = (page - 1) * limit;
+
+      const ideas = await this.ideaService.getAllIdeas(null, {
+        limit,
+        offset,
+        orderBy: options.sortBy
+          ? `${options.sortBy} ${options.sortOrder || 'desc'}`
+          : 'created_at DESC',
+      });
+
+      // Get total count
+      const totalCount = await this.ideaRepository.count();
+
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        ideas: ideas.map((idea) => ({
+          id: idea.id,
+          href: idea.href,
+          title: idea.title,
+          type: idea.type,
+          typeIcon: idea.typeIcon,
+          rating: idea.rating,
+          description: idea.description,
+          tags: idea.tags,
+          isFavorite: idea.isFavorite,
+          userId: idea.userId,
+          createdAt: idea.createdAt,
+          updatedAt: idea.updatedAt,
+        })),
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          pages: totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting ideas:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get votes for admin management
+   * @param {Object} options - Query options
+   * @returns {Promise<Object>} Votes data with pagination
+   */
+  async getVotes(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = (page - 1) * limit;
+
+      const votes = await this.voteRepository.findAll({
+        limit,
+        offset,
+        orderBy: 'timestamp DESC',
+      });
+
+      // Get total count
+      const totalCount = await this.voteRepository.count();
+
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        votes: votes.map((vote) => ({
+          id: vote.id,
+          ideaSlug: vote.idea_slug,
+          userId: vote.user_id,
+          marketViability: vote.market_viability,
+          realWorldProblem: vote.real_world_problem,
+          innovation: vote.innovation,
+          technicalFeasibility: vote.technical_feasibility,
+          scalability: vote.scalability,
+          marketSurvival: vote.market_survival,
+          createdAt: vote.timestamp,
+        })),
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          pages: totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting votes:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get idea by ID for admin
+   * @param {number} ideaId - Idea ID
+   * @returns {Promise<Object>} Idea data
+   */
+  async getIdeaById(ideaId) {
+    try {
+      const idea = await this.ideaService.getIdeaById(ideaId);
+      return idea;
+    } catch (error) {
+      console.error('Error getting idea by ID:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Update an idea (admin override)
+   * @param {number} ideaId - Idea ID
+   * @param {Object} ideaData - Updated idea data
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<Object>} Updated idea data
+   */
+  async updateIdea(ideaId, ideaData, adminInfo) {
+    try {
+      // Get the original idea to check ownership
+      const originalIdea = await this.ideaService.getIdeaById(ideaId);
+
+      // For admin updates, we bypass ownership check by using the original userId
+      const updatedIdea = await this.ideaService.updateIdea(
+        ideaId,
+        originalIdea.userId,
+        ideaData
+      );
+
+      // Log admin action
+      this.logAdminAction({
+        adminId: adminInfo.id,
+        adminEmail: adminInfo.email,
+        action: 'UPDATE_IDEA',
+        targetType: 'idea',
+        targetId: ideaId,
+        details: { title: updatedIdea.title },
+        ip: adminInfo.ip,
+      });
+
+      return updatedIdea;
+    } catch (error) {
+      console.error('Error updating idea:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Delete an idea (admin override)
+   * @param {number} ideaId - Idea ID
+   * @param {Object} adminInfo - Admin performing the action
+   * @returns {Promise<boolean>} Success status
+   */
+  async deleteIdea(ideaId, adminInfo) {
+    try {
+      // Get the original idea to check ownership
+      const originalIdea = await this.ideaService.getIdeaById(ideaId);
+
+      // For admin deletion, we bypass ownership check by using the original userId
+      const success = await this.ideaService.deleteIdea(
+        ideaId,
+        originalIdea.userId
+      );
+
+      if (success) {
+        // Log admin action
+        this.logAdminAction({
+          adminId: adminInfo.id,
+          adminEmail: adminInfo.email,
+          action: 'DELETE_IDEA',
+          targetType: 'idea',
+          targetId: ideaId,
+          details: { deletedIdeaTitle: originalIdea.title },
+          ip: adminInfo.ip,
+        });
+      }
+
+      return success;
+    } catch (error) {
+      console.error('Error deleting idea:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get all landing page sections for admin management
+   * @param {Object} options - Query options
+   * @returns {Promise<Object>} Sections with pagination
+   */
+  async getLandingPageSections(options = {}) {
+    try {
+      return await this.landingPageService.getAllSections(options);
+    } catch (error) {
+      console.error('Error fetching landing page sections:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get landing page section by ID
+   * @param {number} id - Section ID
+   * @returns {Promise<Object|null>} Section data
+   */
+  async getLandingPageSectionById(id) {
+    try {
+      return await this.landingPageService.getSectionById(id);
+    } catch (error) {
+      console.error('Error fetching landing page section:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Create a new landing page section
+   * @param {Object} sectionData - Section data
+   * @param {Object} adminInfo - Admin user info
+   * @returns {Promise<number>} Created section ID
+   */
+  async createLandingPageSection(sectionData, adminInfo) {
+    try {
+      const sectionId =
+        await this.landingPageService.createSection(sectionData);
+
+      // Log admin action
+      this.logAdminAction({
+        adminId: adminInfo.id,
+        adminEmail: adminInfo.email,
+        action: 'CREATE_LANDING_PAGE_SECTION',
+        targetType: 'landing_page_section',
+        targetId: sectionId,
+        details: {
+          sectionType: sectionData.sectionType,
+          title: sectionData.title,
+        },
+        ip: adminInfo.ip,
+      });
+
+      return sectionId;
+    } catch (error) {
+      console.error('Error creating landing page section:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Update a landing page section
+   * @param {number} id - Section ID
+   * @param {Object} sectionData - Updated section data
+   * @param {Object} adminInfo - Admin user info
+   * @returns {Promise<boolean>} Success status
+   */
+  async updateLandingPageSection(id, sectionData, adminInfo) {
+    try {
+      const success = await this.landingPageService.updateSection(
+        id,
+        sectionData
+      );
+
+      if (success) {
+        // Log admin action
+        this.logAdminAction({
+          adminId: adminInfo.id,
+          adminEmail: adminInfo.email,
+          action: 'UPDATE_LANDING_PAGE_SECTION',
+          targetType: 'landing_page_section',
+          targetId: id,
+          details: {
+            sectionType: sectionData.sectionType,
+            title: sectionData.title,
+          },
+          ip: adminInfo.ip,
+        });
+      }
+
+      return success;
+    } catch (error) {
+      console.error('Error updating landing page section:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Delete a landing page section
+   * @param {number} id - Section ID
+   * @param {Object} adminInfo - Admin user info
+   * @returns {Promise<boolean>} Success status
+   */
+  async deleteLandingPageSection(id, adminInfo) {
+    try {
+      // Get section info before deletion for logging
+      const section = await this.landingPageService.getSectionById(id);
+
+      const success = await this.landingPageService.deleteSection(id);
+
+      if (success && section) {
+        // Log admin action
+        this.logAdminAction({
+          adminId: adminInfo.id,
+          adminEmail: adminInfo.email,
+          action: 'DELETE_LANDING_PAGE_SECTION',
+          targetType: 'landing_page_section',
+          targetId: id,
+          details: { sectionType: section.sectionType, title: section.title },
+          ip: adminInfo.ip,
+        });
+      }
+
+      return success;
+    } catch (error) {
+      console.error('Error deleting landing page section:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Toggle landing page section active status
+   * @param {number} id - Section ID
+   * @param {Object} adminInfo - Admin user info
+   * @returns {Promise<boolean>} Success status
+   */
+  async toggleLandingPageSectionStatus(id, adminInfo) {
+    try {
+      const success = await this.landingPageService.toggleSectionStatus(id);
+
+      if (success) {
+        // Log admin action
+        this.logAdminAction({
+          adminId: adminInfo.id,
+          adminEmail: adminInfo.email,
+          action: 'TOGGLE_LANDING_PAGE_SECTION',
+          targetType: 'landing_page_section',
+          targetId: id,
+          details: { toggled: true },
+          ip: adminInfo.ip,
+        });
+      }
+
+      return success;
+    } catch (error) {
+      console.error('Error toggling landing page section status:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Update landing page section order
+   * @param {number} id - Section ID
+   * @param {number} order - New order
+   * @param {Object} adminInfo - Admin user info
+   * @returns {Promise<boolean>} Success status
+   */
+  async updateLandingPageSectionOrder(id, order, adminInfo) {
+    try {
+      const success = await this.landingPageService.updateSectionOrder(
+        id,
+        order
+      );
+
+      if (success) {
+        // Log admin action
+        this.logAdminAction({
+          adminId: adminInfo.id,
+          adminEmail: adminInfo.email,
+          action: 'UPDATE_LANDING_PAGE_SECTION_ORDER',
+          targetType: 'landing_page_section',
+          targetId: id,
+          details: { newOrder: order },
+          ip: adminInfo.ip,
+        });
+      }
+
+      return success;
+    } catch (error) {
+      console.error('Error updating landing page section order:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get landing page section types for dropdowns
+   * @returns {Array} Section type options
+   */
+  getLandingPageSectionTypes() {
+    return this.landingPageService.getSectionTypes();
   }
 }
 

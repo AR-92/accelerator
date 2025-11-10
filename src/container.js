@@ -15,6 +15,12 @@ const VoteRepository = require('./repositories/VoteRepository');
 const StartupRepository = require('./repositories/StartupRepository');
 const EnterpriseRepository = require('./repositories/EnterpriseRepository');
 const CorporateRepository = require('./repositories/CorporateRepository');
+const ProjectRepository = require('./repositories/ProjectRepository');
+const TeamRepository = require('./repositories/TeamRepository');
+const LandingPageRepository = require('./repositories/LandingPageRepository');
+const PackageRepository = require('./repositories/PackageRepository');
+const BillingRepository = require('./repositories/BillingRepository');
+const RewardRepository = require('./repositories/RewardRepository');
 const {
   LearningContentRepository,
   LearningCategoryRepository,
@@ -31,6 +37,7 @@ const VoteService = require('./services/VoteService');
 const StartupService = require('./services/StartupService');
 const EnterpriseService = require('./services/EnterpriseService');
 const CorporateService = require('./services/CorporateService');
+const LandingPageService = require('./services/LandingPageService');
 const LearningService = require('./services/LearningService');
 const HelpService = require('./services/HelpService');
 const AdminService = require('./services/AdminService');
@@ -93,6 +100,28 @@ container.register(
   'helpCategoryRepository',
   (c) => new HelpCategoryRepository(c.get('db'))
 );
+container.register(
+  'projectRepository',
+  (c) => new ProjectRepository(c.get('db'))
+);
+container.register('teamRepository', (c) => new TeamRepository(c.get('db')));
+container.register(
+  'landingPageRepository',
+  (c) => new LandingPageRepository(c.get('db'))
+);
+container.register(
+  'packageRepository',
+  (c) => new PackageRepository(c.get('db'))
+);
+container.register(
+  'billingRepository',
+  (c) => new BillingRepository(c.get('db'))
+);
+container.register(
+  'rewardRepository',
+  (c) => new RewardRepository(c.get('db'))
+);
+container.register('voteRepository', (c) => new VoteRepository(c.get('db')));
 
 // Register services
 container.register(
@@ -120,6 +149,10 @@ container.register(
   (c) => new CorporateService(c.get('corporateRepository'))
 );
 container.register(
+  'landingPageService',
+  (c) => new LandingPageService(c.get('landingPageRepository'))
+);
+container.register(
   'learningService',
   (c) =>
     new LearningService(
@@ -145,7 +178,16 @@ container.register(
       c.get('adminActivityRepository'),
       c.get('startupService'),
       c.get('enterpriseService'),
-      c.get('corporateService')
+      c.get('corporateService'),
+      c.get('projectRepository'),
+      c.get('teamRepository'),
+      c.get('ideaService'),
+      c.get('ideaRepository'),
+      c.get('landingPageService'),
+      c.get('packageRepository'),
+      c.get('billingRepository'),
+      c.get('rewardRepository'),
+      c.get('voteRepository')
     )
 );
 

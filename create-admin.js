@@ -9,13 +9,21 @@ async function createAdminUser() {
   try {
     console.log('Creating admin user...');
 
-    const adminUser = await adminService.createAdminUser({
-      email: 'admin@accelerator.com',
-      password: 'admin123',
-      first_name: 'Admin',
-      last_name: 'User',
-      credits: 1000,
-    });
+    const adminUser = await adminService.createUser(
+      {
+        email: 'admin@accelerator.com',
+        password: 'admin123',
+        firstName: 'Admin',
+        lastName: 'User',
+        role: 'admin',
+        credits: 1000,
+      },
+      {
+        id: 0, // System admin
+        email: 'system@accelerator.com',
+        ip: '127.0.0.1',
+      }
+    );
 
     console.log('Admin user created successfully!');
     console.log('Email: admin@accelerator.com');
