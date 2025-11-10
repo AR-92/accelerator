@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const container = require('../../../container');
-const { requireAuth } = require('../../../middleware/auth');
+const container = require('../../../../container');
+const { requireAuth } = require('../../../../middleware/auth');
 
 // Get enterprise controller from container
 const enterpriseController = container.get('enterpriseController');

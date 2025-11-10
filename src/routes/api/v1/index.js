@@ -3,9 +3,8 @@ const router = express.Router();
 const container = require('../../../container');
 const { requireAuth } = require('../../../middleware/auth');
 const aiRoutes = require('./ai');
-const startupRoutes = require('./startup');
-const enterpriseRoutes = require('./enterprise');
-const corporateRoutes = require('./corporate');
+const businessRoutes = require('./business');
+const adminRoutes = require('./admin');
 
 // Import learning controller
 const learningController = container.get('learningController');
@@ -13,14 +12,11 @@ const learningController = container.get('learningController');
 // Include AI routes under /ai endpoint
 router.use('/ai', aiRoutes);
 
-// Include startup routes under /startups endpoint
-router.use('/startups', startupRoutes);
+// Include business routes
+router.use('/', businessRoutes);
 
-// Include enterprise routes under /enterprises endpoint
-router.use('/enterprises', enterpriseRoutes);
-
-// Include corporate routes under /corporates endpoint
-router.use('/corporates', corporateRoutes);
+// Include admin routes
+router.use('/admin', adminRoutes);
 
 // User and product routes removed - Supabase dependency
 

@@ -14,10 +14,10 @@ const { getSecuritySettings } = require('./config/security');
 // Import container and routes
 const container = require('./src/container');
 const authRoutes = require('./src/routes/pages/auth');
-const pageRoutes = require('./src/routes/pages/main');
+const pageRoutes = require('./src/routes/pages');
 const aiAssistantModelsRoutes = require('./src/routes/pages/ai-assistant-models');
-const apiRoutes = require('./src/routes/api/v1/api');
-const adminRoutes = require('./src/routes/admin');
+const apiRoutes = require('./src/routes/api/v1');
+const adminRoutes = require('./src/routes/api/v1/admin');
 
 const app = express();
 const port = process.env.PORT || 3000;

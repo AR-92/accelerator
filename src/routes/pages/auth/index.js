@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const container = require('../../container');
-const { requireAuth } = require('../../middleware/auth');
+const container = require('../../../container');
+const { requireAuth } = require('../../../middleware/auth');
 const {
   validateRegistration,
   validateLogin,
   validateProfileUpdate,
   validatePasswordChange,
-} = require('../../validators/authValidators');
+} = require('../../../validators/authValidators');
 
 // GET main auth page (unified login/signup)
 router.get('/', (req, res) => {
