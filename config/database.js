@@ -1,8 +1,11 @@
 // Database configuration
 const sqlite3 = require('sqlite3').verbose();
+const MigrationRunner = require('../src/database/MigrationRunner');
 
 // Create database instance
-const db = new sqlite3.Database('./accelerator.db', (err) => {
+const dbPath = require('path').resolve(__dirname, '../accelerator.db');
+console.log('Database path:', dbPath);
+const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Error opening database:', err.message);
   } else {
@@ -10,199 +13,42 @@ const db = new sqlite3.Database('./accelerator.db', (err) => {
   }
 });
 
-// Initialize database tables
-const initializeDatabase = () => {
-  const createUsersTable = `
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      email TEXT UNIQUE NOT NULL,
-      password_hash TEXT NOT NULL,
-      first_name TEXT,
-      last_name TEXT,
-      role TEXT DEFAULT 'startup',
-      theme TEXT DEFAULT 'system',
-      bio TEXT DEFAULT '',
-      credits INTEGER DEFAULT 0,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
-  `;
-
-  const createSessionsTable = `
-    CREATE TABLE IF NOT EXISTS sessions (
-      sid TEXT PRIMARY KEY,
-      sess TEXT NOT NULL,
-      expire INTEGER NOT NULL
-    );
-  `;
-
-  const createIdeasTable = `
-    CREATE TABLE IF NOT EXISTS ideas (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER,
-      href TEXT UNIQUE NOT NULL,
-      title TEXT NOT NULL,
-      type TEXT NOT NULL,
-      typeIcon TEXT NOT NULL,
-      rating INTEGER NOT NULL,
-      description TEXT,
-      tags TEXT,
-      isFavorite BOOLEAN DEFAULT FALSE,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users (id)
-    );
-  `;
-
-  const createPortfolioTable = `
-     CREATE TABLE IF NOT EXISTS portfolio (
-       id INTEGER PRIMARY KEY AUTOINCREMENT,
-       user_id INTEGER NOT NULL,
-       title TEXT NOT NULL,
-       description TEXT,
-       category TEXT NOT NULL,
-       tags TEXT,
-       votes INTEGER DEFAULT 0,
-       isPublic BOOLEAN DEFAULT TRUE,
-       image TEXT,
-       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-       FOREIGN KEY (user_id) REFERENCES users (id)
-     );
-   `;
-
-  const createVotesTable = `
-    CREATE TABLE IF NOT EXISTS votes (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER NOT NULL,
-      idea_id INTEGER NOT NULL,
-      vote_type TEXT NOT NULL,
-      realWorldProblem INTEGER NOT NULL,
-      innovation INTEGER NOT NULL,
-      technicalFeasibility INTEGER NOT NULL,
-      scalability INTEGER NOT NULL,
-      marketSurvival INTEGER NOT NULL,
-      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users (id)
-    );
-  `;
-
-  const createProjectsTable = `
-    CREATE TABLE IF NOT EXISTS projects (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER NOT NULL,
-      title TEXT NOT NULL,
-      description TEXT,
-      status TEXT DEFAULT 'active',
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users (id)
-    );
-  `;
-
-  const createTeamsTable = `
-    CREATE TABLE IF NOT EXISTS teams (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      project_id INTEGER NOT NULL,
-      user_id INTEGER NOT NULL,
-      role TEXT DEFAULT 'member',
-      joined_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users (id),
-      FOREIGN KEY (project_id) REFERENCES projects (id)
-    );
-  `;
-
-  const createCollaborationsTable = `
-    CREATE TABLE IF NOT EXISTS collaborations (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      project_id INTEGER NOT NULL,
-      user_id INTEGER NOT NULL,
-      message TEXT NOT NULL,
-      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users (id),
-      FOREIGN KEY (project_id) REFERENCES projects (id)
-    );
-  `;
-
-  const createAiInteractionsTable = `
-    CREATE TABLE IF NOT EXISTS ai_interactions (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER NOT NULL,
-      model_type TEXT NOT NULL,
-      prompt TEXT NOT NULL,
-      response TEXT,
-      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users (id)
-    );
-  `;
-
-  const createReportsTable = `
-    CREATE TABLE IF NOT EXISTS reports (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER NOT NULL,
-      type TEXT NOT NULL,
-      content TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users (id)
-    );
-  `;
-
-  const createSubscriptionsTable = `
-    CREATE TABLE IF NOT EXISTS subscriptions (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER NOT NULL,
-      plan TEXT NOT NULL,
-      credits INTEGER DEFAULT 0,
-      expires_at DATETIME,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users (id)
-    );
-  `;
-
-  const createNotificationsTable = `
-    CREATE TABLE IF NOT EXISTS notifications (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER NOT NULL,
-      message TEXT NOT NULL,
-      read_status BOOLEAN DEFAULT FALSE,
-      timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users (id)
-    );
-  `;
-
-  const tables = [
-    createUsersTable,
-    createSessionsTable,
-    createIdeasTable,
-    createPortfolioTable,
-    createVotesTable,
-    createProjectsTable,
-    createTeamsTable,
-    createCollaborationsTable,
-    createAiInteractionsTable,
-    createReportsTable,
-    createSubscriptionsTable,
-    createNotificationsTable,
-  ];
-
-  let completed = 0;
-  const total = tables.length;
-
-  tables.forEach((sql) => {
-    db.run(sql, (err) => {
-      completed++;
+// Promisified database methods for migrations
+const dbRun = (sql, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.run(sql, params, function (err) {
       if (err) {
-        console.error('Error creating table:', err);
-      }
-      if (completed === total) {
-        console.log('Database tables initialized successfully');
+        reject(err);
+      } else {
+        resolve({ id: this.lastID, changes: this.changes });
       }
     });
   });
 };
 
-// Initialize tables on startup
-initializeDatabase();
+const dbAll = (sql, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.all(sql, params, (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(rows);
+      }
+    });
+  });
+};
+
+const dbGet = (sql, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.get(sql, params, (err, row) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(row);
+      }
+    });
+  });
+};
 
 // Test connection function
 const testConnection = async () => {
@@ -219,7 +65,49 @@ const testConnection = async () => {
   });
 };
 
+// Run migrations function
+const runMigrations = async () => {
+  try {
+    const migrationRunner = new MigrationRunner({ 
+      run: (sql, params) => {
+        return new Promise((resolve, reject) => {
+          db.run(sql, params, function(err) {
+            if (err) reject(err);
+            else resolve({ lastID: this.lastID, changes: this.changes });
+          });
+        });
+      },
+      all: (sql, params) => {
+        return new Promise((resolve, reject) => {
+          db.all(sql, params, (err, rows) => {
+            if (err) reject(err);
+            else resolve(rows);
+          });
+        });
+      },
+      get: (sql, params) => {
+        return new Promise((resolve, reject) => {
+          db.get(sql, params, (err, row) => {
+            if (err) reject(err);
+            else resolve(row);
+          });
+        });
+      }
+    });
+    
+    await migrationRunner.runMigrations();
+    console.log('Database migrations completed successfully');
+  } catch (error) {
+    console.error('Error running migrations:', error);
+    throw error;
+  }
+};
+
 module.exports = {
   db,
+  dbRun,
+  dbAll,
+  dbGet,
   testConnection,
+  runMigrations,
 };

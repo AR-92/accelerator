@@ -1,0 +1,154 @@
+<div class='flex flex-col gap-4 lg:gap-6'>
+   <!-- Header -->
+   <div class='flex items-center justify-between'>
+     <div class='grid gap-1'>
+       <h1 class='font-heading text-2xl font-semibold text-foreground dark:text-white'>Credit Management</h1>
+       <p class='text-base text-muted-foreground'>Manage user credits, transactions, and payment methods</p>
+     </div>
+     <div class='flex gap-2'>
+        <a href='/admin/transactions' class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
+          {{lucide 'Receipt' 'w-4 h-4 mr-2'}}
+          View Transactions
+        </a>
+        <a href='/admin/payment-methods' class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
+          {{lucide 'CreditCard' 'w-4 h-4 mr-2'}}
+          Payment Methods
+        </a>
+     </div>
+   </div>
+
+  <!-- Stats Cards -->
+  <div class='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
+    <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
+      <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
+        <h3 class='tracking-tight text-sm font-medium'>Total Credits Issued</h3>
+        {{lucide 'Coins' 'h-4 w-4 text-muted-foreground'}}
+      </div>
+      <div class='text-2xl font-bold'>{{stats.totalCredits}}</div>
+      <p class='text-xs text-muted-foreground'>All time credits</p>
+    </div>
+    <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
+      <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
+        <h3 class='tracking-tight text-sm font-medium'>Active Credits</h3>
+        {{lucide 'TrendingUp' 'h-4 w-4 text-muted-foreground'}}
+      </div>
+      <div class='text-2xl font-bold'>{{stats.activeCredits}}</div>
+      <p class='text-xs text-muted-foreground'>Currently available</p>
+    </div>
+    <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
+      <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
+        <h3 class='tracking-tight text-sm font-medium'>Total Transactions</h3>
+        {{lucide 'Receipt' 'h-4 w-4 text-muted-foreground'}}
+      </div>
+      <div class='text-2xl font-bold'>{{stats.totalTransactions}}</div>
+      <p class='text-xs text-muted-foreground'>All credit movements</p>
+    </div>
+    <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
+      <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
+        <h3 class='tracking-tight text-sm font-medium'>Revenue</h3>
+        {{lucide 'DollarSign' 'h-4 w-4 text-muted-foreground'}}
+      </div>
+      <div class='text-2xl font-bold'>${{stats.totalRevenue}}</div>
+      <p class='text-xs text-muted-foreground'>From credit purchases</p>
+    </div>
+  </div>
+
+  <!-- Recent Transactions -->
+  <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+    <div class='px-6 py-4 border-b border-border'>
+      <div class='flex items-center justify-between'>
+        <h2 class='text-lg font-medium text-foreground'>Recent Transactions</h2>
+        <a href='/admin/transactions' class='text-sm text-primary hover:underline'>View all</a>
+      </div>
+    </div>
+    <div class='overflow-x-auto'>
+      <table class='w-full'>
+        <thead>
+          <tr class='border-b border-border'>
+            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>User</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Type</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Amount</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Status</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each transactions}}
+          <tr class='border-b border-border hover:bg-muted/50'>
+            <td class='p-4 align-middle'>
+              <div class='flex items-center gap-3'>
+                {{lucide 'User' 'h-5 w-5 text-muted-foreground'}}
+                <div>
+                  <div class='font-medium text-foreground'>User #{{user_id}}</div>
+                </div>
+              </div>
+            </td>
+            <td class='p-4 align-middle'>
+              <span class='inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
+                {{#if (eq transaction_type 'purchase')}}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300
+                {{else if (eq transaction_type 'usage')}}bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300
+                {{else if (eq transaction_type 'refund')}}bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300
+                {{else}}bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300{{/if}}'>
+                {{capitalize transaction_type}}
+              </span>
+            </td>
+            <td class='p-4 align-middle'>
+              <span class='font-medium {{#if (eq transaction_type 'usage')}}text-red-600{{else}}text-green-600{{/if}}'>
+                {{#if (eq transaction_type 'usage')}}-{{else}}+{{/if}}{{amount}} credits
+              </span>
+            </td>
+            <td class='p-4 align-middle'>
+              <span class='inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
+                {{#if (eq status 'completed')}}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300
+                {{else if (eq status 'pending')}}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300
+                {{else}}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300{{/if}}'>
+                {{capitalize status}}
+              </span>
+            </td>
+            <td class='p-4 align-middle'>
+              <span class='text-sm text-muted-foreground'>{{formatDate created_at}}</span>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Payment Methods Overview -->
+  <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+    <div class='px-6 py-4 border-b border-border'>
+      <div class='flex items-center justify-between'>
+        <h2 class='text-lg font-medium text-foreground'>Payment Methods</h2>
+        <a href='/admin/payment-methods' class='text-sm text-primary hover:underline'>Manage</a>
+      </div>
+    </div>
+    <div class='p-6'>
+      <div class='grid gap-4 md:grid-cols-3'>
+        <div class='text-center'>
+          <div class='text-2xl font-bold text-green-600'>{{paymentMethods.length}}</div>
+          <p class='text-sm text-muted-foreground'>Active Methods</p>
+        </div>
+        <div class='text-center'>
+          <div class='text-2xl font-bold text-blue-600'>{{stats.stripeCount}}</div>
+          <p class='text-sm text-muted-foreground'>Stripe</p>
+        </div>
+        <div class='text-center'>
+          <div class='text-2xl font-bold text-purple-600'>{{stats.paypalCount}}</div>
+          <p class='text-sm text-muted-foreground'>PayPal</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Helper functions for Handlebars
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function formatDate(dateStr) {
+  return new Date(dateStr).toLocaleDateString();
+}
+</script>

@@ -1,8 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { requireAdminAuth } = require('../../middleware/auth/adminAuth');
 const container = require('../../container');
 const adminController = container.get('adminController');
+const adminAuthController = container.get('adminAuthController');
+
+// Import admin auth middleware and wrap it for async compatibility
+const { requireAdminAuth: originalRequireAdminAuth } = require('../../middleware/auth/adminAuth');
+
+const requireAdminAuth = (req, res, next) => {
+  originalRequireAdminAuth(req, res, next).catch(next);
+};
 
 // Helper function for page data
 const getPageData = (title, activeKey, padding = 'py-8', user = null) => ({
@@ -17,6 +24,18 @@ router.get('/login', (req, res) => {
   res.render('pages/admin/login', {
     title: 'Admin Login - Accelerator Platform',
     layout: 'admin-login',
+  });
+});
+
+// POST admin login
+router.post('/login', (req, res) => {
+  adminAuthController.login(req, res).catch(err => {
+    console.error('Admin login error:', err);
+    res.status(500).render('pages/admin/login', {
+      title: 'Admin Login - Accelerator Platform',
+      layout: 'admin-login',
+      error: 'An error occurred during login',
+    });
   });
 });
 
@@ -83,6 +102,20 @@ router.get(
   adminController.showCorporateDetails.bind(adminController)
 );
 
+// GET admin organizations
+router.get(
+  '/organizations',
+  requireAdminAuth,
+  adminController.showOrganizations.bind(adminController)
+);
+
+// GET admin organization details
+router.get(
+  '/organizations/:organizationId',
+  requireAdminAuth,
+  adminController.showOrganizationDetails.bind(adminController)
+);
+
 // GET admin ideas
 router.get(
   '/ideas',
@@ -113,7 +146,7 @@ router.get(
 
 // GET admin collaboration details
 router.get(
-  '/collaborations/:collaborationId',
+  '/collaborations/:projectId',
   requireAdminAuth,
   adminController.showCollaborationDetails.bind(adminController)
 );
@@ -137,6 +170,48 @@ router.get(
   '/rewards',
   requireAdminAuth,
   adminController.showRewards.bind(adminController)
+);
+
+// GET admin transactions
+router.get(
+  '/transactions',
+  requireAdminAuth,
+  adminController.showTransactions.bind(adminController)
+);
+
+// GET admin payment methods
+router.get(
+  '/payment-methods',
+  requireAdminAuth,
+  adminController.showPaymentMethods.bind(adminController)
+);
+
+// GET admin AI models
+router.get(
+  '/ai-models',
+  requireAdminAuth,
+  adminController.showAIModels.bind(adminController)
+);
+
+// GET admin AI workflows
+router.get(
+  '/ai-workflows',
+  requireAdminAuth,
+  adminController.showAIWorkflows.bind(adminController)
+);
+
+// GET admin AI workflow details
+router.get(
+  '/ai-workflows/:workflowId',
+  requireAdminAuth,
+  adminController.showAIWorkflowDetails.bind(adminController)
+);
+
+// GET admin credits
+router.get(
+  '/credits',
+  requireAdminAuth,
+  adminController.showCredits.bind(adminController)
 );
 
 // GET admin landing page
@@ -189,5 +264,22 @@ router.get(
   requireAdminAuth,
   adminController.showSystemHealth.bind(adminController)
 );
+
+// POST admin logout
+router.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Admin logout error:', err);
+      return res.status(500).render('pages/error/page-not-found', {
+        title: 'Error - Admin Panel',
+        layout: 'main',
+        message: 'An error occurred during logout',
+      });
+    }
+
+    res.clearCookie('connect.sid');
+    res.redirect('/admin/login');
+  });
+});
 
 module.exports = router;

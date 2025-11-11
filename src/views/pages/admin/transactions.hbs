@@ -1,0 +1,260 @@
+<div class='flex flex-col gap-4 lg:gap-6'>
+   <!-- Header -->
+   <div class='flex items-center justify-between'>
+     <div class='grid gap-1'>
+       <h1 class='font-heading text-2xl font-semibold text-foreground dark:text-white'>Transaction Management</h1>
+       <p class='text-base text-muted-foreground'>Total transactions: {{pagination.total}}</p>
+     </div>
+     <div class='flex gap-2'>
+        <button onclick="exportToCSV()" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
+          {{lucide 'Download' 'w-4 h-4 mr-2'}}
+          Export CSV
+        </button>
+     </div>
+   </div>
+
+  <!-- Stats Cards -->
+  <div class='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
+    <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
+      <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
+        <h3 class='tracking-tight text-sm font-medium'>Total Transactions</h3>
+        {{lucide 'Receipt' 'h-4 w-4 text-muted-foreground'}}
+      </div>
+      <div class='text-2xl font-bold'>{{stats.totalTransactions}}</div>
+    </div>
+    <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
+      <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
+        <h3 class='tracking-tight text-sm font-medium'>Completed</h3>
+        {{lucide 'CheckCircle' 'h-4 w-4 text-muted-foreground'}}
+      </div>
+      <div class='text-2xl font-bold'>{{stats.completedCount}}</div>
+    </div>
+    <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
+      <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
+        <h3 class='tracking-tight text-sm font-medium'>Pending</h3>
+        {{lucide 'Clock' 'h-4 w-4 text-muted-foreground'}}
+      </div>
+      <div class='text-2xl font-bold'>{{stats.pendingCount}}</div>
+    </div>
+    <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
+      <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
+        <h3 class='tracking-tight text-sm font-medium'>Revenue</h3>
+        {{lucide 'DollarSign' 'h-4 w-4 text-muted-foreground'}}
+      </div>
+      <div class='text-2xl font-bold'>${{stats.totalRevenue}}</div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class='rounded-md bg-card text-card-foreground shadow-sm p-6' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+    <div class='flex flex-wrap gap-4'>
+      <div>
+        <label class='block text-sm font-medium text-foreground mb-2'>Type</label>
+        <select id="typeFilter" class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+          <option value="">All Types</option>
+          <option value="purchase">Purchase</option>
+          <option value="usage">Usage</option>
+          <option value="refund">Refund</option>
+          <option value="bonus">Bonus</option>
+        </select>
+      </div>
+      <div>
+        <label class='block text-sm font-medium text-foreground mb-2'>Status</label>
+        <select id="statusFilter" class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+          <option value="">All Status</option>
+          <option value="completed">Completed</option>
+          <option value="pending">Pending</option>
+          <option value="failed">Failed</option>
+        </select>
+      </div>
+      <div>
+        <label class='block text-sm font-medium text-foreground mb-2'>User ID</label>
+        <input type="text" id="userIdInput" placeholder="Enter user ID"
+               class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+      </div>
+      <div>
+        <label class='block text-sm font-medium text-foreground mb-2'>Search</label>
+        <input type="text" id="searchInput" placeholder="Search transactions"
+               class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+      </div>
+      <div class="flex items-end">
+        <button id="applyFilters" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
+          Apply Filters
+        </button>
+      </div>
+    </div>
+  </div>
+
+   <!-- Transactions Table -->
+    <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+     <div class='px-6 py-4 border-b border-border'>
+       <h2 class='text-lg font-medium text-foreground'>Transactions ({{pagination.total}})</h2>
+     </div>
+     <div class='overflow-x-auto'>
+       <table class='w-full'>
+         <thead>
+           <tr class='border-b border-border'>
+             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Transaction ID</th>
+             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>User</th>
+             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Type</th>
+             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Amount</th>
+             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Status</th>
+             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Payment Method</th>
+             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Date</th>
+             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Actions</th>
+           </tr>
+         </thead>
+         <tbody>
+           {{#each transactions}}
+           <tr class='border-b border-border hover:bg-muted/50'>
+             <td class='p-4 align-middle'>
+               <div class='font-medium text-foreground'>{{id}}</div>
+               {{#if external_transaction_id}}
+               <div class='text-sm text-muted-foreground'>Ext: {{external_transaction_id}}</div>
+               {{/if}}
+             </td>
+             <td class='p-4 align-middle'>
+               <div class='flex items-center gap-3'>
+                 {{lucide 'User' 'h-5 w-5 text-muted-foreground'}}
+                 <div>
+                   <div class='font-medium text-foreground'>User #{{user_id}}</div>
+                 </div>
+               </div>
+             </td>
+             <td class='p-4 align-middle'>
+               <span class='inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
+                 {{#if (eq transaction_type 'purchase')}}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300
+                 {{else if (eq transaction_type 'usage')}}bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300
+                 {{else if (eq transaction_type 'refund')}}bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300
+                 {{else}}bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300{{/if}}'>
+                 {{capitalize transaction_type}}
+               </span>
+             </td>
+             <td class='p-4 align-middle'>
+               <span class='font-medium {{#if (eq transaction_type 'usage')}}text-red-600{{else}}text-green-600{{/if}}'>
+                 {{#if (eq transaction_type 'usage')}}-{{else}}+{{/if}}{{amount}} credits
+               </span>
+               {{#if price}}
+               <div class='text-sm text-muted-foreground'>${{price}}</div>
+               {{/if}}
+             </td>
+             <td class='p-4 align-middle'>
+               <span class='inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
+                 {{#if (eq status 'completed')}}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300
+                 {{else if (eq status 'pending')}}bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300
+                 {{else}}bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300{{/if}}'>
+                 {{capitalize status}}
+               </span>
+             </td>
+             <td class='p-4 align-middle'>
+               {{#if payment_method_id}}
+                 <span class='text-sm text-muted-foreground'>Method #{{payment_method_id}}</span>
+               {{else}}
+                 <span class='text-sm text-muted-foreground'>—</span>
+               {{/if}}
+             </td>
+             <td class='p-4 align-middle'>
+               <span class='text-sm text-muted-foreground'>{{formatDate created_at}}</span>
+             </td>
+             <td class='p-4 align-middle'>
+               <div class='flex items-center gap-2'>
+                 <button onclick="viewTransaction({{id}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8'>
+                   {{lucide 'Eye' 'h-4 w-4'}}
+                 </button>
+                 {{#if (eq status 'pending')}}
+                 <button onclick="processTransaction({{id}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8'>
+                   {{lucide 'Check' 'h-4 w-4'}}
+                 </button>
+                 {{/if}}
+               </div>
+             </td>
+           </tr>
+           {{/each}}
+         </tbody>
+       </table>
+     </div>
+
+     <!-- Pagination -->
+     {{#if pagination.pages}}
+     <div class='flex items-center justify-between px-6 py-4 border-t border-border'>
+       <div class='text-sm text-muted-foreground'>
+         Showing {{pagination.page}} of {{pagination.pages}} pages
+       </div>
+       <div class='flex items-center gap-2'>
+         {{#if pagination.hasPrev}}
+         <a href='?page={{subtract pagination.page 1}}&limit={{pagination.limit}}&search={{filters.search}}&type={{filters.type}}&status={{filters.status}}&userId={{filters.userId}}' class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-3'>
+           Previous
+         </a>
+         {{/if}}
+
+         {{#each (range 1 pagination.pages)}}
+         <a href='?page={{this}}&limit={{pagination.limit}}&search={{filters.search}}&type={{filters.type}}&status={{filters.status}}&userId={{filters.userId}}' class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 {{#if (eq this ../pagination.page)}}bg-primary text-primary-foreground{{else}}border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground{{/if}} h-9 w-9'>
+           {{this}}
+         </a>
+         {{/each}}
+
+         {{#if pagination.hasNext}}
+         <a href='?page={{add pagination.page 1}}&limit={{pagination.limit}}&search={{filters.search}}&type={{filters.type}}&status={{filters.status}}&userId={{filters.userId}}' class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-3'>
+           Next
+         </a>
+         {{/if}}
+       </div>
+     </div>
+     {{/if}}
+   </div>
+</div>
+
+<script>
+// Filter functionality
+document.getElementById('applyFilters').addEventListener('click', function() {
+  const type = document.getElementById('typeFilter').value;
+  const status = document.getElementById('statusFilter').value;
+  const userId = document.getElementById('userIdInput').value;
+  const search = document.getElementById('searchInput').value;
+
+  const params = new URLSearchParams(window.location.search);
+  if (type) params.set('type', type); else params.delete('type');
+  if (status) params.set('status', status); else params.delete('status');
+  if (userId) params.set('userId', userId); else params.delete('userId');
+  if (search) params.set('search', search); else params.delete('search');
+  params.set('page', '1'); // Reset to first page
+
+  window.location.search = params.toString();
+});
+
+// Export functionality
+function exportToCSV() {
+  const params = new URLSearchParams(window.location.search);
+  window.location.href = '/admin/transactions/export?' + params.toString();
+}
+
+// Transaction actions
+function viewTransaction(id) {
+  // TODO: Implement view transaction details
+  alert('View transaction details functionality coming soon!');
+}
+
+function processTransaction(id) {
+  if (confirm('Process this pending transaction?')) {
+    // TODO: Implement process transaction
+    alert('Process transaction functionality coming soon!');
+  }
+}
+
+// Helper functions for Handlebars
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function formatDate(dateStr) {
+  return new Date(dateStr).toLocaleDateString();
+}
+
+function range(start, end) {
+  const result = [];
+  for (let i = start; i <= end; i++) {
+    result.push(i);
+  }
+  return result;
+}
+</script>

@@ -172,9 +172,14 @@ const server = app.listen(port, async () => {
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`Node version: ${process.version}`);
 
-  // Test SQLite connection
+  // Run database migrations and test connection
   try {
-    const { testConnection } = require('./config/database');
+    const { testConnection, runMigrations } = require('./config/database');
+    
+    // Run migrations first
+    await runMigrations();
+    
+    // Then test the connection
     const isConnected = await testConnection();
     if (isConnected) {
       console.log('SQLite connection established successfully');
@@ -182,7 +187,7 @@ const server = app.listen(port, async () => {
       console.warn('Warning: SQLite connection failed');
     }
   } catch (error) {
-    console.error('Warning: SQLite connection test failed:', {
+    console.error('Database initialization error:', {
       error: error.message,
     });
   }

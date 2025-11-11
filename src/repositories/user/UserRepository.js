@@ -32,7 +32,7 @@ class UserRepository extends BaseRepository {
 
   async findByRowid(rowid) {
     const sql =
-      'SELECT id, email, first_name, last_name, role, credits, status, banned, banned_reason, banned_at, theme, bio, created_at, updated_at, rowid FROM users WHERE rowid = ?';
+      'SELECT id, email, first_name, last_name, user_type as role, credits, status, banned, banned_reason, banned_at, theme, bio, created_at, updated_at, rowid FROM users WHERE rowid = ?';
     const row = await this.queryOne(sql, [rowid]);
     return row ? new User(row) : null;
   }
@@ -60,7 +60,7 @@ class UserRepository extends BaseRepository {
       password_hash: user.passwordHash,
       first_name: user.firstName,
       last_name: user.lastName,
-      role: user.role,
+      user_type: user.role,
       theme: user.theme,
       bio: user.bio,
       credits: user.credits,
@@ -82,7 +82,7 @@ class UserRepository extends BaseRepository {
     const data = {};
     if (user.firstName !== undefined) data.first_name = user.firstName;
     if (user.lastName !== undefined) data.last_name = user.lastName;
-    if (user.role !== undefined) data.role = user.role;
+    if (user.role !== undefined) data.user_type = user.role;
     if (user.theme !== undefined) data.theme = user.theme;
     if (user.bio !== undefined) data.bio = user.bio;
     data.updated_at = new Date().toISOString();
@@ -111,7 +111,8 @@ class UserRepository extends BaseRepository {
    * @returns {Promise<User[]>}
    */
   async findByRole(role) {
-    const sql = 'SELECT * FROM users WHERE role = ? ORDER BY created_at DESC';
+    const sql =
+      'SELECT * FROM users WHERE user_type = ? ORDER BY created_at DESC';
     const rows = await this.query(sql, [role]);
     return rows.map((row) => new User(row));
   }
@@ -137,7 +138,8 @@ class UserRepository extends BaseRepository {
    * @returns {Promise<Object>} Role counts
    */
   async countByRole() {
-    const sql = 'SELECT role, COUNT(*) as count FROM users GROUP BY role';
+    const sql =
+      'SELECT user_type as role, COUNT(*) as count FROM users GROUP BY user_type';
     const rows = await this.query(sql);
     const result = {};
     rows.forEach((row) => {
@@ -186,7 +188,7 @@ class UserRepository extends BaseRepository {
    */
   async updateRole(id, role) {
     const data = {
-      role: role,
+      user_type: role,
       updated_at: new Date().toISOString(),
     };
     const success = await super.update(id, data);
@@ -279,11 +281,11 @@ class UserRepository extends BaseRepository {
       : 'DESC';
 
     let sql =
-      'SELECT id, email, first_name, last_name, role, credits, status, banned, banned_reason, banned_at, theme, bio, created_at, updated_at, rowid FROM users WHERE 1=1';
+      'SELECT id, email, first_name, last_name, user_type as role, credits, status, banned, ban_reason, theme, bio, created_at, updated_at, rowid FROM users WHERE 1=1';
     const params = [];
 
     if (role) {
-      sql += ' AND role = ?';
+      sql += ' AND user_type = ?';
       params.push(role);
     }
 
@@ -312,7 +314,7 @@ class UserRepository extends BaseRepository {
     const params = [];
 
     if (role) {
-      sql += ' AND role = ?';
+      sql += ' AND user_type = ?';
       params.push(role);
     }
 

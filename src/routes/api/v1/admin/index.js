@@ -1,7 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { requireAdminAuth } = require('../../../../middleware/auth/adminAuth');
 const rateLimit = require('express-rate-limit');
+
+// Import admin auth middleware and wrap it for async compatibility  
+const { requireAdminAuth: originalRequireAdminAuth } = require('../../../../middleware/auth/adminAuth');
+
+const requireAdminAuth = (req, res, next) => {
+  originalRequireAdminAuth(req, res, next).catch(next);
+};
 
 // Rate limiter for system stats API (120 requests per minute)
 const systemStatsLimiter = rateLimit({
@@ -315,7 +321,16 @@ router.get(
   requireAdminAuth,
   adminController.getIdea.bind(adminController)
 );
-// Note: updateIdea and deleteIdea routes removed as methods don't exist in AdminBusinessController
+router.put(
+  '/api/ideas/:ideaId',
+  requireAdminAuth,
+  adminController.updateIdea.bind(adminController)
+);
+router.delete(
+  '/api/ideas/:ideaId',
+  requireAdminAuth,
+  adminController.deleteIdea.bind(adminController)
+);
 
 // Votes management routes - commented out as methods don't exist
 // router.get(
@@ -324,112 +339,112 @@ router.get(
 //   adminController.showVotes.bind(adminController)
 // );
 
-// Package management routes - commented out as methods don't exist
-// router.get(
-//   '/packages',
-//   requireAdminAuth,
-//   adminController.showPackages.bind(adminController)
-// );
-// router.get(
-//   '/packages/:packageId',
-//   requireAdminAuth,
-//   adminController.showPackageDetails.bind(adminController)
-// );
+// Package management routes
+router.get(
+  '/packages',
+  requireAdminAuth,
+  adminController.showPackages.bind(adminController)
+);
+router.get(
+  '/packages/:packageId',
+  requireAdminAuth,
+  adminController.showPackageDetails.bind(adminController)
+);
 
-// Package API routes - commented out as methods don't exist
-// router.post(
-//   '/api/packages',
-//   requireAdminAuth,
-//   adminController.createPackage.bind(adminController)
-// );
-// router.get(
-//   '/api/packages/:packageId',
-//   requireAdminAuth,
-//   adminController.getPackage.bind(adminController)
-// );
-// router.put(
-//   '/api/packages/:packageId',
-//   requireAdminAuth,
-//   adminController.updatePackage.bind(adminController)
-// );
-// router.delete(
-//   '/api/packages/:packageId',
-//   requireAdminAuth,
-//   adminController.deletePackage.bind(adminController)
-// );
+// Package API routes
+router.post(
+  '/api/packages',
+  requireAdminAuth,
+  adminController.createPackage.bind(adminController)
+);
+router.get(
+  '/api/packages/:packageId',
+  requireAdminAuth,
+  adminController.getPackage.bind(adminController)
+);
+router.put(
+  '/api/packages/:packageId',
+  requireAdminAuth,
+  adminController.updatePackage.bind(adminController)
+);
+router.delete(
+  '/api/packages/:packageId',
+  requireAdminAuth,
+  adminController.deletePackage.bind(adminController)
+);
 
-// Billing management routes - commented out as methods don't exist
-// router.get(
-//   '/billing',
-//   requireAdminAuth,
-//   adminController.showBilling.bind(adminController)
-// );
-// router.get(
-//   '/billing/:billingId',
-//   requireAdminAuth,
-//   adminController.showBillingDetails.bind(adminController)
-// );
+// Billing management routes
+router.get(
+  '/billing',
+  requireAdminAuth,
+  adminController.showBilling.bind(adminController)
+);
+router.get(
+  '/billing/:billingId',
+  requireAdminAuth,
+  adminController.showBillingDetails.bind(adminController)
+);
 
-// Billing API routes - commented out as methods don't exist
-// router.post(
-//   '/api/billing',
-//   requireAdminAuth,
-//   adminController.createBillingTransaction.bind(adminController)
-// );
-// router.get(
-//   '/api/billing/:billingId',
-//   requireAdminAuth,
-//   adminController.getBillingTransaction.bind(adminController)
-// );
-// router.put(
-//   '/api/billing/:billingId/status',
-//   requireAdminAuth,
-//   adminController.updateBillingStatus.bind(adminController)
-// );
-// router.post(
-//   '/api/billing/:billingId/refund',
-//   requireAdminAuth,
-//   adminController.processRefund.bind(adminController)
-// );
+// Billing API routes
+router.post(
+  '/api/billing',
+  requireAdminAuth,
+  adminController.createBillingTransaction.bind(adminController)
+);
+router.get(
+  '/api/billing/:billingId',
+  requireAdminAuth,
+  adminController.getBillingTransaction.bind(adminController)
+);
+router.put(
+  '/api/billing/:billingId/status',
+  requireAdminAuth,
+  adminController.updateBillingStatus.bind(adminController)
+);
+router.post(
+  '/api/billing/:billingId/refund',
+  requireAdminAuth,
+  adminController.processRefund.bind(adminController)
+);
 
-// Reward management routes - commented out as methods don't exist
-// router.get(
-//   '/rewards',
-//   requireAdminAuth,
-//   adminController.showRewards.bind(adminController)
-// );
-// router.get(
-//   '/rewards/:rewardId',
-//   requireAdminAuth,
-//   adminController.showRewardDetails.bind(adminController)
-// );
+// Reward management routes
+router.get(
+  '/rewards',
+  requireAdminAuth,
+  adminController.showRewards.bind(adminController)
+);
+router.get(
+  '/rewards/:rewardId',
+  requireAdminAuth,
+  adminController.showRewardDetails.bind(adminController)
+);
 
-// Reward API routes - commented out as methods don't exist
-// router.post(
-//   '/api/rewards',
-//   requireAdminAuth,
-//   adminController.createReward.bind(adminController)
-// );
-// router.post(
-//   '/api/rewards/grant',
-//   requireAdminAuth,
-//   adminController.grantReward.bind(adminController)
-// );
-// router.get(
-//   '/api/rewards/:rewardId',
-//   requireAdminAuth,
-//   adminController.getReward.bind(adminController)
-// );
-// router.put(
-//   '/api/rewards/:rewardId',
-//   requireAdminAuth,
-//   adminController.updateReward.bind(adminController)
-// );
-// router.delete(
-//   '/api/rewards/:rewardId',
-//   requireAdminAuth,
-//   adminController.deleteReward.bind(adminController)
-// );
+// Reward API routes
+router.post(
+  '/api/rewards',
+  requireAdminAuth,
+  adminController.createReward.bind(adminController)
+);
+router.post(
+  '/api/rewards/grant',
+  requireAdminAuth,
+  adminController.grantReward.bind(adminController)
+);
+router.get(
+  '/api/rewards/:rewardId',
+  requireAdminAuth,
+  adminController.getReward.bind(adminController)
+);
+router.put(
+  '/api/rewards/:rewardId',
+  requireAdminAuth,
+  adminController.updateReward.bind(adminController)
+);
+router.delete(
+  '/api/rewards/:rewardId',
+  requireAdminAuth,
+  adminController.deleteReward.bind(adminController)
+);
 
 // Landing page management routes - commented out as methods don't exist
 // router.get(
@@ -473,6 +488,23 @@ router.patch(
   '/api/landing-page/:sectionId/order',
   requireAdminAuth,
   adminController.updateLandingPageSectionOrder.bind(adminController)
+);
+
+// Credit management routes
+router.get(
+  '/credits',
+  requireAdminAuth,
+  adminController.showCredits.bind(adminController)
+);
+router.get(
+  '/transactions',
+  requireAdminAuth,
+  adminController.showTransactions.bind(adminController)
+);
+router.get(
+  '/payment-methods',
+  requireAdminAuth,
+  adminController.showPaymentMethods.bind(adminController)
 );
 
 module.exports = router;

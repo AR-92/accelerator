@@ -2,28 +2,30 @@
  * Vote service handling business logic for voting
  */
 class VoteService {
-  constructor(voteRepository, ideaRepository) {
+  constructor(voteRepository, projectRepository) {
     this.voteRepository = voteRepository;
-    this.ideaRepository = ideaRepository;
+    this.projectRepository = projectRepository;
   }
 
   /**
-   * Get votes for an idea
-   * @param {string} ideaSlug - Idea slug
+   * Get votes for a project
+   * @param {number} projectId - Project ID
    * @param {Object} options - Query options
    * @returns {Promise<Object[]>} Array of vote data
    */
-  async getVotesForIdea(ideaSlug, options = {}) {
-    const votes = await this.voteRepository.findByIdeaSlug(ideaSlug, options);
+  async getVotesForProject(projectId, options = {}) {
+    const votes = await this.voteRepository.findByProjectId(projectId, options);
     return votes.map((vote) => ({
       id: vote.id,
       userId: vote.userId,
+      projectId: vote.projectId,
       marketViability: vote.marketViability,
       realWorldProblem: vote.realWorldProblem,
       innovation: vote.innovation,
       technicalFeasibility: vote.technicalFeasibility,
       scalability: vote.scalability,
       marketSurvival: vote.marketSurvival,
+      score: vote.score,
       averageScore: vote.averageScore,
       totalScore: vote.totalScore,
       isComplete: vote.isComplete,
@@ -32,46 +34,47 @@ class VoteService {
   }
 
   /**
-   * Add a vote for an idea
-   * @param {string} ideaSlug - Idea slug
+   * Add a vote for a project
+   * @param {number} projectId - Project ID
    * @param {number} userId - User ID
    * @param {Object} voteData - Vote data
    * @returns {Promise<Object>} Created vote data
    */
-  async addVote(ideaSlug, userId, voteData) {
-    // Check if idea exists
-    const idea = await this.ideaRepository.findByHref(ideaSlug);
-    if (!idea) {
+  async addVote(projectId, userId, voteData) {
+    // Check if project exists
+    const project = await this.projectRepository.findById(projectId);
+    if (!project) {
       const NotFoundError = require('../utils/errors/NotFoundError');
-      throw new NotFoundError('Idea not found');
+      throw new NotFoundError('Project not found');
     }
 
     // Check if user has already voted
-    const hasVoted = await this.voteRepository.hasUserVoted(userId, ideaSlug);
+    const hasVoted = await this.voteRepository.hasUserVoted(userId, projectId);
     if (hasVoted) {
       const ValidationError = require('../utils/errors/ValidationError');
       throw new ValidationError('Vote failed', [
-        'You have already voted for this idea',
+        'You have already voted for this project',
       ]);
     }
 
     const voteId = await this.voteRepository.create({
       ...voteData,
       userId,
-      ideaSlug,
+      projectId,
     });
 
     const vote = await this.voteRepository.findById(voteId);
     return {
       id: vote.id,
       userId: vote.userId,
-      ideaSlug: vote.ideaSlug,
+      projectId: vote.projectId,
       marketViability: vote.marketViability,
       realWorldProblem: vote.realWorldProblem,
       innovation: vote.innovation,
       technicalFeasibility: vote.technicalFeasibility,
       scalability: vote.scalability,
       marketSurvival: vote.marketSurvival,
+      score: vote.score,
       averageScore: vote.averageScore,
       totalScore: vote.totalScore,
       isComplete: vote.isComplete,
@@ -80,19 +83,19 @@ class VoteService {
   }
 
   /**
-   * Get vote statistics for an idea
-   * @param {string} ideaSlug - Idea slug
+   * Get vote statistics for a project
+   * @param {number} projectId - Project ID
    * @returns {Promise<Object>} Vote statistics
    */
-  async getVoteStats(ideaSlug) {
-    // Check if idea exists
-    const idea = await this.ideaRepository.findByHref(ideaSlug);
-    if (!idea) {
+  async getVoteStats(projectId) {
+    // Check if project exists
+    const project = await this.projectRepository.findById(projectId);
+    if (!project) {
       const NotFoundError = require('../utils/errors/NotFoundError');
-      throw new NotFoundError('Idea not found');
+      throw new NotFoundError('Project not found');
     }
 
-    return await this.voteRepository.getVoteStats(ideaSlug);
+    return await this.voteRepository.getVoteStats(projectId);
   }
 
   /**
@@ -105,13 +108,14 @@ class VoteService {
     const votes = await this.voteRepository.findByUserId(userId, options);
     return votes.map((vote) => ({
       id: vote.id,
-      ideaSlug: vote.ideaSlug,
+      projectId: vote.projectId,
       marketViability: vote.marketViability,
       realWorldProblem: vote.realWorldProblem,
       innovation: vote.innovation,
       technicalFeasibility: vote.technicalFeasibility,
       scalability: vote.scalability,
       marketSurvival: vote.marketSurvival,
+      score: vote.score,
       averageScore: vote.averageScore,
       totalScore: vote.totalScore,
       isComplete: vote.isComplete,

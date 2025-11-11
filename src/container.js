@@ -15,17 +15,24 @@ const VoteRepository = require('./repositories/idea/VoteRepository');
 const StartupRepository = require('./repositories/business/StartupRepository');
 const EnterpriseRepository = require('./repositories/business/EnterpriseRepository');
 const CorporateRepository = require('./repositories/business/CorporateRepository');
+const OrganizationRepository = require('./repositories/business/OrganizationRepository');
 const ProjectRepository = require('./repositories/project/ProjectRepository');
 const CollaborationRepository = require('./repositories/project/CollaborationRepository');
+const ProjectCollaboratorRepository = require('./repositories/project/ProjectCollaboratorRepository');
 const TeamRepository = require('./repositories/user/TeamRepository');
 const LandingPageRepository = require('./repositories/content/LandingPageRepository');
 const PackageRepository = require('./repositories/billing/PackageRepository');
 const BillingRepository = require('./repositories/billing/BillingRepository');
 const RewardRepository = require('./repositories/billing/RewardRepository');
+const TransactionRepository = require('./repositories/billing/TransactionRepository');
+const PaymentMethodRepository = require('./repositories/billing/PaymentMethodRepository');
 const LearningContentRepository = require('./repositories/content/learning/LearningContentRepository');
 const LearningCategoryRepository = require('./repositories/content/learning/LearningCategoryRepository');
 const HelpContentRepository = require('./repositories/content/help/HelpContentRepository');
 const HelpCategoryRepository = require('./repositories/content/help/HelpCategoryRepository');
+const AIModelRepository = require('./repositories/ai/AIModelRepository');
+const AIWorkflowRepository = require('./repositories/ai/AIWorkflowRepository');
+const WorkflowStepRepository = require('./repositories/ai/WorkflowStepRepository');
 
 // Import services
 const AuthService = require('./services/auth/AuthService');
@@ -34,6 +41,7 @@ const VoteService = require('./services/idea/VoteService');
 const StartupService = require('./services/business/StartupService');
 const EnterpriseService = require('./services/business/EnterpriseService');
 const CorporateService = require('./services/business/CorporateService');
+const OrganizationService = require('./services/business/OrganizationService');
 const LandingPageService = require('./services/content/LandingPageService');
 const LearningService = require('./services/content/LearningService');
 const HelpService = require('./services/content/HelpService');
@@ -70,6 +78,9 @@ const AdminSystemStatsController = require('./controllers/admin/AdminSystemStats
 const AdminUserViewController = require('./controllers/admin/AdminUserViewController');
 const AdminUserActionController = require('./controllers/admin/AdminUserActionController');
 const AdminBusinessController = require('./controllers/admin/AdminBusinessController');
+const AdminOrganizationController = require('./controllers/admin/AdminOrganizationController');
+const AdminAIController = require('./controllers/admin/AdminAIController');
+const AdminCreditController = require('./controllers/admin/AdminCreditController');
 const AdminAuthController = require('./controllers/admin/AdminAuthController');
 
 // Create container instance
@@ -103,6 +114,10 @@ container.register(
   (c) => new CorporateRepository(c.get('db'))
 );
 container.register(
+  'organizationRepository',
+  (c) => new OrganizationRepository(c.get('db'))
+);
+container.register(
   'learningContentRepository',
   (c) => new LearningContentRepository(c.get('db'))
 );
@@ -119,12 +134,28 @@ container.register(
   (c) => new HelpCategoryRepository(c.get('db'))
 );
 container.register(
+  'aiModelRepository',
+  (c) => new AIModelRepository(c.get('db'))
+);
+container.register(
+  'aiWorkflowRepository',
+  (c) => new AIWorkflowRepository(c.get('db'))
+);
+container.register(
+  'workflowStepRepository',
+  (c) => new WorkflowStepRepository(c.get('db'))
+);
+container.register(
   'projectRepository',
   (c) => new ProjectRepository(c.get('db'))
 );
 container.register(
   'collaborationRepository',
   (c) => new CollaborationRepository(c.get('db'))
+);
+container.register(
+  'projectCollaboratorRepository',
+  (c) => new ProjectCollaboratorRepository(c.get('db'))
 );
 container.register('teamRepository', (c) => new TeamRepository(c.get('db')));
 container.register(
@@ -143,6 +174,14 @@ container.register(
   'rewardRepository',
   (c) => new RewardRepository(c.get('db'))
 );
+container.register(
+  'transactionRepository',
+  (c) => new TransactionRepository(c.get('db'))
+);
+container.register(
+  'paymentMethodRepository',
+  (c) => new PaymentMethodRepository(c.get('db'))
+);
 container.register('voteRepository', (c) => new VoteRepository(c.get('db')));
 
 // Register services
@@ -156,7 +195,7 @@ container.register(
 );
 container.register(
   'voteService',
-  (c) => new VoteService(c.get('voteRepository'), c.get('ideaRepository'))
+  (c) => new VoteService(c.get('voteRepository'), c.get('projectRepository'))
 );
 container.register(
   'startupService',
@@ -169,6 +208,10 @@ container.register(
 container.register(
   'corporateService',
   (c) => new CorporateService(c.get('corporateRepository'))
+);
+container.register(
+  'organizationService',
+  (c) => new OrganizationService(c.get('organizationRepository'))
 );
 container.register(
   'landingPageService',
@@ -226,6 +269,7 @@ container.register(
       c.get('startupService'),
       c.get('enterpriseService'),
       c.get('corporateService'),
+      c.get('organizationService'),
       c.get('adminActivityRepository')
     )
 );
@@ -234,7 +278,7 @@ container.register(
   (c) =>
     new ProjectManagementService(
       c.get('projectRepository'),
-      c.get('teamRepository'),
+      c.get('projectCollaboratorRepository'),
       c.get('adminActivityRepository')
     )
 );
@@ -250,11 +294,18 @@ container.register(
       c.get('ideaService'),
       c.get('voteService'),
       c.get('landingPageService'),
+      c.get('organizationService'),
       c.get('packageRepository'),
       c.get('billingRepository'),
       c.get('rewardRepository'),
+      c.get('transactionRepository'),
+      c.get('paymentMethodRepository'),
+      c.get('aiModelRepository'),
+      c.get('aiWorkflowRepository'),
+      c.get('workflowStepRepository'),
       c.get('voteRepository'),
-      c.get('collaborationRepository')
+      c.get('collaborationRepository'),
+      c.get('projectCollaboratorRepository')
     )
 );
 
@@ -387,6 +438,9 @@ container.register('adminController', (c) => {
   const userView = new AdminUserViewController(adminService);
   const userAction = new AdminUserActionController(adminService);
   const business = new AdminBusinessController(adminService);
+  const organizations = new AdminOrganizationController(adminService);
+  const ai = new AdminAIController(adminService);
+  const credits = new AdminCreditController(adminService);
   return {
     showDashboard: dashboard.showDashboard.bind(dashboard),
     showUsers: userView.showUsers.bind(userView),
@@ -397,11 +451,36 @@ container.register('adminController', (c) => {
     showSettings: dashboard.showSettings.bind(dashboard),
     showSystemHealth: dashboard.showSystemHealth.bind(dashboard),
     showIdeas: dashboard.showIdeas.bind(dashboard),
+    showIdeaDetails: business.showIdeaDetails.bind(business),
+    getIdea: business.getIdea.bind(business),
+    updateIdea: business.updateIdea.bind(business),
+    deleteIdea: business.deleteIdea.bind(business),
     showVotes: dashboard.showVotes.bind(dashboard),
-    showCollaborations: dashboard.showCollaborations.bind(dashboard),
-    showPackages: dashboard.showPackages.bind(dashboard),
-    showBilling: dashboard.showBilling.bind(dashboard),
-    showRewards: dashboard.showRewards.bind(dashboard),
+    showCollaborations: business.showCollaborations.bind(business),
+    showCollaborationDetails: business.showCollaborationDetails.bind(business),
+    getProject: business.getProject.bind(business),
+    updateProjectStatus: business.updateProjectStatus.bind(business),
+    removeUserFromProject: business.removeUserFromProject.bind(business),
+    deleteProject: business.deleteProject.bind(business),
+    showPackages: business.showPackages.bind(business),
+    showPackageDetails: business.showPackageDetails.bind(business),
+    getPackage: business.getPackage.bind(business),
+    createPackage: business.createPackage.bind(business),
+    updatePackage: business.updatePackage.bind(business),
+    deletePackage: business.deletePackage.bind(business),
+    showBilling: business.showBilling.bind(business),
+    showBillingDetails: business.showBillingDetails.bind(business),
+    getBillingTransaction: business.getBillingTransaction.bind(business),
+    createBillingTransaction: business.createBillingTransaction.bind(business),
+    updateBillingStatus: business.updateBillingStatus.bind(business),
+    processRefund: business.processRefund.bind(business),
+    showRewards: business.showRewards.bind(business),
+    showRewardDetails: business.showRewardDetails.bind(business),
+    getReward: business.getReward.bind(business),
+    createReward: business.createReward.bind(business),
+    updateReward: business.updateReward.bind(business),
+    deleteReward: business.deleteReward.bind(business),
+    grantReward: business.grantReward.bind(business),
     showLandingPage: dashboard.showLandingPage.bind(dashboard),
     getSystemStatsAPI: systemStats.getSystemStatsAPI.bind(systemStats),
     createUser: userAction.createUser.bind(userAction),
@@ -444,20 +523,41 @@ container.register('adminController', (c) => {
     showIdeas: business.showIdeas.bind(business),
     showIdeaDetails: business.showIdeaDetails.bind(business),
     getIdea: business.getIdea.bind(business),
-    showCollaborations: business.showCollaborations.bind(business),
-    showCollaborationDetails: business.showCollaborationDetails.bind(business),
-    getProject: business.getProject.bind(business),
-    updateProjectStatus: business.updateProjectStatus.bind(business),
-    removeUserFromProject: business.removeUserFromProject.bind(business),
-    deleteProject: business.deleteProject.bind(business),
+    updateIdea: business.updateIdea.bind(business),
+    deleteIdea: business.deleteIdea.bind(business),
+    showPackages: business.showPackages.bind(business),
+    showPackageDetails: business.showPackageDetails.bind(business),
+    getPackage: business.getPackage.bind(business),
+    createPackage: business.createPackage.bind(business),
+    updatePackage: business.updatePackage.bind(business),
+    deletePackage: business.deletePackage.bind(business),
+    showBilling: business.showBilling.bind(business),
+    showBillingDetails: business.showBillingDetails.bind(business),
+    getBillingTransaction: business.getBillingTransaction.bind(business),
+    createBillingTransaction: business.createBillingTransaction.bind(business),
+    updateBillingStatus: business.updateBillingStatus.bind(business),
+    processRefund: business.processRefund.bind(business),
+    showRewards: business.showRewards.bind(business),
+    showRewardDetails: business.showRewardDetails.bind(business),
+    getReward: business.getReward.bind(business),
+    createReward: business.createReward.bind(business),
+    updateReward: business.updateReward.bind(business),
+    deleteReward: business.deleteReward.bind(business),
+    grantReward: business.grantReward.bind(business),
     updateLandingPageSectionOrder:
       business.updateLandingPageSectionOrder.bind(business),
-    showCollaborations: business.showCollaborations.bind(business),
-    showCollaborationDetails: business.showCollaborationDetails.bind(business),
-    getProject: business.getProject.bind(business),
-    updateProjectStatus: business.updateProjectStatus.bind(business),
-    removeUserFromProject: business.removeUserFromProject.bind(business),
-    deleteProject: business.deleteProject.bind(business),
+    // Organization controllers
+    showOrganizations: organizations.showOrganizations.bind(organizations),
+    showOrganizationDetails:
+      organizations.showOrganizationDetails.bind(organizations),
+    // AI controllers
+    showAIModels: ai.showAIModels.bind(ai),
+    showAIWorkflows: ai.showAIWorkflows.bind(ai),
+    showAIWorkflowDetails: ai.showAIWorkflowDetails.bind(ai),
+    // Credit controllers
+    showCredits: credits.showCredits.bind(credits),
+    showTransactions: credits.showTransactions.bind(credits),
+    showPaymentMethods: credits.showPaymentMethods.bind(credits),
   };
 });
 container.register(

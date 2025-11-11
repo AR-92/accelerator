@@ -382,9 +382,8 @@ class AdminDashboardController {
       console.error('Error loading rewards page:', error);
       res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        layout: 'admin',
-        message: 'An error occurred while loading rewards management.',
-        user: req.user,
+        layout: 'main',
+        message: 'An error occurred while loading the rewards page.',
       });
     }
   }

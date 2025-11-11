@@ -11,11 +11,18 @@ class AdminService {
     ideaService,
     voteService,
     landingPageService,
+    organizationService,
     packageRepository,
     billingRepository,
     rewardRepository,
+    transactionRepository,
+    paymentMethodRepository,
+    aiModelRepository,
+    aiWorkflowRepository,
+    workflowStepRepository,
     voteRepository,
-    collaborationRepository
+    collaborationRepository,
+    projectCollaboratorRepository
   ) {
     this.systemMonitoringService = systemMonitoringService;
     this.userManagementService = userManagementService;
@@ -25,11 +32,18 @@ class AdminService {
     this.ideaService = ideaService;
     this.voteService = voteService;
     this.landingPageService = landingPageService;
+    this.organizationService = organizationService;
     this.packageRepository = packageRepository;
     this.billingRepository = billingRepository;
     this.rewardRepository = rewardRepository;
+    this.transactionRepository = transactionRepository;
+    this.paymentMethodRepository = paymentMethodRepository;
+    this.aiModelRepository = aiModelRepository;
+    this.aiWorkflowRepository = aiWorkflowRepository;
+    this.workflowStepRepository = workflowStepRepository;
     this.voteRepository = voteRepository;
     this.collaborationRepository = collaborationRepository;
+    this.projectCollaboratorRepository = projectCollaboratorRepository;
   }
 
   // System Monitoring Methods
@@ -411,7 +425,7 @@ class AdminService {
         this.rewardRepository.findAll({
           limit,
           offset,
-          orderBy: 'created_at DESC',
+          orderBy: 'awarded_at DESC',
         }),
         this.rewardRepository.count(),
         this.rewardRepository.getStats(),
@@ -422,21 +436,16 @@ class AdminService {
       return {
         rewards: rewards.map((reward) => ({
           id: reward.id,
-          userId: reward.user_id,
-          type: reward.type,
-          title: reward.title,
-          description: reward.description,
+          giverUserId: reward.giver_user_id,
+          recipientUserId: reward.recipient_user_id,
+          projectId: reward.project_id,
           credits: reward.credits,
-          status: reward.status,
-          expiresAt: reward.expires_at,
-          createdAt: reward.created_at,
-          updatedAt: reward.updated_at,
+          reason: reward.reason,
+          transactionId: reward.transaction_id,
+          awardedAt: reward.awarded_at,
         })),
         stats: {
           totalRewards: stats.total_rewards,
-          activeRewards: stats.active_rewards,
-          usedRewards: stats.used_rewards,
-          expiredRewards: stats.expired_rewards,
           totalCreditsGranted: stats.total_credits_granted,
           avgCreditsPerReward: Math.round(stats.avg_credits_per_reward || 0),
           uniqueUsersRewarded: stats.unique_users_rewarded,
@@ -754,6 +763,530 @@ class AdminService {
 
   getLandingPageSectionTypes() {
     return this.landingPageService.getSectionTypes();
+  }
+
+  // Organization Management Methods
+  async getAllOrganizations() {
+    return this.organizationService.getAllOrganizations();
+  }
+
+  async getOrganizationById(id) {
+    return this.organizationService.getOrganizationById(id);
+  }
+
+  async getOrganizationStats() {
+    return this.organizationService.getOrganizationStats();
+  }
+
+  async createOrganization(organizationData, adminInfo) {
+    return this.organizationService.createOrganization(
+      organizationData,
+      adminInfo
+    );
+  }
+
+  async updateOrganization(id, organizationData, adminInfo) {
+    return this.organizationService.updateOrganization(
+      id,
+      organizationData,
+      adminInfo
+    );
+  }
+
+  async deleteOrganization(id, adminInfo) {
+    return this.organizationService.deleteOrganization(id, adminInfo);
+  }
+
+  async getOrganizations(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = (page - 1) * limit;
+      const search = options.search || '';
+      const type = options.type || null;
+
+      const [organizations, totalCount] = await Promise.all([
+        this.organizationService.getOrganizations({
+          limit,
+          offset,
+          search,
+          type,
+          orderBy: 'created_at DESC',
+        }),
+        this.organizationService.getOrganizationCount({ search, type }),
+      ]);
+
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        organizations,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+        filters: {
+          search,
+          type,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting organizations:', error);
+      throw error;
+    }
+  }
+
+  async bulkUpdateOrganizationStatus(organizationIds, status, adminInfo) {
+    return this.organizationService.bulkUpdateStatus(
+      organizationIds,
+      status,
+      adminInfo
+    );
+  }
+
+  async bulkDeleteOrganizations(organizationIds, adminInfo) {
+    return this.organizationService.bulkDelete(organizationIds, adminInfo);
+  }
+
+  async exportOrganizationsToCSV(filters = {}) {
+    return this.organizationService.exportToCSV(filters);
+  }
+
+  // AI Model Management Methods
+  async getAllAIModels() {
+    return this.aiModelRepository.getAll();
+  }
+
+  async getAIModelStats() {
+    return this.aiModelRepository.getUsageStats();
+  }
+
+  // AI Workflow Management Methods
+  async getAllAIWorkflows() {
+    return this.aiWorkflowRepository.getAll();
+  }
+
+  async getAIWorkflowById(id) {
+    return this.aiWorkflowRepository.getById(id);
+  }
+
+  async getWorkflowExecutions(workflowId) {
+    return this.workflowStepRepository.getByModelId(
+      (await this.aiWorkflowRepository.getById(workflowId)).model_id
+    );
+  }
+
+  async getWorkflowOutputs(workflowId) {
+    // This would need implementation in the repository
+    return [];
+  }
+
+  async getWorkflowFeedback(workflowId) {
+    // This would need implementation in the repository
+    return [];
+  }
+
+  async getAIWorkflowStats() {
+    return this.aiWorkflowRepository.getStats();
+  }
+
+  async createAIWorkflow(workflowData, adminInfo) {
+    return this.aiWorkflowRepository.create(workflowData, adminInfo);
+  }
+
+  async updateAIWorkflow(id, workflowData, adminInfo) {
+    return this.aiWorkflowRepository.update(id, workflowData, adminInfo);
+  }
+
+  async deleteAIWorkflow(id, adminInfo) {
+    return this.aiWorkflowRepository.delete(id, adminInfo);
+  }
+
+  async getAIWorkflows(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = (page - 1) * limit;
+      const search = options.search || '';
+      const modelId = options.modelId || null;
+
+      const [workflows, totalCount] = await Promise.all([
+        this.aiWorkflowRepository.findAll({
+          limit,
+          offset,
+          search,
+          modelId,
+          orderBy: 'created_at DESC',
+        }),
+        this.aiWorkflowRepository.count({ search, modelId }),
+      ]);
+
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        workflows,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+        filters: {
+          search,
+          modelId,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting AI workflows:', error);
+      throw error;
+    }
+  }
+
+  async getWorkflowExecutionById(executionId) {
+    return this.workflowStepRepository.getExecutionById(executionId);
+  }
+
+  async getWorkflowExecutionsByWorkflow(workflowId, options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = (page - 1) * limit;
+
+      const [executions, totalCount] = await Promise.all([
+        this.workflowStepRepository.getExecutionsByWorkflow(workflowId, {
+          limit,
+          offset,
+          orderBy: 'created_at DESC',
+        }),
+        this.workflowStepRepository.countExecutionsByWorkflow(workflowId),
+      ]);
+
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        executions,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting workflow executions:', error);
+      throw error;
+    }
+  }
+
+  async createWorkflowExecution(executionData, adminInfo) {
+    return this.workflowStepRepository.createExecution(
+      executionData,
+      adminInfo
+    );
+  }
+
+  async updateWorkflowExecutionStatus(executionId, status, adminInfo) {
+    return this.workflowStepRepository.updateExecutionStatus(
+      executionId,
+      status,
+      adminInfo
+    );
+  }
+
+  async getWorkflowOutputsByExecution(executionId) {
+    return this.workflowStepRepository.getOutputsByExecution(executionId);
+  }
+
+  async getWorkflowFeedbackByExecution(executionId) {
+    return this.workflowStepRepository.getFeedbackByExecution(executionId);
+  }
+
+  async createAIModel(modelData, adminInfo) {
+    return this.aiModelRepository.create(modelData, adminInfo);
+  }
+
+  async updateAIModel(id, modelData, adminInfo) {
+    return this.aiModelRepository.update(id, modelData, adminInfo);
+  }
+
+  async deleteAIModel(id, adminInfo) {
+    return this.aiModelRepository.delete(id, adminInfo);
+  }
+
+  async getAIModelById(id) {
+    return this.aiModelRepository.getById(id);
+  }
+
+  async getAIModels(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = (page - 1) * limit;
+      const search = options.search || '';
+
+      const [models, totalCount] = await Promise.all([
+        this.aiModelRepository.findAll({
+          limit,
+          offset,
+          search,
+          orderBy: 'created_at DESC',
+        }),
+        this.aiModelRepository.count({ search }),
+      ]);
+
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        models,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+        filters: {
+          search,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting AI models:', error);
+      throw error;
+    }
+  }
+
+  // Workflow Steps Management
+  async getAllWorkflowSteps() {
+    return this.workflowStepRepository.getAllWithModels();
+  }
+
+  // Credit and Transaction Management Methods
+  async getAllTransactions() {
+    return this.transactionRepository.getAll();
+  }
+
+  async getTransactionStats() {
+    return this.transactionRepository.getStats();
+  }
+
+  async getAllPaymentMethods() {
+    return this.paymentMethodRepository.getAll();
+  }
+
+  async getPaymentMethodStats() {
+    return this.paymentMethodRepository.getStats();
+  }
+
+  async getCreditStats() {
+    const [transactionStats, paymentMethodStats] = await Promise.all([
+      this.transactionRepository.getStats(),
+      this.paymentMethodRepository.getStats(),
+    ]);
+
+    return {
+      ...transactionStats,
+      ...paymentMethodStats,
+    };
+  }
+
+  async getTransactions(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = (page - 1) * limit;
+      const search = options.search || '';
+      const type = options.type || null;
+      const status = options.status || null;
+      const userId = options.userId || null;
+
+      const [transactions, totalCount] = await Promise.all([
+        this.transactionRepository.findAll({
+          limit,
+          offset,
+          search,
+          type,
+          status,
+          userId,
+          orderBy: 'created_at DESC',
+        }),
+        this.transactionRepository.count({ search, type, status, userId }),
+      ]);
+
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        transactions,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+        filters: {
+          search,
+          type,
+          status,
+          userId,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting transactions:', error);
+      throw error;
+    }
+  }
+
+  async getTransactionById(id) {
+    return this.transactionRepository.getById(id);
+  }
+
+  async createTransaction(transactionData, adminInfo) {
+    return this.transactionRepository.create(transactionData, adminInfo);
+  }
+
+  async updateTransaction(id, transactionData, adminInfo) {
+    return this.transactionRepository.update(id, transactionData, adminInfo);
+  }
+
+  async deleteTransaction(id, adminInfo) {
+    return this.transactionRepository.delete(id, adminInfo);
+  }
+
+  async getPaymentMethods(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = (page - 1) * limit;
+      const search = options.search || '';
+      const type = options.type || null;
+      const status = options.status || null;
+
+      const [paymentMethods, totalCount] = await Promise.all([
+        this.paymentMethodRepository.findAll({
+          limit,
+          offset,
+          search,
+          type,
+          status,
+          orderBy: 'created_at DESC',
+        }),
+        this.paymentMethodRepository.count({ search, type, status }),
+      ]);
+
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        paymentMethods,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+        filters: {
+          search,
+          type,
+          status,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting payment methods:', error);
+      throw error;
+    }
+  }
+
+  async getPaymentMethodById(id) {
+    return this.paymentMethodRepository.getById(id);
+  }
+
+  async createPaymentMethod(paymentMethodData, adminInfo) {
+    return this.paymentMethodRepository.create(paymentMethodData, adminInfo);
+  }
+
+  async updatePaymentMethod(id, paymentMethodData, adminInfo) {
+    return this.paymentMethodRepository.update(
+      id,
+      paymentMethodData,
+      adminInfo
+    );
+  }
+
+  async deletePaymentMethod(id, adminInfo) {
+    return this.paymentMethodRepository.delete(id, adminInfo);
+  }
+
+  async allocateCreditsToUser(userId, amount, reason, adminInfo) {
+    return this.transactionRepository.allocateCredits(
+      userId,
+      amount,
+      reason,
+      adminInfo
+    );
+  }
+
+  async deductCreditsFromUser(userId, amount, reason, adminInfo) {
+    return this.transactionRepository.deductCredits(
+      userId,
+      amount,
+      reason,
+      adminInfo
+    );
+  }
+
+  async getUserCreditHistory(userId, options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = (page - 1) * limit;
+
+      const [transactions, totalCount] = await Promise.all([
+        this.transactionRepository.getUserCreditHistory(userId, {
+          limit,
+          offset,
+          orderBy: 'created_at DESC',
+        }),
+        this.transactionRepository.countUserTransactions(userId),
+      ]);
+
+      const totalPages = Math.ceil(totalCount / limit);
+
+      return {
+        transactions,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting user credit history:', error);
+      throw error;
+    }
+  }
+
+  async getCreditBalance(userId) {
+    return this.transactionRepository.getUserCreditBalance(userId);
+  }
+
+  async processBulkCreditAllocation(allocations, adminInfo) {
+    return this.transactionRepository.bulkAllocateCredits(
+      allocations,
+      adminInfo
+    );
   }
 }
 

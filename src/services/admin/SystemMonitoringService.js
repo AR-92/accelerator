@@ -166,7 +166,6 @@ class SystemMonitoringService {
         },
         rewards: {
           totalRewards: rewardStats.total_rewards || 0,
-          activeRewards: rewardStats.active_rewards || 0,
           totalCreditsGranted: rewardStats.total_credits_granted || 0,
           uniqueUsersRewarded: rewardStats.unique_users_rewarded || 0,
         },

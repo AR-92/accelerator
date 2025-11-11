@@ -73,6 +73,98 @@ async function runMigration() {
     await rewardsMigration.up(db);
     console.log('✅ Packages, billing, and rewards tables migration completed');
 
+    // Run new schema migrations
+    console.log('Running new schema migrations...');
+
+    // Update users schema
+    const updateUsersSchemaMigration = require('../src/migrations/user/005_update_users_schema');
+    await updateUsersSchemaMigration.up(db);
+    console.log('✅ Update users schema migration completed');
+
+    // Create organizations
+    const organizationsMigration = require('../src/migrations/business/005_create_organizations_table');
+    await organizationsMigration.up(db);
+    console.log('✅ Organizations table migration completed');
+
+    // Update projects
+    const updateProjectsMigration = require('../src/migrations/project/001_update_projects_schema');
+    await updateProjectsMigration.up(db);
+    console.log('✅ Update projects schema migration completed');
+
+    // Rename teams to collaborators
+    const renameTeamsMigration = require('../src/migrations/project/002_rename_teams_to_collaborators');
+    await renameTeamsMigration.up(db);
+    console.log('✅ Rename teams to collaborators migration completed');
+
+    // Update votes
+    const updateVotesMigration = require('../src/migrations/idea/001_update_votes_schema');
+    await updateVotesMigration.up(db);
+    console.log('✅ Update votes schema migration completed');
+
+    // Update rewards
+    const updateRewardsMigration = require('../src/migrations/billing/004_create_rewards');
+    await updateRewardsMigration.up(db);
+    console.log('✅ Update rewards table migration completed');
+
+    // Create transactions
+    const transactionsMigration = require('../src/migrations/billing/005_create_transactions');
+    await transactionsMigration.up(db);
+    console.log('✅ Transactions table migration completed');
+
+    // Create payment methods
+    const paymentMethodsMigration = require('../src/migrations/billing/006_create_payment_methods');
+    await paymentMethodsMigration.up(db);
+    console.log('✅ Payment methods table migration completed');
+
+    // Create tasks
+    const tasksMigration = require('../src/migrations/project/003_create_tasks');
+    await tasksMigration.up(db);
+    console.log('✅ Tasks table migration completed');
+
+    // Rename collaborations to messages
+    const renameMessagesMigration = require('../src/migrations/project/004_rename_collaborations_to_messages');
+    await renameMessagesMigration.up(db);
+    console.log('✅ Rename collaborations to messages migration completed');
+
+    // Create files table
+    const filesMigration = require('../src/migrations/content/011_create_files_table');
+    await filesMigration.up(db);
+    console.log('✅ Files table migration completed');
+
+    // Create project stages
+    const projectStagesMigration = require('../src/migrations/project/005_create_project_stages');
+    await projectStagesMigration.up(db);
+    console.log('✅ Project stages table migration completed');
+
+    // AI Workflow migrations
+    const aiModelsMigration = require('../src/migrations/ai/001_create_ai_models');
+    await aiModelsMigration.up(db);
+    console.log('✅ AI Models table migration completed');
+
+    const aiWorkflowsMigration = require('../src/migrations/ai/002_create_ai_workflows');
+    await aiWorkflowsMigration.up(db);
+    console.log('✅ AI Workflows table migration completed');
+
+    const workflowStepsMigration = require('../src/migrations/ai/003_create_workflow_steps');
+    await workflowStepsMigration.up(db);
+    console.log('✅ Workflow Steps table migration completed');
+
+    const workflowExecutionsMigration = require('../src/migrations/ai/004_create_workflow_executions');
+    await workflowExecutionsMigration.up(db);
+    console.log('✅ Workflow Executions table migration completed');
+
+    const workflowInputsMigration = require('../src/migrations/ai/005_create_workflow_inputs');
+    await workflowInputsMigration.up(db);
+    console.log('✅ Workflow Inputs table migration completed');
+
+    const workflowOutputsMigration = require('../src/migrations/ai/006_create_workflow_outputs');
+    await workflowOutputsMigration.up(db);
+    console.log('✅ Workflow Outputs table migration completed');
+
+    const workflowFeedbackMigration = require('../src/migrations/ai/007_create_workflow_feedback');
+    await workflowFeedbackMigration.up(db);
+    console.log('✅ Workflow Feedback table migration completed');
+
     console.log('✅ All migrations completed successfully!');
     process.exit(0);
   } catch (error) {

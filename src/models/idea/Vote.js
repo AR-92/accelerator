@@ -1,13 +1,13 @@
 const BaseModel = require('../common/BaseModel');
 
 /**
- * Vote model representing a vote on an idea
+ * Vote model representing a vote on a project
  */
 class Vote extends BaseModel {
   constructor(data = {}) {
     super(data);
     this.userId = data.user_id;
-    this.ideaSlug = data.ideaSlug || data.idea_slug;
+    this.projectId = data.projectId || data.project_id;
     this.marketViability = data.marketViability || data.market_viability;
     this.realWorldProblem = data.realWorldProblem || data.real_world_problem;
     this.innovation = data.innovation;
@@ -15,6 +15,7 @@ class Vote extends BaseModel {
       data.technicalFeasibility || data.technical_feasibility;
     this.scalability = data.scalability;
     this.marketSurvival = data.marketSurvival || data.market_survival;
+    this.score = data.score || 1; // Adding the score field that matches the DB schema
   }
 
   /**
@@ -81,8 +82,8 @@ class Vote extends BaseModel {
   validate() {
     const errors = [];
 
-    if (!this.ideaSlug || this.ideaSlug.trim().length === 0) {
-      errors.push('Idea slug is required');
+    if (!this.projectId || this.projectId <= 0) {
+      errors.push('Project ID is required');
     }
 
     const criteria = [
@@ -118,7 +119,7 @@ class Vote extends BaseModel {
    */
   static getValidationRules() {
     return {
-      ideaSlug: { required: true },
+      projectId: { required: true, type: 'number', min: 1 },
       marketViability: { required: true, min: 0, max: 5 },
       realWorldProblem: { required: true, min: 0, max: 5 },
       innovation: { required: true, min: 0, max: 5 },

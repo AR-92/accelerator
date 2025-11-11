@@ -167,7 +167,7 @@ async function populateUsers() {
 
       const sql = `
         INSERT INTO users (
-          email, password_hash, first_name, last_name, role, credits, bio
+          email, password_hash, first_name, last_name, user_type, wallet_credits, bio
         ) VALUES (?, ?, ?, ?, ?, ?, ?)
       `;
 

@@ -11,7 +11,7 @@ class User extends BaseModel {
     this.passwordHash = data.password_hash;
     this.firstName = data.first_name || data.firstName;
     this.lastName = data.last_name || data.lastName;
-    this.role = data.role || 'startup';
+    this.role = data.user_type || data.role || 'startup';
     this.theme = data.theme || 'system';
     this.bio = data.bio || '';
     this.credits = data.credits || 0;

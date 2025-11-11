@@ -9,26 +9,16 @@ class RewardRepository extends BaseRepository {
   }
 
   /**
-   * Find rewards by user ID
+   * Find rewards by user ID (as recipient)
    * @param {number} userId - User ID
    * @param {Object} options - Query options
    * @returns {Promise<Array>}
    */
   async findByUserId(userId, options = {}) {
-    let sql = `SELECT * FROM ${this.tableName} WHERE user_id = ?`;
+    let sql = `SELECT * FROM ${this.tableName} WHERE recipient_user_id = ?`;
     const params = [userId];
 
-    if (options.status) {
-      sql += ` AND status = ?`;
-      params.push(options.status);
-    }
-
-    if (options.type) {
-      sql += ` AND type = ?`;
-      params.push(options.type);
-    }
-
-    sql += ` ORDER BY created_at DESC`;
+    sql += ` ORDER BY awarded_at DESC`;
 
     if (options.limit) {
       sql += ` LIMIT ?`;
@@ -44,43 +34,17 @@ class RewardRepository extends BaseRepository {
   }
 
   /**
-   * Find active rewards for a user
+   * Find rewards for a user (as recipient)
    * @param {number} userId - User ID
    * @returns {Promise<Array>}
    */
   async findActiveByUserId(userId) {
     const sql = `
       SELECT * FROM ${this.tableName}
-      WHERE user_id = ? AND status = 'active'
-        AND (expires_at IS NULL OR expires_at > CURRENT_TIMESTAMP)
-      ORDER BY created_at DESC
+      WHERE recipient_user_id = ?
+      ORDER BY awarded_at DESC
     `;
     return await this.query(sql, [userId]);
-  }
-
-  /**
-   * Find rewards by type
-   * @param {string} type - Reward type
-   * @param {Object} options - Query options
-   * @returns {Promise<Array>}
-   */
-  async findByType(type, options = {}) {
-    let sql = `SELECT * FROM ${this.tableName} WHERE type = ?`;
-    const params = [type];
-
-    sql += ` ORDER BY created_at DESC`;
-
-    if (options.limit) {
-      sql += ` LIMIT ?`;
-      params.push(options.limit);
-    }
-
-    if (options.offset) {
-      sql += ` OFFSET ?`;
-      params.push(options.offset);
-    }
-
-    return await this.query(sql, params);
   }
 
   /**
@@ -91,12 +55,9 @@ class RewardRepository extends BaseRepository {
     const sql = `
       SELECT
         COUNT(*) as total_rewards,
-        SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) as active_rewards,
-        SUM(CASE WHEN status = 'used' THEN 1 ELSE 0 END) as used_rewards,
-        SUM(CASE WHEN status = 'expired' THEN 1 ELSE 0 END) as expired_rewards,
         SUM(credits) as total_credits_granted,
         AVG(credits) as avg_credits_per_reward,
-        COUNT(DISTINCT user_id) as unique_users_rewarded
+        COUNT(DISTINCT recipient_user_id) as unique_users_rewarded
       FROM ${this.tableName}
     `;
     return await this.queryOne(sql);
@@ -111,13 +72,13 @@ class RewardRepository extends BaseRepository {
   async getRewardsByDateRange(startDate, endDate) {
     const sql = `
       SELECT
-        DATE(created_at) as date,
+        DATE(awarded_at) as date,
         COUNT(*) as rewards_granted,
         SUM(credits) as credits_granted
       FROM ${this.tableName}
-      WHERE DATE(created_at) BETWEEN ? AND ?
-      GROUP BY DATE(created_at)
-      ORDER BY DATE(created_at)
+      WHERE DATE(awarded_at) BETWEEN ? AND ?
+      GROUP BY DATE(awarded_at)
+      ORDER BY DATE(awarded_at)
     `;
     return await this.query(sql, [startDate, endDate]);
   }
@@ -127,20 +88,18 @@ class RewardRepository extends BaseRepository {
    * @returns {Promise<number>} Number of expired rewards
    */
   async expireRewards() {
-    const sql = `UPDATE ${this.tableName} SET status = 'expired', updated_at = CURRENT_TIMESTAMP WHERE status = 'active' AND expires_at <= CURRENT_TIMESTAMP`;
-    const result = await this.run(sql);
-    return result.changes;
+    // No expiration logic in new schema
+    return 0;
   }
 
   /**
-   * Mark reward as used
+   * Mark reward as used (not applicable in new schema)
    * @param {number} id - Reward ID
    * @returns {Promise<boolean>}
    */
   async markAsUsed(id) {
-    const sql = `UPDATE ${this.tableName} SET status = 'used', updated_at = CURRENT_TIMESTAMP WHERE id = ? AND status = 'active'`;
-    const result = await this.run(sql, [id]);
-    return result.changes > 0;
+    // Not applicable in new schema
+    return false;
   }
 
   /**
@@ -149,7 +108,7 @@ class RewardRepository extends BaseRepository {
    * @returns {Promise<number>}
    */
   async getTotalCreditsGranted(userId) {
-    const sql = `SELECT SUM(credits) as total FROM ${this.tableName} WHERE user_id = ? AND status IN ('active', 'used')`;
+    const sql = `SELECT SUM(credits) as total FROM ${this.tableName} WHERE recipient_user_id = ?`;
     const result = await this.queryOne(sql, [userId]);
     return result.total || 0;
   }
@@ -160,7 +119,7 @@ class RewardRepository extends BaseRepository {
    * @returns {Promise<Array>}
    */
   async getRecentRewards(limit = 10) {
-    const sql = `SELECT * FROM ${this.tableName} ORDER BY created_at DESC LIMIT ?`;
+    const sql = `SELECT * FROM ${this.tableName} ORDER BY awarded_at DESC LIMIT ?`;
     return await this.query(sql, [limit]);
   }
 }

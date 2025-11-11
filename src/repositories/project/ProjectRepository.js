@@ -29,10 +29,11 @@ class ProjectRepository extends BaseRepository {
     project.validate();
 
     const data = {
-      user_id: project.userId,
+      owner_user_id: project.ownerUserId || project.userId,
+      organization_id: project.organizationId,
       title: project.title,
       description: project.description,
-      status: project.status,
+      visibility: project.visibility || 'private',
     };
 
     return await super.create(data);
@@ -52,21 +53,39 @@ class ProjectRepository extends BaseRepository {
     if (project.title !== undefined) data.title = project.title;
     if (project.description !== undefined)
       data.description = project.description;
-    if (project.status !== undefined) data.status = project.status;
+    if (project.visibility !== undefined) data.visibility = project.visibility;
+    if (project.organizationId !== undefined)
+      data.organization_id = project.organizationId;
     data.updated_at = new Date().toISOString();
 
     return await super.update(id, data);
   }
 
   /**
-   * Find projects by user ID
+   * Find projects by owner user ID
+   * @param {number} userId - User ID
+   * @returns {Promise<Project[]>}
+   */
+  async findByOwnerUserId(userId) {
+    const sql =
+      'SELECT * FROM projects WHERE owner_user_id = ? ORDER BY created_at DESC';
+    const rows = await this.query(sql, [userId]);
+    return rows.map((row) => new Project(row));
+  }
+
+  /**
+   * Find projects by user ID (includes owned and collaborated projects)
    * @param {number} userId - User ID
    * @returns {Promise<Project[]>}
    */
   async findByUserId(userId) {
-    const sql =
-      'SELECT * FROM projects WHERE user_id = ? ORDER BY created_at DESC';
-    const rows = await this.query(sql, [userId]);
+    const sql = `
+      SELECT DISTINCT p.* FROM projects p
+      LEFT JOIN project_collaborators pc ON p.id = pc.project_id
+      WHERE p.owner_user_id = ? OR pc.user_id = ?
+      ORDER BY p.created_at DESC
+    `;
+    const rows = await this.query(sql, [userId, userId]);
     return rows.map((row) => new Project(row));
   }
 

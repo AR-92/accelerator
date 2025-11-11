@@ -20,19 +20,19 @@ class VoteRepository extends BaseRepository {
   }
 
   /**
-   * Find votes for a specific idea
-   * @param {string} ideaSlug - Idea slug
+   * Find votes for a specific project
+   * @param {number} projectId - Project ID
    * @param {Object} options - Query options
    * @returns {Promise<Vote[]>}
    */
-  async findByIdeaSlug(ideaSlug, options = {}) {
-    let sql = 'SELECT * FROM votes WHERE idea_slug = ?';
-    const params = [ideaSlug];
+  async findByProjectId(projectId, options = {}) {
+    let sql = 'SELECT * FROM votes WHERE project_id = ?';
+    const params = [projectId];
 
     if (options.orderBy) {
       sql += ` ORDER BY ${options.orderBy}`;
     } else {
-      sql += ' ORDER BY timestamp DESC';
+      sql += ' ORDER BY created_at DESC';
     }
 
     if (options.limit) {
@@ -80,37 +80,38 @@ class VoteRepository extends BaseRepository {
 
     const data = {
       user_id: vote.userId,
-      idea_slug: vote.ideaSlug,
+      project_id: vote.projectId,
       market_viability: vote.marketViability,
       real_world_problem: vote.realWorldProblem,
       innovation: vote.innovation,
       technical_feasibility: vote.technicalFeasibility,
       scalability: vote.scalability,
       market_survival: vote.marketSurvival,
+      score: vote.score,
     };
 
     return await super.create(data);
   }
 
   /**
-   * Check if user has already voted for an idea
+   * Check if user has already voted for a project
    * @param {number} userId - User ID
-   * @param {string} ideaSlug - Idea slug
+   * @param {number} projectId - Project ID
    * @returns {Promise<boolean>}
    */
-  async hasUserVoted(userId, ideaSlug) {
+  async hasUserVoted(userId, projectId) {
     const sql =
-      'SELECT COUNT(*) as count FROM votes WHERE user_id = ? AND idea_slug = ?';
-    const result = await this.queryOne(sql, [userId, ideaSlug]);
+      'SELECT COUNT(*) as count FROM votes WHERE user_id = ? AND project_id = ?';
+    const result = await this.queryOne(sql, [userId, projectId]);
     return result.count > 0;
   }
 
   /**
-   * Get vote statistics for an idea
-   * @param {string} ideaSlug - Idea slug
+   * Get vote statistics for a project
+   * @param {number} projectId - Project ID
    * @returns {Promise<Object>} Vote statistics
    */
-  async getVoteStats(ideaSlug) {
+  async getVoteStats(projectId) {
     const sql = `
       SELECT
         COUNT(*) as total_votes,
@@ -120,13 +121,14 @@ class VoteRepository extends BaseRepository {
         AVG(technical_feasibility) as avg_technical_feasibility,
         AVG(scalability) as avg_scalability,
         AVG(market_survival) as avg_market_survival,
-        MIN(timestamp) as first_vote,
-        MAX(timestamp) as last_vote
+        AVG(score) as avg_score,
+        MIN(created_at) as first_vote,
+        MAX(created_at) as last_vote
       FROM votes
-      WHERE idea_slug = ?
+      WHERE project_id = ?
     `;
 
-    const result = await this.queryOne(sql, [ideaSlug]);
+    const result = await this.queryOne(sql, [projectId]);
 
     return {
       totalVotes: result.total_votes || 0,
@@ -138,6 +140,7 @@ class VoteRepository extends BaseRepository {
         scalability: result.avg_scalability || 0,
         marketSurvival: result.avg_market_survival || 0,
       },
+      averageScore: result.avg_score || 0,
       overallAverage:
         ((result.avg_market_viability || 0) +
           (result.avg_real_world_problem || 0) +
@@ -177,13 +180,13 @@ class VoteRepository extends BaseRepository {
   }
 
   /**
-   * Delete votes for an idea (useful for cleanup)
-   * @param {string} ideaSlug - Idea slug
+   * Delete votes for a project (useful for cleanup)
+   * @param {number} projectId - Project ID
    * @returns {Promise<number>} Number of deleted votes
    */
-  async deleteByIdeaSlug(ideaSlug) {
-    const sql = 'DELETE FROM votes WHERE idea_slug = ?';
-    const result = await this.run(sql, [ideaSlug]);
+  async deleteByProjectId(projectId) {
+    const sql = 'DELETE FROM votes WHERE project_id = ?';
+    const result = await this.run(sql, [projectId]);
     return result.changes;
   }
 }
