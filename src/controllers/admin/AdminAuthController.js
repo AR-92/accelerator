@@ -29,7 +29,7 @@ class AdminAuthController {
 
         return res.status(400).render('pages/admin/login', {
           title: 'Admin Login - Accelerator Platform',
-          layout: 'admin',
+          layout: 'admin-login',
           error: errorMessage,
         });
       }
@@ -51,7 +51,7 @@ class AdminAuthController {
 
         return res.status(403).render('pages/admin/login', {
           title: 'Admin Login - Accelerator Platform',
-          layout: 'admin',
+          layout: 'admin-login',
           error: errorMessage,
         });
       }
@@ -88,7 +88,7 @@ class AdminAuthController {
 
         return res.status(error.statusCode).render('pages/admin/login', {
           title: 'Admin Login - Accelerator Platform',
-          layout: 'admin',
+          layout: 'admin-login',
           error: errorMessage,
         });
       }
@@ -106,7 +106,7 @@ class AdminAuthController {
 
       res.status(500).render('pages/admin/login', {
         title: 'Admin Login - Accelerator Platform',
-        layout: 'admin',
+        layout: 'admin-login',
         error: errorMessage,
       });
     }

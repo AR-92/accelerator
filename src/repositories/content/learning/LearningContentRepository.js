@@ -27,7 +27,7 @@ class LearningContentRepository extends BaseRepository {
    */
   async findBySlug(slug) {
     const sql =
-      'SELECT * FROM learning_articles WHERE slug = ? AND is_published = 1';
+      'SELECT * FROM learning_articles WHERE slug = ? AND is_published = true';
     const row = await this.queryOne(sql, [slug]);
     return row ? new LearningContent(row) : null;
   }
@@ -80,7 +80,7 @@ class LearningContentRepository extends BaseRepository {
    */
   async findAllPublished(options = {}) {
     let sql =
-      'SELECT la.*, lc.name as category_name, lc.slug as category_slug FROM learning_articles la LEFT JOIN learning_categories lc ON la.category_id = lc.id WHERE la.is_published = 1';
+      'SELECT la.*, lc.name as category_name, lc.slug as category_slug FROM learning_articles la LEFT JOIN learning_categories lc ON la.category_id = lc.id WHERE la.is_published = true';
     const params = [];
 
     if (options.categoryId) {
@@ -150,7 +150,7 @@ class LearningContentRepository extends BaseRepository {
    * @returns {Promise<LearningContent[]>}
    */
   async findByTags(tags, options = {}) {
-    let sql = 'SELECT * FROM learning_articles WHERE is_published = 1 AND (';
+    let sql = 'SELECT * FROM learning_articles WHERE is_published = true AND (';
     const params = [];
 
     const tagConditions = tags.map(() => 'tags LIKE ?').join(' OR ');
@@ -296,7 +296,7 @@ class LearningContentRepository extends BaseRepository {
     const params = [];
 
     if (!options.includeUnpublished) {
-      sql += ' AND is_published = 1';
+      sql += ' AND is_published = true';
     }
 
     if (options.categoryId) {
@@ -331,7 +331,7 @@ class LearningContentRepository extends BaseRepository {
     // First try to find articles in the same category
     let sql = `
        SELECT * FROM learning_articles
-       WHERE is_published = 1 AND id != ? AND category_id = ?
+       WHERE is_published = true AND id != ? AND category_id = ?
        ORDER BY is_featured DESC, view_count DESC
        LIMIT ?
      `;
@@ -345,7 +345,7 @@ class LearningContentRepository extends BaseRepository {
       const tagConditions = tags.map(() => 'tags LIKE ?').join(' OR ');
       sql = `
          SELECT * FROM learning_articles
-         WHERE is_published = 1 AND id != ? AND category_id != ? AND (${tagConditions})
+         WHERE is_published = true AND id != ? AND category_id != ? AND (${tagConditions})
          ORDER BY is_featured DESC, view_count DESC
          LIMIT ?
        `;
@@ -365,7 +365,7 @@ class LearningContentRepository extends BaseRepository {
       const remaining = limit - rows.length;
       sql = `
          SELECT * FROM learning_articles
-         WHERE is_published = 1 AND id != ? AND is_featured = 1
+         WHERE is_published = true AND id != ? AND is_featured = true
          ORDER BY view_count DESC
          LIMIT ?
        `;
@@ -549,12 +549,12 @@ class LearningContentRepository extends BaseRepository {
     const sql = `
        SELECT
          COUNT(*) as total_articles,
-         COUNT(CASE WHEN is_featured = 1 THEN 1 END) as featured_articles,
+         COUNT(CASE WHEN is_featured = true THEN 1 END) as featured_articles,
          SUM(view_count) as total_views,
          SUM(like_count) as total_likes,
          AVG(read_time_minutes) as avg_read_time
        FROM learning_articles
-       WHERE is_published = 1
+       WHERE is_published = true
      `;
 
     const result = await this.queryOne(sql);

@@ -1,9 +1,12 @@
+const { Logger } = require('../../utils/logger');
+
 /**
  * Authentication controller part 1 handling login, register, logout, profile operations
  */
 class AuthControllerPart1 {
   constructor(authService) {
     this.authService = authService;
+    this.logger = new Logger('AuthController');
   }
 
   /**
@@ -12,11 +15,20 @@ class AuthControllerPart1 {
    * @param {Object} res - Express response object
    */
   async login(req, res) {
+    this.logger.info('Login request received', { 
+      ip: req.ip || req.connection.remoteAddress,
+      userAgent: req.get('User-Agent')
+    });
+
     try {
       const { email, password } = req.body;
 
       if (!email || !password) {
         const errorMessage = 'Email and password are required';
+        this.logger.warn('Login failed - missing credentials', { 
+          email, 
+          ip: req.ip || req.connection.remoteAddress 
+        });
 
         // Check if this is an HTMX request
         if (req.headers['hx-request']) {
@@ -34,11 +46,14 @@ class AuthControllerPart1 {
         });
       }
 
+      // Attempt to authenticate user
       const user = await this.authService.login(email, password);
 
       // Set session
       req.session.userId = user.id;
       req.session.user = user;
+
+      this.logger.logAuthEvent('login', user.id, email, req.ip || req.connection.remoteAddress);
 
       // Check if this is an HTMX request
       if (req.headers['hx-request']) {
@@ -52,7 +67,10 @@ class AuthControllerPart1 {
       // Redirect to dashboard on successful login
       res.redirect('/pages/dashboard');
     } catch (error) {
-      console.error('Login error:', error);
+      this.logger.error('Login error:', error, { 
+        email: req.body.email,
+        ip: req.ip || req.connection.remoteAddress 
+      });
 
       if (error.name === 'ValidationError') {
         const errorMessage = error.firstError;
@@ -98,6 +116,11 @@ class AuthControllerPart1 {
    * @param {Object} res - Express response object
    */
   async register(req, res) {
+    this.logger.info('Registration request received', { 
+      ip: req.ip || req.connection.remoteAddress,
+      userAgent: req.get('User-Agent')
+    });
+
     try {
       const {
         email,
@@ -109,6 +132,12 @@ class AuthControllerPart1 {
 
       if (!email || !password || !firstName || !lastName) {
         const errorMessage = 'All fields are required';
+        this.logger.warn('Registration failed - missing required fields', { 
+          email, 
+          firstName, 
+          lastName,
+          ip: req.ip || req.connection.remoteAddress 
+        });
 
         // Check if this is an HTMX request
         if (req.headers['hx-request']) {
@@ -133,6 +162,8 @@ class AuthControllerPart1 {
         role,
       });
 
+      this.logger.logAuthEvent('register', user.id, email, req.ip || req.connection.remoteAddress);
+
       // Check if this is an HTMX request
       if (req.headers['hx-request']) {
         return res.json({
@@ -153,7 +184,12 @@ class AuthControllerPart1 {
         message: 'Registration successful',
       });
     } catch (error) {
-      console.error('Registration error:', error);
+      this.logger.error('Registration error:', error, { 
+        email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        ip: req.ip || req.connection.remoteAddress 
+      });
 
       if (error.name === 'ValidationError') {
         const errorMessage = error.firstError;
@@ -198,16 +234,28 @@ class AuthControllerPart1 {
    * @param {Object} res - Express response object
    */
   async logout(req, res) {
+    this.logger.info('Logout request', { 
+      userId: req.session.userId,
+      ip: req.ip || req.connection.remoteAddress 
+    });
+
     try {
+      const userId = req.session.userId;
+      
       req.session.destroy((err) => {
         if (err) {
-          console.error('Logout error:', err);
+          this.logger.error('Logout error:', err, { 
+            userId,
+            ip: req.ip || req.connection.remoteAddress 
+          });
+          
           return res.status(500).json({
             error: 'Internal Server Error',
             message: 'An error occurred during logout',
           });
         }
 
+        this.logger.logAuthEvent('logout', userId, null, req.ip || req.connection.remoteAddress);
         res.clearCookie('connect.sid');
         res.json({
           success: true,
@@ -215,7 +263,11 @@ class AuthControllerPart1 {
         });
       });
     } catch (error) {
-      console.error('Logout error:', error);
+      this.logger.error('Logout error:', error, { 
+        userId: req.session.userId,
+        ip: req.ip || req.connection.remoteAddress 
+      });
+      
       res.status(500).json({
         error: 'Internal Server Error',
         message: 'An error occurred during logout',
@@ -229,6 +281,11 @@ class AuthControllerPart1 {
    * @param {Object} res - Express response object
    */
   async getProfile(req, res) {
+    this.logger.info('Get profile request', { 
+      userId: req.user.id,
+      ip: req.ip || req.connection.remoteAddress 
+    });
+
     try {
       const user = await this.authService.getUserById(req.user.id);
       res.json({
@@ -236,7 +293,10 @@ class AuthControllerPart1 {
         user,
       });
     } catch (error) {
-      console.error('Get profile error:', error);
+      this.logger.error('Get profile error:', error, { 
+        userId: req.user.id,
+        ip: req.ip || req.connection.remoteAddress 
+      });
 
       if (error.name === 'NotFoundError') {
         return res.status(error.statusCode).json({
@@ -258,6 +318,11 @@ class AuthControllerPart1 {
    * @param {Object} res - Express response object
    */
   async updateProfile(req, res) {
+    this.logger.info('Update profile request', { 
+      userId: req.user.id,
+      ip: req.ip || req.connection.remoteAddress 
+    });
+
     try {
       const { firstName, lastName, role } = req.body;
       const user = await this.authService.updateProfile(req.user.id, {
@@ -269,13 +334,23 @@ class AuthControllerPart1 {
       // Update session
       req.session.user = user;
 
+      this.logger.info('Profile updated successfully', { 
+        userId: req.user.id,
+        firstName,
+        lastName,
+        role
+      });
+
       res.json({
         success: true,
         user,
         message: 'Profile updated successfully',
       });
     } catch (error) {
-      console.error('Update profile error:', error);
+      this.logger.error('Update profile error:', error, { 
+        userId: req.user.id,
+        ip: req.ip || req.connection.remoteAddress 
+      });
 
       if (error.name === 'NotFoundError' || error.name === 'ValidationError') {
         return res.status(error.statusCode).json({

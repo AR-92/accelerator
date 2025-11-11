@@ -32,7 +32,7 @@ class UserRepository extends BaseRepository {
 
   async findByRowid(rowid) {
     const sql =
-      'SELECT id, email, first_name, last_name, user_type as role, credits, status, banned, banned_reason, banned_at, theme, bio, created_at, updated_at, rowid FROM users WHERE rowid = ?';
+      'SELECT id, email, first_name, last_name, user_type as role, wallet_credits as credits, status, banned, banned_reason, banned_at, theme, bio, created_at, updated_at FROM users WHERE id = ?';
     const row = await this.queryOne(sql, [rowid]);
     return row ? new User(row) : null;
   }
@@ -281,7 +281,7 @@ class UserRepository extends BaseRepository {
       : 'DESC';
 
     let sql =
-      'SELECT id, email, first_name, last_name, user_type as role, credits, status, banned, ban_reason, theme, bio, created_at, updated_at, rowid FROM users WHERE 1=1';
+      'SELECT id, email, first_name, last_name, user_type as role, wallet_credits as credits, status, banned, ban_reason, theme, bio, created_at, updated_at FROM users WHERE 1=1';
     const params = [];
 
     if (role) {

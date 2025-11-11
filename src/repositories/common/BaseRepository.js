@@ -5,6 +5,9 @@ class BaseRepository {
   constructor(db, tableName) {
     this.db = db;
     this.tableName = tableName;
+    // Initialize logger with table name context
+    const { Logger } = require('../../utils/logger');
+    this.logger = new Logger(`${tableName}Repository`);
   }
 
   /**
@@ -13,16 +16,18 @@ class BaseRepository {
    * @param {Array} params - Query parameters
    * @returns {Promise}
    */
-  query(sql, params = []) {
-    return new Promise((resolve, reject) => {
-      this.db.all(sql, params, (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-      });
-    });
+  async query(sql, params = []) {
+    const start = Date.now();
+    try {
+      const rows = await this.db.all(sql, params);
+      const duration = Date.now() - start;
+      this.logger.logDatabaseQuery('query', sql, params, duration);
+      return rows;
+    } catch (error) {
+      const duration = Date.now() - start;
+      this.logger.logDatabaseError('query', sql, params, error, { duration });
+      throw error;
+    }
   }
 
   /**
@@ -31,16 +36,20 @@ class BaseRepository {
    * @param {Array} params - Query parameters
    * @returns {Promise}
    */
-  queryOne(sql, params = []) {
-    return new Promise((resolve, reject) => {
-      this.db.get(sql, params, (err, row) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(row);
-        }
+  async queryOne(sql, params = []) {
+    const start = Date.now();
+    try {
+      const row = await this.db.get(sql, params);
+      const duration = Date.now() - start;
+      this.logger.logDatabaseQuery('queryOne', sql, params, duration);
+      return row;
+    } catch (error) {
+      const duration = Date.now() - start;
+      this.logger.logDatabaseError('queryOne', sql, params, error, {
+        duration,
       });
-    });
+      throw error;
+    }
   }
 
   /**
@@ -49,16 +58,18 @@ class BaseRepository {
    * @param {Array} params - Query parameters
    * @returns {Promise}
    */
-  run(sql, params = []) {
-    return new Promise((resolve, reject) => {
-      this.db.run(sql, params, function (err) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({ id: this.lastID, changes: this.changes });
-        }
-      });
-    });
+  async run(sql, params = []) {
+    const start = Date.now();
+    try {
+      const resultData = await this.db.run(sql, params);
+      const duration = Date.now() - start;
+      this.logger.logDatabaseQuery('run', sql, params, duration);
+      return { id: resultData.lastID, changes: resultData.changes };
+    } catch (error) {
+      const duration = Date.now() - start;
+      this.logger.logDatabaseError('run', sql, params, error, { duration });
+      throw error;
+    }
   }
 
   /**

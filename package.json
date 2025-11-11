@@ -13,7 +13,11 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "db:setup": "bash setup-db.sh",
+    "db:schema": "bash -c 'psql -U \"${DB_USER:-postgres}\" -d \"${DB_NAME:-accelerator_db}\" -f sql/database-schema.sql'",
+    "db:test": "bash -c 'psql -U \"${DB_USER:-postgres}\" -d \"${DB_NAME:-accelerator_db}\" -f sql/test-database.sql'",
+    "db:migrate": "node -e \"require('./config/database').runMigrations()\""
   },
   "keywords": [
     "express",
@@ -43,7 +47,7 @@
     "@tailwindcss/forms": "^0.5.10",
     "bcrypt": "^6.0.0",
     "concurrently": "^9.2.1",
-    "connect-sqlite3": "^0.9.16",
+    "connect-pg-simple": "^10.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^4.18.2",
@@ -53,8 +57,9 @@
     "handlebars": "^4.7.8",
     "helmet": "^7.1.0",
     "lucide-static": "^0.548.0",
-    "sqlite3": "^5.1.7",
+    "pg": "^8.13.1",
     "systeminformation": "^5.27.11",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "winston": "^3.18.3"
   }
 }

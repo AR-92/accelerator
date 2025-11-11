@@ -65,7 +65,7 @@ class IdeaService {
     // Check if href already exists
     const existingIdea = await this.ideaRepository.findByHref(ideaData.href);
     if (existingIdea) {
-      const ValidationError = require('../utils/errors/ValidationError');
+      const ValidationError = require('../../utils/errors/ValidationError');
       throw new ValidationError('Idea creation failed', [
         'Idea with this href already exists',
       ]);
@@ -91,7 +91,7 @@ class IdeaService {
 
     // Check ownership
     if (idea.userId !== userId) {
-      const ValidationError = require('../utils/errors/ValidationError');
+      const ValidationError = require('../../utils/errors/ValidationError');
       throw new ValidationError('Update failed', [
         'You can only update your own ideas',
       ]);
@@ -101,7 +101,7 @@ class IdeaService {
     if (ideaData.href && ideaData.href !== idea.href) {
       const existingIdea = await this.ideaRepository.findByHref(ideaData.href);
       if (existingIdea) {
-        const ValidationError = require('../utils/errors/ValidationError');
+        const ValidationError = require('../../utils/errors/ValidationError');
         throw new ValidationError('Update failed', [
           'Idea with this href already exists',
         ]);
@@ -131,7 +131,7 @@ class IdeaService {
 
     // Check ownership
     if (idea.userId !== userId) {
-      const ValidationError = require('../utils/errors/ValidationError');
+      const ValidationError = require('../../utils/errors/ValidationError');
       throw new ValidationError('Delete failed', [
         'You can only delete your own ideas',
       ]);
@@ -158,7 +158,7 @@ class IdeaService {
 
     // Check ownership
     if (idea.userId !== userId) {
-      const ValidationError = require('../utils/errors/ValidationError');
+      const ValidationError = require('../../utils/errors/ValidationError');
       throw new ValidationError('Update failed', [
         'You can only modify your own ideas',
       ]);

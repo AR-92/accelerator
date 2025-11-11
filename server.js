@@ -3,7 +3,8 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
-const SQLiteStore = require('connect-sqlite3')(session);
+const pgSession = require('connect-pg-simple')(session);
+const { Logger } = require('./src/utils/logger');
 const { handlebarsConfig } = require('./config/handlebars');
 const {
   errorHandler,
@@ -26,7 +27,11 @@ const port = process.env.PORT || 3000;
 // Session configuration
 app.use(
   session({
-    store: new SQLiteStore({ db: 'sessions.db', dir: __dirname }),
+    store: new pgSession({
+      pool: require('./config/database').pool,
+      tableName: 'session',
+      createTableIfMissing: true  // Create session table if it doesn't exist
+    }),
     secret:
       process.env.SESSION_SECRET || 'your-secret-key-change-in-production',
     resave: false,
@@ -80,6 +85,10 @@ app.use(
   })
 );
 
+// Import and use the request logging middleware
+const { requestLogger } = require('./src/middleware/logging/requestLogger');
+app.use(requestLogger);
+
 // Use routes
 app.use('/auth', authRoutes);
 app.use('/pages', pageRoutes);
@@ -116,7 +125,9 @@ app.get('/health', async (req, res) => {
 
     res.status(200).json(healthCheck);
   } catch (error) {
-    console.error('Health check error:', error);
+    const { Logger } = require('./src/utils/logger');
+    const healthLogger = new Logger('HealthCheck');
+    healthLogger.error('Health check error:', error);
     res.status(500).json({
       status: 'ERROR',
       timestamp: new Date().toISOString(),
@@ -168,9 +179,10 @@ app.use(errorHandler);
 
 // Start the server
 const server = app.listen(port, async () => {
-  console.log(`Server running at http://localhost:${port}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`Node version: ${process.version}`);
+  const startupLogger = new Logger('Server');
+  startupLogger.info(`Server running at http://localhost:${port}`);
+  startupLogger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  startupLogger.info(`Node version: ${process.version}`);
 
   // Run database migrations and test connection
   try {
@@ -182,17 +194,19 @@ const server = app.listen(port, async () => {
     // Then test the connection
     const isConnected = await testConnection();
     if (isConnected) {
-      console.log('SQLite connection established successfully');
+      startupLogger.info('PostgreSQL connection established successfully');
     } else {
-      console.warn('Warning: SQLite connection failed');
+      startupLogger.warn('Warning: PostgreSQL connection failed');
     }
   } catch (error) {
-    console.error('Database initialization error:', {
+    startupLogger.error('Database initialization error:', {
       error: error.message,
     });
   }
 });
 
 server.on('error', (error) => {
-  console.error('Server error:', error);
+  const { Logger } = require('./src/utils/logger');
+  const errorLogger = new Logger('Server');
+  errorLogger.error('Server error', error);
 });

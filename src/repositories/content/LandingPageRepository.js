@@ -25,7 +25,7 @@ class LandingPageRepository extends BaseRepository {
    */
   async findAllActive() {
     const sql =
-      'SELECT * FROM landing_pages WHERE is_active = 1 ORDER BY "order" ASC';
+      'SELECT * FROM landing_pages WHERE is_active = true ORDER BY sort_order ASC';
     const rows = await this.query(sql);
     return rows.map((row) => new LandingPage(row));
   }
@@ -37,7 +37,7 @@ class LandingPageRepository extends BaseRepository {
    */
   async findByType(sectionType) {
     const sql =
-      'SELECT * FROM landing_pages WHERE section_type = ? AND is_active = 1 ORDER BY "order" ASC';
+      'SELECT * FROM landing_pages WHERE section_type = ? AND is_active = true ORDER BY sort_order ASC';
     const rows = await this.query(sql, [sectionType]);
     return rows.map((row) => new LandingPage(row));
   }

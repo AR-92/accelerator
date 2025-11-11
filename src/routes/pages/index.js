@@ -12,7 +12,6 @@ const reportsRoutes = require('./reports');
 const communicationRoutes = require('./communication');
 const authRoutes = require('./auth');
 const aiAssistantModelsRoutes = require('./ai-assistant-models');
-const adminRoutes = require('./admin');
 
 router.use('/', dashboardRoutes);
 router.use('/', collaborateRoutes);
@@ -25,6 +24,5 @@ router.use('/', reportsRoutes);
 router.use('/', communicationRoutes);
 router.use('/', authRoutes);
 router.use('/', aiAssistantModelsRoutes);
-router.use('/admin', adminRoutes);
 
 module.exports = router;

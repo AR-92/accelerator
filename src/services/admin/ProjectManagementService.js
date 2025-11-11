@@ -84,7 +84,7 @@ class ProjectManagementService {
     try {
       const project = await this.projectRepository.findById(projectId);
       if (!project) {
-        const NotFoundError = require('../../utils/errors/NotFoundError');
+        const NotFoundError = require('../../../utils/errors/NotFoundError');
         throw new NotFoundError('Project not found');
       }
 
@@ -114,7 +114,7 @@ class ProjectManagementService {
         status,
       });
       if (!project) {
-        const NotFoundError = require('../../utils/errors/NotFoundError');
+        const NotFoundError = require('../../../utils/errors/NotFoundError');
         throw new NotFoundError('Project not found');
       }
 
@@ -145,7 +145,7 @@ class ProjectManagementService {
     try {
       const project = await this.projectRepository.findById(projectId);
       if (!project) {
-        const NotFoundError = require('../../utils/errors/NotFoundError');
+        const NotFoundError = require('../../../utils/errors/NotFoundError');
         throw new NotFoundError('Project not found');
       }
 

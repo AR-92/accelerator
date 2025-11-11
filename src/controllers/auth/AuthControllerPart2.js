@@ -1,9 +1,12 @@
+const { Logger } = require('../../utils/logger');
+
 /**
  * Authentication controller part 2 handling password change, user search operations
  */
 class AuthControllerPart2 {
   constructor(authService) {
     this.authService = authService;
+    this.logger = new Logger('AuthController');
   }
 
   /**
@@ -12,13 +15,24 @@ class AuthControllerPart2 {
    * @param {Object} res - Express response object
    */
   async changePassword(req, res) {
+    this.logger.info('Password change request', { 
+      userId: req.user.id,
+      ip: req.ip || req.connection.remoteAddress 
+    });
+
     try {
       const { currentPassword, newPassword } = req.body;
 
       if (!currentPassword || !newPassword) {
+        const errorMessage = 'Current password and new password are required';
+        this.logger.warn('Password change failed - missing required fields', { 
+          userId: req.user.id,
+          ip: req.ip || req.connection.remoteAddress 
+        });
+
         return res.status(400).json({
           error: 'Validation Error',
-          message: 'Current password and new password are required',
+          message: errorMessage,
         });
       }
 
@@ -28,12 +42,16 @@ class AuthControllerPart2 {
         newPassword
       );
 
+      this.logger.info('Password changed successfully', { userId: req.user.id });
       res.json({
         success: true,
         message: 'Password changed successfully',
       });
     } catch (error) {
-      console.error('Change password error:', error);
+      this.logger.error('Password change error:', error, { 
+        userId: req.user.id,
+        ip: req.ip || req.connection.remoteAddress 
+      });
 
       if (error.name === 'NotFoundError' || error.name === 'ValidationError') {
         return res.status(error.statusCode).json({

@@ -176,7 +176,7 @@ class AdminDashboardController {
    */
   async showHelpContent(req, res) {
     try {
-      res.render('pages/admin/content-help', {
+      res.render('pages/admin/help-content', {
         title: 'Help Content Management - Admin Panel',
         layout: 'admin',
         activeHelpContent: true,
@@ -200,7 +200,7 @@ class AdminDashboardController {
    */
   async showLearningContent(req, res) {
     try {
-      res.render('pages/admin/content-learn', {
+      res.render('pages/admin/learning-content', {
         title: 'Learning Content Management - Admin Panel',
         layout: 'admin',
         activeLearningContent: true,

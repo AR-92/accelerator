@@ -28,16 +28,16 @@ Nice — you’ve sketched a clear domain. Below I’ll translate your requireme
 * Keep **organization** entities (Enterprise, Startup, Corporate) in an `organizations` table with `org_type`. Link users to organizations via `organization_id`. Corporate users can create organizations of type `enterprise` etc.
 * Use explicit join tables for many-to-many relations (collaborators, votes) — easier to enforce constraints and store metadata (e.g., role, joined_at).
 * Record **transactions** for money/credits. Always append-only; compute balances from transactions or keep a `wallet_balance` for fast lookups (but validate by reconciliation).
-* Use foreign keys and enable `PRAGMA foreign_keys = ON;` in SQLite to enforce referential integrity.
+* Use foreign key constraints in PostgreSQL to enforce referential integrity.
 * Use soft deletes (`deleted_at`) if you need recoverability.
 * Add indices on FK columns and on frequently queried fields (e.g., `project.owner_id`, `vote.project_id`, `transactions.user_id`).
 
 # 4) Example SQLite schema (starter)
 
-Run `PRAGMA foreign_keys = ON;` before using.
+
 
 ```sql
-PRAGMA foreign_keys = ON;
+
 
 -- USERS (auth + profile + type)
 CREATE TABLE users (

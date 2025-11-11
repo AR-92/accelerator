@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const { Logger } = require('../../utils/logger');
 
 /**
  * Authentication service handling user authentication logic
@@ -6,6 +7,7 @@ const bcrypt = require('bcrypt');
 class AuthService {
   constructor(userRepository) {
     this.userRepository = userRepository;
+    this.logger = new Logger('AuthService');
   }
 
   /**
@@ -14,45 +16,55 @@ class AuthService {
    * @returns {Promise<Object>} Created user data (without password)
    */
   async register(userData) {
-    const { email, password, firstName, lastName, role = 'startup' } = userData;
+    const { email, firstName, lastName, role = 'startup' } = userData;
+    this.logger.info('User registration attempt', { email, firstName, lastName, role });
 
-    // Check if user already exists
-    const existingUser = await this.userRepository.findByEmail(email);
-    if (existingUser) {
-      const ValidationError = require('../utils/errors/ValidationError');
-      throw new ValidationError('Registration failed', [
-        'Email already registered',
-      ]);
+    try {
+      // Check if user already exists
+      const existingUser = await this.userRepository.findByEmail(email);
+      if (existingUser) {
+        this.logger.warn('Registration failed - email already exists', { email });
+        const ValidationError = require('../../utils/errors/ValidationError');
+        throw new ValidationError('Registration failed', [
+          'Email already registered',
+        ]);
+      }
+
+      // Validate password strength
+      if (!userData.password || userData.password.length < 6) {
+        this.logger.warn('Registration failed - weak password', { email });
+        const ValidationError = require('../../utils/errors/ValidationError');
+        throw new ValidationError('Registration failed', [
+          'Password must be at least 6 characters long',
+        ]);
+      }
+
+      // Create user
+      const newUser = new (require('../models/user/User'))({
+        email,
+        firstName,
+        lastName,
+        role,
+      });
+      await newUser.setPassword(userData.password);
+
+      const userId = await this.userRepository.create({
+        email: newUser.email,
+        password_hash: newUser.passwordHash,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        role: newUser.role,
+      });
+
+      this.logger.info('User registered successfully', { userId, email });
+
+      // Return user data without password
+      const user = await this.userRepository.findById(userId);
+      return user.toPublicJSON();
+    } catch (error) {
+      this.logger.error(error, { email, firstName, lastName, role });
+      throw error;
     }
-
-    // Validate password strength
-    if (!password || password.length < 6) {
-      const ValidationError = require('../utils/errors/ValidationError');
-      throw new ValidationError('Registration failed', [
-        'Password must be at least 6 characters long',
-      ]);
-    }
-
-    // Create user
-    const newUser = new (require('../models/user/User'))({
-      email,
-      firstName,
-      lastName,
-      role,
-    });
-    await newUser.setPassword(password);
-
-    const userId = await this.userRepository.create({
-      email: newUser.email,
-      password_hash: newUser.passwordHash,
-      firstName: newUser.firstName,
-      lastName: newUser.lastName,
-      role: newUser.role,
-    });
-
-    // Return user data without password
-    const user = await this.userRepository.findById(userId);
-    return user.toPublicJSON();
   }
 
   /**
@@ -62,25 +74,35 @@ class AuthService {
    * @returns {Promise<Object>} User data if authentication successful
    */
   async login(email, password) {
-    // Find user by email
-    const user = await this.userRepository.findByEmail(email);
-    if (!user) {
-      const ValidationError = require('../utils/errors/ValidationError');
-      throw new ValidationError('Authentication failed', [
-        'Invalid email or password',
-      ]);
-    }
+    this.logger.info('Login attempt', { email });
 
-    // Verify password
-    const isValidPassword = await user.verifyPassword(password);
-    if (!isValidPassword) {
-      const ValidationError = require('../utils/errors/ValidationError');
-      throw new ValidationError('Authentication failed', [
-        'Invalid email or password',
-      ]);
-    }
+    try {
+      // Find user by email
+      const user = await this.userRepository.findByEmail(email);
+      if (!user) {
+        this.logger.warn('Login failed - user not found', { email });
+        const ValidationError = require('../../utils/errors/ValidationError');
+        throw new ValidationError('Authentication failed', [
+          'Invalid email or password',
+        ]);
+      }
 
-    return user.toPublicJSON();
+      // Verify password
+      const isValidPassword = await user.verifyPassword(password);
+      if (!isValidPassword) {
+        this.logger.warn('Login failed - invalid password', { email, userId: user.id });
+        const ValidationError = require('../../utils/errors/ValidationError');
+        throw new ValidationError('Authentication failed', [
+          'Invalid email or password',
+        ]);
+      }
+
+      this.logger.info('Login successful', { email, userId: user.id });
+      return user.toPublicJSON();
+    } catch (error) {
+      this.logger.error(error, { email });
+      throw error;
+    }
   }
 
   /**
@@ -91,7 +113,7 @@ class AuthService {
   async getUserById(id) {
     const user = await this.userRepository.findById(id);
     if (!user) {
-      const NotFoundError = require('../utils/errors/NotFoundError');
+      const NotFoundError = require('../../utils/errors/NotFoundError');
       throw new NotFoundError('User not found');
     }
     return user.toPublicJSON();
@@ -106,7 +128,7 @@ class AuthService {
   async updateProfile(id, userData) {
     const updated = await this.userRepository.update(id, userData);
     if (!updated) {
-      const NotFoundError = require('../utils/errors/NotFoundError');
+      const NotFoundError = require('../../utils/errors/NotFoundError');
       throw new NotFoundError('User not found');
     }
 
@@ -121,32 +143,48 @@ class AuthService {
    * @returns {Promise<boolean>} Success status
    */
   async changePassword(id, currentPassword, newPassword) {
-    const user = await this.userRepository.findById(id);
-    if (!user) {
-      const NotFoundError = require('../utils/errors/NotFoundError');
-      throw new NotFoundError('User not found');
-    }
+    this.logger.info('Password change attempt', { userId: id });
 
-    // Verify current password
-    const isValidPassword = await user.verifyPassword(currentPassword);
-    if (!isValidPassword) {
-      const ValidationError = require('../utils/errors/ValidationError');
-      throw new ValidationError('Password change failed', [
-        'Current password is incorrect',
-      ]);
-    }
+    try {
+      const user = await this.userRepository.findById(id);
+      if (!user) {
+        this.logger.warn('Password change failed - user not found', { userId: id });
+        const NotFoundError = require('../../utils/errors/NotFoundError');
+        throw new NotFoundError('User not found');
+      }
 
-    // Validate new password
-    if (!newPassword || newPassword.length < 6) {
-      const ValidationError = require('../utils/errors/ValidationError');
-      throw new ValidationError('Password change failed', [
-        'New password must be at least 6 characters long',
-      ]);
-    }
+      // Verify current password
+      const isValidPassword = await user.verifyPassword(currentPassword);
+      if (!isValidPassword) {
+        this.logger.warn('Password change failed - current password invalid', { userId: id });
+        const ValidationError = require('../../utils/errors/ValidationError');
+        throw new ValidationError('Password change failed', [
+          'Current password is incorrect',
+        ]);
+      }
 
-    // Hash new password and update
-    await user.setPassword(newPassword);
-    return await this.userRepository.updatePassword(id, user.passwordHash);
+      // Validate new password
+      if (!newPassword || newPassword.length < 6) {
+        this.logger.warn('Password change failed - new password too short', { userId: id });
+        const ValidationError = require('../../utils/errors/ValidationError');
+        throw new ValidationError('Password change failed', [
+          'New password must be at least 6 characters long',
+        ]);
+      }
+
+      // Hash new password and update
+      await user.setPassword(newPassword);
+      const updated = await this.userRepository.updatePassword(id, user.passwordHash);
+      
+      if (updated) {
+        this.logger.info('Password changed successfully', { userId: id });
+      }
+
+      return updated;
+    } catch (error) {
+      this.logger.error(error, { userId: id });
+      throw error;
+    }
   }
 
   /**

@@ -21,10 +21,7 @@ const getPageData = (title, activeKey, padding = 'py-8', user = null) => ({
 
 // GET admin login
 router.get('/login', (req, res) => {
-  res.render('pages/admin/login', {
-    title: 'Admin Login - Accelerator Platform',
-    layout: 'admin-login',
-  });
+  adminAuthController.showLogin(req, res);
 });
 
 // POST admin login
@@ -158,6 +155,13 @@ router.get(
   adminController.showPackages.bind(adminController)
 );
 
+// GET admin package details
+router.get(
+  '/packages/:packageId',
+  requireAdminAuth,
+  adminController.showPackageDetails.bind(adminController)
+);
+
 // GET admin billing
 router.get(
   '/billing',
@@ -165,11 +169,25 @@ router.get(
   adminController.showBilling.bind(adminController)
 );
 
+// GET admin billing details
+router.get(
+  '/billing/:billingId',
+  requireAdminAuth,
+  adminController.showBillingDetails.bind(adminController)
+);
+
 // GET admin rewards
 router.get(
   '/rewards',
   requireAdminAuth,
   adminController.showRewards.bind(adminController)
+);
+
+// GET admin reward details
+router.get(
+  '/rewards/:rewardId',
+  requireAdminAuth,
+  adminController.showRewardDetails.bind(adminController)
 );
 
 // GET admin transactions

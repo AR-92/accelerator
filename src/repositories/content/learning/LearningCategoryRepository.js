@@ -26,7 +26,7 @@ class LearningCategoryRepository extends BaseRepository {
    */
   async findBySlug(slug) {
     const sql =
-      'SELECT * FROM learning_categories WHERE slug = ? AND is_active = 1';
+      'SELECT * FROM learning_categories WHERE slug = ? AND is_active = true';
     const row = await this.queryOne(sql, [slug]);
     return row ? new LearningCategory(row) : null;
   }
@@ -37,7 +37,7 @@ class LearningCategoryRepository extends BaseRepository {
    * @returns {Promise<LearningCategory[]>}
    */
   async findAllActive(options = {}) {
-    let sql = 'SELECT * FROM learning_categories WHERE is_active = 1';
+    let sql = 'SELECT * FROM learning_categories WHERE is_active = true';
     const params = [];
 
     if (options.orderBy) {

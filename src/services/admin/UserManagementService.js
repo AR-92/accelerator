@@ -89,7 +89,7 @@ class UserManagementService {
         userData.email
       );
       if (existingUser) {
-        const ValidationError = require('../../utils/errors/ValidationError');
+        const ValidationError = require('../../../utils/errors/ValidationError');
         throw new ValidationError('User creation failed', [
           'Email already registered',
         ]);
@@ -141,7 +141,7 @@ class UserManagementService {
     try {
       const user = await this.userRepository.findById(userId);
       if (!user) {
-        const NotFoundError = require('../../utils/errors/NotFoundError');
+        const NotFoundError = require('../../../utils/errors/NotFoundError');
         throw new NotFoundError('User not found');
       }
 
@@ -171,7 +171,7 @@ class UserManagementService {
     try {
       const user = await this.userRepository.findByRowid(rowid);
       if (!user) {
-        const NotFoundError = require('../../utils/errors/NotFoundError');
+        const NotFoundError = require('../../../utils/errors/NotFoundError');
         throw new NotFoundError('User not found');
       }
 
@@ -208,7 +208,7 @@ class UserManagementService {
     try {
       const user = await this.userRepository.updateCredits(userId, credits);
       if (!user) {
-        const NotFoundError = require('../../utils/errors/NotFoundError');
+        const NotFoundError = require('../../../utils/errors/NotFoundError');
         throw new NotFoundError('User not found');
       }
 
@@ -249,7 +249,7 @@ class UserManagementService {
     try {
       const user = await this.userRepository.updateRole(userId, role);
       if (!user) {
-        const NotFoundError = require('../../utils/errors/NotFoundError');
+        const NotFoundError = require('../../../utils/errors/NotFoundError');
         throw new NotFoundError('User not found');
       }
 
@@ -292,7 +292,7 @@ class UserManagementService {
     try {
       const user = await this.userRepository.updateStatus(userId, status);
       if (!user) {
-        const NotFoundError = require('../../utils/errors/NotFoundError');
+        const NotFoundError = require('../../../utils/errors/NotFoundError');
         throw new NotFoundError('User not found');
       }
 
@@ -340,13 +340,13 @@ class UserManagementService {
         reason
       );
       if (!user) {
-        const NotFoundError = require('../../utils/errors/NotFoundError');
+        const NotFoundError = require('../../../utils/errors/NotFoundError');
         throw new NotFoundError('User not found');
       }
 
       // Prevent banning admin users
       if (banned && user.role === 'admin') {
-        const ValidationError = require('../../utils/errors/ValidationError');
+        const ValidationError = require('../../../utils/errors/ValidationError');
         throw new ValidationError('Cannot ban admin users');
       }
 
@@ -391,13 +391,13 @@ class UserManagementService {
       // Check if user exists first
       const user = await this.userRepository.findById(userId);
       if (!user) {
-        const NotFoundError = require('../../utils/errors/NotFoundError');
+        const NotFoundError = require('../../../utils/errors/NotFoundError');
         throw new NotFoundError('User not found');
       }
 
       // Prevent deleting admin users
       if (user.role === 'admin') {
-        const ValidationError = require('../../utils/errors/ValidationError');
+        const ValidationError = require('../../../utils/errors/ValidationError');
         throw new ValidationError('Cannot delete admin users');
       }
 
@@ -531,7 +531,7 @@ class UserManagementService {
     try {
       const user = await this.userRepository.findById(userId);
       if (!user) {
-        const NotFoundError = require('../../utils/errors/NotFoundError');
+        const NotFoundError = require('../../../utils/errors/NotFoundError');
         throw new NotFoundError('User not found');
       }
 

@@ -51,7 +51,7 @@ class VoteService {
     // Check if user has already voted
     const hasVoted = await this.voteRepository.hasUserVoted(userId, projectId);
     if (hasVoted) {
-      const ValidationError = require('../utils/errors/ValidationError');
+      const ValidationError = require('../../utils/errors/ValidationError');
       throw new ValidationError('Vote failed', [
         'You have already voted for this project',
       ]);
@@ -139,7 +139,7 @@ class VoteService {
 
     // Check ownership
     if (vote.userId !== userId) {
-      const ValidationError = require('../utils/errors/ValidationError');
+      const ValidationError = require('../../utils/errors/ValidationError');
       throw new ValidationError('Update failed', [
         'You can only update your own votes',
       ]);
@@ -170,7 +170,7 @@ class VoteService {
 
     // Check ownership
     if (vote.userId !== userId) {
-      const ValidationError = require('../utils/errors/ValidationError');
+      const ValidationError = require('../../utils/errors/ValidationError');
       throw new ValidationError('Delete failed', [
         'You can only delete your own votes',
       ]);

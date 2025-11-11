@@ -61,7 +61,7 @@ class StartupService {
 
     // Check ownership
     if (startup.userId !== userId) {
-      const ValidationError = require('../utils/errors/ValidationError');
+      const ValidationError = require('../../utils/errors/ValidationError');
       throw new ValidationError('Update failed', [
         'You can only update your own startups',
       ]);
@@ -90,7 +90,7 @@ class StartupService {
 
     // Check ownership
     if (startup.userId !== userId) {
-      const ValidationError = require('../utils/errors/ValidationError');
+      const ValidationError = require('../../utils/errors/ValidationError');
       throw new ValidationError('Delete failed', [
         'You can only delete your own startups',
       ]);

@@ -113,7 +113,7 @@ class User extends BaseModel {
     }
 
     if (errors.length > 0) {
-      const ValidationError = require('../utils/errors/ValidationError');
+      const ValidationError = require('../../utils/errors/ValidationError');
       throw new ValidationError('User validation failed', errors);
     }
   }

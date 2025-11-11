@@ -1,18 +1,25 @@
 /**
  * Centralized error handling middleware
  */
+const { Logger } = require('../../utils/logger');
+
+// Create a logger for the error handler
+const logger = new Logger('ErrorHandler');
 
 /**
  * Global error handler middleware
  */
 const errorHandler = (error, req, res, next) => {
-  // Log the error
-  console.error('Error occurred:', {
+  // Log the error with detailed context
+  logger.error('Unhandled application error', {
     message: error.message,
     stack: error.stack,
     url: req.url,
     method: req.method,
     userId: req.user ? req.user.id : 'anonymous',
+    sessionId: req.sessionID || 'none',
+    ip: req.ip || req.connection.remoteAddress,
+    userAgent: req.get('User-Agent'),
     timestamp: new Date().toISOString(),
   });
 
@@ -46,20 +53,7 @@ const errorHandler = (error, req, res, next) => {
     });
   }
 
-  // Handle database errors
-  if (error.code === 'SQLITE_CONSTRAINT') {
-    return res.status(409).json({
-      error: 'Conflict',
-      message: 'A resource with this data already exists',
-    });
-  }
 
-  if (error.code === 'SQLITE_BUSY') {
-    return res.status(503).json({
-      error: 'Service Unavailable',
-      message: 'Database is temporarily busy, please try again',
-    });
-  }
 
   // Handle JWT errors
   if (error.name === 'JsonWebTokenError') {

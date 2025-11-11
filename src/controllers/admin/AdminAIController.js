@@ -104,7 +104,7 @@ class AdminAIController {
       const feedback =
         await this.adminService.getWorkflowFeedbackByExecution(workflowId);
 
-      res.render('pages/admin/ai-workflow-details', {
+      res.render('pages/admin/ai-workflows', {
         title: `${workflow.model_name} Workflow - Admin Panel`,
         activeAIWorkflows: true,
         mainPadding: 'py-8',

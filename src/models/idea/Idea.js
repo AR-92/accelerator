@@ -106,7 +106,7 @@ class Idea extends BaseModel {
     }
 
     if (errors.length > 0) {
-      const ValidationError = require('../utils/errors/ValidationError');
+      const ValidationError = require('../../utils/errors/ValidationError');
       throw new ValidationError('Idea validation failed', errors);
     }
   }

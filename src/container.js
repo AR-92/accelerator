@@ -317,7 +317,7 @@ container.register('authController', (c) => {
   return {
     login: part1.login.bind(part1),
     register: part1.register.bind(part1),
-    logout: part2.logout.bind(part2),
+    logout: part1.logout.bind(part1),
     // Add other methods if needed
   };
 });
@@ -450,7 +450,7 @@ container.register('adminController', (c) => {
     showLearningContent: dashboard.showLearningContent.bind(dashboard),
     showSettings: dashboard.showSettings.bind(dashboard),
     showSystemHealth: dashboard.showSystemHealth.bind(dashboard),
-    showIdeas: dashboard.showIdeas.bind(dashboard),
+    showIdeas: business.showIdeas.bind(business),
     showIdeaDetails: business.showIdeaDetails.bind(business),
     getIdea: business.getIdea.bind(business),
     updateIdea: business.updateIdea.bind(business),
@@ -520,30 +520,6 @@ container.register('adminController', (c) => {
       business.bulkUpdateCorporateStatus.bind(business),
     bulkDeleteCorporates: business.bulkDeleteCorporates.bind(business),
     exportCorporatesToCSV: business.exportCorporatesToCSV.bind(business),
-    showIdeas: business.showIdeas.bind(business),
-    showIdeaDetails: business.showIdeaDetails.bind(business),
-    getIdea: business.getIdea.bind(business),
-    updateIdea: business.updateIdea.bind(business),
-    deleteIdea: business.deleteIdea.bind(business),
-    showPackages: business.showPackages.bind(business),
-    showPackageDetails: business.showPackageDetails.bind(business),
-    getPackage: business.getPackage.bind(business),
-    createPackage: business.createPackage.bind(business),
-    updatePackage: business.updatePackage.bind(business),
-    deletePackage: business.deletePackage.bind(business),
-    showBilling: business.showBilling.bind(business),
-    showBillingDetails: business.showBillingDetails.bind(business),
-    getBillingTransaction: business.getBillingTransaction.bind(business),
-    createBillingTransaction: business.createBillingTransaction.bind(business),
-    updateBillingStatus: business.updateBillingStatus.bind(business),
-    processRefund: business.processRefund.bind(business),
-    showRewards: business.showRewards.bind(business),
-    showRewardDetails: business.showRewardDetails.bind(business),
-    getReward: business.getReward.bind(business),
-    createReward: business.createReward.bind(business),
-    updateReward: business.updateReward.bind(business),
-    deleteReward: business.deleteReward.bind(business),
-    grantReward: business.grantReward.bind(business),
     updateLandingPageSectionOrder:
       business.updateLandingPageSectionOrder.bind(business),
     // Organization controllers

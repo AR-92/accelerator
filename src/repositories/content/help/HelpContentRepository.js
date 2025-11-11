@@ -27,7 +27,7 @@ class HelpContentRepository extends BaseRepository {
    */
   async findBySlug(slug) {
     const sql =
-      'SELECT * FROM help_articles WHERE slug = ? AND is_published = 1';
+      'SELECT * FROM help_articles WHERE slug = ? AND is_published = true';
     const row = await this.queryOne(sql, [slug]);
     return row ? new HelpContent(row) : null;
   }
@@ -80,7 +80,7 @@ class HelpContentRepository extends BaseRepository {
    */
   async findAllPublished(options = {}) {
     let sql =
-      'SELECT ha.*, hc.name as category_name, hc.slug as category_slug FROM help_articles ha LEFT JOIN help_categories hc ON ha.category_id = hc.id WHERE ha.is_published = 1';
+      'SELECT ha.*, hc.name as category_name, hc.slug as category_slug FROM help_articles ha LEFT JOIN help_categories hc ON ha.category_id = hc.id WHERE ha.is_published = true';
     const params = [];
 
     if (options.categoryId) {
@@ -145,7 +145,7 @@ class HelpContentRepository extends BaseRepository {
    * @returns {Promise<HelpContent[]>}
    */
   async findByTags(tags, options = {}) {
-    let sql = 'SELECT * FROM help_articles WHERE is_published = 1 AND (';
+    let sql = 'SELECT * FROM help_articles WHERE is_published = true AND (';
     const params = [];
 
     const tagConditions = tags.map(() => 'tags LIKE ?').join(' OR ');
@@ -291,7 +291,7 @@ class HelpContentRepository extends BaseRepository {
     const params = [];
 
     if (!options.includeUnpublished) {
-      sql += ' AND is_published = 1';
+      sql += ' AND is_published = true';
     }
 
     if (options.categoryId) {
@@ -326,7 +326,7 @@ class HelpContentRepository extends BaseRepository {
     // First try to find articles in the same category
     let sql = `
        SELECT * FROM help_articles
-       WHERE is_published = 1 AND id != ? AND category_id = ?
+       WHERE is_published = true AND id != ? AND category_id = ?
        ORDER BY is_featured DESC, view_count DESC
        LIMIT ?
      `;
@@ -340,7 +340,7 @@ class HelpContentRepository extends BaseRepository {
       const tagConditions = tags.map(() => 'tags LIKE ?').join(' OR ');
       sql = `
          SELECT * FROM help_articles
-         WHERE is_published = 1 AND id != ? AND category_id != ? AND (${tagConditions})
+         WHERE is_published = true AND id != ? AND category_id != ? AND (${tagConditions})
          ORDER BY is_featured DESC, view_count DESC
          LIMIT ?
        `;
@@ -360,7 +360,7 @@ class HelpContentRepository extends BaseRepository {
       const remaining = limit - rows.length;
       sql = `
          SELECT * FROM help_articles
-         WHERE is_published = 1 AND id != ? AND is_featured = 1
+         WHERE is_published = true AND id != ? AND is_featured = true
          ORDER BY view_count DESC
          LIMIT ?
        `;
@@ -389,12 +389,12 @@ class HelpContentRepository extends BaseRepository {
     const sql = `
        SELECT
          COUNT(*) as total_articles,
-         COUNT(CASE WHEN is_featured = 1 THEN 1 END) as featured_articles,
+         COUNT(CASE WHEN is_featured = true THEN 1 END) as featured_articles,
          SUM(view_count) as total_views,
          SUM(helpful_count) as total_helpful,
          AVG(read_time_minutes) as avg_read_time
        FROM help_articles
-       WHERE is_published = 1
+       WHERE is_published = true
      `;
 
     const result = await this.queryOne(sql);
