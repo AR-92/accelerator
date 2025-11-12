@@ -24,12 +24,25 @@ class AdminUserViewController {
       const search = req.query.search;
       const sortBy = req.query.sortBy || 'created_at';
       const sortOrder = req.query.sortOrder || 'desc';
+      const tab = req.query.tab || 'all';
+
+      // Handle tab filters
+      let tabFilters = {};
+      if (tab === 'active') {
+        tabFilters.status = 'active';
+      } else if (tab === 'banned') {
+        tabFilters.banned = true;
+      } else if (tab === 'admins') {
+        tabFilters.role = 'admin';
+      }
 
       const result = await this.adminService.getUsers({
         page,
         limit,
         role,
         search,
+        status: tabFilters.status,
+        banned: tabFilters.banned,
         sortBy,
         sortOrder,
       });
@@ -50,6 +63,7 @@ class AdminUserViewController {
           users: result.users,
           pagination: result.pagination,
           filters: { role, search, sortBy, sortOrder },
+          activeTab: tab,
           activeUsers: true,
           user: req.user,
         });
@@ -79,15 +93,15 @@ class AdminUserViewController {
    */
   async showUserDetails(req, res) {
     try {
-      const { id } = req.params;
-      const user = await this.adminService.getUserById(parseInt(id));
+      const { userId } = req.params;
+      const user = await this.adminService.getUserById(parseInt(userId));
 
       res.render('pages/admin/user-details', {
         title: `User Details - ${user.firstName} ${user.lastName} - Admin Panel`,
         layout: 'admin',
-        user,
-        activeUsers: true,
         user: req.user,
+        selectedUser: user,
+        activeUsers: true,
       });
     } catch (error) {
       console.error('Error loading user details page:', error);
@@ -130,6 +144,17 @@ class AdminUserViewController {
     try {
       const role = req.query.role;
       const search = req.query.search;
+      const tab = req.query.tab || 'all';
+
+      // Handle tab filters
+      let tabFilters = {};
+      if (tab === 'active') {
+        tabFilters.status = 'active';
+      } else if (tab === 'banned') {
+        tabFilters.banned = true;
+      } else if (tab === 'admins') {
+        tabFilters.role = 'admin';
+      }
 
       // Get all users (no pagination for export)
       const result = await this.adminService.getUsers({
@@ -137,6 +162,8 @@ class AdminUserViewController {
         limit: 10000, // Large limit for export
         role,
         search,
+        status: tabFilters.status,
+        banned: tabFilters.banned,
         sortBy: 'created_at',
         sortOrder: 'desc',
       });

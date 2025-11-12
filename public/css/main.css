@@ -1401,6 +1401,10 @@ body {
   margin: 0px;
 }
 
+.-m-4 {
+  margin: -1rem;
+}
+
 .-mx-1 {
   margin-left: -0.25rem;
   margin-right: -0.25rem;
@@ -8439,6 +8443,10 @@ body {
 @media (min-width: 1024px) {
   .lg\:col-span-2 {
     grid-column: span 2 / span 2;
+  }
+
+  .lg\:-m-6 {
+    margin: -1.5rem;
   }
 
   .lg\:flex {

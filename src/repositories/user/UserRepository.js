@@ -258,6 +258,8 @@ class UserRepository extends BaseRepository {
       offset = 0,
       role,
       search,
+      status,
+      banned,
       sortBy = 'created_at',
       sortOrder = 'desc',
     } = options;
@@ -289,6 +291,16 @@ class UserRepository extends BaseRepository {
       params.push(role);
     }
 
+    if (status) {
+      sql += ' AND status = ?';
+      params.push(status);
+    }
+
+    if (banned !== undefined) {
+      sql += ' AND banned = ?';
+      params.push(banned);
+    }
+
     if (search && search.trim()) {
       sql += ' AND (email LIKE ? OR first_name LIKE ? OR last_name LIKE ?)';
       const searchTerm = `%${search.trim()}%`;
@@ -308,7 +320,7 @@ class UserRepository extends BaseRepository {
    * @returns {Promise<number>}
    */
   async countFiltered(options = {}) {
-    const { role, search } = options;
+    const { role, search, status, banned } = options;
 
     let sql = 'SELECT COUNT(*) as count FROM users WHERE 1=1';
     const params = [];
@@ -316,6 +328,16 @@ class UserRepository extends BaseRepository {
     if (role) {
       sql += ' AND user_type = ?';
       params.push(role);
+    }
+
+    if (status) {
+      sql += ' AND status = ?';
+      params.push(status);
+    }
+
+    if (banned !== undefined) {
+      sql += ' AND banned = ?';
+      params.push(banned);
     }
 
     if (search && search.trim()) {

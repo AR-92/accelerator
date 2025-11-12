@@ -437,6 +437,86 @@ class AdminUserActionController {
       });
     }
   }
+
+  /**
+   * Impersonate user (API)
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async impersonateUser(req, res) {
+    try {
+      const { userId } = req.params;
+
+      // Get the user to impersonate
+      const user = await this.adminService.getUserById(parseInt(userId));
+
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          error: 'User not found',
+        });
+      }
+
+      // Store original admin user in session
+      req.session.originalUser = req.session.user;
+      req.session.originalUserId = req.session.userId;
+
+      // Set session to impersonated user
+      req.session.user = user;
+      req.session.userId = user.id;
+
+      res.json({
+        success: true,
+        message: 'Successfully impersonating user',
+      });
+    } catch (error) {
+      console.error('Error impersonating user:', error);
+      res.status(500).json({
+        success: false,
+        error: 'An error occurred while impersonating user',
+      });
+    }
+  }
+
+  /**
+   * Impersonate user (page redirect)
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async impersonateUserPage(req, res) {
+    try {
+      const { userId } = req.params;
+
+      // Get the user to impersonate
+      const user = await this.adminService.getUserById(parseInt(userId));
+
+      if (!user) {
+        return res.status(404).render('pages/error/page-not-found', {
+          title: 'User Not Found - Admin Panel',
+          layout: 'admin',
+          message: 'The user you are trying to impersonate does not exist.',
+        });
+      }
+
+      // Store original admin user in session
+      req.session.originalUser = req.session.user;
+      req.session.originalUserId = req.session.userId;
+
+      // Set session to impersonated user
+      req.session.user = user;
+      req.session.userId = user.id;
+
+      // Redirect to user dashboard
+      res.redirect('/pages/dashboard');
+    } catch (error) {
+      console.error('Error impersonating user:', error);
+      res.status(500).render('pages/error/page-not-found', {
+        title: 'Error - Admin Panel',
+        layout: 'admin',
+        message: 'An error occurred while impersonating the user.',
+      });
+    }
+  }
 }
 
 module.exports = AdminUserActionController;

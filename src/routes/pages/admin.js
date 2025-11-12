@@ -243,6 +243,13 @@ router.get(
   adminController.showSystemHealth.bind(adminController)
 );
 
+// GET admin impersonate user
+router.get(
+  '/impersonate/:userId',
+  requireAdminAuth,
+  adminController.impersonateUserPage.bind(adminController)
+);
+
 // POST admin logout
 router.post('/logout', (req, res) => {
   req.session.destroy((err) => {

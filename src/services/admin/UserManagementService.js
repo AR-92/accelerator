@@ -37,12 +37,16 @@ class UserManagementService {
           offset,
           role: options.role,
           search: options.search,
+          status: options.status,
+          banned: options.banned,
           sortBy: options.sortBy,
           sortOrder: options.sortOrder,
         }),
         this.userRepository.countFiltered({
           role: options.role,
           search: options.search,
+          status: options.status,
+          banned: options.banned,
         }),
       ]);
 

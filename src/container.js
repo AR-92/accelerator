@@ -306,6 +306,7 @@ container.register('authController', (c) => {
     login: part1.login.bind(part1),
     register: part1.register.bind(part1),
     logout: part1.logout.bind(part1),
+    switchBack: part1.switchBack.bind(part1),
     // Add other methods if needed
   };
 });
@@ -478,6 +479,8 @@ container.register('adminController', (c) => {
     updateUserStatus: userAction.updateUserStatus.bind(userAction),
     updateUserBanned: userAction.updateUserBanned.bind(userAction),
     resetUserPassword: userAction.resetUserPassword.bind(userAction),
+    impersonateUser: userAction.impersonateUser.bind(userAction),
+    impersonateUserPage: userAction.impersonateUserPage.bind(userAction),
     exportUsersToCSV: userView.exportUsersToCSV.bind(userView),
     deleteUser: userAction.deleteUser.bind(userAction),
     bulkUpdateCredits: userAction.bulkUpdateCredits.bind(userAction),

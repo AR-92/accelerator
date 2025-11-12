@@ -319,6 +319,65 @@ class AuthControllerPart1 {
   }
 
   /**
+   * Switch back from impersonation
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   */
+  async switchBack(req, res) {
+    this.logger.info('Switch back request', {
+      userId: req.session.userId,
+      originalUserId: req.session.originalUserId,
+      ip: req.ip || req.connection.remoteAddress,
+    });
+
+    try {
+      if (!req.session.originalUser) {
+        return res.status(400).json({
+          success: false,
+          error: 'Not currently impersonating',
+        });
+      }
+
+      // Restore original admin user
+      req.session.user = req.session.originalUser;
+      req.session.userId = req.session.originalUserId;
+
+      // Clear impersonation data
+      delete req.session.originalUser;
+      delete req.session.originalUserId;
+
+      // Check if this is an HTMX request
+      if (req.headers['hx-request']) {
+        return res.json({
+          success: true,
+          message: 'Switched back to admin',
+        });
+      }
+
+      res.redirect('/admin/users');
+    } catch (error) {
+      this.logger.error('Switch back error:', error, {
+        userId: req.session.userId,
+        ip: req.ip || req.connection.remoteAddress,
+      });
+
+      if (req.headers['hx-request']) {
+        return res.status(500).json({
+          success: false,
+          error: 'Internal Server Error',
+          message: 'An error occurred during switch back',
+        });
+      }
+
+      res.status(500).render('pages/error/page-not-found', {
+        title: 'Error - Accelerator Platform',
+        layout: 'main',
+        message: 'An error occurred during switch back',
+      });
+    }
+  }
+
+  /**
    * Get current user profile
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object

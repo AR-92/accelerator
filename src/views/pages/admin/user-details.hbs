@@ -3,7 +3,7 @@
   <div class='flex items-center justify-between'>
     <div class='grid gap-1'>
       <h1 class='font-heading text-2xl font-semibold text-foreground dark:text-white'>User Details</h1>
-      <p class='text-base text-muted-foreground'>{{user.firstName}} {{user.lastName}} ({{user.email}})</p>
+      <p class='text-base text-muted-foreground'>{{selectedUser.firstName}} {{selectedUser.lastName}} ({{selectedUser.email}})</p>
     </div>
     <div class='flex gap-2'>
       <button onclick="window.history.back()" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
@@ -20,29 +20,29 @@
       <div class='space-y-3'>
         <div>
           <label class='block text-sm font-medium text-muted-foreground'>Full Name</label>
-          <p class='text-sm text-foreground'>{{user.firstName}} {{user.lastName}}</p>
+          <p class='text-sm text-foreground'>{{selectedUser.firstName}} {{selectedUser.lastName}}</p>
         </div>
         <div>
           <label class='block text-sm font-medium text-muted-foreground'>Email</label>
-          <p class='text-sm text-foreground'>{{user.email}}</p>
+          <p class='text-sm text-foreground'>{{selectedUser.email}}</p>
         </div>
         <div>
           <label class='block text-sm font-medium text-muted-foreground'>Role</label>
           <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800'>
-            {{user.role}}
+            {{selectedUser.role}}
           </span>
         </div>
         <div>
           <label class='block text-sm font-medium text-muted-foreground'>Status</label>
           <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{#if (eq user.status 'active')}}bg-green-100 text-green-800{{else}}bg-red-100 text-red-800{{/if}}'>
-            {{user.status}}
+            {{selectedUser.status}}
           </span>
         </div>
         {{#if user.banned}}
         <div>
           <label class='block text-sm font-medium text-muted-foreground'>Banned</label>
           <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800'>
-            Yes {{#if user.bannedReason}}- {{user.bannedReason}}{{/if}}
+            Yes {{#if user.bannedReason}}- {{selectedUser.bannedReason}}{{/if}}
           </span>
         </div>
         {{/if}}
@@ -55,16 +55,16 @@
       <div class='space-y-3'>
         <div>
           <label class='block text-sm font-medium text-muted-foreground'>Credits</label>
-          <p class='text-lg font-semibold text-foreground'>{{user.credits}}</p>
+          <p class='text-lg font-semibold text-foreground'>{{selectedUser.credits}}</p>
         </div>
         <div>
           <label class='block text-sm font-medium text-muted-foreground'>Theme</label>
-          <p class='text-sm text-foreground'>{{user.theme}}</p>
+          <p class='text-sm text-foreground'>{{selectedUser.theme}}</p>
         </div>
         {{#if user.bio}}
         <div>
           <label class='block text-sm font-medium text-muted-foreground'>Bio</label>
-          <p class='text-sm text-foreground'>{{user.bio}}</p>
+          <p class='text-sm text-foreground'>{{selectedUser.bio}}</p>
         </div>
         {{/if}}
       </div>
@@ -76,16 +76,16 @@
       <div class='space-y-3'>
         <div>
           <label class='block text-sm font-medium text-muted-foreground'>Created</label>
-          <p class='text-sm text-foreground' id="createdAt">{{user.createdAt}}</p>
+          <p class='text-sm text-foreground' id="createdAt">{{selectedUser.createdAt}}</p>
         </div>
         <div>
           <label class='block text-sm font-medium text-muted-foreground'>Last Updated</label>
-          <p class='text-sm text-foreground' id="updatedAt">{{user.updatedAt}}</p>
+          <p class='text-sm text-foreground' id="updatedAt">{{selectedUser.updatedAt}}</p>
         </div>
         {{#if user.bannedAt}}
         <div>
           <label class='block text-sm font-medium text-muted-foreground'>Banned At</label>
-          <p class='text-sm text-foreground' id="bannedAt">{{user.bannedAt}}</p>
+          <p class='text-sm text-foreground' id="bannedAt">{{selectedUser.bannedAt}}</p>
         </div>
         {{/if}}
       </div>
@@ -96,25 +96,28 @@
   <div class='rounded-md bg-card text-card-foreground shadow-sm p-6' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
     <h3 class='text-lg font-medium text-foreground mb-4'>Quick Actions</h3>
     <div class='flex flex-wrap gap-2'>
-      <button onclick="editUserRole({{user.id}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
+      <button onclick="editUserRole({{selectedUser.id}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
         Edit Role
       </button>
-      <button onclick="manageCredits({{user.id}}, '{{user.fullName}}', {{user.credits}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
+      <button onclick="manageCredits({{selectedUser.id}}, '{{selectedUser.fullName}}', {{selectedUser.credits}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
         Manage Credits
       </button>
-      <button onclick="resetPassword({{user.id}}, '{{user.fullName}}')" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-orange-600 text-white shadow hover:bg-orange-700 h-9 px-4 py-2'>
+      <button onclick="resetPassword({{selectedUser.id}}, '{{selectedUser.fullName}}')" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-orange-600 text-white shadow hover:bg-orange-700 h-9 px-4 py-2'>
         Reset Password
       </button>
-      <button onclick="toggleStatus({{user.id}}, '{{user.status}}')" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
-        {{#if (eq user.status 'active')}}Deactivate{{else}}Activate{{/if}}
-      </button>
-      {{#unless (eq user.role 'admin')}}
-      <button onclick="toggleBan({{user.id}}, {{user.banned}}, '{{user.fullName}}')" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 {{#if user.banned}}bg-green-600 hover:bg-green-700{{else}}bg-orange-600 hover:bg-orange-700{{/if}} text-white shadow h-9 px-4 py-2'>
-        {{#if user.banned}}Unban{{else}}Ban{{/if}}
-      </button>
-      <button onclick="deleteUser({{user.id}}, '{{user.fullName}}')" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground shadow hover:bg-destructive/90 h-9 px-4 py-2'>
-        Delete User
-      </button>
+       <button onclick="toggleStatus({{selectedUser.id}}, '{{selectedUser.status}}')" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
+         {{#if (eq selectedUser.status 'active')}}Deactivate{{else}}Activate{{/if}}
+       </button>
+       {{#unless (eq selectedUser.role 'admin')}}
+       <button onclick="toggleBan({{selectedUser.id}}, {{selectedUser.banned}}, '{{selectedUser.fullName}}')" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 {{#if selectedUser.banned}}bg-green-600 hover:bg-green-700{{else}}bg-orange-600 hover:bg-orange-700{{/if}} text-white shadow h-9 px-4 py-2'>
+         {{#if selectedUser.banned}}Unban{{else}}Ban{{/if}}
+       </button>
+       <a href="/admin/impersonate/{{selectedUser.id}}" target="_blank" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-blue-600 text-white shadow hover:bg-blue-700 h-9 px-4 py-2'>
+         Login as User
+       </a>
+       <button onclick="deleteUser({{selectedUser.id}}, '{{selectedUser.fullName}}')" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-destructive text-destructive-foreground shadow hover:bg-destructive/90 h-9 px-4 py-2'>
+         Delete User
+       </button>
       {{/unless}}
     </div>
   </div>
@@ -354,6 +357,8 @@ function copyPassword() {
     copyBtn.textContent = originalText;
   }, 2000);
 }
+
+
 
 function deleteUser(userId, userName) {
   Toast.warning(`Are you sure you want to delete user ${userName}? This action cannot be undone.`);

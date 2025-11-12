@@ -7,6 +7,7 @@ const requireAuth = (req, res, next) => {
   }
   req.user = req.session.user;
   res.locals.user = req.session.user;
+  res.locals.originalUser = req.session.originalUser;
   next();
 };
 
@@ -14,6 +15,7 @@ const optionalAuth = (req, res, next) => {
   if (req.session.userId) {
     req.user = req.session.user;
     res.locals.user = req.session.user;
+    res.locals.originalUser = req.session.originalUser;
   }
   next();
 };

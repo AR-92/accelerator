@@ -30,18 +30,24 @@
     </button>
     <div class='h-6 w-px bg-border mx-2 navbar-divider'></div>
     <nav class='flex items-center gap-6 ml-8'>
+      {{#if (eq user.role 'startup')}}
       <a
         href='/pages/dashboard'
         class='text-sm text-muted-foreground hover:text-foreground transition-colors'
       >Dashboard</a>
+      {{/if}}
+      {{#if (eq user.role 'enterprise')}}
       <a
         href='/pages/enterprise-dashboard'
         class='text-sm text-muted-foreground hover:text-foreground transition-colors'
       >Enterprise</a>
+      {{/if}}
+      {{#if (eq user.role 'corporate')}}
       <a
         href='/pages/corporate-dashboard'
         class='text-sm text-muted-foreground hover:text-foreground transition-colors'
       >Corporate</a>
+      {{/if}}
       <a
         href='/pages/portfolio'
         class='text-sm text-muted-foreground hover:text-foreground transition-colors'
@@ -321,17 +327,31 @@
             </a>
           </div>
 
-          <!-- Separator -->
-          <div class='bg-border -mx-1 my-1 h-px'></div>
+           <!-- Separator -->
+           <div class='bg-border -mx-1 my-1 h-px'></div>
 
-          <!-- Log out item -->
-          <a
-            href='/auth/logout'
-            class='relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground'
-          >
-            {{lucide 'LogOut' 'mr-2 h-4 w-4'}}
-            Log out
-          </a>
+           {{#if originalUser}}
+           <!-- Switch Back item -->
+           <a
+             href='/auth/switch-back'
+             class='relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground'
+           >
+             {{lucide 'ArrowLeft' 'mr-2 h-4 w-4'}}
+             Switch Back to Admin
+           </a>
+
+           <!-- Separator -->
+           <div class='bg-border -mx-1 my-1 h-px'></div>
+           {{/if}}
+
+           <!-- Log out item -->
+           <a
+             href='/auth/logout'
+             class='relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground'
+           >
+             {{lucide 'LogOut' 'mr-2 h-4 w-4'}}
+             Log out
+           </a>
         </div>
       </div>
     </div>
