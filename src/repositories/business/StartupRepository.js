@@ -170,12 +170,11 @@ class StartupRepository extends BaseRepository {
    * @returns {Promise<Object>} Status counts
    */
   async countByStatus() {
-    const sql =
-      'SELECT status, COUNT(*) as count FROM startups GROUP BY status';
+    const sql = 'SELECT stage, COUNT(*) as count FROM startups GROUP BY stage';
     const rows = await this.query(sql);
     const result = {};
     rows.forEach((row) => {
-      result[row.status] = row.count;
+      result[row.stage] = row.count;
     });
     return result;
   }

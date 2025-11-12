@@ -62,10 +62,12 @@ class LandingPageService {
         params.push(isActive ? 1 : 0);
       }
 
-      sql += ' ORDER BY "order" ASC, created_at DESC';
+      sql += ' ORDER BY sort_order ASC, created_at DESC';
 
       // Get total count
-      const countSql = sql.replace('SELECT *', 'SELECT COUNT(*) as count');
+      const countSql = sql
+        .replace('SELECT *', 'SELECT COUNT(*) as count')
+        .replace('ORDER BY sort_order ASC, created_at DESC', '');
       const countResult = await this.landingPageRepository.queryOne(
         countSql,
         params

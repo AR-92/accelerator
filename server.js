@@ -30,7 +30,7 @@ app.use(
     store: new pgSession({
       pool: require('./config/database').pool,
       tableName: 'session',
-      createTableIfMissing: true  // Create session table if it doesn't exist
+      createTableIfMissing: true, // Create session table if it doesn't exist
     }),
     secret:
       process.env.SESSION_SECRET || 'your-secret-key-change-in-production',
@@ -141,16 +141,6 @@ app.get('/', (req, res) => {
   res.redirect('/auth/login');
 });
 
-// Direct route for explore-ideas (without /pages prefix)
-app.get('/explore-ideas', (req, res) => {
-  res.render('pages/content/browse-ideas', {
-    title: 'Explore Ideas - Accelerator Platform',
-    isActiveExploreIdeas: true,
-    mainPadding: 'py-8',
-    layout: 'main',
-  });
-});
-
 // Direct route for idea-detail (without /pages prefix)
 app.get('/idea-detail', (req, res) => {
   res.render('pages/content/view-idea', {
@@ -178,7 +168,7 @@ app.use(errorHandler);
 // });
 
 // Start the server
-const server = app.listen(port, async () => {
+const server = app.listen(port, '0.0.0.0', async () => {
   const startupLogger = new Logger('Server');
   startupLogger.info(`Server running at http://localhost:${port}`);
   startupLogger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
@@ -187,10 +177,10 @@ const server = app.listen(port, async () => {
   // Run database migrations and test connection
   try {
     const { testConnection, runMigrations } = require('./config/database');
-    
+
     // Run migrations first
     await runMigrations();
-    
+
     // Then test the connection
     const isConnected = await testConnection();
     if (isConnected) {

@@ -59,7 +59,7 @@ class LandingPageRepository extends BaseRepository {
       image_url: section.imageUrl,
       button_text: section.buttonText,
       button_url: section.buttonUrl,
-      order: section.order,
+      sort_order: section.order,
       is_active: section.isActive ? 1 : 0,
       metadata: JSON.stringify(section.metadata),
     };
@@ -85,7 +85,7 @@ class LandingPageRepository extends BaseRepository {
       image_url: section.imageUrl,
       button_text: section.buttonText,
       button_url: section.buttonUrl,
-      order: section.order,
+      sort_order: section.order,
       is_active: section.isActive ? 1 : 0,
       metadata: JSON.stringify(section.metadata),
       updated_at: new Date().toISOString(),
@@ -102,7 +102,7 @@ class LandingPageRepository extends BaseRepository {
    */
   async updateOrder(id, order) {
     return await super.update(id, {
-      order,
+      sort_order: order,
       updated_at: new Date().toISOString(),
     });
   }

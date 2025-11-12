@@ -41,23 +41,6 @@ class AdminDashboardController {
           help: { total: 0, published: 0, draft: 0 },
           learning: { total: 0, published: 0, draft: 0 },
         },
-        startups: {
-          total: 0,
-          byStatus: [
-            { status: 'active', count: 0 },
-            { status: 'inactive', count: 0 },
-            { status: 'acquired', count: 0 },
-            { status: 'failed', count: 0 },
-          ],
-        },
-        enterprises: {
-          total: 0,
-          byStatus: [],
-        },
-        corporates: {
-          total: 0,
-          byStatus: [],
-        },
         credits: { total: 0 },
         packages: { total: 0, active: 0, avgPrice: 0, avgCredits: 0 },
         billing: {
@@ -111,7 +94,7 @@ class AdminDashboardController {
       console.error('Error loading settings page:', error);
       res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         message: 'An error occurred while loading settings.',
         user: req.user,
       });
@@ -138,7 +121,7 @@ class AdminDashboardController {
       console.error('Error loading system health page:', error);
       res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         message: 'An error occurred while loading system health.',
         user: req.user,
       });
@@ -162,7 +145,7 @@ class AdminDashboardController {
       console.error('Error loading content page:', error);
       res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         message: 'An error occurred while loading content management.',
         user: req.user,
       });
@@ -186,7 +169,7 @@ class AdminDashboardController {
       console.error('Error loading help content page:', error);
       res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         message: 'An error occurred while loading help content management.',
         user: req.user,
       });
@@ -210,7 +193,7 @@ class AdminDashboardController {
       console.error('Error loading learning content page:', error);
       res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         message: 'An error occurred while loading learning content management.',
         user: req.user,
       });
@@ -251,7 +234,7 @@ class AdminDashboardController {
       console.error('Error loading ideas page:', error);
       res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         message: 'An error occurred while loading ideas management.',
         user: req.user,
       });
@@ -282,7 +265,7 @@ class AdminDashboardController {
       console.error('Error loading votes page:', error);
       res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         message: 'An error occurred while loading votes management.',
         user: req.user,
       });
@@ -316,7 +299,7 @@ class AdminDashboardController {
       console.error('Error loading packages page:', error);
       res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         message: 'An error occurred while loading package management.',
         user: req.user,
       });
@@ -350,7 +333,7 @@ class AdminDashboardController {
       console.error('Error loading billing page:', error);
       res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         message: 'An error occurred while loading billing management.',
         user: req.user,
       });
@@ -411,7 +394,7 @@ class AdminDashboardController {
 
       res.render('pages/admin/collaborations', {
         title: 'Collaborations Management - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         activeCollaborations: true,
         collaborations: result.collaborations,
         pagination: result.pagination,
@@ -422,7 +405,7 @@ class AdminDashboardController {
       console.error('Error loading collaborations page:', error);
       res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         message: 'An error occurred while loading collaborations management.',
         user: req.user,
       });
@@ -456,7 +439,7 @@ class AdminDashboardController {
       console.error('Error loading landing page:', error);
       res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         message: 'An error occurred while loading landing page management.',
         user: req.user,
       });

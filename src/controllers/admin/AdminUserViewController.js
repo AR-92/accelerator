@@ -64,7 +64,7 @@ class AdminUserViewController {
       } else {
         res.status(500).render('pages/error/page-not-found', {
           title: 'Error - Admin Panel',
-          layout: 'admin',
+          layout: 'error-admin',
           message: 'An error occurred while loading users.',
           user: req.user,
         });
@@ -93,7 +93,7 @@ class AdminUserViewController {
       console.error('Error loading user details page:', error);
       res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         message: 'An error occurred while loading user details.',
         user: req.user,
       });

@@ -14,9 +14,8 @@
 
           <form
             hx-post='/auth/signup'
-            hx-target='#toast-container'
-            hx-swap='beforeend'
-            hx-on:htmx:after-request='handleSignupResponse(event)'
+            hx-swap='none'
+            hx-on:htmx:before-swap='handleSignupResponse(event); return false;'
             class='grid gap-4'
           >
             <div class='grid grid-cols-2 gap-8'>
@@ -161,11 +160,23 @@
   </div>
 </section>
 
-<script>
-  function handleSignupResponse(event) { const xhr = event.detail.xhr; const
-  response = JSON.parse(xhr.responseText); if (xhr.status === 200 &&
-  response.success) { // Success - show toast and redirect to login
-  Toast.success(response.message); setTimeout(() => { window.location.href =
-  '/auth'; }, 2000); } else if (response.error) { // Error - show toast
-  Toast.error(response.error); } }
-</script>
+ <script>
+   function handleSignupResponse(event) {
+     const xhr = event.detail.xhr;
+     const response = JSON.parse(xhr.responseText);
+
+     if (xhr.status === 200 && response.success) {
+       // Success - show toast and redirect to login
+       Toast.success(response.message);
+       setTimeout(() => {
+         window.location.href = '/auth';
+       }, 2000);
+     } else if (response.error) {
+       // Error - show toast
+       Toast.error(response.error);
+     } else if (xhr.status >= 400) {
+       // Handle server errors
+       Toast.error('An error occurred during signup');
+     }
+   }
+ </script>

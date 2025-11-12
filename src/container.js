@@ -50,7 +50,6 @@ const HelpService = require('./services/content/HelpService');
 const SystemMonitoringService = require('./services/admin/SystemMonitoringService');
 const UserManagementService = require('./services/admin/UserManagementService');
 const ContentManagementService = require('./services/admin/ContentManagementService');
-const BusinessManagementService = require('./services/admin/BusinessManagementService');
 const ProjectManagementService = require('./services/admin/ProjectManagementService');
 const AdminService = require('./services/admin/AdminService');
 
@@ -262,17 +261,7 @@ container.register(
   (c) =>
     new ContentManagementService(c.get('helpService'), c.get('learningService'))
 );
-container.register(
-  'businessManagementService',
-  (c) =>
-    new BusinessManagementService(
-      c.get('startupService'),
-      c.get('enterpriseService'),
-      c.get('corporateService'),
-      c.get('organizationService'),
-      c.get('adminActivityRepository')
-    )
-);
+
 container.register(
   'projectManagementService',
   (c) =>
@@ -289,7 +278,6 @@ container.register(
       c.get('systemMonitoringService'),
       c.get('userManagementService'),
       c.get('contentManagementService'),
-      c.get('businessManagementService'),
       c.get('projectManagementService'),
       c.get('ideaService'),
       c.get('voteService'),
@@ -494,32 +482,6 @@ container.register('adminController', (c) => {
     deleteUser: userAction.deleteUser.bind(userAction),
     bulkUpdateCredits: userAction.bulkUpdateCredits.bind(userAction),
     bulkUpdateRoles: userAction.bulkUpdateRoles.bind(userAction),
-    createStartup: business.createStartup.bind(business),
-    getStartup: business.getStartup.bind(business),
-    updateStartup: business.updateStartup.bind(business),
-    deleteStartup: business.deleteStartup.bind(business),
-    showStartups: business.showStartups.bind(business),
-    showStartupDetails: business.showStartupDetails.bind(business),
-    showEnterprises: business.showEnterprises.bind(business),
-    showEnterpriseDetails: business.showEnterpriseDetails.bind(business),
-    createEnterprise: business.createEnterprise.bind(business),
-    getEnterprise: business.getEnterprise.bind(business),
-    updateEnterprise: business.updateEnterprise.bind(business),
-    deleteEnterprise: business.deleteEnterprise.bind(business),
-    bulkUpdateEnterpriseStatus:
-      business.bulkUpdateEnterpriseStatus.bind(business),
-    bulkDeleteEnterprises: business.bulkDeleteEnterprises.bind(business),
-    exportEnterprisesToCSV: business.exportEnterprisesToCSV.bind(business),
-    showCorporates: business.showCorporates.bind(business),
-    showCorporateDetails: business.showCorporateDetails.bind(business),
-    createCorporate: business.createCorporate.bind(business),
-    getCorporate: business.getCorporate.bind(business),
-    updateCorporate: business.updateCorporate.bind(business),
-    deleteCorporate: business.deleteCorporate.bind(business),
-    bulkUpdateCorporateStatus:
-      business.bulkUpdateCorporateStatus.bind(business),
-    bulkDeleteCorporates: business.bulkDeleteCorporates.bind(business),
-    exportCorporatesToCSV: business.exportCorporatesToCSV.bind(business),
     updateLandingPageSectionOrder:
       business.updateLandingPageSectionOrder.bind(business),
     // Organization controllers

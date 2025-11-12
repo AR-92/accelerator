@@ -22,6 +22,9 @@ router.get('/', (req, res) => {
 
 // GET login page (redirects to main auth page)
 router.get('/login', (req, res) => {
+  if (req.session.userId) {
+    return res.redirect('/pages/dashboard');
+  }
   res.redirect('/auth');
 });
 
@@ -38,6 +41,17 @@ router.get('/signup', (req, res) => {
   }
   res.render('pages/auth/auth-signup', {
     title: 'Create Account - Accelerator Platform',
+    layout: 'auth',
+  });
+});
+
+// GET forgot password page
+router.get('/forgot-password', (req, res) => {
+  if (req.session.userId) {
+    return res.redirect('/pages/dashboard');
+  }
+  res.render('pages/auth/forgot-password', {
+    title: 'Forgot Password - Accelerator Platform',
     layout: 'auth',
   });
 });

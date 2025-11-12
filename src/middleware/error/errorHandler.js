@@ -53,8 +53,6 @@ const errorHandler = (error, req, res, next) => {
     });
   }
 
-
-
   // Handle JWT errors
   if (error.name === 'JsonWebTokenError') {
     return res.status(401).json({
@@ -100,9 +98,24 @@ const errorHandler = (error, req, res, next) => {
  * 404 Not Found handler
  */
 const notFoundHandler = (req, res) => {
-  res.status(404).json({
-    error: 'Not Found',
-    message: `Route ${req.method} ${req.path} not found`,
+  // Return JSON for API routes
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({
+      error: 'Not Found',
+      message: `Route ${req.method} ${req.path} not found`,
+    });
+  }
+
+  // Determine layout based on route
+  let layout = 'error-main'; // default for webapp
+  if (req.path.startsWith('/admin')) {
+    layout = 'error-admin'; // admin portal
+  }
+
+  // Render 404 page for web routes
+  res.status(404).render('pages/error/page-not-found', {
+    title: '404 - Page Not Found',
+    layout: layout,
   });
 };
 

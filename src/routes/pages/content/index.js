@@ -49,18 +49,19 @@ router.post('/ideas', (req, res) => {
 // GET explore ideas page
 router.get('/explore-ideas', optionalAuth, async (req, res) => {
   try {
-    const { getAllIdeas } = require('../../../services/core/databaseService');
-    const ideas = await getAllIdeas(); // Show all ideas for exploration
+    const container = require('../../../container');
+    const ideaService = container.get('ideaService');
+    const ideas = await ideaService.getAllIdeas(null, { limit: 20 }); // Get up to 20 ideas
 
     res.render('pages/content/browse-ideas', {
-      ...getPageData('Explore Ideas - Accelerator Platform', 'ExploreIdeas'),
+      ...getPageData('Explore Ideas', 'ExploreIdeas'),
       layout: 'main',
       ideas: ideas,
     });
   } catch (error) {
-    console.error('Error fetching ideas:', error);
+    console.error('Error fetching ideas for explore page:', error);
     res.render('pages/content/browse-ideas', {
-      ...getPageData('Explore Ideas - Accelerator Platform', 'ExploreIdeas'),
+      ...getPageData('Explore Ideas', 'ExploreIdeas'),
       layout: 'main',
       ideas: [],
     });

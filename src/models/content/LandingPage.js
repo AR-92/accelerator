@@ -13,7 +13,7 @@ class LandingPage extends BaseModel {
     this.imageUrl = data.image_url || data.imageUrl || '';
     this.buttonText = data.button_text || data.buttonText || '';
     this.buttonUrl = data.button_url || data.buttonUrl || '';
-    this.order = data.order || 0;
+    this.order = data.sort_order || data.order || 0;
     this.isActive =
       data.is_active !== undefined
         ? data.is_active

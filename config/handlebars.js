@@ -177,6 +177,27 @@ handlebars.registerHelper('capitalize', function (str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 });
 
+// Helper to get user initials
+handlebars.registerHelper('userInitials', function (user) {
+  if (!user) return 'U';
+  const firstName = user.firstName || '';
+  const lastName = user.lastName || '';
+  const firstInitial = firstName.charAt(0).toUpperCase();
+  const lastInitial = lastName.charAt(0).toUpperCase();
+  return firstInitial + (lastInitial || '');
+});
+
+// Helper to get user full name
+handlebars.registerHelper('userFullName', function (user) {
+  if (!user) return 'User';
+  const firstName = user.firstName || '';
+  const lastName = user.lastName || '';
+  if (firstName && lastName) {
+    return `${firstName} ${lastName}`;
+  }
+  return firstName || lastName || 'User';
+});
+
 // Helper to calculate days since a date
 handlebars.registerHelper('daysSince', function (dateString) {
   if (!dateString) return 0;

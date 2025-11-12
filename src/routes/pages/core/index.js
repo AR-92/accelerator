@@ -24,30 +24,6 @@ router.get('/terms', (req, res) => {
   });
 });
 
-// GET auth login page
-router.get('/auth', (req, res) => {
-  res.render(
-    'pages/auth/auth',
-    getPageData('Login - Accelerator Platform', 'Auth')
-  );
-});
-
-// GET auth signup page
-router.get('/auth/signup', (req, res) => {
-  res.render(
-    'pages/auth/auth-signup',
-    getPageData('Sign Up - Accelerator Platform', 'Auth')
-  );
-});
-
-// GET forgot password page
-router.get('/forgot-password', (req, res) => {
-  res.render(
-    'pages/auth/forgot-password',
-    getPageData('Forgot Password - Accelerator Platform', 'Auth')
-  );
-});
-
 // GET new project page
 router.get('/new-project', (req, res) => {
   res.render('pages/projects/create-project', {

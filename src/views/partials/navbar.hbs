@@ -226,17 +226,17 @@
       </svg>
     </a>
     <div class='relative' id='navbar-user-profile-dropdown'>
-      <button
-        type='button'
-        class='flex items-center gap-2 h-9 px-3 rounded-md hover:bg-muted transition-colors'
-      >
-        <span
-          class='relative flex size-6 shrink-0 overflow-hidden rounded-full bg-purple-500 dark:bg-purple-600 text-white items-center justify-center text-xs font-bold'
-        >AI</span>
-        <div class='hidden @sm:block text-left'>
-          <div class='text-sm font-medium'>Admin</div>
-          <div class='text-xs text-muted-foreground'>admin@example.com</div>
-        </div>
+       <button
+         type='button'
+         class='flex items-center gap-2 h-9 px-3 rounded-md hover:bg-muted transition-colors'
+       >
+         <span
+           class='relative flex size-6 shrink-0 overflow-hidden rounded-full bg-purple-500 dark:bg-purple-600 text-white items-center justify-center text-xs font-bold'
+         >{{userInitials user}}</span>
+         <div class='hidden @sm:block text-left'>
+           <div class='text-sm font-medium'>{{userFullName user}}</div>
+           <div class='text-xs text-muted-foreground'>{{user.email}}</div>
+         </div>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           width='24'
@@ -255,17 +255,17 @@
       <div
         class='absolute right-0 z-50 mt-2 w-72 origin-top-right rounded-md border bg-gray-50 dark:bg-gray-800 p-1 text-popover-foreground shadow-lg hidden opacity-0 invisible transition-all duration-200'
       >
-        <div class='p-1' role='none'>
-          <!-- User profile section -->
-          <div class='flex items-center gap-2 px-2 py-2 text-left text-sm'>
-            <span
-              class='relative flex size-8 shrink-0 overflow-hidden h-8 w-8 rounded-full bg-purple-500 dark:bg-purple-600 text-white items-center justify-center text-xs font-bold'
-            >AI</span>
-            <div class='grid flex-1 text-left text-sm leading-tight'>
-              <span class='truncate font-medium'>Admin</span>
-              <span class='truncate text-xs'>admin@example.com</span>
-            </div>
-          </div>
+         <div class='p-1' role='none'>
+           <!-- User profile section -->
+           <div class='flex items-center gap-2 px-2 py-2 text-left text-sm'>
+             <span
+               class='relative flex size-8 shrink-0 overflow-hidden h-8 w-8 rounded-full bg-purple-500 dark:bg-purple-600 text-white items-center justify-center text-xs font-bold'
+             >{{userInitials user}}</span>
+             <div class='grid flex-1 text-left text-sm leading-tight'>
+               <span class='truncate font-medium'>{{userFullName user}}</span>
+               <span class='truncate text-xs'>{{user.email}}</span>
+             </div>
+           </div>
 
           <!-- Separator -->
           <div class='bg-border -mx-1 my-1 h-px'></div>

@@ -12,10 +12,10 @@ const getPageData = (title, activeKey, padding = 'py-8') => ({
 // GET portfolio
 router.get('/portfolio', optionalAuth, async (req, res) => {
   try {
-    const {
-      getAllPortfolio,
-    } = require('../../../services/core/databaseService');
-    let portfolioData = await getAllPortfolio(req.user ? req.user.id : null);
+    const container = require('../../../container');
+    const portfolioRepo = container.get('portfolioRepository');
+    const userId = req.user ? req.user.id : null;
+    let portfolioData = await portfolioRepo.findAll(userId);
 
     // Handle filtering, sorting, grouping, and search
     const { category, sort, group, search } = req.query;

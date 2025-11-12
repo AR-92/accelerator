@@ -5,7 +5,9 @@ const adminController = container.get('adminController');
 const adminAuthController = container.get('adminAuthController');
 
 // Import admin auth middleware and wrap it for async compatibility
-const { requireAdminAuth: originalRequireAdminAuth } = require('../../middleware/auth/adminAuth');
+const {
+  requireAdminAuth: originalRequireAdminAuth,
+} = require('../../middleware/auth/adminAuth');
 
 const requireAdminAuth = (req, res, next) => {
   originalRequireAdminAuth(req, res, next).catch(next);
@@ -26,7 +28,7 @@ router.get('/login', (req, res) => {
 
 // POST admin login
 router.post('/login', (req, res) => {
-  adminAuthController.login(req, res).catch(err => {
+  adminAuthController.login(req, res).catch((err) => {
     console.error('Admin login error:', err);
     res.status(500).render('pages/admin/login', {
       title: 'Admin Login - Accelerator Platform',
@@ -55,48 +57,6 @@ router.get(
   '/users/:userId',
   requireAdminAuth,
   adminController.showUserDetails.bind(adminController)
-);
-
-// GET admin startups
-router.get(
-  '/startups',
-  requireAdminAuth,
-  adminController.showStartups.bind(adminController)
-);
-
-// GET admin startup details
-router.get(
-  '/startups/:startupId',
-  requireAdminAuth,
-  adminController.showStartupDetails.bind(adminController)
-);
-
-// GET admin enterprises
-router.get(
-  '/enterprises',
-  requireAdminAuth,
-  adminController.showEnterprises.bind(adminController)
-);
-
-// GET admin enterprise details
-router.get(
-  '/enterprises/:enterpriseId',
-  requireAdminAuth,
-  adminController.showEnterpriseDetails.bind(adminController)
-);
-
-// GET admin corporates
-router.get(
-  '/corporates',
-  requireAdminAuth,
-  adminController.showCorporates.bind(adminController)
-);
-
-// GET admin corporate details
-router.get(
-  '/corporates/:corporateId',
-  requireAdminAuth,
-  adminController.showCorporateDetails.bind(adminController)
 );
 
 // GET admin organizations

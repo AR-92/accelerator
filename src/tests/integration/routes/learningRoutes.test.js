@@ -64,6 +64,73 @@ describe('Learning Routes Integration', () => {
           showSettings: jest.fn(),
           showSystemHealth: jest.fn(),
           getSystemStatsAPI: jest.fn(),
+          createUser: jest.fn(),
+          getUser: jest.fn(),
+          updateUserCredits: jest.fn(),
+          updateUserRole: jest.fn(),
+          updateUserStatus: jest.fn(),
+          updateUserBanned: jest.fn(),
+          resetUserPassword: jest.fn(),
+          exportUsersToCSV: jest.fn(),
+          deleteUser: jest.fn(),
+          bulkUpdateCredits: jest.fn(),
+          bulkUpdateRoles: jest.fn(),
+          createStartup: jest.fn(),
+          getStartup: jest.fn(),
+          updateStartup: jest.fn(),
+          deleteStartup: jest.fn(),
+          showStartups: jest.fn(),
+          showStartupDetails: jest.fn(),
+          showEnterprises: jest.fn(),
+          showEnterpriseDetails: jest.fn(),
+          createEnterprise: jest.fn(),
+          getEnterprise: jest.fn(),
+          updateEnterprise: jest.fn(),
+          deleteEnterprise: jest.fn(),
+          bulkUpdateEnterpriseStatus: jest.fn(),
+          bulkDeleteEnterprises: jest.fn(),
+          exportEnterprisesToCSV: jest.fn(),
+          showCollaborations: jest.fn(),
+          showCollaborationDetails: jest.fn(),
+          getProject: jest.fn(),
+          updateProjectStatus: jest.fn(),
+          removeUserFromProject: jest.fn(),
+          deleteProject: jest.fn(),
+          showCorporates: jest.fn(),
+          showCorporateDetails: jest.fn(),
+          createCorporate: jest.fn(),
+          getCorporate: jest.fn(),
+          updateCorporate: jest.fn(),
+          deleteCorporate: jest.fn(),
+          bulkUpdateCorporateStatus: jest.fn(),
+          bulkDeleteCorporates: jest.fn(),
+          exportCorporatesToCSV: jest.fn(),
+          getIdea: jest.fn(),
+          updateIdea: jest.fn(),
+          deleteIdea: jest.fn(),
+          showPackages: jest.fn(),
+          showPackageDetails: jest.fn(),
+          createPackage: jest.fn(),
+          getPackage: jest.fn(),
+          updatePackage: jest.fn(),
+          deletePackage: jest.fn(),
+          showBilling: jest.fn(),
+          showBillingDetails: jest.fn(),
+          createBillingTransaction: jest.fn(),
+          getBillingTransaction: jest.fn(),
+          updateBillingStatus: jest.fn(),
+          processRefund: jest.fn(),
+          showRewards: jest.fn(),
+          showRewardDetails: jest.fn(),
+          createReward: jest.fn(),
+          grantReward: jest.fn(),
+          getReward: jest.fn(),
+          updateReward: jest.fn(),
+          deleteReward: jest.fn(),
+          updateLandingPageSectionOrder: jest.fn(),
+          showCredits: jest.fn(),
+          showTransactions: jest.fn(),
+          showPaymentMethods: jest.fn(),
         };
       }
       // Return a mock object for other services to prevent undefined errors
@@ -77,6 +144,13 @@ describe('Learning Routes Integration', () => {
     // Create express app with routes
     app = express();
     app.use(express.json());
+
+    // Set up minimal view engine for testing
+    app.engine('hbs', (filePath, options, callback) => {
+      callback(null, '<html><body>Test</body></html>');
+    });
+    app.set('view engine', 'hbs');
+    app.set('views', 'src/views');
 
     // Import and use routes (this will use our mocked container)
     const learningRoutes = require('../../../routes/pages/main');
@@ -204,7 +278,7 @@ describe('Learning Routes Integration', () => {
     describe('GET /api/learning/categories', () => {
       it('should call getCategoriesAPI', async () => {
         mockLearningController.getCategoriesAPI.mockImplementation(
-          (req, res) => {
+          async (req, res) => {
             res.json({ success: true, categories: [] });
           }
         );
@@ -220,7 +294,7 @@ describe('Learning Routes Integration', () => {
     describe('GET /api/learning/categories/:categorySlug/articles', () => {
       it('should call getCategoryArticlesAPI', async () => {
         mockLearningController.getCategoryArticlesAPI.mockImplementation(
-          (req, res) => {
+          async (req, res) => {
             res.json({ success: true, articles: [] });
           }
         );
@@ -239,12 +313,14 @@ describe('Learning Routes Integration', () => {
 
     describe('GET /api/learning/articles/:articleSlug', () => {
       it('should call getArticleAPI', async () => {
-        mockLearningController.getArticleAPI.mockImplementation((req, res) => {
-          res.json({
-            success: true,
-            article: { id: 1, title: 'Test Article' },
-          });
-        });
+        mockLearningController.getArticleAPI.mockImplementation(
+          async (req, res) => {
+            res.json({
+              success: true,
+              article: { id: 1, title: 'Test Article' },
+            });
+          }
+        );
 
         const response = await request(app).get(
           '/api/learning/articles/test-article'
@@ -260,7 +336,7 @@ describe('Learning Routes Integration', () => {
     describe('GET /api/learning/search', () => {
       it('should call searchArticlesAPI', async () => {
         mockLearningController.searchArticlesAPI.mockImplementation(
-          (req, res) => {
+          async (req, res) => {
             res.json({ success: true, articles: [], query: 'test' });
           }
         );
@@ -277,7 +353,7 @@ describe('Learning Routes Integration', () => {
     describe('GET /api/learning/stats', () => {
       it('should call getLearningStatsAPI', async () => {
         mockLearningController.getLearningStatsAPI.mockImplementation(
-          (req, res) => {
+          async (req, res) => {
             res.json({ success: true, stats: { totalArticles: 10 } });
           }
         );

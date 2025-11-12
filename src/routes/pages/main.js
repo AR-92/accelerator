@@ -509,8 +509,9 @@ router.get(
 // GET portfolio
 router.get('/portfolio', requireAuth, async (req, res) => {
   try {
-    const { getAllPortfolio } = require('../../services/core/databaseService');
-    let portfolioData = await getAllPortfolio(req.user.id);
+    const container = require('../../container');
+    const portfolioRepo = container.get('portfolioRepository');
+    let portfolioData = await portfolioRepo.findAll(req.user.id);
 
     // Handle filtering, sorting, grouping, and search
     const { category, sort, group, search } = req.query;
@@ -603,12 +604,10 @@ router.get('/portfolio/:id', async (req, res) => {
     const idea = await getPortfolioById(req.params.id);
 
     if (!idea) {
-      return res
-        .status(404)
-        .render(
-          'pages/error/page-not-found',
-          getPageData('Idea Not Found - Accelerator Platform', '')
-        );
+      return res.status(404).render('pages/error/page-not-found', {
+        ...getPageData('Idea Not Found - Accelerator Platform', ''),
+        layout: 'error-main',
+      });
     }
 
     res.render('pages/portfolio/portfolio-idea', {
@@ -618,12 +617,10 @@ router.get('/portfolio/:id', async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching portfolio item:', error);
-    res
-      .status(500)
-      .render(
-        'pages/error/page-not-found',
-        getPageData('Internal Server Error - Accelerator Platform', '')
-      );
+    res.status(500).render('pages/error/page-not-found', {
+      ...getPageData('Internal Server Error - Accelerator Platform', ''),
+      layout: 'error-main',
+    });
   }
 });
 
@@ -693,30 +690,6 @@ router.get('/business-plan', (req, res) => {
   res.render(
     'pages/reports/business-plan',
     getPageData('Business Plan - Strategic Planning', 'BusinessPlan')
-  );
-});
-
-// GET auth login page
-router.get('/auth', (req, res) => {
-  res.render(
-    'pages/auth/auth',
-    getPageData('Login - Accelerator Platform', 'Auth')
-  );
-});
-
-// GET auth signup page
-router.get('/auth/signup', (req, res) => {
-  res.render(
-    'pages/auth/auth-signup',
-    getPageData('Sign Up - Accelerator Platform', 'Auth')
-  );
-});
-
-// GET forgot password page
-router.get('/forgot-password', (req, res) => {
-  res.render(
-    'pages/auth/forgot-password',
-    getPageData('Forgot Password - Accelerator Platform', 'Auth')
   );
 });
 

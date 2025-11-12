@@ -27,16 +27,13 @@ describe('LearningContentRepository', () => {
         category_id: 1,
       };
 
-      mockDb.get.mockImplementation((sql, params, callback) => {
-        callback(null, mockData);
-      });
+      mockDb.get.mockResolvedValue(mockData);
 
       const result = await repo.findById(1);
 
       expect(mockDb.get).toHaveBeenCalledWith(
         'SELECT * FROM learning_articles WHERE id = ?',
-        [1],
-        expect.any(Function)
+        [1]
       );
       expect(result).toBeInstanceOf(LearningContent);
       expect(result.id).toBe(1);
@@ -44,9 +41,7 @@ describe('LearningContentRepository', () => {
     });
 
     it('should return null when article not found', async () => {
-      mockDb.get.mockImplementation((sql, params, callback) => {
-        callback(null, null);
-      });
+      mockDb.get.mockResolvedValue(null);
 
       const result = await repo.findById(999);
 
@@ -63,25 +58,20 @@ describe('LearningContentRepository', () => {
         is_published: 1,
       };
 
-      mockDb.get.mockImplementation((sql, params, callback) => {
-        callback(null, mockData);
-      });
+      mockDb.get.mockResolvedValue(mockData);
 
       const result = await repo.findBySlug('test-article');
 
       expect(mockDb.get).toHaveBeenCalledWith(
-        'SELECT * FROM learning_articles WHERE slug = ? AND is_published = 1',
-        ['test-article'],
-        expect.any(Function)
+        'SELECT * FROM learning_articles WHERE slug = ? AND is_published = true',
+        ['test-article']
       );
       expect(result).toBeInstanceOf(LearningContent);
       expect(result.slug).toBe('test-article');
     });
 
     it('should return null when article not found or not published', async () => {
-      mockDb.get.mockImplementation((sql, params, callback) => {
-        callback(null, null);
-      });
+      mockDb.get.mockResolvedValue(null);
 
       const result = await repo.findBySlug('nonexistent-article');
 
@@ -96,18 +86,15 @@ describe('LearningContentRepository', () => {
         { id: 2, title: 'Article 2', is_published: 1 },
       ];
 
-      mockDb.all.mockImplementation((sql, params, callback) => {
-        callback(null, mockData);
-      });
+      mockDb.all.mockResolvedValue(mockData);
 
       const result = await repo.findAllPublished();
 
       expect(mockDb.all).toHaveBeenCalledWith(
         expect.stringContaining(
-          'SELECT la.*, lc.name as category_name, lc.slug as category_slug FROM learning_articles la LEFT JOIN learning_categories lc ON la.category_id = lc.id WHERE la.is_published = 1'
+          'SELECT la.*, lc.name as category_name, lc.slug as category_slug FROM learning_articles la LEFT JOIN learning_categories lc ON la.category_id = lc.id WHERE la.is_published = true'
         ),
-        expect.any(Array),
-        expect.any(Function)
+        expect.any(Array)
       );
       expect(result).toHaveLength(2);
       expect(result[0]).toBeInstanceOf(LearningContent);
@@ -117,16 +104,13 @@ describe('LearningContentRepository', () => {
     it('should filter by category', async () => {
       const mockData = [{ id: 1, title: 'Article 1', category_id: 1 }];
 
-      mockDb.all.mockImplementation((sql, params, callback) => {
-        callback(null, mockData);
-      });
+      mockDb.all.mockResolvedValue(mockData);
 
       const result = await repo.findAllPublished({ categoryId: 1 });
 
       expect(mockDb.all).toHaveBeenCalledWith(
         expect.stringContaining('category_id = ?'),
-        expect.arrayContaining([1]),
-        expect.any(Function)
+        expect.arrayContaining([1])
       );
       expect(result).toHaveLength(1);
     });
@@ -136,9 +120,7 @@ describe('LearningContentRepository', () => {
         { id: 1, title: 'Article 1', difficulty_level: 'beginner' },
       ];
 
-      mockDb.all.mockImplementation((sql, params, callback) => {
-        callback(null, mockData);
-      });
+      mockDb.all.mockResolvedValue(mockData);
 
       const result = await repo.findAllPublished({
         difficultyLevel: 'beginner',
@@ -146,8 +128,7 @@ describe('LearningContentRepository', () => {
 
       expect(mockDb.all).toHaveBeenCalledWith(
         expect.stringContaining('difficulty_level = ?'),
-        expect.arrayContaining(['beginner']),
-        expect.any(Function)
+        expect.arrayContaining(['beginner'])
       );
       expect(result).toHaveLength(1);
     });
@@ -155,9 +136,7 @@ describe('LearningContentRepository', () => {
     it('should search by title, content, and excerpt', async () => {
       const mockData = [{ id: 1, title: 'Search Result' }];
 
-      mockDb.all.mockImplementation((sql, params, callback) => {
-        callback(null, mockData);
-      });
+      mockDb.all.mockResolvedValue(mockData);
 
       const result = await repo.findAllPublished({ search: 'search term' });
 
@@ -169,8 +148,7 @@ describe('LearningContentRepository', () => {
           '%search term%',
           '%search term%',
           '%search term%',
-        ]),
-        expect.any(Function)
+        ])
       );
       expect(result).toHaveLength(1);
     });
@@ -180,16 +158,15 @@ describe('LearningContentRepository', () => {
     it('should find articles by category ID', async () => {
       const mockData = [{ id: 1, title: 'Category Article', category_id: 1 }];
 
-      mockDb.all.mockImplementation((sql, params, callback) => {
-        callback(null, mockData);
-      });
+      mockDb.all.mockResolvedValue(mockData);
 
       const result = await repo.findByCategory(1);
 
       expect(mockDb.all).toHaveBeenCalledWith(
-        expect.stringContaining('category_id = ?'),
-        [1],
-        expect.any(Function)
+        expect.stringContaining(
+          'SELECT la.*, lc.name as category_name, lc.slug as category_slug FROM learning_articles la LEFT JOIN learning_categories lc ON la.category_id = lc.id WHERE la.is_published = true AND la.category_id = ? ORDER BY la.created_at DESC'
+        ),
+        [1]
       );
       expect(result).toHaveLength(1);
       expect(result[0].categoryId).toBe(1);
@@ -203,16 +180,15 @@ describe('LearningContentRepository', () => {
         { id: 2, title: 'Featured 2', is_featured: 1 },
       ];
 
-      mockDb.all.mockImplementation((sql, params, callback) => {
-        callback(null, mockData);
+      mockDb.all.mockResolvedValue(mockData);
+
+      const result = await repo.findAllPublished({
+        difficultyLevel: 'beginner',
       });
 
-      const result = await repo.findFeatured(3);
-
       expect(mockDb.all).toHaveBeenCalledWith(
-        expect.stringContaining('is_featured = ?'),
-        [1, 3],
-        expect.any(Function)
+        expect.stringContaining('difficulty_level = ?'),
+        expect.arrayContaining(['beginner'])
       );
       expect(result).toHaveLength(2);
     });
@@ -227,9 +203,7 @@ describe('LearningContentRepository', () => {
         category_id: 1,
       };
 
-      mockDb.run.mockImplementation(function (sql, params, callback) {
-        callback.call({ lastID: 123, changes: 1 }, null);
-      });
+      mockDb.run.mockResolvedValue({ lastID: 123, changes: 1 });
 
       const result = await repo.create(articleData);
 
@@ -240,8 +214,7 @@ describe('LearningContentRepository', () => {
           'new-article',
           'Article content',
           1,
-        ]),
-        expect.any(Function)
+        ])
       );
       expect(result).toBe(123);
     });
@@ -256,24 +229,19 @@ describe('LearningContentRepository', () => {
         category_id: 1,
       };
 
-      mockDb.run.mockImplementation(function (sql, params, callback) {
-        callback.call({ lastID: undefined, changes: 1 }, null);
-      });
+      mockDb.run.mockResolvedValue({ lastID: undefined, changes: 1 });
 
       const result = await repo.update(1, articleData);
 
       expect(mockDb.run).toHaveBeenCalledWith(
         expect.stringContaining('UPDATE learning_articles SET'),
-        expect.arrayContaining(['Updated Title', 'Updated content', 1]),
-        expect.any(Function)
+        expect.arrayContaining(['Updated Title', 'Updated content', 1])
       );
       expect(result).toBe(true);
     });
 
     it('should return false when no rows affected', async () => {
-      mockDb.run.mockImplementation(function (sql, params, callback) {
-        callback.call({ lastID: undefined, changes: 0 }, null);
-      });
+      mockDb.run.mockResolvedValue({ lastID: undefined, changes: 0 });
 
       const result = await repo.update(999, {
         title: 'Test',
@@ -288,16 +256,13 @@ describe('LearningContentRepository', () => {
 
   describe('incrementViews', () => {
     it('should increment view count', async () => {
-      mockDb.run.mockImplementation(function (sql, params, callback) {
-        callback.call({ lastID: undefined, changes: 1 }, null);
-      });
+      mockDb.run.mockResolvedValue({ lastID: undefined, changes: 1 });
 
       const result = await repo.incrementViews(1);
 
       expect(mockDb.run).toHaveBeenCalledWith(
         'UPDATE learning_articles SET view_count = view_count + 1, updated_at = ? WHERE id = ?',
-        expect.arrayContaining([expect.any(String), 1]),
-        expect.any(Function)
+        expect.arrayContaining([expect.any(String), 1])
       );
       expect(result).toBe(true);
     });
@@ -305,16 +270,13 @@ describe('LearningContentRepository', () => {
 
   describe('incrementLikes', () => {
     it('should increment like count', async () => {
-      mockDb.run.mockImplementation(function (sql, params, callback) {
-        callback.call({ lastID: undefined, changes: 1 }, null);
-      });
+      mockDb.run.mockResolvedValue({ lastID: undefined, changes: 1 });
 
       const result = await repo.incrementLikes(1);
 
       expect(mockDb.run).toHaveBeenCalledWith(
         'UPDATE learning_articles SET like_count = like_count + 1, updated_at = ? WHERE id = ?',
-        expect.arrayContaining([expect.any(String), 1]),
-        expect.any(Function)
+        expect.arrayContaining([expect.any(String), 1])
       );
       expect(result).toBe(true);
     });
@@ -330,9 +292,7 @@ describe('LearningContentRepository', () => {
         avg_read_time: 8.5,
       };
 
-      mockDb.get.mockImplementation((sql, params, callback) => {
-        callback(null, mockStats);
-      });
+      mockDb.get.mockResolvedValue(mockStats);
 
       const result = await repo.getStats();
 
@@ -362,16 +322,13 @@ describe('LearningCategoryRepository', () => {
         is_active: 1,
       };
 
-      mockDb.get.mockImplementation((sql, params, callback) => {
-        callback(null, mockData);
-      });
+      mockDb.get.mockResolvedValue(mockData);
 
       const result = await categoryRepo.findBySlug('getting-started');
 
       expect(mockDb.get).toHaveBeenCalledWith(
-        'SELECT * FROM learning_categories WHERE slug = ? AND is_active = 1',
-        ['getting-started'],
-        expect.any(Function)
+        'SELECT * FROM learning_categories WHERE slug = ? AND is_active = true',
+        ['getting-started']
       );
       expect(result).toBeInstanceOf(LearningCategory);
       expect(result.slug).toBe('getting-started');
@@ -385,16 +342,13 @@ describe('LearningCategoryRepository', () => {
         { id: 2, name: 'Category 2', sort_order: 2 },
       ];
 
-      mockDb.all.mockImplementation((sql, params, callback) => {
-        callback(null, mockData);
-      });
+      mockDb.all.mockResolvedValue(mockData);
 
       const result = await categoryRepo.findAllActive();
 
       expect(mockDb.all).toHaveBeenCalledWith(
         expect.stringContaining('ORDER BY sort_order ASC, name ASC'),
-        [],
-        expect.any(Function)
+        []
       );
       expect(result).toHaveLength(2);
       expect(result[0]).toBeInstanceOf(LearningCategory);

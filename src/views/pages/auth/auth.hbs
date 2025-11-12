@@ -12,13 +12,12 @@
             </p>
           </div>
 
-          <form
-            hx-post='/auth/login'
-            hx-target='#toast-container'
-            hx-swap='beforeend'
-            hx-on:htmx:after-request='handleLoginResponse(event)'
-            class='grid gap-4'
-          >
+           <form
+             hx-post='/auth/login'
+             hx-swap='none'
+             hx-on:htmx:before-swap='handleLoginResponse(event); return false;'
+             class='grid gap-4'
+           >
             <div class='grid gap-2'>
               <label
                 class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
@@ -103,11 +102,23 @@
   </div>
 </section>
 
-<script>
-  function handleLoginResponse(event) { const xhr = event.detail.xhr; const
-  response = JSON.parse(xhr.responseText); if (xhr.status === 200 &&
-  response.success) { // Success - show toast and redirect
-  Toast.success(response.message); setTimeout(() => { window.location.href =
-  response.redirect; }, 1500); } else if (response.error) { // Error - show
-  toast Toast.error(response.error); } }
-</script>
+ <script>
+   function handleLoginResponse(event) {
+     const xhr = event.detail.xhr;
+     const response = JSON.parse(xhr.responseText);
+
+     if (xhr.status === 200 && response.success) {
+       // Success - show toast and redirect
+       Toast.success(response.message);
+       setTimeout(() => {
+         window.location.href = response.redirect;
+       }, 1500);
+     } else if (response.error) {
+       // Error - show toast
+       Toast.error(response.error);
+     } else if (xhr.status >= 400) {
+       // Handle server errors
+       Toast.error('An error occurred during login');
+     }
+   }
+ </script>

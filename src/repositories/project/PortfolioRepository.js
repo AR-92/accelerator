@@ -45,7 +45,7 @@ class PortfolioRepository extends BaseRepository {
     if (options.orderBy) {
       sql += ` ORDER BY ${options.orderBy}`;
     } else {
-      sql += ' ORDER BY updated_date DESC, created_at DESC';
+      sql += ' ORDER BY updated_at DESC, created_at DESC';
     }
 
     if (options.limit) {
@@ -172,8 +172,8 @@ class PortfolioRepository extends BaseRepository {
    */
   async incrementVotes(id) {
     const sql =
-      'UPDATE portfolio SET votes = votes + 1, updated_date = ?, updated_at = ? WHERE id = ?';
-    const params = [new Date().toISOString(), new Date().toISOString(), id];
+      'UPDATE portfolio SET votes = votes + 1, updated_at = ? WHERE id = ?';
+    const params = [new Date().toISOString(), id];
     const result = await this.run(sql, params);
     return result.changes > 0;
   }
@@ -185,8 +185,8 @@ class PortfolioRepository extends BaseRepository {
    */
   async decrementVotes(id) {
     const sql =
-      'UPDATE portfolio SET votes = CASE WHEN votes > 0 THEN votes - 1 ELSE 0 END, updated_date = ?, updated_at = ? WHERE id = ?';
-    const params = [new Date().toISOString(), new Date().toISOString(), id];
+      'UPDATE portfolio SET votes = CASE WHEN votes > 0 THEN votes - 1 ELSE 0 END, updated_at = ? WHERE id = ?';
+    const params = [new Date().toISOString(), id];
     const result = await this.run(sql, params);
     return result.changes > 0;
   }

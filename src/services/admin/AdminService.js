@@ -6,7 +6,6 @@ class AdminService {
     systemMonitoringService,
     userManagementService,
     contentManagementService,
-    businessManagementService,
     projectManagementService,
     ideaService,
     voteService,
@@ -27,7 +26,6 @@ class AdminService {
     this.systemMonitoringService = systemMonitoringService;
     this.userManagementService = userManagementService;
     this.contentManagementService = contentManagementService;
-    this.businessManagementService = businessManagementService;
     this.projectManagementService = projectManagementService;
     this.ideaService = ideaService;
     this.voteService = voteService;
@@ -130,112 +128,6 @@ class AdminService {
     return this.contentManagementService.getLearningContent(options);
   }
 
-  // Business Management Methods
-  async getStartups(options = {}) {
-    return this.businessManagementService.getStartups(options);
-  }
-
-  async getStartupById(startupId) {
-    return this.businessManagementService.getStartupById(startupId);
-  }
-
-  async createStartup(startupData, adminInfo) {
-    return this.businessManagementService.createStartup(startupData, adminInfo);
-  }
-
-  async updateStartup(startupId, startupData, adminInfo) {
-    return this.businessManagementService.updateStartup(
-      startupId,
-      startupData,
-      adminInfo
-    );
-  }
-
-  async deleteStartup(startupId, adminInfo) {
-    return this.businessManagementService.deleteStartup(startupId, adminInfo);
-  }
-
-  async getEnterprises(options = {}) {
-    return this.businessManagementService.getEnterprises(options);
-  }
-
-  async getEnterpriseById(enterpriseId) {
-    return this.businessManagementService.getEnterpriseById(enterpriseId);
-  }
-
-  async createEnterprise(userId, enterpriseData) {
-    return this.businessManagementService.createEnterprise(
-      userId,
-      enterpriseData
-    );
-  }
-
-  async updateEnterprise(enterpriseId, enterpriseData) {
-    return this.businessManagementService.updateEnterprise(
-      enterpriseId,
-      enterpriseData
-    );
-  }
-
-  async deleteEnterprise(enterpriseId) {
-    return this.businessManagementService.deleteEnterprise(enterpriseId);
-  }
-
-  async bulkUpdateEnterpriseStatus(enterpriseIds, status) {
-    return this.businessManagementService.bulkUpdateEnterpriseStatus(
-      enterpriseIds,
-      status
-    );
-  }
-
-  async bulkDeleteEnterprises(enterpriseIds) {
-    return this.businessManagementService.bulkDeleteEnterprises(enterpriseIds);
-  }
-
-  async exportEnterprisesToCSV(filters = {}) {
-    return this.businessManagementService.exportEnterprisesToCSV(filters);
-  }
-
-  async getCorporates(options = {}) {
-    return this.businessManagementService.getCorporates(options);
-  }
-
-  async getCorporateById(corporateId) {
-    return this.businessManagementService.getCorporateById(corporateId);
-  }
-
-  async createCorporate(userId, corporateData) {
-    return this.businessManagementService.createCorporate(
-      userId,
-      corporateData
-    );
-  }
-
-  async updateCorporate(corporateId, corporateData) {
-    return this.businessManagementService.updateCorporate(
-      corporateId,
-      corporateData
-    );
-  }
-
-  async deleteCorporate(corporateId) {
-    return this.businessManagementService.deleteCorporate(corporateId);
-  }
-
-  async bulkUpdateCorporateStatus(corporateIds, status) {
-    return this.businessManagementService.bulkUpdateCorporateStatus(
-      corporateIds,
-      status
-    );
-  }
-
-  async bulkDeleteCorporates(corporateIds) {
-    return this.businessManagementService.bulkDeleteCorporates(corporateIds);
-  }
-
-  async exportCorporatesToCSV(filters = {}) {
-    return this.businessManagementService.exportCorporatesToCSV(filters);
-  }
 
   // Project Management Methods
   async getProjects(options = {}) {
@@ -317,25 +209,6 @@ class AdminService {
     }
   }
 
-  async getPackageById(packageId) {
-    return this.businessManagementService.getPackageById(packageId);
-  }
-
-  async createPackage(packageData, adminInfo) {
-    return this.businessManagementService.createPackage(packageData, adminInfo);
-  }
-
-  async updatePackage(packageId, packageData, adminInfo) {
-    return this.businessManagementService.updatePackage(
-      packageId,
-      packageData,
-      adminInfo
-    );
-  }
-
-  async deletePackage(packageId, adminInfo) {
-    return this.businessManagementService.deletePackage(packageId, adminInfo);
-  }
 
   // Billing Management Methods
   async getBillingTransactions(options = {}) {
@@ -386,33 +259,6 @@ class AdminService {
     }
   }
 
-  async getBillingTransactionById(billingId) {
-    return this.businessManagementService.getBillingTransactionById(billingId);
-  }
-
-  async createBillingTransaction(billingData, adminInfo) {
-    return this.businessManagementService.createBillingTransaction(
-      billingData,
-      adminInfo
-    );
-  }
-
-  async updateBillingTransactionStatus(billingId, status, adminInfo) {
-    return this.businessManagementService.updateBillingTransactionStatus(
-      billingId,
-      status,
-      adminInfo
-    );
-  }
-
-  async processRefund(billingId, refundAmount, refundReason, adminInfo) {
-    return this.businessManagementService.processRefund(
-      billingId,
-      refundAmount,
-      refundReason,
-      adminInfo
-    );
-  }
 
   // Reward Management Methods
   async getRewards(options = {}) {
@@ -466,34 +312,9 @@ class AdminService {
   }
 
   async getRewardById(rewardId) {
-    return this.businessManagementService.getRewardById(rewardId);
   }
 
-  async createReward(rewardData, adminInfo) {
-    return this.businessManagementService.createReward(rewardData, adminInfo);
-  }
 
-  async updateReward(rewardId, rewardData, adminInfo) {
-    return this.businessManagementService.updateReward(
-      rewardId,
-      rewardData,
-      adminInfo
-    );
-  }
-
-  async deleteReward(rewardId, adminInfo) {
-    return this.businessManagementService.deleteReward(rewardId, adminInfo);
-  }
-
-  async grantRewardToUser(userId, type, title, credits, adminInfo) {
-    return this.businessManagementService.grantRewardToUser(
-      userId,
-      type,
-      title,
-      credits,
-      adminInfo
-    );
-  }
 
   // Idea Management Methods
   async getIdeas(options = {}) {
@@ -679,21 +500,6 @@ class AdminService {
     }
   }
 
-  async getIdeaById(ideaId) {
-    return this.businessManagementService.getIdeaById(ideaId);
-  }
-
-  async updateIdea(ideaId, ideaData, adminInfo) {
-    return this.businessManagementService.updateIdea(
-      ideaId,
-      ideaData,
-      adminInfo
-    );
-  }
-
-  async deleteIdea(ideaId, adminInfo) {
-    return this.businessManagementService.deleteIdea(ideaId, adminInfo);
-  }
 
   // Landing Page Management Methods
   async getLandingPageSections(options = {}) {

@@ -10,12 +10,20 @@ const requireAdminAuth = async (req, res, next) => {
 
   // Check if user exists and has admin role in the database
   try {
-    const user = await dbGet('SELECT id, email, user_type as role, status, banned FROM users WHERE id = ?', [req.session.userId]);
-    
-    if (!user || user.role !== 'admin' || user.status !== 'active' || user.banned) {
+    const user = await dbGet(
+      'SELECT id, email, user_type as role, status, banned FROM users WHERE id = ?',
+      [req.session.userId]
+    );
+
+    if (
+      !user ||
+      user.role !== 'admin' ||
+      user.status !== 'active' ||
+      user.banned
+    ) {
       return res.status(403).render('pages/error/access-denied', {
         title: 'Access Denied - Admin Panel',
-        layout: 'admin',
+        layout: 'error-admin',
         message: 'You do not have permission to access the admin panel.',
         user: req.session.user || null,
       });
@@ -27,7 +35,7 @@ const requireAdminAuth = async (req, res, next) => {
       email: user.email,
       role: user.role,
       status: user.status,
-      banned: user.banned
+      banned: user.banned,
     };
     req.user = req.session.user;
     next();
@@ -35,7 +43,7 @@ const requireAdminAuth = async (req, res, next) => {
     console.error('Admin auth middleware error:', error);
     return res.status(500).render('pages/error/access-denied', {
       title: 'Access Denied - Admin Panel',
-      layout: 'admin',
+      layout: 'error-admin',
       message: 'An error occurred during admin authentication.',
       user: req.session.user || null,
     });
@@ -45,15 +53,23 @@ const requireAdminAuth = async (req, res, next) => {
 const optionalAdminAuth = async (req, res, next) => {
   if (req.session.userId) {
     try {
-      const user = await dbGet('SELECT id, email, user_type as role, status, banned FROM users WHERE id = ?', [req.session.userId]);
-      
-      if (user && user.role === 'admin' && user.status === 'active' && !user.banned) {
+      const user = await dbGet(
+        'SELECT id, email, user_type as role, status, banned FROM users WHERE id = ?',
+        [req.session.userId]
+      );
+
+      if (
+        user &&
+        user.role === 'admin' &&
+        user.status === 'active' &&
+        !user.banned
+      ) {
         req.session.user = {
           id: user.id,
           email: user.email,
           role: user.role,
           status: user.status,
-          banned: user.banned
+          banned: user.banned,
         };
         req.user = req.session.user;
       }
