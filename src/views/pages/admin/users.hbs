@@ -1,4 +1,28 @@
  <div class="-m-4 lg:-m-6">
+    <!-- Sub Navigation -->
+    <div class="border-b border-gray-200 dark:border-gray-700 bg-background px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class='flex w-full items-center gap-[16px] overflow-x-auto lg:gap-[48px]'>
+          <a
+            class='p-[10px] text-[16px] font-[500] {{#if (eq activeTab 'all')}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+            href='/admin/users?tab=all'
+          >All Users</a>
+          <a
+            class='p-[10px] text-[16px] font-[500] {{#if (eq activeTab 'active')}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+            href='/admin/users?tab=active'
+          >Active</a>
+          <a
+            class='p-[10px] text-[16px] font-[500] {{#if (eq activeTab 'banned')}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+            href='/admin/users?tab=banned'
+          >Banned</a>
+          <a
+            class='p-[10px] text-[16px] font-[500] {{#if (eq activeTab 'admins')}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
+            href='/admin/users?tab=admins'
+          >Admins</a>
+        </div>
+      </div>
+    </div>
+
     <div class='flex flex-col gap-4 lg:gap-6 p-4 lg:p-6'>
 
     <!-- Header -->
