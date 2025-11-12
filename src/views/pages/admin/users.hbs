@@ -1,216 +1,216 @@
- <div class="-m-4 lg:-m-6">
-    <!-- Sub Navigation -->
-    <div class="border-b border-gray-200 dark:border-gray-700 bg-background px-6">
-      <div class="max-w-7xl mx-auto">
-        <div class='flex w-full items-center gap-[16px] overflow-x-auto lg:gap-[48px]'>
-          <a
-            class='p-[10px] text-[16px] font-[500] {{#if (eq activeTab 'all')}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
-            href='/admin/users?tab=all'
-          >All Users</a>
-          <a
-            class='p-[10px] text-[16px] font-[500] {{#if (eq activeTab 'active')}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
-            href='/admin/users?tab=active'
-          >Active</a>
-          <a
-            class='p-[10px] text-[16px] font-[500] {{#if (eq activeTab 'banned')}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
-            href='/admin/users?tab=banned'
-          >Banned</a>
-          <a
-            class='p-[10px] text-[16px] font-[500] {{#if (eq activeTab 'admins')}}border-b border-primary text-black dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400{{/if}}'
-            href='/admin/users?tab=admins'
-          >Admins</a>
-        </div>
-      </div>
-    </div>
+  <style>
+    /* Custom styles for glass effect and design */
+    .glass {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(6px);
+    }
+    .muted {
+      color: #6b7280;
+    }
+    /* Subtle table row divider */
+    .row-divider { box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.04); }
+  </style>
 
-    <div class='flex flex-col gap-4 lg:gap-6 p-4 lg:p-6'>
+  <!-- Main container with gradient background -->
+  <div class="min-h-screen bg-gradient-to-br from-gray-300 via-gray-200 to-gray-400 flex items-center justify-center p-6">
+    <!-- Glass card container -->
+    <div class="w-full max-w-5xl rounded-xl shadow-2xl overflow-hidden bg-white/60 glass ring-1 ring-gray-200">
 
-    <!-- Bootstrap Table Container -->
-    <div class="bootstrap-table bootstrap3">
-      <div class="fixed-table-toolbar">
-        <div class="bs-bars pull-left">
-          <div class="toolbar">
-            <button onclick="openCreateUserModal()" class="btn btn-default">{{lucide 'Plus' 'w-4 h-4 mr-2'}}Create User</button>
-            <button onclick="exportToCSV()" class="btn btn-default">{{lucide 'Download' 'w-4 h-4 mr-2'}}Export CSV</button>
-          </div>
-        </div>
-        <div class="columns columns-right btn-group pull-right">
-          <button class="btn btn-default" type="button" name="refresh" aria-label="Refresh" title="Refresh" onclick="location.reload()">
-            {{lucide 'RefreshCw' 'w-4 h-4'}}
+      <!-- Sticky header (toolbar) -->
+      <header class="sticky top-0 z-20 bg-gradient-to-r from-sky-500 to-indigo-600 text-white p-5">
+        <div class="max-w-7xl mx-auto flex items-center gap-4">
+          <!-- Left: Alert button -->
+          <button onclick="openCreateUserModal()" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-full px-4 py-2 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 opacity-90" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M13.73 21a2 2 0 01-3.46 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+              <path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+            </svg>
+            <span class="text-sm font-medium">Create User</span>
           </button>
-          <div class="keep-open btn-group">
-            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-label="Columns" title="Columns" aria-expanded="false">
-              {{lucide 'Columns' 'w-4 h-4'}}
-              <span class="caret"></span>
+
+          <!-- center: search -->
+          <div class="flex-1 flex justify-center">
+            <div class="w-full max-w-lg">
+              <label class="relative block">
+                <span class="sr-only">Search</span>
+                <span class="absolute inset-y-0 left-3 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white/80" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="11" cy="11" r="6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 21l-4.35-4.35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <input
+                  class="w-full pl-12 pr-4 py-3 rounded-full bg-white/20 placeholder-white/75 text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+                  placeholder="Search users..." aria-label="Search" id="searchInput" />
+              </label>
+            </div>
+          </div>
+
+          <!-- right: small action icons -->
+          <div class="flex items-center gap-3">
+            <button onclick="exportToCSV()" class="p-2 rounded-full bg-white/10 border border-white/25 hover:bg-white/20" title="Export CSV">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="7,10 12,15 17,10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="12" y1="15" x2="12" y2="3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </button>
-            <ul class="dropdown-menu" role="menu">
-              <li class="dropdown-item-marker" role="menuitem">
-                <label><input type="checkbox" data-field="select" value="0" checked="checked"> <span>Select</span></label>
-              </li>
-              <li class="dropdown-item-marker" role="menuitem">
-                <label><input type="checkbox" data-field="user" value="1" checked="checked"> <span>User</span></label>
-              </li>
-              <li class="dropdown-item-marker" role="menuitem">
-                <label><input type="checkbox" data-field="role" value="2" checked="checked"> <span>Role</span></label>
-              </li>
-              <li class="dropdown-item-marker" role="menuitem">
-                <label><input type="checkbox" data-field="status" value="3" checked="checked"> <span>Status</span></label>
-              </li>
-              <li class="dropdown-item-marker" role="menuitem">
-                <label><input type="checkbox" data-field="credits" value="4" checked="checked"> <span>Credits</span></label>
-              </li>
-              <li class="dropdown-item-marker" role="menuitem">
-                <label><input type="checkbox" data-field="created" value="5" checked="checked"> <span>Created</span></label>
-              </li>
-              <li class="dropdown-item-marker" role="menuitem">
-                <label><input type="checkbox" data-field="actions" value="6" checked="checked"> <span>Actions</span></label>
-              </li>
-            </ul>
+            <button onclick="location.reload()" class="p-2 rounded-full bg-white/10 border border-white/25 hover:bg-white/20" title="Refresh">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M20 8v6h-6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 16a8 8 0 0112-6.32L20 11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button class="p-2 rounded-full bg-white/10 border border-white/25 hover:bg-white/20" title="View Options">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
           </div>
         </div>
-        <div class="pull-right search input-group">
-          <input class="form-control search-input" type="search" id="searchInput" aria-label="Search" placeholder="Search users..." autocomplete="off">
-        </div>
-      </div>
+      </header>
 
-      <div class="fixed-table-container" style="padding-bottom: 0px;">
-        <div class="fixed-table-header" style="display: none;"><table></table></div>
-        <div class="fixed-table-body">
-          <table id="users-table" class="table table-hover table-striped">
-            <thead style="">
-              <tr>
-                <th data-field="select"><div class="th-inner">Select</div></th>
-                <th data-field="user"><div class="th-inner sortable both">User</div></th>
-                <th data-field="role"><div class="th-inner sortable both">Role</div></th>
-                <th data-field="status"><div class="th-inner">Status</div></th>
-                <th data-field="credits"><div class="th-inner sortable both">Credits</div></th>
-                <th data-field="created"><div class="th-inner sortable both">Created</div></th>
-                <th data-field="actions"><div class="th-inner">Actions</div></th>
-              </tr>
-            </thead>
-            <tbody>
+      <!-- Table area (scrolls if wide) -->
+      <div class="overflow-auto">
+        <table class="min-w-full table-fixed bg-white">
+          <thead class="text-xs uppercase text-muted">
+            <tr class="bg-white">
+              <th class="w-12 px-6 py-4 text-left border-b border-gray-100 muted">
+                <input type="checkbox" id="selectAll" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+              </th>
+              <th class="px-6 py-4 text-left border-b border-gray-100">User</th>
+              <th class="px-6 py-4 text-left border-b border-gray-100">Role</th>
+              <th class="px-6 py-4 text-left border-b border-gray-100">Status</th>
+              <th class="px-6 py-4 text-left border-b border-gray-100">Credits</th>
+              <th class="px-6 py-4 text-left border-b border-gray-100">Created</th>
+              <th class="w-36 px-6 py-4 text-left border-b border-gray-100">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm text-gray-700">
             {{#each users}}
-            <tr data-index="{{@index}}">
-              <td class="">
-                <input type="checkbox" class="userCheckbox" value="{{id}}" data-user-id="{{id}}">
+            <tr class="row-divider {{#if (eq @index 1)}}bg-white/50{{/if}}{{#if (eq @index 3)}}bg-white/50{{/if}}{{#if (eq @index 5)}}bg-white/50{{/if}}{{#if (eq @index 7)}}bg-white/50{{/if}}">
+              <td class="px-6 py-4">
+                <input type="checkbox" class="userCheckbox" value="{{id}}" data-user-id="{{id}}" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
               </td>
-              <td class="">
+              <td class="px-6 py-4">
                 <div class="text-sm font-medium">{{fullName}}</div>
-                <div class="text-sm text-muted-foreground">{{email}}</div>
+                <div class="text-sm text-gray-500">{{email}}</div>
               </td>
-              <td class="">{{role}}</td>
-              <td class="">
-                <span class="label {{#if (eq status 'active')}}label-success{{else}}label-danger{{/if}}">{{status}}</span>
+              <td class="px-6 py-4">{{role}}</td>
+              <td class="px-6 py-4">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{#if (eq status 'active')}}bg-green-100 text-green-800{{else}}bg-red-100 text-red-800{{/if}}">{{status}}</span>
                 {{#if banned}}
-                <span class="label label-danger">BANNED</span>
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 ml-1">BANNED</span>
                 {{/if}}
               </td>
-              <td class="">{{credits}}</td>
-              <td class="">{{formatDate createdAt}}</td>
-              <td class="">
-                <a rel="tooltip" title="View" class="table-action view" href="/admin/users/{{id}}">
-                  <i class="fa fa-eye"></i>
-                </a>
-                <a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" onclick="editUser({{id}})">
-                  <i class="fa fa-edit"></i>
-                </a>
-                <a rel="tooltip" title="Manage Credits" class="table-action" href="javascript:void(0)" onclick="manageCredits({{id}}, '{{fullName}}', {{credits}})">
-                  <i class="fa fa-dollar-sign"></i>
-                </a>
-                <a rel="tooltip" title="{{#if (eq status 'active')}}Deactivate{{else}}Activate{{/if}}" class="table-action {{#if (eq status 'active')}}remove{{else}}like{{/if}}" href="javascript:void(0)" onclick="toggleStatus({{id}}, '{{status}}')">
-                  {{#if (eq status 'active')}}
-                  <i class="fa fa-times-circle"></i>
-                  {{else}}
-                  <i class="fa fa-check-circle"></i>
-                  {{/if}}
-                </a>
-                {{#unless (eq role 'admin')}}
-                <a rel="tooltip" title="{{#if banned}}Unban{{else}}Ban{{/if}}" class="table-action {{#if banned}}like{{else}}remove{{/if}}" href="javascript:void(0)" onclick="toggleBan({{id}}, {{banned}}, '{{fullName}}')">
-                  {{#if banned}}
-                  <i class="fa fa-check-circle"></i>
-                  {{else}}
-                  <i class="fa fa-ban"></i>
-                  {{/if}}
-                </a>
-                <a rel="tooltip" title="Delete" class="table-action remove" href="javascript:void(0)" onclick="deleteUser({{id}}, '{{fullName}}')">
-                  <i class="fa fa-trash"></i>
-                </a>
-                {{/unless}}
+              <td class="px-6 py-4">{{credits}}</td>
+              <td class="px-6 py-4">{{formatDate createdAt}}</td>
+              <td class="px-6 py-4">
+                <div class="flex items-center justify-end gap-3 text-gray-400">
+                  <button onclick="window.location.href='/admin/users/{{id}}'" class="hover:text-gray-600" title="View">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button onclick="editUser({{id}})" class="hover:text-gray-600" title="Edit">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path d="M3 21v-3l11-11 3 3L6 21H3z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M14 7l3 3" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button onclick="manageCredits({{id}}, '{{fullName}}', {{credits}})" class="hover:text-gray-600" title="Manage Credits">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button onclick="toggleStatus({{id}}, '{{status}}')" class="hover:text-gray-600" title="{{#if (eq status 'active')}}Deactivate{{else}}Activate{{/if}}">
+                    {{#if (eq status 'active')}}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <circle cx="12" cy="12" r="10" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <line x1="15" y1="9" x2="9" y2="15" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <line x1="9" y1="9" x2="15" y2="15" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{else}}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{/if}}
+                  </button>
+                  {{#unless (eq role 'admin')}}
+                  <button onclick="toggleBan({{id}}, {{banned}}, '{{fullName}}')" class="hover:text-gray-600" title="{{#if banned}}Unban{{else}}Ban{{/if}}">
+                    {{#if banned}}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{else}}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <circle cx="12" cy="12" r="10" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <line x1="15" y1="9" x2="9" y2="15" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <line x1="9" y1="9" x2="15" y2="15" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{/if}}
+                  </button>
+                  <button onclick="deleteUser({{id}}, '{{fullName}}')" class="hover:text-red-600" title="Delete">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  {{/unless}}
+                </div>
               </td>
           </tr>
           {{/each}}
         </tbody>
           </table>
         </div>
-        <div class="fixed-table-footer"></div>
-      </div>
 
-      <!-- Bulk Actions -->
-      <div id="bulkActions" class="alert alert-info" style="margin-bottom: 0; display: none;">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-3">
+        <!-- Bulk Actions (floating) -->
+        <div id="bulkActions" class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg z-30" style="display: none;">
+          <div class="flex items-center gap-4">
             <span id="selectedCount">0 users selected</span>
-            <span class="text-sm text-muted">Select users above to perform bulk actions</span>
-          </div>
-          <div class="flex gap-2">
-            <button onclick="openBulkRoleModal()" id="bulkRoleBtn" class="btn btn-primary" disabled>
-              {{lucide 'Edit' 'w-4 h-4 mr-2'}}
-              Update Role
-            </button>
-            <button onclick="openBulkCreditsModal()" id="bulkCreditsBtn" class="btn btn-success" disabled>
-              {{lucide 'DollarSign' 'w-4 h-4 mr-2'}}
-              Update Credits
-            </button>
-            <button onclick="bulkDelete()" id="bulkDeleteBtn" class="btn btn-danger" disabled>
-              {{lucide 'Trash2' 'w-4 h-4 mr-2'}}
-              Delete Selected
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="fixed-table-pagination">
-        <div class="pull-left pagination-detail">
-          <span class="pagination-info">Showing {{pagination.limit}} of {{pagination.total}} users</span>
-          <div class="page-list">
-            <div class="btn-group dropdown dropup">
-              <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                <span class="page-size">{{pagination.limit}}</span>
-                <span class="caret"></span>
+            <div class="flex gap-2">
+              <button onclick="openBulkRoleModal()" id="bulkRoleBtn" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-sm" disabled>
+                Update Role
               </button>
-              <ul class="dropdown-menu" role="menu">
-                <li role="menuitem" class="{{#if (eq pagination.limit 10)}}active{{/if}}"><a href="?limit=10&page=1">10</a></li>
-                <li role="menuitem" class="{{#if (eq pagination.limit 20)}}active{{/if}}"><a href="?limit=20&page=1">20</a></li>
-                <li role="menuitem" class="{{#if (eq pagination.limit 50)}}active{{/if}}"><a href="?limit=50&page=1">50</a></li>
-                <li role="menuitem" class="{{#if (eq pagination.limit 100)}}active{{/if}}"><a href="?limit=100&page=1">100</a></li>
-              </ul>
+              <button onclick="openBulkCreditsModal()" id="bulkCreditsBtn" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-sm" disabled>
+                Update Credits
+              </button>
+              <button onclick="bulkDelete()" id="bulkDeleteBtn" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm" disabled>
+                Delete Selected
+              </button>
             </div>
-            rows visible
           </div>
         </div>
-        <div class="pull-right pagination">
-          <ul class="pagination">
-            {{#if (gt pagination.page 1)}}
-            <li class="page-item page-pre">
-              <a class="page-link" aria-label="previous page" href="?page={{subtract pagination.page 1}}&limit={{pagination.limit}}&role={{filters.role}}&search={{filters.search}}">‹</a>
-            </li>
-            {{/if}}
-
-            {{#each (range 1 pagination.pages)}}
-            <li class="page-item {{#if (eq this ../pagination.page)}}active{{/if}}">
-              <a class="page-link" aria-label="to page {{this}}" href="?page={{this}}&limit={{pagination.limit}}&role={{filters.role}}&search={{filters.search}}">{{this}}</a>
-            </li>
-            {{/each}}
-
-            {{#if (lt pagination.page pagination.pages)}}
-            <li class="page-item page-next">
-              <a class="page-link" aria-label="next page" href="?page={{add pagination.page 1}}&limit={{pagination.limit}}&role={{filters.role}}&search={{filters.search}}">›</a>
-            </li>
-            {{/if}}
-          </ul>
-        </div>
       </div>
+
+      <!-- Sticky footer / pagination -->
+      <footer class="sticky bottom-0 bg-white/70 glass border-t border-gray-200 p-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="rounded-full border px-4 py-2 text-sm font-medium">{{pagination.limit}}</div>
+            <div class="text-sm muted">rows visible</div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <nav class="flex items-center gap-3 text-sm">
+              {{#if (gt pagination.page 1)}}
+              <a href="?page={{subtract pagination.page 1}}&limit={{pagination.limit}}&role={{filters.role}}&search={{filters.search}}" class="inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-50">‹</a>
+              {{/if}}
+
+              {{#each (range 1 pagination.pages)}}
+              <a href="?page={{this}}&limit={{pagination.limit}}&role={{filters.role}}&search={{filters.search}}" class="inline-flex items-center justify-center w-10 h-10 rounded-full {{#if (eq this ../pagination.page)}}bg-blue-600 text-white{{else}}border border-gray-300 text-gray-600 hover:bg-gray-50{{/if}}">{{this}}</a>
+              {{/each}}
+
+              {{#if (lt pagination.page pagination.pages)}}
+              <a href="?page={{add pagination.page 1}}&limit={{pagination.limit}}&role={{filters.role}}&search={{filters.search}}" class="inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-50">›</a>
+              {{/if}}
+            </nav>
+          </div>
+        </div>
+      </footer>
     </div>
+  </div>
 
 <!-- Edit User Modal -->
 <div id="editUserModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
