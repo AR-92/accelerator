@@ -25,229 +25,192 @@
 
     <div class='flex flex-col gap-4 lg:gap-6 p-4 lg:p-6'>
 
-    <!-- Header -->
-    <div class='flex flex-col gap-4'>
-      <div class='flex items-center justify-between'>
-        <h1 class='font-heading text-2xl font-semibold text-foreground dark:text-white'>User Management</h1>
-        <div class='flex gap-2'>
-          <button onclick="exportToCSV()" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
-            {{lucide 'Download' 'w-4 h-4 mr-2'}}
-            Export CSV
-          </button>
-          <button onclick="openCreateUserModal()" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
-            {{lucide 'Plus' 'w-4 h-4 mr-2'}}
-            Create User
-          </button>
-        </div>
-      </div>
-      <div class='flex items-center justify-between'>
-        <div class='flex items-center gap-4'>
-          <span class='text-sm text-muted-foreground'>Total: {{pagination.total}}</span>
-          <div class='flex items-center gap-2'>
-            <label class='text-sm text-foreground'>Rows per page:</label>
-            <select id="rowsPerPage" class='flex h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
-              <option value="10">10</option>
-              <option value="20" selected>20</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select>
+    <!-- Bootstrap Table Container -->
+    <div class="bootstrap-table bootstrap3">
+      <div class="fixed-table-toolbar">
+        <div class="bs-bars pull-left">
+          <div class="toolbar">
+            <button onclick="openCreateUserModal()" class="btn btn-default">{{lucide 'Plus' 'w-4 h-4 mr-2'}}Create User</button>
+            <button onclick="exportToCSV()" class="btn btn-default">{{lucide 'Download' 'w-4 h-4 mr-2'}}Export CSV</button>
           </div>
         </div>
-        <div class='flex gap-4'>
-          <input type="text" id="searchInput" placeholder="Search by name or email"
-                 class='flex h-9 w-64 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
-          <select id="roleFilter" class='flex h-9 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
-            <option value="">All Roles</option>
-            <option value="startup">Startup</option>
-            <option value="corporate">Corporate</option>
-            <option value="enterprise">Enterprise</option>
-            <option value="admin">Admin</option>
-          </select>
+        <div class="columns columns-right btn-group pull-right">
+          <button class="btn btn-default" type="button" name="refresh" aria-label="Refresh" title="Refresh" onclick="location.reload()">
+            {{lucide 'RefreshCw' 'w-4 h-4'}}
+          </button>
+          <div class="keep-open btn-group">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-label="Columns" title="Columns" aria-expanded="false">
+              {{lucide 'Columns' 'w-4 h-4'}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li class="dropdown-item-marker" role="menuitem">
+                <label><input type="checkbox" data-field="select" value="0" checked="checked"> <span>Select</span></label>
+              </li>
+              <li class="dropdown-item-marker" role="menuitem">
+                <label><input type="checkbox" data-field="user" value="1" checked="checked"> <span>User</span></label>
+              </li>
+              <li class="dropdown-item-marker" role="menuitem">
+                <label><input type="checkbox" data-field="role" value="2" checked="checked"> <span>Role</span></label>
+              </li>
+              <li class="dropdown-item-marker" role="menuitem">
+                <label><input type="checkbox" data-field="status" value="3" checked="checked"> <span>Status</span></label>
+              </li>
+              <li class="dropdown-item-marker" role="menuitem">
+                <label><input type="checkbox" data-field="credits" value="4" checked="checked"> <span>Credits</span></label>
+              </li>
+              <li class="dropdown-item-marker" role="menuitem">
+                <label><input type="checkbox" data-field="created" value="5" checked="checked"> <span>Created</span></label>
+              </li>
+              <li class="dropdown-item-marker" role="menuitem">
+                <label><input type="checkbox" data-field="actions" value="6" checked="checked"> <span>Actions</span></label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="pull-right search input-group">
+          <input class="form-control search-input" type="search" id="searchInput" aria-label="Search" placeholder="Search users..." autocomplete="off">
         </div>
       </div>
-    </div>
 
-   <!-- Bulk Actions -->
-   <div id="bulkActions" class='rounded-md bg-card text-card-foreground shadow-sm p-4 hidden' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-     <div class='flex items-center justify-between'>
-       <div class='flex items-center gap-3'>
-         <span class='text-sm font-medium text-foreground' id="selectedCount">0 users selected</span>
-         <span class='text-xs text-muted-foreground'>Select users above to perform bulk actions</span>
-       </div>
-       <div class='flex gap-2'>
-          <button onclick="openBulkRoleModal()" id="bulkRoleBtn" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-blue-600 text-white shadow hover:bg-blue-700 h-9 px-4 py-2' disabled>
-            {{lucide 'Edit' 'w-4 h-4 mr-2'}}
-            Update Role
-          </button>
-          <button onclick="openBulkCreditsModal()" id="bulkCreditsBtn" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-green-600 text-white shadow hover:bg-green-700 h-9 px-4 py-2' disabled>
-            {{lucide 'DollarSign' 'w-4 h-4 mr-2'}}
-            Update Credits
-          </button>
-          <button onclick="bulkDelete()" id="bulkDeleteBtn" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-red-600 text-white shadow hover:bg-red-700 h-9 px-4 py-2' disabled>
-            {{lucide 'Trash2' 'w-4 h-4 mr-2'}}
-            Delete Selected
-          </button>
-       </div>
-     </div>
-   </div>
-
-   <!-- Users Table -->
-    <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-     <div class='px-6 py-4 border-b border-border'>
-       <h2 class='text-lg font-medium text-foreground'>Users ({{pagination.total}})</h2>
-     </div>
-
-     <div class='overflow-x-auto'>
-       <table class='min-w-full divide-y divide-border table-fixed sm:table-auto'>
-         <thead class='bg-muted/50'>
-           <tr>
-             <th class='w-12 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
-               <input type="checkbox" id="selectAll" class='rounded border-gray-300 text-primary focus:ring-primary'>
-             </th>
-             <th class='min-w-48 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
-               <button onclick="sortBy('first_name')" class='hover:text-foreground transition-colors flex items-center gap-1'>
-                 User
-                 {{#if (eq filters.sortBy 'first_name')}}
-                   {{#if (eq filters.sortOrder 'asc')}}↑{{else}}↓{{/if}}
-                 {{/if}}
-               </button>
-             </th>
-             <th class='w-20 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
-               <button onclick="sortBy('role')" class='hover:text-foreground transition-colors flex items-center gap-1'>
-                 Role
-                 {{#if (eq filters.sortBy 'role')}}
-                   {{#if (eq filters.sortOrder 'asc')}}↑{{else}}↓{{/if}}
-                 {{/if}}
-               </button>
-             </th>
-             <th class='w-24 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Status</th>
-             <th class='w-20 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
-               <button onclick="sortBy('credits')" class='hover:text-foreground transition-colors flex items-center gap-1'>
-                 Credits
-                 {{#if (eq filters.sortBy 'credits')}}
-                   {{#if (eq filters.sortOrder 'asc')}}↑{{else}}↓{{/if}}
-                 {{/if}}
-               </button>
-             </th>
-              <th class='w-32 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider hidden md:table-cell'>
-                <button onclick="sortBy('created_at')" class='hover:text-foreground transition-colors flex items-center gap-1'>
-                  Created
-                  {{#if (eq filters.sortBy 'created_at')}}
-                    {{#if (eq filters.sortOrder 'asc')}}↑{{else}}↓{{/if}}
-                  {{/if}}
-                </button>
-              </th>
-             <th class='w-48 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Actions</th>
-           </tr>
-         </thead>
-          <tbody class='bg-card divide-y divide-border'>
+      <div class="fixed-table-container" style="padding-bottom: 0px;">
+        <div class="fixed-table-header" style="display: none;"><table></table></div>
+        <div class="fixed-table-body">
+          <table id="users-table" class="table table-hover table-striped">
+            <thead style="">
+              <tr>
+                <th data-field="select"><div class="th-inner">Select</div></th>
+                <th data-field="user"><div class="th-inner sortable both">User</div></th>
+                <th data-field="role"><div class="th-inner sortable both">Role</div></th>
+                <th data-field="status"><div class="th-inner">Status</div></th>
+                <th data-field="credits"><div class="th-inner sortable both">Credits</div></th>
+                <th data-field="created"><div class="th-inner sortable both">Created</div></th>
+                <th data-field="actions"><div class="th-inner">Actions</div></th>
+              </tr>
+            </thead>
+            <tbody>
             {{#each users}}
-            <tr class='hover:bg-muted/50'>
-              <td class='w-12 px-4 py-4 whitespace-nowrap'>
-                <input type="checkbox" class="userCheckbox" value="{{id}}" data-user-id="{{id}}" class='rounded border-gray-300 text-primary focus:ring-primary'>
+            <tr data-index="{{@index}}">
+              <td class="">
+                <input type="checkbox" class="userCheckbox" value="{{id}}" data-user-id="{{id}}">
               </td>
-              <td class='w-1/4 px-4 py-4 whitespace-nowrap'>
-               <div class='text-sm font-medium text-foreground'>{{fullName}}</div>
-               <div class='text-sm text-muted-foreground'>{{email}}</div>
-             </td>
-              <td class='w-20 px-4 py-4 whitespace-nowrap'>
-                <span class='text-sm text-foreground'>{{role}}</span>
+              <td class="">
+                <div class="text-sm font-medium">{{fullName}}</div>
+                <div class="text-sm text-muted-foreground">{{email}}</div>
               </td>
-               <td class='w-24 px-4 py-4 whitespace-nowrap'>
-                 <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{#if (eq status 'active')}}bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400{{else}}bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400{{/if}}'>
-                   {{status}}
-                 </span>
-                 {{#if banned}}
-                 <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400 ml-1'>
-                   BANNED
-                 </span>
-                 {{/if}}
-               </td>
-              <td class='w-20 px-4 py-4 whitespace-nowrap text-sm text-foreground'>
-                <span class='font-medium'>{{credits}}</span>
+              <td class="">{{role}}</td>
+              <td class="">
+                <span class="label {{#if (eq status 'active')}}label-success{{else}}label-danger{{/if}}">{{status}}</span>
+                {{#if banned}}
+                <span class="label label-danger">BANNED</span>
+                {{/if}}
               </td>
-               <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-muted-foreground hidden md:table-cell'>
-                 {{formatDate createdAt}}
-               </td>
-               <td class='px-4 py-4 whitespace-nowrap text-sm font-medium'>
-                 <div class='relative'>
-                   <button data-user-id="{{id}}" class='inline-flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors' title='Actions'>
-                     {{lucide 'MoreVertical' 'w-4 h-4'}}
-                   </button>
-                    <div id="dropdown-{{id}}" class='fixed w-48 bg-card rounded-md shadow-lg border border-border z-50 hidden'>
-                     <div class='py-1'>
-                        <button onclick="window.location.href='/admin/users/{{id}}'" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
-                          {{lucide 'Eye' 'w-4 h-4 mr-2'}}
-                          View Details
-                        </button>
-                       <button onclick="editUser({{id}})" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
-                         {{lucide 'Edit' 'w-4 h-4 mr-2'}}
-                         Edit Role
-                       </button>
-                       <button onclick="manageCredits({{id}}, '{{fullName}}', {{credits}})" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
-                         {{lucide 'DollarSign' 'w-4 h-4 mr-2'}}
-                         Manage Credits
-                       </button>
-                       <button onclick="toggleStatus({{id}}, '{{status}}')" class='flex items-center w-full px-4 py-2 text-sm {{#if (eq status 'active')}}text-orange-600{{else}}text-green-600{{/if}} hover:bg-muted hover:text-foreground transition-colors'>
-                         {{#if (eq status 'active')}}
-                         {{lucide 'CircleX' 'w-4 h-4 mr-2'}}
-                         {{else}}
-                         {{lucide 'CheckCircle' 'w-4 h-4 mr-2'}}
-                         {{/if}}
-                         {{#if (eq status 'active')}}Deactivate{{else}}Activate{{/if}}
-                       </button>
-                       {{#unless (eq role 'admin')}}
-                       <button onclick="toggleBan({{id}}, {{banned}}, '{{fullName}}')" class='flex items-center w-full px-4 py-2 text-sm {{#if banned}}text-green-600{{else}}text-red-600{{/if}} hover:bg-muted hover:text-foreground transition-colors'>
-                         {{#if banned}}
-                         {{lucide 'CheckCircle' 'w-4 h-4 mr-2'}}
-                         {{else}}
-                         {{lucide 'AlertTriangle' 'w-4 h-4 mr-2'}}
-                         {{/if}}
-                         {{#if banned}}Unban{{else}}Ban{{/if}}
-                       </button>
-                       <button onclick="deleteUser({{id}}, '{{fullName}}')" class='flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-muted hover:text-foreground transition-colors'>
-                         {{lucide 'Trash2' 'w-4 h-4 mr-2'}}
-                         Delete User
-                       </button>
-                       {{/unless}}
-                     </div>
-                   </div>
-                 </div>
-               </td>
+              <td class="">{{credits}}</td>
+              <td class="">{{formatDate createdAt}}</td>
+              <td class="">
+                <a rel="tooltip" title="View" class="table-action view" href="/admin/users/{{id}}">
+                  <i class="fa fa-eye"></i>
+                </a>
+                <a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" onclick="editUser({{id}})">
+                  <i class="fa fa-edit"></i>
+                </a>
+                <a rel="tooltip" title="Manage Credits" class="table-action" href="javascript:void(0)" onclick="manageCredits({{id}}, '{{fullName}}', {{credits}})">
+                  <i class="fa fa-dollar-sign"></i>
+                </a>
+                <a rel="tooltip" title="{{#if (eq status 'active')}}Deactivate{{else}}Activate{{/if}}" class="table-action {{#if (eq status 'active')}}remove{{else}}like{{/if}}" href="javascript:void(0)" onclick="toggleStatus({{id}}, '{{status}}')">
+                  {{#if (eq status 'active')}}
+                  <i class="fa fa-times-circle"></i>
+                  {{else}}
+                  <i class="fa fa-check-circle"></i>
+                  {{/if}}
+                </a>
+                {{#unless (eq role 'admin')}}
+                <a rel="tooltip" title="{{#if banned}}Unban{{else}}Ban{{/if}}" class="table-action {{#if banned}}like{{else}}remove{{/if}}" href="javascript:void(0)" onclick="toggleBan({{id}}, {{banned}}, '{{fullName}}')">
+                  {{#if banned}}
+                  <i class="fa fa-check-circle"></i>
+                  {{else}}
+                  <i class="fa fa-ban"></i>
+                  {{/if}}
+                </a>
+                <a rel="tooltip" title="Delete" class="table-action remove" href="javascript:void(0)" onclick="deleteUser({{id}}, '{{fullName}}')">
+                  <i class="fa fa-trash"></i>
+                </a>
+                {{/unless}}
+              </td>
           </tr>
           {{/each}}
         </tbody>
-       </table>
-     </div>
-
-      <!-- Pagination -->
-    {{#if (gt pagination.pages 1)}}
-    <div class='px-6 py-4 border-t border-border flex items-center justify-between'>
-      <div class='text-sm text-muted-foreground'>
-        Showing {{pagination.limit}} of {{pagination.total}} users
+          </table>
+        </div>
+        <div class="fixed-table-footer"></div>
       </div>
-      <div class='flex gap-2'>
-        {{#if (gt pagination.page 1)}}
-        <a href="?page={{subtract pagination.page 1}}&role={{filters.role}}&search={{filters.search}}"
-           class='px-3 py-1 border border-border rounded-md text-sm hover:bg-muted transition-colors'>Previous</a>
-        {{/if}}
 
-        {{#each (range 1 pagination.pages)}}
-        <a href="?page={{this}}&role={{filters.role}}&search={{filters.search}}"
-           class='px-3 py-1 border {{#if (eq this ../pagination.page)}}border-primary bg-primary/10 text-primary{{else}}border-border hover:bg-muted{{/if}} rounded-md text-sm transition-colors'>
-          {{this}}
-        </a>
-        {{/each}}
+      <!-- Bulk Actions -->
+      <div id="bulkActions" class="alert alert-info" style="margin-bottom: 0; display: none;">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span id="selectedCount">0 users selected</span>
+            <span class="text-sm text-muted">Select users above to perform bulk actions</span>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="openBulkRoleModal()" id="bulkRoleBtn" class="btn btn-primary" disabled>
+              {{lucide 'Edit' 'w-4 h-4 mr-2'}}
+              Update Role
+            </button>
+            <button onclick="openBulkCreditsModal()" id="bulkCreditsBtn" class="btn btn-success" disabled>
+              {{lucide 'DollarSign' 'w-4 h-4 mr-2'}}
+              Update Credits
+            </button>
+            <button onclick="bulkDelete()" id="bulkDeleteBtn" class="btn btn-danger" disabled>
+              {{lucide 'Trash2' 'w-4 h-4 mr-2'}}
+              Delete Selected
+            </button>
+          </div>
+        </div>
+      </div>
 
-        {{#if (lt pagination.page pagination.pages)}}
-        <a href="?page={{add pagination.page 1}}&role={{filters.role}}&search={{filters.search}}"
-           class='px-3 py-1 border border-border rounded-md text-sm hover:bg-muted transition-colors'>Next</a>
-        {{/if}}
+      <div class="fixed-table-pagination">
+        <div class="pull-left pagination-detail">
+          <span class="pagination-info">Showing {{pagination.limit}} of {{pagination.total}} users</span>
+          <div class="page-list">
+            <div class="btn-group dropdown dropup">
+              <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                <span class="page-size">{{pagination.limit}}</span>
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li role="menuitem" class="{{#if (eq pagination.limit 10)}}active{{/if}}"><a href="?limit=10&page=1">10</a></li>
+                <li role="menuitem" class="{{#if (eq pagination.limit 20)}}active{{/if}}"><a href="?limit=20&page=1">20</a></li>
+                <li role="menuitem" class="{{#if (eq pagination.limit 50)}}active{{/if}}"><a href="?limit=50&page=1">50</a></li>
+                <li role="menuitem" class="{{#if (eq pagination.limit 100)}}active{{/if}}"><a href="?limit=100&page=1">100</a></li>
+              </ul>
+            </div>
+            rows visible
+          </div>
+        </div>
+        <div class="pull-right pagination">
+          <ul class="pagination">
+            {{#if (gt pagination.page 1)}}
+            <li class="page-item page-pre">
+              <a class="page-link" aria-label="previous page" href="?page={{subtract pagination.page 1}}&limit={{pagination.limit}}&role={{filters.role}}&search={{filters.search}}">‹</a>
+            </li>
+            {{/if}}
+
+            {{#each (range 1 pagination.pages)}}
+            <li class="page-item {{#if (eq this ../pagination.page)}}active{{/if}}">
+              <a class="page-link" aria-label="to page {{this}}" href="?page={{this}}&limit={{pagination.limit}}&role={{filters.role}}&search={{filters.search}}">{{this}}</a>
+            </li>
+            {{/each}}
+
+            {{#if (lt pagination.page pagination.pages)}}
+            <li class="page-item page-next">
+              <a class="page-link" aria-label="next page" href="?page={{add pagination.page 1}}&limit={{pagination.limit}}&role={{filters.role}}&search={{filters.search}}">›</a>
+            </li>
+            {{/if}}
+          </ul>
+        </div>
       </div>
     </div>
-    {{/if}}
-  </div>
-</div>
 
 <!-- Edit User Modal -->
 <div id="editUserModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
@@ -525,13 +488,13 @@ function updateBulkActions() {
   const selectedCount = document.getElementById('selectedCount');
 
   if (count > 0) {
-    bulkActions.classList.remove('hidden');
+    bulkActions.style.display = 'block';
     selectedCount.textContent = `${count} user${count > 1 ? 's' : ''} selected`;
     document.getElementById('bulkRoleBtn').disabled = false;
     document.getElementById('bulkCreditsBtn').disabled = false;
     document.getElementById('bulkDeleteBtn').disabled = false;
   } else {
-    bulkActions.classList.add('hidden');
+    bulkActions.style.display = 'none';
     document.getElementById('bulkRoleBtn').disabled = true;
     document.getElementById('bulkCreditsBtn').disabled = true;
     document.getElementById('bulkDeleteBtn').disabled = true;
@@ -762,9 +725,21 @@ document.addEventListener('DOMContentLoaded', function() {
   const role = urlParams.get('role') || '';
   const search = urlParams.get('search') || '';
 
-  document.getElementById('rowsPerPage').value = limit;
+  // Note: rowsPerPage select removed, using pagination dropdown instead
   document.getElementById('roleFilter').value = role;
   document.getElementById('searchInput').value = search;
+});
+
+// Handle page size changes from pagination dropdown
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.page-list .dropdown-menu a')) {
+    e.preventDefault();
+    const limit = e.target.textContent.trim();
+    const url = new URL(window.location);
+    url.searchParams.set('limit', limit);
+    url.searchParams.set('page', '1');
+    window.location.href = url.toString();
+  }
 });
 </script>
     </div>
