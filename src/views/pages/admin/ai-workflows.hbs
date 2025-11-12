@@ -1,200 +1,280 @@
-<div class='flex flex-col gap-4 lg:gap-6'>
-   <!-- Header -->
-   <div class='flex items-center justify-between'>
-     <div class='grid gap-1'>
-       <h1 class='font-heading text-2xl font-semibold text-foreground dark:text-white'>AI Workflows Management</h1>
-       <p class='text-base text-muted-foreground'>Total workflows: {{pagination.total}}</p>
-     </div>
-     <div class='flex gap-2'>
-        <button onclick="exportToCSV()" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
-          {{lucide 'Download' 'w-4 h-4 mr-2'}}
-          Export CSV
-        </button>
-        <button onclick="createAIWorkflow()" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
-          {{lucide 'Plus' 'w-4 h-4 mr-2'}}
-          Create Workflow
-        </button>
-     </div>
-   </div>
+<!-- Glass card container -->
+<div
+  class="w-full max-w-5xl rounded-xl shadow-2xl overflow-hidden bg-white/85 backdrop-blur-sm ring-1 ring-gray-200 flex flex-col min-h-[600px]">
 
-  <!-- Stats Cards -->
-  <div class='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
-    <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
-      <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
-        <h3 class='tracking-tight text-sm font-medium'>Total Workflows</h3>
-        {{lucide 'Workflow' 'h-4 w-4 text-muted-foreground'}}
-      </div>
-      <div class='text-2xl font-bold'>{{stats.totalWorkflows}}</div>
-    </div>
-    <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
-      <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
-        <h3 class='tracking-tight text-sm font-medium'>Active Workflows</h3>
-        {{lucide 'CheckCircle' 'h-4 w-4 text-green-500'}}
-      </div>
-      <div class='text-2xl font-bold'>{{stats.activeWorkflows}}</div>
-    </div>
-    <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
-      <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
-        <h3 class='tracking-tight text-sm font-medium'>Total Executions</h3>
-        {{lucide 'Play' 'h-4 w-4 text-muted-foreground'}}
-      </div>
-      <div class='text-2xl font-bold'>{{stats.totalExecutions}}</div>
-    </div>
-    <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
-      <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
-        <h3 class='tracking-tight text-sm font-medium'>Success Rate</h3>
-        {{lucide 'TrendingUp' 'h-4 w-4 text-muted-foreground'}}
-      </div>
-      <div class='text-2xl font-bold'>{{stats.successRate}}%</div>
-    </div>
-  </div>
+  <!-- Sticky header (toolbar) -->
+   <header class="sticky top-0 z-20 bg-violet-800 text-white p-5">
+    <!-- Page Title and Description -->
+    <div class="mb-6 flex justify-between">
 
-  <!-- Filters -->
-  <div class='rounded-md bg-card text-card-foreground shadow-sm p-6' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-    <div class='flex flex-wrap gap-4'>
-      <div>
-        <label class='block text-sm font-medium text-foreground mb-2'>Model</label>
-        <select id="modelFilter" class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
-          <option value="">All Models</option>
-          <option value="1">Business Model</option>
-          <option value="2">Financial Model</option>
-          <option value="3">Legal Model</option>
-          <option value="4">Marketing Model</option>
-          <option value="5">Team Model</option>
-          <option value="6">Idea Model</option>
-          <option value="7">Funding Model</option>
+    <div class="text-left">
+      <h1 class="text-3xl font-bold text-white mb-2">AI Workflows Management</h1>
+      <p class=" text-gray-200">Manage and oversee all AI workflows in the system</p>
+    </div>
+        <div class="">
+          <button onclick="createAIWorkflow()"
+          class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-full px-4 py-2 text-sm">
+          {{lucide 'Plus' 'w-4 h-4'}}
+          <span class="text-sm font-medium">Create Workflow</span>
+        </button>
+    </div>
+     </div>
+     <div class="max-w-7xl mx-auto flex items-center gap-4">
+      <!-- left: model filter -->
+      <div class="flex items-center gap-3">
+        <select id="modelFilter" class="bg-white/10 hover:bg-white/20 border border-white/30 rounded-full px-3 py-1.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white/30">
+          <option value="" class="text-gray-900">All Models</option>
+          <option value="1" class="text-gray-900">Business Model</option>
+          <option value="2" class="text-gray-900">Financial Model</option>
+          <option value="3" class="text-gray-900">Legal Model</option>
+          <option value="4" class="text-gray-900">Marketing Model</option>
+          <option value="5" class="text-gray-900">Team Model</option>
+          <option value="6" class="text-gray-900">Idea Model</option>
+          <option value="7" class="text-gray-900">Funding Model</option>
         </select>
       </div>
-      <div>
-        <label class='block text-sm font-medium text-foreground mb-2'>Search</label>
-        <input type="text" id="searchInput" placeholder="Search by name"
-               class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
+
+      <!-- center: search -->
+      <div class="flex-1 flex justify-left">
+        <div class="w-full max-w-lg">
+          <label class="relative block">
+            <span class="sr-only">Search</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Search' 'w-5 h-5 text-white/80'}}
+            </span>
+            <input
+              class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 placeholder-white/75 text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              placeholder="Search workflows..." aria-label="Search" id="searchInput" />
+          </label>
+        </div>
       </div>
-      <div class="flex items-end">
-        <button id="applyFilters" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
-          Apply Filters
+
+      <!-- right: small action icons -->
+      <div class="flex items-center gap-3">
+
+        <button onclick="exportToCSV()" class="p-2 rounded-full bg-white/10 border border-white/25 hover:bg-white/20"
+          title="Export CSV">
+          {{lucide 'Download' 'w-5 h-5'}}
+        </button>
+        <button onclick="location.reload()"
+          class="p-2 rounded-full bg-white/10 border border-white/25 hover:bg-white/20" title="Refresh">
+          {{lucide 'RefreshCw' 'w-5 h-5'}}
         </button>
       </div>
     </div>
-  </div>
+   </header>
 
-   <!-- AI Workflows Table -->
-    <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-     <div class='px-6 py-4 border-b border-border'>
-       <h2 class='text-lg font-medium text-foreground'>AI Workflows ({{pagination.total}})</h2>
-     </div>
-     <div class='overflow-x-auto'>
-       <table class='w-full'>
-         <thead>
-           <tr class='border-b border-border'>
-             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Workflow</th>
-             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Model</th>
-             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Type</th>
-             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Steps</th>
-             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Executions</th>
-             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Success Rate</th>
-             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Created</th>
-             <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Actions</th>
-           </tr>
-         </thead>
-         <tbody>
-           {{#each aiWorkflows}}
-           <tr class='border-b border-border hover:bg-muted/50'>
-             <td class='p-4 align-middle'>
-               <div class='flex items-center gap-3'>
-                 {{lucide 'Workflow' 'h-5 w-5 text-purple-500'}}
-                 <div>
-                   <div class='font-medium text-foreground'>{{name}}</div>
-                   <div class='text-sm text-muted-foreground'>{{description}}</div>
-                 </div>
-               </div>
-             </td>
-             <td class='p-4 align-middle'>
-               <span class='text-sm text-muted-foreground'>{{model_name}}</span>
-             </td>
-             <td class='p-4 align-middle'>
-               <span class='inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
-                 {{#if (eq workflow_type 'business_plan')}}bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300
-                 {{else if (eq workflow_type 'pitch_deck')}}bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300
-                 {{else}}bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300{{/if}}'>
-                 {{capitalize workflow_type}}
-               </span>
-             </td>
-             <td class='p-4 align-middle'>
-               <span class='text-sm font-medium'>{{step_count}}</span>
-             </td>
-             <td class='p-4 align-middle'>
-               <span class='text-sm font-medium'>{{execution_count}}</span>
-             </td>
-             <td class='p-4 align-middle'>
-               <span class='text-sm font-medium {{#if (gt success_rate 80)}}text-green-600{{else if (gt success_rate 50)}}text-yellow-600{{else}}text-red-600{{/if}}'>
-                 {{success_rate}}%
-               </span>
-             </td>
-             <td class='p-4 align-middle'>
-               <span class='text-sm text-muted-foreground'>{{formatDate created_at}}</span>
-             </td>
-             <td class='p-4 align-middle'>
-               <div class='flex items-center gap-2'>
-                 <a href='/admin/ai/workflows/{{id}}' class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8'>
-                   {{lucide 'Eye' 'h-4 w-4'}}
-                 </a>
-                 <button onclick="editAIWorkflow({{id}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8'>
-                   {{lucide 'Edit' 'h-4 w-4'}}
-                 </button>
-                 <button onclick="deleteAIWorkflow({{id}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8 text-destructive hover:bg-destructive hover:text-destructive-foreground'>
-                   {{lucide 'Trash2' 'h-4 w-4'}}
-                 </button>
-               </div>
-             </td>
-           </tr>
-           {{/each}}
-         </tbody>
-       </table>
-     </div>
-
-     <!-- Pagination -->
-     {{#if pagination.pages}}
-     <div class='flex items-center justify-between px-6 py-4 border-t border-border'>
-       <div class='text-sm text-muted-foreground'>
-         Showing {{pagination.page}} of {{pagination.pages}} pages
+   <!-- Stats Cards -->
+   <div class="bg-white p-6 border-b border-gray-200">
+     <div class='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
+       <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
+         <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
+           <h3 class='tracking-tight text-sm font-medium'>Total Workflows</h3>
+           {{lucide 'Workflow' 'h-4 w-4 text-muted-foreground'}}
+         </div>
+         <div class='text-2xl font-bold'>{{stats.totalWorkflows}}</div>
        </div>
-       <div class='flex items-center gap-2'>
-         {{#if pagination.hasPrev}}
-         <a href='?page={{subtract pagination.page 1}}&limit={{pagination.limit}}&search={{filters.search}}&modelId={{filters.modelId}}' class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-3'>
-           Previous
-         </a>
-         {{/if}}
-
-         {{#each (range 1 pagination.pages)}}
-         <a href='?page={{this}}&limit={{pagination.limit}}&search={{filters.search}}&modelId={{filters.modelId}}' class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 {{#if (eq this ../pagination.page)}}bg-primary text-primary-foreground{{else}}border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground{{/if}} h-9 w-9'>
-           {{this}}
-         </a>
-         {{/each}}
-
-         {{#if pagination.hasNext}}
-         <a href='?page={{add pagination.page 1}}&limit={{pagination.limit}}&search={{filters.search}}&modelId={{filters.modelId}}' class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-3'>
-           Next
-         </a>
-         {{/if}}
+       <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
+         <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
+           <h3 class='tracking-tight text-sm font-medium'>Active Workflows</h3>
+           {{lucide 'CheckCircle' 'h-4 w-4 text-green-500'}}
+         </div>
+         <div class='text-2xl font-bold'>{{stats.activeWorkflows}}</div>
+       </div>
+       <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
+         <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
+           <h3 class='tracking-tight text-sm font-medium'>Total Executions</h3>
+           {{lucide 'Play' 'h-4 w-4 text-muted-foreground'}}
+         </div>
+         <div class='text-2xl font-bold'>{{stats.totalExecutions}}</div>
+       </div>
+       <div class='rounded-lg border bg-card text-card-foreground shadow-sm p-6'>
+         <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
+           <h3 class='tracking-tight text-sm font-medium'>Success Rate</h3>
+           {{lucide 'TrendingUp' 'h-4 w-4 text-muted-foreground'}}
+         </div>
+         <div class='text-2xl font-bold'>{{stats.successRate}}%</div>
        </div>
      </div>
-     {{/if}}
    </div>
-</div>
+
+    <!-- Table area (scrolls if wide) -->
+   <div class="overflow-auto flex-1">
+     <table class="min-w-full table-auto bg-violet-50 dark:bg-violet-900">
+       <thead class='bg-violet-200 dark:bg-violet-800'>
+         <tr>
+            <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">Workflow</th>
+            <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">Model</th>
+            <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">Type</th>
+            <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider hidden md:table-cell">Steps</th>
+            <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider hidden md:table-cell">Executions</th>
+            <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider hidden lg:table-cell">Success Rate</th>
+            <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider hidden lg:table-cell">Created</th>
+            <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">Actions</th>
+         </tr>
+       </thead>
+       <tbody class="text-sm text-black dark:text-white">
+         {{#each aiWorkflows}}
+         <tr class="border-b border-gray-100/40 hover:bg-violet-100 dark:hover:bg-violet-800 transition-colors duration-150 even:bg-violet-100 dark:even:bg-violet-800">
+           <td class="px-6 py-4">
+             <div class='flex items-center gap-3'>
+               {{lucide 'Workflow' 'h-5 w-5 text-purple-500'}}
+               <div>
+                 <div class='font-medium text-gray-900'>{{name}}</div>
+                 <div class='text-sm text-gray-500'>{{description}}</div>
+               </div>
+             </div>
+           </td>
+           <td class="px-6 py-4">
+             <div class="text-sm text-gray-900">{{model_name}}</div>
+           </td>
+           <td class="px-6 py-4">
+             <span class='inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
+               {{#if (eq workflow_type 'business_plan')}}bg-blue-100 text-blue-800
+               {{else if (eq workflow_type 'pitch_deck')}}bg-green-100 text-green-800
+               {{else}}bg-purple-100 text-purple-800{{/if}}'>
+               {{capitalize workflow_type}}
+             </span>
+           </td>
+           <td class="px-6 py-4 hidden md:table-cell">
+             <div class="text-sm text-gray-900 font-medium">{{step_count}}</div>
+           </td>
+           <td class="px-6 py-4 hidden md:table-cell">
+             <div class="text-sm text-gray-900 font-medium">{{execution_count}}</div>
+           </td>
+           <td class="px-6 py-4 hidden lg:table-cell">
+             <span class='text-sm font-medium {{#if (gt success_rate 80)}}text-green-600{{else if (gt success_rate 50)}}text-yellow-600{{else}}text-red-600{{/if}}'>
+               {{success_rate}}%
+             </span>
+           </td>
+           <td class="px-6 py-4 hidden lg:table-cell">
+             <div class="text-sm text-gray-900">{{formatDate created_at}}</div>
+           </td>
+           <td class="px-6 py-4">
+             <div class="flex items-center gap-2">
+               <a href='/admin/ai/workflows/{{id}}' class='p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors'>
+                 {{lucide 'Eye' 'w-4 h-4'}}
+               </a>
+               <button onclick="editAIWorkflow({{id}})" class='p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors'>
+                 {{lucide 'Edit' 'w-4 h-4'}}
+               </button>
+               <button onclick="deleteAIWorkflow({{id}})" class='p-2 rounded-full hover:bg-gray-100 text-red-600 hover:text-red-700 transition-colors'>
+                 {{lucide 'Trash2' 'w-4 h-4'}}
+               </button>
+             </div>
+           </td>
+        </tr>
+        {{else}}
+        <tr>
+          <td colspan="7" class='px-6 py-8 text-center text-gray-500'>
+            <div class="text-gray-500">
+              <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              </svg>
+              <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No AI workflows found</h3>
+              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Workflows will appear here once they are created.</p>
+            </div>
+          </td>
+        </tr>
+        {{/each}}
+        </tbody>
+     </table>
+   </div>
+
+   <!-- Footer / pagination -->
+   <footer class="bg-white/85 backdrop-blur-sm border-t border-gray-200 p-4">
+     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+       <div class="text-sm text-gray-600">
+         Showing {{pagination.start}}-{{pagination.end}} of {{pagination.total}} workflows
+       </div>
+
+       <div class="flex items-center gap-3">
+         <span class="text-sm text-gray-600 font-medium">Rows per page:</span>
+         <select id="rowsPerPage"
+           class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+           <option value="10" {{#if (eq pagination.limit 10)}}selected{{/if}}>10</option>
+           <option value="20" {{#if (eq pagination.limit 20)}}selected{{/if}}>20</option>
+           <option value="50" {{#if (eq pagination.limit 50)}}selected{{/if}}>50</option>
+           <option value="100" {{#if (eq pagination.limit 100)}}selected{{/if}}>100</option>
+         </select>
+       </div>
+
+       <div class="flex items-center gap-2">
+         <nav class="flex items-center gap-1 text-sm">
+           {{#if (gt pagination.page 1)}}
+           <a href="?page={{subtract pagination.page 1}}&limit={{pagination.limit}}&search={{filters.search}}&modelId={{filters.modelId}}"
+             class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md"
+             title="Previous page">
+             {{lucide 'ChevronLeft' 'w-4 h-4'}}
+           </a>
+           {{/if}}
+
+           {{#each (range 1 pagination.pages)}}
+           <a href="?page={{this}}&limit={{pagination.limit}}&search={{filters.search}}&modelId={{filters.modelId}}"
+             class="inline-flex items-center justify-center w-10 h-10 rounded-lg {{#if (eq this ../pagination.page)}}bg-primary text-primary-foreground shadow-lg scale-105{{else}}border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400{{/if}} transition-all duration-200 shadow-sm hover:shadow-md font-medium">{{this}}</a>
+           {{/each}}
+
+           {{#if (lt pagination.page pagination.pages)}}
+           <a href="?page={{add pagination.page 1}}&limit={{pagination.limit}}&search={{filters.search}}&modelId={{filters.modelId}}"
+             class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md"
+             title="Next page">
+             {{lucide 'ChevronRight' 'w-4 h-4'}}
+           </a>
+           {{/if}}
+         </nav>
+       </div>
+     </div>
+   </footer>
+ </div>
 
 <script>
-// Filter functionality
-document.getElementById('applyFilters').addEventListener('click', function() {
-  const modelId = document.getElementById('modelFilter').value;
-  const search = document.getElementById('searchInput').value;
+// Initialize controls from URL params
+document.addEventListener('DOMContentLoaded', function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const limit = urlParams.get('limit') || '20';
+  const search = urlParams.get('search') || '';
+  const modelId = urlParams.get('modelId') || '';
 
-  const params = new URLSearchParams(window.location.search);
-  if (modelId) params.set('modelId', modelId); else params.delete('modelId');
-  if (search) params.set('search', search); else params.delete('search');
-  params.set('page', '1'); // Reset to first page
+  document.getElementById('rowsPerPage').value = limit;
+  document.getElementById('searchInput').value = search;
+  document.getElementById('modelFilter').value = modelId;
+});
 
-  window.location.search = params.toString();
+// Handle model filter changes
+document.getElementById('modelFilter').addEventListener('change', function () {
+  const modelId = this.value;
+  const url = new URL(window.location);
+  if (modelId) {
+    url.searchParams.set('modelId', modelId);
+  } else {
+    url.searchParams.delete('modelId');
+  }
+  url.searchParams.set('page', '1');
+  window.location.href = url.toString();
+});
+
+// Handle rows per page changes
+document.getElementById('rowsPerPage').addEventListener('change', function () {
+  const limit = this.value;
+  const url = new URL(window.location);
+  url.searchParams.set('limit', limit);
+  url.searchParams.set('page', '1');
+  window.location.href = url.toString();
+});
+
+// Handle search input
+document.getElementById('searchInput').addEventListener('keyup', function (e) {
+  if (e.key === 'Enter') {
+    const search = this.value;
+    const url = new URL(window.location);
+    if (search) {
+      url.searchParams.set('search', search);
+    } else {
+      url.searchParams.delete('search');
+    }
+    url.searchParams.set('page', '1');
+    window.location.href = url.toString();
+  }
 });
 
 // Export functionality
@@ -236,5 +316,25 @@ function range(start, end) {
     result.push(i);
   }
   return result;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function add(a, b) {
+  return a + b;
+}
+
+function eq(a, b) {
+  return a === b;
+}
+
+function gt(a, b) {
+  return a > b;
+}
+
+function lt(a, b) {
+  return a < b;
 }
 </script>

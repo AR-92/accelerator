@@ -53,8 +53,12 @@ class MigrationDBInterface {
       finalSql = finalSql.replace(/`/g, '"');
 
       const result = await client.query(finalSql, params);
+      // For INSERT with RETURNING, use the returned row's id
+      // For other queries, fall back to rowCount
+      const lastID =
+        result.rows && result.rows.length > 0 ? result.rows[0].id : undefined;
       return {
-        lastID: result.rows && result.rows[0] ? result.rows[0].id : undefined,
+        lastID: lastID,
         changes: result.rowCount || 0,
       };
     } finally {
@@ -235,15 +239,15 @@ const runMigrations = async () => {
 
     // If the complete schema doesn't exist, apply the schema from SQL file
     dbLogger.info('Applying database schema from SQL file');
-    
+
     const fs = require('fs');
     const path = require('path');
     const schemaFile = path.join(__dirname, '..', 'sql', 'database-schema.sql');
-    
+
     if (!fs.existsSync(schemaFile)) {
       throw new Error(`Schema file not found: ${schemaFile}`);
     }
-    
+
     const schemaSql = fs.readFileSync(schemaFile, 'utf8');
     const schemaClient = await pool.connect();
     try {
@@ -252,9 +256,15 @@ const runMigrations = async () => {
     } finally {
       schemaClient.release();
     }
-    
+
     // Optionally load seed data if needed
-    const seedFile = path.join(__dirname, '..', 'src', 'database', 'seedData.sql');
+    const seedFile = path.join(
+      __dirname,
+      '..',
+      'src',
+      'database',
+      'seedData.sql'
+    );
     if (fs.existsSync(seedFile)) {
       dbLogger.info('Loading seed data from SQL file');
       const seedSql = fs.readFileSync(seedFile, 'utf8');

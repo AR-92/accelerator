@@ -229,6 +229,76 @@ router.get(
   adminController.showHelpContent.bind(adminController)
 );
 
+// GET admin projects
+router.get(
+  '/projects',
+  requireAdminAuth,
+  adminController.showProjects.bind(adminController)
+);
+
+// GET admin project details
+router.get(
+  '/projects/:projectId',
+  requireAdminAuth,
+  adminController.showProjectDetails.bind(adminController)
+);
+
+// GET admin project collaborators
+router.get(
+  '/project-collaborators',
+  requireAdminAuth,
+  adminController.showProjectCollaborators.bind(adminController)
+);
+
+// GET admin tasks
+router.get(
+  '/tasks',
+  requireAdminAuth,
+  adminController.showTasks.bind(adminController)
+);
+
+// GET admin messages
+router.get(
+  '/messages',
+  requireAdminAuth,
+  adminController.showMessages.bind(adminController)
+);
+
+// GET admin startups
+router.get(
+  '/startups',
+  requireAdminAuth,
+  adminController.showStartups.bind(adminController)
+);
+
+// GET admin enterprises
+router.get(
+  '/enterprises',
+  requireAdminAuth,
+  adminController.showEnterprises.bind(adminController)
+);
+
+// GET admin corporates
+router.get(
+  '/corporates',
+  requireAdminAuth,
+  adminController.showCorporates.bind(adminController)
+);
+
+// GET admin help categories
+router.get(
+  '/help-categories',
+  requireAdminAuth,
+  adminController.showHelpCategories.bind(adminController)
+);
+
+// GET admin help articles
+router.get(
+  '/help-articles',
+  requireAdminAuth,
+  adminController.showHelpArticles.bind(adminController)
+);
+
 // GET admin settings
 router.get(
   '/settings',
@@ -266,5 +336,160 @@ router.post('/logout', (req, res) => {
     res.redirect('/admin/login');
   });
 });
+
+// API routes for SCRUD operations
+
+// Projects API
+router.post(
+  '/api/projects',
+  requireAdminAuth,
+  adminController.createProject.bind(adminController)
+);
+router.put(
+  '/api/projects/:projectId',
+  requireAdminAuth,
+  adminController.updateProject.bind(adminController)
+);
+router.delete(
+  '/api/projects/:projectId',
+  requireAdminAuth,
+  adminController.deleteProject.bind(adminController)
+);
+
+// Project Collaborators API
+router.post(
+  '/api/project-collaborators',
+  requireAdminAuth,
+  adminController.createProjectCollaborator.bind(adminController)
+);
+router.put(
+  '/api/project-collaborators/:collaboratorId',
+  requireAdminAuth,
+  adminController.updateProjectCollaborator.bind(adminController)
+);
+router.delete(
+  '/api/project-collaborators/:collaboratorId',
+  requireAdminAuth,
+  adminController.deleteProjectCollaborator.bind(adminController)
+);
+
+// Tasks API
+router.post(
+  '/api/tasks',
+  requireAdminAuth,
+  adminController.createTask.bind(adminController)
+);
+router.put(
+  '/api/tasks/:taskId',
+  requireAdminAuth,
+  adminController.updateTask.bind(adminController)
+);
+router.delete(
+  '/api/tasks/:taskId',
+  requireAdminAuth,
+  adminController.deleteTask.bind(adminController)
+);
+
+// Messages API
+router.post(
+  '/api/messages',
+  requireAdminAuth,
+  adminController.createMessage.bind(adminController)
+);
+router.put(
+  '/api/messages/:messageId',
+  requireAdminAuth,
+  adminController.updateMessage.bind(adminController)
+);
+router.delete(
+  '/api/messages/:messageId',
+  requireAdminAuth,
+  adminController.deleteMessage.bind(adminController)
+);
+
+// Startups API
+router.post(
+  '/api/startups',
+  requireAdminAuth,
+  adminController.createStartup.bind(adminController)
+);
+router.put(
+  '/api/startups/:startupId',
+  requireAdminAuth,
+  adminController.updateStartup.bind(adminController)
+);
+router.delete(
+  '/api/startups/:startupId',
+  requireAdminAuth,
+  adminController.deleteStartup.bind(adminController)
+);
+
+// Enterprises API
+router.post(
+  '/api/enterprises',
+  requireAdminAuth,
+  adminController.createEnterprise.bind(adminController)
+);
+router.put(
+  '/api/enterprises/:enterpriseId',
+  requireAdminAuth,
+  adminController.updateEnterprise.bind(adminController)
+);
+router.delete(
+  '/api/enterprises/:enterpriseId',
+  requireAdminAuth,
+  adminController.deleteEnterprise.bind(adminController)
+);
+
+// Corporates API
+router.post(
+  '/api/corporates',
+  requireAdminAuth,
+  adminController.createCorporate.bind(adminController)
+);
+router.put(
+  '/api/corporates/:corporateId',
+  requireAdminAuth,
+  adminController.updateCorporate.bind(adminController)
+);
+router.delete(
+  '/api/corporates/:corporateId',
+  requireAdminAuth,
+  adminController.deleteCorporate.bind(adminController)
+);
+
+// Help Categories API
+router.post(
+  '/api/help-categories',
+  requireAdminAuth,
+  adminController.createHelpCategory.bind(adminController)
+);
+router.put(
+  '/api/help-categories/:categoryId',
+  requireAdminAuth,
+  adminController.updateHelpCategory.bind(adminController)
+);
+router.delete(
+  '/api/help-categories/:categoryId',
+  requireAdminAuth,
+  adminController.deleteHelpCategory.bind(adminController)
+);
+
+// Help Articles API
+router.post(
+  '/api/help-articles',
+  requireAdminAuth,
+  adminController.createHelpArticle.bind(adminController)
+);
+router.put(
+  '/api/help-articles/:articleId',
+  requireAdminAuth,
+  adminController.updateHelpArticle.bind(adminController)
+);
+router.delete(
+  '/api/help-articles/:articleId',
+  requireAdminAuth,
+  adminController.deleteHelpArticle.bind(adminController)
+);
 
 module.exports = router;

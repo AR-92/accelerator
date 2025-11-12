@@ -126,7 +126,7 @@ class BaseRepository {
     const placeholders = columns.map(() => '?').join(', ');
     const values = Object.values(data);
 
-    const sql = `INSERT INTO ${this.tableName} (${columns.join(', ')}) VALUES (${placeholders})`;
+    const sql = `INSERT INTO ${this.tableName} (${columns.join(', ')}) VALUES (${placeholders}) RETURNING id`;
     const result = await this.run(sql, values);
 
     return result.id;

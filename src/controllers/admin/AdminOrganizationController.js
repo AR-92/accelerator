@@ -37,9 +37,10 @@ class AdminOrganizationController {
       });
     } catch (error) {
       console.error('Error showing organizations:', error);
-      res.status(500).render('pages/error', {
+      res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        error: 'Failed to load organizations',
+        layout: 'main',
+        message: 'Failed to load organizations',
       });
     }
   }
@@ -54,9 +55,10 @@ class AdminOrganizationController {
         await this.adminService.getOrganizationById(organizationId);
 
       if (!organization) {
-        return res.status(404).render('pages/error', {
+        return res.status(404).render('pages/error/page-not-found', {
           title: 'Not Found - Admin Panel',
-          error: 'Organization not found',
+          layout: 'main',
+          message: 'Organization not found',
         });
       }
 
@@ -82,9 +84,10 @@ class AdminOrganizationController {
       });
     } catch (error) {
       console.error('Error showing organization details:', error);
-      res.status(500).render('pages/error', {
+      res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        error: 'Failed to load organization details',
+        layout: 'main',
+        message: 'Failed to load organization details',
       });
     }
   }

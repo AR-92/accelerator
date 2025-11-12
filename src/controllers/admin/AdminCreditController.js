@@ -67,9 +67,10 @@ class AdminCreditController {
       });
     } catch (error) {
       console.error('Error showing transactions:', error);
-      res.status(500).render('pages/error', {
+      res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        error: 'Failed to load transactions',
+        layout: 'main',
+        message: 'Failed to load transactions',
       });
     }
   }

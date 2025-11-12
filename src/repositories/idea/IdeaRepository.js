@@ -42,7 +42,7 @@ class IdeaRepository extends BaseRepository {
     const conditions = [];
 
     if (userId) {
-      conditions.push('user_id = ?');
+      conditions.push('owner_user_id = ?');
       params.push(userId);
     }
 
@@ -58,7 +58,7 @@ class IdeaRepository extends BaseRepository {
     if (options.orderBy) {
       sql += ` ORDER BY ${options.orderBy}`;
     } else {
-      sql += ' ORDER BY rating DESC, created_at DESC';
+      sql += ' ORDER BY (upvotes - downvotes) DESC, created_at DESC';
     }
 
     if (options.limit) {

@@ -17,13 +17,20 @@ class AuthService {
    */
   async register(userData) {
     const { email, firstName, lastName, role = 'startup' } = userData;
-    this.logger.info('User registration attempt', { email, firstName, lastName, role });
+    this.logger.info('User registration attempt', {
+      email,
+      firstName,
+      lastName,
+      role,
+    });
 
     try {
       // Check if user already exists
       const existingUser = await this.userRepository.findByEmail(email);
       if (existingUser) {
-        this.logger.warn('Registration failed - email already exists', { email });
+        this.logger.warn('Registration failed - email already exists', {
+          email,
+        });
         const ValidationError = require('../../utils/errors/ValidationError');
         throw new ValidationError('Registration failed', [
           'Email already registered',
@@ -40,7 +47,7 @@ class AuthService {
       }
 
       // Create user
-      const newUser = new (require('../models/user/User'))({
+      const newUser = new (require('../../models/user/User'))({
         email,
         firstName,
         lastName,
@@ -90,7 +97,10 @@ class AuthService {
       // Verify password
       const isValidPassword = await user.verifyPassword(password);
       if (!isValidPassword) {
-        this.logger.warn('Login failed - invalid password', { email, userId: user.id });
+        this.logger.warn('Login failed - invalid password', {
+          email,
+          userId: user.id,
+        });
         const ValidationError = require('../../utils/errors/ValidationError');
         throw new ValidationError('Authentication failed', [
           'Invalid email or password',
@@ -148,7 +158,9 @@ class AuthService {
     try {
       const user = await this.userRepository.findById(id);
       if (!user) {
-        this.logger.warn('Password change failed - user not found', { userId: id });
+        this.logger.warn('Password change failed - user not found', {
+          userId: id,
+        });
         const NotFoundError = require('../../utils/errors/NotFoundError');
         throw new NotFoundError('User not found');
       }
@@ -156,7 +168,9 @@ class AuthService {
       // Verify current password
       const isValidPassword = await user.verifyPassword(currentPassword);
       if (!isValidPassword) {
-        this.logger.warn('Password change failed - current password invalid', { userId: id });
+        this.logger.warn('Password change failed - current password invalid', {
+          userId: id,
+        });
         const ValidationError = require('../../utils/errors/ValidationError');
         throw new ValidationError('Password change failed', [
           'Current password is incorrect',
@@ -165,7 +179,9 @@ class AuthService {
 
       // Validate new password
       if (!newPassword || newPassword.length < 6) {
-        this.logger.warn('Password change failed - new password too short', { userId: id });
+        this.logger.warn('Password change failed - new password too short', {
+          userId: id,
+        });
         const ValidationError = require('../../utils/errors/ValidationError');
         throw new ValidationError('Password change failed', [
           'New password must be at least 6 characters long',
@@ -174,8 +190,11 @@ class AuthService {
 
       // Hash new password and update
       await user.setPassword(newPassword);
-      const updated = await this.userRepository.updatePassword(id, user.passwordHash);
-      
+      const updated = await this.userRepository.updatePassword(
+        id,
+        user.passwordHash
+      );
+
       if (updated) {
         this.logger.info('Password changed successfully', { userId: id });
       }

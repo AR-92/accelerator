@@ -293,7 +293,8 @@ container.register(
       c.get('workflowStepRepository'),
       c.get('voteRepository'),
       c.get('collaborationRepository'),
-      c.get('projectCollaboratorRepository')
+      c.get('projectCollaboratorRepository'),
+      c.get('db')
     )
 );
 
@@ -499,6 +500,46 @@ container.register('adminController', (c) => {
     showCredits: credits.showCredits.bind(credits),
     showTransactions: credits.showTransactions.bind(credits),
     showPaymentMethods: credits.showPaymentMethods.bind(credits),
+    // New SCRUD methods for missing tables
+    showProjects: business.showProjects.bind(business),
+    showProjectDetails: business.showProjectDetails.bind(business),
+    createProject: business.createProject.bind(business),
+    updateProject: business.updateProject.bind(business),
+    showProjectCollaborators: business.showProjectCollaborators.bind(business),
+    createProjectCollaborator:
+      business.createProjectCollaborator.bind(business),
+    updateProjectCollaborator:
+      business.updateProjectCollaborator.bind(business),
+    deleteProjectCollaborator:
+      business.deleteProjectCollaborator.bind(business),
+    showTasks: business.showTasks.bind(business),
+    createTask: business.createTask.bind(business),
+    updateTask: business.updateTask.bind(business),
+    deleteTask: business.deleteTask.bind(business),
+    showMessages: business.showMessages.bind(business),
+    createMessage: business.createMessage.bind(business),
+    updateMessage: business.updateMessage.bind(business),
+    deleteMessage: business.deleteMessage.bind(business),
+    showStartups: business.showStartups.bind(business),
+    createStartup: business.createStartup.bind(business),
+    updateStartup: business.updateStartup.bind(business),
+    deleteStartup: business.deleteStartup.bind(business),
+    showEnterprises: business.showEnterprises.bind(business),
+    createEnterprise: business.createEnterprise.bind(business),
+    updateEnterprise: business.updateEnterprise.bind(business),
+    deleteEnterprise: business.deleteEnterprise.bind(business),
+    showCorporates: business.showCorporates.bind(business),
+    createCorporate: business.createCorporate.bind(business),
+    updateCorporate: business.updateCorporate.bind(business),
+    deleteCorporate: business.deleteCorporate.bind(business),
+    showHelpCategories: business.showHelpCategories.bind(business),
+    createHelpCategory: business.createHelpCategory.bind(business),
+    updateHelpCategory: business.updateHelpCategory.bind(business),
+    deleteHelpCategory: business.deleteHelpCategory.bind(business),
+    showHelpArticles: business.showHelpArticles.bind(business),
+    createHelpArticle: business.createHelpArticle.bind(business),
+    updateHelpArticle: business.updateHelpArticle.bind(business),
+    deleteHelpArticle: business.deleteHelpArticle.bind(business),
   };
 });
 container.register(

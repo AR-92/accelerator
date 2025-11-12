@@ -1,0 +1,367 @@
+<!-- src/views/pages/admin/project-collaborators.hbs -->
+<div
+  class="w-full max-w-5xl rounded-xl shadow-2xl overflow-hidden bg-white/85 backdrop-blur-sm ring-1 ring-gray-200 flex flex-col min-h-[600px]">
+
+  <!-- Sticky header (toolbar) -->
+   <header class="sticky top-0 z-20 bg-blue-800 text-white p-5">
+    <!-- Page Title and Description -->
+    <div class="mb-6 flex justify-between">
+
+    <div class="text-left">
+      <h1 class="text-3xl font-bold text-white mb-2">Project Collaborators Management</h1>
+      <p class=" text-gray-200">Manage and oversee all project collaborators in the system</p>
+    </div>
+        <div class="">
+          <button onclick="exportToCSV()"
+          class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-full px-4 py-2 text-sm">
+          {{lucide 'Download' 'w-4 h-4'}}
+          <span class="text-sm font-medium">Export</span>
+        </button>
+    </div>
+     </div>
+     <div class="max-w-7xl mx-auto flex items-center gap-4">
+      <!-- center: search -->
+      <div class="flex-1 flex justify-left">
+        <div class="w-full max-w-lg">
+          <label class="relative block">
+            <span class="sr-only">Search</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Search' 'w-5 h-5 text-white/80'}}
+            </span>
+            <input
+              class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 placeholder-white/75 text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              placeholder="Search collaborators..." aria-label="Search" id="searchInput" />
+          </label>
+        </div>
+      </div>
+
+      <!-- right: small action icons -->
+      <div class="flex items-center gap-3">
+        <button onclick="location.reload()"
+          class="p-2 rounded-full bg-white/10 border border-white/25 hover:bg-white/20" title="Refresh">
+          {{lucide 'RefreshCw' 'w-5 h-5'}}
+        </button>
+      </div>
+    </div>
+   </header>
+
+     <!-- Project Collaborators Table -->
+      <div class='rounded-md bg-blue-50 dark:bg-blue-900 text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+      <div class='px-6 py-4 border-b border-border'>
+        <h2 class='text-lg font-medium text-foreground'>Project Collaborators ({{pagination.total}})</h2>
+      </div>
+
+      <div class='overflow-x-auto'>
+        <table class='min-w-full divide-y divide-border table-fixed sm:table-auto'>
+           <thead class='bg-blue-200 dark:bg-blue-800'>
+            <tr>
+              <th class='w-12 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                <input type="checkbox" id="selectAll" class='rounded border-gray-300 text-primary focus:ring-primary'>
+              </th>
+              <th class='min-w-48 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Project
+              </th>
+              <th class='w-32 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                User
+              </th>
+              <th class='w-24 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Role
+              </th>
+              <th class='w-32 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider hidden md:table-cell'>
+                <button onclick="sortBy('joined_at')" class='hover:text-foreground transition-colors flex items-center gap-1'>
+                  Joined
+                  {{#if (eq filters.sortBy 'joined_at')}}
+                    {{#if (eq filters.sortOrder 'asc')}}↑{{else}}↓{{/if}}
+                  {{/if}}
+                </button>
+              </th>
+              <th class='w-48 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>Actions</th>
+            </tr>
+          </thead>
+           <tbody class='bg-card divide-y divide-border'>
+             {{#each collaborators}}
+             <tr class='hover:bg-blue-100 dark:hover:bg-blue-800'>
+               <td class='w-12 px-4 py-4 whitespace-nowrap'>
+                 <input type="checkbox" class="collaboratorCheckbox" value="{{id}}" data-collaborator-id="{{id}}" class='rounded border-gray-300 text-primary focus:ring-primary'>
+               </td>
+               <td class='w-1/4 px-4 py-4 whitespace-nowrap'>
+                <div class='text-sm font-medium text-foreground'>{{project_title}}</div>
+              </td>
+               <td class='w-32 px-4 py-4 whitespace-nowrap'>
+                 <div class='text-sm text-foreground'>{{user_name}}</div>
+                 <div class='text-sm text-black dark:text-white'>{{user_email}}</div>
+               </td>
+                 <td class='w-24 px-4 py-4 whitespace-nowrap'>
+                   {{#if (eq role 'admin')}}
+                     <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400'>
+                       Admin
+                     </span>
+                   {{else if (eq role 'member')}}
+                     <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400'>
+                       Member
+                     </span>
+                   {{else}}
+                     <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'>
+                       Viewer
+                     </span>
+                   {{/if}}
+                 </td>
+                <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-black dark:text-white hidden md:table-cell'>
+                  {{formatDate joined_at}}
+                </td>
+                <td class='px-4 py-4 whitespace-nowrap text-sm font-medium'>
+                  <div class='relative'>
+                    <button data-collaborator-id="{{id}}" class='inline-flex items-center justify-center w-8 h-8 rounded-md text-black dark:text-white hover:bg-muted hover:text-foreground transition-colors' title='Actions'>
+                      {{lucide 'MoreVertical' 'w-4 h-4'}}
+                    </button>
+                     <div id="dropdown-{{id}}" class='fixed w-48 bg-card rounded-md shadow-lg border border-border z-50 hidden'>
+                      <div class='py-1'>
+                        <button onclick="editCollaborator({{id}})" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                          {{lucide 'Edit' 'w-4 h-4 mr-2'}}
+                          Edit Collaborator
+                        </button>
+                        <button onclick="deleteCollaborator({{id}}, '{{user_name}}')" class='flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-muted hover:text-foreground transition-colors'>
+                          {{lucide 'Trash2' 'w-4 h-4 mr-2'}}
+                          Remove Collaborator
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+           </tr>
+            {{else}}
+            <tr>
+              <td colspan="6" class='px-6 py-8 text-center text-gray-500'>
+                <div class="text-gray-500">
+                  <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                  </svg>
+                  <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No collaborators found</h3>
+                  <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Get started by adding collaborators to projects.</p>
+                </div>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Bulk Actions -->
+      <div id="bulkActions" class='px-6 py-4 border-t border-border bg-muted/30 hidden'>
+        <div class='flex items-center justify-between'>
+          <div class='flex items-center gap-3'>
+            <span class='text-sm font-medium text-foreground' id="selectedCount">0 collaborators selected</span>
+            <span class='text-xs text-black dark:text-white'>Select collaborators above to perform bulk actions</span>
+          </div>
+          <div class='flex gap-2'>
+             <button onclick="bulkDelete()" id="bulkDeleteBtn" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-red-600 text-white shadow hover:bg-red-700 h-9 px-4 py-2' disabled>
+               {{lucide 'Trash2' 'w-4 h-4 mr-2'}}
+               Remove Selected
+             </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+     {{#if (gt pagination.pages 1)}}
+     <div class='px-6 py-4 border-t border-border flex items-center justify-between'>
+        <div class='text-sm text-black dark:text-white'>
+          Showing {{#if collaborators.length}}{{add (multiply (subtract pagination.page 1) pagination.limit) 1}}{{else}}0{{/if}}-{{add (multiply (subtract pagination.page 1) pagination.limit) collaborators.length}} of {{pagination.total}} collaborators
+        </div>
+       <div class='flex gap-2'>
+         {{#if (gt pagination.page 1)}}
+         <a href="?page={{subtract pagination.page 1}}&search={{filters.search}}&sortBy={{filters.sortBy}}&sortOrder={{filters.sortOrder}}" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
+           {{lucide 'ChevronLeft' 'w-4 h-4 mr-1'}}
+           Previous
+         </a>
+         {{/if}}
+
+         {{#each (range 1 (add pagination.pages 1))}}
+         {{#if (and (gte this (subtract pagination.page 2)) (lte this (add pagination.page 2)))}}
+         <a href="?page={{this}}&search={{../filters.search}}&sortBy={{../filters.sortBy}}&sortOrder={{../filters.sortOrder}}" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 {{#if (eq this ../pagination.page)}}bg-primary text-primary-foreground shadow{{else}}border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground{{/if}} h-9 w-9'>
+           {{this}}
+         </a>
+         {{/if}}
+         {{/each}}
+
+         {{#if (lt pagination.page pagination.pages)}}
+         <a href="?page={{add pagination.page 1}}&search={{filters.search}}&sortBy={{filters.sortBy}}&sortOrder={{filters.sortOrder}}" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
+           Next
+           {{lucide 'ChevronRight' 'w-4 h-4 mr-1'}}
+         </a>
+         {{/if}}
+       </div>
+     </div>
+     {{/if}}
+    </div>
+   </div>
+
+<script>
+// Project Collaborators management JavaScript
+let currentFilters = {{{json filters}}};
+let currentPagination = {{{json pagination}}};
+
+// Search functionality
+document.getElementById('searchInput').addEventListener('input', debounce(function(e) {
+  const searchTerm = e.target.value;
+  updateFilters({ search: searchTerm, page: 1 });
+}, 300));
+
+function sortBy(column) {
+  const currentSort = currentFilters.sortBy;
+  const currentOrder = currentFilters.sortOrder;
+
+  let newOrder = 'asc';
+  if (currentSort === column && currentOrder === 'asc') {
+    newOrder = 'desc';
+  }
+
+  updateFilters({ sortBy: column, sortOrder: newOrder, page: 1 });
+}
+
+function updateFilters(newFilters) {
+  currentFilters = { ...currentFilters, ...newFilters };
+  const params = new URLSearchParams(window.location.search);
+
+  Object.keys(currentFilters).forEach(key => {
+    if (currentFilters[key] !== null && currentFilters[key] !== undefined && currentFilters[key] !== '') {
+      params.set(key, currentFilters[key]);
+    } else {
+      params.delete(key);
+    }
+  });
+
+  window.location.search = params.toString();
+}
+
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Bulk selection
+document.getElementById('selectAll').addEventListener('change', function(e) {
+  const checkboxes = document.querySelectorAll('.collaboratorCheckbox');
+  checkboxes.forEach(cb => cb.checked = e.target.checked);
+  updateBulkActions();
+});
+
+document.addEventListener('change', function(e) {
+  if (e.target.classList.contains('collaboratorCheckbox')) {
+    updateBulkActions();
+  }
+});
+
+function updateBulkActions() {
+  const selectedCheckboxes = document.querySelectorAll('.collaboratorCheckbox:checked');
+  const bulkActions = document.getElementById('bulkActions');
+  const selectedCount = document.getElementById('selectedCount');
+  const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+
+  if (selectedCheckboxes.length > 0) {
+    bulkActions.classList.remove('hidden');
+    selectedCount.textContent = `${selectedCheckboxes.length} collaborator${selectedCheckboxes.length > 1 ? 's' : ''} selected`;
+    bulkDeleteBtn.disabled = false;
+  } else {
+    bulkActions.classList.add('hidden');
+    bulkDeleteBtn.disabled = true;
+  }
+}
+
+// Dropdown menus
+document.addEventListener('click', function(e) {
+  if (e.target.closest('[data-collaborator-id]')) {
+    const button = e.target.closest('[data-collaborator-id]');
+    const collaboratorId = button.dataset.collaboratorId;
+    const dropdown = document.getElementById(`dropdown-${collaboratorId}`);
+
+    // Close all other dropdowns
+    document.querySelectorAll('[id^="dropdown-"]').forEach(d => {
+      if (d !== dropdown) d.classList.add('hidden');
+    });
+
+    // Toggle current dropdown
+    dropdown.classList.toggle('hidden');
+
+    // Position dropdown
+    const rect = button.getBoundingClientRect();
+    dropdown.style.top = `${rect.bottom + window.scrollY}px`;
+    dropdown.style.left = `${rect.left + window.scrollX}px`;
+  } else if (!e.target.closest('[id^="dropdown-"]')) {
+    // Close all dropdowns when clicking outside
+    document.querySelectorAll('[id^="dropdown-"]').forEach(d => d.classList.add('hidden'));
+  }
+});
+
+// CRUD operations
+function editCollaborator(id) {
+  // TODO: Implement edit modal/form
+  alert('Edit collaborator functionality coming soon');
+}
+
+function deleteCollaborator(id, name) {
+  if (confirm(`Are you sure you want to remove "${name}" from this project?`)) {
+    fetch(`/admin/api/project-collaborators/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        location.reload();
+      } else {
+        alert('Error removing collaborator: ' + data.error);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Error removing collaborator');
+    });
+  }
+}
+
+function bulkDelete() {
+  const selectedIds = Array.from(document.querySelectorAll('.collaboratorCheckbox:checked')).map(cb => cb.value);
+
+  if (selectedIds.length === 0) return;
+
+  if (confirm(`Are you sure you want to remove ${selectedIds.length} collaborator${selectedIds.length > 1 ? 's' : ''} from their projects?`)) {
+    Promise.all(selectedIds.map(id =>
+      fetch(`/admin/api/project-collaborators/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+    ))
+    .then(responses => Promise.all(responses.map(r => r.json())))
+    .then(results => {
+      const successCount = results.filter(r => r.success).length;
+      if (successCount === selectedIds.length) {
+        location.reload();
+      } else {
+        alert(`Removed ${successCount} of ${selectedIds.length} collaborators`);
+        location.reload();
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Error removing collaborators');
+    });
+  }
+}
+
+function exportToCSV() {
+  // TODO: Implement CSV export
+  alert('Export functionality coming soon');
+}
+</script>

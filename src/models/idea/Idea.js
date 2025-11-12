@@ -6,12 +6,12 @@ const BaseModel = require('../common/BaseModel');
 class Idea extends BaseModel {
   constructor(data = {}) {
     super(data);
-    this.userId = data.user_id;
+    this.userId = data.owner_user_id || data.user_id;
     this.href = data.href;
     this.title = data.title;
     this.type = data.type;
     this.typeIcon = data.typeIcon;
-    this.rating = data.rating || 0;
+    this.rating = data.rating || (data.upvotes || 0) - (data.downvotes || 0);
     this.description = data.description;
     this.tags = data.tags
       ? Array.isArray(data.tags)

@@ -83,26 +83,26 @@
     </div>
   </div>
 
-  <!-- Related Users -->
-  {{#if users}}
-  <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+   <!-- Related Users -->
+   {{#if users}}
+   <div class='rounded-md bg-stone-50 dark:bg-stone-900 text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
     <div class='px-6 py-4 border-b border-border'>
       <h2 class='text-lg font-medium text-foreground'>Users in this Organization ({{users.length}})</h2>
     </div>
-    <div class='overflow-x-auto'>
+     <div class='overflow-x-auto'>
       <table class='w-full'>
-        <thead>
+        <thead class='bg-stone-200 dark:bg-stone-800'>
           <tr class='border-b border-border'>
-            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Name</th>
-            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Email</th>
-            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Role</th>
-            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Credits</th>
-            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Status</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-black dark:text-white'>Name</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-black dark:text-white'>Email</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-black dark:text-white'>Role</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-black dark:text-white'>Credits</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-black dark:text-white'>Status</th>
           </tr>
         </thead>
         <tbody>
           {{#each users}}
-          <tr class='border-b border-border hover:bg-muted/50'>
+          <tr class='border-b border-border hover:bg-stone-100 dark:hover:bg-stone-800'>
             <td class='p-4 align-middle'>
               <div class='font-medium text-foreground'>
                 {{#if name}}{{name}}{{else}}{{first_name}} {{last_name}}{{/if}}
@@ -138,25 +138,25 @@
   </div>
   {{/if}}
 
-  <!-- Related Projects -->
-  {{#if projects}}
-  <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+   <!-- Related Projects -->
+   {{#if projects}}
+   <div class='rounded-md bg-stone-50 dark:bg-stone-900 text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
     <div class='px-6 py-4 border-b border-border'>
       <h2 class='text-lg font-medium text-foreground'>Projects in this Organization ({{projects.length}})</h2>
     </div>
-    <div class='overflow-x-auto'>
+     <div class='overflow-x-auto'>
       <table class='w-full'>
-        <thead>
+        <thead class='bg-stone-200 dark:bg-stone-800'>
           <tr class='border-b border-border'>
-            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Title</th>
-            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Status</th>
-            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Owner</th>
-            <th class='h-12 px-4 text-left align-middle font-medium text-muted-foreground'>Created</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-black dark:text-white'>Title</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-black dark:text-white'>Status</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-black dark:text-white'>Owner</th>
+            <th class='h-12 px-4 text-left align-middle font-medium text-black dark:text-white'>Created</th>
           </tr>
         </thead>
         <tbody>
           {{#each projects}}
-          <tr class='border-b border-border hover:bg-muted/50'>
+          <tr class='border-b border-border hover:bg-stone-100 dark:hover:bg-stone-800'>
             <td class='p-4 align-middle'>
               <div class='font-medium text-foreground'>{{title}}</div>
               {{#if description}}

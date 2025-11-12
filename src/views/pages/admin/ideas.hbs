@@ -1,42 +1,64 @@
-<div class='flex flex-col gap-4 lg:gap-6'>
-    <!-- Header -->
-    <div class='flex items-center justify-between'>
-      <div class='grid gap-1'>
-        <h1 class='font-heading text-2xl font-semibold text-foreground dark:text-white'>Ideas Management</h1>
-        <p class='text-base text-muted-foreground'>Total ideas: {{pagination.total}}</p>
+<!-- Glass card container -->
+<div
+  class="w-full max-w-5xl rounded-xl shadow-2xl overflow-hidden bg-white/85 backdrop-blur-sm ring-1 ring-gray-200 flex flex-col min-h-[600px]">
+
+  <!-- Sticky header (toolbar) -->
+   <header class="sticky top-0 z-20 bg-blue-800 text-white p-5">
+    <!-- Page Title and Description -->
+    <div class="mb-6 flex justify-between">
+
+    <div class="text-left">
+      <h1 class="text-3xl font-bold text-white mb-2">Ideas Management</h1>
+      <p class=" text-gray-200">Manage and oversee all ideas in the system</p>
+    </div>
+        <div class="">
+          <button onclick="exportToCSV()"
+          class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-full px-4 py-2 text-sm">
+          {{lucide 'Download' 'w-4 h-4'}}
+          <span class="text-sm font-medium">Export</span>
+        </button>
+    </div>
+     </div>
+     <div class="max-w-7xl mx-auto flex items-center gap-4">
+      <!-- center: search -->
+      <div class="flex-1 flex justify-left">
+        <div class="w-full max-w-lg">
+          <label class="relative block">
+            <span class="sr-only">Search</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Search' 'w-5 h-5 text-white/80'}}
+            </span>
+            <input
+              class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 placeholder-white/75 text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              placeholder="Search ideas..." aria-label="Search" id="searchInput" />
+          </label>
+        </div>
+      </div>
+
+      <!-- right: small action icons -->
+      <div class="flex items-center gap-3">
+        <button onclick="location.reload()"
+          class="p-2 rounded-full bg-white/10 border border-white/25 hover:bg-white/20" title="Refresh">
+          {{lucide 'RefreshCw' 'w-5 h-5'}}
+        </button>
       </div>
     </div>
+   </header>
 
-   <!-- Filters -->
-   <div class='rounded-md bg-card text-card-foreground shadow-sm p-6' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
-     <div class='flex flex-wrap gap-4'>
-       <div>
-         <label class='block text-sm font-medium text-foreground mb-2'>Search</label>
-         <input type="text" id="searchInput" placeholder="Search by title or description"
-                class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring'>
-       </div>
-       <div class="flex items-end">
-         <button id="applyFilters" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2'>
-           Apply Filters
-         </button>
-       </div>
-     </div>
-   </div>
-
-    <!-- Ideas Table -->
-     <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+     <!-- Ideas Table -->
+      <div class='rounded-md bg-blue-50 dark:bg-blue-900 text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
       <div class='px-6 py-4 border-b border-border'>
         <h2 class='text-lg font-medium text-foreground'>Ideas ({{pagination.total}})</h2>
       </div>
 
       <div class='overflow-x-auto'>
         <table class='min-w-full divide-y divide-border table-fixed sm:table-auto'>
-          <thead class='bg-muted/50'>
+           <thead class='bg-blue-200 dark:bg-blue-800'>
             <tr>
-              <th class='w-12 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
+              <th class='w-12 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
                 <input type="checkbox" id="selectAll" class='rounded border-gray-300 text-primary focus:ring-primary'>
               </th>
-              <th class='min-w-48 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
+              <th class='min-w-48 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
                 <button onclick="sortBy('title')" class='hover:text-foreground transition-colors flex items-center gap-1'>
                   Title
                   {{#if (eq filters.sortBy 'title')}}
@@ -44,7 +66,7 @@
                   {{/if}}
                 </button>
               </th>
-              <th class='w-20 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
+              <th class='w-20 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
                 <button onclick="sortBy('type')" class='hover:text-foreground transition-colors flex items-center gap-1'>
                   Type
                   {{#if (eq filters.sortBy 'type')}}
@@ -52,7 +74,7 @@
                   {{/if}}
                 </button>
               </th>
-              <th class='w-24 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>
+              <th class='w-24 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
                 <button onclick="sortBy('rating')" class='hover:text-foreground transition-colors flex items-center gap-1'>
                   Rating
                   {{#if (eq filters.sortBy 'rating')}}
@@ -60,8 +82,8 @@
                   {{/if}}
                 </button>
               </th>
-              <th class='w-20 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Favorite</th>
-               <th class='w-32 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider hidden md:table-cell'>
+              <th class='w-20 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>Favorite</th>
+               <th class='w-32 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider hidden md:table-cell'>
                  <button onclick="sortBy('created_at')" class='hover:text-foreground transition-colors flex items-center gap-1'>
                    Created
                    {{#if (eq filters.sortBy 'created_at')}}
@@ -69,18 +91,18 @@
                    {{/if}}
                  </button>
                </th>
-              <th class='w-48 px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider'>Actions</th>
+              <th class='w-48 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>Actions</th>
             </tr>
           </thead>
            <tbody class='bg-card divide-y divide-border'>
              {{#each ideas}}
-             <tr class='hover:bg-muted/50'>
+             <tr class='hover:bg-blue-100 dark:hover:bg-blue-800'>
                <td class='w-12 px-4 py-4 whitespace-nowrap'>
                  <input type="checkbox" class="ideaCheckbox" value="{{id}}" data-idea-id="{{id}}" class='rounded border-gray-300 text-primary focus:ring-primary'>
                </td>
                <td class='w-1/4 px-4 py-4 whitespace-nowrap'>
                 <div class='text-sm font-medium text-foreground'>{{title}}</div>
-                <div class='text-sm text-muted-foreground'>{{href}}</div>
+                <div class='text-sm text-black dark:text-white'>{{href}}</div>
               </td>
                <td class='w-20 px-4 py-4 whitespace-nowrap'>
                  <span class='text-sm text-foreground'>{{type}}</span>
@@ -106,15 +128,15 @@
                    ★ Favorite
                  </span>
                  {{else}}
-                 <span class='text-muted-foreground'>No</span>
+                 <span class='text-black dark:text-white'>No</span>
                  {{/if}}
                </td>
-                <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-muted-foreground hidden md:table-cell'>
+                <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-black dark:text-white hidden md:table-cell'>
                   {{formatDate createdAt}}
                 </td>
                 <td class='px-4 py-4 whitespace-nowrap text-sm font-medium'>
                   <div class='relative'>
-                    <button data-idea-id="{{id}}" class='inline-flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors' title='Actions'>
+                    <button data-idea-id="{{id}}" class='inline-flex items-center justify-center w-8 h-8 rounded-md text-black dark:text-white hover:bg-muted hover:text-foreground transition-colors' title='Actions'>
                       {{lucide 'MoreVertical' 'w-4 h-4'}}
                     </button>
                      <div id="dropdown-{{id}}" class='fixed w-48 bg-card rounded-md shadow-lg border border-border z-50 hidden'>
@@ -136,8 +158,20 @@
                   </div>
                 </td>
            </tr>
-           {{/each}}
-         </tbody>
+            {{else}}
+            <tr>
+              <td colspan="8" class='px-6 py-8 text-center text-gray-500'>
+                <div class="text-gray-500">
+                  <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                  </svg>
+                  <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No ideas found</h3>
+                  <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Get started by creating your first idea.</p>
+                </div>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
         </table>
       </div>
 
@@ -146,7 +180,7 @@
         <div class='flex items-center justify-between'>
           <div class='flex items-center gap-3'>
             <span class='text-sm font-medium text-foreground' id="selectedCount">0 ideas selected</span>
-            <span class='text-xs text-muted-foreground'>Select ideas above to perform bulk actions</span>
+            <span class='text-xs text-black dark:text-white'>Select ideas above to perform bulk actions</span>
           </div>
           <div class='flex gap-2'>
              <button onclick="bulkDelete()" id="bulkDeleteBtn" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-red-600 text-white shadow hover:bg-red-700 h-9 px-4 py-2' disabled>
@@ -160,9 +194,9 @@
       <!-- Pagination -->
      {{#if (gt pagination.pages 1)}}
      <div class='px-6 py-4 border-t border-border flex items-center justify-between'>
-       <div class='text-sm text-muted-foreground'>
-         Showing {{pagination.limit}} of {{pagination.total}} ideas
-       </div>
+        <div class='text-sm text-black dark:text-white'>
+          Showing {{#if ideas.length}}{{add (multiply (subtract pagination.page 1) pagination.limit) 1}}{{else}}0{{/if}}-{{add (multiply (subtract pagination.page 1) pagination.limit) ideas.length}} of {{pagination.total}} ideas
+        </div>
        <div class='flex gap-2'>
          {{#if (gt pagination.page 1)}}
          <a href="?page={{subtract pagination.page 1}}&search={{filters.search}}"
@@ -201,7 +235,7 @@
          <input type="hidden" id="editIdeaId">
          <div class="mb-4">
            <label class="block text-sm font-medium text-foreground mb-2">Title</label>
-           <input type="text" id="editIdeaTitle" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+           <input type="text" id="editIdeaTitle" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-black dark:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
          </div>
          <div class="mb-4">
            <label class="block text-sm font-medium text-foreground mb-2">Type</label>
@@ -214,11 +248,11 @@
          </div>
          <div class="mb-4">
            <label class="block text-sm font-medium text-foreground mb-2">Rating (1-10)</label>
-           <input type="number" id="editIdeaRating" min="1" max="10" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+           <input type="number" id="editIdeaRating" min="1" max="10" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-black dark:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
          </div>
          <div class="mb-4">
            <label class="block text-sm font-medium text-foreground mb-2">Description</label>
-           <textarea id="editIdeaDescription" rows="3" class="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"></textarea>
+           <textarea id="editIdeaDescription" rows="3" class="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-black dark:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"></textarea>
          </div>
          <div class="flex justify-end gap-2">
            <button type="button" onclick="closeEditModal()" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Cancel</button>
@@ -406,7 +440,7 @@
          updatePagination(data.pagination, data.filters);
 
          // Update total count
-         document.querySelector('p.text-base.text-muted-foreground').textContent = `Total ideas: ${data.pagination.total}`;
+         document.querySelector('p.text-base.text-black dark:text-white').textContent = `Total ideas: ${data.pagination.total}`;
 
          // Update URL without page reload
          const url = new URL(window.location);
@@ -431,7 +465,7 @@
        </td>
        <td class='w-1/4 px-4 py-4 whitespace-nowrap'>
          <div class='text-sm font-medium text-foreground'>${idea.title}</div>
-         <div class='text-sm text-muted-foreground'>${idea.href}</div>
+         <div class='text-sm text-black dark:text-white'>${idea.href}</div>
        </td>
        <td class='w-20 px-4 py-4 whitespace-nowrap'>
          <span class='text-sm text-foreground'>${idea.type}</span>
@@ -442,14 +476,14 @@
          </span>
        </td>
        <td class='w-20 px-4 py-4 whitespace-nowrap text-sm text-foreground'>
-         ${idea.isFavorite ? '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">★ Favorite</span>' : '<span class="text-muted-foreground">No</span>'}
+         ${idea.isFavorite ? '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">★ Favorite</span>' : '<span class="text-black dark:text-white">No</span>'}
        </td>
-       <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-muted-foreground hidden md:table-cell'>
+       <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-black dark:text-white hidden md:table-cell'>
          ${new Date(idea.createdAt).toLocaleDateString()}
        </td>
        <td class='px-4 py-4 whitespace-nowrap text-sm font-medium'>
          <div class='relative'>
-           <button data-idea-id="${idea.id}" class='inline-flex items-center justify-center w-8 h-8 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors' title='Actions'>
+           <button data-idea-id="${idea.id}" class='inline-flex items-center justify-center w-8 h-8 rounded-md text-black dark:text-white hover:bg-muted hover:text-foreground transition-colors' title='Actions'>
              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
              </svg>
@@ -488,7 +522,7 @@
    if (!paginationContainer) return;
 
    let paginationHTML = `
-     <div class='text-sm text-muted-foreground'>
+     <div class='text-sm text-black dark:text-white'>
        Showing 20 of ${pagination.total} ideas
      </div>
      <div class='flex gap-2'>

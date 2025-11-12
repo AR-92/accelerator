@@ -50,7 +50,7 @@
            <div class='space-y-3'>
              {{#each systemStats.cpu.cores}}
              <div class='flex items-center gap-3'>
-               <span class='text-sm font-medium text-gray-700 dark:text-gray-300 w-8'>Core {{@index}}</span>
+               <span class='text-sm font-medium text-black dark:text-white dark:text-gray-300 w-8'>Core {{@index}}</span>
                <div class='flex-1'>
                  <div class='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
                    <div class='h-2 rounded-full transition-all duration-300 {{#if (gt this.usage 80)}}bg-red-500{{else if (gt this.usage 60)}}bg-yellow-500{{else}}bg-green-500{{/if}}' style='width: {{this.usage}}%'></div>
@@ -76,7 +76,7 @@
                </div>
              </div>
              <div class='pt-3'>
-               <h3 class='text-sm font-medium text-gray-700 dark:text-gray-300 mb-2'>CPU Usage History</h3>
+               <h3 class='text-sm font-medium text-black dark:text-white dark:text-gray-300 mb-2'>CPU Usage History</h3>
                <div class='bg-gray-100 dark:bg-gray-700 rounded p-2'>
                  <pre class='text-xs text-gray-800 dark:text-gray-200 font-mono leading-none' style='font-size: 10px; line-height: 10px;'>{{systemStats.graphs.cpu}}</pre>
                </div>
@@ -95,7 +95,7 @@
            <div class='space-y-4'>
              <div>
                <div class='flex justify-between text-sm mb-2'>
-                 <span class='text-gray-700 dark:text-gray-300'>RAM Usage</span>
+                 <span class='text-black dark:text-white dark:text-gray-300'>RAM Usage</span>
                  <span class='font-medium'>{{systemStats.memory.systemUsed}} / {{systemStats.memory.systemTotal}} MB</span>
                </div>
                <div class='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3'>
@@ -105,7 +105,7 @@
              {{#if systemStats.memory.swapTotal}}
              <div>
                <div class='flex justify-between text-sm mb-2'>
-                 <span class='text-gray-700 dark:text-gray-300'>Swap Usage</span>
+                 <span class='text-black dark:text-white dark:text-gray-300'>Swap Usage</span>
                  <span class='font-medium'>{{systemStats.memory.swapUsed}} / {{systemStats.memory.swapTotal}} MB</span>
                </div>
                <div class='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3'>
@@ -179,29 +179,41 @@
            Top Processes
          </h2>
          <div class='overflow-x-auto'>
-           <table class='w-full text-sm'>
-             <thead>
-               <tr class='border-b border-gray-200 dark:border-gray-700'>
-                 <th class='text-left py-3 px-2 font-medium text-gray-700 dark:text-gray-300'>PID</th>
-                 <th class='text-left py-3 px-2 font-medium text-gray-700 dark:text-gray-300'>Process</th>
-                 <th class='text-right py-3 px-2 font-medium text-gray-700 dark:text-gray-300'>CPU %</th>
-                 <th class='text-right py-3 px-2 font-medium text-gray-700 dark:text-gray-300'>Memory %</th>
-                 <th class='text-right py-3 px-2 font-medium text-gray-700 dark:text-gray-300'>Memory</th>
-                 <th class='text-left py-3 px-2 font-medium text-gray-700 dark:text-gray-300'>User</th>
+            <table class='w-full text-sm bg-zinc-50 dark:bg-zinc-900'>
+              <thead class='bg-zinc-200 dark:bg-zinc-800'>
+                <tr class='border-b border-gray-200 dark:border-gray-700'>
+                 <th class='text-left py-3 px-2 font-medium text-black dark:text-white dark:text-gray-300'>PID</th>
+                 <th class='text-left py-3 px-2 font-medium text-black dark:text-white dark:text-gray-300'>Process</th>
+                 <th class='text-right py-3 px-2 font-medium text-black dark:text-white dark:text-gray-300'>CPU %</th>
+                 <th class='text-right py-3 px-2 font-medium text-black dark:text-white dark:text-gray-300'>Memory %</th>
+                 <th class='text-right py-3 px-2 font-medium text-black dark:text-white dark:text-gray-300'>Memory</th>
+                 <th class='text-left py-3 px-2 font-medium text-black dark:text-white dark:text-gray-300'>User</th>
                </tr>
              </thead>
              <tbody>
                {{#each systemStats.processes}}
-               <tr class='border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'>
+                <tr class='border-b border-gray-100 dark:border-gray-700 hover:bg-zinc-100 dark:hover:bg-zinc-800'>
                  <td class='py-3 px-2 text-blue-600 font-medium'>{{this.pid}}</td>
                  <td class='py-3 px-2 text-gray-900 dark:text-white truncate max-w-xs' title='{{this.command}}'>{{this.name}}</td>
                  <td class='py-3 px-2 text-right {{#if (gt this.cpu 50)}}text-red-600{{else if (gt this.cpu 20)}}text-yellow-600{{else}}text-green-600{{/if}} font-medium'>{{this.cpu}}%</td>
                  <td class='py-3 px-2 text-right {{#if (gt this.memory 10)}}text-red-600{{else if (gt this.memory 5)}}text-yellow-600{{else}}text-green-600{{/if}} font-medium'>{{this.memory}}%</td>
                  <td class='py-3 px-2 text-right text-purple-600 font-medium'>{{this.memoryMB}}M</td>
                  <td class='py-3 px-2 text-cyan-600 font-medium'>{{this.user}}</td>
-               </tr>
-               {{/each}}
-             </tbody>
+                </tr>
+                {{else}}
+                <tr>
+                  <td colspan="6" class='px-6 py-8 text-center text-gray-500'>
+                    <div class="text-gray-500">
+                      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                      </svg>
+                      <h3 class="mt-2 text-sm font-medium text-gray-900">No processes found</h3>
+                      <p class="mt-1 text-sm text-gray-500">Unable to retrieve process information.</p>
+                    </div>
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
            </table>
          </div>
        </div>
@@ -255,7 +267,7 @@
            <div class='space-y-3'>
              {{#each systemStats.temperatures}}
              <div class='flex justify-between items-center'>
-               <span class='text-gray-700 dark:text-gray-300'>{{this.name}}</span>
+               <span class='text-black dark:text-white dark:text-gray-300'>{{this.name}}</span>
                <span class='font-medium {{#if (gt this.value 80)}}text-red-600{{else if (gt this.value 60)}}text-yellow-600{{else}}text-green-600{{/if}}'>{{this.value}}°C</span>
              </div>
              {{/each}}
@@ -276,7 +288,7 @@
            <div class='space-y-4'>
              <div>
                <div class='flex justify-between text-sm mb-2'>
-                 <span class='text-gray-700 dark:text-gray-300'>Level</span>
+                 <span class='text-black dark:text-white dark:text-gray-300'>Level</span>
                  <span class='font-medium'>{{systemStats.battery.level}}%</span>
                </div>
                <div class='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3'>

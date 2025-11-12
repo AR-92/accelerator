@@ -21,7 +21,8 @@ class AdminService {
     workflowStepRepository,
     voteRepository,
     collaborationRepository,
-    projectCollaboratorRepository
+    projectCollaboratorRepository,
+    db
   ) {
     this.systemMonitoringService = systemMonitoringService;
     this.userManagementService = userManagementService;
@@ -42,6 +43,7 @@ class AdminService {
     this.voteRepository = voteRepository;
     this.collaborationRepository = collaborationRepository;
     this.projectCollaboratorRepository = projectCollaboratorRepository;
+    this.db = db;
   }
 
   // System Monitoring Methods
@@ -128,7 +130,6 @@ class AdminService {
     return this.contentManagementService.getLearningContent(options);
   }
 
-
   // Project Management Methods
   async getProjects(options = {}) {
     return this.projectManagementService.getProjects(options);
@@ -209,7 +210,6 @@ class AdminService {
     }
   }
 
-
   // Billing Management Methods
   async getBillingTransactions(options = {}) {
     try {
@@ -258,7 +258,6 @@ class AdminService {
       throw error;
     }
   }
-
 
   // Reward Management Methods
   async getRewards(options = {}) {
@@ -311,10 +310,7 @@ class AdminService {
     }
   }
 
-  async getRewardById(rewardId) {
-  }
-
-
+  async getRewardById(rewardId) {}
 
   // Idea Management Methods
   async getIdeas(options = {}) {
@@ -499,7 +495,6 @@ class AdminService {
       throw error;
     }
   }
-
 
   // Landing Page Management Methods
   async getLandingPageSections(options = {}) {
@@ -1093,6 +1088,1254 @@ class AdminService {
       allocations,
       adminInfo
     );
+  }
+
+  // Projects SCRUD methods
+  async getProjects(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = options.offset || 0;
+      const search = options.search;
+      const sortBy = options.sortBy || 'created_at';
+      const sortOrder = options.sortOrder || 'desc';
+
+      let whereClause = 'WHERE p.deleted_at IS NULL';
+      let params = [];
+      let paramIndex = 1;
+
+      if (search) {
+        whereClause += ` AND (p.title ILIKE $${paramIndex} OR p.description ILIKE $${paramIndex})`;
+        params.push(`%${search}%`);
+        paramIndex++;
+      }
+
+      const orderClause = `ORDER BY p.${sortBy} ${sortOrder.toUpperCase()}`;
+
+      const countQuery = `
+        SELECT COUNT(*) as total
+        FROM projects p
+        ${whereClause}
+      `;
+
+      const dataQuery = `
+        SELECT
+          p.*,
+          u.name as owner_name,
+          u.email as owner_email,
+          o.name as organization_name
+        FROM projects p
+        LEFT JOIN users u ON p.owner_user_id = u.id
+        LEFT JOIN organizations o ON p.organization_id = o.id
+        ${whereClause}
+        ${orderClause}
+        LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
+      `;
+
+      params.push(limit, offset);
+
+      const [countResult, dataResult] = await Promise.all([
+        this.db.query(countQuery, params.slice(0, paramIndex - 2)),
+        this.db.query(dataQuery, params),
+      ]);
+
+      const total = parseInt(countResult.rows[0].total);
+      const totalPages = Math.ceil(total / limit);
+
+      return {
+        projects: dataResult.rows,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting projects:', error);
+      throw error;
+    }
+  }
+
+  async getProject(id) {
+    try {
+      const query = `
+        SELECT
+          p.*,
+          u.name as owner_name,
+          u.email as owner_email,
+          o.name as organization_name
+        FROM projects p
+        LEFT JOIN users u ON p.owner_user_id = u.id
+        LEFT JOIN organizations o ON p.organization_id = o.id
+        WHERE p.id = $1 AND p.deleted_at IS NULL
+      `;
+      const result = await this.db.query(query, [id]);
+      return result.rows[0] || null;
+    } catch (error) {
+      console.error('Error getting project:', error);
+      throw error;
+    }
+  }
+
+  async createProject(projectData, adminInfo) {
+    try {
+      const query = `
+        INSERT INTO projects (
+          owner_user_id, organization_id, title, description, visibility, created_at, updated_at
+        ) VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        RETURNING *
+      `;
+      const values = [
+        projectData.ownerUserId || projectData.owner_user_id,
+        projectData.organizationId || projectData.organization_id,
+        projectData.title,
+        projectData.description,
+        projectData.visibility || 'private',
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error creating project:', error);
+      throw error;
+    }
+  }
+
+  async updateProject(id, projectData, adminInfo) {
+    try {
+      const query = `
+        UPDATE projects
+        SET
+          owner_user_id = $1,
+          organization_id = $2,
+          title = $3,
+          description = $4,
+          visibility = $5,
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = $6 AND deleted_at IS NULL
+        RETURNING *
+      `;
+      const values = [
+        projectData.ownerUserId || projectData.owner_user_id,
+        projectData.organizationId || projectData.organization_id,
+        projectData.title,
+        projectData.description,
+        projectData.visibility,
+        id,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0] || null;
+    } catch (error) {
+      console.error('Error updating project:', error);
+      throw error;
+    }
+  }
+
+  async deleteProject(id, adminInfo) {
+    try {
+      const query = `
+        UPDATE projects
+        SET deleted_at = CURRENT_TIMESTAMP, updated_at = CURRENT_TIMESTAMP
+        WHERE id = $1 AND deleted_at IS NULL
+      `;
+      const result = await this.db.query(query, [id]);
+      return result.rowCount > 0;
+    } catch (error) {
+      console.error('Error deleting project:', error);
+      throw error;
+    }
+  }
+
+  // Project Collaborators SCRUD methods
+  async getProjectCollaborators(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = options.offset || 0;
+      const search = options.search;
+      const sortBy = options.sortBy || 'joined_at';
+      const sortOrder = options.sortOrder || 'desc';
+
+      let whereClause = '';
+      let params = [];
+      let paramIndex = 1;
+
+      if (search) {
+        whereClause += ` AND (u.name ILIKE $${paramIndex} OR u.email ILIKE $${paramIndex} OR p.title ILIKE $${paramIndex})`;
+        params.push(`%${search}%`);
+        paramIndex++;
+      }
+
+      const orderClause = `ORDER BY pc.${sortBy} ${sortOrder.toUpperCase()}`;
+
+      const countQuery = `
+        SELECT COUNT(*) as total
+        FROM project_collaborators pc
+        JOIN users u ON pc.user_id = u.id
+        JOIN projects p ON pc.project_id = p.id
+        WHERE p.deleted_at IS NULL AND u.deleted_at IS NULL ${whereClause}
+      `;
+
+      const dataQuery = `
+        SELECT
+          pc.*,
+          u.name as user_name,
+          u.email as user_email,
+          p.title as project_title
+        FROM project_collaborators pc
+        JOIN users u ON pc.user_id = u.id
+        JOIN projects p ON pc.project_id = p.id
+        WHERE p.deleted_at IS NULL AND u.deleted_at IS NULL ${whereClause}
+        ${orderClause}
+        LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
+      `;
+
+      params.push(limit, offset);
+
+      const [countResult, dataResult] = await Promise.all([
+        this.db.query(countQuery, params.slice(0, paramIndex - 2)),
+        this.db.query(dataQuery, params),
+      ]);
+
+      const total = parseInt(countResult.rows[0].total);
+      const totalPages = Math.ceil(total / limit);
+
+      return {
+        collaborators: dataResult.rows,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting project collaborators:', error);
+      throw error;
+    }
+  }
+
+  async createProjectCollaborator(collaboratorData, adminInfo) {
+    try {
+      const query = `
+        INSERT INTO project_collaborators (
+          project_id, user_id, role, joined_at
+        ) VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
+        RETURNING *
+      `;
+      const values = [
+        collaboratorData.projectId || collaboratorData.project_id,
+        collaboratorData.userId || collaboratorData.user_id,
+        collaboratorData.role || 'member',
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error creating project collaborator:', error);
+      throw error;
+    }
+  }
+
+  async updateProjectCollaborator(id, collaboratorData, adminInfo) {
+    try {
+      const query = `
+        UPDATE project_collaborators
+        SET
+          project_id = $1,
+          user_id = $2,
+          role = $3
+        WHERE id = $4
+        RETURNING *
+      `;
+      const values = [
+        collaboratorData.projectId || collaboratorData.project_id,
+        collaboratorData.userId || collaboratorData.user_id,
+        collaboratorData.role,
+        id,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0] || null;
+    } catch (error) {
+      console.error('Error updating project collaborator:', error);
+      throw error;
+    }
+  }
+
+  async deleteProjectCollaborator(id, adminInfo) {
+    try {
+      const query = 'DELETE FROM project_collaborators WHERE id = $1';
+      const result = await this.db.query(query, [id]);
+      return result.rowCount > 0;
+    } catch (error) {
+      console.error('Error deleting project collaborator:', error);
+      throw error;
+    }
+  }
+
+  // Tasks SCRUD methods
+  async getTasks(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = options.offset || 0;
+      const search = options.search;
+      const sortBy = options.sortBy || 'created_at';
+      const sortOrder = options.sortOrder || 'desc';
+
+      let whereClause = '';
+      let params = [];
+      let paramIndex = 1;
+
+      if (search) {
+        whereClause += ` AND (t.title ILIKE $${paramIndex} OR t.description ILIKE $${paramIndex})`;
+        params.push(`%${search}%`);
+        paramIndex++;
+      }
+
+      const orderClause = `ORDER BY t.${sortBy} ${sortOrder.toUpperCase()}`;
+
+      const countQuery = `
+        SELECT COUNT(*) as total
+        FROM tasks t
+        JOIN projects p ON t.project_id = p.id
+        WHERE p.deleted_at IS NULL ${whereClause}
+      `;
+
+      const dataQuery = `
+        SELECT
+          t.*,
+          p.title as project_title,
+          u.name as assignee_name
+        FROM tasks t
+        JOIN projects p ON t.project_id = p.id
+        LEFT JOIN users u ON t.assignee_user_id = u.id
+        WHERE p.deleted_at IS NULL ${whereClause}
+        ${orderClause}
+        LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
+      `;
+
+      params.push(limit, offset);
+
+      const [countResult, dataResult] = await Promise.all([
+        this.db.query(countQuery, params.slice(0, paramIndex - 2)),
+        this.db.query(dataQuery, params),
+      ]);
+
+      const total = parseInt(countResult.rows[0].total);
+      const totalPages = Math.ceil(total / limit);
+
+      return {
+        tasks: dataResult.rows,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting tasks:', error);
+      throw error;
+    }
+  }
+
+  async createTask(taskData, adminInfo) {
+    try {
+      const query = `
+        INSERT INTO tasks (
+          project_id, title, description, assignee_user_id, status, created_at, updated_at
+        ) VALUES ($1, $2, $3, $4, $5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        RETURNING *
+      `;
+      const values = [
+        taskData.projectId || taskData.project_id,
+        taskData.title,
+        taskData.description,
+        taskData.assigneeUserId || taskData.assignee_user_id,
+        taskData.status || 'todo',
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error creating task:', error);
+      throw error;
+    }
+  }
+
+  async updateTask(id, taskData, adminInfo) {
+    try {
+      const query = `
+        UPDATE tasks
+        SET
+          project_id = $1,
+          title = $2,
+          description = $3,
+          assignee_user_id = $4,
+          status = $5,
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = $6
+        RETURNING *
+      `;
+      const values = [
+        taskData.projectId || taskData.project_id,
+        taskData.title,
+        taskData.description,
+        taskData.assigneeUserId || taskData.assignee_user_id,
+        taskData.status,
+        id,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0] || null;
+    } catch (error) {
+      console.error('Error updating task:', error);
+      throw error;
+    }
+  }
+
+  async deleteTask(id, adminInfo) {
+    try {
+      const query = 'DELETE FROM tasks WHERE id = $1';
+      const result = await this.db.query(query, [id]);
+      return result.rowCount > 0;
+    } catch (error) {
+      console.error('Error deleting task:', error);
+      throw error;
+    }
+  }
+
+  // Messages SCRUD methods
+  async getMessages(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = options.offset || 0;
+      const search = options.search;
+      const sortBy = options.sortBy || 'created_at';
+      const sortOrder = options.sortOrder || 'desc';
+
+      let whereClause = '';
+      let params = [];
+      let paramIndex = 1;
+
+      if (search) {
+        whereClause += ` AND (m.body ILIKE $${paramIndex} OR u.name ILIKE $${paramIndex})`;
+        params.push(`%${search}%`);
+        paramIndex++;
+      }
+
+      const orderClause = `ORDER BY m.${sortBy} ${sortOrder.toUpperCase()}`;
+
+      const countQuery = `
+        SELECT COUNT(*) as total
+        FROM messages m
+        JOIN projects p ON m.project_id = p.id
+        JOIN users u ON m.user_id = u.id
+        WHERE p.deleted_at IS NULL AND u.deleted_at IS NULL ${whereClause}
+      `;
+
+      const dataQuery = `
+        SELECT
+          m.*,
+          p.title as project_title,
+          u.name as user_name,
+          u.email as user_email
+        FROM messages m
+        JOIN projects p ON m.project_id = p.id
+        JOIN users u ON m.user_id = u.id
+        WHERE p.deleted_at IS NULL AND u.deleted_at IS NULL ${whereClause}
+        ${orderClause}
+        LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
+      `;
+
+      params.push(limit, offset);
+
+      const [countResult, dataResult] = await Promise.all([
+        this.db.query(countQuery, params.slice(0, paramIndex - 2)),
+        this.db.query(dataQuery, params),
+      ]);
+
+      const total = parseInt(countResult.rows[0].total);
+      const totalPages = Math.ceil(total / limit);
+
+      return {
+        messages: dataResult.rows,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting messages:', error);
+      throw error;
+    }
+  }
+
+  async createMessage(messageData, adminInfo) {
+    try {
+      const query = `
+        INSERT INTO messages (
+          project_id, user_id, body, created_at
+        ) VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
+        RETURNING *
+      `;
+      const values = [
+        messageData.projectId || messageData.project_id,
+        messageData.userId || messageData.user_id,
+        messageData.body,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error creating message:', error);
+      throw error;
+    }
+  }
+
+  async updateMessage(id, messageData, adminInfo) {
+    try {
+      const query = `
+        UPDATE messages
+        SET
+          project_id = $1,
+          user_id = $2,
+          body = $3
+        WHERE id = $4
+        RETURNING *
+      `;
+      const values = [
+        messageData.projectId || messageData.project_id,
+        messageData.userId || messageData.user_id,
+        messageData.body,
+        id,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0] || null;
+    } catch (error) {
+      console.error('Error updating message:', error);
+      throw error;
+    }
+  }
+
+  async deleteMessage(id, adminInfo) {
+    try {
+      const query = 'DELETE FROM messages WHERE id = $1';
+      const result = await this.db.query(query, [id]);
+      return result.rowCount > 0;
+    } catch (error) {
+      console.error('Error deleting message:', error);
+      throw error;
+    }
+  }
+
+  // Startups SCRUD methods
+  async getStartups(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = options.offset || 0;
+      const search = options.search;
+      const sortBy = options.sortBy || 'created_at';
+      const sortOrder = options.sortOrder || 'desc';
+
+      let whereClause = '';
+      let params = [];
+      let paramIndex = 1;
+
+      if (search) {
+        whereClause += ` AND (s.name ILIKE $${paramIndex} OR s.description ILIKE $${paramIndex} OR s.industry ILIKE $${paramIndex})`;
+        params.push(`%${search}%`);
+        paramIndex++;
+      }
+
+      const orderClause = `ORDER BY s.${sortBy} ${sortOrder.toUpperCase()}`;
+
+      const countQuery = `SELECT COUNT(*) as total FROM startups s ${whereClause}`;
+
+      const dataQuery = `
+        SELECT
+          s.*,
+          u.name as owner_name,
+          u.email as owner_email
+        FROM startups s
+        JOIN users u ON s.owner_user_id = u.id
+        WHERE u.deleted_at IS NULL ${whereClause}
+        ${orderClause}
+        LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
+      `;
+
+      params.push(limit, offset);
+
+      const [countResult, dataResult] = await Promise.all([
+        this.db.query(countQuery, params.slice(0, paramIndex - 2)),
+        this.db.query(dataQuery, params),
+      ]);
+
+      const total = parseInt(countResult.rows[0].total);
+      const totalPages = Math.ceil(total / limit);
+
+      return {
+        startups: dataResult.rows,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting startups:', error);
+      throw error;
+    }
+  }
+
+  async createStartup(startupData, adminInfo) {
+    try {
+      const query = `
+        INSERT INTO startups (
+          owner_user_id, name, description, industry, stage, funding_status,
+          website_url, linkedin_url, twitter_url, logo_url, created_at, updated_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        RETURNING *
+      `;
+      const values = [
+        startupData.ownerUserId || startupData.owner_user_id,
+        startupData.name,
+        startupData.description,
+        startupData.industry,
+        startupData.stage,
+        startupData.fundingStatus || startupData.funding_status,
+        startupData.websiteUrl || startupData.website_url,
+        startupData.linkedinUrl || startupData.linkedin_url,
+        startupData.twitterUrl || startupData.twitter_url,
+        startupData.logoUrl || startupData.logo_url,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error creating startup:', error);
+      throw error;
+    }
+  }
+
+  async updateStartup(id, startupData, adminInfo) {
+    try {
+      const query = `
+        UPDATE startups
+        SET
+          owner_user_id = $1,
+          name = $2,
+          description = $3,
+          industry = $4,
+          stage = $5,
+          funding_status = $6,
+          website_url = $7,
+          linkedin_url = $8,
+          twitter_url = $9,
+          logo_url = $10,
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = $11
+        RETURNING *
+      `;
+      const values = [
+        startupData.ownerUserId || startupData.owner_user_id,
+        startupData.name,
+        startupData.description,
+        startupData.industry,
+        startupData.stage,
+        startupData.fundingStatus || startupData.funding_status,
+        startupData.websiteUrl || startupData.website_url,
+        startupData.linkedinUrl || startupData.linkedin_url,
+        startupData.twitterUrl || startupData.twitter_url,
+        startupData.logoUrl || startupData.logo_url,
+        id,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0] || null;
+    } catch (error) {
+      console.error('Error updating startup:', error);
+      throw error;
+    }
+  }
+
+  async deleteStartup(id, adminInfo) {
+    try {
+      const query = 'DELETE FROM startups WHERE id = $1';
+      const result = await this.db.query(query, [id]);
+      return result.rowCount > 0;
+    } catch (error) {
+      console.error('Error deleting startup:', error);
+      throw error;
+    }
+  }
+
+  // Enterprises SCRUD methods
+  async getEnterprises(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = options.offset || 0;
+      const search = options.search;
+      const sortBy = options.sortBy || 'created_at';
+      const sortOrder = options.sortOrder || 'desc';
+
+      let whereClause = '';
+      let params = [];
+      let paramIndex = 1;
+
+      if (search) {
+        whereClause += ` AND (e.name ILIKE $${paramIndex} OR e.description ILIKE $${paramIndex} OR e.industry ILIKE $${paramIndex})`;
+        params.push(`%${search}%`);
+        paramIndex++;
+      }
+
+      const orderClause = `ORDER BY e.${sortBy} ${sortOrder.toUpperCase()}`;
+
+      const countQuery = `SELECT COUNT(*) as total FROM enterprises e ${whereClause}`;
+
+      const dataQuery = `
+        SELECT
+          e.*,
+          u.name as owner_name,
+          u.email as owner_email
+        FROM enterprises e
+        JOIN users u ON e.owner_user_id = u.id
+        WHERE u.deleted_at IS NULL ${whereClause}
+        ${orderClause}
+        LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
+      `;
+
+      params.push(limit, offset);
+
+      const [countResult, dataResult] = await Promise.all([
+        this.db.query(countQuery, params.slice(0, paramIndex - 2)),
+        this.db.query(dataQuery, params),
+      ]);
+
+      const total = parseInt(countResult.rows[0].total);
+      const totalPages = Math.ceil(total / limit);
+
+      return {
+        enterprises: dataResult.rows,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting enterprises:', error);
+      throw error;
+    }
+  }
+
+  async createEnterprise(enterpriseData, adminInfo) {
+    try {
+      const query = `
+        INSERT INTO enterprises (
+          owner_user_id, name, description, industry, size,
+          website_url, linkedin_url, created_at, updated_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        RETURNING *
+      `;
+      const values = [
+        enterpriseData.ownerUserId || enterpriseData.owner_user_id,
+        enterpriseData.name,
+        enterpriseData.description,
+        enterpriseData.industry,
+        enterpriseData.size,
+        enterpriseData.websiteUrl || enterpriseData.website_url,
+        enterpriseData.linkedinUrl || enterpriseData.linkedin_url,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error creating enterprise:', error);
+      throw error;
+    }
+  }
+
+  async updateEnterprise(id, enterpriseData, adminInfo) {
+    try {
+      const query = `
+        UPDATE enterprises
+        SET
+          owner_user_id = $1,
+          name = $2,
+          description = $3,
+          industry = $4,
+          size = $5,
+          website_url = $6,
+          linkedin_url = $7,
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = $8
+        RETURNING *
+      `;
+      const values = [
+        enterpriseData.ownerUserId || enterpriseData.owner_user_id,
+        enterpriseData.name,
+        enterpriseData.description,
+        enterpriseData.industry,
+        enterpriseData.size,
+        enterpriseData.websiteUrl || enterpriseData.website_url,
+        enterpriseData.linkedinUrl || enterpriseData.linkedin_url,
+        id,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0] || null;
+    } catch (error) {
+      console.error('Error updating enterprise:', error);
+      throw error;
+    }
+  }
+
+  async deleteEnterprise(id, adminInfo) {
+    try {
+      const query = 'DELETE FROM enterprises WHERE id = $1';
+      const result = await this.db.query(query, [id]);
+      return result.rowCount > 0;
+    } catch (error) {
+      console.error('Error deleting enterprise:', error);
+      throw error;
+    }
+  }
+
+  // Corporates SCRUD methods
+  async getCorporates(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = options.offset || 0;
+      const search = options.search;
+      const sortBy = options.sortBy || 'created_at';
+      const sortOrder = options.sortOrder || 'desc';
+
+      let whereClause = '';
+      let params = [];
+      let paramIndex = 1;
+
+      if (search) {
+        whereClause += ` AND (c.name ILIKE $${paramIndex} OR c.description ILIKE $${paramIndex} OR c.industry ILIKE $${paramIndex})`;
+        params.push(`%${search}%`);
+        paramIndex++;
+      }
+
+      const orderClause = `ORDER BY c.${sortBy} ${sortOrder.toUpperCase()}`;
+
+      const countQuery = `SELECT COUNT(*) as total FROM corporates c ${whereClause}`;
+
+      const dataQuery = `
+        SELECT
+          c.*,
+          u.name as owner_name,
+          u.email as owner_email
+        FROM corporates c
+        JOIN users u ON c.owner_user_id = u.id
+        WHERE u.deleted_at IS NULL ${whereClause}
+        ${orderClause}
+        LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
+      `;
+
+      params.push(limit, offset);
+
+      const [countResult, dataResult] = await Promise.all([
+        this.db.query(countQuery, params.slice(0, paramIndex - 2)),
+        this.db.query(dataQuery, params),
+      ]);
+
+      const total = parseInt(countResult.rows[0].total);
+      const totalPages = Math.ceil(total / limit);
+
+      return {
+        corporates: dataResult.rows,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting corporates:', error);
+      throw error;
+    }
+  }
+
+  async createCorporate(corporateData, adminInfo) {
+    try {
+      const query = `
+        INSERT INTO corporates (
+          owner_user_id, name, description, industry, size,
+          website_url, linkedin_url, created_at, updated_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        RETURNING *
+      `;
+      const values = [
+        corporateData.ownerUserId || corporateData.owner_user_id,
+        corporateData.name,
+        corporateData.description,
+        corporateData.industry,
+        corporateData.size,
+        corporateData.websiteUrl || corporateData.website_url,
+        corporateData.linkedinUrl || corporateData.linkedin_url,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error creating corporate:', error);
+      throw error;
+    }
+  }
+
+  async updateCorporate(id, corporateData, adminInfo) {
+    try {
+      const query = `
+        UPDATE corporates
+        SET
+          owner_user_id = $1,
+          name = $2,
+          description = $3,
+          industry = $4,
+          size = $5,
+          website_url = $6,
+          linkedin_url = $7,
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = $8
+        RETURNING *
+      `;
+      const values = [
+        corporateData.ownerUserId || corporateData.owner_user_id,
+        corporateData.name,
+        corporateData.description,
+        corporateData.industry,
+        corporateData.size,
+        corporateData.websiteUrl || corporateData.website_url,
+        corporateData.linkedinUrl || corporateData.linkedin_url,
+        id,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0] || null;
+    } catch (error) {
+      console.error('Error updating corporate:', error);
+      throw error;
+    }
+  }
+
+  async deleteCorporate(id, adminInfo) {
+    try {
+      const query = 'DELETE FROM corporates WHERE id = $1';
+      const result = await this.db.query(query, [id]);
+      return result.rowCount > 0;
+    } catch (error) {
+      console.error('Error deleting corporate:', error);
+      throw error;
+    }
+  }
+
+  // Help Categories SCRUD methods
+  async getHelpCategories(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = options.offset || 0;
+      const search = options.search;
+      const sortBy = options.sortBy || 'created_at';
+      const sortOrder = options.sortOrder || 'desc';
+
+      let whereClause = 'WHERE hc.is_active = true';
+      let params = [];
+      let paramIndex = 1;
+
+      if (search) {
+        whereClause += ` AND (hc.name ILIKE $${paramIndex} OR hc.description ILIKE $${paramIndex})`;
+        params.push(`%${search}%`);
+        paramIndex++;
+      }
+
+      const orderClause = `ORDER BY hc.${sortBy} ${sortOrder.toUpperCase()}`;
+
+      const countQuery = `SELECT COUNT(*) as total FROM help_categories hc ${whereClause}`;
+
+      const dataQuery = `
+        SELECT
+          hc.*,
+          parent.name as parent_category_name
+        FROM help_categories hc
+        LEFT JOIN help_categories parent ON hc.parent_category_id = parent.id
+        ${whereClause}
+        ${orderClause}
+        LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
+      `;
+
+      params.push(limit, offset);
+
+      const [countResult, dataResult] = await Promise.all([
+        this.db.query(countQuery, params.slice(0, paramIndex - 2)),
+        this.db.query(dataQuery, params),
+      ]);
+
+      const total = parseInt(countResult.rows[0].total);
+      const totalPages = Math.ceil(total / limit);
+
+      return {
+        categories: dataResult.rows,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting help categories:', error);
+      throw error;
+    }
+  }
+
+  async createHelpCategory(categoryData, adminInfo) {
+    try {
+      const query = `
+        INSERT INTO help_categories (
+          name, description, slug, is_active, sort_order, parent_category_id, created_at, updated_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        RETURNING *
+      `;
+      const values = [
+        categoryData.name,
+        categoryData.description,
+        categoryData.slug,
+        categoryData.isActive !== undefined ? categoryData.isActive : true,
+        categoryData.sortOrder || 0,
+        categoryData.parentCategoryId || categoryData.parent_category_id,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error creating help category:', error);
+      throw error;
+    }
+  }
+
+  async updateHelpCategory(id, categoryData, adminInfo) {
+    try {
+      const query = `
+        UPDATE help_categories
+        SET
+          name = $1,
+          description = $2,
+          slug = $3,
+          is_active = $4,
+          sort_order = $5,
+          parent_category_id = $6,
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = $7
+        RETURNING *
+      `;
+      const values = [
+        categoryData.name,
+        categoryData.description,
+        categoryData.slug,
+        categoryData.isActive,
+        categoryData.sortOrder,
+        categoryData.parentCategoryId || categoryData.parent_category_id,
+        id,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0] || null;
+    } catch (error) {
+      console.error('Error updating help category:', error);
+      throw error;
+    }
+  }
+
+  async deleteHelpCategory(id, adminInfo) {
+    try {
+      const query = 'DELETE FROM help_categories WHERE id = $1';
+      const result = await this.db.query(query, [id]);
+      return result.rowCount > 0;
+    } catch (error) {
+      console.error('Error deleting help category:', error);
+      throw error;
+    }
+  }
+
+  // Help Articles SCRUD methods
+  async getHelpArticles(options = {}) {
+    try {
+      const page = options.page || 1;
+      const limit = options.limit || 20;
+      const offset = options.offset || 0;
+      const search = options.search;
+      const sortBy = options.sortBy || 'created_at';
+      const sortOrder = options.sortOrder || 'desc';
+
+      let whereClause = '';
+      let params = [];
+      let paramIndex = 1;
+
+      if (search) {
+        whereClause += ` AND (ha.title ILIKE $${paramIndex} OR ha.content ILIKE $${paramIndex})`;
+        params.push(`%${search}%`);
+        paramIndex++;
+      }
+
+      const orderClause = `ORDER BY ha.${sortBy} ${sortOrder.toUpperCase()}`;
+
+      const countQuery = `
+        SELECT COUNT(*) as total
+        FROM help_articles ha
+        LEFT JOIN help_categories hc ON ha.category_id = hc.id
+        WHERE hc.is_active = true ${whereClause}
+      `;
+
+      const dataQuery = `
+        SELECT
+          ha.*,
+          hc.name as category_name,
+          u.name as author_name
+        FROM help_articles ha
+        LEFT JOIN help_categories hc ON ha.category_id = hc.id
+        LEFT JOIN users u ON ha.author_user_id = u.id
+        WHERE hc.is_active = true ${whereClause}
+        ${orderClause}
+        LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
+      `;
+
+      params.push(limit, offset);
+
+      const [countResult, dataResult] = await Promise.all([
+        this.db.query(countQuery, params.slice(0, paramIndex - 2)),
+        this.db.query(dataQuery, params),
+      ]);
+
+      const total = parseInt(countResult.rows[0].total);
+      const totalPages = Math.ceil(total / limit);
+
+      return {
+        articles: dataResult.rows,
+        pagination: {
+          page,
+          limit,
+          total,
+          pages: totalPages,
+          hasPrev: page > 1,
+          hasNext: page < totalPages,
+        },
+      };
+    } catch (error) {
+      console.error('Error getting help articles:', error);
+      throw error;
+    }
+  }
+
+  async createHelpArticle(articleData, adminInfo) {
+    try {
+      const query = `
+        INSERT INTO help_articles (
+          title, content, category_id, author_user_id, slug, is_published,
+          is_featured, view_count, helpful_count, unhelpful_count, read_time_minutes,
+          meta_description, created_at, updated_at, published_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $13)
+        RETURNING *
+      `;
+      const values = [
+        articleData.title,
+        articleData.content,
+        articleData.categoryId || articleData.category_id,
+        articleData.authorUserId || articleData.author_user_id,
+        articleData.slug,
+        articleData.isPublished !== undefined ? articleData.isPublished : false,
+        articleData.isFeatured !== undefined ? articleData.isFeatured : false,
+        articleData.viewCount || 0,
+        articleData.helpfulCount || 0,
+        articleData.unhelpfulCount || 0,
+        articleData.readTimeMinutes || 0,
+        articleData.metaDescription,
+        articleData.isPublished ? new Date() : null,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error creating help article:', error);
+      throw error;
+    }
+  }
+
+  async updateHelpArticle(id, articleData, adminInfo) {
+    try {
+      const query = `
+        UPDATE help_articles
+        SET
+          title = $1,
+          content = $2,
+          category_id = $3,
+          author_user_id = $4,
+          slug = $5,
+          is_published = $6,
+          is_featured = $7,
+          view_count = $8,
+          helpful_count = $9,
+          unhelpful_count = $10,
+          read_time_minutes = $11,
+          meta_description = $12,
+          updated_at = CURRENT_TIMESTAMP,
+          published_at = $13
+        WHERE id = $14
+        RETURNING *
+      `;
+      const values = [
+        articleData.title,
+        articleData.content,
+        articleData.categoryId || articleData.category_id,
+        articleData.authorUserId || articleData.author_user_id,
+        articleData.slug,
+        articleData.isPublished,
+        articleData.isFeatured,
+        articleData.viewCount,
+        articleData.helpfulCount,
+        articleData.unhelpfulCount,
+        articleData.readTimeMinutes,
+        articleData.metaDescription,
+        articleData.isPublished && !articleData.published_at
+          ? new Date()
+          : articleData.published_at,
+        id,
+      ];
+      const result = await this.db.query(query, values);
+      return result.rows[0] || null;
+    } catch (error) {
+      console.error('Error updating help article:', error);
+      throw error;
+    }
+  }
+
+  async deleteHelpArticle(id, adminInfo) {
+    try {
+      const query = 'DELETE FROM help_articles WHERE id = $1';
+      const result = await this.db.query(query, [id]);
+      return result.rowCount > 0;
+    } catch (error) {
+      console.error('Error deleting help article:', error);
+      throw error;
+    }
   }
 }
 

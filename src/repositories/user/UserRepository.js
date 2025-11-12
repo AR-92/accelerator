@@ -63,7 +63,7 @@ class UserRepository extends BaseRepository {
       user_type: user.role,
       theme: user.theme,
       bio: user.bio,
-      credits: user.credits,
+      wallet_credits: user.credits,
     };
 
     return await super.create(data);
@@ -170,7 +170,7 @@ class UserRepository extends BaseRepository {
    */
   async updateCredits(id, credits) {
     const data = {
-      credits: credits,
+      wallet_credits: credits,
       updated_at: new Date().toISOString(),
     };
     const success = await super.update(id, data);
@@ -242,7 +242,7 @@ class UserRepository extends BaseRepository {
    * @returns {Promise<number>}
    */
   async getTotalCredits() {
-    const sql = 'SELECT SUM(credits) as total FROM users';
+    const sql = 'SELECT SUM(wallet_credits) as total FROM users';
     const row = await this.queryOne(sql);
     return row.total || 0;
   }

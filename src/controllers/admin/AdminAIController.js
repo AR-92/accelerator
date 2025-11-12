@@ -38,9 +38,10 @@ class AdminAIController {
       });
     } catch (error) {
       console.error('Error showing AI models:', error);
-      res.status(500).render('pages/error', {
+      res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        error: 'Failed to load AI models',
+        layout: 'main',
+        message: 'Failed to load AI models',
       });
     }
   }
@@ -74,9 +75,10 @@ class AdminAIController {
       });
     } catch (error) {
       console.error('Error showing AI workflows:', error);
-      res.status(500).render('pages/error', {
+      res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        error: 'Failed to load AI workflows',
+        layout: 'main',
+        message: 'Failed to load AI workflows',
       });
     }
   }
@@ -90,9 +92,10 @@ class AdminAIController {
       const workflow = await this.adminService.getAIWorkflowById(workflowId);
 
       if (!workflow) {
-        return res.status(404).render('pages/error', {
+        return res.status(404).render('pages/error/page-not-found', {
           title: 'Not Found - Admin Panel',
-          error: 'AI Workflow not found',
+          layout: 'main',
+          message: 'AI Workflow not found',
         });
       }
 
@@ -116,9 +119,10 @@ class AdminAIController {
       });
     } catch (error) {
       console.error('Error showing AI workflow details:', error);
-      res.status(500).render('pages/error', {
+      res.status(500).render('pages/error/page-not-found', {
         title: 'Error - Admin Panel',
-        error: 'Failed to load AI workflow details',
+        layout: 'main',
+        message: 'Failed to load AI workflow details',
       });
     }
   }
