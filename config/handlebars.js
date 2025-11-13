@@ -268,6 +268,15 @@ if (fs.existsSync(ideaCardPath)) {
   }
 }
 
+const aiMessagePath = path.join(
+  __dirname,
+  '../src/views/partials/_ai-message.hbs'
+);
+if (fs.existsSync(aiMessagePath)) {
+  const aiMessageTemplate = fs.readFileSync(aiMessagePath, 'utf8');
+  handlebars.registerPartial('ai-message', aiMessageTemplate);
+}
+
 const collaborateNavbarPath = path.join(
   __dirname,
   '../src/views/partials/_collaborate-navbar.hbs'
