@@ -79,7 +79,7 @@ To access the admin panel:
 
 2. Login credentials:
    - Email: `admin@accelerator.com`
-   - Password: `admin123`
+   - Password: `123456`
 
 3. Navigate to `/admin/login` and sign in
 
