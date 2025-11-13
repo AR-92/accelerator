@@ -129,7 +129,7 @@ To access the admin panel:
    npm run dev
    ```
 
-6. The application will be available at `http://localhost:3000` (or the port specified in your .env file)
+6. The application will be available at `http://localhost:3002` in development mode (browser-sync proxy), or `http://localhost:3000` for direct server access
 
 ### Running in Production
 

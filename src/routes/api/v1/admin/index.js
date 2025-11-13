@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const rateLimit = require('express-rate-limit');
 
-// Import admin auth middleware and wrap it for async compatibility  
-const { requireAdminAuth: originalRequireAdminAuth } = require('../../../../middleware/auth/adminAuth');
+// Import admin auth middleware and wrap it for async compatibility
+const {
+  requireAdminAuth: originalRequireAdminAuth,
+} = require('../../../../middleware/auth/adminAuth');
 
 const requireAdminAuth = (req, res, next) => {
   originalRequireAdminAuth(req, res, next).catch(next);
@@ -139,8 +141,6 @@ router.post(
   adminController.bulkUpdateRoles.bind(adminController)
 );
 
-
-
 // Collaboration management routes
 router.get(
   '/collaborations',
@@ -152,7 +152,6 @@ router.get(
   requireAdminAuth,
   adminController.showCollaborationDetails.bind(adminController)
 );
-
 
 // Collaboration API routes
 router.get(
@@ -175,8 +174,6 @@ router.delete(
   requireAdminAuth,
   adminController.deleteProject.bind(adminController)
 );
-
-
 
 // Ideas management routes
 router.get(

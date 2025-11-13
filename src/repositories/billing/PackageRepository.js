@@ -66,11 +66,11 @@ class PackageRepository extends BaseRepository {
     const sql = `
       SELECT
         COUNT(*) as total,
-        SUM(CASE WHEN status = 'active' THEN 1 ELSE 0 END) as active,
-        SUM(CASE WHEN status = 'inactive' THEN 1 ELSE 0 END) as inactive,
-        SUM(CASE WHEN status = 'archived' THEN 1 ELSE 0 END) as archived,
-        AVG(price) as avg_price,
-        AVG(credits) as avg_credits
+        SUM(CASE WHEN is_active = true THEN 1 ELSE 0 END) as active,
+        SUM(CASE WHEN is_active = false THEN 1 ELSE 0 END) as inactive,
+        0 as archived,
+        AVG(price_cents) as avg_price,
+        0 as avg_credits
       FROM ${this.tableName}
     `;
     return await this.queryOne(sql);

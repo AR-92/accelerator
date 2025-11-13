@@ -19,6 +19,8 @@ const OrganizationRepository = require('./repositories/business/OrganizationRepo
 const ProjectRepository = require('./repositories/project/ProjectRepository');
 const CollaborationRepository = require('./repositories/project/CollaborationRepository');
 const ProjectCollaboratorRepository = require('./repositories/project/ProjectCollaboratorRepository');
+const TaskRepository = require('./repositories/project/TaskRepository');
+const MessageRepository = require('./repositories/project/MessageRepository');
 const TeamRepository = require('./repositories/user/TeamRepository');
 const LandingPageRepository = require('./repositories/content/LandingPageRepository');
 const PackageRepository = require('./repositories/billing/PackageRepository');
@@ -112,6 +114,7 @@ container.register(
   'corporateRepository',
   (c) => new CorporateRepository(c.get('db'))
 );
+container.register('ideaRepository', (c) => new IdeaRepository(c.get('db')));
 container.register(
   'organizationRepository',
   (c) => new OrganizationRepository(c.get('db'))
@@ -160,6 +163,11 @@ container.register('teamRepository', (c) => new TeamRepository(c.get('db')));
 container.register(
   'landingPageRepository',
   (c) => new LandingPageRepository(c.get('db'))
+);
+container.register('taskRepository', (c) => new TaskRepository(c.get('db')));
+container.register(
+  'messageRepository',
+  (c) => new MessageRepository(c.get('db'))
 );
 container.register(
   'packageRepository',
@@ -245,7 +253,15 @@ container.register(
       c.get('corporateService'),
       c.get('packageRepository'),
       c.get('billingRepository'),
-      c.get('rewardRepository')
+      c.get('rewardRepository'),
+      c.get('projectRepository'),
+      c.get('taskRepository'),
+      c.get('messageRepository'),
+      c.get('ideaRepository'),
+      c.get('voteRepository'),
+      c.get('organizationRepository'),
+      c.get('landingPageRepository'),
+      c.get('projectCollaboratorRepository')
     )
 );
 container.register(

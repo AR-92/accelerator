@@ -80,6 +80,35 @@ class ProjectCollaboratorRepository {
   }
 
   /**
+   * Count total collaborators
+   * @returns {Promise<number>}
+   */
+  async count() {
+    return new Promise((resolve, reject) => {
+      const sql = 'SELECT COUNT(*) as count FROM project_collaborators';
+      this.db.get(sql, [], (err, row) => {
+        if (err) reject(err);
+        else resolve(row.count || 0);
+      });
+    });
+  }
+
+  /**
+   * Count distinct teams (projects with collaborators)
+   * @returns {Promise<number>}
+   */
+  async countDistinctTeams() {
+    return new Promise((resolve, reject) => {
+      const sql =
+        'SELECT COUNT(DISTINCT project_id) as count FROM project_collaborators';
+      this.db.get(sql, [], (err, row) => {
+        if (err) reject(err);
+        else resolve(row.count || 0);
+      });
+    });
+  }
+
+  /**
    * Get collaborator role
    */
   async getCollaboratorRole(projectId, userId) {

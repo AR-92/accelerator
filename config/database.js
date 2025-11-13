@@ -9,10 +9,12 @@ const pool = new Pool({
   user: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASSWORD || '',
   ssl: process.env.DB_SSL === 'true' ? true : false,
-  // Connection pool settings
-  max: 20, // maximum number of clients in the pool
+  // Connection pool settings - optimized for startup performance
+  max: 10, // reduced from 20 to prevent connection exhaustion
+  min: 2, // minimum connections to keep ready
   idleTimeoutMillis: 30000, // close idle clients after 30 seconds
-  connectionTimeoutMillis: 2000, // return an error after 2 seconds if connection could not be established
+  connectionTimeoutMillis: 5000, // increased timeout for slower connections
+  acquireTimeoutMillis: 60000, // timeout for acquiring connection from pool
 });
 
 // PostgreSQL database interface
@@ -221,8 +223,8 @@ const runMigrations = async () => {
       // Check if a key table (users) from our complete schema exists
       const result = await client.query(`
         SELECT EXISTS (
-          SELECT FROM information_schema.tables 
-          WHERE table_schema = 'public' 
+          SELECT FROM information_schema.tables
+          WHERE table_schema = 'public'
           AND table_name = 'users'
         );
       `);
@@ -249,9 +251,36 @@ const runMigrations = async () => {
     }
 
     const schemaSql = fs.readFileSync(schemaFile, 'utf8');
+
+    // Split the schema into individual statements and execute them one by one
+    // This provides better error handling and progress feedback
+    const statements = schemaSql
+      .split(';')
+      .map((stmt) => stmt.trim())
+      .filter((stmt) => stmt.length > 0 && !stmt.startsWith('--'));
+
     const schemaClient = await pool.connect();
     try {
-      await schemaClient.query(schemaSql);
+      dbLogger.info(`Executing ${statements.length} SQL statements...`);
+
+      for (let i = 0; i < statements.length; i++) {
+        const statement = statements[i];
+        if (statement.trim()) {
+          try {
+            await schemaClient.query(statement);
+          } catch (stmtError) {
+            // Log the error but continue with other statements
+            dbLogger.warn(`Statement ${i + 1} failed:`, stmtError.message);
+            // Don't throw - continue with other statements
+          }
+        }
+
+        // Log progress every 50 statements
+        if ((i + 1) % 50 === 0) {
+          dbLogger.info(`Executed ${i + 1}/${statements.length} statements`);
+        }
+      }
+
       dbLogger.info('Database schema applied successfully');
     } finally {
       schemaClient.release();

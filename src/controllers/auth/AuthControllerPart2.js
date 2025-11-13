@@ -15,9 +15,9 @@ class AuthControllerPart2 {
    * @param {Object} res - Express response object
    */
   async changePassword(req, res) {
-    this.logger.info('Password change request', { 
+    this.logger.info('Password change request', {
       userId: req.user.id,
-      ip: req.ip || req.connection.remoteAddress 
+      ip: req.ip || req.connection.remoteAddress,
     });
 
     try {
@@ -25,9 +25,9 @@ class AuthControllerPart2 {
 
       if (!currentPassword || !newPassword) {
         const errorMessage = 'Current password and new password are required';
-        this.logger.warn('Password change failed - missing required fields', { 
+        this.logger.warn('Password change failed - missing required fields', {
           userId: req.user.id,
-          ip: req.ip || req.connection.remoteAddress 
+          ip: req.ip || req.connection.remoteAddress,
         });
 
         return res.status(400).json({
@@ -42,15 +42,17 @@ class AuthControllerPart2 {
         newPassword
       );
 
-      this.logger.info('Password changed successfully', { userId: req.user.id });
+      this.logger.info('Password changed successfully', {
+        userId: req.user.id,
+      });
       res.json({
         success: true,
         message: 'Password changed successfully',
       });
     } catch (error) {
-      this.logger.error('Password change error:', error, { 
+      this.logger.error('Password change error:', error, {
         userId: req.user.id,
-        ip: req.ip || req.connection.remoteAddress 
+        ip: req.ip || req.connection.remoteAddress,
       });
 
       if (error.name === 'NotFoundError' || error.name === 'ValidationError') {

@@ -2,39 +2,37 @@ Nice — you’ve sketched a clear domain. Below I’ll translate your requireme
 
 # 1) Short plain-English summary of what you want
 
-* There is a single **User** entity. A user has a `type`/`role` (student / startup / enterprise / corporate) which affects pricing and what actions/features they can use.
-* Users can **create/read/update/delete (SCRUD)** Projects (permissions depend on user type and ownership).
-* Users can **vote** on projects (one vote per user per project); votes influence rewards.
-* Users can **buy credits** (money → credits). Those credits can be used to reward other users/projects.
-* There are **billing/payment records** for users (payment methods, payments/transactions).
-* Users can **collaborate** on projects (teams, project chat, tasks).
-* There is authentication (signup/login). Corporate users can create Enterprises; Enterprises can manage Startups; Startups can manage Projects (this implies hierarchical ownership/management relationships).
+- There is a single **User** entity. A user has a `type`/`role` (student / startup / enterprise / corporate) which affects pricing and what actions/features they can use.
+- Users can **create/read/update/delete (SCRUD)** Projects (permissions depend on user type and ownership).
+- Users can **vote** on projects (one vote per user per project); votes influence rewards.
+- Users can **buy credits** (money → credits). Those credits can be used to reward other users/projects.
+- There are **billing/payment records** for users (payment methods, payments/transactions).
+- Users can **collaborate** on projects (teams, project chat, tasks).
+- There is authentication (signup/login). Corporate users can create Enterprises; Enterprises can manage Startups; Startups can manage Projects (this implies hierarchical ownership/management relationships).
 
 # 2) Main entities and relationships (ER-style)
 
-* **User** (1) — (many) **Project**: a user may own/create many projects. Startups typically own projects.
-* **User** (many) — (many) **Project** via **ProjectCollaborator**: many users collaborate on many projects.
-* **Project** (1) — (many) **Task**
-* **User** (many) — (many) **Vote** — (many) **Project**: a vote is a join entity (user votes on project).
-* **User** (1) — (many) **Transaction**: records purchases of credits and payments.
-* **User** (1) — (many) **PaymentMethod**
-* **User** (1) — (many) **CreditBalance / Wallet**: track current credits.
-* **ProjectReward**: when credits are rewarded to a project/user as result of votes/purchases.
-* **Corporate → Enterprise → Startup**: hierarchical entities. Model as separate tables referencing parent `user` (or have `Organization` table with `org_type`).
+- **User** (1) — (many) **Project**: a user may own/create many projects. Startups typically own projects.
+- **User** (many) — (many) **Project** via **ProjectCollaborator**: many users collaborate on many projects.
+- **Project** (1) — (many) **Task**
+- **User** (many) — (many) **Vote** — (many) **Project**: a vote is a join entity (user votes on project).
+- **User** (1) — (many) **Transaction**: records purchases of credits and payments.
+- **User** (1) — (many) **PaymentMethod**
+- **User** (1) — (many) **CreditBalance / Wallet**: track current credits.
+- **ProjectReward**: when credits are rewarded to a project/user as result of votes/purchases.
+- **Corporate → Enterprise → Startup**: hierarchical entities. Model as separate tables referencing parent `user` (or have `Organization` table with `org_type`).
 
 # 3) Design choices / patterns & rationale
 
-* Use a single `users` table with `user_type` ENUM-like column (`'student'|'startup'|'enterprise'|'corporate'`). Simpler than separate auth tables.
-* Keep **organization** entities (Enterprise, Startup, Corporate) in an `organizations` table with `org_type`. Link users to organizations via `organization_id`. Corporate users can create organizations of type `enterprise` etc.
-* Use explicit join tables for many-to-many relations (collaborators, votes) — easier to enforce constraints and store metadata (e.g., role, joined_at).
-* Record **transactions** for money/credits. Always append-only; compute balances from transactions or keep a `wallet_balance` for fast lookups (but validate by reconciliation).
-* Use foreign key constraints in PostgreSQL to enforce referential integrity.
-* Use soft deletes (`deleted_at`) if you need recoverability.
-* Add indices on FK columns and on frequently queried fields (e.g., `project.owner_id`, `vote.project_id`, `transactions.user_id`).
+- Use a single `users` table with `user_type` ENUM-like column (`'student'|'startup'|'enterprise'|'corporate'`). Simpler than separate auth tables.
+- Keep **organization** entities (Enterprise, Startup, Corporate) in an `organizations` table with `org_type`. Link users to organizations via `organization_id`. Corporate users can create organizations of type `enterprise` etc.
+- Use explicit join tables for many-to-many relations (collaborators, votes) — easier to enforce constraints and store metadata (e.g., role, joined_at).
+- Record **transactions** for money/credits. Always append-only; compute balances from transactions or keep a `wallet_balance` for fast lookups (but validate by reconciliation).
+- Use foreign key constraints in PostgreSQL to enforce referential integrity.
+- Use soft deletes (`deleted_at`) if you need recoverability.
+- Add indices on FK columns and on frequently queried fields (e.g., `project.owner_id`, `vote.project_id`, `transactions.user_id`).
 
 # 4) Example SQLite schema (starter)
-
-
 
 ```sql
 
@@ -174,34 +172,33 @@ CREATE TABLE messages (
 
 # 5) Example workflows & how the schema supports them
 
-* **User buys credits**
-
+- **User buys credits**
   1. Create `transactions` row with `tx_type = 'purchase_credits'`, `amount_cents = ...`, `credits = X`.
   2. Increment `users.wallet_credits` by `X` (or compute balance from transactions if you prefer reconciliation).
-* **User rewards a project/user**
 
+- **User rewards a project/user**
   1. Verify `giver_user.wallet_credits >= credits_to_give`.
   2. Create `rewards` record (link to project/user).
   3. Create `transactions` record with `tx_type = 'reward_spend'`, `credits = -X`.
   4. Decrement `giver_user.wallet_credits` and increment `recipient_user.wallet_credits` if you want recipients to be able to spend those credits further.
-* **Voting -> reward distribution**
 
-  * Option A (simple): tally votes and periodically run a distribution job (e.g., weekly) which creates `rewards` rows based on vote-weighted share. Store distribution as `transactions` too.
-  * Option B (real-time): when vote happens, immediately compute small reward from a central pool or from credits a sponsor purchased; then create `rewards` entry.
+- **Voting -> reward distribution**
+  - Option A (simple): tally votes and periodically run a distribution job (e.g., weekly) which creates `rewards` rows based on vote-weighted share. Store distribution as `transactions` too.
+  - Option B (real-time): when vote happens, immediately compute small reward from a central pool or from credits a sponsor purchased; then create `rewards` entry.
 
 # 6) Permissions / business rules (where to enforce)
 
-* Enforce who can SCRUD projects:
+- Enforce who can SCRUD projects:
+  - `owner_user_id` can update/delete.
+  - `project_collaborators` with role `admin` can manage.
+  - Only `startup` users (or users in startup orgs) can create projects (enforce in application logic).
 
-  * `owner_user_id` can update/delete.
-  * `project_collaborators` with role `admin` can manage.
-  * Only `startup` users (or users in startup orgs) can create projects (enforce in application logic).
-* Corporate → Enterprise → Startup rules:
+- Corporate → Enterprise → Startup rules:
+  - A corporate user can create an organization row with `org_type='enterprise'`.
+  - An enterprise org can create startups (organizations with `org_type='startup'`) and assign ownership.
+  - These are business rules enforced at app layer (or via triggers/stored procedures if desired).
 
-  * A corporate user can create an organization row with `org_type='enterprise'`.
-  * An enterprise org can create startups (organizations with `org_type='startup'`) and assign ownership.
-  * These are business rules enforced at app layer (or via triggers/stored procedures if desired).
-* Billing & Payment Methods: keep PCI-sensitive details out of your DB (store only provider IDs and metadata), use a payment provider like Stripe and store `provider_method_id`.
+- Billing & Payment Methods: keep PCI-sensitive details out of your DB (store only provider IDs and metadata), use a payment provider like Stripe and store `provider_method_id`.
 
 # 7) Index suggestions (important for performance)
 
@@ -215,18 +212,18 @@ CREATE INDEX idx_rewards_recipient ON rewards(recipient_user_id);
 
 # 8) Extra tips
 
-* Use UUIDs if you expect syncing between systems or want non-guessable IDs (SQLite supports TEXT PKs).
-* Keep `wallet_credits` as an integer (no floats) — store credits as smallest unit (e.g., whole credits).
-* Prefer append-only `transactions` for financial auditability; calculate balances from transactions for correctness (and optionally cache in `wallet_credits`).
-* Write tests for reward distribution logic — money/credits rules are bug-prone.
-* Consider `audit` table or `history` table for major changes (payments, reward distributions, role changes).
+- Use UUIDs if you expect syncing between systems or want non-guessable IDs (SQLite supports TEXT PKs).
+- Keep `wallet_credits` as an integer (no floats) — store credits as smallest unit (e.g., whole credits).
+- Prefer append-only `transactions` for financial auditability; calculate balances from transactions for correctness (and optionally cache in `wallet_credits`).
+- Write tests for reward distribution logic — money/credits rules are bug-prone.
+- Consider `audit` table or `history` table for major changes (payments, reward distributions, role changes).
 
 ---
 
 If you want, I can:
 
-* produce an ER diagram ASCII or DOT for Graphviz,
-* add example triggers to automatically update `wallet_credits` on `transactions`/`rewards`,
-* produce SQL that seeds sample users/orgs/projects and demonstrates a purchase → reward flow.
+- produce an ER diagram ASCII or DOT for Graphviz,
+- add example triggers to automatically update `wallet_credits` on `transactions`/`rewards`,
+- produce SQL that seeds sample users/orgs/projects and demonstrates a purchase → reward flow.
 
 Pick one and I’ll generate it right away.

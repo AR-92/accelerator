@@ -3103,10 +3103,6 @@ body {
   background-color: hsl(var(--card) / 0.5);
 }
 
-.bg-card\/95 {
-  background-color: hsl(var(--card) / 0.95);
-}
-
 .bg-current {
   background-color: currentColor;
 }

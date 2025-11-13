@@ -220,6 +220,22 @@ class ProjectRepository extends BaseRepository {
     });
     return result;
   }
+
+  /**
+   * Get project statistics
+   * @returns {Promise<Object>} Project statistics
+   */
+  async getStats() {
+    const sql = `
+      SELECT
+        COUNT(*) as total_projects,
+        COUNT(CASE WHEN visibility = 'public' THEN 1 END) as public_projects,
+        COUNT(CASE WHEN visibility = 'private' THEN 1 END) as private_projects
+      FROM projects
+      WHERE deleted_at IS NULL
+    `;
+    return await this.queryOne(sql);
+  }
 }
 
 module.exports = ProjectRepository;

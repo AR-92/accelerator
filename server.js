@@ -97,8 +97,23 @@ app.use('/api', apiRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/admin', adminPageRoutes);
 
-// Health check endpoint
-app.get('/health', async (req, res) => {
+// Health check endpoint - lightweight version for fast startup
+app.get('/health', (req, res) => {
+  // Return basic health status immediately without database checks
+  const healthCheck = {
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV || 'development',
+    version: require('./package.json').version,
+    database: 'Initializing...', // Will be updated once DB is ready
+  };
+
+  res.status(200).json(healthCheck);
+});
+
+// Detailed health check endpoint
+app.get('/health/detailed', async (req, res) => {
   try {
     // Check basic server status
     const healthCheck = {
@@ -109,25 +124,16 @@ app.get('/health', async (req, res) => {
       version: require('./package.json').version,
     };
 
-    // Check database connection if in production or if explicitly enabled
-    if (
-      process.env.NODE_ENV === 'production' ||
-      process.env.CHECK_DATABASE_HEALTH === 'true'
-    ) {
-      const { testConnection } = require('./config/database');
-      const dbConnected = await testConnection();
-      healthCheck.database = dbConnected ? 'Connected' : 'Disconnected';
-    } else {
-      healthCheck.database = 'Not checked (dev mode)';
-    }
-
-    // Additional checks can be added here (redis, external APIs, etc.)
+    // Check database connection
+    const { testConnection } = require('./config/database');
+    const dbConnected = await testConnection();
+    healthCheck.database = dbConnected ? 'Connected' : 'Disconnected';
 
     res.status(200).json(healthCheck);
   } catch (error) {
     const { Logger } = require('./src/utils/logger');
     const healthLogger = new Logger('HealthCheck');
-    healthLogger.error('Health check error:', error);
+    healthLogger.error('Detailed health check error:', error);
     res.status(500).json({
       status: 'ERROR',
       timestamp: new Date().toISOString(),
@@ -168,30 +174,44 @@ app.use(errorHandler);
 // });
 
 // Start the server
-const server = app.listen(port, '0.0.0.0', async () => {
+const server = app.listen(port, '0.0.0.0', () => {
   const startupLogger = new Logger('Server');
   startupLogger.info(`Server running at http://localhost:${port}`);
   startupLogger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
   startupLogger.info(`Node version: ${process.version}`);
 
-  // Run database migrations and test connection
-  try {
-    const { testConnection, runMigrations } = require('./config/database');
+  // Run database migrations and test connection asynchronously
+  // This prevents blocking the server startup
+  if (process.env.SKIP_DB_MIGRATION !== 'true') {
+    setImmediate(async () => {
+      try {
+        const { testConnection, runMigrations } = require('./config/database');
 
-    // Run migrations first
-    await runMigrations();
+        startupLogger.info('Initializing database...');
 
-    // Then test the connection
-    const isConnected = await testConnection();
-    if (isConnected) {
-      startupLogger.info('PostgreSQL connection established successfully');
-    } else {
-      startupLogger.warn('Warning: PostgreSQL connection failed');
-    }
-  } catch (error) {
-    startupLogger.error('Database initialization error:', {
-      error: error.message,
+        // Run migrations first
+        await runMigrations();
+
+        // Then test the connection
+        const isConnected = await testConnection();
+        if (isConnected) {
+          startupLogger.info('PostgreSQL connection established successfully');
+          startupLogger.info('Server is ready to accept requests');
+        } else {
+          startupLogger.warn('Warning: PostgreSQL connection failed');
+        }
+      } catch (error) {
+        startupLogger.error('Database initialization error:', {
+          error: error.message,
+        });
+        startupLogger.warn(
+          'Server started but database may not be fully initialized'
+        );
+      }
     });
+  } else {
+    startupLogger.info('Skipping database migration (development mode)');
+    startupLogger.info('Server is ready to accept requests');
   }
 });
 

@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "start:fast": "SKIP_DB_MIGRATION=true node server.js",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:tailwind\" \"npm run dev:browser-sync\"",
-    "dev:server": "nodemon server.js",
+    "dev:server": "SKIP_DB_MIGRATION=true nodemon server.js",
     "dev:tailwind": "npx tailwindcss -i ./src/input.css -o ./public/css/main.css --watch",
     "dev:browser-sync": "browser-sync start --proxy 'localhost:3000' --port 3002 --files 'src/views/**/*.hbs, public/**/*.js, public/**/*.css' --reload-delay 500",
     "build": "npx tailwindcss -i ./src/input.css -o ./public/css/main.css --minify",

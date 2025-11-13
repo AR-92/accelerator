@@ -122,9 +122,12 @@ class BaseRepository {
    * @returns {Promise}
    */
   async create(data) {
-    const columns = Object.keys(data);
+    // If data has a toDatabaseJSON method, use it for database serialization
+    const dbData = data.toDatabaseJSON ? data.toDatabaseJSON() : data;
+
+    const columns = Object.keys(dbData);
     const placeholders = columns.map(() => '?').join(', ');
-    const values = Object.values(data);
+    const values = Object.values(dbData);
 
     const sql = `INSERT INTO ${this.tableName} (${columns.join(', ')}) VALUES (${placeholders}) RETURNING id`;
     const result = await this.run(sql, values);
@@ -139,9 +142,12 @@ class BaseRepository {
    * @returns {Promise}
    */
   async update(id, data) {
-    const columns = Object.keys(data);
+    // If data has a toDatabaseJSON method, use it for database serialization
+    const dbData = data.toDatabaseJSON ? data.toDatabaseJSON() : data;
+
+    const columns = Object.keys(dbData);
     const setClause = columns.map((col) => `${col} = ?`).join(', ');
-    const values = [...Object.values(data), id];
+    const values = [...Object.values(dbData), id];
 
     const sql = `UPDATE ${this.tableName} SET ${setClause} WHERE id = ?`;
     const result = await this.run(sql, values);

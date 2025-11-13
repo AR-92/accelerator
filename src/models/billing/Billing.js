@@ -9,15 +9,26 @@ class Billing extends BaseModel {
     this.userId = data.user_id || data.userId;
     this.packageId = data.package_id || data.packageId;
     this.transactionId = data.transaction_id || data.transactionId;
-    this.amount = data.amount || 0;
+    // Convert amount_cents to dollars for the model
+    this.amount = data.amount_cents
+      ? data.amount_cents / 100
+      : data.amount || 0;
     this.currency = data.currency || 'USD';
     this.status = data.status || 'pending';
+    this.invoiceNumber = data.invoice_number || data.invoiceNumber;
     this.paymentMethod = data.payment_method || data.paymentMethod;
+    this.provider = data.provider;
+    this.providerTxId = data.provider_tx_id || data.providerTxId;
     this.description = data.description || '';
     this.metadata = data.metadata || {};
     this.processedAt = data.processed_at ? new Date(data.processed_at) : null;
+    this.paidAt = data.paid_at ? new Date(data.paid_at) : null;
+    this.expiresAt = data.expires_at ? new Date(data.expires_at) : null;
     this.invoiceUrl = data.invoice_url || data.invoiceUrl;
-    this.refundAmount = data.refund_amount || data.refundAmount || 0;
+    // Convert refund_amount to dollars (assuming it's stored in cents in DB)
+    this.refundAmount = data.refund_amount
+      ? data.refund_amount / 100
+      : data.refundAmount || 0;
     this.refundReason = data.refund_reason || data.refundReason;
   }
 
@@ -28,6 +39,31 @@ class Billing extends BaseModel {
   toJSON() {
     const obj = super.toJSON();
     return obj;
+  }
+
+  /**
+   * Convert to database JSON (for database operations)
+   * @returns {Object}
+   */
+  toDatabaseJSON() {
+    return {
+      user_id: this.userId,
+      package_id: this.packageId,
+      transaction_id: this.transactionId,
+      amount_cents: Math.round(this.amount * 100), // Convert dollars to cents
+      currency: this.currency,
+      status: this.status,
+      invoice_number: this.invoiceNumber,
+      payment_method: this.paymentMethod,
+      provider: this.provider,
+      provider_tx_id: this.providerTxId,
+      refund_amount: Math.round(this.refundAmount * 100), // Convert dollars to cents
+      refund_reason: this.refundReason,
+      paid_at: this.paidAt,
+      expires_at: this.expiresAt,
+      created_at: this.createdAt,
+      updated_at: this.updatedAt,
+    };
   }
 
   /**

@@ -12,7 +12,15 @@ class SystemMonitoringService {
     corporateService,
     packageRepository,
     billingRepository,
-    rewardRepository
+    rewardRepository,
+    projectRepository,
+    taskRepository,
+    messageRepository,
+    ideaRepository,
+    voteRepository,
+    organizationRepository,
+    landingPageRepository,
+    projectCollaboratorRepository
   ) {
     this.userRepository = userRepository;
     this.helpService = helpService;
@@ -24,6 +32,14 @@ class SystemMonitoringService {
     this.packageRepository = packageRepository;
     this.billingRepository = billingRepository;
     this.rewardRepository = rewardRepository;
+    this.projectRepository = projectRepository;
+    this.taskRepository = taskRepository;
+    this.messageRepository = messageRepository;
+    this.ideaRepository = ideaRepository;
+    this.voteRepository = voteRepository;
+    this.organizationRepository = organizationRepository;
+    this.landingPageRepository = landingPageRepository;
+    this.projectCollaboratorRepository = projectCollaboratorRepository;
   }
 
   /**
@@ -45,10 +61,46 @@ class SystemMonitoringService {
    */
   async getDashboardStats() {
     try {
-      // Get user statistics
-      const totalUsers = await this.userRepository.count();
-      const usersByRoleRaw = await this.userRepository.countByRole();
-      const recentUsers = await this.userRepository.findRecent(7); // Last 7 days
+      // Get all statistics in parallel for better performance
+      const [
+        totalUsers,
+        usersByRoleRaw,
+        recentUsers,
+        helpStats,
+        learningStats,
+        startupStats,
+        startupCountByStatus,
+        enterpriseStats,
+        enterpriseCountByStatus,
+        corporateStats,
+        corporateCountByStatus,
+        collaborationStats,
+        totalCredits,
+        packageStats,
+        billingStats,
+        rewardStats,
+        recentActivity,
+        systemStats,
+      ] = await Promise.all([
+        this.userRepository.count(),
+        this.userRepository.countByRole(),
+        this.userRepository.findRecent(7), // Last 7 days
+        this.helpService.getHelpStats(),
+        this.learningService.getLearningStats(),
+        this.startupService.getStartupsFiltered({}),
+        this.startupService.countByStatus(),
+        this.enterpriseService.getEnterprisesFiltered({}),
+        this.enterpriseService.countByStatus(),
+        this.corporateService.getCorporatesFiltered({}),
+        this.corporateService.countByStatus(),
+        this.getCollaborationStats(),
+        this.userRepository.getTotalCredits(),
+        this.packageRepository.getStats(),
+        this.billingRepository.getStats(),
+        this.rewardRepository.getStats(),
+        this.getRecentActivity(10),
+        this.getSystemStats(),
+      ]);
 
       // Define all possible roles and ensure they all appear in the data
       const allRoles = ['admin', 'corporate', 'enterprise', 'startup'];
@@ -58,48 +110,6 @@ class SystemMonitoringService {
         role,
         count: parseInt(usersByRoleRaw[role] || 0),
       }));
-
-      // Get content statistics
-      const helpStats = await this.helpService.getHelpStats();
-      const learningStats = await this.learningService.getLearningStats();
-
-      // Get startup statistics
-      const startupStats = await this.startupService.getStartupsFiltered({});
-      const startupCountByStatus = await this.startupService.countByStatus();
-
-      // Get enterprise statistics
-      const enterpriseStats =
-        await this.enterpriseService.getEnterprisesFiltered({});
-      const enterpriseCountByStatus =
-        await this.enterpriseService.countByStatus();
-
-      // Get corporate statistics
-      const corporateStats = await this.corporateService.getCorporatesFiltered(
-        {}
-      );
-      const corporateCountByStatus =
-        await this.corporateService.countByStatus();
-
-      // Get collaboration statistics
-      const collaborationStats = await this.getCollaborationStats();
-
-      // Calculate credit statistics
-      const totalCredits = await this.userRepository.getTotalCredits();
-
-      // Get package statistics
-      const packageStats = await this.packageRepository.getStats();
-
-      // Get billing statistics
-      const billingStats = await this.billingRepository.getStats();
-
-      // Get reward statistics
-      const rewardStats = await this.rewardRepository.getStats();
-
-      // Get recent activity (last 10 actions)
-      const recentActivity = await this.getRecentActivity(10);
-
-      // Get system health metrics
-      const systemStats = await this.getSystemStats();
 
       return {
         users: {
@@ -166,6 +176,7 @@ class SystemMonitoringService {
         },
         rewards: {
           totalRewards: rewardStats.total_rewards || 0,
+          activeRewards: rewardStats.total_rewards || 0, // Assuming all rewards are active
           totalCreditsGranted: rewardStats.total_credits_granted || 0,
           uniqueUsersRewarded: rewardStats.unique_users_rewarded || 0,
         },
@@ -203,7 +214,11 @@ class SystemMonitoringService {
         },
         credits: { total: 0 },
         activity: [],
-        system: { uptime: 0, memory: { used: 0, total: 0 } },
+        system: {
+          uptime: 0,
+          memory: { used: 0, total: 0 },
+          nodeVersion: process.version,
+        },
       };
     }
   }
@@ -613,13 +628,24 @@ class SystemMonitoringService {
    */
   async getCollaborationStats() {
     try {
-      // This would typically aggregate data from projects, teams, etc.
-      // For now, return basic stats
+      // Get total projects
+      const totalProjects = await this.projectRepository.countFiltered({});
+
+      // Get active projects (all projects are considered active since no status column)
+      const activeProjects = totalProjects;
+
+      // Get total teams (distinct projects with collaborators)
+      const totalTeams =
+        await this.projectCollaboratorRepository.countDistinctTeams();
+
+      // Get total team members
+      const totalTeamMembers = await this.projectCollaboratorRepository.count();
+
       return {
-        totalProjects: 0,
-        activeProjects: 0,
-        totalTeams: 0,
-        totalTeamMembers: 0,
+        totalProjects: totalProjects || 0,
+        activeProjects: activeProjects || 0,
+        totalTeams: totalTeams || 0,
+        totalTeamMembers: totalTeamMembers || 0,
       };
     } catch (error) {
       console.error('Error getting collaboration stats:', error);

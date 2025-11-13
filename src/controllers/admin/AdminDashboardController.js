@@ -64,7 +64,11 @@ class AdminDashboardController {
           totalTeamMembers: 0,
         },
         activity: [],
-        system: { uptime: 0, memory: { used: 0, total: 0 } },
+        system: {
+          uptime: 0,
+          memory: { used: 0, total: 0 },
+          nodeVersion: process.version,
+        },
       };
 
       res.render('pages/admin/dashboard', {

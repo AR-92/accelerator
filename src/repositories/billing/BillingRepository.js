@@ -71,9 +71,9 @@ class BillingRepository extends BaseRepository {
     const sql = `
       SELECT
         COUNT(*) as total_transactions,
-        SUM(CASE WHEN status = 'completed' THEN amount ELSE 0 END) as total_revenue,
-        SUM(CASE WHEN status = 'refunded' THEN refund_amount ELSE 0 END) as total_refunds,
-        AVG(CASE WHEN status = 'completed' THEN amount ELSE NULL END) as avg_transaction,
+        SUM(CASE WHEN status = 'paid' THEN amount_cents / 100.0 ELSE 0 END) as total_revenue,
+        SUM(CASE WHEN status = 'refunded' THEN refund_amount / 100.0 ELSE 0 END) as total_refunds,
+        AVG(CASE WHEN status = 'paid' THEN amount_cents / 100.0 ELSE NULL END) as avg_transaction,
         COUNT(DISTINCT user_id) as unique_customers,
         SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending_transactions,
         SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed_transactions
@@ -92,7 +92,7 @@ class BillingRepository extends BaseRepository {
     const sql = `
       SELECT
         DATE(created_at) as date,
-        SUM(CASE WHEN status = 'completed' THEN amount ELSE 0 END) as revenue,
+        SUM(CASE WHEN status = 'paid' THEN amount_cents / 100.0 ELSE 0 END) as revenue,
         COUNT(*) as transactions
       FROM ${this.tableName}
       WHERE DATE(created_at) BETWEEN ? AND ?
@@ -121,7 +121,7 @@ class BillingRepository extends BaseRepository {
    */
   async updateStatus(id, status, additionalData = {}) {
     const updateData = { status, ...additionalData };
-    if (status === 'completed' && !updateData.processed_at) {
+    if (status === 'paid' && !updateData.processed_at) {
       updateData.processed_at = new Date().toISOString();
     }
 

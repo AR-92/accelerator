@@ -238,6 +238,24 @@ class IdeaRepository extends BaseRepository {
     const rows = await this.query(sql, params);
     return rows.map((row) => new Idea(row));
   }
+
+  /**
+   * Get idea statistics
+   * @returns {Promise<Object>} Idea statistics
+   */
+  async getStats() {
+    const sql = `
+      SELECT
+        COUNT(*) as total_ideas,
+        COUNT(CASE WHEN status = 'published' THEN 1 END) as published_ideas,
+        COUNT(CASE WHEN status = 'draft' THEN 1 END) as draft_ideas,
+        SUM(upvotes) as total_upvotes,
+        SUM(downvotes) as total_downvotes,
+        AVG(CASE WHEN upvotes > 0 THEN upvotes ELSE NULL END) as avg_upvotes
+      FROM ideas
+    `;
+    return await this.queryOne(sql);
+  }
 }
 
 module.exports = IdeaRepository;

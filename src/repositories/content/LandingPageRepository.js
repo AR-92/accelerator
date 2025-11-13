@@ -121,6 +121,22 @@ class LandingPageRepository extends BaseRepository {
       updated_at: new Date().toISOString(),
     });
   }
+
+  /**
+   * Get landing page statistics
+   * @returns {Promise<Object>} Landing page statistics
+   */
+  async getStats() {
+    const sql = `
+      SELECT
+        COUNT(*) as total_pages,
+        COUNT(CASE WHEN is_active = true THEN 1 END) as active_pages,
+        COUNT(CASE WHEN is_active = false THEN 1 END) as inactive_pages,
+        COUNT(CASE WHEN is_published = true THEN 1 END) as published_pages
+      FROM landing_pages
+    `;
+    return await this.queryOne(sql);
+  }
 }
 
 module.exports = LandingPageRepository;
