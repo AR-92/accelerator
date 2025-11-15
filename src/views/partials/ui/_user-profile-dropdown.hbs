@@ -1,0 +1,109 @@
+<div class="relative" id="{{dropdownId}}">
+  <button class="flex items-center gap-3 h-10 px-3 rounded-xl hover:bg-muted/80 transition-all duration-200 border border-border/50 hover:border-border hover:shadow-sm" id="{{dropdownId}}-button">
+    <div class="relative group">
+      <div class="w-8 h-8 bg-gray-200 rounded-xl flex items-center justify-center shadow-md ring-2 ring-background/50 group-hover:ring-gray-300 transition-all duration-200">
+        <div class="flex flex-col items-center">
+          {{lucide 'User' 'w-3 h-3 text-gray-700'}}
+          <span class="text-gray-700 text-xs font-black tracking-wider uppercase leading-none">{{charAt user.firstName 0}}{{charAt user.lastName 0}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="hidden md:flex flex-col items-start min-w-0">
+      <span class="text-sm font-bold text-foreground leading-tight truncate max-w-32">{{user.firstName}} {{user.lastName}}</span>
+      <span class="text-xs text-muted-foreground leading-tight flex items-center gap-1.5">
+        <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+        {{user.role}}
+      </span>
+    </div>
+    <div class="flex items-center justify-center w-5 h-5 rounded-md hover:bg-muted/50 transition-colors" id="{{dropdownId}}-arrow">
+      {{lucide 'ChevronDown' 'w-4 h-4 text-muted-foreground'}}
+    </div>
+  </button>
+
+  <div class="absolute right-0 mt-2 w-64 bg-white backdrop-blur-sm border border-border/50 rounded-xl shadow-xl hidden opacity-0 invisible transition-all duration-200" id="{{dropdownId}}-menu">
+    <div class="p-4 border-b border-border/50">
+      <div class="flex items-center gap-4">
+        <div class="relative group">
+          <div class="w-12 h-12 bg-gray-200 rounded-xl flex items-center justify-center shadow-lg ring-2 ring-background/50 group-hover:ring-gray-300 transition-all duration-200">
+            <div class="flex flex-col items-center">
+              {{lucide 'User' 'w-4 h-4 text-gray-700'}}
+              <span class="text-gray-700 text-sm font-black tracking-wider uppercase leading-none">{{charAt user.firstName 0}}{{charAt user.lastName 0}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="text-base font-semibold text-foreground">{{user.firstName}} {{user.lastName}}</div>
+          <div class="text-sm text-muted-foreground truncate">{{user.email}}</div>
+          <div class="flex items-center gap-1.5 mt-1.5">
+            <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+            <span class="text-xs text-emerald-600 font-medium">Active</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-2">
+      {{#each menuItems}}
+      {{#if divider}}
+      <div class="border-t border-border/50 my-2"></div>
+      {{else if href}}
+      <a href="{{href}}" class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
+        {{lucide icon 'w-4 h-4'}}
+        <span>{{text}}</span>
+      </a>
+      {{else}}
+      <button onclick="{{onclick}}" class="flex items-center w-full gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
+        {{lucide icon 'w-4 h-4'}}
+        <span>{{text}}</span>
+      </button>
+      {{/if}}
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const button = document.getElementById('{{dropdownId}}-button');
+  const menu = document.getElementById('{{dropdownId}}-menu');
+  const arrow = document.getElementById('{{dropdownId}}-arrow');
+
+  button?.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const isHidden = menu.classList.contains('hidden');
+
+    if (isHidden) {
+      menu.classList.remove('hidden');
+      setTimeout(() => {
+        menu.classList.remove('opacity-0', 'invisible');
+      }, 10);
+      arrow.classList.add('rotate-180');
+    } else {
+      menu.classList.add('opacity-0', 'invisible');
+      setTimeout(() => {
+        menu.classList.add('hidden');
+      }, 200);
+      arrow.classList.remove('rotate-180');
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!button?.contains(e.target) && !menu?.contains(e.target)) {
+      menu?.classList.add('opacity-0', 'invisible');
+      setTimeout(() => {
+        menu?.classList.add('hidden');
+      }, 200);
+      arrow.classList.remove('rotate-180');
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      menu?.classList.add('opacity-0', 'invisible');
+      setTimeout(() => {
+        menu?.classList.add('hidden');
+      }, 200);
+      arrow.classList.remove('rotate-180');
+    }
+  });
+})();
+</script>

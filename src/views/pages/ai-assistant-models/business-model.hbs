@@ -7,7 +7,7 @@
   <section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text"
     aria-atomic="false"></section>
   <div class="flex flex-1 overflow-hidden">
-  {{>chatui}}
+  {{> ui/chatui}}
     <aside class="w-96 border-l border-border bg-background flex flex-col h-full">
       <div class="border-b border-border px-4 py-3 flex items-center justify-between">
         <h2 class="text-sm font-semibold text-foreground">Business Framework</h2>
@@ -35,7 +35,7 @@
       </div>
       <div class="flex-1 overflow-y-auto p-4">
         <div class="space-y-6">
-          {{>_business-model}}
+          {{> models/_business-model}}
         </div>
       </div>
     </aside>

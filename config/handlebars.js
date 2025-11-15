@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const { engine } = require('express-handlebars');
 const handlebars = require('handlebars');
 const icons = require('lucide-static');
@@ -233,82 +234,67 @@ handlebars.registerHelper('sectionTypeLabel', function (sectionType) {
   return sectionTypeMap[sectionType] || sectionType;
 });
 
+// Function to recursively register partials with subfolder prefixes
+function registerPartialsRecursively(dir, prefix = '') {
+  console.log(`Registering partials in: ${dir} with prefix: ${prefix}`);
+  const items = fs.readdirSync(dir);
+
+  for (const item of items) {
+    const fullPath = path.join(dir, item);
+    const stat = fs.statSync(fullPath);
+
+    if (stat.isDirectory()) {
+      // Recurse into subdirectory
+      registerPartialsRecursively(
+        fullPath,
+        prefix ? `${prefix}/${item}` : item
+      );
+    } else if (item.endsWith('.hbs')) {
+      // Register partial
+      const partialName = item.replace('.hbs', '');
+      const fullPartialName = prefix ? `${prefix}/${partialName}` : partialName;
+      console.log(`Registering partial: ${fullPartialName} from ${fullPath}`);
+      const template = fs.readFileSync(fullPath, 'utf8');
+      handlebars.registerPartial(fullPartialName, template);
+    }
+  }
+}
+
+// Collect all partials for Express Handlebars
+const partials = {};
+
+// Function to recursively collect partials with subfolder prefixes
+function collectPartialsRecursively(dir, prefix = '') {
+  const items = fs.readdirSync(dir);
+
+  for (const item of items) {
+    const fullPath = path.join(dir, item);
+    const stat = fs.statSync(fullPath);
+
+    if (stat.isDirectory()) {
+      // Recurse into subdirectory
+      collectPartialsRecursively(fullPath, prefix ? `${prefix}/${item}` : item);
+    } else if (item.endsWith('.hbs')) {
+      // Collect partial
+      const partialName = item.replace('.hbs', '');
+      const fullPartialName = prefix ? `${prefix}/${partialName}` : partialName;
+      const template = fs.readFileSync(fullPath, 'utf8');
+      partials[fullPartialName] = template;
+    }
+  }
+}
+
+// Collect all partials
+collectPartialsRecursively(path.join(__dirname, '../src/views/partials'));
+
 const handlebarsConfig = engine({
   extname: '.hbs',
   defaultLayout: 'main',
   layoutsDir: path.join(__dirname, '../src/views/layouts'),
-  partialsDir: [
-    path.join(__dirname, '../src/views/partials'),
-    path.join(__dirname, '../src/components'),
-  ],
+  partials: partials,
 });
 
-// Manually register partials
-const fs = require('fs');
-const userMessagePath = path.join(
-  __dirname,
-  '../src/components/_user-message.hbs'
-);
-if (fs.existsSync(userMessagePath)) {
-  const userMessageTemplate = fs.readFileSync(userMessagePath, 'utf8');
-  handlebars.registerPartial('user-message', userMessageTemplate);
-}
-
-const ideaCardPath = path.join(__dirname, '../src/components/_idea-card.hbs');
-if (fs.existsSync(ideaCardPath)) {
-  const ideaCardTemplate = fs.readFileSync(ideaCardPath, 'utf8');
-  handlebars.registerPartial('idea-card', ideaCardTemplate);
-  const portfolioCardPath = path.join(
-    __dirname,
-    '../src/components/_portfolio-card.hbs'
-  );
-  if (fs.existsSync(portfolioCardPath)) {
-    const portfolioCardTemplate = fs.readFileSync(portfolioCardPath, 'utf8');
-    handlebars.registerPartial('portfolio-card', portfolioCardTemplate);
-  }
-}
-
-const aiMessagePath = path.join(
-  __dirname,
-  '../src/views/partials/_ai-message.hbs'
-);
-if (fs.existsSync(aiMessagePath)) {
-  const aiMessageTemplate = fs.readFileSync(aiMessagePath, 'utf8');
-  handlebars.registerPartial('ai-message', aiMessageTemplate);
-}
-
-const collaborateNavbarPath = path.join(
-  __dirname,
-  '../src/views/partials/_collaborate-navbar.hbs'
-);
-if (fs.existsSync(collaborateNavbarPath)) {
-  const collaborateNavbarTemplate = fs.readFileSync(
-    collaborateNavbarPath,
-    'utf8'
-  );
-  handlebars.registerPartial('_collaborate-navbar', collaborateNavbarTemplate);
-}
-
-const helpNavbarPath = path.join(
-  __dirname,
-  '../src/views/partials/_help-navbar.hbs'
-);
-if (fs.existsSync(helpNavbarPath)) {
-  const helpNavbarTemplate = fs.readFileSync(helpNavbarPath, 'utf8');
-  handlebars.registerPartial('_help-navbar', helpNavbarTemplate);
-}
-
-const ideaRatingWidgetPath = path.join(
-  __dirname,
-  '../src/views/partials/_idea-rating-widget.hbs'
-);
-if (fs.existsSync(ideaRatingWidgetPath)) {
-  const ideaRatingWidgetTemplate = fs.readFileSync(
-    ideaRatingWidgetPath,
-    'utf8'
-  );
-  handlebars.registerPartial('_idea-rating-widget', ideaRatingWidgetTemplate);
-}
+// Partials are now registered with Express Handlebars
 
 module.exports = {
   handlebarsConfig,

@@ -1,0 +1,17 @@
+<div id="{{menuId}}" class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+  <div class="py-1">
+    {{#each actions}}
+    {{#if href}}
+    <a href="{{href}}" class="flex items-center px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
+      {{lucide icon 'w-4 h-4 mr-3'}}
+      {{text}}
+    </a>
+    {{else}}
+    <button onclick="{{onclick}}" class="flex items-center w-full px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
+      {{lucide icon 'w-4 h-4 mr-3'}}
+      {{text}}
+    </button>
+    {{/if}}
+    {{/each}}
+  </div>
+</div>

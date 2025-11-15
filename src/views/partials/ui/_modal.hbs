@@ -1,0 +1,63 @@
+<!-- Modal Backdrop -->
+<div id="{{id}}-backdrop" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300"></div>
+
+<!-- Modal -->
+<div id="{{id}}" class="fixed inset-0 z-50 hidden opacity-0 transition-all duration-300 transform scale-95">
+  <div class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-card rounded-lg shadow-xl max-w-{{size}} w-full max-h-[90vh] overflow-hidden">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between p-6 border-b border-border">
+        <h3 class="text-lg font-semibold text-foreground">{{title}}</h3>
+        <button id="{{id}}-close" class="text-muted-foreground hover:text-foreground transition-colors">
+          {{lucide 'X' 'w-5 h-5'}}
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+        {{{content}}}
+      </div>
+
+      {{#if footer}}
+      <!-- Modal Footer -->
+      <div class="flex items-center justify-end gap-3 p-6 border-t border-border">
+        {{{footer}}}
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const modal = document.getElementById('{{id}}');
+  const backdrop = document.getElementById('{{id}}-backdrop');
+  const closeBtn = document.getElementById('{{id}}-close');
+
+  function showModal() {
+    modal.classList.remove('hidden');
+    backdrop.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0', 'scale-95');
+      backdrop.classList.remove('opacity-0');
+    }, 10);
+  }
+
+  function hideModal() {
+    modal.classList.add('opacity-0', 'scale-95');
+    backdrop.classList.add('opacity-0');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      backdrop.classList.add('hidden');
+      {{#if onClose}}{{onClose}}{{/if}}
+    }, 300);
+  }
+
+  closeBtn?.addEventListener('click', hideModal);
+  backdrop?.addEventListener('click', hideModal);
+
+  // Make functions available globally for this modal
+  window.show{{id}}Modal = showModal;
+  window.hide{{id}}Modal = hideModal;
+})();
+</script>

@@ -1,0 +1,23 @@
+<div class='rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm {{#if href}}cursor-pointer hover:shadow-md transition-shadow{{/if}}' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;' {{#if href}}onclick="window.location.href='{{href}}'"{{/if}}>
+  <div class='flex items-center justify-between px-[10px] py-[4px]'>
+    <div class='flex flex-col gap-[4px]'>
+      <h3 class='text-[14px] font-[500] text-muted-foreground'>{{title}}</h3>
+      <p class='text-[18px] font-[600] text-foreground dark:text-gray-100'>{{value}}</p>
+    </div>
+    <div>
+      <div style='background:{{bgColor}}; border-radius: 6px;'>
+        <div style='width:38px; height:38px; background:{{bgColor}}; border-radius:50%; position:relative;'>
+          <div class='flex items-center justify-center' style='width:35px; height:35px; background:{{iconBgColor}}; border-radius:50%; position:absolute; top:1.5px; left:1.5px;'>
+            {{lucide icon 'w-4 h-4 text-white'}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{#if trendText}}
+  <p class='flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground'>
+    {{lucide trendIcon 'w-5 h-4' style='color: {{trendColor}}'}}
+    <span style='color: {{trendColor}}'>{{trendText}}</span>
+  </p>
+  {{/if}}
+</div>

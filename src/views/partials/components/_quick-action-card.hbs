@@ -1,0 +1,16 @@
+<a href="{{href}}" class="block p-6 bg-card rounded-lg border border-border hover:border-primary/50 hover:shadow-md transition-all duration-200 group">
+  <div class="flex items-center gap-4">
+    <div class="flex-shrink-0">
+      <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+        {{lucide icon 'w-6 h-6 text-primary'}}
+      </div>
+    </div>
+    <div class="flex-1 min-w-0">
+      <h3 class="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">{{title}}</h3>
+      <p class="text-sm text-muted-foreground">{{description}}</p>
+    </div>
+    <div class="flex-shrink-0">
+      {{lucide 'ArrowRight' 'w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors'}}
+    </div>
+  </div>
+</a>

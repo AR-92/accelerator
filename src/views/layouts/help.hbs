@@ -20,19 +20,19 @@
 
 <body class="h-screen flex bg-background font-sans text-foreground overflow-hidden">
     <!-- Full height sidebar -->
-    {{> build-start-up}}
+     {{> ui/build-start-up}}
 
     <!-- Right side with navbar and main content -->
     <div class="flex-1 flex flex-col overflow-hidden">
         <!-- Navbar will be loaded here, starting where sidebar ends -->
         <div id="navbar" class="z-[100] flex-shrink-0">
-            {{> navbar}}
+             {{> navbars/navbar}}
         </div>
 
         <!-- Sub-navigation section -->
         <div class="border-b border-gray-200 dark:border-gray-700 bg-background flex-shrink-0">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                {{> _help-navbar}}
+                 {{> navbars/_help-navbar}}
             </div>
         </div>
 

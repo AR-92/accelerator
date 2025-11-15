@@ -1,0 +1,58 @@
+<tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150 even:bg-purple-100 dark:even:bg-purple-800">
+  <td class="px-6 py-4">
+    <input type="checkbox" class="userCheckbox rounded border-gray-300 text-primary focus:ring-primary"
+      value="{{user.id}}" data-user-id="{{user.id}}" aria-label="Select user {{user.fullName}}">
+  </td>
+  <td class="px-6 py-4">
+    <div>
+      <div class="text-sm font-medium text-gray-900">{{user.fullName}}</div>
+      <div class="text-sm text-gray-500">{{user.email}}</div>
+    </div>
+  </td>
+  <td class="px-6 py-4">
+    <div class="text-sm text-gray-900 capitalize">{{user.role}}</div>
+  </td>
+  <td class="px-6 py-4">
+    <span
+      class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{#if (eq user.status 'active')}}bg-green-100 text-green-800{{else}}bg-red-100 text-red-800{{/if}}">{{user.status}}</span>
+    {{#if user.banned}}
+    <span
+      class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 ml-2">BANNED</span>
+    {{/if}}
+  </td>
+  <td class="px-6 py-4 hidden md:table-cell">
+    <div class="text-sm text-gray-900 font-medium">{{user.credits}}</div>
+  </td>
+  <td class="px-6 py-4 hidden lg:table-cell">
+    <div class="text-sm text-gray-900">{{formatDate user.createdAt}}</div>
+  </td>
+  <td class="px-6 py-4">
+    <div class="relative">
+      <button onclick="toggleActionMenu({{user.id}})"
+        class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors"
+        aria-label="Actions menu">
+        {{lucide 'MoreVertical' 'w-4 h-4'}}
+      </button>
+      <div id="actionMenu-{{user.id}}"
+        class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+        <div class="py-1">
+          {{#each actions}}
+          {{#if href}}
+          <a href="{{href}}"
+            class="flex items-center px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
+            {{lucide icon 'w-4 h-4 mr-3'}}
+            {{text}}
+          </a>
+          {{else}}
+          <button onclick="{{onclick}}"
+            class="flex items-center w-full px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
+            {{lucide icon 'w-4 h-4 mr-3'}}
+            {{text}}
+          </button>
+          {{/if}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </td>
+</tr>

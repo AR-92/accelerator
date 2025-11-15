@@ -90,6 +90,32 @@ To access the admin panel:
 - `/admin/content` - Content management (help and learning articles)
 - `/admin/settings` - System settings and configuration
 
+## Development
+
+### Handlebars Partials Structure
+
+The application uses a well-organized Handlebars partials system for maintainable and reusable UI components. Partials are organized in subfolders under `src/views/partials/`:
+
+- `navbars/` - Navigation components and menus
+- `models/` - Business model templates for AI assistants
+- `widgets/` - Reusable UI widgets (stats cards, toasts, etc.)
+- `lists/` - List and collection components
+- `ui/` - General UI elements (modals, pagination, etc.)
+- `components/` - Reusable components
+- `forms/` - Form input components
+- `tables/` - Table-related components
+
+See `src/views/partials/README.md` for detailed documentation of available partials, their parameters, and usage examples.
+
+### Code Organization
+
+- **Views**: Handlebars templates in `src/views/`
+- **Routes**: API and page routes in `src/routes/`
+- **Controllers**: Business logic in `src/controllers/`
+- **Services**: Application services in `src/services/`
+- **Models**: Database models in `src/models/`
+- **Middleware**: Express middleware in `src/middleware/`
+
 ## Getting Started
 
 ### Prerequisites
