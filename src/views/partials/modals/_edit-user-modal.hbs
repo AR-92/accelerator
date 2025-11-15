@@ -1,0 +1,24 @@
+<!-- Edit User Modal -->
+<div id="editUserModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
+  <div class="relative top-20 mx-auto p-5 border border-border w-96 shadow-lg rounded-md bg-card">
+    <div class="mt-3">
+      <h3 class="text-lg font-medium text-foreground mb-4">Edit User</h3>
+      <form id="editUserForm">
+        <input type="hidden" id="editUserId">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Role</label>
+          <select id="editUserRole" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+            <option value="startup">Startup</option>
+            <option value="corporate">Corporate</option>
+            <option value="enterprise">Enterprise</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeEditModal()" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Cancel</button>
+          <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

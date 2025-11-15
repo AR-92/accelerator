@@ -21,7 +21,9 @@ class BaseRepository {
     try {
       const rows = await this.db.all(sql, params);
       const duration = Date.now() - start;
-      this.logger.logDatabaseQuery('query', sql, params, duration);
+      if (process.env.NODE_ENV !== 'development') {
+        this.logger.logDatabaseQuery('query', sql, params, duration);
+      }
       return rows;
     } catch (error) {
       const duration = Date.now() - start;
@@ -41,7 +43,9 @@ class BaseRepository {
     try {
       const row = await this.db.get(sql, params);
       const duration = Date.now() - start;
-      this.logger.logDatabaseQuery('queryOne', sql, params, duration);
+      if (process.env.NODE_ENV !== 'development') {
+        this.logger.logDatabaseQuery('queryOne', sql, params, duration);
+      }
       return row;
     } catch (error) {
       const duration = Date.now() - start;
@@ -63,7 +67,9 @@ class BaseRepository {
     try {
       const resultData = await this.db.run(sql, params);
       const duration = Date.now() - start;
-      this.logger.logDatabaseQuery('run', sql, params, duration);
+      if (process.env.NODE_ENV !== 'development') {
+        this.logger.logDatabaseQuery('run', sql, params, duration);
+      }
       return { id: resultData.lastID, changes: resultData.changes };
     } catch (error) {
       const duration = Date.now() - start;

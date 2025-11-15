@@ -1,0 +1,11 @@
+<div class="border-b border-gray-200 dark:border-gray-700 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex w-full items-center gap-8 overflow-x-auto">
+      {{#each tabs}}
+      <a href="{{../baseUrl}}{{#if query}}{{query}}{{else}}?{{/if}}{{param}}={{value}}" class="p-3 text-base font-medium {{#if (eq ../activeTab value)}}border-b-2 border-primary text-black dark:text-white dark:text-white dark:border-white{{else}}text-gray-500 dark:text-gray-400 hover:text-black dark:text-white dark:hover:text-gray-300{{/if}} transition-colors whitespace-nowrap">
+        {{text}}
+      </a>
+      {{/each}}
+    </div>
+  </div>
+</div>

@@ -214,11 +214,48 @@ handlebars.registerHelper('json', function (obj) {
   return JSON.stringify(obj);
 });
 
-// Helper to format numbers
-handlebars.registerHelper('formatNumber', function (num) {
-  if (num === null || num === undefined) return '0';
-  return Number(num).toLocaleString();
+// Helper to concatenate strings
+handlebars.registerHelper('concat', function (...args) {
+  // Remove the last argument which is the options object
+  args.pop();
+  return args.join('');
 });
+
+// Helper to create arrays
+handlebars.registerHelper('array', function (...args) {
+  // Remove the last argument which is the options object
+  args.pop();
+  return args;
+});
+
+// Helper to create objects/hashes
+handlebars.registerHelper('hash', function (options) {
+  return options.hash;
+});
+
+// Helper for ternary conditional
+handlebars.registerHelper('cond', function (condition, trueValue, falseValue) {
+  return condition ? trueValue : falseValue;
+});
+
+// Helper to get length of array
+handlebars.registerHelper('len', function (array) {
+  if (Array.isArray(array)) {
+    return array.length;
+  }
+  return 0;
+});
+
+// Helper to calculate colspan for data table
+handlebars.registerHelper(
+  'colspan',
+  function (headers, showCheckbox, showActions) {
+    let count = Array.isArray(headers) ? headers.length : 0;
+    if (showCheckbox) count += 1;
+    if (showActions) count += 1;
+    return count;
+  }
+);
 
 // Helper to get section type label
 handlebars.registerHelper('sectionTypeLabel', function (sectionType) {

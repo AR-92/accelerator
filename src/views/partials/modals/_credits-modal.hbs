@@ -1,0 +1,29 @@
+<!-- Manage Credits Modal -->
+<div id="creditsModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
+  <div class="relative top-20 mx-auto p-5 border border-border w-96 shadow-lg rounded-md bg-card">
+    <div class="mt-3">
+      <h3 class="text-lg font-medium text-foreground mb-4">Manage Credits</h3>
+      <p id="creditsUserName" class="text-sm text-muted-foreground mb-4"></p>
+      <form id="creditsForm">
+        <input type="hidden" id="creditsUserId">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Current Credits</label>
+          <p id="currentCredits" class="text-lg font-semibold text-foreground"></p>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">New Credits Amount</label>
+          <input type="number" id="newCredits" min="0"
+            class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            required>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeCreditsModal()"
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Cancel</button>
+          <button type="submit"
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">Update
+            Credits</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

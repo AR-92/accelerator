@@ -21,6 +21,7 @@ This directory contains reusable Handlebars partials organized by category. The 
 - `components/` - Reusable components
 - `forms/` - Form input components
 - `tables/` - Table-related components
+- `modals/` - Modal dialog templates
 
 ## Available Partials
 
@@ -164,6 +165,132 @@ User profile dropdown menu.
 {{> ui/_user-profile-dropdown dropdownId="user-menu" user=user menuItems=menuItems}}
 ```
 
+#### `_page-header.hbs`
+
+Standardized page header with title, description, and action buttons.
+
+**Parameters:**
+
+- `title` (string): Page title
+- `description` (string): Page description
+- `actions` (array, optional): Array of action objects with `text`, `icon`, `onclick`, `id`, `variant`
+
+**Usage:**
+
+```handlebars
+{{> ui/_page-header title="Users" description="Manage and oversee all user accounts" actions=headerActions}}
+```
+
+#### `_card.hbs`
+
+Consistent card container with optional header and footer.
+
+**Parameters:**
+
+- `content` (string): Card content (HTML)
+- `header` (object, optional): Header object with `title` and `description`
+- `footer` (string, optional): Footer content (HTML)
+- `class` (string, optional): Additional CSS classes
+- `noPadding` (boolean, optional): Remove default padding
+
+**Usage:**
+
+```handlebars
+{{> ui/_card header=(hash title="Settings" description="Configure application") content=formContent}}
+```
+
+#### `_empty-state.hbs`
+
+"No items found" empty state display.
+
+**Parameters:**
+
+- `icon` (string, optional): Lucide icon name
+- `title` (string): Empty state title
+- `message` (string): Empty state message
+- `action` (object, optional): Action button with `text`, `icon`, `href`, `onclick`
+
+**Usage:**
+
+```handlebars
+{{> ui/_empty-state icon="Database" title="No users found" message="Users will appear here once they register."}}
+```
+
+#### `_nav-tabs.hbs`
+
+Navigation tabs for filtering content.
+
+**Parameters:**
+
+- `tabs` (array): Array of tab objects with `text`, `value`, `param`
+- `activeTab` (string): Currently active tab value
+- `baseUrl` (string): Base URL for tab links
+
+**Usage:**
+
+```handlebars
+{{> ui/_nav-tabs tabs=roleTabs activeTab=filters.role baseUrl="/admin/users"}}
+```
+
+#### `_action-dropdown.hbs`
+
+Dropdown menu for table row actions.
+
+**Parameters:**
+
+- `id` (string): Unique dropdown ID
+- `actions` (array): Array of action objects with `text`, `icon`, `href`, `onclick`, or `divider`
+
+**Usage:**
+
+```handlebars
+{{> ui/_action-dropdown id=user.id actions=userActions}}
+```
+
+#### `_filter-bar.hbs`
+
+Search and filter controls bar.
+
+**Parameters:**
+
+- `searchPlaceholder` (string): Search input placeholder
+- `searchValue` (string, optional): Current search value
+- `actions` (array): Array of action buttons with `onclick`, `icon`, `title`
+
+**Usage:**
+
+```handlebars
+{{> ui/_filter-bar searchPlaceholder="Search users..." actions=filterActions}}
+```
+
+#### `_data-table.hbs`
+
+Complete data table interface with search, filters, bulk actions, and pagination.
+
+**Parameters:**
+
+- `title` (string): Table title
+- `description` (string): Table description
+- `headers` (array): Array of header objects with `key`, `label`, `class`, `sortable`
+- `rows` (array): Array of data row objects
+- `showCheckbox` (boolean, optional): Show selection checkboxes
+- `showActions` (boolean, optional): Show actions column
+- `actions` (array): Action objects for each row
+- `filterBar` (object, optional): Filter bar configuration
+- `navTabs` (object, optional): Navigation tabs configuration
+- `bulkActions` (array, optional): Bulk action buttons
+- `pagination` (object, optional): Pagination configuration
+- `headerActions` (array, optional): Header action buttons
+- `sortBy` (string, optional): Current sort field
+- `sortOrder` (string, optional): Current sort order
+- `queryParams` (string, optional): Additional query parameters
+
+**Usage:**
+
+```handlebars
+{{> ui/_data-table title="Users" description="Manage users" headers=userHeaders rows=users showCheckbox=true showActions=true actions=userActions pagination=paginationData}}
+```
+
 ### Tables (`tables/`)
 
 #### `_user-table-row.hbs`
@@ -242,6 +369,24 @@ Form textarea field.
 {{> forms/_form-textarea id="description" label="Description" rows=5 required=true}}
 ```
 
+#### `_form-section.hbs`
+
+Form section container for settings pages.
+
+**Parameters:**
+
+- `title` (string): Section title
+- `description` (string): Section description
+- `fields` (array): Array of field objects with `type`, `id`, `label`, and type-specific properties
+- `layout` (string, optional): CSS layout classes
+- `fieldSpacing` (string, optional): Spacing between fields
+
+**Usage:**
+
+```handlebars
+{{> forms/_form-section title="General Settings" description="Basic configuration" fields=generalFields}}
+```
+
 ### Components (`components/`)
 
 #### `_quick-action-card.hbs`
@@ -259,6 +404,92 @@ Quick action card for dashboards.
 
 ```handlebars
 {{> components/_quick-action-card href="/admin/users" icon="Users" title="Manage Users" description="View and manage user accounts"}}
+```
+
+### Modals (`modals/`)
+
+#### `_edit-user-modal.hbs`
+
+Modal for editing user information.
+
+**Parameters:** None (standalone modal component)
+
+**Usage:**
+
+```handlebars
+{{> modals/_edit-user-modal}}
+```
+
+#### `_edit-idea-modal.hbs`
+
+Modal for editing idea information.
+
+**Parameters:** None (standalone modal component)
+
+**Usage:**
+
+```handlebars
+{{> modals/_edit-idea-modal}}
+```
+
+#### `_create-user-modal.hbs`
+
+Modal for creating new users.
+
+**Parameters:** None (standalone modal component)
+
+**Usage:**
+
+```handlebars
+{{> modals/_create-user-modal}}
+```
+
+#### `_credits-modal.hbs`
+
+Modal for managing user credits.
+
+**Parameters:** None (standalone modal component)
+
+**Usage:**
+
+```handlebars
+{{> modals/_credits-modal}}
+```
+
+#### `_ban-modal.hbs`
+
+Modal for banning/unbanning users.
+
+**Parameters:** None (standalone modal component)
+
+**Usage:**
+
+```handlebars
+{{> modals/_ban-modal}}
+```
+
+#### `_bulk-role-modal.hbs`
+
+Modal for bulk updating user roles.
+
+**Parameters:** None (standalone modal component)
+
+**Usage:**
+
+```handlebars
+{{> modals/_bulk-role-modal}}
+```
+
+#### `_bulk-credits-modal.hbs`
+
+Modal for bulk updating user credits.
+
+**Parameters:** None (standalone modal component)
+
+**Usage:**
+
+```handlebars
+{{> modals/_bulk-credits-modal}}
 ```
 
 ## Notes

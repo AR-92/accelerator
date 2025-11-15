@@ -40,6 +40,11 @@ class SystemMonitoringService {
     this.organizationRepository = organizationRepository;
     this.landingPageRepository = landingPageRepository;
     this.projectCollaboratorRepository = projectCollaboratorRepository;
+
+    // Cache for dashboard stats
+    this.dashboardStatsCache = null;
+    this.dashboardStatsCacheTime = 0;
+    this.cacheTTL = 5 * 60 * 1000; // 5 minutes
   }
 
   /**
@@ -60,6 +65,15 @@ class SystemMonitoringService {
    * @returns {Promise<Object>} Dashboard stats
    */
   async getDashboardStats() {
+    // Check cache
+    const now = Date.now();
+    if (
+      this.dashboardStatsCache &&
+      now - this.dashboardStatsCacheTime < this.cacheTTL
+    ) {
+      return this.dashboardStatsCache;
+    }
+
     try {
       // Get all statistics in parallel for better performance
       const [
@@ -111,7 +125,7 @@ class SystemMonitoringService {
         count: parseInt(usersByRoleRaw[role] || 0),
       }));
 
-      return {
+      const stats = {
         users: {
           total: totalUsers,
           byRole: usersByRole,
@@ -184,6 +198,12 @@ class SystemMonitoringService {
         activity: recentActivity,
         system: systemStats,
       };
+
+      // Cache the result
+      this.dashboardStatsCache = stats;
+      this.dashboardStatsCacheTime = now;
+
+      return stats;
     } catch (error) {
       console.error('Error getting dashboard stats:', error);
       // Return default stats on error for better error handling

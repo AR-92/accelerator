@@ -1,0 +1,27 @@
+<div class="max-w-7xl mx-auto flex items-center gap-4">
+  <!-- Search -->
+  <div class="flex-1 flex justify-left">
+    <div class="w-full max-w-lg">
+      <label class="relative block">
+        <span class="sr-only">Search</span>
+        <span class="absolute inset-y-0 left-3 flex items-center">
+          {{lucide 'Search' 'w-5 h-5 text-white/80'}}
+        </span>
+        <input
+          class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 placeholder-white/75 text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+          placeholder="{{searchPlaceholder}}"
+          id="searchInput"
+          value="{{searchValue}}" />
+      </label>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+  <div class="flex items-center gap-3">
+    {{#each actions}}
+    <button onclick="{{onclick}}" class="p-2 rounded-full bg-white/10 border border-white/25 hover:bg-white/20" title="{{title}}">
+      {{lucide icon 'w-5 h-5'}}
+    </button>
+    {{/each}}
+  </div>
+</div>

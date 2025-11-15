@@ -1,0 +1,36 @@
+<!-- Edit Idea Modal -->
+<div id="editIdeaModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
+  <div class="relative top-20 mx-auto p-5 border border-border w-96 shadow-lg rounded-md bg-card">
+    <div class="mt-3">
+      <h3 class="text-lg font-medium text-foreground mb-4">Edit Idea</h3>
+      <form id="editIdeaForm">
+        <input type="hidden" id="editIdeaId">
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Title</label>
+          <input type="text" id="editIdeaTitle" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-black dark:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Type</label>
+          <select id="editIdeaType" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+            <option value="product">Product</option>
+            <option value="service">Service</option>
+            <option value="feature">Feature</option>
+            <option value="improvement">Improvement</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Rating (1-10)</label>
+          <input type="number" id="editIdeaRating" min="1" max="10" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-black dark:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-foreground mb-2">Description</label>
+          <textarea id="editIdeaDescription" rows="3" class="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-black dark:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"></textarea>
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="closeEditModal()" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Cancel</button>
+          <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class='rounded-md bg-card text-card-foreground shadow-sm {{#if class}}{{class}}{{/if}}' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+  {{#if header}}
+  <div class='px-6 py-4 border-b border-border'>
+    {{#if header.title}}<h2 class='text-lg font-medium text-foreground'>{{header.title}}</h2>{{/if}}
+    {{#if header.description}}<p class='text-sm text-muted-foreground'>{{header.description}}</p>{{/if}}
+  </div>
+  {{/if}}
+  <div class='{{#if noPadding}}{{else}}p-6{{/if}}'>
+    {{{content}}}
+  </div>
+  {{#if footer}}
+  <div class='px-6 py-4 border-t border-border'>
+    {{{footer}}}
+  </div>
+  {{/if}}
+</div>

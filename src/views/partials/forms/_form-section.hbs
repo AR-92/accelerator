@@ -1,0 +1,54 @@
+<div class='rounded-md bg-card text-card-foreground shadow-sm' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+  <div class='px-6 py-4 border-b border-border'>
+    <h2 class='text-lg font-medium text-foreground'>{{title}}</h2>
+    <p class='text-sm text-muted-foreground'>{{description}}</p>
+  </div>
+  <div class='p-6 {{#if layout}} {{layout}} {{/if}}'>
+    {{#each fields}}
+    <div class='{{#if ../fieldSpacing}} {{../fieldSpacing}} {{else}}mb-4{{/if}}'>
+      {{#if type}}
+        {{#eq type "input"}}
+          {{> forms/_form-input id=id label=label value=value placeholder=placeholder required=required error=error type=inputType}}
+        {{/eq}}
+        {{#eq type "select"}}
+          {{> forms/_form-select id=id label=label options=options selected=selected required=required error=error}}
+        {{/eq}}
+        {{#eq type "textarea"}}
+          {{> forms/_form-textarea id=id label=label value=value placeholder=placeholder rows=rows required=required error=error}}
+        {{/eq}}
+        {{#eq type "checkbox"}}
+          <div class='flex items-center justify-between'>
+            <div>
+              <label class='text-sm font-medium text-foreground'>{{label}}</label>
+              <p class='text-sm text-muted-foreground'>{{description}}</p>
+            </div>
+            <input type='checkbox' {{#if checked}}checked{{/if}} class='rounded border-border text-primary' />
+          </div>
+        {{/eq}}
+        {{#eq type "number-input"}}
+          <div class='flex items-center justify-between'>
+            <div>
+              <label class='text-sm font-medium text-foreground'>{{label}}</label>
+              <p class='text-sm text-muted-foreground'>{{description}}</p>
+            </div>
+            <input type='number' value='{{value}}' min='{{min}}' max='{{max}}' step='{{step}}'
+                   class='flex h-9 w-20 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring' />
+          </div>
+        {{/eq}}
+        {{#eq type "grid-inputs"}}
+          <label class='block text-sm font-medium text-foreground mb-2'>{{label}}</label>
+          <div class='grid grid-cols-{{columns}} gap-4'>
+            {{#each inputs}}
+            <div>
+              <label class='block text-xs text-muted-foreground mb-1'>{{label}}</label>
+              <input type='{{type}}' value='{{value}}' min='{{min}}'
+                     class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring' />
+            </div>
+            {{/each}}
+          </div>
+        {{/eq}}
+      {{/if}}
+    </div>
+    {{/each}}
+  </div>
+</div>

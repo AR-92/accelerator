@@ -1,0 +1,187 @@
+<!-- Glass card container -->
+<div class="w-full rounded-xl shadow-2xl overflow-hidden bg-white/85 backdrop-blur-sm ring-1 ring-gray-200 flex flex-col min-h-[600px]">
+
+  <!-- Sticky header (toolbar) -->
+  <header class="sticky top-0 z-20 bg-purple-800 text-white p-5">
+    <!-- Page Title and Description -->
+    <div class="mb-6 flex justify-between">
+      <div class="text-left">
+        <h1 class="text-3xl font-bold text-white mb-2">{{title}}</h1>
+        <p class=" text-gray-200">{{description}}</p>
+      </div>
+      {{#if headerActions}}
+      <div class="">
+        {{#each headerActions}}
+        <button onclick="{{onclick}}" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-full px-4 py-2 text-sm">
+          {{lucide icon 'w-4 h-4'}}
+          <span class="text-sm font-medium">{{text}}</span>
+        </button>
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+
+    {{#if filterBar}}
+    {{> ui/_filter-bar searchPlaceholder=filterBar.searchPlaceholder searchValue=filterBar.searchValue actions=filterBar.actions}}
+    {{/if}}
+  </header>
+
+  {{#if navTabs}}
+  {{> ui/_nav-tabs tabs=navTabs.tabs activeTab=navTabs.activeTab baseUrl=navTabs.baseUrl}}
+  {{/if}}
+
+  <!-- Table area (scrolls if wide) -->
+  <div class="overflow-auto flex-1">
+    <table class="min-w-full table-auto bg-purple-50 dark:bg-purple-900">
+      <thead class='bg-purple-200 dark:bg-purple-800'>
+        <tr>
+          {{#if showCheckbox}}
+          <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">
+            <input type="checkbox" id="selectAll" class="rounded border-gray-300 text-primary focus:ring-primary" aria-label="Select all">
+          </th>
+          {{/if}}
+          {{#each headers}}
+          <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider {{#if ../sortable}}{{#if sortable}}cursor-pointer hover:text-foreground{{/if}}{{/if}} {{#if class}}{{class}}{{/if}}">
+            {{#if ../sortable}}
+            <button onclick="sortBy('{{key}}')" class='hover:text-foreground transition-colors flex items-center gap-1'>
+              {{label}}
+              {{#if (eq ../../../sortBy key)}}
+                {{#if (eq ../../../sortOrder 'asc')}}↑{{else}}↓{{/if}}
+              {{/if}}
+            </button>
+            {{else}}
+            {{label}}
+            {{/if}}
+          </th>
+          {{/each}}
+          {{#if showActions}}
+          <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">Actions</th>
+          {{/if}}
+        </tr>
+      </thead>
+      <tbody class="text-sm text-black dark:text-white">
+        {{#each rows}}
+        <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150 even:bg-purple-100 dark:even:bg-purple-800">
+          {{#if ../showCheckbox}}
+          <td class="px-6 py-4">
+            <input type="checkbox" class="rowCheckbox rounded border-gray-300 text-primary focus:ring-primary" value="{{id}}" data-id="{{id}}" aria-label="Select row">
+          </td>
+          {{/if}}
+          {{#each ../headers}}
+          <td class="px-6 py-4 {{#if class}}{{class}}{{/if}}">
+            {{#if (eq key 'user')}}
+              <div>
+                <div class="text-sm font-medium text-gray-900">{{../this.fullName}}</div>
+                <div class="text-sm text-gray-500">{{../this.email}}</div>
+              </div>
+            {{else if (eq key 'status')}}
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{#if (eq ../this.status 'active')}}bg-green-100 text-green-800{{else}}bg-red-100 text-red-800{{/if}}">{{../this.status}}</span>
+              {{#if ../this.banned}}
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 ml-2">BANNED</span>
+              {{/if}}
+            {{else if (eq key 'role')}}
+              <div class="text-sm text-gray-900 capitalize">{{../this.role}}</div>
+            {{else if (eq key 'credits')}}
+              <div class="text-sm text-gray-900 font-medium">{{../this.credits}}</div>
+            {{else if (eq key 'createdAt')}}
+              <div class="text-sm text-gray-900">{{formatDate ../this.createdAt}}</div>
+            {{else if (eq key 'title')}}
+              <div class='text-sm font-medium text-foreground'>{{../this.title}}</div>
+              <div class='text-sm text-black dark:text-white'>{{../this.href}}</div>
+            {{else if (eq key 'type')}}
+              <span class='text-sm text-foreground'>{{../this.type}}</span>
+            {{else if (eq key 'rating')}}
+              {{#if (gt ../this.rating 7)}}
+                <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'>{{../this.rating}}</span>
+              {{else if (gt ../this.rating 4)}}
+                <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'>{{../this.rating}}</span>
+              {{else}}
+                <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'>{{../this.rating}}</span>
+              {{/if}}
+            {{else if (eq key 'isFavorite')}}
+              {{#if ../this.isFavorite}}
+              <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'>★ Favorite</span>
+              {{else}}
+              <span class='text-black dark:text-white'>No</span>
+              {{/if}}
+            {{else}}
+              {{lookup ../this key}}
+            {{/if}}
+          </td>
+          {{/each}}
+          {{#if ../showActions}}
+          <td class="px-6 py-4">
+            {{> ui/_action-dropdown id=../this.id actions=../actions}}
+          </td>
+          {{/if}}
+        </tr>
+        {{else}}
+        <tr>
+          <td colspan="{{colspan headers showCheckbox showActions}}" class='px-6 py-8 text-center text-gray-500'>
+            {{> ui/_empty-state icon="Database" title="No items found" message="Items will appear here once they are created."}}
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  {{#if bulkActions}}
+  <!-- Bulk Actions (floating) -->
+  <div id="bulkActions" class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-6 py-3 rounded-full shadow-lg z-30" style="display: none;">
+    <div class="flex items-center gap-4">
+      <span id="selectedCount">0 items selected</span>
+      <div class="flex gap-2">
+        {{#each bulkActions}}
+        <button onclick="{{onclick}}" id="{{buttonId}}" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-sm" disabled>
+          {{text}}
+        </button>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  {{/if}}
+
+  {{#if pagination}}
+  <!-- Pagination -->
+  {{#if (gt pagination.pages 1)}}
+  <div class="bg-white/85 backdrop-blur-sm border-t border-gray-200 p-4">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="text-sm text-gray-600">
+        Showing {{#if rows.length}}{{add (multiply (subtract pagination.page 1) pagination.limit) 1}}{{else}}0{{/if}}-{{add (multiply (subtract pagination.page 1) pagination.limit) rows.length}} of {{pagination.total}} items
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span class="text-sm text-gray-600 font-medium">Rows per page:</span>
+        <select id="rowsPerPage" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+          <option value="10" {{#if (eq pagination.limit 10)}}selected{{/if}}>10</option>
+          <option value="20" {{#if (eq pagination.limit 20)}}selected{{/if}}>20</option>
+          <option value="50" {{#if (eq pagination.limit 50)}}selected{{/if}}>50</option>
+          <option value="100" {{#if (eq pagination.limit 100)}}selected{{/if}}>100</option>
+        </select>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <nav class="flex items-center gap-1 text-sm">
+          {{#if (gt pagination.page 1)}}
+          <a href="?page={{subtract pagination.page 1}}&limit={{pagination.limit}}{{queryParams}}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md" title="Previous page">
+            {{lucide 'ChevronLeft' 'w-4 h-4'}}
+          </a>
+          {{/if}}
+
+          {{#each (range 1 pagination.pages)}}
+          <a href="?page={{this}}&limit={{../pagination.limit}}{{../queryParams}}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg {{#if (eq this ../pagination.page)}}bg-primary text-primary-foreground shadow-lg scale-105{{else}}border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400{{/if}} transition-all duration-200 shadow-sm hover:shadow-md font-medium">{{this}}</a>
+          {{/each}}
+
+          {{#if (lt pagination.page pagination.pages)}}
+          <a href="?page={{add pagination.page 1}}&limit={{../pagination.limit}}{{../queryParams}}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md" title="Next page">
+            {{lucide 'ChevronRight' 'w-4 h-4'}}
+          </a>
+          {{/if}}
+        </nav>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  {{/if}}
+</div>

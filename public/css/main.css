@@ -4483,11 +4483,6 @@ body {
   letter-spacing: 0.05em;
 }
 
-.text-\[\#03A9F4\] {
-  --tw-text-opacity: 1;
-  color: rgb(3 169 244 / var(--tw-text-opacity, 1));
-}
-
 .text-\[\#2196F3\] {
   --tw-text-opacity: 1;
   color: rgb(33 150 243 / var(--tw-text-opacity, 1));
@@ -4496,11 +4491,6 @@ body {
 .text-\[\#2A2A2A\] {
   --tw-text-opacity: 1;
   color: rgb(42 42 42 / var(--tw-text-opacity, 1));
-}
-
-.text-\[\#3F51B5\] {
-  --tw-text-opacity: 1;
-  color: rgb(63 81 181 / var(--tw-text-opacity, 1));
 }
 
 .text-\[\#4CAF50\] {
@@ -5908,11 +5898,6 @@ body {
 .hover\:bg-red-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(254 226 226 / var(--tw-bg-opacity, 1));
-}
-
-.hover\:bg-red-50:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 242 242 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-red-500\/20:hover {

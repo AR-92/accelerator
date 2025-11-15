@@ -1,0 +1,17 @@
+<div class='flex items-center justify-between'>
+  <div class='grid gap-1'>
+    <h1 class='font-heading text-2xl font-semibold text-foreground dark:text-white'>{{title}}</h1>
+    <p class='text-base text-muted-foreground'>{{description}}</p>
+  </div>
+  {{#if actions}}
+  <div class='flex items-center gap-3'>
+    {{#each actions}}
+    <button {{#if onclick}}onclick="{{onclick}}"{{/if}} {{#if id}}id="{{id}}"{{/if}}
+            class='flex items-center gap-2 {{#if variant}}{{variant}}{{else}}bg-primary hover:bg-primary/90{{/if}} text-primary-foreground rounded-md px-4 py-2 text-sm font-medium transition-colors'>
+      {{#if icon}}{{lucide icon 'w-4 h-4'}}{{/if}}
+      {{#if text}}<span>{{text}}</span>{{/if}}
+    </button>
+    {{/each}}
+  </div>
+  {{/if}}
+</div>
