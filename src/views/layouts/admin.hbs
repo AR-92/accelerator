@@ -157,63 +157,59 @@
                           </a>
                         {{/if}}
                     </li>
-                    <li>
-                        {{#if activePackages}}
-                          <a href="/admin/packages"
-                             class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
-                              <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
-                                  {{lucide 'Package' 'w-4 h-4'}}
-                              </div>
-                              <span class="font-medium">Packages</span>
-                          </a>
-                        {{else}}
-                          <a href="/admin/packages"
-                             class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
-                              <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
-                                  {{lucide 'Package' 'w-4 h-4'}}
-                              </div>
-                              <span class="font-medium">Packages</span>
-                          </a>
-                        {{/if}}
-                    </li>
                      <li>
-                         {{#if activeBilling}}
-                           <a href="/admin/billing"
-                              class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
-                               <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
-                                   {{lucide 'CreditCard' 'w-4 h-4'}}
-                               </div>
-                               <span class="font-medium">Billing</span>
-                           </a>
-                         {{else}}
-                           <a href="/admin/billing"
-                              class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
-                               <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
-                                   {{lucide 'CreditCard' 'w-4 h-4'}}
-                               </div>
-                               <span class="font-medium">Billing</span>
-                           </a>
-                         {{/if}}
+                         <button class="financial-dropdown-toggle-mobile group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 w-full text-left" id="financial-dropdown-toggle-mobile">
+                             <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
+                                 {{lucide 'DollarSign' 'w-4 h-4'}}
+                             </div>
+                             <span class="font-medium flex-1">Financial</span>
+                             <div class="flex items-center justify-center w-5 h-5 rounded-md transition-transform duration-200" id="financial-chevron-mobile">
+                                 {{lucide 'ChevronDown' 'w-4 h-4'}}
+                             </div>
+                         </button>
+                         <ul class="financial-submenu-mobile hidden ml-4 mt-1 space-y-1" id="financial-submenu-mobile">
+                             <li>
+                                 {{#if activePackages}}
+                                   <a href="/admin/packages"
+                                      class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
+                                       <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
+                                           {{lucide 'Package' 'w-4 h-4'}}
+                                       </div>
+                                       <span class="font-medium">Packages</span>
+                                   </a>
+                                 {{else}}
+                                   <a href="/admin/packages"
+                                      class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
+                                       <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
+                                           {{lucide 'Package' 'w-4 h-4'}}
+                                       </div>
+                                       <span class="font-medium">Packages</span>
+                                   </a>
+                                 {{/if}}
+                             </li>
+                             <li>
+                                 {{#if activeBilling}}
+                                   <a href="/admin/billing"
+                                      class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
+                                       <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
+                                           {{lucide 'CreditCard' 'w-4 h-4'}}
+                                       </div>
+                                       <span class="font-medium">Billing</span>
+                                   </a>
+                                 {{else}}
+                                   <a href="/admin/billing"
+                                      class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
+                                       <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
+                                           {{lucide 'CreditCard' 'w-4 h-4'}}
+                                       </div>
+                                       <span class="font-medium">Billing</span>
+                                   </a>
+                                 {{/if}}
+                             </li>
+
+                         </ul>
                      </li>
-                     <li>
-                         {{#if activeCredits}}
-                           <a href="/admin/credits"
-                              class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
-                               <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
-                                   {{lucide 'Coins' 'w-4 h-4'}}
-                               </div>
-                               <span class="font-medium">Credits</span>
-                           </a>
-                         {{else}}
-                           <a href="/admin/credits"
-                              class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
-                               <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
-                                   {{lucide 'Coins' 'w-4 h-4'}}
-                               </div>
-                               <span class="font-medium">Credits</span>
-                           </a>
-                         {{/if}}
-                     </li>
+
                     <li>
                         {{#if activeCredits}}
                           <a href="/admin/credits"
@@ -252,25 +248,7 @@
                           </a>
                         {{/if}}
                     </li>
-                     <li>
-                         {{#if activeSettings}}
-                           <a href="/admin/settings"
-                              class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
-                               <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
-                                   {{lucide 'Settings' 'w-4 h-4'}}
-                               </div>
-                               <span class="font-medium">Settings</span>
-                           </a>
-                         {{else}}
-                           <a href="/admin/settings"
-                              class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
-                               <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
-                                   {{lucide 'Settings' 'w-4 h-4'}}
-                               </div>
-                                <span class="font-medium">Settings</span>
-                           </a>
-                         {{/if}}
-                   </li>
+
                </ul>
          </nav>
 
@@ -410,82 +388,77 @@
                          </a>
                        {{/if}}
                    </li>
-                   <li>
-                       {{#if activePackages}}
-                         <a href="/admin/packages"
-                            class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
-                             <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
-                                 {{lucide 'Package' 'w-4 h-4'}}
-                             </div>
-                             <span class="font-medium">Packages</span>
-                         </a>
-                       {{else}}
-                         <a href="/admin/packages"
-                            class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
-                             <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
-                                 {{lucide 'Package' 'w-4 h-4'}}
-                             </div>
-                             <span class="font-medium">Packages</span>
-                         </a>
-                       {{/if}}
-                   </li>
-                   <li>
-                       {{#if activeBilling}}
-                         <a href="/admin/billing"
-                            class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
-                             <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
-                                 {{lucide 'CreditCard' 'w-4 h-4'}}
-                             </div>
-                             <span class="font-medium">Billing</span>
-                         </a>
-                       {{else}}
-                         <a href="/admin/billing"
-                            class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
-                             <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
-                                 {{lucide 'CreditCard' 'w-4 h-4'}}
-                             </div>
-                             <span class="font-medium">Billing</span>
-                         </a>
-                       {{/if}}
-                   </li>
-                   <li>
-                       {{#if activeRewards}}
-                         <a href="/admin/rewards"
-                            class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
-                             <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
-                                 {{lucide 'Gift' 'w-4 h-4'}}
-                             </div>
-                             <span class="font-medium">Rewards</span>
-                         </a>
-                       {{else}}
-                         <a href="/admin/rewards"
-                            class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
-                             <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
-                                 {{lucide 'Gift' 'w-4 h-4'}}
-                             </div>
-                             <span class="font-medium">Rewards</span>
-                         </a>
-                       {{/if}}
-                   </li>
                     <li>
-                        {{#if activeSettings}}
-                          <a href="/admin/settings"
-                             class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
-                              <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
-                                  {{lucide 'Settings' 'w-4 h-4'}}
-                              </div>
-                              <span class="font-medium">Settings</span>
-                          </a>
-                        {{else}}
-                          <a href="/admin/settings"
-                             class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
-                              <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
-                                  {{lucide 'Settings' 'w-4 h-4'}}
-                              </div>
-                               <span class="font-medium">Settings</span>
-                          </a>
-                        {{/if}}
+                        <button class="financial-dropdown-toggle group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 w-full text-left" id="financial-dropdown-toggle">
+                            <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
+                                {{lucide 'DollarSign' 'w-4 h-4'}}
+                            </div>
+                            <span class="font-medium flex-1">Financial</span>
+                            <div class="flex items-center justify-center w-5 h-5 rounded-md transition-transform duration-200" id="financial-chevron">
+                                {{lucide 'ChevronDown' 'w-4 h-4'}}
+                            </div>
+                        </button>
+                        <ul class="financial-submenu hidden ml-4 mt-1 space-y-1" id="financial-submenu">
+                            <li>
+                                {{#if activePackages}}
+                                  <a href="/admin/packages"
+                                     class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
+                                      <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
+                                          {{lucide 'Package' 'w-4 h-4'}}
+                                      </div>
+                                      <span class="font-medium">Packages</span>
+                                  </a>
+                                {{else}}
+                                  <a href="/admin/packages"
+                                     class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
+                                      <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
+                                          {{lucide 'Package' 'w-4 h-4'}}
+                                      </div>
+                                      <span class="font-medium">Packages</span>
+                                  </a>
+                                {{/if}}
+                            </li>
+                            <li>
+                                {{#if activeBilling}}
+                                  <a href="/admin/billing"
+                                     class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
+                                      <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
+                                          {{lucide 'CreditCard' 'w-4 h-4'}}
+                                      </div>
+                                      <span class="font-medium">Billing</span>
+                                  </a>
+                                {{else}}
+                                  <a href="/admin/billing"
+                                     class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
+                                      <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
+                                          {{lucide 'CreditCard' 'w-4 h-4'}}
+                                      </div>
+                                      <span class="font-medium">Billing</span>
+                                  </a>
+                                {{/if}}
+                            </li>
+                            <li>
+                                {{#if activeRewards}}
+                                  <a href="/admin/rewards"
+                                     class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
+                                      <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
+                                          {{lucide 'Gift' 'w-4 h-4'}}
+                                      </div>
+                                      <span class="font-medium">Rewards</span>
+                                  </a>
+                                {{else}}
+                                  <a href="/admin/rewards"
+                                     class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
+                                      <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
+                                          {{lucide 'Gift' 'w-4 h-4'}}
+                                      </div>
+                                      <span class="font-medium">Rewards</span>
+                                  </a>
+                                {{/if}}
+                            </li>
+                        </ul>
                     </li>
+
                    <li>
                        {{#if activeLandingPage}}
                          <a href="/admin/landing-page"
@@ -505,25 +478,7 @@
                          </a>
                        {{/if}}
                    </li>
-                    <li>
-                       {{#if activeSystemHealth}}
-                        <a href="/admin/system-health"
-                           class="group flex items-center px-3 py-2.5 rounded-lg bg-primary text-primary-foreground shadow-sm transition-all duration-200">
-                            <div class="flex items-center justify-center w-8 h-8 bg-primary-foreground/20 rounded-md mr-3 transition-colors">
-                                {{lucide 'Activity' 'w-4 h-4'}}
-                            </div>
-                            <span class="font-medium">System Health</span>
-                        </a>
-                      {{else}}
-                        <a href="/admin/system-health"
-                           class="group flex items-center px-3 py-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200">
-                            <div class="flex items-center justify-center w-8 h-8 group-hover:bg-muted rounded-md mr-3 transition-colors">
-                                {{lucide 'Activity' 'w-4 h-4'}}
-                            </div>
-                            <span class="font-medium">System Health</span>
-                        </a>
-                      {{/if}}
-                  </li>
+
              </ul>
          </nav>
 
@@ -629,14 +584,22 @@
                                      {{lucide 'User' 'w-4 h-4'}}
                                      <span>Profile</span>
                                  </a>
-                                 <a href="/admin/settings" class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
-                                     {{lucide 'Settings' 'w-4 h-4'}}
-                                     <span>Settings</span>
-                                 </a>
-                                 <a href="/admin/notifications" class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
-                                     {{lucide 'Bell' 'w-4 h-4'}}
-                                     <span>Notifications</span>
-                                 </a>
+                                  <a href="/admin/profile-settings" class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
+                                      {{lucide 'Settings' 'w-4 h-4'}}
+                                      <span>Profile Settings</span>
+                                  </a>
+                                  <a href="/admin/settings" class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
+                                      {{lucide 'Settings' 'w-4 h-4'}}
+                                      <span>Admin Settings</span>
+                                  </a>
+                                  <a href="/admin/system-health" class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
+                                      {{lucide 'Activity' 'w-4 h-4'}}
+                                      <span>System Health</span>
+                                  </a>
+                                  <a href="/admin/notifications" class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
+                                      {{lucide 'Bell' 'w-4 h-4'}}
+                                      <span>Notifications</span>
+                                  </a>
                                  <a href="/admin/activity" class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
                                      {{lucide 'Activity' 'w-4 h-4'}}
                                      <span>Activity Log</span>
@@ -763,6 +726,38 @@
                     userDropdown?.classList.add('hidden');
                 }, 200);
                 userMenuArrow.classList.remove('rotate-180');
+            }
+        });
+
+        // Financial dropdown toggle for desktop
+        const financialToggle = document.getElementById('financial-dropdown-toggle');
+        const financialSubmenu = document.getElementById('financial-submenu');
+        const financialChevron = document.getElementById('financial-chevron');
+
+        financialToggle?.addEventListener('click', function() {
+            const isHidden = financialSubmenu.classList.contains('hidden');
+            if (isHidden) {
+                financialSubmenu.classList.remove('hidden');
+                financialChevron.classList.add('rotate-180');
+            } else {
+                financialSubmenu.classList.add('hidden');
+                financialChevron.classList.remove('rotate-180');
+            }
+        });
+
+        // Financial dropdown toggle for mobile
+        const financialToggleMobile = document.getElementById('financial-dropdown-toggle-mobile');
+        const financialSubmenuMobile = document.getElementById('financial-submenu-mobile');
+        const financialChevronMobile = document.getElementById('financial-chevron-mobile');
+
+        financialToggleMobile?.addEventListener('click', function() {
+            const isHidden = financialSubmenuMobile.classList.contains('hidden');
+            if (isHidden) {
+                financialSubmenuMobile.classList.remove('hidden');
+                financialChevronMobile.classList.add('rotate-180');
+            } else {
+                financialSubmenuMobile.classList.add('hidden');
+                financialChevronMobile.classList.remove('rotate-180');
             }
         });
     </script>
