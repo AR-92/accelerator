@@ -30,56 +30,994 @@
         </div>
       </div>
       <div class="flex-1 overflow-y-auto px-4 py-6">
-        <div class="max-w-3xl mx-auto space-y-6">
-          <div class="flex gap-4">
-            <div class="bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg" style="margin-top: -6px;">
-              <img src="/images/favcon.svg" alt="Logo" class="size-6">
-            </div>
-            <div class="flex-1">
-              <div class="text-sm font-semibold text-foreground mb-2">Accelerator</div>
-              <div class="text-sm text-foreground leading-relaxed">Welcome to the Legal Model Assistant! Let's protect your business. What type of entity are you considering forming?</div>
-              <div class="flex items-center gap-2 mt-3">
-                <button class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-volume2 h-3 w-3">
-                    <path
-                      d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z">
-                    </path>
-                    <path d="M16 9a5 5 0 0 1 0 6"></path>
-                    <path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path>
-                  </svg>
-                </button>
-                <button class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-copy h-3 w-3">
-                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
-                    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
-                  </svg>
-                </button>
-                <button class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-rotate-cw h-3 w-3">
-                    <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
-                    <path d="M21 3v5h-5"></path>
-                  </svg>
-                </button>
-                <button class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-thumbs-down h-3 w-3">
-                    <path d="M17 14V2"></path>
-                    <path
-                      d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z">
-                    </path>
-                  </svg>
-                </button>
-              </div>
-            </div>
+        <div class="max-w-7xl mx-auto space-y-6">
+{{> ai-message message="Hey there! Welcome to the Legal Model Assistant. I'm here to help you build a solid legal foundation for your startup. Let's start by figuring out what type of company entity you're thinking about forming – like an LLC, corporation, or something else?" time="10:28 AM" name="iGate Accelerator" subtitle="AI Assistant" avatarSrc="/images/favcon.svg" status="Sent" topic="Welcome & Introduction" }}
+          <div class='flex flex-col'>
+<!-- Task Header -->
+<div class='bg-muted rounded-2xl p-4 mb-4'>
+  <div class='flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-3'>
+    <div class='flex items-center gap-3'>
+      <div class='w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold flex-shrink-0'>
+        <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'></path>
+        </svg>
+      </div>
+      <div class='min-w-0'>
+        <h4 class='text-sm font-semibold text-foreground'>Legal Onboarding</h4>
+        <p class='text-sm text-muted-foreground'>Guide to legal and corporate framework</p>
+      </div>
+    </div>
+    <div class='flex items-center gap-2 flex-shrink-0'>
+      <span class='inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'>
+        <svg class='w-3 h-3 mr-1' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+          <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
+        </svg>
+        In Progress
+      </span>
+      <span class='text-xs text-muted-foreground'>10:30 AM</span>
+    </div>
+  </div>
+  <div class='w-full bg-secondary rounded-full h-2'>
+    <div class='bg-primary h-2 rounded-full transition-all duration-300' style='width: 20%;'></div>
+  </div>
+</div>
+<!-- Task Content with Steps -->
+<div class='flex'>
+  <div class='w-[60px] relative'>
+    <div class='absolute left-20 top-5 bottom-5 w-0 border-l border-dotted border-gray-500 z-0'></div>
+  </div>
+  <div class='flex flex-col flex-1 min-w-0 overflow-hidden pt-2'>
+    <!-- Step 1: Company Structure -->
+    <div class='flex gap-4'>
+      <div class='flex-shrink-0 relative'>
+        <div class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+          1
+        </div>
+      </div>
+      <div class='flex-1 pb-6'>
+        <div class='bg-background rounded-lg p-4 border border-border'>
+          <div class='flex items-center gap-2 mb-2'>
+            <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'></path>
+            </svg>
+            <h5 class='text-sm font-semibold text-foreground'>Company Structure</h5>
           </div>
-          <!-- Conversation will continue here -->
+          <p class='text-sm text-muted-foreground mb-3'>Fundamental company details and legal entity formation.</p>
+          <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+            <span class='flex items-center gap-1'>
+              <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <circle cx='12' cy='12' r='10'></circle>
+                <polyline points='12,6 12,12 16,14'></polyline>
+              </svg>
+              2.3s
+            </span>
+            <span class='flex items-center gap-1'>
+              <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                <polyline points='22,4 12,14.01 9,11.01'></polyline>
+              </svg>
+              98% confidence
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Step 2: Intellectual Property -->
+    <div class='flex gap-4'>
+      <div class='flex-shrink-0 relative'>
+        <div class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+          2
+        </div>
+      </div>
+      <div class='flex-1 pb-6'>
+        <div class='bg-background rounded-lg p-4 border border-border'>
+          <div class='flex items-center gap-2 mb-2'>
+            <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 15v2m-6 4h12a2 2 0 002-2v-2a2 2 0 00-2-2h-1V9a3 3 0 00-3-3H9a3 3 0 00-3 3v6H5a2 2 0 00-2 2v2a2 2 0 002 2z'></path>
+            </svg>
+            <h5 class='text-sm font-semibold text-foreground'>Intellectual Property</h5>
+          </div>
+          <p class='text-sm text-muted-foreground mb-3'>Protect your innovations and brand assets.</p>
+          <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+            <span class='flex items-center gap-1'>
+              <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <circle cx='12' cy='12' r='10'></circle>
+                <polyline points='12,6 12,12 16,14'></polyline>
+              </svg>
+              5.7s
+            </span>
+            <span class='flex items-center gap-1'>
+              <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                <polyline points='22,4 12,14.01 9,11.01'></polyline>
+              </svg>
+              95% confidence
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Step 3: Contracts & Agreements -->
+    <div class='flex gap-4 '>
+      <div class='flex-shrink-0 relative'>
+        <div class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+          3
+        </div>
+      </div>
+      <div class='flex-1 pb-6'>
+        <div class='bg-background rounded-lg p-4 border border-border'>
+          <div class='flex items-center gap-2 mb-3'>
+            <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+            </svg>
+            <h5 class='text-sm font-semibold text-foreground'>Contracts & Agreements</h5>
+          </div>
+          <p class='text-sm text-muted-foreground mb-3'>Essential legal documents for your business.</p>
+          <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+            <span class='flex items-center gap-1'>
+              <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <circle cx='12' cy='12' r='10'></circle>
+                <polyline points='12,6 12,12 16,14'></polyline>
+              </svg>
+              8.2s
+            </span>
+            <span class='flex items-center gap-1'>
+              <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                <polyline points='22,4 12,14.01 9,11.01'></polyline>
+              </svg>
+              92% confidence
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Step 4: Compliance & Regulations -->
+    <div class='flex gap-4 '>
+      <div class='flex-shrink-0 relative'>
+        <div class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+          4
+        </div>
+      </div>
+      <div class='flex-1 pb-6'>
+        <div class='bg-background rounded-lg p-4 border border-border'>
+          <div class='flex items-center gap-2 mb-3'>
+            <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+            </svg>
+            <h5 class='text-sm font-semibold text-foreground'>Compliance & Regulations</h5>
+          </div>
+          <p class='text-sm text-muted-foreground mb-3'>Legal requirements and regulatory compliance.</p>
+          <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+            <span class='flex items-center gap-1'>
+              <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <circle cx='12' cy='12' r='10'></circle>
+                <polyline points='12,6 12,12 16,14'></polyline>
+              </svg>
+              3.1s
+            </span>
+            <span class='flex items-center gap-1'>
+              <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                <polyline points='22,4 12,14.01 9,11.01'></polyline>
+              </svg>
+              96% confidence
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Step 5: Cap Table & Equity -->
+    <div class='flex gap-4 '>
+      <div class='flex-shrink-0 relative'>
+        <div class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+          5
+        </div>
+      </div>
+      <div class='flex-1 pb-6'>
+        <div class='bg-background rounded-lg p-4 border border-border'>
+          <div class='flex items-center gap-2 mb-3'>
+            <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'></path>
+            </svg>
+            <h5 class='text-sm font-semibold text-foreground'>Cap Table & Equity</h5>
+          </div>
+          <p class='text-sm text-muted-foreground mb-3'>Ownership structure and equity distribution.</p>
+          <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+            <span class='flex items-center gap-1'>
+              <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <circle cx='12' cy='12' r='10'></circle>
+                <polyline points='12,6 12,12 16,14'></polyline>
+              </svg>
+              4.2s
+            </span>
+            <span class='flex items-center gap-1'>
+              <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                <polyline points='22,4 12,14.01 9,11.01'></polyline>
+              </svg>
+              94% confidence
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='text-xs text-muted-foreground mt-3'>10:30 AM</div>
+  </div>
+</div>
+</div>
+<!-- Section 1: Company Structure -->
+<div id='section-1' class='bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-800 p-4 mb-6'>
+  <div class='flex items-center gap-3 mb-3'>
+    <div class='w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center'>
+      <span class='text-sm font-bold text-blue-600 dark:text-blue-400'>1</span>
+    </div>
+    <h3 class='text-lg font-semibold text-blue-900 dark:text-blue-100'>Company Structure</h3>
+  </div>
+  <p class='text-sm text-blue-800 dark:text-blue-200 mb-3'>Let's begin with the fundamental company details. If you don't have the answer, choose AI Suggest, and I will generate an appropriate response for your stage.</p>
+  <div class='text-xs text-blue-700 dark:text-blue-300'>
+    <strong>Topics covered:</strong> Company Name, Company Type, Commercial Registration
+  </div>
+</div>
+{{> ai-message message="Alright, let's get the basics down. What's the name you're using or planning for your company? If you're not sure yet, I can suggest some ideas based on your industry." time="10:28 AM" name="iGate Accelerator" subtitle="AI Assistant" avatarSrc="/images/favcon.svg" status="Sent" topic="Company Name" }}
+<!-- Company Name Form -->
+<div class="flex justify-end mb-4">
+  <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+    <div class="flex items-start gap-3 mb-3">
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-foreground">You</div>
+        <div class="text-xs text-muted-foreground">Responding</div>
+        <div class="mt-2">
+          <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Company Name</h3>
+        </div>
+      </div>
+      <div class="flex-shrink-0">
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+          U
+        </div>
+      </div>
+    </div>
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-foreground mb-2">Company Name</label>
+        <input type="text" name="company_name" class="w-full px-3 py-2 border border-border rounded-md bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Enter company name...">
+      </div>
+      <div class="flex gap-2">
+        <button type="button" onclick="autoFillForm('company_name')" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-medium">AI Suggest</button>
+        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit Company Name</button>
+        <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+      </div>
+    </form>
+    <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+      <span class="flex space-x-1">
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+      </span>
+      <span>User is typing...</span>
+    </div>
+  </div>
+</div>
+{{> ai-message message="Got it. Now, what kind of legal structure are you going with? Are you an LLC, a sole proprietorship, or maybe something else like a joint stock company? If you're early stage, an LLC is often a great choice for flexibility." time="10:28 AM" name="iGate Accelerator" subtitle="AI Assistant" avatarSrc="/images/favcon.svg" status="Sent" topic="Company Type" }}
+<!-- Company Type Form -->
+<div class="flex justify-end mb-4">
+  <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+    <div class="flex items-start gap-3 mb-3">
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-foreground">You</div>
+        <div class="text-xs text-muted-foreground">Responding</div>
+        <div class="mt-2">
+          <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Company Type</h3>
+        </div>
+      </div>
+      <div class="flex-shrink-0">
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+          U
+        </div>
+      </div>
+    </div>
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-foreground mb-2">Company Type</label>
+        <select name="company_type" class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
+          <option value="">Select company type</option>
+          <option value="llc">Limited Liability Company (LLC)</option>
+          <option value="sole">Sole Proprietorship</option>
+          <option value="joint">Joint Stock Company</option>
+          <option value="startup">Startup / Early-stage unregistered</option>
+          <option value="branch">Branch of foreign company</option>
+          <option value="holding">Holding company</option>
+        </select>
+      </div>
+      <div class="flex gap-2">
+        <button type="button" onclick="autoFillForm('company_type')" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-medium">AI Suggest</button>
+        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit Company Type</button>
+        <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+      </div>
+    </form>
+    <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+      <span class="flex space-x-1">
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+      </span>
+      <span>User is typing...</span>
+    </div>
+  </div>
+</div>
+{{> ai-message message="Okay, do you already have a Commercial Registration (CR) or Business Registration (BR) number? If not, that's something we'll need to get sorted soon." time="10:28 AM" name="iGate Accelerator" subtitle="AI Assistant" avatarSrc="/images/favcon.svg" status="Sent" topic="Commercial Registration" }}
+<!-- Commercial Registration Form -->
+<div class="flex justify-end mb-4">
+  <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+    <div class="flex items-start gap-3 mb-3">
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-foreground">You</div>
+        <div class="text-xs text-muted-foreground">Responding</div>
+        <div class="mt-2">
+          <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Commercial Registration</h3>
+        </div>
+      </div>
+      <div class="flex-shrink-0">
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+          U
+        </div>
+      </div>
+    </div>
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-foreground mb-2">Commercial Registration Number</label>
+        <div class="flex gap-2">
+          <input type="text" name="cr_number" class="flex-1 px-3 py-2 border border-border rounded-md bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Enter CR number...">
+          <button type="button" class="px-3 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">No</button>
+          <button type="button" class="px-3 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">In Progress</button>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="button" onclick="autoFillForm('commercial_registration')" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-medium">AI Suggest</button>
+        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit Commercial Registration</button>
+        <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+      </div>
+    </form>
+    <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+      <span class="flex space-x-1">
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+      </span>
+      <span>User is typing...</span>
+    </div>
+  </div>
+</div>
+<!-- Section 1 Complete - Proceed to Section 2 -->
+<div class="bg-muted rounded-2xl p-4 my-6">
+  <div class="flex items-start gap-3 mb-4">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+      <span class="text-lg">🎉</span>
+    </div>
+    <div class="flex-1">
+      <h4 class="text-sm font-semibold text-foreground mb-1">Section 1 Complete!</h4>
+      <p class="text-sm text-muted-foreground">Great job on company structure. Now let's move to intellectual property protection.</p>
+    </div>
+  </div>
+  <div class="bg-background rounded-lg p-3 mb-4 border border-border">
+    <div class="flex items-center gap-2 mb-2">
+      <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+      <span class="text-sm font-medium text-foreground">Company Structure</span>
+    </div>
+    <p class="text-xs text-muted-foreground">Completed: Company Name, Company Type, Commercial Registration</p>
+  </div>
+  <!-- Overall Progress Bar -->
+  <div class="mb-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-medium text-foreground">Overall Progress</span>
+      <span class="text-sm text-muted-foreground">1/5 sections completed</span>
+    </div>
+    <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+      <div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="Company Structure - Completed"></div>
+      <div class="bg-muted h-4 flex-1" title="Intellectual Property - Remaining"></div>
+      <div class="bg-muted h-4 flex-1" title="Contracts & Agreements - Remaining"></div>
+      <div class="bg-muted h-4 flex-1" title="Compliance & Regulations - Remaining"></div>
+      <div class="bg-muted h-4 rounded-r-full flex-1" title="Cap Table & Equity - Remaining"></div>
+    </div>
+    <div class="flex justify-between text-xs text-muted-foreground mt-2">
+      <span class="text-blue-600 font-medium">Structure</span>
+      <span>IP</span>
+      <span>Contracts</span>
+      <span>Compliance</span>
+      <span>Equity</span>
+    </div>
+  </div>
+  <div class="flex gap-3">
+    <button class="flex-1 px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium" data-action="proceed" data-target="2">
+      Proceed to Section 2
+    </button>
+    <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium" data-action="review" data-target="1">
+      Review Section 1
+    </button>
+  </div>
+</div>
+<!-- Section 2: Intellectual Property -->
+<div id='section-2' class='bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg border border-green-200 dark:border-green-800 p-4 mb-6'>
+  <div class='flex items-center gap-3 mb-3'>
+    <div class='w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center'>
+      <span class='text-sm font-bold text-green-600 dark:text-green-400'>2</span>
+    </div>
+    <h3 class='text-lg font-semibold text-green-900 dark:text-green-100'>Intellectual Property</h3>
+  </div>
+  <p class='text-sm text-green-800 dark:text-green-200 mb-3'>Would you like me to help you identify which intellectual property protections your startup needs?</p>
+  <div class='text-xs text-green-700 dark:text-green-300'>
+    <strong>Topics covered:</strong> Trademark, Copyright, Patent, Trade Secrets
+  </div>
+</div>
+{{> ai-message message="Hey, intellectual property is super important for startups. Want me to walk you through what protections you might need? Based on what most tech startups do, I'd suggest trademarks for your brand stuff like logo and name – that's key to stop competitors from copying your identity. For example, registering 'YourApp' as a trademark protects your brand. Then copyright for your website, app designs, and content – it's automatic when you create them, but registering gives extra protection. If you've got unique tech or algorithms, patents could be worth looking into, like patenting a special data processing method. And don't forget trade secrets for confidential stuff like your pricing or processes – just make sure you have NDAs and internal policies in place. Most startups start with trademark and copyright. What do you think?" time="10:28 AM" name="iGate Accelerator" subtitle="AI Assistant" avatarSrc="/images/favcon.svg" status="Sent" topic="IP Protection" }}
+<!-- IP Protection Form -->
+<div class="flex justify-end mb-4">
+  <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+    <div class="flex items-start gap-3 mb-3">
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-foreground">You</div>
+        <div class="text-xs text-muted-foreground">Responding</div>
+        <div class="mt-2">
+          <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">IP Protection</h3>
+        </div>
+      </div>
+      <div class="flex-shrink-0">
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+          U
+        </div>
+      </div>
+    </div>
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-foreground mb-2">IP Protection Options</label>
+        <div class="flex gap-2">
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Yes, AI Suggest</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">No, I will list them manually</button>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit IP Protection</button>
+        <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+      </div>
+    </form>
+    <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+      <span class="flex space-x-1">
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+      </span>
+      <span>User is typing...</span>
+    </div>
+  </div>
+</div>
+{{> ai-message message="Speaking of patents, do you have any proprietary technology or processes that might be patentable? Like unique algorithms, AI models, or hardware designs?" time="10:28 AM" name="iGate Accelerator" subtitle="AI Assistant" avatarSrc="/images/favcon.svg" status="Sent" topic="Patentable Technology" }}
+<!-- Patentable Technology Form -->
+<div class="flex justify-end mb-4">
+  <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+    <div class="flex items-start gap-3 mb-3">
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-foreground">You</div>
+        <div class="text-xs text-muted-foreground">Responding</div>
+        <div class="mt-2">
+          <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Patentable Technology</h3>
+        </div>
+      </div>
+      <div class="flex-shrink-0">
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+          U
+        </div>
+      </div>
+    </div>
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-foreground mb-2">Patentable Technology</label>
+        <div class="flex gap-2">
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Yes</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">No</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Not sure</button>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="button" onclick="autoFillForm('patentable_tech')" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-medium">AI Suggest</button>
+        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit Patentable Technology</button>
+        <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+      </div>
+    </form>
+    <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+      <span class="flex space-x-1">
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+      </span>
+      <span>User is typing...</span>
+    </div>
+  </div>
+</div>
+<!-- Section 2 Complete - Proceed to Section 3 -->
+<div class="bg-muted rounded-2xl p-4 my-6">
+  <div class="flex items-start gap-3 mb-4">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+      <span class="text-lg">🚀</span>
+    </div>
+    <div class="flex-1">
+      <h4 class="text-sm font-semibold text-foreground mb-1">Section 2 Complete!</h4>
+      <p class="text-sm text-muted-foreground">Excellent! Your IP foundation is solid. Now let's cover contracts and agreements.</p>
+    </div>
+  </div>
+  <div class="bg-background rounded-lg p-3 mb-4 border border-border">
+    <div class="flex items-center gap-2 mb-2">
+      <div class="w-2 h-2 rounded-full bg-green-500"></div>
+      <span class="text-sm font-medium text-foreground">Intellectual Property</span>
+    </div>
+    <p class="text-xs text-muted-foreground">Completed: Trademark, Copyright, Patent, Trade Secrets</p>
+  </div>
+  <!-- Overall Progress Bar -->
+  <div class="mb-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-medium text-foreground">Overall Progress</span>
+      <span class="text-sm text-muted-foreground">2/5 sections completed</span>
+    </div>
+    <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+      <div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="Company Structure - Completed"></div>
+      <div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Intellectual Property - Completed"></div>
+      <div class="bg-muted h-4 flex-1" title="Contracts & Agreements - Remaining"></div>
+      <div class="bg-muted h-4 flex-1" title="Compliance & Regulations - Remaining"></div>
+      <div class="bg-muted h-4 rounded-r-full flex-1" title="Cap Table & Equity - Remaining"></div>
+    </div>
+    <div class="flex justify-between text-xs text-muted-foreground mt-2">
+      <span class="text-blue-600 font-medium">Structure</span>
+      <span class="text-green-600 font-medium">IP</span>
+      <span>Contracts</span>
+      <span>Compliance</span>
+      <span>Equity</span>
+    </div>
+  </div>
+  <div class="flex gap-3">
+    <button class="flex-1 px-4 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-700 font-medium" data-action="proceed" data-target="3">
+      Proceed to Section 3
+    </button>
+    <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium" data-action="review" data-target="2">
+      Review Section 2
+    </button>
+  </div>
+</div>
+<!-- Section 3: Contracts & Agreements -->
+<div id='section-3' class='bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 rounded-lg border border-orange-200 dark:border-orange-800 p-4 mb-6'>
+  <div class='flex items-center gap-3 mb-3'>
+    <div class='w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center'>
+      <span class='text-sm font-bold text-orange-600 dark:text-orange-400'>3</span>
+    </div>
+    <h3 class='text-lg font-semibold text-orange-900 dark:text-orange-100'>Contracts & Agreements</h3>
+  </div>
+  <p class='text-sm text-orange-800 dark:text-orange-200 mb-3'>Do you want me to suggest the contracts and agreements your startup must have at your current stage?</p>
+  <div class='text-xs text-orange-700 dark:text-orange-300'>
+    <strong>Topics covered:</strong> Founder Agreement, NDA, Employment Agreements, IP Assignment, Terms of Use, SLA, Shareholders Agreement, Partnership Agreements
+  </div>
+</div>
+{{> ai-message message="Sure, contracts are the backbone of your business relationships. Want me to suggest the key ones for your stage? For early startups, you definitely need a founder agreement covering equity split, roles, and vesting – like a 4-year vesting with a 1-year cliff. NDAs for everyone you talk to. Employment or contractor agreements for your team, including IP assignment. Terms of use and privacy policy for your website or app. If you're providing services, an SLA. Shareholders agreement if you have investors. And vendor agreements for partners. I can help draft templates for these." time="10:28 AM" name="iGate Accelerator" subtitle="AI Assistant" avatarSrc="/images/favcon.svg" status="Sent" topic="Contracts & Agreements" }}
+<!-- Contracts & Agreements Form -->
+<div class="flex justify-end mb-4">
+  <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+    <div class="flex items-start gap-3 mb-3">
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-foreground">You</div>
+        <div class="text-xs text-muted-foreground">Responding</div>
+        <div class="mt-2">
+          <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Contracts & Agreements</h3>
+        </div>
+      </div>
+      <div class="flex-shrink-0">
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+          U
+        </div>
+      </div>
+    </div>
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-foreground mb-2">Contracts & Agreements Options</label>
+        <div class="flex gap-2">
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Yes, AI Suggest</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">No, we will enter manually</button>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit Contracts & Agreements</button>
+        <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+      </div>
+    </form>
+    <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+      <span class="flex space-x-1">
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+      </span>
+      <span>User is typing...</span>
+    </div>
+  </div>
+</div>
+<!-- Section 3 Complete - Proceed to Section 4 -->
+<div class="bg-muted rounded-2xl p-4 my-6">
+  <div class="flex items-start gap-3 mb-4">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+      <span class="text-lg">📄</span>
+    </div>
+    <div class="flex-1">
+      <h4 class="text-sm font-semibold text-foreground mb-1">Section 3 Complete!</h4>
+      <p class="text-sm text-muted-foreground">Great work on contracts. Now let's ensure compliance and regulations.</p>
+    </div>
+  </div>
+  <div class="bg-background rounded-lg p-3 mb-4 border border-border">
+    <div class="flex items-center gap-2 mb-2">
+      <div class="w-2 h-2 rounded-full bg-orange-500"></div>
+      <span class="text-sm font-medium text-foreground">Contracts & Agreements</span>
+    </div>
+    <p class="text-xs text-muted-foreground">Completed: Founder Agreement, NDA, Employment Agreements, IP Assignment, Terms of Use, SLA, Shareholders Agreement, Partnership Agreements</p>
+  </div>
+  <!-- Overall Progress Bar -->
+  <div class="mb-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-medium text-foreground">Overall Progress</span>
+      <span class="text-sm text-muted-foreground">3/5 sections completed</span>
+    </div>
+    <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+      <div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="Company Structure - Completed"></div>
+      <div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Intellectual Property - Completed"></div>
+      <div class="bg-orange-500 h-4 flex-1 transition-all duration-500" title="Contracts & Agreements - Completed"></div>
+      <div class="bg-muted h-4 flex-1" title="Compliance & Regulations - Remaining"></div>
+      <div class="bg-muted h-4 rounded-r-full flex-1" title="Cap Table & Equity - Remaining"></div>
+    </div>
+    <div class="flex justify-between text-xs text-muted-foreground mt-2">
+      <span class="text-blue-600 font-medium">Structure</span>
+      <span class="text-green-600 font-medium">IP</span>
+      <span class="text-orange-600 font-medium">Contracts</span>
+      <span>Compliance</span>
+      <span>Equity</span>
+    </div>
+  </div>
+  <div class="flex gap-3">
+    <button class="flex-1 px-4 py-2 text-sm bg-orange-600 text-white rounded-md hover:bg-orange-700 font-medium" data-action="proceed" data-target="4">
+      Proceed to Section 4
+    </button>
+    <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium" data-action="review" data-target="3">
+      Review Section 3
+    </button>
+  </div>
+</div>
+<!-- Section 4: Compliance & Regulations -->
+<div id='section-4' class='bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 rounded-lg border border-purple-200 dark:border-purple-800 p-4 mb-6'>
+  <div class='flex items-center gap-3 mb-3'>
+    <div class='w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center'>
+      <span class='text-sm font-bold text-purple-600 dark:text-purple-400'>4</span>
+    </div>
+    <h3 class='text-lg font-semibold text-purple-900 dark:text-purple-100'>Compliance & Regulations</h3>
+  </div>
+  <p class='text-sm text-purple-800 dark:text-purple-200 mb-3'>Would you like me to recommend the compliance requirements relevant to your business?</p>
+  <div class='text-xs text-purple-700 dark:text-purple-300'>
+    <strong>Topics covered:</strong> Corporate Compliance, Data Protection, Cybersecurity, Industry-Specific Compliance
+  </div>
+</div>
+{{> ai-message message="Compliance is crucial to avoid legal headaches. Want recommendations for your business? Key areas include corporate compliance like registrations and filings to keep your legal standing solid, data protection with GDPR or CCPA if you handle personal info, cybersecurity to prevent breaches, and industry-specific rules depending on what you do – like financial regs or healthcare standards. It varies by location and industry, so tell me more about your business." time="10:28 AM" name="iGate Accelerator" subtitle="AI Assistant" avatarSrc="/images/favcon.svg" status="Sent" topic="Compliance & Regulations" }}
+<!-- Data Protection Form -->
+<div class="flex justify-end mb-4">
+  <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+    <div class="flex items-start gap-3 mb-3">
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-foreground">You</div>
+        <div class="text-xs text-muted-foreground">Responding</div>
+        <div class="mt-2">
+          <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Data Protection</h3>
+        </div>
+      </div>
+      <div class="flex-shrink-0">
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+          U
+        </div>
+      </div>
+    </div>
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-foreground mb-2">Personal Data Handling</label>
+        <div class="flex gap-2">
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Yes</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">No</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Not sure</button>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="button" onclick="autoFillForm('data_protection')" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-medium">AI Suggest</button>
+        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit Data Protection</button>
+        <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+      </div>
+    </form>
+    <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+      <span class="flex space-x-1">
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+      </span>
+      <span>User is typing...</span>
+    </div>
+  </div>
+</div>
+<!-- Section 4 Complete - Proceed to Section 5 -->
+<div class="bg-muted rounded-2xl p-4 my-6">
+  <div class="flex items-start gap-3 mb-4">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+      <span class="text-lg">⚖️</span>
+    </div>
+    <div class="flex-1">
+      <h4 class="text-sm font-semibold text-foreground mb-1">Section 4 Complete!</h4>
+      <p class="text-sm text-muted-foreground">Compliance covered. Finally, let's set up your cap table and equity structure.</p>
+    </div>
+  </div>
+  <div class="bg-background rounded-lg p-3 mb-4 border border-border">
+    <div class="flex items-center gap-2 mb-2">
+      <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+      <span class="text-sm font-medium text-foreground">Compliance & Regulations</span>
+    </div>
+    <p class="text-xs text-muted-foreground">Completed: Corporate Compliance, Data Protection, Cybersecurity, Industry-Specific Compliance</p>
+  </div>
+  <!-- Overall Progress Bar -->
+  <div class="mb-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-medium text-foreground">Overall Progress</span>
+      <span class="text-sm text-muted-foreground">4/5 sections completed</span>
+    </div>
+    <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+      <div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="Company Structure - Completed"></div>
+      <div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Intellectual Property - Completed"></div>
+      <div class="bg-orange-500 h-4 flex-1 transition-all duration-500" title="Contracts & Agreements - Completed"></div>
+      <div class="bg-purple-500 h-4 flex-1 transition-all duration-500" title="Compliance & Regulations - Completed"></div>
+      <div class="bg-muted h-4 rounded-r-full flex-1" title="Cap Table & Equity - Remaining"></div>
+    </div>
+    <div class="flex justify-between text-xs text-muted-foreground mt-2">
+      <span class="text-blue-600 font-medium">Structure</span>
+      <span class="text-green-600 font-medium">IP</span>
+      <span class="text-orange-600 font-medium">Contracts</span>
+      <span class="text-purple-600 font-medium">Compliance</span>
+      <span>Equity</span>
+    </div>
+  </div>
+  <div class="flex gap-3">
+    <button class="flex-1 px-4 py-2 text-sm bg-purple-600 text-white rounded-md hover:bg-purple-700 font-medium" data-action="proceed" data-target="5">
+      Proceed to Section 5
+    </button>
+    <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium" data-action="review" data-target="4">
+      Review Section 4
+    </button>
+  </div>
+</div>
+<!-- Section 5: Cap Table & Equity -->
+<div id='section-5' class='bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 rounded-lg border border-red-200 dark:border-red-800 p-4 mb-6'>
+  <div class='flex items-center gap-3 mb-3'>
+    <div class='w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center'>
+      <span class='text-sm font-bold text-red-600 dark:text-red-400'>5</span>
+    </div>
+    <h3 class='text-lg font-semibold text-red-900 dark:text-red-100'>Cap Table & Equity</h3>
+  </div>
+  <p class='text-sm text-red-800 dark:text-red-200 mb-3'>Would you like me to generate a recommended cap table structure for your stage?</p>
+  <div class='text-xs text-red-700 dark:text-red-300'>
+    <strong>Topics covered:</strong> Cap Table Structure, ESOP Pool, Investment Rounds, Downloadable Cap Table
+  </div>
+</div>
+{{> ai-message message="Sure, cap tables are all about ownership. Want me to generate a structure for your stage? For a seed-stage startup, a common setup is founders taking 60-80% total – like 40% for the CEO, 25% for CTO, 10% for others. Then 10% for an ESOP pool to attract talent, and 15% for early investors. Founders usually have vesting schedules to keep them committed. Investors will dilute you over rounds, so plan ahead. I can create a full downloadable table." time="10:28 AM" name="iGate Accelerator" subtitle="AI Assistant" avatarSrc="/images/favcon.svg" status="Sent" topic="Cap Table & Equity" }}
+<!-- Cap Table Form -->
+<div class="flex justify-end mb-4">
+  <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+    <div class="flex items-start gap-3 mb-3">
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-foreground">You</div>
+        <div class="text-xs text-muted-foreground">Responding</div>
+        <div class="mt-2">
+          <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Cap Table & Equity</h3>
+        </div>
+      </div>
+      <div class="flex-shrink-0">
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+          U
+        </div>
+      </div>
+    </div>
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-foreground mb-2">Cap Table Options</label>
+        <div class="flex gap-2">
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Yes, AI Suggest</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">No, manually</button>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit Cap Table</button>
+        <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+      </div>
+    </form>
+    <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+      <span class="flex space-x-1">
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+      </span>
+      <span>User is typing...</span>
+    </div>
+  </div>
+</div>
+{{> ai-message message="Speaking of ESOP, do you want to add an employee stock option pool? It's recommended at 5-15% to attract and retain talent. If you're not sure, I can recommend based on your team size." time="10:28 AM" name="iGate Accelerator" subtitle="AI Assistant" avatarSrc="/images/favcon.svg" status="Sent" topic="ESOP Pool" }}
+<!-- ESOP Pool Form -->
+<div class="flex justify-end mb-4">
+  <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+    <div class="flex items-start gap-3 mb-3">
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-foreground">You</div>
+        <div class="text-xs text-muted-foreground">Responding</div>
+        <div class="mt-2">
+          <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">ESOP Pool</h3>
+        </div>
+      </div>
+      <div class="flex-shrink-0">
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+          U
+        </div>
+      </div>
+    </div>
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-foreground mb-2">ESOP Pool Options</label>
+        <div class="flex gap-2">
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Yes (recommended 5–15%)</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">No</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Not sure</button>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="button" onclick="autoFillForm('esop_pool')" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-medium">AI Recommend</button>
+        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit ESOP Pool</button>
+        <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+      </div>
+    </form>
+    <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+      <span class="flex space-x-1">
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+      </span>
+      <span>User is typing...</span>
+    </div>
+  </div>
+</div>
+{{> ai-message message="Alright, do you expect an investment round soon? Like pre-seed, seed, or series A? Or not yet? I can adjust the cap table accordingly." time="10:28 AM" name="iGate Accelerator" subtitle="AI Assistant" avatarSrc="/images/favcon.svg" status="Sent" topic="Investment Round" }}
+<!-- Investment Round Form -->
+<div class="flex justify-end mb-4">
+  <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+    <div class="flex items-start gap-3 mb-3">
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-foreground">You</div>
+        <div class="text-xs text-muted-foreground">Responding</div>
+        <div class="mt-2">
+          <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Investment Round</h3>
+        </div>
+      </div>
+      <div class="flex-shrink-0">
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+          U
+        </div>
+      </div>
+    </div>
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-foreground mb-2">Investment Round Options</label>
+        <div class="flex gap-2">
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Pre-seed</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Seed</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Series A</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Not yet</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">AI Suggest</button>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit Investment Round</button>
+        <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+      </div>
+    </form>
+    <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+      <span class="flex space-x-1">
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+      </span>
+      <span>User is typing...</span>
+    </div>
+  </div>
+</div>
+{{> ai-message message="Finally, should I create a full downloadable cap table for you? I can make it in Excel or PDF format." time="10:28 AM" name="iGate Accelerator" subtitle="AI Assistant" avatarSrc="/images/favcon.svg" status="Sent" topic="Downloadable Cap Table" }}
+<!-- Downloadable Cap Table Form -->
+<div class="flex justify-end mb-4">
+  <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+    <div class="flex items-start gap-3 mb-3">
+      <div class="flex-1">
+        <div class="text-sm font-semibold text-foreground">You</div>
+        <div class="text-xs text-muted-foreground">Responding</div>
+        <div class="mt-2">
+          <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Downloadable Cap Table</h3>
+        </div>
+      </div>
+      <div class="flex-shrink-0">
+        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+          U
+        </div>
+      </div>
+    </div>
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-foreground mb-2">Downloadable Cap Table Options</label>
+        <div class="flex gap-2">
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Yes (Excel)</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Yes (PDF)</button>
+          <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">No</button>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit Downloadable Cap Table</button>
+        <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+      </div>
+    </form>
+    <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+      <span class="flex space-x-1">
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+        <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+      </span>
+      <span>User is typing...</span>
+    </div>
+  </div>
+</div>
+<!-- Section 5 Complete - All Done -->
+<div class="bg-muted rounded-2xl p-4 my-6">
+  <div class="flex items-start gap-3 mb-4">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+      <span class="text-lg">🎉</span>
+    </div>
+    <div class="flex-1">
+      <h4 class="text-sm font-semibold text-foreground mb-1">All Sections Complete!</h4>
+      <p class="text-sm text-muted-foreground">Congratulations! You've completed the Legal Model Assistant. Your startup's legal and corporate framework is now well-established.</p>
+    </div>
+  </div>
+  <div class="bg-background rounded-lg p-3 mb-4 border border-border">
+    <div class="flex items-center gap-2 mb-2">
+      <div class="w-2 h-2 rounded-full bg-red-500"></div>
+      <span class="text-sm font-medium text-foreground">Cap Table & Equity</span>
+    </div>
+    <p class="text-xs text-muted-foreground">Completed: Cap Table Structure, ESOP Pool, Investment Rounds, Downloadable Cap Table</p>
+  </div>
+  <!-- Overall Progress Bar -->
+  <div class="mb-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-medium text-foreground">Overall Progress</span>
+      <span class="text-sm text-muted-foreground">5/5 sections completed</span>
+    </div>
+    <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+      <div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="Company Structure - Completed"></div>
+      <div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Intellectual Property - Completed"></div>
+      <div class="bg-orange-500 h-4 flex-1 transition-all duration-500" title="Contracts & Agreements - Completed"></div>
+      <div class="bg-purple-500 h-4 flex-1 transition-all duration-500" title="Compliance & Regulations - Completed"></div>
+      <div class="bg-red-500 h-4 rounded-r-full flex-1 transition-all duration-500" title="Cap Table & Equity - Completed"></div>
+    </div>
+    <div class="flex justify-between text-xs text-muted-foreground mt-2">
+      <span class="text-blue-600 font-medium">Structure</span>
+      <span class="text-green-600 font-medium">IP</span>
+      <span class="text-orange-600 font-medium">Contracts</span>
+      <span class="text-purple-600 font-medium">Compliance</span>
+      <span class="text-red-600 font-medium">Equity</span>
+    </div>
+  </div>
+  <div class="flex gap-3">
+    <button class="flex-1 px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 font-medium">
+      Download Summary
+    </button>
+    <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium">
+      Start Over
+    </button>
+  </div>
+</div>
         </div>
       </div>
       <div class="border-t border-border p-4">
@@ -115,36 +1053,6 @@
         </div>
       </div>
     </div>
-    <aside class="w-96 border-l border-border bg-background flex flex-col h-full">
-      <div class="border-b border-border px-4 py-3 flex items-center justify-between">
-        <h2 class="text-sm font-semibold text-foreground">Legal Framework</h2>
-        <div class="flex items-center gap-1">
-           <button onclick="toggleMaximize(this)" class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-               class="lucide lucide-maximize2 h-3 w-3">
-               <polyline points="15 3 21 3 21 9"></polyline>
-               <polyline points="9 21 3 21 3 15"></polyline>
-               <line x1="21" x2="14" y1="3" y2="10"></line>
-               <line x1="3" x2="10" y1="21" y2="14"></line>
-             </svg>
-           </button>
-           <button onclick="closeAside(this)" class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-               class="lucide lucide-x h-3 w-3">
-               <path d="M18 6 6 18"></path>
-               <path d="M6 6 12 12"></path>
-               <path d="M18 18 12 12"></path>
-             </svg>
-           </button>
-        </div>
-      </div>
-      <div class="flex-1 overflow-y-auto p-4">
-        <div class="space-y-6">
-          {{>_legal-model}}
-        </div>
-      </div>
-    </aside>
+{{>_legal-model}}
   </div>
 </div>

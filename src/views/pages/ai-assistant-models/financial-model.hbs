@@ -29,59 +29,1469 @@
           </div>
         </div>
       </div>
-      <div class="flex-1 overflow-y-auto px-4 py-6">
-        <div class="max-w-3xl mx-auto space-y-6">
-          <div class="flex gap-4">
-            <div class="bg-background text-foreground flex aspect-square size-8 items-center justify-center rounded-lg" style="margin-top: -6px;">
-              <img src="/images/favcon.svg" alt="Logo" class="size-6">
-            </div>
-            <div class="flex-1">
-              <div class="text-sm font-semibold text-foreground mb-2">Accelerator</div>
-              <div class="text-sm text-foreground leading-relaxed">Welcome to the Financial Model Assistant! Let's build your financial foundation. What's your estimated startup cost?</div>
-              <div class="flex items-center gap-2 mt-3">
-                <button class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-volume2 h-3 w-3">
-                    <path
-                      d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z">
-                    </path>
-                    <path d="M16 9a5 5 0 0 1 0 6"></path>
-                    <path d="M19.364 18.364a9 9 0 0 0 0-12.728"></path>
-                  </svg>
-                </button>
-                <button class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-copy h-3 w-3">
-                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
-                    <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
-                  </svg>
-                </button>
-                <button class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-rotate-cw h-3 w-3">
-                    <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
-                    <path d="M21 3v5h-5"></path>
-                  </svg>
-                </button>
-                <button class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-thumbs-down h-3 w-3">
-                    <path d="M17 14V2"></path>
-                    <path
-                      d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z">
-                    </path>
-                  </svg>
-                </button>
+       <div class="flex-1 overflow-y-auto px-4 py-6">
+         <div class="max-w-7xl mx-auto space-y-6">
+           <!-- Conversation will continue here -->
+            {{> ai-message
+
+            message="Welcome to the iGate Accelerator Financial Model Assistant! I'm here to guide you through a comprehensive process of building your startup's financial foundation. We'll work together step by step to collect your KPIs, define revenue assumptions, calculate costs, and generate complete financial statements. Let's begin by gathering your key performance indicators."
+
+            time="10:28 AM"
+
+            name="iGate Accelerator"
+
+            subtitle="AI Assistant"
+
+            avatarSrc="/images/favcon.svg"
+
+            status="Sent"
+
+            topic="Welcome & Introduction"
+
+            }}
+              <div class='flex flex-col'>
+              <!-- Task Header -->
+              <div class='bg-muted rounded-2xl p-4 mb-4'>
+                <div class='flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-3'>
+                  <div class='flex items-center gap-3'>
+                    <div
+                      class='w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold flex-shrink-0'>
+                      <svg class='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2'
+                          d='M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z'></path>
+                      </svg>
+                    </div>
+                    <div class='min-w-0'>
+                      <h4 class='text-sm font-semibold text-foreground'>Financial Model Builder</h4>
+                      <p class='text-sm text-muted-foreground'>Guide to building your startup financial model</p>
+                    </div>
+                  </div>
+                  <div class='flex items-center gap-2 flex-shrink-0'>
+                    <span class='inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'>
+                      <svg class='w-3 h-3 mr-1' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 13l4 4L19 7'></path>
+                      </svg>
+                      In Progress
+                    </span>
+                    <span class='text-xs text-muted-foreground'>10:30 AM</span>
+                  </div>
+                </div>
+                <div class='w-full bg-secondary rounded-full h-2'>
+                  <div class='bg-primary h-2 rounded-full transition-all duration-300' style='width: 12.5%;'></div>
+                </div>
+              </div>
+
+
+              <!-- Task Content with Steps -->
+             <div class='flex'>
+               <div class='w-[60px] relative'>
+                 <div class='absolute left-20 top-5 bottom-5 w-0 border-l border-dotted border-gray-500 z-0'></div>
+               </div>
+               <div class='flex flex-col flex-1 min-w-0 overflow-hidden pt-2'>
+                 <!-- Step 1: KPI Collection -->
+                 <div class='flex gap-4'>
+                   <div class='flex-shrink-0 relative'>
+                     <div
+                       class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                       1
+                     </div>
+                   </div>
+                   <div class='flex-1 pb-6'>
+                     <div class='bg-background rounded-lg p-4 border border-border'>
+                       <div class='flex items-center gap-2 mb-2'>
+                         <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2'
+                             d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'></path>
+                         </svg>
+                         <h5 class='text-sm font-semibold text-foreground'>KPI Collection</h5>
+                       </div>
+                       <p class='text-sm text-muted-foreground mb-3'>Before we build your financial model, let's start with your Key Performance Indicators (KPIs).</p>
+                       <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <circle cx='12' cy='12' r='10'></circle>
+                             <polyline points='12,6 12,12 16,14'></polyline>
+                           </svg>
+                           2.3s
+                         </span>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                             <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                           </svg>
+                           98% confidence
+                         </span>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+
+                 <!-- Step 2: Revenue Assumptions -->
+                 <div class='flex gap-4'>
+                   <div class='flex-shrink-0 relative'>
+                     <div
+                       class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                       2
+                     </div>
+                   </div>
+                   <div class='flex-1 pb-6'>
+                     <div class='bg-background rounded-lg p-4 border border-border'>
+                       <div class='flex items-center gap-2 mb-2'>
+                         <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2'
+                             d='M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1'></path>
+                         </svg>
+                         <h5 class='text-sm font-semibold text-foreground'>Revenue Assumptions</h5>
+                       </div>
+                       <p class='text-sm text-muted-foreground mb-3'>Let's define your revenue assumptions.</p>
+                       <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <circle cx='12' cy='12' r='10'></circle>
+                             <polyline points='12,6 12,12 16,14'></polyline>
+                           </svg>
+                           5.7s
+                         </span>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                             <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                           </svg>
+                           95% confidence
+                         </span>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+
+                 <!-- Step 3: Revenue Streams -->
+                 <div class='flex gap-4 '>
+                   <div class='flex-shrink-0 relative'>
+                     <div
+                       class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                       3
+                     </div>
+                   </div>
+                   <div class='flex-1 pb-6'>
+                     <div class='bg-background rounded-lg p-4 border border-border'>
+                       <div class='flex items-center gap-2 mb-3'>
+                         <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2'
+                             d='M13 10V3L4 14h7v7l9-11h-7z'></path>
+                         </svg>
+                         <h5 class='text-sm font-semibold text-foreground'>Revenue Streams</h5>
+                       </div>
+                       <p class='text-sm text-muted-foreground mb-3'>Please list your revenue streams.</p>
+                       <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <circle cx='12' cy='12' r='10'></circle>
+                             <polyline points='12,6 12,12 16,14'></polyline>
+                           </svg>
+                           8.2s
+                         </span>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                             <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                           </svg>
+                           92% confidence
+                         </span>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+
+                 <!-- Step 4: COGS -->
+                 <div class='flex gap-4 '>
+                   <div class='flex-shrink-0 relative'>
+                     <div
+                       class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                       4
+                     </div>
+                   </div>
+                   <div class='flex-1 pb-6'>
+                     <div class='bg-background rounded-lg p-4 border border-border'>
+                       <div class='flex items-center gap-2 mb-3'>
+                         <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2'
+                             d='M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4'></path>
+                         </svg>
+                         <h5 class='text-sm font-semibold text-foreground'>COGS</h5>
+                       </div>
+                       <p class='text-sm text-muted-foreground mb-3'>What are your monthly COGS?</p>
+                       <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <circle cx='12' cy='12' r='10'></circle>
+                             <polyline points='12,6 12,12 16,14'></polyline>
+                           </svg>
+                           3.1s
+                         </span>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                             <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                           </svg>
+                           96% confidence
+                         </span>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+
+                 <!-- Step 5: Opex -->
+                 <div class='flex gap-4 '>
+                   <div class='flex-shrink-0 relative'>
+                     <div
+                       class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                       5
+                     </div>
+                   </div>
+                   <div class='flex-1 pb-6'>
+                     <div class='bg-background rounded-lg p-4 border border-border'>
+                       <div class='flex items-center gap-2 mb-3'>
+                         <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2'
+                             d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'></path>
+                         </svg>
+                         <h5 class='text-sm font-semibold text-foreground'>Opex</h5>
+                       </div>
+                       <p class='text-sm text-muted-foreground mb-3'>Now let's capture your Opex.</p>
+                       <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <circle cx='12' cy='12' r='10'></circle>
+                             <polyline points='12,6 12,12 16,14'></polyline>
+                           </svg>
+                           4.2s
+                         </span>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                             <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                           </svg>
+                           94% confidence
+                         </span>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+
+                 <!-- Step 6: Capex -->
+                 <div class='flex gap-4 '>
+                   <div class='flex-shrink-0 relative'>
+                     <div
+                       class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                       6
+                     </div>
+                   </div>
+                   <div class='flex-1 pb-6'>
+                     <div class='bg-background rounded-lg p-4 border border-border'>
+                       <div class='flex items-center gap-2 mb-3'>
+                         <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2'
+                             d='M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4'></path>
+                         </svg>
+                         <h5 class='text-sm font-semibold text-foreground'>Capex</h5>
+                       </div>
+                       <p class='text-sm text-muted-foreground mb-3'>Do you have any capital expenditures?</p>
+                       <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <circle cx='12' cy='12' r='10'></circle>
+                             <polyline points='12,6 12,12 16,14'></polyline>
+                           </svg>
+                           6.8s
+                         </span>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                             <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                           </svg>
+                           91% confidence
+                         </span>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+
+                 <!-- Step 7: Financial Statements -->
+                 <div class='flex gap-4 '>
+                   <div class='flex-shrink-0 relative'>
+                     <div
+                       class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                       7
+                     </div>
+                   </div>
+                   <div class='flex-1 pb-6'>
+                     <div class='bg-background rounded-lg p-4 border border-border'>
+                       <div class='flex items-center gap-2 mb-3'>
+                         <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2'
+                             d='M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+                         </svg>
+                         <h5 class='text-sm font-semibold text-foreground'>Financial Statements</h5>
+                       </div>
+                       <p class='text-sm text-muted-foreground mb-3'>We now generate your financial statements.</p>
+                       <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <circle cx='12' cy='12' r='10'></circle>
+                             <polyline points='12,6 12,12 16,14'></polyline>
+                           </svg>
+                           7.5s
+                         </span>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                             <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                           </svg>
+                           89% confidence
+                         </span>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+
+                 <!-- Step 8: Financial Ratios -->
+                 <div class='flex gap-4 '>
+                   <div class='flex-shrink-0 relative'>
+                     <div
+                       class='w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold shadow-md relative z-10 ml-2'>
+                       8
+                     </div>
+                   </div>
+                   <div class='flex-1 pb-6'>
+                     <div class='bg-background rounded-lg p-4 border border-border'>
+                       <div class='flex items-center gap-2 mb-3'>
+                         <svg class='w-4 h-4 text-primary' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                           <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2'
+                             d='M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z'></path>
+                         </svg>
+                         <h5 class='text-sm font-semibold text-foreground'>Financial Ratios</h5>
+                       </div>
+                       <p class='text-sm text-muted-foreground mb-3'>To complete your financial model, I will calculate all major ratios.</p>
+                       <div class='flex items-center gap-4 text-xs text-muted-foreground'>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <circle cx='12' cy='12' r='10'></circle>
+                             <polyline points='12,6 12,12 16,14'></polyline>
+                           </svg>
+                           4.9s
+                         </span>
+                         <span class='flex items-center gap-1'>
+                           <svg class='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                             <path d='M22 11.08V12a10 10 0 1 1-5.93-9.14'></path>
+                             <polyline points='22,4 12,14.01 9,11.01'></polyline>
+                           </svg>
+                           97% confidence
+                         </span>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+
+                 <div class='text-xs text-muted-foreground mt-3'>10:30 AM</div>
+               </div>
+             </div>
+           </div>
+            <!-- Section 1: KPI Collection -->
+            <div id='section-1' class='bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-800 p-4 mb-6'>
+             <div class='flex items-center gap-3 mb-3'>
+               <div class='w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center'>
+                 <span class='text-sm font-bold text-blue-600 dark:text-blue-400'>1</span>
+               </div>
+               <h3 class='text-lg font-semibold text-blue-900 dark:text-blue-100'>KPI Collection</h3>
+             </div>
+             <p class='text-sm text-blue-800 dark:text-blue-200 mb-3'>Before we build your financial model, let's start with your Key Performance Indicators (KPIs).</p>
+             <div class='text-xs text-blue-700 dark:text-blue-300'>
+               <strong>What KPIs do you currently track or plan to track?</strong>
+             </div>
+           </div>
+           {{> ai-message
+
+           message="What KPIs do you currently track or plan to track? Examples if you don't know: Customer Acquisition Cost (CAC), Lifetime Value (LTV), Gross Margin, Churn Rate, Monthly Active Users, Conversion Rate, Average Revenue per User (ARPU). You may select multiple or type your own."
+
+           time="10:28 AM"
+
+           name="iGate Accelerator"
+
+           subtitle="AI Assistant"
+
+           avatarSrc="/images/favcon.svg"
+
+           status="Sent"
+
+           topic="KPI Collection"
+
+            }}
+             <!-- KPI Collection Form -->
+             <div class="flex justify-end mb-4">
+               <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+                 <div class="flex items-start gap-3 mb-3">
+                   <div class="flex-1">
+                     <div class="text-sm font-semibold text-foreground">You</div>
+                     <div class="text-xs text-muted-foreground">Responding</div>
+                     <div class="mt-2">
+                       <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">KPI Collection</h3>
+                     </div>
+                   </div>
+                   <div class="flex-shrink-0">
+                     <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+                       U
+                     </div>
+                   </div>
+                 </div>
+                 <form class="space-y-4">
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">Select or Enter KPIs</label>
+                     <div class="flex flex-wrap gap-2 mb-2">
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">CAC</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">LTV</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Gross Margin</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Churn Rate</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">MAU</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">ARPU</button>
+                     </div>
+                     <input type="text" name="custom_kpi" class="w-full px-3 py-2 border border-border rounded-md bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Or type your own KPI...">
+                   </div>
+                   <div class="flex gap-2">
+                     <button type="button" onclick="autoFillForm('kpi_collection')" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-medium">Auto-Fill with AI</button>
+                     <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit KPIs</button>
+                     <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+                   </div>
+                 </form>
+                 <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                   <span class="flex space-x-1">
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+                   </span>
+                   <span>User is typing...</span>
+                 </div>
+               </div>
+             </div>
+             <!-- Section 1 Complete - Proceed to Section 2 -->
+             <div class="bg-muted rounded-2xl p-4 my-6">
+               <div class="flex items-start gap-3 mb-4">
+                 <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                   <span class="text-lg">🎯</span>
+                 </div>
+                 <div class="flex-1">
+                   <h4 class="text-sm font-semibold text-foreground mb-1">Section 1 Complete!</h4>
+                   <p class="text-sm text-muted-foreground">Great job collecting your KPIs. Now let's define your revenue assumptions to build the foundation of your financial model.</p>
+                 </div>
+               </div>
+               <div class="bg-background rounded-lg p-3 mb-4 border border-border">
+                 <div class="flex items-center gap-2 mb-2">
+                   <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+                   <span class="text-sm font-medium text-foreground">KPI Collection</span>
+                 </div>
+                 <p class="text-xs text-muted-foreground">Completed: KPI identification and tracking setup</p>
+               </div>
+               <!-- Overall Progress Bar -->
+               <div class="mb-4">
+                 <div class="flex items-center justify-between mb-2">
+                   <span class="text-sm font-medium text-foreground">Overall Progress</span>
+                   <span class="text-sm text-muted-foreground">1/8 sections completed</span>
+                 </div>
+                 <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+                   <div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="KPI Collection - Completed"></div>
+                   <div class="bg-muted h-4 flex-1" title="Revenue Assumptions - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="Revenue Streams - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="COGS - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="Opex - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="Capex - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="Financial Statements - Remaining"></div>
+                   <div class="bg-muted h-4 rounded-r-full flex-1" title="Financial Ratios - Remaining"></div>
+                 </div>
+                 <div class="flex justify-between text-xs text-muted-foreground mt-2">
+                   <span class="text-blue-600 font-medium">KPIs</span>
+                   <span>Revenue</span>
+                   <span>Streams</span>
+                   <span>COGS</span>
+                   <span>Opex</span>
+                   <span>Capex</span>
+                   <span>Statements</span>
+                   <span>Ratios</span>
+                 </div>
+               </div>
+                <div class="flex gap-3">
+                  <button class="flex-1 px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium" data-action="proceed" data-target="2">
+                    Proceed to Section 2
+                  </button>
+                  <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium" data-action="review" data-target="1">
+                    Review Section 1
+                  </button>
+                </div>
+             </div>
+             <!-- Section 2: Revenue Assumptions -->
+             <div id='section-2' class='bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg border border-green-200 dark:border-green-800 p-4 mb-6'>
+              <div class='flex items-center gap-3 mb-3'>
+                <div class='w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center'>
+                  <span class='text-sm font-bold text-green-600 dark:text-green-400'>2</span>
+                </div>
+                <h3 class='text-lg font-semibold text-green-900 dark:text-green-100'>Revenue Assumptions</h3>
+              </div>
+              <p class='text-sm text-green-800 dark:text-green-200 mb-3'>Let's define your revenue assumptions.</p>
+              <div class='text-xs text-green-700 dark:text-green-300'>
+                <strong>Topics covered:</strong> Monthly/Yearly Revenue Expectations
               </div>
             </div>
-          </div>
-          <!-- Conversation will continue here -->
-        </div>
-      </div>
+            {{> ai-message
+
+             message="Do you have your monthly or yearly revenue expectations? If not, I can propose ranges based on similar startups. Options if unknown: Early stage typical range: 30K–120K SAR/month, Growth stage range: 150K–500K SAR/month, Scale stage: 500K+ SAR/month"
+
+            time="10:28 AM"
+
+            name="iGate Accelerator"
+
+            subtitle="AI Assistant"
+
+            avatarSrc="/images/favcon.svg"
+
+            status="Sent"
+
+            topic="Revenue Assumptions"
+
+             }}
+             <!-- Revenue Assumptions Form -->
+             <div class="flex justify-end mb-4">
+               <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+                 <div class="flex items-start gap-3 mb-3">
+                   <div class="flex-1">
+                     <div class="text-sm font-semibold text-foreground">You</div>
+                     <div class="text-xs text-muted-foreground">Responding</div>
+                     <div class="mt-2">
+                       <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Revenue Assumptions</h3>
+                     </div>
+                   </div>
+                   <div class="flex-shrink-0">
+                     <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+                       U
+                     </div>
+                   </div>
+                 </div>
+                 <form class="space-y-4">
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">Monthly Revenue Expectation (SAR)</label>
+                     <input type="number" name="monthly_revenue" class="w-full px-3 py-2 border border-border rounded-md bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="e.g., 80000">
+                   </div>
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">Growth Period</label>
+                     <input type="text" name="growth_period" class="w-full px-3 py-2 border border-border rounded-md bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="e.g., First 6 months">
+                   </div>
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">Stage</label>
+                     <div class="flex gap-2 mb-2">
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Early Stage</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Growth Stage</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Scale Stage</button>
+                     </div>
+                     <select name="stage" class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
+                       <option value="">Select stage</option>
+                       <option value="early">Early Stage (30K–120K SAR/month)</option>
+                       <option value="growth">Growth Stage (150K–500K SAR/month)</option>
+                       <option value="scale">Scale Stage (500K+ SAR/month)</option>
+                     </select>
+                   </div>
+                   <div class="flex gap-2">
+                     <button type="button" onclick="autoFillForm('revenue_assumptions')" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-medium">Auto-Fill with AI</button>
+                     <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit Revenue Assumptions</button>
+                     <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+                   </div>
+                 </form>
+                 <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                   <span class="flex space-x-1">
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+                   </span>
+                   <span>User is typing...</span>
+                 </div>
+               </div>
+             </div>
+             <!-- Section 2 Complete - Proceed to Section 3 -->
+             <div class="bg-muted rounded-2xl p-4 my-6">
+               <div class="flex items-start gap-3 mb-4">
+                 <div class="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                   <span class="text-lg">📈</span>
+                 </div>
+                 <div class="flex-1">
+                   <h4 class="text-sm font-semibold text-foreground mb-1">Section 2 Complete!</h4>
+                   <p class="text-sm text-muted-foreground">Excellent! Your revenue assumptions are set. Now let's break down your revenue streams to understand where your income comes from.</p>
+                 </div>
+               </div>
+               <div class="bg-background rounded-lg p-3 mb-4 border border-border">
+                 <div class="flex items-center gap-2 mb-2">
+                   <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                   <span class="text-sm font-medium text-foreground">Revenue Assumptions</span>
+                 </div>
+                 <p class="text-xs text-muted-foreground">Completed: Monthly/Yearly revenue expectations defined</p>
+               </div>
+               <!-- Overall Progress Bar -->
+               <div class="mb-4">
+                 <div class="flex items-center justify-between mb-2">
+                   <span class="text-sm font-medium text-foreground">Overall Progress</span>
+                   <span class="text-sm text-muted-foreground">2/8 sections completed</span>
+                 </div>
+                 <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+                   <div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="KPI Collection - Completed"></div>
+                   <div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Revenue Assumptions - Completed"></div>
+                   <div class="bg-muted h-4 flex-1" title="Revenue Streams - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="COGS - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="Opex - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="Capex - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="Financial Statements - Remaining"></div>
+                   <div class="bg-muted h-4 rounded-r-full flex-1" title="Financial Ratios - Remaining"></div>
+                 </div>
+                 <div class="flex justify-between text-xs text-muted-foreground mt-2">
+                   <span class="text-blue-600 font-medium">KPIs</span>
+                   <span class="text-green-600 font-medium">Revenue</span>
+                   <span>Streams</span>
+                   <span>COGS</span>
+                   <span>Opex</span>
+                   <span>Capex</span>
+                   <span>Statements</span>
+                   <span>Ratios</span>
+                 </div>
+               </div>
+                <div class="flex gap-3">
+                  <button class="flex-1 px-4 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-700 font-medium" data-action="proceed" data-target="3">
+                    Proceed to Section 3
+                  </button>
+                  <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium" data-action="review" data-target="2">
+                    Review Section 2
+                  </button>
+                </div>
+             </div>
+             <!-- Section 3: Revenue Streams -->
+             <div id='section-3' class='bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 rounded-lg border border-purple-200 dark:border-purple-800 p-4 mb-6'>
+              <div class='flex items-center gap-3 mb-3'>
+                <div class='w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center'>
+                  <span class='text-sm font-bold text-purple-600 dark:text-purple-400'>3</span>
+                </div>
+                <h3 class='text-lg font-semibold text-purple-900 dark:text-purple-100'>Revenue Streams</h3>
+              </div>
+              <p class='text-sm text-purple-800 dark:text-purple-200 mb-3'>Please list your revenue streams.</p>
+              <div class='text-xs text-purple-700 dark:text-purple-300'>
+                <strong>Topics covered:</strong> Subscription, Transaction Fee, Licensing, Professional Services, Hardware Sales, API Usage
+              </div>
+            </div>
+            {{> ai-message
+
+             message="Please list your revenue streams. Examples if you don't know: Subscription revenue, Transaction fee, Licensing, Professional services, Hardware sales, API usage"
+
+            time="10:28 AM"
+
+            name="iGate Accelerator"
+
+            subtitle="AI Assistant"
+
+            avatarSrc="/images/favcon.svg"
+
+            status="Sent"
+
+            topic="Revenue Streams"
+
+             }}
+             <!-- Revenue Streams Form -->
+             <div class="flex justify-end mb-4">
+               <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+                 <div class="flex items-start gap-3 mb-3">
+                   <div class="flex-1">
+                     <div class="text-sm font-semibold text-foreground">You</div>
+                     <div class="text-xs text-muted-foreground">Responding</div>
+                     <div class="mt-2">
+                       <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Revenue Streams</h3>
+                     </div>
+                   </div>
+                   <div class="flex-shrink-0">
+                     <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+                       U
+                     </div>
+                   </div>
+                 </div>
+                 <form class="space-y-4">
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">Select Revenue Streams</label>
+                     <div class="flex flex-wrap gap-2 mb-2">
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Subscription</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Transaction Fee</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Licensing</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Professional Services</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Hardware Sales</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">API Usage</button>
+                     </div>
+                     <input type="text" name="custom_stream" class="w-full px-3 py-2 border border-border rounded-md bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Or type your own revenue stream...">
+                   </div>
+                   <div class="flex gap-2">
+                     <button type="button" onclick="autoFillForm('revenue_streams')" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-medium">Auto-Fill with AI</button>
+                     <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit Revenue Streams</button>
+                     <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+                   </div>
+                 </form>
+                 <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                   <span class="flex space-x-1">
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+                   </span>
+                   <span>User is typing...</span>
+                 </div>
+               </div>
+             </div>
+             <!-- Section 3 Complete - Proceed to Section 4 -->
+             <div class="bg-muted rounded-2xl p-4 my-6">
+               <div class="flex items-start gap-3 mb-4">
+                 <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                   <span class="text-lg">💰</span>
+                 </div>
+                 <div class="flex-1">
+                   <h4 class="text-sm font-semibold text-foreground mb-1">Section 3 Complete!</h4>
+                   <p class="text-sm text-muted-foreground">Great! Your revenue streams are defined. Now let's calculate your Cost of Goods Sold (COGS) to understand your direct costs.</p>
+                 </div>
+               </div>
+               <div class="bg-background rounded-lg p-3 mb-4 border border-border">
+                 <div class="flex items-center gap-2 mb-2">
+                   <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+                   <span class="text-sm font-medium text-foreground">Revenue Streams</span>
+                 </div>
+                 <p class="text-xs text-muted-foreground">Completed: Revenue streams identified and categorized</p>
+               </div>
+               <!-- Overall Progress Bar -->
+               <div class="mb-4">
+                 <div class="flex items-center justify-between mb-2">
+                   <span class="text-sm font-medium text-foreground">Overall Progress</span>
+                   <span class="text-sm text-muted-foreground">3/8 sections completed</span>
+                 </div>
+                 <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+                   <div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="KPI Collection - Completed"></div>
+                   <div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Revenue Assumptions - Completed"></div>
+                   <div class="bg-purple-500 h-4 flex-1 transition-all duration-500" title="Revenue Streams - Completed"></div>
+                   <div class="bg-muted h-4 flex-1" title="COGS - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="Opex - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="Capex - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="Financial Statements - Remaining"></div>
+                   <div class="bg-muted h-4 rounded-r-full flex-1" title="Financial Ratios - Remaining"></div>
+                 </div>
+                 <div class="flex justify-between text-xs text-muted-foreground mt-2">
+                   <span class="text-blue-600 font-medium">KPIs</span>
+                   <span class="text-green-600 font-medium">Revenue</span>
+                   <span class="text-purple-600 font-medium">Streams</span>
+                   <span>COGS</span>
+                   <span>Opex</span>
+                   <span>Capex</span>
+                   <span>Statements</span>
+                   <span>Ratios</span>
+                 </div>
+               </div>
+                <div class="flex gap-3">
+                  <button class="flex-1 px-4 py-2 text-sm bg-purple-600 text-white rounded-md hover:bg-purple-700 font-medium" data-action="proceed" data-target="4">
+                    Proceed to Section 4
+                  </button>
+                  <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium" data-action="review" data-target="3">
+                    Review Section 3
+                  </button>
+                </div>
+             </div>
+             <!-- Section 4: COGS -->
+             <div id='section-4' class='bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 rounded-lg border border-orange-200 dark:border-orange-800 p-4 mb-6'>
+              <div class='flex items-center gap-3 mb-3'>
+                <div class='w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center'>
+                  <span class='text-sm font-bold text-orange-600 dark:text-orange-400'>4</span>
+                </div>
+                <h3 class='text-lg font-semibold text-orange-900 dark:text-orange-100'>COGS</h3>
+              </div>
+              <p class='text-sm text-orange-800 dark:text-orange-200 mb-3'>What are your monthly COGS? These are costs directly tied to delivering your product.</p>
+              <div class='text-xs text-orange-700 dark:text-orange-300'>
+                <strong>Topics covered:</strong> Cloud hosting, Delivery cost, Support staff, Payment gateway fees, Software license usage
+              </div>
+            </div>
+            {{> ai-message
+
+             message="What are your monthly COGS? These are costs directly tied to delivering your product. Examples if unknown: Cloud hosting (AWS, Google Cloud), Delivery cost per order, Support staff, Payment gateway fees, Software license usage. Typical SaaS COGS range: 10%–35% of revenue"
+
+            time="10:28 AM"
+
+            name="iGate Accelerator"
+
+            subtitle="AI Assistant"
+
+            avatarSrc="/images/favcon.svg"
+
+            status="Sent"
+
+            topic="COGS"
+
+             }}
+             <!-- COGS Form -->
+             <div class="flex justify-end mb-4">
+               <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+                 <div class="flex items-start gap-3 mb-3">
+                   <div class="flex-1">
+                     <div class="text-sm font-semibold text-foreground">You</div>
+                     <div class="text-xs text-muted-foreground">Responding</div>
+                     <div class="mt-2">
+                       <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">COGS</h3>
+                     </div>
+                   </div>
+                   <div class="flex-shrink-0">
+                     <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+                       U
+                     </div>
+                   </div>
+                 </div>
+                 <form class="space-y-4">
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">Monthly COGS (SAR)</label>
+                     <input type="number" name="monthly_cogs" class="w-full px-3 py-2 border border-border rounded-md bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="e.g., 8000">
+                   </div>
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">COGS Breakdown</label>
+                     <div class="space-y-2">
+                       <div class="flex gap-2">
+                         <input type="text" name="cogs_item[]" class="flex-1 px-3 py-2 border border-border rounded-md bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Item name">
+                         <input type="number" name="cogs_amount[]" class="w-24 px-3 py-2 border border-border rounded-md bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Amount">
+                       </div>
+                     </div>
+                     <button type="button" class="mt-2 px-3 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 text-sm">Add Another Item</button>
+                   </div>
+                   <div class="flex gap-2">
+                     <button type="button" onclick="autoFillForm('cogs')" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-medium">Auto-Fill with AI</button>
+                     <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit COGS</button>
+                     <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+                   </div>
+                 </form>
+                 <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                   <span class="flex space-x-1">
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+                   </span>
+                   <span>User is typing...</span>
+                 </div>
+               </div>
+             </div>
+             <!-- Section 4 Complete - Proceed to Section 5 -->
+             <div class="bg-muted rounded-2xl p-4 my-6">
+               <div class="flex items-start gap-3 mb-4">
+                 <div class="flex-shrink-0 w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+                   <span class="text-lg">📊</span>
+                 </div>
+                 <div class="flex-1">
+                   <h4 class="text-sm font-semibold text-foreground mb-1">Section 4 Complete!</h4>
+                   <p class="text-sm text-muted-foreground">Perfect! Your COGS are calculated. Now let's capture your Operating Expenses (Opex) to complete your cost structure.</p>
+                 </div>
+               </div>
+               <div class="bg-background rounded-lg p-3 mb-4 border border-border">
+                 <div class="flex items-center gap-2 mb-2">
+                   <div class="w-2 h-2 rounded-full bg-orange-500"></div>
+                   <span class="text-sm font-medium text-foreground">COGS</span>
+                 </div>
+                 <p class="text-xs text-muted-foreground">Completed: Direct costs identified and quantified</p>
+               </div>
+               <!-- Overall Progress Bar -->
+               <div class="mb-4">
+                 <div class="flex items-center justify-between mb-2">
+                   <span class="text-sm font-medium text-foreground">Overall Progress</span>
+                   <span class="text-sm text-muted-foreground">4/8 sections completed</span>
+                 </div>
+                 <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+                   <div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="KPI Collection - Completed"></div>
+                   <div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Revenue Assumptions - Completed"></div>
+                   <div class="bg-purple-500 h-4 flex-1 transition-all duration-500" title="Revenue Streams - Completed"></div>
+                   <div class="bg-orange-500 h-4 flex-1 transition-all duration-500" title="COGS - Completed"></div>
+                   <div class="bg-muted h-4 flex-1" title="Opex - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="Capex - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="Financial Statements - Remaining"></div>
+                   <div class="bg-muted h-4 rounded-r-full flex-1" title="Financial Ratios - Remaining"></div>
+                 </div>
+                 <div class="flex justify-between text-xs text-muted-foreground mt-2">
+                   <span class="text-blue-600 font-medium">KPIs</span>
+                   <span class="text-green-600 font-medium">Revenue</span>
+                   <span class="text-purple-600 font-medium">Streams</span>
+                   <span class="text-orange-600 font-medium">COGS</span>
+                   <span>Opex</span>
+                   <span>Capex</span>
+                   <span>Statements</span>
+                   <span>Ratios</span>
+                 </div>
+               </div>
+                <div class="flex gap-3">
+                  <button class="flex-1 px-4 py-2 text-sm bg-orange-600 text-white rounded-md hover:bg-orange-700 font-medium" data-action="proceed" data-target="5">
+                    Proceed to Section 5
+                  </button>
+                  <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium" data-action="review" data-target="4">
+                    Review Section 4
+                  </button>
+                </div>
+             </div>
+             <!-- Section 5: Opex -->
+             <div id='section-5' class='bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-900/20 dark:to-rose-900/20 rounded-lg border border-red-200 dark:border-red-800 p-4 mb-6'>
+              <div class='flex items-center gap-3 mb-3'>
+                <div class='w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center'>
+                  <span class='text-sm font-bold text-red-600 dark:text-red-400'>5</span>
+                </div>
+                <h3 class='text-lg font-semibold text-red-900 dark:text-red-100'>Opex</h3>
+              </div>
+              <p class='text-sm text-red-800 dark:text-red-200 mb-3'>Now let's capture your Opex.</p>
+              <div class='text-xs text-red-700 dark:text-red-300'>
+                <strong>Topics covered:</strong> Salaries & wages, Marketing, Office rent, Software subscriptions, Legal & accounting, Travel, R&D
+              </div>
+            </div>
+            {{> ai-message
+
+             message="Now let's capture your Opex. Common categories (you can choose multiple): Salaries & wages, Marketing, Office rent, Software subscriptions, Legal & accounting, Travel, R&D. If you don't have exact values, I can recommend standard benchmarks."
+
+            time="10:28 AM"
+
+            name="iGate Accelerator"
+
+            subtitle="AI Assistant"
+
+            avatarSrc="/images/favcon.svg"
+
+            status="Sent"
+
+            topic="Opex"
+
+             }}
+             <!-- Opex Form -->
+             <div class="flex justify-end mb-4">
+               <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+                 <div class="flex items-start gap-3 mb-3">
+                   <div class="flex-1">
+                     <div class="text-sm font-semibold text-foreground">You</div>
+                     <div class="text-xs text-muted-foreground">Responding</div>
+                     <div class="mt-2">
+                       <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Opex</h3>
+                     </div>
+                   </div>
+                   <div class="flex-shrink-0">
+                     <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+                       U
+                     </div>
+                   </div>
+                 </div>
+                 <form class="space-y-4">
+                   <div id="opex-container">
+                     <div class="opex-item bg-muted rounded-lg p-4 border border-border mb-4">
+                       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                         <div>
+                           <label class="block text-sm font-medium text-foreground mb-2">Category</label>
+                           <select name="opex_category[]" class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
+                             <option value="salaries">Salaries & Wages</option>
+                             <option value="marketing">Marketing</option>
+                             <option value="rent">Office Rent</option>
+                             <option value="software">Software Subscriptions</option>
+                             <option value="legal">Legal & Accounting</option>
+                             <option value="travel">Travel</option>
+                             <option value="rnd">R&D</option>
+                             <option value="other">Other</option>
+                           </select>
+                         </div>
+                         <div>
+                           <label class="block text-sm font-medium text-foreground mb-2">Monthly Amount (SAR)</label>
+                           <input type="number" name="opex_amount[]" class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="e.g., 50000">
+                         </div>
+                       </div>
+                       <button type="button" class="px-3 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 text-sm">Remove</button>
+                     </div>
+                   </div>
+                   <button type="button" class="w-full px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium">Add Another Opex Item</button>
+                   <div class="flex gap-2">
+                     <button type="button" onclick="autoFillForm('opex')" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-medium">Auto-Fill with AI</button>
+                     <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit Opex</button>
+                     <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+                   </div>
+                 </form>
+                 <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                   <span class="flex space-x-1">
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+                   </span>
+                   <span>User is typing...</span>
+                 </div>
+               </div>
+             </div>
+             <!-- Section 5 Complete - Proceed to Section 6 -->
+             <div class="bg-muted rounded-2xl p-4 my-6">
+               <div class="flex items-start gap-3 mb-4">
+                 <div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+                   <span class="text-lg">🏗️</span>
+                 </div>
+                 <div class="flex-1">
+                   <h4 class="text-sm font-semibold text-foreground mb-1">Section 5 Complete!</h4>
+                   <p class="text-sm text-muted-foreground">Excellent! Your operating expenses are captured. Now let's identify any capital expenditures for your business.</p>
+                 </div>
+               </div>
+               <div class="bg-background rounded-lg p-3 mb-4 border border-border">
+                 <div class="flex items-center gap-2 mb-2">
+                   <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                   <span class="text-sm font-medium text-foreground">Opex</span>
+                 </div>
+                 <p class="text-xs text-muted-foreground">Completed: Operating expenses categorized and quantified</p>
+               </div>
+               <!-- Overall Progress Bar -->
+               <div class="mb-4">
+                 <div class="flex items-center justify-between mb-2">
+                   <span class="text-sm font-medium text-foreground">Overall Progress</span>
+                   <span class="text-sm text-muted-foreground">5/8 sections completed</span>
+                 </div>
+                 <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+                   <div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="KPI Collection - Completed"></div>
+                   <div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Revenue Assumptions - Completed"></div>
+                   <div class="bg-purple-500 h-4 flex-1 transition-all duration-500" title="Revenue Streams - Completed"></div>
+                   <div class="bg-orange-500 h-4 flex-1 transition-all duration-500" title="COGS - Completed"></div>
+                   <div class="bg-red-500 h-4 flex-1 transition-all duration-500" title="Opex - Completed"></div>
+                   <div class="bg-muted h-4 flex-1" title="Capex - Remaining"></div>
+                   <div class="bg-muted h-4 flex-1" title="Financial Statements - Remaining"></div>
+                   <div class="bg-muted h-4 rounded-r-full flex-1" title="Financial Ratios - Remaining"></div>
+                 </div>
+                 <div class="flex justify-between text-xs text-muted-foreground mt-2">
+                   <span class="text-blue-600 font-medium">KPIs</span>
+                   <span class="text-green-600 font-medium">Revenue</span>
+                   <span class="text-purple-600 font-medium">Streams</span>
+                   <span class="text-orange-600 font-medium">COGS</span>
+                   <span class="text-red-600 font-medium">Opex</span>
+                   <span>Capex</span>
+                   <span>Statements</span>
+                   <span>Ratios</span>
+                 </div>
+               </div>
+                <div class="flex gap-3">
+                  <button class="flex-1 px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700 font-medium" data-action="proceed" data-target="6">
+                    Proceed to Section 6
+                  </button>
+                  <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium" data-action="review" data-target="5">
+                    Review Section 5
+                  </button>
+                </div>
+             </div>
+             <!-- Section 6: Capex -->
+             <div id='section-6' class='bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 rounded-lg border border-indigo-200 dark:border-indigo-800 p-4 mb-6'>
+              <div class='flex items-center gap-3 mb-3'>
+                <div class='w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center'>
+                  <span class='text-sm font-bold text-indigo-600 dark:text-indigo-400'>6</span>
+                </div>
+                <h3 class='text-lg font-semibold text-indigo-900 dark:text-indigo-100'>Capex</h3>
+              </div>
+              <p class='text-sm text-indigo-800 dark:text-indigo-200 mb-3'>Do you have any capital expenditures?</p>
+              <div class='text-xs text-indigo-700 dark:text-indigo-300'>
+                <strong>Topics covered:</strong> Equipment, Servers, Vehicles, Machinery, One-time system build cost
+              </div>
+            </div>
+            {{> ai-message
+
+             message="Do you have any capital expenditures (Capex) such as equipment, servers, vehicles, machinery, or one-time system build cost? If unknown, options: Zero Capex, SaaS build cost (30K–120K SAR one-time), Equipment purchases (10K–200K SAR)"
+
+            time="10:28 AM"
+
+            name="iGate Accelerator"
+
+            subtitle="AI Assistant"
+
+            avatarSrc="/images/favcon.svg"
+
+            status="Sent"
+
+            topic="Capex"
+
+             }}
+             <!-- Capex Form -->
+             <div class="flex justify-end mb-4">
+               <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+                 <div class="flex items-start gap-3 mb-3">
+                   <div class="flex-1">
+                     <div class="text-sm font-semibold text-foreground">You</div>
+                     <div class="text-xs text-muted-foreground">Responding</div>
+                     <div class="mt-2">
+                       <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Capex</h3>
+                     </div>
+                   </div>
+                   <div class="flex-shrink-0">
+                     <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+                       U
+                     </div>
+                   </div>
+                 </div>
+                 <form class="space-y-4">
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">Total Capex Amount (SAR)</label>
+                     <input type="number" name="total_capex" class="w-full px-3 py-2 border border-border rounded-md bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="e.g., 100000">
+                   </div>
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">Capex Description</label>
+                     <textarea name="capex_description" rows="3" class="w-full px-3 py-2 border border-border rounded-md bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-vertical" placeholder="Describe the capital expenditure..."></textarea>
+                   </div>
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">Amortization Period (Years)</label>
+                     <input type="number" name="amortization_years" class="w-full px-3 py-2 border border-border rounded-md bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="e.g., 3">
+                   </div>
+                   <div class="flex gap-2">
+                     <button type="button" onclick="autoFillForm('capex')" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 font-medium">Auto-Fill with AI</button>
+                     <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Submit Capex</button>
+                     <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+                   </div>
+                 </form>
+                 <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                   <span class="flex space-x-1">
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+                   </span>
+                   <span>User is typing...</span>
+                 </div>
+               </div>
+             </div>
+             <!-- Section 6 Complete - Proceed to Section 7 -->
+             <div class="bg-muted rounded-2xl p-4 my-6">
+               <div class="flex items-start gap-3 mb-4">
+                 <div class="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                   <span class="text-lg">📋</span>
+                 </div>
+                 <div class="flex-1">
+                   <h4 class="text-sm font-semibold text-foreground mb-1">Section 6 Complete!</h4>
+                   <p class="text-sm text-muted-foreground">Great! Your capital expenditures are noted. Now let's generate your complete financial statements.</p>
+                 </div>
+               </div>
+               <div class="bg-background rounded-lg p-3 mb-4 border border-border">
+                 <div class="flex items-center gap-2 mb-2">
+                   <div class="w-2 h-2 rounded-full bg-indigo-500"></div>
+                   <span class="text-sm font-medium text-foreground">Capex</span>
+                 </div>
+                 <p class="text-xs text-muted-foreground">Completed: Capital expenditures identified and planned</p>
+               </div>
+               <!-- Overall Progress Bar -->
+               <div class="mb-4">
+                 <div class="flex items-center justify-between mb-2">
+                   <span class="text-sm font-medium text-foreground">Overall Progress</span>
+                   <span class="text-sm text-muted-foreground">6/8 sections completed</span>
+                 </div>
+                 <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+                   <div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="KPI Collection - Completed"></div>
+                   <div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Revenue Assumptions - Completed"></div>
+                   <div class="bg-purple-500 h-4 flex-1 transition-all duration-500" title="Revenue Streams - Completed"></div>
+                   <div class="bg-orange-500 h-4 flex-1 transition-all duration-500" title="COGS - Completed"></div>
+                   <div class="bg-red-500 h-4 flex-1 transition-all duration-500" title="Opex - Completed"></div>
+                   <div class="bg-indigo-500 h-4 flex-1 transition-all duration-500" title="Capex - Completed"></div>
+                   <div class="bg-muted h-4 flex-1" title="Financial Statements - Remaining"></div>
+                   <div class="bg-muted h-4 rounded-r-full flex-1" title="Financial Ratios - Remaining"></div>
+                 </div>
+                 <div class="flex justify-between text-xs text-muted-foreground mt-2">
+                   <span class="text-blue-600 font-medium">KPIs</span>
+                   <span class="text-green-600 font-medium">Revenue</span>
+                   <span class="text-purple-600 font-medium">Streams</span>
+                   <span class="text-orange-600 font-medium">COGS</span>
+                   <span class="text-red-600 font-medium">Opex</span>
+                   <span class="text-indigo-600 font-medium">Capex</span>
+                   <span>Statements</span>
+                   <span>Ratios</span>
+                 </div>
+               </div>
+                <div class="flex gap-3">
+                  <button class="flex-1 px-4 py-2 text-sm bg-indigo-600 text-white rounded-md hover:bg-indigo-700 font-medium" data-action="proceed" data-target="7">
+                    Proceed to Section 7
+                  </button>
+                  <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium" data-action="review" data-target="6">
+                    Review Section 6
+                  </button>
+                </div>
+             </div>
+             <!-- Section 7: Financial Statements -->
+             <div id='section-7' class='bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 rounded-lg border border-teal-200 dark:border-teal-800 p-4 mb-6'>
+              <div class='flex items-center gap-3 mb-3'>
+                <div class='w-8 h-8 rounded-full bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center'>
+                  <span class='text-sm font-bold text-teal-600 dark:text-teal-400'>7</span>
+                </div>
+                <h3 class='text-lg font-semibold text-teal-900 dark:text-teal-100'>Financial Statements</h3>
+              </div>
+              <p class='text-sm text-teal-800 dark:text-teal-200 mb-3'>We now generate your financial statements.</p>
+              <div class='text-xs text-teal-700 dark:text-teal-300'>
+                <strong>Topics covered:</strong> Income Statement, Cash Flow Statement, Balance Sheet
+              </div>
+            </div>
+            {{> ai-message
+
+             message="We now generate your financial statements. Before I compute, do you want any special formatting: Monthly view, Quarterly view, Yearly summary, 3-year projection, 5-year projection?"
+
+            time="10:28 AM"
+
+            name="iGate Accelerator"
+
+            subtitle="AI Assistant"
+
+            avatarSrc="/images/favcon.svg"
+
+            status="Sent"
+
+            topic="Financial Statements"
+
+             }}
+             <!-- Financial Statements Form -->
+             <div class="flex justify-end mb-4">
+               <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+                 <div class="flex items-start gap-3 mb-3">
+                   <div class="flex-1">
+                     <div class="text-sm font-semibold text-foreground">You</div>
+                     <div class="text-xs text-muted-foreground">Responding</div>
+                     <div class="mt-2">
+                       <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Financial Statements</h3>
+                     </div>
+                   </div>
+                   <div class="flex-shrink-0">
+                     <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+                       U
+                     </div>
+                   </div>
+                 </div>
+                 <form class="space-y-4">
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">Statement Format</label>
+                     <div class="flex flex-wrap gap-2 mb-2">
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Monthly View</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Quarterly View</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Yearly Summary</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">3-Year Projection</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">5-Year Projection</button>
+                     </div>
+                     <select name="statement_format" class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
+                       <option value="monthly">Monthly View</option>
+                       <option value="quarterly">Quarterly View</option>
+                       <option value="yearly">Yearly Summary</option>
+                       <option value="3year">3-Year Projection</option>
+                       <option value="5year">5-Year Projection</option>
+                     </select>
+                   </div>
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">Output Format</label>
+                     <div class="flex gap-2 mb-2">
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Table Format</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">PDF</button>
+                       <button type="button" class="px-3 py-2 bg-primary text-primary-foreground rounded-full text-sm hover:bg-primary/90">Excel</button>
+                     </div>
+                     <select name="output_format" class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
+                       <option value="table">Table Format</option>
+                       <option value="pdf">PDF</option>
+                       <option value="excel">Excel</option>
+                     </select>
+                   </div>
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">Investor Capital (SAR)</label>
+                     <input type="number" name="investor_capital" class="w-full px-3 py-2 border border-border rounded-md bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="e.g., 500000">
+                   </div>
+                   <div class="flex gap-2">
+                     <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Generate Financial Statements</button>
+                     <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+                   </div>
+                 </form>
+                 <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                   <span class="flex space-x-1">
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+                   </span>
+                   <span>User is typing...</span>
+                 </div>
+               </div>
+             </div>
+             <!-- Section 7 Complete - Proceed to Section 8 -->
+             <div class="bg-muted rounded-2xl p-4 my-6">
+               <div class="flex items-start gap-3 mb-4">
+                 <div class="flex-shrink-0 w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
+                   <span class="text-lg">📈</span>
+                 </div>
+                 <div class="flex-1">
+                   <h4 class="text-sm font-semibold text-foreground mb-1">Section 7 Complete!</h4>
+                   <p class="text-sm text-muted-foreground">Fantastic! Your financial statements are generated. Finally, let's calculate your key financial ratios for analysis.</p>
+                 </div>
+               </div>
+               <div class="bg-background rounded-lg p-3 mb-4 border border-border">
+                 <div class="flex items-center gap-2 mb-2">
+                   <div class="w-2 h-2 rounded-full bg-teal-500"></div>
+                   <span class="text-sm font-medium text-foreground">Financial Statements</span>
+                 </div>
+                 <p class="text-xs text-muted-foreground">Completed: Income Statement, Cash Flow Statement, Balance Sheet generated</p>
+               </div>
+               <!-- Overall Progress Bar -->
+               <div class="mb-4">
+                 <div class="flex items-center justify-between mb-2">
+                   <span class="text-sm font-medium text-foreground">Overall Progress</span>
+                   <span class="text-sm text-muted-foreground">7/8 sections completed</span>
+                 </div>
+                 <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+                   <div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="KPI Collection - Completed"></div>
+                   <div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Revenue Assumptions - Completed"></div>
+                   <div class="bg-purple-500 h-4 flex-1 transition-all duration-500" title="Revenue Streams - Completed"></div>
+                   <div class="bg-orange-500 h-4 flex-1 transition-all duration-500" title="COGS - Completed"></div>
+                   <div class="bg-red-500 h-4 flex-1 transition-all duration-500" title="Opex - Completed"></div>
+                   <div class="bg-indigo-500 h-4 flex-1 transition-all duration-500" title="Capex - Completed"></div>
+                   <div class="bg-teal-500 h-4 flex-1 transition-all duration-500" title="Financial Statements - Completed"></div>
+                   <div class="bg-muted h-4 rounded-r-full flex-1" title="Financial Ratios - Remaining"></div>
+                 </div>
+                 <div class="flex justify-between text-xs text-muted-foreground mt-2">
+                   <span class="text-blue-600 font-medium">KPIs</span>
+                   <span class="text-green-600 font-medium">Revenue</span>
+                   <span class="text-purple-600 font-medium">Streams</span>
+                   <span class="text-orange-600 font-medium">COGS</span>
+                   <span class="text-red-600 font-medium">Opex</span>
+                   <span class="text-indigo-600 font-medium">Capex</span>
+                   <span class="text-teal-600 font-medium">Statements</span>
+                   <span>Ratios</span>
+                 </div>
+               </div>
+                <div class="flex gap-3">
+                  <button class="flex-1 px-4 py-2 text-sm bg-teal-600 text-white rounded-md hover:bg-teal-700 font-medium" data-action="proceed" data-target="8">
+                    Proceed to Section 8
+                  </button>
+                  <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium" data-action="review" data-target="7">
+                    Review Section 7
+                  </button>
+                </div>
+             </div>
+             <!-- Section 8: Financial Ratios -->
+             <div id='section-8' class='bg-gradient-to-r from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20 rounded-lg border border-pink-200 dark:border-pink-800 p-4 mb-6'>
+              <div class='flex items-center gap-3 mb-3'>
+                <div class='w-8 h-8 rounded-full bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center'>
+                  <span class='text-sm font-bold text-pink-600 dark:text-pink-400'>8</span>
+                </div>
+                <h3 class='text-lg font-semibold text-pink-900 dark:text-pink-100'>Financial Ratios</h3>
+              </div>
+              <p class='text-sm text-pink-800 dark:text-pink-200 mb-3'>To complete your financial model, I will calculate all major ratios.</p>
+              <div class='text-xs text-pink-700 dark:text-pink-300'>
+                <strong>Topics covered:</strong> Profitability, Efficiency, Liquidity, Growth ratios
+              </div>
+            </div>
+            {{> ai-message
+
+             message="To complete your financial model, I will calculate all major ratios: Profitability (Gross Margin, Net Margin, EBITDA Margin, ROA, ROE), Efficiency (LTV/CAC, CAC Payback Period, ARPU, Revenue per employee), Liquidity (Current Ratio, Quick Ratio), Growth (MRR growth, YoY revenue growth, Retention rate). Would you like all ratios or a selected group?"
+
+            time="10:28 AM"
+
+            name="iGate Accelerator"
+
+            subtitle="AI Assistant"
+
+            avatarSrc="/images/favcon.svg"
+
+            status="Sent"
+
+            topic="Financial Ratios"
+
+             }}
+             <!-- Financial Ratios Form -->
+             <div class="flex justify-end mb-4">
+               <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+                 <div class="flex items-start gap-3 mb-3">
+                   <div class="flex-1">
+                     <div class="text-sm font-semibold text-foreground">You</div>
+                     <div class="text-xs text-muted-foreground">Responding</div>
+                     <div class="mt-2">
+                       <h3 class="text-sm font-semibold text-primary bg-primary/10 rounded-md px-2 py-1 inline-block">Financial Ratios</h3>
+                     </div>
+                   </div>
+                   <div class="flex-shrink-0">
+                     <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+                       U
+                     </div>
+                   </div>
+                 </div>
+                 <form class="space-y-4">
+                   <div>
+                     <label class="block text-sm font-medium text-foreground mb-2">Ratio Categories</label>
+                     <div class="grid grid-cols-2 gap-2 mb-2">
+                       <label class="flex items-center gap-2">
+                         <input type="checkbox" name="ratios[]" value="profitability" checked class="rounded">
+                         <span class="text-sm">Profitability</span>
+                       </label>
+                       <label class="flex items-center gap-2">
+                         <input type="checkbox" name="ratios[]" value="efficiency" checked class="rounded">
+                         <span class="text-sm">Efficiency</span>
+                       </label>
+                       <label class="flex items-center gap-2">
+                         <input type="checkbox" name="ratios[]" value="liquidity" checked class="rounded">
+                         <span class="text-sm">Liquidity</span>
+                       </label>
+                       <label class="flex items-center gap-2">
+                         <input type="checkbox" name="ratios[]" value="growth" checked class="rounded">
+                         <span class="text-sm">Growth</span>
+                       </label>
+                     </div>
+                   </div>
+                   <div class="flex gap-2">
+                     <button type="submit" class="flex-1 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 font-medium">Calculate All Ratios</button>
+                     <button type="button" class="px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80">Save Draft</button>
+                   </div>
+                 </form>
+                 <div class="text-xs text-muted-foreground mt-2 flex items-center gap-1">
+                   <span class="flex space-x-1">
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+                     <span class="w-1 h-1 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+                   </span>
+                   <span>User is typing...</span>
+                 </div>
+               </div>
+             </div>
+             <!-- Final Completion -->
+             <div class="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 rounded-lg border border-emerald-200 dark:border-emerald-800 p-6 my-6">
+               <div class="flex items-start gap-3 mb-4">
+                 <div class="flex-shrink-0 w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
+                   <span class="text-xl">🎉</span>
+                 </div>
+                 <div class="flex-1">
+                   <h4 class="text-lg font-semibold text-emerald-900 dark:text-emerald-100 mb-2">Financial Model Complete!</h4>
+                   <p class="text-sm text-emerald-800 dark:text-emerald-200 mb-4">Congratulations! Your comprehensive financial model is now ready. You have successfully built a 36-month forecast with all key components including KPIs, revenue streams, costs, financial statements, and ratios.</p>
+                   <div class="bg-background rounded-lg p-4 border border-border">
+                     <div class="flex items-center gap-2 mb-3">
+                       <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                       <span class="text-sm font-medium text-foreground">All Sections Completed</span>
+                     </div>
+                     <p class="text-xs text-muted-foreground">✅ Complete financial model<br>✅ 36-month forecast<br>✅ KPI dashboard<br>✅ Income Statement<br>✅ Cash Flow Statement<br>✅ Balance Sheet<br>✅ All Financial Ratios<br>✅ Editable Excel file</p>
+                   </div>
+                 </div>
+               </div>
+               <!-- Final Progress Bar -->
+               <div class="mb-4">
+                 <div class="flex items-center justify-between mb-2">
+                   <span class="text-sm font-medium text-foreground">Overall Progress</span>
+                   <span class="text-sm text-emerald-600 font-medium">8/8 sections completed</span>
+                 </div>
+                 <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+                   <div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="KPI Collection - Completed"></div>
+                   <div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Revenue Assumptions - Completed"></div>
+                   <div class="bg-purple-500 h-4 flex-1 transition-all duration-500" title="Revenue Streams - Completed"></div>
+                   <div class="bg-orange-500 h-4 flex-1 transition-all duration-500" title="COGS - Completed"></div>
+                   <div class="bg-red-500 h-4 flex-1 transition-all duration-500" title="Opex - Completed"></div>
+                   <div class="bg-indigo-500 h-4 flex-1 transition-all duration-500" title="Capex - Completed"></div>
+                   <div class="bg-teal-500 h-4 flex-1 transition-all duration-500" title="Financial Statements - Completed"></div>
+                   <div class="bg-pink-500 h-4 rounded-r-full flex-1 transition-all duration-500" title="Financial Ratios - Completed"></div>
+                 </div>
+                 <div class="flex justify-between text-xs text-muted-foreground mt-2">
+                   <span class="text-blue-600 font-medium">KPIs</span>
+                   <span class="text-green-600 font-medium">Revenue</span>
+                   <span class="text-purple-600 font-medium">Streams</span>
+                   <span class="text-orange-600 font-medium">COGS</span>
+                   <span class="text-red-600 font-medium">Opex</span>
+                   <span class="text-indigo-600 font-medium">Capex</span>
+                   <span class="text-teal-600 font-medium">Statements</span>
+                   <span class="text-pink-600 font-medium">Ratios</span>
+                 </div>
+               </div>
+               <div class="flex gap-3">
+                 <button class="flex-1 px-4 py-2 text-sm bg-emerald-600 text-white rounded-md hover:bg-emerald-700 font-medium">
+                   Download Excel Model
+                 </button>
+                 <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium">
+                   Share Model
+                 </button>
+               </div>
+             </div>
+         </div>
+       </div>
       <div class="border-t border-border p-4">
         <div class="max-w-3xl mx-auto">
           <div class="flex items-center gap-2 bg-muted rounded-lg px-4 py-2">
@@ -115,36 +1525,6 @@
         </div>
       </div>
     </div>
-    <aside class="w-96 border-l border-border bg-background flex flex-col h-full">
-      <div class="border-b border-border px-4 py-3 flex items-center justify-between">
-        <h2 class="text-sm font-semibold text-foreground">Financial Projections</h2>
-        <div class="flex items-center gap-1">
-           <button onclick="toggleMaximize(this)" class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-               class="lucide lucide-maximize2 h-3 w-3">
-               <polyline points="15 3 21 3 21 9"></polyline>
-               <polyline points="9 21 3 21 3 15"></polyline>
-               <line x1="21" x2="14" y1="3" y2="10"></line>
-               <line x1="3" x2="10" y1="21" y2="14"></line>
-             </svg>
-           </button>
-           <button onclick="closeAside(this)" class="h-7 w-7 flex items-center justify-center hover:bg-muted rounded-md transition-colors">
-             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-               class="lucide lucide-x h-3 w-3">
-               <path d="M18 6 6 18"></path>
-               <path d="M6 6 12 12"></path>
-               <path d="M18 18 12 12"></path>
-             </svg>
-           </button>
-        </div>
-      </div>
-      <div class="flex-1 overflow-y-auto p-4">
-        <div class="space-y-6">
-          {{>_financial-model}}
-        </div>
-      </div>
-    </aside>
+{{>_financial-model}}
   </div>
 </div>
