@@ -1,0 +1,306 @@
+<!-- Glass card container -->
+ <div
+  class="w-full rounded-xl shadow-2xl overflow-hidden bg-white/85 backdrop-blur-sm ring-1 ring-gray-200 flex flex-col min-h-[600px]">
+
+  <!-- Sticky header (toolbar) -->
+   <header class="sticky top-0 z-20 bg-slate-800 text-white p-5">
+    <!-- Page Title and Description -->
+    <div class="mb-6 flex justify-between">
+
+    <div class="text-left">
+      <h1 class="text-3xl font-bold text-white mb-2">Transaction Management</h1>
+      <p class=" text-gray-200">Manage and monitor all transactions</p>
+    </div>
+        <div class="">
+           <button onclick="exportToCSV()" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-full px-4 py-2 text-sm">
+           {{lucide 'Download' 'w-4 h-4'}}
+           <span class="text-sm font-medium">Export</span>
+         </button>
+    </div>
+     </div>
+     <div class="max-w-7xl mx-auto flex items-center gap-4">
+      <!-- center: search and filters -->
+      <div class="flex-1 flex justify-left gap-4">
+        <div class="w-full max-w-xs">
+          <label class="relative block">
+            <span class="sr-only">Search</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Search' 'w-5 h-5 text-white/80'}}
+            </span>
+            <input
+              class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 placeholder-white/75 text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              placeholder="Search transactions..." aria-label="Search" id="searchInput" />
+          </label>
+        </div>
+
+        <div class="w-full max-w-xs">
+          <label class="relative block">
+            <span class="sr-only">Type</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Tag' 'w-5 h-5 text-white/80'}}
+            </span>
+            <select id="typeFilter" class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-white/30 appearance-none">
+              <option value="" class="text-gray-900">All Types</option>
+              <option value="purchase" class="text-gray-900">Purchase</option>
+              <option value="usage" class="text-gray-900">Usage</option>
+              <option value="refund" class="text-gray-900">Refund</option>
+              <option value="bonus" class="text-gray-900">Bonus</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="w-full max-w-xs">
+          <label class="relative block">
+            <span class="sr-only">Status</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Filter' 'w-5 h-5 text-white/80'}}
+            </span>
+            <select id="statusFilter" class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-white/30 appearance-none">
+              <option value="" class="text-gray-900">All Status</option>
+              <option value="completed" class="text-gray-900">Completed</option>
+              <option value="pending" class="text-gray-900">Pending</option>
+              <option value="failed" class="text-gray-900">Failed</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <!-- right: small action icons -->
+      <div class="flex items-center gap-3">
+        <button onclick="location.reload()"
+          class="p-2 rounded-full bg-white/10 border border-white/25 hover:bg-white/20" title="Refresh">
+          {{lucide 'RefreshCw' 'w-5 h-5'}}
+        </button>
+      </div>
+    </div>
+    </header>
+
+    <!-- Table area (scrolls if wide) -->
+   <div class="overflow-auto flex-1">
+      <table class="w-full min-w-full table-auto bg-slate-50 dark:bg-slate-900">
+       <thead class='bg-slate-200 dark:bg-slate-800'>
+         <tr>
+           <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">Transaction ID</th>
+           <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">User</th>
+           <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">Type</th>
+           <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">Amount</th>
+           <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">Status</th>
+           <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">Payment Method</th>
+           <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider hidden md:table-cell">Date</th>
+           <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">Actions</th>
+         </tr>
+       </thead>
+       <tbody class="text-sm text-black dark:text-white">
+         {{#each transactions}}
+         <tr class="border-b border-gray-100/40 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-150 even:bg-slate-100 dark:even:bg-slate-800">
+           <td class="px-6 py-4">
+             <div class="text-sm font-medium text-gray-900">{{id}}</div>
+             {{#if external_transaction_id}}
+             <div class="text-sm text-gray-500">Ext: {{external_transaction_id}}</div>
+             {{/if}}
+           </td>
+           <td class="px-6 py-4">
+             <div class="flex items-center gap-3">
+               {{lucide 'User' 'h-5 w-5 text-gray-400'}}
+               <div>
+                 <div class="text-sm font-medium text-gray-900">User #{{user_id}}</div>
+               </div>
+             </div>
+           </td>
+           <td class="px-6 py-4">
+             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium capitalize
+               {{#if (eq transaction_type 'purchase')}}bg-green-100 text-green-800
+               {{else if (eq transaction_type 'usage')}}bg-blue-100 text-blue-800
+               {{else if (eq transaction_type 'refund')}}bg-orange-100 text-orange-800
+               {{else}}bg-purple-100 text-purple-800{{/if}}">
+               {{transaction_type}}
+             </span>
+           </td>
+           <td class="px-6 py-4">
+             <span class="text-sm font-medium {{#if (eq transaction_type 'usage')}}text-red-600{{else}}text-green-600{{/if}}">
+               {{#if (eq transaction_type 'usage')}}-{{else}}+{{/if}}{{amount}} credits
+             </span>
+             {{#if price}}
+             <div class="text-sm text-gray-500">${{price}}</div>
+             {{/if}}
+           </td>
+           <td class="px-6 py-4">
+             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium capitalize
+               {{#if (eq status 'completed')}}bg-green-100 text-green-800
+               {{else if (eq status 'pending')}}bg-yellow-100 text-yellow-800
+               {{else}}bg-red-100 text-red-800{{/if}}">
+               {{status}}
+             </span>
+           </td>
+           <td class="px-6 py-4">
+             {{#if payment_method_id}}
+               <span class="text-sm text-gray-500">Method #{{payment_method_id}}</span>
+             {{else}}
+               <span class="text-sm text-gray-500">—</span>
+             {{/if}}
+           </td>
+           <td class="px-6 py-4 hidden md:table-cell">
+             <div class="text-sm text-gray-900">{{formatDate created_at}}</div>
+           </td>
+           <td class="px-6 py-4">
+             <div class="flex items-center gap-2">
+               <button onclick="viewTransaction({{id}})" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors" title="View Details">
+                 {{lucide 'Eye' 'w-4 h-4'}}
+               </button>
+               {{#if (eq status 'pending')}}
+               <button onclick="processTransaction({{id}})" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors" title="Process Transaction">
+                 {{lucide 'Check' 'w-4 h-4'}}
+               </button>
+               {{/if}}
+             </div>
+           </td>
+          </tr>
+          {{else}}
+          <tr>
+            <td colspan="8" class='px-6 py-8 text-center text-gray-500'>
+              <div class="text-gray-500">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                </svg>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">No transactions found</h3>
+                <p class="mt-1 text-sm text-gray-500">No transactions have been processed yet.</p>
+              </div>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+     </table>
+   </div>
+
+   <!-- Footer / pagination -->
+   <footer class="bg-white/85 backdrop-blur-sm border-t border-gray-200 p-4">
+     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+       <div class="text-sm text-gray-600">
+         Showing {{pagination.start}}-{{pagination.end}} of {{pagination.total}} transactions
+       </div>
+
+       <div class="flex items-center gap-3">
+         <span class="text-sm text-gray-600 font-medium">Rows per page:</span>
+         <select id="rowsPerPage" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+           <option value="10" {{#if (eq pagination.limit 10)}}selected{{/if}}>10</option>
+           <option value="20" {{#if (eq pagination.limit 20)}}selected{{/if}}>20</option>
+           <option value="50" {{#if (eq pagination.limit 50)}}selected{{/if}}>50</option>
+           <option value="100" {{#if (eq pagination.limit 100)}}selected{{/if}}>100</option>
+         </select>
+       </div>
+
+       <div class="flex items-center gap-2">
+         <nav class="flex items-center gap-1 text-sm">
+           {{#if (gt pagination.page 1)}}
+           <a href="?page={{subtract pagination.page 1}}&limit={{pagination.limit}}&search={{filters.search}}&type={{filters.type}}&status={{filters.status}}&userId={{filters.userId}}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md" title="Previous page">
+             {{lucide 'ChevronLeft' 'w-4 h-4'}}
+           </a>
+           {{/if}}
+
+           {{#each (range 1 pagination.pages)}}
+           <a href="?page={{this}}&limit={{pagination.limit}}&search={{filters.search}}&type={{filters.type}}&status={{filters.status}}&userId={{filters.userId}}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg {{#if (eq this ../pagination.page)}}bg-primary text-primary-foreground shadow-lg scale-105{{else}}border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400{{/if}} transition-all duration-200 shadow-sm hover:shadow-md font-medium">{{this}}</a>
+           {{/each}}
+
+           {{#if (lt pagination.page pagination.pages)}}
+           <a href="?page={{add pagination.page 1}}&limit={{pagination.limit}}&search={{filters.search}}&type={{filters.type}}&status={{filters.status}}&userId={{filters.userId}}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md" title="Next page">
+             {{lucide 'ChevronRight' 'w-4 h-4'}}
+           </a>
+           {{/if}}
+         </nav>
+       </div>
+     </div>
+   </footer>
+</div>
+
+<script>
+// Helper functions for date formatting
+function formatDate(dateString) {
+  return new Date(dateString).toLocaleDateString();
+}
+
+function range(start, end) {
+  const result = [];
+  for (let i = start; i <= end; i++) {
+    result.push(i);
+  }
+  return result;
+}
+
+// Debounce function for search input
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Apply filters function
+function applyFilters() {
+  const type = document.getElementById('typeFilter').value;
+  const status = document.getElementById('statusFilter').value;
+  const search = document.getElementById('searchInput').value;
+
+  const params = new URLSearchParams(window.location.search);
+  if (type) params.set('type', type); else params.delete('type');
+  if (status) params.set('status', status); else params.delete('status');
+  if (search) params.set('search', search); else params.delete('search');
+  params.set('page', '1'); // Reset to first page
+
+  window.location.search = params.toString();
+}
+
+// Debounced search
+const debouncedSearch = debounce(applyFilters, 500);
+
+// Event listeners
+document.getElementById('searchInput').addEventListener('input', debouncedSearch);
+document.getElementById('typeFilter').addEventListener('change', applyFilters);
+document.getElementById('statusFilter').addEventListener('change', applyFilters);
+
+// Handle rows per page changes
+document.getElementById('rowsPerPage').addEventListener('change', function () {
+  const limit = this.value;
+  const url = new URL(window.location);
+  url.searchParams.set('limit', limit);
+  url.searchParams.set('page', '1');
+  window.location.href = url.toString();
+});
+
+// Initialize controls from URL params
+document.addEventListener('DOMContentLoaded', function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const limit = urlParams.get('limit') || '20';
+  const type = urlParams.get('type') || '';
+  const status = urlParams.get('status') || '';
+  const search = urlParams.get('search') || '';
+
+  document.getElementById('rowsPerPage').value = limit;
+  document.getElementById('typeFilter').value = type;
+  document.getElementById('statusFilter').value = status;
+  document.getElementById('searchInput').value = search;
+});
+
+// Export functionality
+function exportToCSV() {
+  const params = new URLSearchParams(window.location.search);
+  window.location.href = '/admin/transactions/export?' + params.toString();
+}
+
+// Transaction actions
+function viewTransaction(id) {
+  // TODO: Implement view transaction details
+  alert('View transaction details functionality coming soon!');
+}
+
+function processTransaction(id) {
+  if (confirm('Process this pending transaction?')) {
+    // TODO: Implement process transaction
+    alert('Process transaction functionality coming soon!');
+  }
+}
+</script>

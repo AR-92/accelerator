@@ -15,12 +15,12 @@ const { getSecuritySettings } = require('./config/security');
 
 // Import container and routes
 const container = require('./src/container');
-const authRoutes = require('./src/routes/pages/auth');
-const pageRoutes = require('./src/routes/pages');
-const aiAssistantModelsRoutes = require('./src/routes/pages/ai-assistant-models');
-const apiRoutes = require('./src/routes/api/v1');
-const adminRoutes = require('./src/routes/api/v1/admin');
-const adminPageRoutes = require('./src/routes/pages/admin');
+const authRoutes = require('./src/main/routes/pages/auth');
+const pageRoutes = require('./src/main/routes/pages');
+const aiAssistantModelsRoutes = require('./src/main/routes/pages/ai-assistant-models');
+const apiRoutes = require('./src/common/routes/api/v1');
+const adminRoutes = require('./src/admin/routes/api/v1/admin');
+const adminPageRoutes = require('./src/admin/routes/pages/admin');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -90,7 +90,7 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Set up Handlebars as the templating engine
 app.engine('hbs', handlebarsConfig);
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'src', 'views'));
+app.set('views', path.join(__dirname, 'views/main'));
 
 // Serve static files
 app.use(

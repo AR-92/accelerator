@@ -1,0 +1,643 @@
+<!-- Glass card container -->
+ <div
+  class="w-full rounded-xl shadow-2xl overflow-hidden bg-white/85 backdrop-blur-sm ring-1 ring-gray-200 flex flex-col min-h-[600px]">
+
+  <!-- Sticky header (toolbar) -->
+   <header class="sticky top-0 z-20 bg-orange-800 text-white p-5">
+    <!-- Page Title and Description -->
+    <div class="mb-6 flex justify-between">
+
+    <div class="text-left">
+      <h1 class="text-3xl font-bold text-white mb-2">Landing Page Management</h1>
+      <p class=" text-gray-200">Manage landing page sections and content</p>
+    </div>
+        <div class="">
+          <button onclick="showCreateModal()" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-full px-4 py-2 text-sm">
+          {{lucide 'Plus' 'w-4 h-4'}}
+          <span class="text-sm font-medium">Add Section</span>
+        </a>
+    </div>
+     </div>
+     <div class="max-w-7xl mx-auto flex items-center gap-4">
+      <!-- center: search and filters -->
+      <div class="flex-1 flex justify-left gap-4">
+        <div class="w-full max-w-xs">
+          <label class="relative block">
+            <span class="sr-only">Search</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Search' 'w-5 h-5 text-white/80'}}
+            </span>
+            <input
+              class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 placeholder-white/75 text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              placeholder="Search sections..." aria-label="Search" id="searchInput" value="{{filters.search}}" />
+          </label>
+        </div>
+
+        <div class="w-full max-w-xs">
+          <label class="relative block">
+            <span class="sr-only">Section Type</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Filter' 'w-5 h-5 text-white/80'}}
+            </span>
+            <select id="sectionTypeFilter" class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-white/30 appearance-none">
+              <option value="" class="text-gray-900">All Types</option>
+              {{#each sectionTypes}}
+              <option value="{{value}}" {{#if (eq ../filters.sectionType value)}}selected{{/if}} class="text-gray-900">{{label}}</option>
+              {{/each}}
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <!-- right: small action icons -->
+      <div class="flex items-center gap-3">
+        <button onclick="location.reload()"
+          class="p-2 rounded-full bg-white/10 border border-white/25 hover:bg-white/20" title="Refresh">
+          {{lucide 'RefreshCw' 'w-5 h-5'}}
+        </button>
+      </div>
+    </div>
+   </header>
+
+    <!-- Sections Table -->
+     <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+      <div class='px-6 py-4 border-b border-border'>
+        <h2 class='text-lg font-medium text-foreground'>Landing Page Sections ({{pagination.total}})</h2>
+      </div>
+
+      <div class='overflow-x-auto'>
+        <table class='min-w-full divide-y divide-border table-fixed sm:table-auto'>
+          <thead class='bg-orange-200 dark:bg-orange-800'>
+            <tr>
+              <th class='w-12 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                <input type="checkbox" id="selectAll" class='rounded border-gray-300 text-primary focus:ring-primary'>
+              </th>
+              <th class='min-w-48 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Title
+              </th>
+              <th class='w-24 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Type
+              </th>
+              <th class='w-16 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Order
+              </th>
+              <th class='w-20 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Status
+              </th>
+              <th class='w-32 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider hidden md:table-cell'>
+                Created
+              </th>
+              <th class='w-48 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>Actions</th>
+            </tr>
+          </thead>
+          <tbody class='bg-orange-50 dark:bg-orange-900 divide-y divide-border'>
+            {{#each sections}}
+            <tr class='hover:bg-orange-100 dark:hover:bg-orange-800'>
+              <td class='w-12 px-4 py-4 whitespace-nowrap'>
+                <input type="checkbox" class="sectionCheckbox" value="{{id}}" data-section-id="{{id}}" class='rounded border-gray-300 text-primary focus:ring-primary'>
+              </td>
+              <td class='w-1/4 px-4 py-4 whitespace-nowrap'>
+                <div class='text-sm font-medium text-foreground'>{{title}}</div>
+                {{#if subtitle}}
+                <div class='text-sm text-black dark:text-white'>{{subtitle}}</div>
+                {{/if}}
+              </td>
+               <td class='w-24 px-4 py-4 whitespace-nowrap'>
+                 <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400'>
+                   {{sectionTypeLabel sectionType}}
+                 </span>
+               </td>
+              <td class='w-16 px-4 py-4 whitespace-nowrap'>
+                <input type="number" value="{{order}}" onchange="updateOrder({{id}}, this.value)"
+                       class='w-12 text-center border border-input rounded px-1 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-ring'>
+              </td>
+              <td class='w-20 px-4 py-4 whitespace-nowrap text-sm text-foreground'>
+                {{#if isActive}}
+                <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'>
+                  Active
+                </span>
+                {{else}}
+                <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400'>
+                  Inactive
+                </span>
+                {{/if}}
+              </td>
+              <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-black dark:text-white hidden md:table-cell'>
+                {{formatDate createdAt}}
+              </td>
+              <td class='px-4 py-4 whitespace-nowrap text-sm font-medium'>
+                <div class='relative'>
+                  <button data-section-id="{{id}}" class='inline-flex items-center justify-center w-8 h-8 rounded-md text-black dark:text-white hover:bg-muted hover:text-foreground transition-colors' title='Actions'>
+                    {{lucide 'MoreVertical' 'w-4 h-4'}}
+                  </button>
+                  <div id="dropdown-{{id}}" class='fixed w-48 bg-card rounded-md shadow-lg border border-border z-50 hidden'>
+                    <div class='py-1'>
+                      <button onclick="window.location.href='/admin/landing-page/{{id}}'" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                        {{lucide 'Eye' 'w-4 h-4 mr-2'}}
+                        View Details
+                      </button>
+                      <button onclick="editSection({{id}})" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                        {{lucide 'Edit' 'w-4 h-4 mr-2'}}
+                        Edit Section
+                      </button>
+                      <button onclick="toggleStatus({{id}})" class='flex items-center w-full px-4 py-2 text-sm text-foreground hover:bg-muted hover:text-foreground transition-colors'>
+                        {{lucide 'ToggleLeft' 'w-4 h-4 mr-2'}}
+                        {{#if isActive}}Deactivate{{else}}Activate{{/if}}
+                      </button>
+                      <button onclick="deleteSection({{id}}, '{{title}}')" class='flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-muted hover:text-foreground transition-colors'>
+                        {{lucide 'Trash2' 'w-4 h-4 mr-2'}}
+                        Delete Section
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            {{else}}
+            <tr>
+              <td colspan="7" class='px-6 py-8 text-center text-gray-500'>
+                <div class="text-gray-500">
+                  <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="m12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+                  </svg>
+                  <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No landing page sections found</h3>
+                  <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Sections will appear here once they are created.</p>
+                </div>
+              </td>
+            </tr>
+            {{/each}}
+            </tbody>
+           <tfoot>
+             <tr>
+               <td colspan="4" class='px-6 py-4 border-t border-border'>
+                 <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+                   <div class="text-sm text-gray-600">
+                     Showing {{#if sections.length}}{{add (multiply (subtract pagination.page 1) pagination.limit) 1}}{{else}}0{{/if}}-{{add (multiply (subtract pagination.page 1) pagination.limit) sections.length}} of {{pagination.total}} sections
+                   </div>
+
+                   <div class="flex items-center gap-3">
+                     <span class="text-sm text-gray-600 font-medium">Rows per page:</span>
+                     <select id="rowsPerPage"
+                       class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+                       <option value="10" {{#if (eq pagination.limit 10)}}selected{{/if}}>10</option>
+                       <option value="20" {{#if (eq pagination.limit 20)}}selected{{/if}}>20</option>
+                       <option value="50" {{#if (eq pagination.limit 50)}}selected{{/if}}>50</option>
+                       <option value="100" {{#if (eq pagination.limit 100)}}selected{{/if}}>100</option>
+                     </select>
+                   </div>
+
+                   <div class="flex items-center gap-2">
+                     <nav class="flex items-center gap-1 text-sm">
+                       {{#if (gt pagination.page 1)}}
+                       <a href="?page={{subtract pagination.page 1}}&sectionType={{filters.sectionType}}&search={{filters.search}}"
+                         class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md"
+                         title="Previous page">
+                         {{lucide 'ChevronLeft' 'w-4 h-4'}}
+                       </a>
+                       {{/if}}
+
+                       {{#each (range 1 pagination.pages)}}
+                       <a href="?page={{this}}&sectionType={{filters.sectionType}}&search={{filters.search}}"
+                         class="inline-flex items-center justify-center w-10 h-10 rounded-lg {{#if (eq this ../pagination.page)}}bg-primary text-primary-foreground shadow-lg scale-105{{else}}border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400{{/if}} transition-all duration-200 shadow-sm hover:shadow-md font-medium">{{this}}</a>
+                       {{/each}}
+
+                       {{#if (lt pagination.page pagination.pages)}}
+                       <a href="?page={{add pagination.page 1}}&sectionType={{filters.sectionType}}&search={{filters.search}}"
+                         class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md"
+                         title="Next page">
+                         {{lucide 'ChevronRight' 'w-4 h-4'}}
+                       </a>
+                       {{/if}}
+                     </nav>
+                   </div>
+                 </div>
+               </td>
+             </tr>
+           </tfoot>
+         </table>
+      </div>
+
+      <!-- Bulk Actions -->
+      <div id="bulkActions" class='px-6 py-4 border-t border-border bg-muted/30 hidden'>
+        <div class='flex items-center justify-between'>
+          <div class='flex items-center gap-3'>
+            <span class='text-sm font-medium text-foreground' id="selectedCount">0 sections selected</span>
+            <span class='text-xs text-black dark:text-white'>Select sections above to perform bulk actions</span>
+          </div>
+          <div class='flex gap-2'>
+            <button onclick="bulkToggleStatus()" id="bulkToggleBtn" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-blue-600 text-white shadow hover:bg-blue-700 h-9 px-4 py-2' disabled>
+              {{lucide 'ToggleLeft' 'w-4 h-4 mr-2'}}
+              Toggle Status
+            </button>
+            <button onclick="bulkDelete()" id="bulkDeleteBtn" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-red-600 text-white shadow hover:bg-red-700 h-9 px-4 py-2' disabled>
+              {{lucide 'Trash2' 'w-4 h-4 mr-2'}}
+              Delete Selected
+            </button>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- Create/Edit Section Modal -->
+  <div id="sectionModal" class="fixed inset-0 bg-background/80 backdrop-blur-sm overflow-y-auto h-full w-full hidden">
+    <div class="relative top-20 mx-auto p-5 border border-border w-96 shadow-lg rounded-md bg-card">
+      <div class="mt-3">
+        <h3 id="modalTitle" class="text-lg font-medium text-foreground mb-4">Create Landing Page Section</h3>
+        <form id="sectionForm">
+          <input type="hidden" id="sectionId">
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-foreground mb-2">Section Type</label>
+            <select id="sectionType" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+              {{#each sectionTypes}}
+              <option value="{{value}}">{{label}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-foreground mb-2">Title</label>
+            <input type="text" id="sectionTitle" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-black dark:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring" required>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-foreground mb-2">Subtitle</label>
+            <input type="text" id="sectionSubtitle" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-black dark:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-foreground mb-2">Content</label>
+            <textarea id="sectionContent" rows="4" class="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-black dark:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"></textarea>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-foreground mb-2">Image URL</label>
+            <input type="url" id="sectionImageUrl" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-black dark:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-foreground mb-2">Button Text</label>
+            <input type="text" id="sectionButtonText" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-black dark:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-foreground mb-2">Button URL</label>
+            <input type="url" id="sectionButtonUrl" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-black dark:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-foreground mb-2">Order</label>
+            <input type="number" id="sectionOrder" min="0" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-black dark:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+          </div>
+          <div class="mb-4">
+            <label class="flex items-center">
+              <input type="checkbox" id="sectionIsActive" class="rounded border-gray-300 text-primary focus:ring-primary mr-2">
+              <span class="text-sm font-medium text-foreground">Active</span>
+            </label>
+          </div>
+          <div class="flex justify-end gap-2">
+            <button type="button" onclick="closeModal()" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2">Cancel</button>
+            <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // Helper functions for date formatting
+  function formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString();
+  }
+
+  function range(start, end) {
+    const result = [];
+    for (let i = start; i <= end; i++) {
+      result.push(i);
+    }
+    return result;
+  }
+
+  // Modal functions
+  function showCreateModal() {
+    document.getElementById('modalTitle').textContent = 'Create Landing Page Section';
+    document.getElementById('sectionId').value = '';
+    document.getElementById('sectionForm').reset();
+    document.getElementById('sectionIsActive').checked = true;
+    document.getElementById('sectionModal').classList.remove('hidden');
+  }
+
+  function editSection(sectionId) {
+    // Fetch section data and populate modal
+    fetch(`/admin/api/landing-page/${sectionId}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const section = data.section;
+          document.getElementById('modalTitle').textContent = 'Edit Landing Page Section';
+          document.getElementById('sectionId').value = section.id;
+          document.getElementById('sectionType').value = section.sectionType;
+          document.getElementById('sectionTitle').value = section.title;
+          document.getElementById('sectionSubtitle').value = section.subtitle || '';
+          document.getElementById('sectionContent').value = section.content || '';
+          document.getElementById('sectionImageUrl').value = section.imageUrl || '';
+          document.getElementById('sectionButtonText').value = section.buttonText || '';
+          document.getElementById('sectionButtonUrl').value = section.buttonUrl || '';
+          document.getElementById('sectionOrder').value = section.order || 0;
+          document.getElementById('sectionIsActive').checked = section.isActive;
+          document.getElementById('sectionModal').classList.remove('hidden');
+        }
+      });
+  }
+
+  function closeModal() {
+    document.getElementById('sectionModal').classList.add('hidden');
+  }
+
+  function deleteSection(sectionId, sectionTitle) {
+    Toast.warning(`Are you sure you want to delete the section "${sectionTitle}"? This action cannot be undone.`);
+    fetch(`/admin/api/landing-page/${sectionId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        location.reload();
+      } else {
+        Toast.error('Error deleting section: ' + data.error);
+      }
+    });
+  }
+
+  function toggleStatus(sectionId) {
+    fetch(`/admin/api/landing-page/${sectionId}/toggle`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        location.reload();
+      } else {
+        Toast.error('Error toggling section status: ' + data.error);
+      }
+    });
+  }
+
+  function updateOrder(sectionId, order) {
+    fetch(`/admin/api/landing-page/${sectionId}/order`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ order: parseInt(order) }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (!data.success) {
+        Toast.error('Error updating section order: ' + data.error);
+      }
+    });
+  }
+
+  // Bulk actions functions
+  function updateBulkActions() {
+    const checkboxes = document.querySelectorAll('.sectionCheckbox:checked');
+    const count = checkboxes.length;
+    const bulkActions = document.getElementById('bulkActions');
+    const selectedCount = document.getElementById('selectedCount');
+
+    if (count > 0) {
+      bulkActions.classList.remove('hidden');
+      selectedCount.textContent = `${count} section${count > 1 ? 's' : ''} selected`;
+      document.getElementById('bulkToggleBtn').disabled = false;
+      document.getElementById('bulkDeleteBtn').disabled = false;
+    } else {
+      bulkActions.classList.add('hidden');
+      document.getElementById('bulkToggleBtn').disabled = true;
+      document.getElementById('bulkDeleteBtn').disabled = true;
+    }
+  }
+
+   function bulkToggleStatus() {
+     const checkboxes = document.querySelectorAll('.sectionCheckbox:checked');
+     const count = checkboxes.length;
+
+     Toast.warning(`Are you sure you want to toggle the status of ${count} section${count > 1 ? 's' : ''}?`);
+     const sectionIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+
+     // Toggle sections one by one
+     Promise.all(sectionIds.map(sectionId =>
+       fetch(`/admin/api/landing-page/${sectionId}/toggle`, {
+         method: 'PATCH',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+       }).then(response => response.json())
+     )).then(results => {
+       const successCount = results.filter(r => r.success).length;
+       Toast.success(`Successfully toggled ${successCount} out of ${count} sections`);
+       location.reload();
+     });
+   }
+
+  function bulkDelete() {
+    const checkboxes = document.querySelectorAll('.sectionCheckbox:checked');
+    const count = checkboxes.length;
+
+    Toast.warning(`Are you sure you want to delete ${count} section${count > 1 ? 's' : ''}? This action cannot be undone.`);
+    const sectionIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+
+    // Delete sections one by one
+    Promise.all(sectionIds.map(sectionId =>
+      fetch(`/admin/api/landing-page/${sectionId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(response => response.json())
+    )).then(results => {
+      const successCount = results.filter(r => r.success).length;
+      Toast.success(`Successfully deleted ${successCount} out of ${count} sections`);
+      location.reload();
+    });
+  }
+
+  // Form handlers
+  document.getElementById('sectionForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const sectionId = document.getElementById('sectionId').value;
+    const isEdit = sectionId !== '';
+
+    const sectionData = {
+      sectionType: document.getElementById('sectionType').value,
+      title: document.getElementById('sectionTitle').value,
+      subtitle: document.getElementById('sectionSubtitle').value,
+      content: document.getElementById('sectionContent').value,
+      imageUrl: document.getElementById('sectionImageUrl').value,
+      buttonText: document.getElementById('sectionButtonText').value,
+      buttonUrl: document.getElementById('sectionButtonUrl').value,
+      order: parseInt(document.getElementById('sectionOrder').value) || 0,
+      isActive: document.getElementById('sectionIsActive').checked,
+    };
+
+    const url = isEdit ? `/admin/api/landing-page/${sectionId}` : '/admin/api/landing-page';
+    const method = isEdit ? 'PUT' : 'POST';
+
+    fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(sectionData),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        closeModal();
+        location.reload();
+      } else {
+        Toast.error('Error saving section: ' + data.error);
+      }
+    });
+  });
+
+  // Checkbox event listeners
+  document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('sectionCheckbox')) {
+      updateBulkActions();
+    }
+  });
+
+  // Action dropdown functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add hover event listeners to all dropdown triggers
+    document.querySelectorAll('button[data-section-id]').forEach(button => {
+      const sectionId = button.getAttribute('data-section-id');
+      const dropdown = document.getElementById(`dropdown-${sectionId}`);
+      const container = button.parentElement;
+
+      // Show dropdown on hover
+      container.addEventListener('mouseenter', function() {
+        // Close all other dropdowns first
+        document.querySelectorAll('[id^="dropdown-"]').forEach(d => {
+          if (d !== dropdown) {
+            d.classList.add('hidden');
+          }
+        });
+
+        // Position the dropdown relative to the button
+        const buttonRect = button.getBoundingClientRect();
+        const dropdownHeight = dropdown.offsetHeight || 200;
+        const viewportHeight = window.innerHeight;
+        const spaceBelow = viewportHeight - buttonRect.bottom;
+        const spaceAbove = buttonRect.top;
+
+        // Temporarily show dropdown to measure its dimensions
+        const wasHidden = dropdown.classList.contains('hidden');
+        if (wasHidden) {
+          dropdown.classList.remove('hidden');
+          dropdown.style.visibility = 'hidden';
+          dropdown.style.position = 'fixed';
+          dropdown.style.left = '-9999px';
+          dropdown.style.top = '-9999px';
+        }
+
+        // Get actual dimensions
+        const dropdownWidth = dropdown.offsetWidth || 192;
+        const actualDropdownHeight = dropdown.offsetHeight || 200;
+
+        // Position horizontally (right-aligned with button)
+        dropdown.style.left = `${buttonRect.right - dropdownWidth}px`;
+
+        // Restore visibility if it was hidden
+        if (wasHidden) {
+          dropdown.style.visibility = 'visible';
+          dropdown.style.position = 'fixed';
+        }
+
+        // Position vertically (prefer below, but go above if not enough space)
+        if (spaceBelow >= actualDropdownHeight + 4) {
+          dropdown.style.top = `${buttonRect.bottom + 1}px`;
+        } else if (spaceAbove >= actualDropdownHeight + 4) {
+          dropdown.style.top = `${buttonRect.top - actualDropdownHeight - 1}px`;
+        } else {
+          dropdown.style.top = `${buttonRect.bottom + 1}px`;
+          if (dropdownBottom > viewportHeight) {
+            window.scrollBy(0, dropdownBottom - viewportHeight + 20);
+          }
+        }
+
+        // Show current dropdown
+        dropdown.classList.remove('hidden');
+      });
+
+      // Hide dropdown when mouse leaves the container
+      container.addEventListener('mouseleave', function() {
+        setTimeout(() => {
+          if (!container.matches(':hover') && !dropdown.matches(':hover')) {
+            dropdown.classList.add('hidden');
+          }
+        }, 100);
+      });
+
+      // Also hide when mouse leaves the dropdown itself
+      dropdown.addEventListener('mouseleave', function() {
+        setTimeout(() => {
+          if (!container.matches(':hover') && !dropdown.matches(':hover')) {
+            dropdown.classList.add('hidden');
+          }
+        }, 100);
+      });
+    });
+
+     // Close dropdowns when clicking outside
+     document.addEventListener('click', function(e) {
+       if (!e.target.closest('[id^="dropdown-"]') && !e.target.closest('button[data-section-id]')) {
+         document.querySelectorAll('[id^="dropdown-"]').forEach(dropdown => {
+           dropdown.classList.add('hidden');
+         });
+       }
+     });
+   });
+
+   // Handle rows per page changes
+   document.getElementById('rowsPerPage').addEventListener('change', function () {
+     const limit = this.value;
+     const url = new URL(window.location);
+     url.searchParams.set('limit', limit);
+     url.searchParams.set('page', '1');
+     window.location.href = url.toString();
+   });
+
+   // Initialize controls from URL params
+   document.addEventListener('DOMContentLoaded', function () {
+     const urlParams = new URLSearchParams(window.location.search);
+     const limit = urlParams.get('limit') || '20';
+     document.getElementById('rowsPerPage').value = limit;
+   });
+
+  // Filter functionality - auto-apply on change
+  document.getElementById('sectionTypeFilter').addEventListener('change', function() {
+    applyFilters();
+  });
+
+  document.getElementById('searchInput').addEventListener('input', function() {
+    // Debounce search input
+    clearTimeout(window.searchTimeout);
+    window.searchTimeout = setTimeout(applyFilters, 300);
+  });
+
+  function applyFilters() {
+    const sectionType = document.getElementById('sectionTypeFilter').value;
+    const search = document.getElementById('searchInput').value;
+
+    const params = new URLSearchParams();
+    if (sectionType) params.set('sectionType', sectionType);
+    if (search) params.set('search', search);
+
+    window.location.href = `/admin/landing-page?${params.toString()}`;
+  }
+  </script>

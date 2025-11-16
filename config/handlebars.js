@@ -236,9 +236,10 @@ handlebars.registerHelper('sectionTypeLabel', function (sectionType) {
 const handlebarsConfig = engine({
   extname: '.hbs',
   defaultLayout: 'main',
-  layoutsDir: path.join(__dirname, '../src/views/layouts'),
+  layoutsDir: path.join(__dirname, '../views/main/layouts'),
   partialsDir: [
-    path.join(__dirname, '../src/views/partials'),
+    path.join(__dirname, '../views/main/partials'),
+    path.join(__dirname, '../views/common/partials'),
     path.join(__dirname, '../src/components'),
   ],
 });
@@ -270,7 +271,7 @@ if (fs.existsSync(ideaCardPath)) {
 
 const aiMessagePath = path.join(
   __dirname,
-  '../src/views/partials/shared/_ai-message.hbs'
+  '../views/common/partials/_ai-message.hbs'
 );
 if (fs.existsSync(aiMessagePath)) {
   const aiMessageTemplate = fs.readFileSync(aiMessagePath, 'utf8');
@@ -279,7 +280,7 @@ if (fs.existsSync(aiMessagePath)) {
 
 const collaborateNavbarPath = path.join(
   __dirname,
-  '../src/views/partials/user/_collaborate-navbar.hbs'
+  '../views/main/partials/_collaborate-navbar.hbs'
 );
 if (fs.existsSync(collaborateNavbarPath)) {
   const collaborateNavbarTemplate = fs.readFileSync(
@@ -294,7 +295,7 @@ if (fs.existsSync(collaborateNavbarPath)) {
 
 const helpNavbarPath = path.join(
   __dirname,
-  '../src/views/partials/user/_help-navbar.hbs'
+  '../views/main/partials/_help-navbar.hbs'
 );
 if (fs.existsSync(helpNavbarPath)) {
   const helpNavbarTemplate = fs.readFileSync(helpNavbarPath, 'utf8');
@@ -327,17 +328,14 @@ if (fs.existsSync(toastPath)) {
 
 const buildStartUpPath = path.join(
   __dirname,
-  '../src/views/partials/components/_build-start-up.hbs'
+  '../views/common/partials/_build-start-up.hbs'
 );
 if (fs.existsSync(buildStartUpPath)) {
   const buildStartUpTemplate = fs.readFileSync(buildStartUpPath, 'utf8');
   handlebars.registerPartial('components/build-start-up', buildStartUpTemplate);
 }
 
-const navbarPath = path.join(
-  __dirname,
-  '../src/views/partials/shared/_navbar.hbs'
-);
+const navbarPath = path.join(__dirname, '../views/common/partials/_navbar.hbs');
 if (fs.existsSync(navbarPath)) {
   const navbarTemplate = fs.readFileSync(navbarPath, 'utf8');
   handlebars.registerPartial('shared/navbar', navbarTemplate);
@@ -345,7 +343,7 @@ if (fs.existsSync(navbarPath)) {
 
 const learnNavbarPath = path.join(
   __dirname,
-  '../src/views/partials/user/_learn-navbar.hbs'
+  '../views/main/partials/_learn-navbar.hbs'
 );
 if (fs.existsSync(learnNavbarPath)) {
   const learnNavbarTemplate = fs.readFileSync(learnNavbarPath, 'utf8');
@@ -354,7 +352,7 @@ if (fs.existsSync(learnNavbarPath)) {
 
 const reportsNavbarPath = path.join(
   __dirname,
-  '../src/views/partials/user/_reports-navbar.hbs'
+  '../views/main/partials/_reports-navbar.hbs'
 );
 if (fs.existsSync(reportsNavbarPath)) {
   const reportsNavbarTemplate = fs.readFileSync(reportsNavbarPath, 'utf8');
@@ -363,7 +361,7 @@ if (fs.existsSync(reportsNavbarPath)) {
 
 const settingsNavbarPath = path.join(
   __dirname,
-  '../src/views/partials/user/_settings-navbar.hbs'
+  '../views/main/partials/_settings-navbar.hbs'
 );
 if (fs.existsSync(settingsNavbarPath)) {
   const settingsNavbarTemplate = fs.readFileSync(settingsNavbarPath, 'utf8');

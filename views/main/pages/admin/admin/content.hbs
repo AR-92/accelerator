@@ -1,0 +1,122 @@
+<div class='flex flex-col gap-4 lg:gap-6'>
+  <!-- Header -->
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1
+        class='font-heading text-2xl font-semibold text-foreground dark:text-white'
+      >Content Management</h1>
+      <p class='text-base text-muted-foreground'>Manage help and learning
+        content across the platform.</p>
+    </div>
+  </div>
+
+  <!-- Content Sections -->
+  <div class='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+    <!-- Help Center -->
+    <div
+      class='rounded-md bg-card text-card-foreground shadow-sm p-6'
+      style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+    >
+      <div class='flex items-center justify-between mb-4'>
+        <h2 class='text-lg font-medium text-foreground'>Help Center</h2>
+        <a
+          href='/admin/content/help'
+          class='text-primary hover:text-primary/80 text-sm font-medium transition-colors'
+        >
+          Manage →
+        </a>
+      </div>
+      <p class='text-muted-foreground text-sm mb-4'>
+        Manage help articles, categories, and support content.
+      </p>
+      <div class='space-y-2'>
+        <div class='flex justify-between text-sm'>
+          <span class='text-muted-foreground'>Total Articles</span>
+          <span
+            class='font-medium text-foreground'
+          >{{stats.content.help.total}}</span>
+        </div>
+        <div class='flex justify-between text-sm'>
+          <span class='text-muted-foreground'>Published</span>
+          <span
+            class='font-medium text-green-600 dark:text-green-400'
+          >{{stats.content.help.published}}</span>
+        </div>
+        <div class='flex justify-between text-sm'>
+          <span class='text-muted-foreground'>Draft</span>
+          <span
+            class='font-medium text-yellow-600 dark:text-yellow-400'
+          >{{stats.content.help.draft}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learning Center -->
+    <div
+      class='rounded-md bg-card text-card-foreground shadow-sm p-6'
+      style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+    >
+      <div class='flex items-center justify-between mb-4'>
+        <h2 class='text-lg font-medium text-foreground'>Learning Center</h2>
+        <a
+          href='/admin/content/learn'
+          class='text-primary hover:text-primary/80 text-sm font-medium transition-colors'
+        >
+          Manage →
+        </a>
+      </div>
+      <p class='text-muted-foreground text-sm mb-4'>
+        Manage learning articles, courses, and educational content.
+      </p>
+      <div class='space-y-2'>
+        <div class='flex justify-between text-sm'>
+          <span class='text-muted-foreground'>Total Articles</span>
+          <span
+            class='font-medium text-foreground'
+          >{{stats.content.learning.total}}</span>
+        </div>
+        <div class='flex justify-between text-sm'>
+          <span class='text-muted-foreground'>Published</span>
+          <span
+            class='font-medium text-green-600 dark:text-green-400'
+          >{{stats.content.learning.published}}</span>
+        </div>
+        <div class='flex justify-between text-sm'>
+          <span class='text-muted-foreground'>Draft</span>
+          <span
+            class='font-medium text-yellow-600 dark:text-yellow-400'
+          >{{stats.content.learning.draft}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div
+    class='rounded-md bg-card text-card-foreground shadow-sm p-6'
+    style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'
+  >
+    <h3 class='text-lg font-medium text-foreground mb-4'>Quick Actions</h3>
+    <div class='grid grid-cols-1 md:grid-cols-2 gap-4'>
+      <button
+        class='flex items-center p-4 border-2 border-dashed border-border rounded-lg hover:border-primary/50 transition-colors text-left'
+      >
+        {{lucide 'Plus' 'w-8 h-8 text-muted-foreground mr-3'}}
+        <div>
+          <p class='font-medium text-foreground'>Create Help Article</p>
+          <p class='text-sm text-muted-foreground'>Add new help documentation</p>
+        </div>
+      </button>
+
+      <button
+        class='flex items-center p-4 border-2 border-dashed border-border rounded-lg hover:border-primary/50 transition-colors text-left'
+      >
+        {{lucide 'Plus' 'w-8 h-8 text-muted-foreground mr-3'}}
+        <div>
+          <p class='font-medium text-foreground'>Create Learning Article</p>
+          <p class='text-sm text-muted-foreground'>Add new educational content</p>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

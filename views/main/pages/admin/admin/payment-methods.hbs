@@ -1,0 +1,234 @@
+<!-- Glass card container -->
+ <div
+  class="w-full rounded-xl shadow-2xl overflow-hidden bg-white/85 backdrop-blur-sm ring-1 ring-gray-200 flex flex-col min-h-[600px]">
+
+  <!-- Sticky header (toolbar) -->
+   <header class="sticky top-0 z-20 bg-cyan-800 text-white p-5">
+    <!-- Page Title and Description -->
+    <div class="mb-6 flex justify-between">
+
+    <div class="text-left">
+      <h1 class="text-3xl font-bold text-white mb-2">Payment Methods</h1>
+      <p class=" text-gray-200">Manage payment methods and configurations</p>
+    </div>
+        <div class="">
+          <button onclick="addPaymentMethod()" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-full px-4 py-2 text-sm">
+          {{lucide 'Plus' 'w-4 h-4'}}
+          <span class="text-sm font-medium">Add Method</span>
+        </a>
+    </div>
+     </div>
+     <div class="max-w-7xl mx-auto flex items-center gap-4">
+      <!-- center: search and filters -->
+      <div class="flex-1 flex justify-left gap-4">
+        <div class="w-full max-w-xs">
+          <label class="relative block">
+            <span class="sr-only">Search</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Search' 'w-5 h-5 text-white/80'}}
+            </span>
+            <input
+              class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 placeholder-white/75 text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              placeholder="Search methods..." aria-label="Search" id="searchInput" />
+          </label>
+        </div>
+
+        <div class="w-full max-w-xs">
+          <label class="relative block">
+            <span class="sr-only">Provider</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Filter' 'w-5 h-5 text-white/80'}}
+            </span>
+            <select id="providerFilter" class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-white/30 appearance-none">
+              <option value="" class="text-gray-900">All Providers</option>
+              <option value="stripe" class="text-gray-900">Stripe</option>
+              <option value="paypal" class="text-gray-900">PayPal</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <!-- right: small action icons -->
+      <div class="flex items-center gap-3">
+        <button onclick="location.reload()"
+          class="p-2 rounded-full bg-white/10 border border-white/25 hover:bg-white/20" title="Refresh">
+          {{lucide 'RefreshCw' 'w-5 h-5'}}
+        </button>
+      </div>
+    </div>
+   </header>
+
+    <!-- Payment Methods Table -->
+     <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+      <div class='px-6 py-4 border-b border-border'>
+        <h2 class='text-lg font-medium text-foreground'>Payment Methods</h2>
+      </div>
+      <div class='overflow-x-auto'>
+        <table class='min-w-full divide-y divide-border table-fixed sm:table-auto'>
+          <thead class='bg-cyan-200 dark:bg-cyan-800'>
+            <tr>
+              <th class='min-w-48 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Method
+              </th>
+              <th class='w-24 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Provider
+              </th>
+              <th class='w-20 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Status
+              </th>
+              <th class='min-w-48 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Configuration
+              </th>
+              <th class='w-32 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider hidden md:table-cell'>
+                Created
+              </th>
+              <th class='w-48 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>Actions</th>
+            </tr>
+          </thead>
+           <tbody class='bg-cyan-50 dark:bg-cyan-900 divide-y divide-border'>
+            {{#each paymentMethods}}
+            <tr class='hover:bg-cyan-100 dark:hover:bg-cyan-800'>
+              <td class='w-1/4 px-4 py-4 whitespace-nowrap'>
+               <div class='flex items-center gap-3'>
+                 {{#if (eq provider 'stripe')}}
+                   {{lucide 'CreditCard' 'h-5 w-5 text-blue-500'}}
+                 {{else if (eq provider 'paypal')}}
+                   {{lucide 'DollarSign' 'h-5 w-5 text-blue-600'}}
+                 {{else}}
+                   {{lucide 'Wallet' 'h-5 w-5 text-gray-500'}}
+                 {{/if}}
+                 <div>
+                   <div class='text-sm font-medium text-foreground'>{{method_name}}</div>
+                   <div class='text-sm text-black dark:text-white'>ID: {{id}}</div>
+                 </div>
+               </div>
+             </td>
+              <td class='w-24 px-4 py-4 whitespace-nowrap'>
+                <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                  {{#if (eq provider 'stripe')}}bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400
+                  {{else if (eq provider 'paypal')}}bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400
+                  {{else}}bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400{{/if}}'>
+                  {{capitalize provider}}
+                </span>
+              </td>
+              <td class='w-20 px-4 py-4 whitespace-nowrap'>
+                <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                  {{#if is_active}}bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400
+                  {{else}}bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400{{/if}}'>
+                  {{#if is_active}}Active{{else}}Inactive{{/if}}
+                </span>
+              </td>
+              <td class='min-w-48 px-4 py-4 whitespace-nowrap'>
+                <div class='text-sm'>
+                  {{#if api_key}}
+                  <div class='text-black dark:text-white'>API Key: ****{{api_key.slice -4}}</div>
+                  {{/if}}
+                  {{#if webhook_secret}}
+                  <div class='text-black dark:text-white'>Webhook: ****{{webhook_secret.slice -4}}</div>
+                  {{/if}}
+                  {{#if (eq provider 'stripe')}}
+                  <div class='text-black dark:text-white'>Publishable: ****{{publishable_key.slice -4}}</div>
+                  {{/if}}
+                </div>
+              </td>
+              <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-black dark:text-white hidden md:table-cell'>
+                {{formatDate created_at}}
+              </td>
+              <td class='px-4 py-4 whitespace-nowrap text-sm font-medium'>
+                <div class='flex items-center gap-2'>
+                  <button onclick="editPaymentMethod({{id}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8'>
+                    {{lucide 'Edit' 'h-4 w-4'}}
+                  </button>
+                  <button onclick="toggleStatus({{id}}, {{is_active}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8'>
+                    {{#if is_active}}
+                      {{lucide 'Pause' 'h-4 w-4'}}
+                    {{else}}
+                      {{lucide 'Play' 'h-4 w-4'}}
+                    {{/if}}
+                  </button>
+                  <button onclick="deletePaymentMethod({{id}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8 text-destructive hover:bg-destructive hover:text-destructive-foreground'>
+                    {{lucide 'Trash2' 'h-4 w-4'}}
+                  </button>
+                </div>
+              </td>
+            </tr>
+            {{else}}
+            <tr>
+              <td colspan="6" class='px-6 py-8 text-center text-gray-500'>
+                <div class="text-gray-500">
+                  <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                  </svg>
+                  <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No payment methods found</h3>
+                  <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Payment methods will appear here once they are configured.</p>
+                </div>
+              </td>
+            </tr>
+            {{/each}}
+            </tbody>
+          <tfoot></tfoot>
+         </table>
+      </div>
+    </div>
+  </div>
+
+<script>
+// Payment method actions
+function addPaymentMethod() {
+  // TODO: Implement add payment method modal
+  alert('Add payment method functionality coming soon!');
+}
+
+function editPaymentMethod(id) {
+  // TODO: Implement edit payment method
+  alert('Edit payment method functionality coming soon!');
+}
+
+function toggleStatus(id, currentStatus) {
+  const action = currentStatus ? 'deactivate' : 'activate';
+  if (confirm(`Are you sure you want to ${action} this payment method?`)) {
+    // TODO: Implement toggle status
+    alert(`Toggle status functionality coming soon!`);
+  }
+}
+
+function deletePaymentMethod(id) {
+  if (confirm('Are you sure you want to delete this payment method? This action cannot be undone.')) {
+    // TODO: Implement delete payment method
+    alert('Delete payment method functionality coming soon!');
+  }
+}
+
+// Filter functionality - auto-apply on change
+document.getElementById('providerFilter').addEventListener('change', function() {
+  applyFilters();
+});
+
+document.getElementById('searchInput').addEventListener('input', function() {
+  // Debounce search input
+  clearTimeout(window.searchTimeout);
+  window.searchTimeout = setTimeout(applyFilters, 300);
+});
+
+function applyFilters() {
+  const provider = document.getElementById('providerFilter').value;
+  const search = document.getElementById('searchInput').value;
+
+  const params = new URLSearchParams(window.location.search);
+  if (provider) params.set('provider', provider); else params.delete('provider');
+  if (search) params.set('search', search); else params.delete('search');
+  params.set('page', '1'); // Reset to first page
+
+  window.location.search = params.toString();
+}
+
+// Helper functions for Handlebars
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function formatDate(dateStr) {
+  return new Date(dateStr).toLocaleDateString();
+}
+</script>

@@ -2,12 +2,10 @@
 module.exports = {
   darkMode: 'class',
   content: [
-    './src/views/**/*.{hbs,handlebars,html}',
+    './views/**/*.{hbs,handlebars,html}',
     './src/components/**/*.{hbs,handlebars,html,js,ts,jsx,tsx}',
-    './src/pages/**/*.{hbs,handlebars,html,js,ts,jsx,tsx}',
-    './src/app/**/*.{hbs,handlebars,html,js,ts,jsx,tsx}',
-    './public/**/*.js',
     './src/**/*.{js,ts,jsx,tsx}',
+    './public/**/*.js',
     '!./src/**/*.test.{js,ts,jsx,tsx}',
     '!./src/tests/**/*',
     '!./coverage/**/*',

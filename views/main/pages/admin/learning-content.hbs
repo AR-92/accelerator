@@ -1,0 +1,253 @@
+<!-- Glass card container -->
+ <div
+  class="w-full rounded-xl shadow-2xl overflow-hidden bg-white/85 backdrop-blur-sm ring-1 ring-gray-200 flex flex-col min-h-[600px]">
+
+  <!-- Sticky header (toolbar) -->
+   <header class="sticky top-0 z-20 bg-indigo-800 text-white p-5">
+    <!-- Page Title and Description -->
+    <div class="mb-6 flex justify-between">
+
+    <div class="text-left">
+      <h1 class="text-3xl font-bold text-white mb-2">Learning Content Management</h1>
+      <p class=" text-gray-200">Manage learning articles and educational content</p>
+    </div>
+        <div class="">
+          <a href="/admin/content" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-full px-4 py-2 text-sm">
+          {{lucide 'ArrowLeft' 'w-4 h-4'}}
+          <span class="text-sm font-medium">Back to Content</span>
+        </a>
+    </div>
+     </div>
+     <div class="max-w-7xl mx-auto flex items-center gap-4">
+      <!-- center: search and filters -->
+      <div class="flex-1 flex justify-left gap-4">
+        <div class="w-full max-w-xs">
+          <label class="relative block">
+            <span class="sr-only">Search</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Search' 'w-5 h-5 text-white/80'}}
+            </span>
+            <input
+              class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 placeholder-white/75 text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              placeholder="Search articles..." aria-label="Search" id="searchInput" value="{{filters.search}}" />
+          </label>
+        </div>
+
+        <div class="w-full max-w-xs">
+          <label class="relative block">
+            <span class="sr-only">Category</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Filter' 'w-5 h-5 text-white/80'}}
+            </span>
+            <select id="categoryFilter" class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-white/30 appearance-none">
+              <option value="" class="text-gray-900">All Categories</option>
+              {{#each categories}}
+              <option value="{{id}}" {{#if (eq this.id ../filters.category)}}selected{{/if}} class="text-gray-900">{{name}}</option>
+              {{/each}}
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <!-- right: small action icons -->
+      <div class="flex items-center gap-3">
+        <button onclick="location.reload()"
+          class="p-2 rounded-full bg-white/10 border border-white/25 hover:bg-white/20" title="Refresh">
+          {{lucide 'RefreshCw' 'w-5 h-5'}}
+        </button>
+        <button onclick="createNewArticle()"
+          class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-full px-4 py-2 text-sm">
+          {{lucide 'Plus' 'w-4 h-4'}}
+          <span class="text-sm font-medium">New Article</span>
+        </button>
+      </div>
+    </div>
+   </header>
+
+    <!-- Articles Table -->
+     <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+      <div class='px-6 py-4 border-b border-border'>
+        <h2 class='text-lg font-medium text-foreground'>Learning Articles ({{pagination.total}})</h2>
+      </div>
+
+      <div class='overflow-x-auto'>
+        <table class='min-w-full divide-y divide-border table-fixed sm:table-auto'>
+          <thead class='bg-indigo-200 dark:bg-indigo-800'>
+            <tr>
+              <th class='min-w-48 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Title
+              </th>
+              <th class='w-32 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Category
+              </th>
+              <th class='w-24 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Status
+              </th>
+              <th class='w-32 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider hidden md:table-cell'>
+                Created
+              </th>
+              <th class='w-48 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>Actions</th>
+            </tr>
+          </thead>
+           <tbody class='bg-indigo-50 dark:bg-indigo-900 divide-y divide-border'>
+             {{#each articles}}
+             <tr class='hover:bg-indigo-100 dark:hover:bg-indigo-800'>
+               <td class='w-1/4 px-4 py-4 whitespace-nowrap'>
+                <div class='text-sm font-medium text-foreground'>{{title}}</div>
+                <div class='text-sm text-black dark:text-white'>{{slug}}</div>
+              </td>
+               <td class='w-32 px-4 py-4 whitespace-nowrap'>
+                 <span class='text-sm text-foreground'>{{category.name}}</span>
+               </td>
+               <td class='w-24 px-4 py-4 whitespace-nowrap'>
+                 {{#if published}}
+                 <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'>
+                   Published
+                 </span>
+                 {{else}}
+                 <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'>
+                   Draft
+                 </span>
+                 {{/if}}
+               </td>
+               <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-black dark:text-white hidden md:table-cell'>
+                 {{formatDate createdAt}}
+               </td>
+               <td class='px-4 py-4 whitespace-nowrap text-sm font-medium'>
+                 <div class='flex space-x-2'>
+                   <button onclick="editArticle({{id}})" class='text-blue-600 hover:text-blue-900 transition-colors'>Edit</button>
+                   <button onclick="togglePublish({{id}}, {{published}})" class='text-green-600 hover:text-green-900 transition-colors'>
+                     {{#if published}}Unpublish{{else}}Publish{{/if}}
+                   </button>
+                   <button onclick="deleteArticle({{id}}, '{{title}}')" class='text-red-600 hover:text-red-900 transition-colors'>Delete</button>
+                 </div>
+               </td>
+            </tr>
+            {{else}}
+            <tr>
+              <td colspan="6" class='px-6 py-8 text-center text-gray-500'>
+                <div class="text-gray-500">
+                  <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                  </svg>
+                  <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No learning content found</h3>
+                  <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Content will appear here once it is created.</p>
+                </div>
+              </td>
+            </tr>
+            {{/each}}
+            </tbody>
+           <tfoot>
+             <tr>
+               <td colspan="5" class='px-6 py-4 border-t border-border'>
+                 <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+                   <div class="text-sm text-gray-600">
+                     Showing {{#if articles.length}}{{add (multiply (subtract pagination.page 1) pagination.limit) 1}}{{else}}0{{/if}}-{{add (multiply (subtract pagination.page 1) pagination.limit) articles.length}} of {{pagination.total}} articles
+                   </div>
+
+                   <div class="flex items-center gap-3">
+                     <span class="text-sm text-gray-600 font-medium">Rows per page:</span>
+                     <select id="rowsPerPage"
+                       class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors">
+                       <option value="10" {{#if (eq pagination.limit 10)}}selected{{/if}}>10</option>
+                       <option value="20" {{#if (eq pagination.limit 20)}}selected{{/if}}>20</option>
+                       <option value="50" {{#if (eq pagination.limit 50)}}selected{{/if}}>50</option>
+                       <option value="100" {{#if (eq pagination.limit 100)}}selected{{/if}}>100</option>
+                     </select>
+                   </div>
+
+                   <div class="flex items-center gap-2">
+                     <nav class="flex items-center gap-1 text-sm">
+                       {{#if (gt pagination.page 1)}}
+                       <a href="?page={{subtract pagination.page 1}}&category={{filters.category}}&search={{filters.search}}"
+                         class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md"
+                         title="Previous page">
+                         {{lucide 'ChevronLeft' 'w-4 h-4'}}
+                       </a>
+                       {{/if}}
+
+                       {{#each (range 1 pagination.pages)}}
+                       <a href="?page={{this}}&category={{filters.category}}&search={{filters.search}}"
+                         class="inline-flex items-center justify-center w-10 h-10 rounded-lg {{#if (eq this ../pagination.page)}}bg-primary text-primary-foreground shadow-lg scale-105{{else}}border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400{{/if}} transition-all duration-200 shadow-sm hover:shadow-md font-medium">{{this}}</a>
+                       {{/each}}
+
+                       {{#if (lt pagination.page pagination.pages)}}
+                       <a href="?page={{add pagination.page 1}}&category={{filters.category}}&search={{filters.search}}"
+                         class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md"
+                         title="Next page">
+                         {{lucide 'ChevronRight' 'w-4 h-4'}}
+                       </a>
+                       {{/if}}
+                     </nav>
+                   </div>
+                 </div>
+               </td>
+             </tr>
+           </tfoot>
+         </table>
+      </div>
+
+
+    </div>
+  </div>
+
+<script>
+// Helper functions
+function createNewArticle() {
+  // TODO: Implement create new article functionality
+  Toast.info('Create new article functionality coming soon');
+}
+
+function editArticle(articleId) {
+  // TODO: Implement edit functionality
+  Toast.info('Edit functionality coming soon');
+}
+
+function togglePublish(articleId, currentlyPublished) {
+  // TODO: Implement publish/unpublish functionality
+  Toast.info('Publish toggle functionality coming soon');
+}
+
+function deleteArticle(articleId, title) {
+  Toast.warning(`Are you sure you want to delete "${title}"? This action cannot be undone.`);
+  // TODO: Implement delete functionality
+  Toast.info('Delete functionality coming soon');
+}
+
+// Filter functionality - auto-apply on change
+document.getElementById('categoryFilter').addEventListener('change', function() {
+  applyFilters();
+});
+
+document.getElementById('searchInput').addEventListener('input', function() {
+  // Debounce search input
+  clearTimeout(window.searchTimeout);
+  window.searchTimeout = setTimeout(applyFilters, 300);
+});
+
+function applyFilters() {
+  const category = document.getElementById('categoryFilter').value;
+  const search = document.getElementById('searchInput').value;
+  const url = new URL(window.location);
+  url.searchParams.set('category', category);
+  url.searchParams.set('search', search);
+  url.searchParams.set('page', '1'); // Reset to first page
+  window.location.href = url.toString();
+}
+
+// Handle rows per page changes
+document.getElementById('rowsPerPage').addEventListener('change', function () {
+  const limit = this.value;
+  const url = new URL(window.location);
+  url.searchParams.set('limit', limit);
+  url.searchParams.set('page', '1');
+  window.location.href = url.toString();
+});
+
+// Initialize controls from URL params
+document.addEventListener('DOMContentLoaded', function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const limit = urlParams.get('limit') || '20';
+  document.getElementById('rowsPerPage').value = limit;
+});
+</script>

@@ -1,0 +1,466 @@
+
+<!-- Glass card container -->
+ <div
+  class="w-full rounded-xl shadow-2xl overflow-hidden bg-white/85 backdrop-blur-sm ring-1 ring-gray-200 flex flex-col min-h-[600px]">
+
+  <!-- Sticky header (toolbar) -->
+   <header class="sticky top-0 z-20 bg-red-800 text-white p-5">
+    <!-- Page Title and Description -->
+    <div class="mb-6 flex justify-between">
+
+    <div class="text-left">
+      <h1 class="text-3xl font-bold text-white mb-2">Package Management</h1>
+      <p class=" text-gray-200">Manage billing packages and pricing</p>
+    </div>
+        <div class="">
+          <button onclick="openCreatePackageModal()" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/30 rounded-full px-4 py-2 text-sm">
+          {{lucide 'Plus' 'w-4 h-4'}}
+          <span class="text-sm font-medium">Create Package</span>
+        </a>
+    </div>
+     </div>
+     <div class="max-w-7xl mx-auto flex items-center gap-4">
+      <!-- center: search and filters -->
+      <div class="flex-1 flex justify-left gap-4">
+        <div class="w-full max-w-xs">
+          <label class="relative block">
+            <span class="sr-only">Search</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Search' 'w-5 h-5 text-white/80'}}
+            </span>
+            <input
+              class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 placeholder-white/75 text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+              placeholder="Search packages..." aria-label="Search" id="searchInput" />
+          </label>
+        </div>
+
+        <div class="w-full max-w-xs">
+          <label class="relative block">
+            <span class="sr-only">Status</span>
+            <span class="absolute inset-y-0 left-3 flex items-center">
+              {{lucide 'Filter' 'w-5 h-5 text-white/80'}}
+            </span>
+            <select id="statusFilter" class="w-full pl-12 pr-4 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-white/30 appearance-none">
+              <option value="" class="text-gray-900">All Status</option>
+              <option value="active" class="text-gray-900">Active</option>
+              <option value="inactive" class="text-gray-900">Inactive</option>
+              <option value="archived" class="text-gray-900">Archived</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <!-- right: small action icons -->
+      <div class="flex items-center gap-3">
+        <button onclick="location.reload()"
+          class="p-2 rounded-full bg-white/10 border border-white/25 hover:bg-white/20" title="Refresh">
+          {{lucide 'RefreshCw' 'w-5 h-5'}}
+        </button>
+      </div>
+    </div>
+   </header>
+
+    <!-- Packages Table -->
+     <div class='rounded-md bg-card text-card-foreground shadow-sm overflow-visible' style='box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;'>
+      <div class='px-6 py-4 border-b border-border'>
+        <h2 class='text-lg font-medium text-foreground'>Packages ({{pagination.total}})</h2>
+      </div>
+      <div class='overflow-x-auto'>
+        <table class='min-w-full divide-y divide-border table-fixed sm:table-auto'>
+          <thead class='bg-red-200 dark:bg-red-800'>
+            <tr>
+              <th class='min-w-48 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Name
+              </th>
+              <th class='w-20 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Price
+              </th>
+              <th class='w-20 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Credits
+              </th>
+              <th class='w-20 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Status
+              </th>
+              <th class='w-20 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Popular
+              </th>
+              <th class='w-20 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>
+                Order
+              </th>
+              <th class='w-32 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider hidden md:table-cell'>
+                Created
+              </th>
+              <th class='w-32 px-4 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider'>Actions</th>
+            </tr>
+          </thead>
+           <tbody class='bg-red-50 dark:bg-red-900 divide-y divide-border'>
+           {{#each packages}}
+            <tr class='hover:bg-red-100 dark:hover:bg-red-800'>
+             <td class='w-1/4 px-4 py-4 whitespace-nowrap'>
+              <div class='text-sm font-medium text-foreground'>{{name}}</div>
+              {{#if description}}
+              <div class='text-sm text-black dark:text-white truncate max-w-xs'>{{description}}</div>
+              {{/if}}
+            </td>
+             <td class='w-20 px-4 py-4 whitespace-nowrap'>
+               <span class='text-sm font-medium text-foreground'>${{price}}</span>
+             </td>
+             <td class='w-20 px-4 py-4 whitespace-nowrap'>
+               <span class='text-sm font-medium text-foreground'>{{credits}}</span>
+             </td>
+             <td class='w-20 px-4 py-4 whitespace-nowrap'>
+               <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                 {{#eq status "active"}}bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400
+                 {{else if (eq status "inactive")}}bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400
+                 {{else}}bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400{{/eq}}'>
+                 {{status}}
+               </span>
+             </td>
+             <td class='w-20 px-4 py-4 whitespace-nowrap'>
+               {{#if isPopular}}
+                 <span class='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400'>
+                   Popular
+                 </span>
+               {{else}}
+                 <span class='text-black dark:text-white'>-</span>
+               {{/if}}
+             </td>
+             <td class='w-20 px-4 py-4 whitespace-nowrap'>
+               <span class='text-sm text-foreground'>{{sortOrder}}</span>
+             </td>
+             <td class='w-32 px-4 py-4 whitespace-nowrap text-sm text-black dark:text-white hidden md:table-cell'>
+               {{formatDate createdAt}}
+             </td>
+             <td class='px-4 py-4 whitespace-nowrap text-sm font-medium'>
+               <div class='flex items-center gap-2'>
+                 <button onclick="editPackage({{id}})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0'>
+                   {{lucide 'Edit' 'w-4 h-4'}}
+                 </button>
+                 <button onclick="deletePackage({{id}}, '{{name}}')" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0 text-red-600 hover:text-red-700'>
+                   {{lucide 'Trash2' 'w-4 h-4'}}
+                 </button>
+               </div>
+             </td>
+           </tr>
+           {{else}}
+           <tr>
+             <td colspan="8" class='px-6 py-8 text-center text-gray-500'>
+               <div class="text-gray-500">
+                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                 </svg>
+                 <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No packages found</h3>
+                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Packages will appear here once they are created.</p>
+               </div>
+             </td>
+           </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+      <!-- Pagination -->
+      {{#if (gt pagination.pages 1)}}
+      <div class='px-6 py-4 border-t border-border flex items-center justify-between'>
+         <div class='text-sm text-black dark:text-white'>
+           Showing {{#if packages.length}}{{add (multiply (subtract pagination.page 1) pagination.limit) 1}}{{else}}0{{/if}}-{{add (multiply (subtract pagination.page 1) pagination.limit) packages.length}} of {{pagination.total}} packages
+         </div>
+        <div class='flex gap-2'>
+          {{#if pagination.hasPrev}}
+          <button onclick="loadPage({{subtract pagination.page 1}})" class='px-3 py-1 border border-border rounded-md text-sm hover:bg-muted transition-colors'>Previous</button>
+          {{/if}}
+
+          <span class='px-3 py-1 border border-primary bg-primary/10 text-primary rounded-md text-sm'>
+            {{pagination.page}}
+          </span>
+
+          {{#if pagination.hasNext}}
+          <button onclick="loadPage({{add pagination.page 1}})" class='px-3 py-1 border border-border rounded-md text-sm hover:bg-muted transition-colors'>Next</button>
+          {{/if}}
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+
+   <!-- Create/Edit Package Modal -->
+  <div id="packageModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white" id="modalTitle">Create Package</h3>
+            <button onclick="closePackageModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+              {{lucide 'X' 'w-6 h-6'}}
+            </button>
+          </div>
+
+          <form id="packageForm" onsubmit="savePackage(event)">
+            <input type="hidden" id="packageId" name="id">
+
+            <div class="space-y-4">
+              <div>
+                <label for="packageName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name *</label>
+                <input type="text" id="packageName" name="name" required
+                       class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+              </div>
+
+              <div>
+                <label for="packageDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description</label>
+                <textarea id="packageDescription" name="description" rows="3"
+                          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"></textarea>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label for="packagePrice" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Price ($)</label>
+                  <input type="number" id="packagePrice" name="price" step="0.01" min="0"
+                         class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+                </div>
+
+                <div>
+                  <label for="packageCredits" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Credits</label>
+                  <input type="number" id="packageCredits" name="credits" min="0"
+                         class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+                </div>
+              </div>
+
+              <div>
+                <label for="packageFeatures" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Features (one per line)</label>
+                <textarea id="packageFeatures" name="features" rows="4" placeholder="Feature 1&#10;Feature 2&#10;Feature 3"
+                          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"></textarea>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label for="packageStatus" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
+                  <select id="packageStatus" name="status"
+                          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="archived">Archived</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="packageSortOrder" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Sort Order</label>
+                  <input type="number" id="packageSortOrder" name="sort_order" min="0"
+                         class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+                </div>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <label class="flex items-center">
+                  <input type="checkbox" id="packageIsPopular" name="is_popular" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Mark as Popular</span>
+                </label>
+
+                <label class="flex items-center">
+                  <input type="checkbox" id="packageIsRecommended" name="is_recommended" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                  <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Mark as Recommended</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="flex justify-end gap-3 mt-6">
+              <button type="button" onclick="closePackageModal()"
+                      class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600">
+                Cancel
+              </button>
+              <button type="submit"
+                      class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                Save Package
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentPage = {{pagination.page}};
+    let currentFilters = {{{json filters}}};
+
+    function loadPage(page) {
+      currentPage = page;
+      loadPackages();
+    }
+
+    function applyFilters() {
+      currentFilters.status = document.getElementById('statusFilter').value;
+      currentFilters.search = document.getElementById('searchInput').value;
+      currentPage = 1;
+      loadPackages();
+    }
+
+    function loadPackages() {
+      const params = new URLSearchParams({
+        page: currentPage,
+        ...currentFilters
+      });
+
+      fetch(`/admin/packages?${params}&ajax=true`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Update table content
+            const tbody = document.querySelector('tbody');
+            tbody.innerHTML = data.packages.map(pkg => `
+              <tr class='border-b border-border hover:bg-muted/50'>
+                <td class='p-4 align-middle'>
+                  <div class='font-medium'>${pkg.name}</div>
+                  ${pkg.description ? `<div class='text-sm text-black dark:text-white truncate max-w-xs'>${pkg.description}</div>` : ''}
+                </td>
+                <td class='p-4 align-middle font-medium'>$${pkg.price}</td>
+                <td class='p-4 align-middle font-medium'>${pkg.credits}</td>
+                <td class='p-4 align-middle'>
+                  <span class='inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
+                    ${pkg.status === 'active' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
+                      pkg.status === 'inactive' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300' :
+                      'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300'}'>
+                    ${pkg.status}
+                  </span>
+                </td>
+                <td class='p-4 align-middle'>
+                  ${pkg.isPopular ? '<span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">Popular</span>' : '<span class="text-black dark:text-white">-</span>'}
+                </td>
+                <td class='p-4 align-middle'>${pkg.sortOrder}</td>
+                <td class='p-4 align-middle text-sm text-black dark:text-white'>${new Date(pkg.createdAt).toLocaleDateString()}</td>
+                <td class='p-4 align-middle'>
+                  <div class='flex items-center gap-2'>
+                    <button onclick="editPackage(${pkg.id})" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0'>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                      </svg>
+                    </button>
+                    <button onclick="deletePackage(${pkg.id}, '${pkg.name}')" class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0 text-red-600 hover:text-red-700'>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            `).join('');
+
+            // Update pagination
+            // ... pagination update logic ...
+          }
+        })
+        .catch(error => console.error('Error loading packages:', error));
+    }
+
+    function openCreatePackageModal() {
+      document.getElementById('modalTitle').textContent = 'Create Package';
+      document.getElementById('packageForm').reset();
+      document.getElementById('packageId').value = '';
+      document.getElementById('packageModal').classList.remove('hidden');
+    }
+
+    function editPackage(id) {
+      fetch(`/admin/api/packages/${id}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            const pkg = data.package;
+            document.getElementById('modalTitle').textContent = 'Edit Package';
+            document.getElementById('packageId').value = pkg.id;
+            document.getElementById('packageName').value = pkg.name;
+            document.getElementById('packageDescription').value = pkg.description || '';
+            document.getElementById('packagePrice').value = pkg.price;
+            document.getElementById('packageCredits').value = pkg.credits;
+            document.getElementById('packageFeatures').value = Array.isArray(pkg.features) ? pkg.features.join('\n') : '';
+            document.getElementById('packageStatus').value = pkg.status;
+            document.getElementById('packageSortOrder').value = pkg.sortOrder;
+            document.getElementById('packageIsPopular').checked = pkg.isPopular;
+            document.getElementById('packageIsRecommended').checked = pkg.isRecommended;
+            document.getElementById('packageModal').classList.remove('hidden');
+          }
+        })
+        .catch(error => console.error('Error loading package:', error));
+    }
+
+    function closePackageModal() {
+      document.getElementById('packageModal').classList.add('hidden');
+    }
+
+    function savePackage(event) {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+      const packageData = {
+        name: formData.get('name'),
+        description: formData.get('description'),
+        price: parseFloat(formData.get('price')) || 0,
+        credits: parseInt(formData.get('credits')) || 0,
+        features: formData.get('features').split('\n').filter(f => f.trim()),
+        status: formData.get('status'),
+        sort_order: parseInt(formData.get('sort_order')) || 0,
+        is_popular: formData.has('is_popular'),
+        is_recommended: formData.has('is_recommended')
+      };
+
+      const packageId = formData.get('id');
+      const url = packageId ? `/admin/api/packages/${packageId}` : '/admin/api/packages';
+      const method = packageId ? 'PUT' : 'POST';
+
+      fetch(url, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(packageData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          closePackageModal();
+          loadPackages();
+          // Show success toast
+        } else {
+          Toast.error('Error: ' + data.error);
+        }
+      })
+      .catch(error => {
+        console.error('Error saving package:', error);
+        Toast.error('An error occurred while saving the package');
+      });
+    }
+
+    function deletePackage(id, name) {
+      Toast.warning(`Are you sure you want to delete the package "${name}"?`);
+      fetch(`/admin/api/packages/${id}`, {
+        method: 'DELETE'
+      })
+      .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            loadPackages();
+            // Show success toast
+          } else {
+            Toast.error('Error: ' + data.error);
+          }
+        })
+        .catch(error => {
+          console.error('Error deleting package:', error);
+          Toast.error('An error occurred while deleting the package');
+        });
+    }
+
+    // Filter functionality - auto-apply on change
+    document.getElementById('statusFilter').addEventListener('change', function() {
+      applyFilters();
+    });
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+      // Debounce search input
+      clearTimeout(window.searchTimeout);
+      window.searchTimeout = setTimeout(applyFilters, 300);
+    });
+
+    // Initialize filters
+    document.getElementById('statusFilter').value = currentFilters.status || '';
+    document.getElementById('searchInput').value = currentFilters.search || '';
+  </script>
+</div>
