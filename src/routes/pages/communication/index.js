@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { optionalAuth } = require('../../../middleware/auth/auth');
 
 // Helper function for page data
 const getPageData = (title, activeKey, padding = 'py-8') => ({
@@ -9,7 +10,7 @@ const getPageData = (title, activeKey, padding = 'py-8') => ({
 });
 
 // GET notifications
-router.get('/notifications', (req, res) => {
+router.get('/notifications', optionalAuth, (req, res) => {
   res.render('pages/communication/notifications', {
     ...getPageData('Notifications', 'Notifications'),
     layout: 'main',

@@ -29,25 +29,25 @@
       </svg>
     </button>
     <div class='h-6 w-px bg-border mx-2 navbar-divider'></div>
-    <nav class='flex items-center gap-6 ml-8'>
-      {{#if (eq user.role 'startup')}}
-      <a
-        href='/pages/dashboard'
-        class='text-sm text-muted-foreground hover:text-foreground transition-colors'
-      >Dashboard</a>
-      {{/if}}
-      {{#if (eq user.role 'enterprise')}}
-      <a
-        href='/pages/enterprise-dashboard'
-        class='text-sm text-muted-foreground hover:text-foreground transition-colors'
-      >Enterprise</a>
-      {{/if}}
-      {{#if (eq user.role 'corporate')}}
-      <a
-        href='/pages/corporate-dashboard'
-        class='text-sm text-muted-foreground hover:text-foreground transition-colors'
-      >Corporate</a>
-      {{/if}}
+     <nav class='flex items-center gap-6 ml-8'>
+       {{#if (eq user.role 'startup')}}
+       <a
+         href='/pages/dashboard'
+         class='text-sm text-muted-foreground hover:text-foreground transition-colors'
+       >Dashboard</a>
+       {{/if}}
+       {{#if (eq user.role 'enterprise')}}
+       <a
+         href='/pages/enterprise-dashboard'
+         class='text-sm text-muted-foreground hover:text-foreground transition-colors'
+       >Enterprise</a>
+       {{/if}}
+       {{#if (eq user.role 'corporate')}}
+       <a
+         href='/pages/corporate-dashboard'
+         class='text-sm text-muted-foreground hover:text-foreground transition-colors'
+       >Corporate</a>
+       {{/if}}
       <a
         href='/pages/portfolio'
         class='text-sm text-muted-foreground hover:text-foreground transition-colors'

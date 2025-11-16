@@ -29,6 +29,7 @@ class LearningControllerPart2 {
         layout: 'learn',
         article,
         relatedArticles,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Get article error:', error);
@@ -69,6 +70,7 @@ class LearningControllerPart2 {
           currentCategory: category || '',
           currentDifficulty: difficulty || '',
           error: 'Search query must be at least 2 characters',
+          user: res.locals.user,
         });
       }
 
@@ -120,6 +122,7 @@ class LearningControllerPart2 {
         offsetStart,
         offsetEnd,
         totalResults,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Search articles error:', error);

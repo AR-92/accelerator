@@ -284,7 +284,7 @@ router.get('/collaborate/ai', (req, res) => {
 });
 
 // GET AI assistant detailed chat
-router.get('/collaborate/ai-new', (req, res) => {
+router.get('/collaborate/ai-new', optionalAuth, (req, res) => {
   res.render('pages/collaborate/ai-chat-new', {
     ...getPageData('AI Assistant - Detailed Chat', 'Collaborate'),
     layout: 'main',
@@ -431,7 +431,7 @@ router.get('/settings/credits', (req, res) => {
 });
 
 // GET subscriptions billing
-router.get('/subscriptions/billing', (req, res) => {
+router.get('/subscriptions/billing', optionalAuth, (req, res) => {
   res.render('pages/account/billing/history', {
     ...getPageData('Billing History', 'Subscriptions'),
     layout: 'main',
@@ -439,7 +439,7 @@ router.get('/subscriptions/billing', (req, res) => {
 });
 
 // GET subscriptions payment
-router.get('/subscriptions/payment', (req, res) => {
+router.get('/subscriptions/payment', optionalAuth, (req, res) => {
   res.render('pages/account/payment/methods', {
     ...getPageData('Payment Methods', 'Subscriptions'),
     layout: 'main',
@@ -455,7 +455,7 @@ router.get('/subscriptions', (req, res) => {
 });
 
 // GET subscriptions payment
-router.get('/subscriptions/payment', (req, res) => {
+router.get('/subscriptions/payment', optionalAuth, (req, res) => {
   res.render('pages/account/payment/methods', {
     ...getPageData('Payment Methods', 'Subscriptions'),
     layout: 'main',
@@ -598,7 +598,7 @@ router.get('/portfolio', requireAuth, async (req, res) => {
 });
 
 // GET individual portfolio idea
-router.get('/portfolio/:id', async (req, res) => {
+router.get('/portfolio/:id', optionalAuth, async (req, res) => {
   try {
     const { getPortfolioById } = require('../../services/core/databaseService');
     const idea = await getPortfolioById(req.params.id);
@@ -625,7 +625,7 @@ router.get('/portfolio/:id', async (req, res) => {
 });
 
 // GET notifications
-router.get('/notifications', (req, res) => {
+router.get('/notifications', optionalAuth, (req, res) => {
   res.render('pages/communication/notifications', {
     ...getPageData('Notifications', 'Notifications'),
     layout: 'main',
@@ -694,7 +694,7 @@ router.get('/business-plan', (req, res) => {
 });
 
 // GET new project page
-router.get('/new-project', (req, res) => {
+router.get('/new-project', optionalAuth, (req, res) => {
   res.render('pages/projects/create-project', {
     ...getPageData('New Project - Accelerator Platform', 'NewProject'),
     layout: 'main',
@@ -723,7 +723,7 @@ router.get('/explore-ideas', optionalAuth, async (req, res) => {
 });
 
 // GET upgrade page
-router.get('/upgrade', (req, res) => {
+router.get('/upgrade', optionalAuth, (req, res) => {
   res.render('pages/core/upgrade-plan', {
     ...getPageData('Upgrade to Pro - Accelerator Platform', 'Upgrade'),
     layout: 'main',
@@ -731,7 +731,7 @@ router.get('/upgrade', (req, res) => {
 });
 
 // GET terms and conditions
-router.get('/terms', (req, res) => {
+router.get('/terms', optionalAuth, (req, res) => {
   res.render('pages/legal/terms', {
     title: 'Terms and Conditions - Accelerator Platform',
     layout: 'main',
@@ -739,42 +739,42 @@ router.get('/terms', (req, res) => {
 });
 
 // GET learn center overview
-router.get('/learn', (req, res) => {
+router.get('/learn', optionalAuth, (req, res) => {
   const container = require('../../container');
   const learningController = container.get('learningController');
   learningController.getLearningCenter(req, res);
 });
 
 // GET search results (must come before category route)
-router.get('/learn/search', (req, res) => {
+router.get('/learn/search', optionalAuth, (req, res) => {
   const container = require('../../container');
   const learningController = container.get('learningController');
   learningController.searchArticles(req, res);
 });
 
 // GET learn category pages
-router.get('/learn/:categorySlug', (req, res) => {
+router.get('/learn/:categorySlug', optionalAuth, (req, res) => {
   const container = require('../../container');
   const learningController = container.get('learningController');
   learningController.getCategoryArticles(req, res);
 });
 
 // GET individual article
-router.get('/learn/article/:articleSlug', (req, res) => {
+router.get('/learn/article/:articleSlug', optionalAuth, (req, res) => {
   const container = require('../../container');
   const learningController = container.get('learningController');
   learningController.getArticle(req, res);
 });
 
 // GET help center overview
-router.get('/help', (req, res) => {
+router.get('/help', optionalAuth, (req, res) => {
   const container = require('../../container');
   const helpController = container.get('helpController');
   helpController.getHelpCenter(req, res);
 });
 
 // GET individual help article (must come before category route)
-router.get('/help/article/:articleSlug', (req, res) => {
+router.get('/help/article/:articleSlug', optionalAuth, (req, res) => {
   console.log('ARTICLE ROUTE HIT:', req.params.articleSlug);
   const container = require('../../container');
   const helpController = container.get('helpController');
@@ -782,14 +782,14 @@ router.get('/help/article/:articleSlug', (req, res) => {
 });
 
 // GET help category pages
-router.get('/help/:categorySlug', (req, res) => {
+router.get('/help/:categorySlug', optionalAuth, (req, res) => {
   const container = require('../../container');
   const helpController = container.get('helpController');
   helpController.getCategoryArticles(req, res);
 });
 
 // GET buy credits page
-router.get('/buy-credits', (req, res) => {
+router.get('/buy-credits', optionalAuth, (req, res) => {
   res.render('pages/account/buy-credits', {
     ...getPageData('Buy Credits - Accelerator Platform', 'BuyCredits'),
     layout: 'main',
@@ -797,7 +797,7 @@ router.get('/buy-credits', (req, res) => {
 });
 
 // GET buy credits page with /pages prefix
-router.get('/buy-credits', (req, res) => {
+router.get('/buy-credits', optionalAuth, (req, res) => {
   res.render('pages/account/buy-credits', {
     ...getPageData('Buy Credits - Accelerator Platform', 'BuyCredits'),
     layout: 'main',

@@ -53,6 +53,7 @@ class HelpControllerPart2 {
         layout: 'help',
         article: articleWithCategory,
         relatedArticles,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Get article error:', error);

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { optionalAuth } = require('../../../middleware/auth/auth');
 
 // Helper function for page data
 const getPageData = (title, activeKey, padding = 'py-8') => ({
@@ -17,7 +18,7 @@ router.get('/reports', (req, res) => {
 });
 
 // GET subscriptions billing
-router.get('/subscriptions/billing', (req, res) => {
+router.get('/subscriptions/billing', optionalAuth, (req, res) => {
   res.render('pages/account/billing/history', {
     ...getPageData('Billing History', 'Subscriptions'),
     layout: 'main',
@@ -25,7 +26,7 @@ router.get('/subscriptions/billing', (req, res) => {
 });
 
 // GET subscriptions payment
-router.get('/subscriptions/payment', (req, res) => {
+router.get('/subscriptions/payment', optionalAuth, (req, res) => {
   res.render('pages/account/payment/methods', {
     ...getPageData('Payment Methods', 'Subscriptions'),
     layout: 'main',
@@ -41,7 +42,7 @@ router.get('/subscriptions', (req, res) => {
 });
 
 // GET subscriptions payment
-router.get('/subscriptions/payment', (req, res) => {
+router.get('/subscriptions/payment', optionalAuth, (req, res) => {
   res.render('pages/account/payment/methods', {
     ...getPageData('Payment Methods', 'Subscriptions'),
     layout: 'main',
@@ -49,7 +50,7 @@ router.get('/subscriptions/payment', (req, res) => {
 });
 
 // GET buy credits page
-router.get('/buy-credits', (req, res) => {
+router.get('/buy-credits', optionalAuth, (req, res) => {
   res.render('pages/account/buy-credits', {
     ...getPageData('Buy Credits - Accelerator Platform', 'BuyCredits'),
     layout: 'main',
@@ -57,7 +58,7 @@ router.get('/buy-credits', (req, res) => {
 });
 
 // GET buy credits page with /pages prefix
-router.get('/buy-credits', (req, res) => {
+router.get('/buy-credits', optionalAuth, (req, res) => {
   res.render('pages/account/buy-credits', {
     ...getPageData('Buy Credits - Accelerator Platform', 'BuyCredits'),
     layout: 'main',

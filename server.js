@@ -25,23 +25,36 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Session configuration
-app.use(
-  session({
-    store: new pgSession({
-      pool: require('./config/database').pool,
-      tableName: 'session',
-      createTableIfMissing: true, // Create session table if it doesn't exist
-    }),
-    secret:
-      process.env.SESSION_SECRET || 'your-secret-key-change-in-production',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    },
-  })
-);
+const sessionConfig = {
+  secret: process.env.SESSION_SECRET || 'your-secret-key-change-in-production',
+  resave: true,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  },
+};
+
+if (process.env.SKIP_DB_MIGRATION !== 'true') {
+  // Use PostgreSQL store when database is available
+  sessionConfig.store = new pgSession({
+    pool: require('./config/database').pool,
+    tableName: 'session',
+    createTableIfMissing: true, // Create session table if it doesn't exist
+  });
+}
+// When SKIP_DB_MIGRATION=true, use default memory store
+
+app.use(session(sessionConfig));
+
+// Middleware to set user in res.locals for all routes
+app.use((req, res, next) => {
+  if (req.session.userId && req.session.user) {
+    res.locals.user = req.session.user;
+    res.locals.originalUser = req.session.originalUser;
+  }
+  next();
+});
 
 // Get security settings based on environment
 const securitySettings = getSecuritySettings();
@@ -173,50 +186,45 @@ app.use(errorHandler);
 //   process.exit(0);
 // });
 
-// Start the server
-const server = app.listen(port, '0.0.0.0', () => {
+// Initialize database and start server
+(async () => {
   const startupLogger = new Logger('Server');
-  startupLogger.info(`Server running at http://localhost:${port}`);
-  startupLogger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  startupLogger.info(`Node version: ${process.version}`);
 
-  // Run database migrations and test connection asynchronously
-  // This prevents blocking the server startup
   if (process.env.SKIP_DB_MIGRATION !== 'true') {
-    setImmediate(async () => {
-      try {
-        const { testConnection, runMigrations } = require('./config/database');
+    try {
+      const { testConnection, runMigrations } = require('./config/database');
 
-        startupLogger.info('Initializing database...');
+      startupLogger.info('Initializing database...');
 
-        // Run migrations first
-        await runMigrations();
+      // Run migrations first
+      await runMigrations();
 
-        // Then test the connection
-        const isConnected = await testConnection();
-        if (isConnected) {
-          startupLogger.info('PostgreSQL connection established successfully');
-          startupLogger.info('Server is ready to accept requests');
-        } else {
-          startupLogger.warn('Warning: PostgreSQL connection failed');
-        }
-      } catch (error) {
-        startupLogger.error('Database initialization error:', {
-          error: error.message,
-        });
-        startupLogger.warn(
-          'Server started but database may not be fully initialized'
-        );
+      // Then test the connection
+      const isConnected = await testConnection();
+      if (isConnected) {
+        startupLogger.info('PostgreSQL connection established successfully');
+      } else {
+        startupLogger.warn('Warning: PostgreSQL connection failed');
+        process.exit(1);
       }
-    });
+    } catch (error) {
+      startupLogger.error('Database initialization error:', error);
+      process.exit(1);
+    }
   } else {
     startupLogger.info('Skipping database migration (development mode)');
-    startupLogger.info('Server is ready to accept requests');
   }
-});
 
-server.on('error', (error) => {
-  const { Logger } = require('./src/utils/logger');
-  const errorLogger = new Logger('Server');
-  errorLogger.error('Server error', error);
-});
+  // Start the server after database is ready
+  const server = app.listen(port, '0.0.0.0', () => {
+    startupLogger.info(`Server running at http://localhost:${port}`);
+    startupLogger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    startupLogger.info(`Node version: ${process.version}`);
+    startupLogger.info('Server is ready to accept requests');
+  });
+
+  server.on('error', (error) => {
+    const errorLogger = new Logger('Server');
+    errorLogger.error('Server error', error);
+  });
+})();

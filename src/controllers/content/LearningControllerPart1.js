@@ -26,6 +26,7 @@ class LearningControllerPart1 {
         categories,
         featuredArticles,
         stats,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Get learning center error:', error);
@@ -83,6 +84,7 @@ class LearningControllerPart1 {
         category,
         articles,
         currentCategory: categorySlug,
+        user: res.locals.user,
       };
 
       if (activeFlag) {

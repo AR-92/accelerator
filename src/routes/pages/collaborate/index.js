@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { optionalAuth } = require('../../../middleware/auth/auth');
 
 // Helper function for page data
 const getPageData = (title, activeKey, padding = 'py-8') => ({
@@ -89,7 +90,7 @@ router.get('/collaborate/ai', (req, res) => {
 });
 
 // GET AI assistant detailed chat
-router.get('/collaborate/ai-new', (req, res) => {
+router.get('/collaborate/ai-new', optionalAuth, (req, res) => {
   res.render('pages/collaborate/ai-chat-new', {
     ...getPageData('AI Assistant - Detailed Chat', 'Collaborate'),
     layout: 'main',
