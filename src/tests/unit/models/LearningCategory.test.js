@@ -1,4 +1,4 @@
-const LearningCategory = require('../../../models/content/LearningCategory');
+const LearningCategory = require('../../../modules/learning/models/LearningCategory');
 
 describe('LearningCategory Model', () => {
   describe('constructor', () => {

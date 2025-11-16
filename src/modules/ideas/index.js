@@ -11,6 +11,7 @@ const IdeaService = require('./services/IdeaService');
 const VoteService = require('./services/VoteService');
 const IdeaRepository = require('./repositories/IdeaRepository');
 const VoteRepository = require('./repositories/VoteRepository');
+const PortfolioRepository = require('../../main/repositories/PortfolioRepository');
 const Idea = require('./models/Idea');
 const Vote = require('./models/Vote');
 
@@ -23,6 +24,10 @@ module.exports = (container) => {
   container.register(
     'voteRepository',
     () => new VoteRepository(container.get('db'))
+  );
+  container.register(
+    'portfolioRepository',
+    () => new PortfolioRepository(container.get('db'))
   );
 
   // Register services
@@ -52,6 +57,7 @@ module.exports = (container) => {
     VoteService: container.get('voteService'),
     IdeaRepository: container.get('ideaRepository'),
     VoteRepository: container.get('voteRepository'),
+    PortfolioRepository: container.get('portfolioRepository'),
     Idea,
     Vote,
   };

@@ -15,7 +15,9 @@ const { getSecuritySettings } = require('./config/security');
 
 // Import container and routes
 const container = require('./src/container');
-const authRoutes = require('./src/modules/auth/routes/pages');
+const authRoutes = require('./src/modules/auth/routes/pages')(
+  container.get('authController')
+);
 const pageRoutes = require('./src/main/routes/pages');
 const aiAssistantModelsRoutes = require('./src/main/routes/pages/ai-assistant-models');
 const apiRoutes = require('./src/shared/routes/api/v1');
@@ -188,7 +190,7 @@ app.get('/', (req, res) => {
       return res.redirect('/pages/dashboard');
     }
   }
-  res.redirect('/auth/login');
+  res.redirect('/auth');
 });
 
 // Direct route for idea-detail (without /pages prefix)

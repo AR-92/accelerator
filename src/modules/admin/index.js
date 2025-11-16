@@ -17,6 +17,7 @@ const AdminAIController = require('./controllers/AdminAIController');
 const AdminCreditController = require('./controllers/AdminCreditController');
 const AdminAuthController = require('./controllers/AdminAuthController');
 
+const AdminActivityRepository = require('./repositories/AdminActivityRepository');
 const AdminService = require('./services/AdminService');
 const SystemMonitoringService = require('./services/SystemMonitoringService');
 const UserManagementService = require('./services/UserManagementService');
@@ -24,13 +25,79 @@ const ContentManagementService = require('./services/ContentManagementService');
 const ProjectManagementService = require('./services/ProjectManagementService');
 const BusinessManagementService = require('./services/BusinessManagementService');
 
-const AdminActivityRepository = require('./repositories/AdminActivityRepository');
+// Import additional repositories used by admin
+const OrganizationRepository = require('../../main/repositories/OrganizationRepository');
+const LandingPageRepository = require('../../main/repositories/LandingPageRepository');
+const PackageRepository = require('../../main/repositories/PackageRepository');
+const BillingRepository = require('../../main/repositories/BillingRepository');
+const RewardRepository = require('../../main/repositories/RewardRepository');
+const TransactionRepository = require('../../main/repositories/TransactionRepository');
+const PaymentMethodRepository = require('../../main/repositories/PaymentMethodRepository');
+const AIModelRepository = require('../../main/repositories/AIModelRepository');
+const AIWorkflowRepository = require('../../main/repositories/AIWorkflowRepository');
+const WorkflowStepRepository = require('../../main/repositories/WorkflowStepRepository');
+
+// Import additional services
+const OrganizationService = require('../../main/services/OrganizationService');
+const LandingPageService = require('../../main/services/LandingPageService');
 
 module.exports = (container) => {
   // Register repositories
   container.register(
     'adminActivityRepository',
     () => new AdminActivityRepository(container.get('db'))
+  );
+
+  // Register additional repositories
+  container.register(
+    'organizationRepository',
+    () => new OrganizationRepository(container.get('db'))
+  );
+  container.register(
+    'landingPageRepository',
+    () => new LandingPageRepository(container.get('db'))
+  );
+  container.register(
+    'packageRepository',
+    () => new PackageRepository(container.get('db'))
+  );
+  container.register(
+    'billingRepository',
+    () => new BillingRepository(container.get('db'))
+  );
+  container.register(
+    'rewardRepository',
+    () => new RewardRepository(container.get('db'))
+  );
+  container.register(
+    'transactionRepository',
+    () => new TransactionRepository(container.get('db'))
+  );
+  container.register(
+    'paymentMethodRepository',
+    () => new PaymentMethodRepository(container.get('db'))
+  );
+  container.register(
+    'aiModelRepository',
+    () => new AIModelRepository(container.get('db'))
+  );
+  container.register(
+    'aiWorkflowRepository',
+    () => new AIWorkflowRepository(container.get('db'))
+  );
+  container.register(
+    'workflowStepRepository',
+    () => new WorkflowStepRepository(container.get('db'))
+  );
+
+  // Register additional services
+  container.register(
+    'organizationService',
+    () => new OrganizationService(container.get('organizationRepository'))
+  );
+  container.register(
+    'landingPageService',
+    () => new LandingPageService(container.get('landingPageRepository'))
   );
 
   // Register services
@@ -62,7 +129,31 @@ module.exports = (container) => {
   );
   container.register(
     'systemMonitoringService',
-    () => new SystemMonitoringService()
+    () =>
+      new SystemMonitoringService(
+        container.get('userRepository'),
+        container.get('helpService'),
+        container.get('learningService'),
+        container.get('adminActivityRepository'),
+        container.get('startupService'),
+        container.get('enterpriseService'),
+        container.get('corporateService'),
+        container.get('packageRepository'),
+        container.get('billingRepository'),
+        container.get('rewardRepository'),
+        container.get('projectRepository'),
+        container.get('taskRepository'),
+        container.get('messageRepository'),
+        container.get('ideaRepository'),
+        container.get('voteRepository'),
+        container.get('organizationRepository'),
+        container.get('landingPageRepository'),
+        container.get('transactionRepository'),
+        container.get('paymentMethodRepository'),
+        container.get('aiModelRepository'),
+        container.get('aiWorkflowRepository'),
+        container.get('workflowStepRepository')
+      )
   );
   container.register(
     'userManagementService',
@@ -76,8 +167,8 @@ module.exports = (container) => {
     'contentManagementService',
     () =>
       new ContentManagementService(
-        container.get('learningContentRepository'),
-        container.get('helpContentRepository')
+        container.get('helpService'),
+        container.get('learningService')
       )
   );
   container.register(
@@ -85,6 +176,7 @@ module.exports = (container) => {
     () =>
       new ProjectManagementService(
         container.get('projectRepository'),
+        container.get('teamRepository'),
         container.get('adminActivityRepository')
       )
   );
@@ -92,9 +184,10 @@ module.exports = (container) => {
     'businessManagementService',
     () =>
       new BusinessManagementService(
-        container.get('corporateRepository'),
-        container.get('enterpriseRepository'),
-        container.get('startupRepository')
+        container.get('startupService'),
+        container.get('enterpriseService'),
+        container.get('corporateService'),
+        container.get('adminActivityRepository')
       )
   );
 
@@ -170,6 +263,7 @@ module.exports = (container) => {
     AdminAIController: container.get('adminAIController'),
     AdminCreditController: container.get('adminCreditController'),
     AdminAuthController: container.get('adminAuthController'),
+
     AdminService: container.get('adminService'),
     SystemMonitoringService: container.get('systemMonitoringService'),
     UserManagementService: container.get('userManagementService'),

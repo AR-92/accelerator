@@ -1,7 +1,7 @@
-const LearningContentRepository = require('../../../repositories/content/learning/LearningContentRepository');
-const LearningCategoryRepository = require('../../../repositories/content/learning/LearningCategoryRepository');
-const LearningContent = require('../../../models/content/LearningContent');
-const LearningCategory = require('../../../models/content/LearningCategory');
+const LearningContentRepository = require('../../../modules/learning/repositories/LearningContentRepository');
+const LearningCategoryRepository = require('../../../modules/learning/repositories/LearningCategoryRepository');
+const LearningContent = require('../../../modules/learning/models/LearningContent');
+const LearningCategory = require('../../../modules/learning/models/LearningCategory');
 
 // Mock database
 const mockDb = {

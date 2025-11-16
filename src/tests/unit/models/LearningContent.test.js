@@ -1,4 +1,4 @@
-const LearningContent = require('../../../models/content/LearningContent');
+const LearningContent = require('../../../modules/learning/models/LearningContent');
 
 describe('LearningContent Model', () => {
   describe('constructor', () => {

@@ -1,5 +1,5 @@
-const LearningService = require('../../../services/content/LearningService');
-const LearningContent = require('../../../models/content/LearningContent');
+const LearningService = require('../../../modules/learning/services/LearningService');
+const LearningContent = require('../../../modules/learning/models/LearningContent');
 
 // Mock repositories
 const mockContentRepo = {
