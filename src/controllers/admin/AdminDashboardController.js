@@ -12,18 +12,25 @@ class AdminDashboardController {
    * @param {Object} res - Express response object
    */
   async showDashboard(req, res) {
+    console.log('Admin dashboard controller called');
     try {
+      console.log('Getting dashboard stats...');
       const stats = await this.adminService.getDashboardStats();
+      console.log('Dashboard stats retrieved:', Object.keys(stats));
 
+      console.log('About to render admin dashboard template...');
+      console.log('Stats object:', JSON.stringify(stats, null, 2));
       res.render('pages/admin/dashboard', {
         title: 'Admin Dashboard - Accelerator Platform',
         layout: 'admin',
         stats,
         activeDashboard: true,
-        user: req.user,
+        user: res.locals.user,
       });
+      console.log('Admin dashboard rendered successfully');
     } catch (error) {
       console.error('Error loading admin dashboard:', error);
+      console.error('Error stack:', error.stack);
       // Return default stats instead of 404
       const defaultStats = {
         users: {
@@ -76,7 +83,7 @@ class AdminDashboardController {
         layout: 'admin',
         stats: defaultStats,
         activeDashboard: true,
-        user: req.user,
+        user: res.locals.user,
       });
     }
   }
@@ -92,7 +99,7 @@ class AdminDashboardController {
         title: 'Settings - Admin Panel',
         layout: 'admin',
         activeSettings: true,
-        user: req.user,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Error loading settings page:', error);
@@ -100,7 +107,7 @@ class AdminDashboardController {
         title: 'Error - Admin Panel',
         layout: 'error-admin',
         message: 'An error occurred while loading settings.',
-        user: req.user,
+        user: res.locals.user,
       });
     }
   }
@@ -119,7 +126,7 @@ class AdminDashboardController {
         layout: 'admin',
         systemStats,
         activeSystemHealth: true,
-        user: req.user,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Error loading system health page:', error);
@@ -127,7 +134,7 @@ class AdminDashboardController {
         title: 'Error - Admin Panel',
         layout: 'error-admin',
         message: 'An error occurred while loading system health.',
-        user: req.user,
+        user: res.locals.user,
       });
     }
   }
@@ -143,7 +150,7 @@ class AdminDashboardController {
         title: 'Content Management - Admin Panel',
         layout: 'admin',
         activeContent: true,
-        user: req.user,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Error loading content page:', error);
@@ -151,7 +158,7 @@ class AdminDashboardController {
         title: 'Error - Admin Panel',
         layout: 'error-admin',
         message: 'An error occurred while loading content management.',
-        user: req.user,
+        user: res.locals.user,
       });
     }
   }
@@ -167,7 +174,7 @@ class AdminDashboardController {
         title: 'Help Content Management - Admin Panel',
         layout: 'admin',
         activeHelpContent: true,
-        user: req.user,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Error loading help content page:', error);
@@ -175,7 +182,7 @@ class AdminDashboardController {
         title: 'Error - Admin Panel',
         layout: 'error-admin',
         message: 'An error occurred while loading help content management.',
-        user: req.user,
+        user: res.locals.user,
       });
     }
   }
@@ -191,7 +198,7 @@ class AdminDashboardController {
         title: 'Learning Content Management - Admin Panel',
         layout: 'admin',
         activeLearningContent: true,
-        user: req.user,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Error loading learning content page:', error);
@@ -199,7 +206,7 @@ class AdminDashboardController {
         title: 'Error - Admin Panel',
         layout: 'error-admin',
         message: 'An error occurred while loading learning content management.',
-        user: req.user,
+        user: res.locals.user,
       });
     }
   }
@@ -232,7 +239,7 @@ class AdminDashboardController {
         ideas: result.ideas,
         pagination: result.pagination,
         filters: { search, sortBy, sortOrder },
-        user: req.user,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Error loading ideas page:', error);
@@ -240,7 +247,7 @@ class AdminDashboardController {
         title: 'Error - Admin Panel',
         layout: 'error-admin',
         message: 'An error occurred while loading ideas management.',
-        user: req.user,
+        user: res.locals.user,
       });
     }
   }
@@ -263,7 +270,7 @@ class AdminDashboardController {
         activeVotes: true,
         votes: result.votes,
         pagination: result.pagination,
-        user: req.user,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Error loading votes page:', error);
@@ -271,7 +278,7 @@ class AdminDashboardController {
         title: 'Error - Admin Panel',
         layout: 'error-admin',
         message: 'An error occurred while loading votes management.',
-        user: req.user,
+        user: res.locals.user,
       });
     }
   }
@@ -297,7 +304,7 @@ class AdminDashboardController {
         packages: result.packages,
         pagination: result.pagination,
         filters: { status, search },
-        user: req.user,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Error loading packages page:', error);
@@ -305,7 +312,7 @@ class AdminDashboardController {
         title: 'Error - Admin Panel',
         layout: 'error-admin',
         message: 'An error occurred while loading package management.',
-        user: req.user,
+        user: res.locals.user,
       });
     }
   }
@@ -331,7 +338,7 @@ class AdminDashboardController {
         activeBilling: true,
         transactions: result.transactions,
         pagination: result.pagination,
-        user: req.user,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Error loading billing page:', error);
@@ -339,7 +346,7 @@ class AdminDashboardController {
         title: 'Error - Admin Panel',
         layout: 'error-admin',
         message: 'An error occurred while loading billing management.',
-        user: req.user,
+        user: res.locals.user,
       });
     }
   }
@@ -363,7 +370,7 @@ class AdminDashboardController {
         rewards: result.rewards,
         stats: result.stats,
         pagination: result.pagination,
-        user: req.user,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Error loading rewards page:', error);
@@ -403,7 +410,7 @@ class AdminDashboardController {
         collaborations: result.collaborations,
         pagination: result.pagination,
         filters: { search, sortBy, sortOrder },
-        user: req.user,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Error loading collaborations page:', error);
@@ -411,7 +418,7 @@ class AdminDashboardController {
         title: 'Error - Admin Panel',
         layout: 'error-admin',
         message: 'An error occurred while loading collaborations management.',
-        user: req.user,
+        user: res.locals.user,
       });
     }
   }
@@ -437,7 +444,7 @@ class AdminDashboardController {
         activeLandingPage: true,
         sections: result.sections,
         pagination: result.pagination,
-        user: req.user,
+        user: res.locals.user,
       });
     } catch (error) {
       console.error('Error loading landing page:', error);
@@ -445,7 +452,7 @@ class AdminDashboardController {
         title: 'Error - Admin Panel',
         layout: 'error-admin',
         message: 'An error occurred while loading landing page management.',
-        user: req.user,
+        user: res.locals.user,
       });
     }
   }

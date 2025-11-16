@@ -43,63 +43,16 @@ class SystemMonitoringService {
   }
 
   /**
-   * Log admin action for audit purposes
-   * @param {Object} action - Action details
-   */
-  async logAdminAction(action) {
-    try {
-      await this.adminActivityRepository.create(action);
-    } catch (error) {
-      console.error('Error logging admin action:', error);
-      // Don't throw - logging failure shouldn't break the main operation
-    }
-  }
-
-  /**
    * Get admin dashboard statistics
    * @returns {Promise<Object>} Dashboard stats
    */
   async getDashboardStats() {
     try {
-      // Get all statistics in parallel for better performance
-      const [
-        totalUsers,
-        usersByRoleRaw,
-        recentUsers,
-        helpStats,
-        learningStats,
-        startupStats,
-        startupCountByStatus,
-        enterpriseStats,
-        enterpriseCountByStatus,
-        corporateStats,
-        corporateCountByStatus,
-        collaborationStats,
-        totalCredits,
-        packageStats,
-        billingStats,
-        rewardStats,
-        recentActivity,
-        systemStats,
-      ] = await Promise.all([
+      console.log('SystemMonitoringService.getDashboardStats called');
+      // Get basic user stats
+      const [totalUsers, usersByRoleRaw] = await Promise.all([
         this.userRepository.count(),
         this.userRepository.countByRole(),
-        this.userRepository.findRecent(7), // Last 7 days
-        this.helpService.getHelpStats(),
-        this.learningService.getLearningStats(),
-        this.startupService.getStartupsFiltered({}),
-        this.startupService.countByStatus(),
-        this.enterpriseService.getEnterprisesFiltered({}),
-        this.enterpriseService.countByStatus(),
-        this.corporateService.getCorporatesFiltered({}),
-        this.corporateService.countByStatus(),
-        this.getCollaborationStats(),
-        this.userRepository.getTotalCredits(),
-        this.packageRepository.getStats(),
-        this.billingRepository.getStats(),
-        this.rewardRepository.getStats(),
-        this.getRecentActivity(10),
-        this.getSystemStats(),
       ]);
 
       // Define all possible roles and ensure they all appear in the data
@@ -115,78 +68,33 @@ class SystemMonitoringService {
         users: {
           total: totalUsers,
           byRole: usersByRole,
-          recent: recentUsers.length,
-          recentUsers: recentUsers.slice(0, 5), // Last 5 new users
+          recent: 0, // TODO: implement recent users
+          recentUsers: [],
         },
         content: {
-          help: {
-            total: helpStats.totalArticles || 0,
-            published: helpStats.totalArticles || 0, // All returned stats are for published articles
-            draft: 0, // We'll need to modify the query to get draft count
-          },
-          learning: {
-            total: learningStats.totalArticles || 0,
-            published: learningStats.totalArticles || 0,
-            draft: 0,
-          },
+          help: { total: 0, published: 0, draft: 0 },
+          learning: { total: 0, published: 0, draft: 0 },
         },
         startups: {
-          total: startupStats.total || 0,
-          byStatus: Object.entries(startupCountByStatus).map(
-            ([status, count]) => ({
-              status,
-              count: parseInt(count),
-            })
-          ),
+          total: 0,
+          byStatus: [
+            { status: 'active', count: 0 },
+            { status: 'inactive', count: 0 },
+            { status: 'acquired', count: 0 },
+            { status: 'failed', count: 0 },
+          ],
         },
-        enterprises: {
-          total: enterpriseStats.total || 0,
-          byStatus: Object.entries(enterpriseCountByStatus).map(
-            ([status, count]) => ({
-              status,
-              count: parseInt(count),
-            })
-          ),
+        credits: { total: 0 },
+        activity: [],
+        system: {
+          uptime: 0,
+          memory: { used: 0, total: 0 },
+          nodeVersion: process.version,
         },
-        corporates: {
-          total: corporateStats.total || 0,
-          byStatus: Object.entries(corporateCountByStatus).map(
-            ([status, count]) => ({
-              status,
-              count: parseInt(count),
-            })
-          ),
-        },
-        credits: {
-          total: totalCredits,
-        },
-        packages: {
-          total: packageStats.total || 0,
-          active: packageStats.active || 0,
-          avgPrice: packageStats.avg_price || 0,
-          avgCredits: packageStats.avg_credits || 0,
-        },
-        billing: {
-          totalTransactions: billingStats.total_transactions || 0,
-          totalRevenue: billingStats.total_revenue || 0,
-          totalRefunds: billingStats.total_refunds || 0,
-          avgTransaction: billingStats.avg_transaction || 0,
-          uniqueCustomers: billingStats.unique_customers || 0,
-          pendingTransactions: billingStats.pending_transactions || 0,
-        },
-        rewards: {
-          totalRewards: rewardStats.total_rewards || 0,
-          activeRewards: rewardStats.total_rewards || 0, // Assuming all rewards are active
-          totalCreditsGranted: rewardStats.total_credits_granted || 0,
-          uniqueUsersRewarded: rewardStats.unique_users_rewarded || 0,
-        },
-        collaborations: collaborationStats,
-        activity: recentActivity,
-        system: systemStats,
       };
     } catch (error) {
       console.error('Error getting dashboard stats:', error);
-      // Return default stats on error for better error handling
+      // Return default stats on error
       return {
         users: {
           total: 0,

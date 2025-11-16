@@ -4,6 +4,7 @@ const path = require('path');
 const cors = require('cors');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
+const fs = require('fs');
 const { Logger } = require('./src/utils/logger');
 const { handlebarsConfig } = require('./config/handlebars');
 const {
@@ -35,14 +36,15 @@ const sessionConfig = {
   },
 };
 
-if (process.env.SKIP_DB_MIGRATION !== 'true') {
-  // Use PostgreSQL store when database is available
-  sessionConfig.store = new pgSession({
-    pool: require('./config/database').pool,
-    tableName: 'session',
-    createTableIfMissing: true, // Create session table if it doesn't exist
-  });
-}
+// Temporarily use memory store for sessions
+// if (process.env.SKIP_DB_MIGRATION !== 'true') {
+//   // Use PostgreSQL store when database is available
+//   sessionConfig.store = new pgSession({
+//     pool: require('./config/database').pool,
+//     tableName: 'session',
+//     createTableIfMissing: true, // Create session table if it doesn't exist
+//   });
+// }
 // When SKIP_DB_MIGRATION=true, use default memory store
 
 app.use(session(sessionConfig));
@@ -108,6 +110,7 @@ app.use('/pages', pageRoutes);
 app.use('/pages', aiAssistantModelsRoutes);
 app.use('/api', apiRoutes);
 app.use('/api/admin', adminRoutes);
+console.log('Mounting admin routes at /admin');
 app.use('/admin', adminPageRoutes);
 
 // Health check endpoint - lightweight version for fast startup
@@ -188,9 +191,18 @@ app.use(errorHandler);
 
 // Initialize database and start server
 (async () => {
+  // Clear the server log file at startup
+  const logFilePath = path.join(__dirname, 'logs', 'server.log');
+  try {
+    fs.writeFileSync(logFilePath, '');
+  } catch (error) {
+    console.error('Failed to clear log file:', error);
+  }
+
   const startupLogger = new Logger('Server');
 
-  if (process.env.SKIP_DB_MIGRATION !== 'true') {
+  if (false) {
+    // Temporarily disable migrations
     try {
       const { testConnection, runMigrations } = require('./config/database');
 

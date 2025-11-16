@@ -270,7 +270,7 @@ if (fs.existsSync(ideaCardPath)) {
 
 const aiMessagePath = path.join(
   __dirname,
-  '../src/views/partials/_ai-message.hbs'
+  '../src/views/partials/shared/_ai-message.hbs'
 );
 if (fs.existsSync(aiMessagePath)) {
   const aiMessageTemplate = fs.readFileSync(aiMessagePath, 'utf8');
@@ -279,35 +279,203 @@ if (fs.existsSync(aiMessagePath)) {
 
 const collaborateNavbarPath = path.join(
   __dirname,
-  '../src/views/partials/_collaborate-navbar.hbs'
+  '../src/views/partials/user/_collaborate-navbar.hbs'
 );
 if (fs.existsSync(collaborateNavbarPath)) {
   const collaborateNavbarTemplate = fs.readFileSync(
     collaborateNavbarPath,
     'utf8'
   );
-  handlebars.registerPartial('_collaborate-navbar', collaborateNavbarTemplate);
+  handlebars.registerPartial(
+    'user/collaborate-navbar',
+    collaborateNavbarTemplate
+  );
 }
 
 const helpNavbarPath = path.join(
   __dirname,
-  '../src/views/partials/_help-navbar.hbs'
+  '../src/views/partials/user/_help-navbar.hbs'
 );
 if (fs.existsSync(helpNavbarPath)) {
   const helpNavbarTemplate = fs.readFileSync(helpNavbarPath, 'utf8');
-  handlebars.registerPartial('_help-navbar', helpNavbarTemplate);
+  handlebars.registerPartial('user/help-navbar', helpNavbarTemplate);
 }
 
 const ideaRatingWidgetPath = path.join(
   __dirname,
-  '../src/views/partials/_idea-rating-widget.hbs'
+  '../src/views/partials/components/_idea-rating-widget.hbs'
 );
 if (fs.existsSync(ideaRatingWidgetPath)) {
   const ideaRatingWidgetTemplate = fs.readFileSync(
     ideaRatingWidgetPath,
     'utf8'
   );
-  handlebars.registerPartial('_idea-rating-widget', ideaRatingWidgetTemplate);
+  handlebars.registerPartial(
+    'components/idea-rating-widget',
+    ideaRatingWidgetTemplate
+  );
+}
+
+const toastPath = path.join(
+  __dirname,
+  '../src/views/partials/shared/_toast.hbs'
+);
+if (fs.existsSync(toastPath)) {
+  const toastTemplate = fs.readFileSync(toastPath, 'utf8');
+  handlebars.registerPartial('_toast', toastTemplate);
+}
+
+const buildStartUpPath = path.join(
+  __dirname,
+  '../src/views/partials/components/_build-start-up.hbs'
+);
+if (fs.existsSync(buildStartUpPath)) {
+  const buildStartUpTemplate = fs.readFileSync(buildStartUpPath, 'utf8');
+  handlebars.registerPartial('components/build-start-up', buildStartUpTemplate);
+}
+
+const navbarPath = path.join(
+  __dirname,
+  '../src/views/partials/shared/_navbar.hbs'
+);
+if (fs.existsSync(navbarPath)) {
+  const navbarTemplate = fs.readFileSync(navbarPath, 'utf8');
+  handlebars.registerPartial('shared/navbar', navbarTemplate);
+}
+
+const learnNavbarPath = path.join(
+  __dirname,
+  '../src/views/partials/user/_learn-navbar.hbs'
+);
+if (fs.existsSync(learnNavbarPath)) {
+  const learnNavbarTemplate = fs.readFileSync(learnNavbarPath, 'utf8');
+  handlebars.registerPartial('user/learn-navbar', learnNavbarTemplate);
+}
+
+const reportsNavbarPath = path.join(
+  __dirname,
+  '../src/views/partials/user/_reports-navbar.hbs'
+);
+if (fs.existsSync(reportsNavbarPath)) {
+  const reportsNavbarTemplate = fs.readFileSync(reportsNavbarPath, 'utf8');
+  handlebars.registerPartial('user/reports-navbar', reportsNavbarTemplate);
+}
+
+const settingsNavbarPath = path.join(
+  __dirname,
+  '../src/views/partials/user/_settings-navbar.hbs'
+);
+if (fs.existsSync(settingsNavbarPath)) {
+  const settingsNavbarTemplate = fs.readFileSync(settingsNavbarPath, 'utf8');
+  handlebars.registerPartial('user/settings-navbar', settingsNavbarTemplate);
+}
+
+const corporateNavbarPath = path.join(
+  __dirname,
+  '../src/views/partials/admin/_corporate-navbar.hbs'
+);
+if (fs.existsSync(corporateNavbarPath)) {
+  const corporateNavbarTemplate = fs.readFileSync(corporateNavbarPath, 'utf8');
+  handlebars.registerPartial('admin/corporate-navbar', corporateNavbarTemplate);
+}
+
+const enterpriseNavbarPath = path.join(
+  __dirname,
+  '../src/views/partials/admin/_enterprise-navbar.hbs'
+);
+if (fs.existsSync(enterpriseNavbarPath)) {
+  const enterpriseNavbarTemplate = fs.readFileSync(
+    enterpriseNavbarPath,
+    'utf8'
+  );
+  handlebars.registerPartial(
+    'admin/enterprise-navbar',
+    enterpriseNavbarTemplate
+  );
+}
+
+const ideasListPath = path.join(
+  __dirname,
+  '../src/views/partials/components/_ideas-list.hbs'
+);
+if (fs.existsSync(ideasListPath)) {
+  const ideasListTemplate = fs.readFileSync(ideasListPath, 'utf8');
+  handlebars.registerPartial('components/ideas-list', ideasListTemplate);
+}
+
+const portfolioListPath = path.join(
+  __dirname,
+  '../src/views/partials/components/_portfolio-list.hbs'
+);
+if (fs.existsSync(portfolioListPath)) {
+  const portfolioListTemplate = fs.readFileSync(portfolioListPath, 'utf8');
+  handlebars.registerPartial(
+    'components/portfolio-list',
+    portfolioListTemplate
+  );
+}
+
+const ideaModelPath = path.join(
+  __dirname,
+  '../src/views/partials/components/_idea-model.hbs'
+);
+if (fs.existsSync(ideaModelPath)) {
+  const ideaModelTemplate = fs.readFileSync(ideaModelPath, 'utf8');
+  handlebars.registerPartial('_idea-model', ideaModelTemplate);
+}
+
+const businessModelPath = path.join(
+  __dirname,
+  '../src/views/partials/components/_business-model.hbs'
+);
+if (fs.existsSync(businessModelPath)) {
+  const businessModelTemplate = fs.readFileSync(businessModelPath, 'utf8');
+  handlebars.registerPartial('_business-model', businessModelTemplate);
+}
+
+const marketingModelPath = path.join(
+  __dirname,
+  '../src/views/partials/components/_marketing-model.hbs'
+);
+if (fs.existsSync(marketingModelPath)) {
+  const marketingModelTemplate = fs.readFileSync(marketingModelPath, 'utf8');
+  handlebars.registerPartial('_marketing-model', marketingModelTemplate);
+}
+
+const financialModelPath = path.join(
+  __dirname,
+  '../src/views/partials/components/_financial-model.hbs'
+);
+if (fs.existsSync(financialModelPath)) {
+  const financialModelTemplate = fs.readFileSync(financialModelPath, 'utf8');
+  handlebars.registerPartial('_financial-model', financialModelTemplate);
+}
+
+const teamModelPath = path.join(
+  __dirname,
+  '../src/views/partials/components/_team-model.hbs'
+);
+if (fs.existsSync(teamModelPath)) {
+  const teamModelTemplate = fs.readFileSync(teamModelPath, 'utf8');
+  handlebars.registerPartial('_team-model', teamModelTemplate);
+}
+
+const legalModelPath = path.join(
+  __dirname,
+  '../src/views/partials/components/_legal-model.hbs'
+);
+if (fs.existsSync(legalModelPath)) {
+  const legalModelTemplate = fs.readFileSync(legalModelPath, 'utf8');
+  handlebars.registerPartial('_legal-model', legalModelTemplate);
+}
+
+const fundModelPath = path.join(
+  __dirname,
+  '../src/views/partials/components/_fund-model.hbs'
+);
+if (fs.existsSync(fundModelPath)) {
+  const fundModelTemplate = fs.readFileSync(fundModelPath, 'utf8');
+  handlebars.registerPartial('_fund-model', fundModelTemplate);
 }
 
 module.exports = {

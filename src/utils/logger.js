@@ -1,13 +1,11 @@
 const winston = require('winston');
 const path = require('path');
-
 // Create logs directory if it doesn't exist
 const fs = require('fs');
 const logsDir = path.join(__dirname, '../../logs');
 if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir, { recursive: true });
 }
-
 // Define custom format for logging
 const logFormat = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
@@ -15,72 +13,62 @@ const logFormat = winston.format.combine(
   winston.format.splat(),
   winston.format.json()
 );
-
 // Define a more readable format for console output with enhanced styling
 const consoleFormat = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
   winston.format.errors({ stack: true }),
   winston.format.splat(),
-  winston.format.printf(({ timestamp, level, message, context, service, ...metadata }) => {
-    // Add custom styling for different log levels with ANSI colors
-    let styledLevel = level.toUpperCase();
-    switch(level.toLowerCase()) {
-      case 'error':
-        styledLevel = '\x1b[31m\x1b[1m[ERROR]\x1b[0m'; // Red + Bold
-        break;
-      case 'warn':
-        styledLevel = '\x1b[33m\x1b[1m[WARN]\x1b[0m';  // Yellow + Bold
-        break;
-      case 'info':
-        styledLevel = '\x1b[36m[INFO]\x1b[0m';  // Cyan
-        break;
-      case 'debug':
-        styledLevel = '\x1b[90m[DEBUG]\x1b[0m'; // Gray
-        break;
-      default:
-        styledLevel = `[${level.toUpperCase()}]`;
-    }
-    
-    // Style context with a different color
-    const styledContext = context ? `\x1b[35m[${context}]\x1b[0m` : '';
-    
-    // Format metadata nicely if it exists
-    const metaString = Object.keys(metadata).length ? 
-      ` \x1b[90m|\x1b[0m \x1b[90m${JSON.stringify(metadata)}\x1b[0m` : '';
-    
-    // Create a visually appealing structured format
-    return `${timestamp} ${styledLevel} ${styledContext} ${message}${metaString}`;
-  })
-);
+  winston.format.printf(
+    ({ timestamp, level, message, context, service, ...metadata }) => {
+      // Add custom styling for different log levels with ANSI colors
+      let styledLevel = level.toUpperCase();
+      switch (level.toLowerCase()) {
+        case 'error':
+          styledLevel = '\x1b[31m\x1b[1m[ERROR]\x1b[0m'; // Red + Bold
+          break;
+        case 'warn':
+          styledLevel = '\x1b[33m\x1b[1m[WARN]\x1b[0m'; // Yellow + Bold
+          break;
+        case 'info':
+          styledLevel = '\x1b[36m[INFO]\x1b[0m'; // Cyan
+          break;
+        case 'debug':
+          styledLevel = '\x1b[90m[DEBUG]\x1b[0m'; // Gray
+          break;
+        default:
+          styledLevel = `[${level.toUpperCase()}]`;
+      }
 
+      // Style context with a different color
+      const styledContext = context ? `\x1b[35m[${context}]\x1b[0m` : '';
+
+      // Format metadata nicely if it exists
+      const metaString = Object.keys(metadata).length
+        ? ` \x1b[90m|\x1b[0m \x1b[90m${JSON.stringify(metadata)}\x1b[0m`
+        : '';
+
+      // Create a visually appealing structured format
+      return `${timestamp} ${styledLevel} ${styledContext} ${message}${metaString}`;
+    }
+  )
+);
 // Create logger instance
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: logFormat,
   defaultMeta: { service: 'accelerator-app' },
   transports: [
-    // Log to file for all levels
-    new winston.transports.File({ 
-      filename: path.join(logsDir, 'combined.log'),
-      maxsize: '20m', // Rotate when file reaches 20MB
-      maxFiles: 5,    // Keep up to 5 log files
+    // Log to single file for all levels, overwritten each server run
+    new winston.transports.File({
+      filename: path.join(logsDir, 'server.log'),
     }),
-    
-    // Log errors to a separate file
-    new winston.transports.File({ 
-      filename: path.join(logsDir, 'error.log'),
-      level: 'error',
-      maxsize: '20m',
-      maxFiles: 5,
-    }),
-    
+
     // Log to console in all environments with colorful, readable format
     new winston.transports.Console({
-      format: consoleFormat
-    })
+      format: consoleFormat,
+    }),
   ],
 });
-
 /**
  * Logging utility with context and metadata
  */
@@ -88,7 +76,6 @@ class Logger {
   constructor(context = 'App') {
     this.context = context;
   }
-
   /**
    * Log an info message
    * @param {string} message - The message to log
@@ -97,7 +84,6 @@ class Logger {
   info(message, meta = {}) {
     logger.info(message, { context: this.context, ...meta });
   }
-
   /**
    * Log a warning message
    * @param {string} message - The message to log
@@ -106,7 +92,6 @@ class Logger {
   warn(message, meta = {}) {
     logger.warn(message, { context: this.context, ...meta });
   }
-
   /**
    * Log an error message
    * @param {string|Error} message - The message or error to log
@@ -114,16 +99,15 @@ class Logger {
    */
   error(message, meta = {}) {
     if (message instanceof Error) {
-      logger.error(message.message, { 
+      logger.error(message.message, {
         context: this.context,
         stack: message.stack,
-        ...meta 
+        ...meta,
       });
     } else {
       logger.error(message, { context: this.context, ...meta });
     }
   }
-
   /**
    * Log a debug message
    * @param {string} message - The message to log
@@ -132,7 +116,6 @@ class Logger {
   debug(message, meta = {}) {
     logger.debug(message, { context: this.context, ...meta });
   }
-
   /**
    * Log a request
    * @param {Object} req - Express request object
@@ -149,9 +132,8 @@ class Logger {
       userAgent: req.get('User-Agent'),
       ip: req.ip || req.connection.remoteAddress,
       userId: req.session?.userId || 'anonymous',
-      sessionId: req.sessionID || 'none'
+      sessionId: req.sessionID || 'none',
     };
-
     if (res.statusCode >= 400 && res.statusCode < 500) {
       logger.warn('Request completed with client error', logData);
     } else if (res.statusCode >= 500) {
@@ -160,7 +142,6 @@ class Logger {
       logger.info('Request completed', logData);
     }
   }
-
   /**
    * Log a database query
    * @param {string} operation - Database operation name
@@ -176,10 +157,9 @@ class Logger {
       sql,
       params: this.sanitizeParams(params),
       duration: `${duration}ms`,
-      ...meta
+      ...meta,
     });
   }
-
   /**
    * Log a database error
    * @param {string} operation - Database operation name
@@ -196,10 +176,9 @@ class Logger {
       params: this.sanitizeParams(params),
       error: error.message,
       stack: error.stack,
-      ...meta
+      ...meta,
     });
   }
-
   /**
    * Log an authentication event
    * @param {string} action - Authentication action (login, register, logout)
@@ -215,10 +194,9 @@ class Logger {
       userId,
       email,
       ip,
-      ...meta
+      ...meta,
     });
   }
-
   /**
    * Log business logic operations
    * @param {string} operation - Operation name
@@ -230,10 +208,9 @@ class Logger {
       context: this.context,
       operation,
       userId,
-      details
+      details,
     });
   }
-
   /**
    * Sanitize sensitive parameters
    * @param {Array} params - Parameters to sanitize
@@ -241,17 +218,18 @@ class Logger {
    */
   sanitizeParams(params) {
     if (!Array.isArray(params)) return params;
-    
-    return params.map(param => {
+
+    return params.map((param) => {
       // If param looks like a password, hide it
-      if (typeof param === 'string' && 
-          (param.toLowerCase().includes('password') || 
-           param.toLowerCase().includes('hash'))) {
+      if (
+        typeof param === 'string' &&
+        (param.toLowerCase().includes('password') ||
+          param.toLowerCase().includes('hash'))
+      ) {
         return '[HIDDEN]';
       }
       return param;
     });
   }
 }
-
 module.exports = { logger, Logger };

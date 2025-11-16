@@ -1,9 +1,9 @@
 Perfect! I understand — you want a **fully interactive dialogue framework** where:
 
-* **Each question is asked individually**
-* **If the startup does not have an answer**, the **AI can provide suggestions or sample options**
-* **Some questions can have multiple-choice/multi-answer suggestions**
-* Keeps it structured and detailed
+- **Each question is asked individually**
+- **If the startup does not have an answer**, the **AI can provide suggestions or sample options**
+- **Some questions can have multiple-choice/multi-answer suggestions**
+- Keeps it structured and detailed
 
 Here’s an **enhanced, AI-assisted, multi-answer interactive dialogue** version of your model:
 
@@ -19,7 +19,7 @@ Here’s an **enhanced, AI-assisted, multi-answer interactive dialogue** version
 
 **AI – Question 1:**
 What is the **core function** of your product?
-*(If unsure, I can suggest options.)*
+_(If unsure, I can suggest options.)_
 
 **Startup:**
 Not sure yet.
@@ -36,36 +36,36 @@ Not sure yet.
 
 **AI – Question 2:**
 List your **Key Activities** needed to deliver the product.
-*(If unknown, I can suggest multiple answers.)*
+_(If unknown, I can suggest multiple answers.)_
 
 **Startup:**
 I don’t have a list.
 
 **AI – Multi-answer Options:**
 
-* Develop AI/ML algorithms
-* Maintain cloud infrastructure
-* Integrate with ERP/POS systems
-* Provide dashboards and analytics
-* Customer support and onboarding
+- Develop AI/ML algorithms
+- Maintain cloud infrastructure
+- Integrate with ERP/POS systems
+- Provide dashboards and analytics
+- Customer support and onboarding
 
 **Startup selects:** All of the above
 
 ---
 
 **AI – Question 3:**
-What are your **Key Resources**? *(physical, human, IP, software)*
+What are your **Key Resources**? _(physical, human, IP, software)_
 
 **Startup:**
 Not sure.
 
 **AI Options:**
 
-* ML/data engineers
-* Proprietary algorithms
-* Cloud infrastructure
-* Historical datasets
-* API/integration libraries
+- ML/data engineers
+- Proprietary algorithms
+- Cloud infrastructure
+- Historical datasets
+- API/integration libraries
 
 **Startup selects:** ML engineers + proprietary algorithms + cloud infrastructure
 
@@ -79,11 +79,11 @@ I have none yet.
 
 **AI Options (multi-select):**
 
-* Delivery companies
-* IoT device vendors
-* Cloud providers
-* ERP resellers
-* Outsourced support companies
+- Delivery companies
+- IoT device vendors
+- Cloud providers
+- ERP resellers
+- Outsourced support companies
 
 **Startup selects:** Delivery companies + Cloud providers
 
@@ -101,26 +101,26 @@ I don’t know.
 
 **AI Options:**
 
-* AI SaaS for logistics
-* Delivery management platform
-* Fleet optimization software
+- AI SaaS for logistics
+- Delivery management platform
+- Fleet optimization software
 
 **Startup selects:** AI SaaS for logistics
 
 ---
 
 **AI – Question 6:**
-Who is your **Target Market**? *(multi-answer possible)*
+Who is your **Target Market**? _(multi-answer possible)_
 
 **Startup:**
 I only have e-commerce companies.
 
 **AI Options to add:**
 
-* Courier companies
-* Retail distribution fleets
-* Restaurants with delivery
-* Manufacturing/distribution companies
+- Courier companies
+- Retail distribution fleets
+- Restaurants with delivery
+- Manufacturing/distribution companies
 
 **Startup selects:** E-commerce + Courier companies
 
@@ -147,8 +147,8 @@ I don’t know.
 
 **AI Options / Guidance:**
 
-* Based on fleet management spend in GCC: 3–4B SAR
-* Based on e-commerce logistics market: 1–2B SAR
+- Based on fleet management spend in GCC: 3–4B SAR
+- Based on e-commerce logistics market: 1–2B SAR
 
 **Startup selects:** 3.5B SAR
 
@@ -186,11 +186,11 @@ I only know one.
 
 **AI Multi-options:**
 
-* FarEye
-* Locus
-* Onfleet
-* Local ERP route modules
-* Internal corporate tools
+- FarEye
+- Locus
+- Onfleet
+- Local ERP route modules
+- Internal corporate tools
 
 **Startup selects:** FarEye + Onfleet
 
@@ -225,10 +225,10 @@ I don’t know.
 
 **AI Multi-options:**
 
-* Arabic interface
-* Local ERP/Wasl integration
-* Competitive pricing for SMEs
-* AI predictive analytics
+- Arabic interface
+- Local ERP/Wasl integration
+- Competitive pricing for SMEs
+- AI predictive analytics
 
 Startup selects: Arabic interface + AI predictive analytics
 
@@ -242,10 +242,10 @@ I’m not sure.
 
 **AI Multi-options:**
 
-* High switching cost
-* Integration complexity
-* Data-sharing resistance
-* Dependence on legacy ERP
+- High switching cost
+- Integration complexity
+- Data-sharing resistance
+- Dependence on legacy ERP
 
 Startup selects all
 
@@ -263,11 +263,11 @@ I don’t know.
 
 **AI Multi-options:**
 
-* Data privacy issues
-* Model inaccuracy
-* Integration failures
-* Low adoption
-* Cloud cost escalation
+- Data privacy issues
+- Model inaccuracy
+- Integration failures
+- Low adoption
+- Cloud cost escalation
 
 Startup selects: Data privacy + Integration failures
 
@@ -307,9 +307,9 @@ Deliver packages efficiently.
 
 **AI Suggestion (Optional multi-answer):**
 
-* Minimize delivery cost
-* Improve fleet productivity
-* Track deliveries in real-time
+- Minimize delivery cost
+- Improve fleet productivity
+- Track deliveries in real-time
 
 Startup selects: All
 
@@ -359,10 +359,10 @@ Reduce routing errors
 
 **AI Suggestion Multi-answer:**
 
-* Fuel cost reduction
-* Automated dispatching
-* Alerts for delays
-* Driver performance tracking
+- Fuel cost reduction
+- Automated dispatching
+- Alerts for delays
+- Driver performance tracking
 
 Startup selects all
 
@@ -376,10 +376,10 @@ Increase delivery speed
 
 **AI Suggestion Multi-answer:**
 
-* Higher fleet efficiency
-* Predictive ETA
-* Analytics dashboards
-* Daily delivery capacity improvement
+- Higher fleet efficiency
+- Predictive ETA
+- Analytics dashboards
+- Daily delivery capacity improvement
 
 Startup selects all
 
@@ -403,10 +403,10 @@ Fixed Costs?
 
 **AI Suggestion Multi-answer:**
 
-* Salaries
-* Cloud infrastructure
-* Office operations
-* Support services
+- Salaries
+- Cloud infrastructure
+- Office operations
+- Support services
 
 Startup selects all → 1.2M SAR
 
@@ -448,9 +448,9 @@ Exit Strategy?
 
 **AI Options:**
 
-* Acquisition by ERP/logistics player
-* IPO in 5–7 years
-* Strategic merger
+- Acquisition by ERP/logistics player
+- IPO in 5–7 years
+- Strategic merger
 
 Startup selects: Acquisition
 
