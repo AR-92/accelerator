@@ -1,0 +1,60 @@
+  <div class='flex items-center justify-between'>
+    <div class='grid gap-1'>
+      <h1 class='font-heading text-2xl font-semibold text-foreground dark:text-white'>Admin Profile</h1>
+      <p class='text-base text-muted-foreground'>Manage your admin profile information.</p>
+    </div>
+  </div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Profile Information -->
+  <div class="lg:col-span-2">
+    <div class="bg-card rounded-lg border border-border p-6">
+      <h3 class="text-lg font-semibold text-foreground mb-4">Profile Information</h3>
+      <div class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-muted-foreground mb-2">First Name</label>
+            <p class="text-foreground">{{user.firstName}}</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-muted-foreground mb-2">Last Name</label>
+            <p class="text-foreground">{{user.lastName}}</p>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-muted-foreground mb-2">Email</label>
+          <p class="text-foreground">{{user.email}}</p>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-muted-foreground mb-2">Role</label>
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+            Administrator
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Actions -->
+  <div>
+    <div class="bg-card rounded-lg border border-border p-6">
+      <h3 class="text-lg font-semibold text-foreground mb-4">Quick Actions</h3>
+      <div class="space-y-3">
+        <a href="/admin/profile-settings" class="flex items-center justify-center w-full px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+          Edit Profile Settings
+        </a>
+        <a href="/admin/settings" class="flex items-center justify-center w-full px-4 py-2 bg-muted text-muted-foreground rounded-lg hover:bg-muted/80 transition-colors">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+          Admin Settings
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

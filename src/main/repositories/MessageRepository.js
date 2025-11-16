@@ -15,7 +15,8 @@ class MessageRepository extends BaseRepository {
    * @returns {Promise<Object[]>}
    */
   async findByProjectId(projectId, options = {}) {
-    let sql = 'SELECT m.*, u.name as user_name, u.email as user_email FROM messages m JOIN users u ON m.user_id = u.id WHERE m.project_id = ?';
+    let sql =
+      'SELECT m.*, u.name as user_name, u.email as user_email FROM messages m JOIN users u ON m.user_id = u.id WHERE m.project_id = ?';
     const params = [projectId];
 
     sql += ' ORDER BY m.created_at DESC';
@@ -39,7 +40,8 @@ class MessageRepository extends BaseRepository {
    * @returns {Promise<Object[]>}
    */
   async findByUserId(userId) {
-    const sql = 'SELECT m.*, p.title as project_title FROM messages m JOIN projects p ON m.project_id = p.id WHERE m.user_id = ? ORDER BY m.created_at DESC';
+    const sql =
+      'SELECT m.*, p.title as project_title FROM messages m JOIN projects p ON m.project_id = p.id WHERE m.user_id = ? ORDER BY m.created_at DESC';
     return await this.query(sql, [userId]);
   }
 

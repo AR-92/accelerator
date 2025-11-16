@@ -5,22 +5,29 @@ const cors = require('cors');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const fs = require('fs');
-const { Logger } = require('./src/utils/logger');
+const { Logger } = require('./src/shared/utils/logger');
 const { handlebarsConfig } = require('./config/handlebars');
 const {
   errorHandler,
   notFoundHandler,
-} = require('./src/middleware/error/errorHandler');
+} = require('./src/shared/middleware/error/errorHandler');
 const { getSecuritySettings } = require('./config/security');
 
 // Import container and routes
 const container = require('./src/container');
-const authRoutes = require('./src/auth/routes/pages/auth');
+const authRoutes = require('./src/modules/auth/routes/pages');
 const pageRoutes = require('./src/main/routes/pages');
 const aiAssistantModelsRoutes = require('./src/main/routes/pages/ai-assistant-models');
 const apiRoutes = require('./src/shared/routes/api/v1');
-const adminRoutes = require('./src/admin/routes/api/v1/admin');
-const adminPageRoutes = require('./src/admin/routes/pages/admin');
+const adminRoutes = require('./src/modules/admin/routes/api/v1/admin');
+const adminPageRoutes = require('./src/modules/admin/routes/pages/admin');
+const startupApiRoutes = require('./src/modules/startup/routes/api');
+const learningApiRoutes = require('./src/modules/learning/routes/api');
+const learningPageRoutes = require('./src/modules/learning/routes/pages');
+const helpApiRoutes = require('./src/modules/help/routes/api');
+const helpPageRoutes = require('./src/modules/help/routes/pages');
+const collaborationApiRoutes = require('./src/modules/collaboration/routes/api');
+const collaborationPageRoutes = require('./src/modules/collaboration/routes/pages');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -101,7 +108,9 @@ app.use(
 );
 
 // Import and use the request logging middleware
-const { requestLogger } = require('./src/middleware/logging/requestLogger');
+const {
+  requestLogger,
+} = require('./src/shared/middleware/logging/requestLogger');
 app.use(requestLogger);
 
 // Use routes
@@ -110,6 +119,13 @@ app.use('/pages', pageRoutes);
 app.use('/pages', aiAssistantModelsRoutes);
 app.use('/api', apiRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/startups', startupApiRoutes);
+app.use('/api/learning', learningApiRoutes);
+app.use('/learn', learningPageRoutes);
+app.use('/api/help', helpApiRoutes);
+app.use('/help', helpPageRoutes);
+app.use('/api/collaborate', collaborationApiRoutes);
+app.use('/pages/collaborate', collaborationPageRoutes);
 console.log('Mounting admin routes at /admin');
 app.use('/admin', adminPageRoutes);
 

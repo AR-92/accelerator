@@ -58,7 +58,8 @@ class TaskRepository extends BaseRepository {
       project_id: taskData.projectId || taskData.project_id,
       title: taskData.title,
       description: taskData.description || null,
-      assignee_user_id: taskData.assigneeUserId || taskData.assignee_user_id || null,
+      assignee_user_id:
+        taskData.assigneeUserId || taskData.assignee_user_id || null,
       status: taskData.status || 'todo',
     };
 
@@ -74,9 +75,14 @@ class TaskRepository extends BaseRepository {
   async update(id, taskData) {
     const data = {};
     if (taskData.title !== undefined) data.title = taskData.title;
-    if (taskData.description !== undefined) data.description = taskData.description;
-    if (taskData.assigneeUserId !== undefined || taskData.assignee_user_id !== undefined) {
-      data.assignee_user_id = taskData.assigneeUserId || taskData.assignee_user_id;
+    if (taskData.description !== undefined)
+      data.description = taskData.description;
+    if (
+      taskData.assigneeUserId !== undefined ||
+      taskData.assignee_user_id !== undefined
+    ) {
+      data.assignee_user_id =
+        taskData.assigneeUserId || taskData.assignee_user_id;
     }
     if (taskData.status !== undefined) data.status = taskData.status;
     if (taskData.projectId !== undefined || taskData.project_id !== undefined) {
