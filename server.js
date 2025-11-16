@@ -158,8 +158,20 @@ app.get('/health/detailed', async (req, res) => {
   }
 });
 
-// Home route (redirect to login)
+// Home route (redirect based on auth status)
 app.get('/', (req, res) => {
+  if (req.session.userId && req.session.user) {
+    const user = req.session.user;
+    if (user.role === 'admin') {
+      return res.redirect('/admin/dashboard');
+    } else if (user.role === 'enterprise') {
+      return res.redirect('/pages/enterprise-dashboard');
+    } else if (user.role === 'corporate') {
+      return res.redirect('/pages/corporate-dashboard');
+    } else {
+      return res.redirect('/pages/dashboard');
+    }
+  }
   res.redirect('/auth/login');
 });
 
