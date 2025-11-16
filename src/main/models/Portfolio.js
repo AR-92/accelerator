@@ -1,4 +1,4 @@
-const BaseModel = require('../../common/models/BaseModel');
+const BaseModel = require('../../shared/models/BaseModel');
 
 /**
  * Portfolio model representing a portfolio item

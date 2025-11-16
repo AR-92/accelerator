@@ -106,7 +106,7 @@ router.get('/portfolio/:id', optionalAuth, async (req, res) => {
   try {
     const {
       getPortfolioById,
-    } = require('../../../../common/services/databaseService');
+    } = require('../../../../shared/services/databaseService');
     const idea = await getPortfolioById(req.params.id);
 
     if (!idea) {

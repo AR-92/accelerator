@@ -1,4 +1,4 @@
-const BaseModel = require('../../common/models/BaseModel');
+const BaseModel = require('../../shared/models/BaseModel');
 
 /**
  * Learning Category model representing categories for learning content

@@ -1,7 +1,7 @@
 /**
  * Corporate repository handling database operations for corporates
  */
-const BaseRepository = require('../../common/repositories/BaseRepository');
+const BaseRepository = require('../../shared/repositories/BaseRepository');
 const Corporate = require('../../main/models/Corporate');
 
 class CorporateRepository extends BaseRepository {

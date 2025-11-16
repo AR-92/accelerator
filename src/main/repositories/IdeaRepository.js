@@ -1,4 +1,4 @@
-const BaseRepository = require('../../common/repositories/BaseRepository');
+const BaseRepository = require('../../shared/repositories/BaseRepository');
 const Idea = require('../../main/models/Idea');
 
 /**

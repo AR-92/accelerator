@@ -247,20 +247,20 @@ const handlebarsConfig = engine({
 const fs = require('fs');
 const userMessagePath = path.join(
   __dirname,
-  '../src/components/_user-message.hbs'
+  '../views/main/partials/components/_user-message.hbs'
 );
 if (fs.existsSync(userMessagePath)) {
   const userMessageTemplate = fs.readFileSync(userMessagePath, 'utf8');
   handlebars.registerPartial('user-message', userMessageTemplate);
 }
 
-const ideaCardPath = path.join(__dirname, '../src/components/_idea-card.hbs');
+const ideaCardPath = path.join(__dirname, '../views/main/partials/components/_idea-card.hbs');
 if (fs.existsSync(ideaCardPath)) {
   const ideaCardTemplate = fs.readFileSync(ideaCardPath, 'utf8');
   handlebars.registerPartial('idea-card', ideaCardTemplate);
   const portfolioCardPath = path.join(
     __dirname,
-    '../src/components/_portfolio-card.hbs'
+    '../views/main/partials/components/_portfolio-card.hbs'
   );
   if (fs.existsSync(portfolioCardPath)) {
     const portfolioCardTemplate = fs.readFileSync(portfolioCardPath, 'utf8');
@@ -268,7 +268,7 @@ if (fs.existsSync(ideaCardPath)) {
   }
 }
 
-const aiMessagePath = path.join(__dirname, '../src/components/_ai-message.hbs');
+const aiMessagePath = path.join(__dirname, '../views/main/partials/components/_ai-message.hbs');
 if (fs.existsSync(aiMessagePath)) {
   const aiMessageTemplate = fs.readFileSync(aiMessagePath, 'utf8');
   handlebars.registerPartial('ai-message', aiMessageTemplate);
@@ -300,7 +300,7 @@ if (fs.existsSync(helpNavbarPath)) {
 
 const ideaRatingWidgetPath = path.join(
   __dirname,
-  '../src/components/_idea-rating-widget.hbs'
+  '../views/main/partials/components/_idea-rating-widget.hbs'
 );
 if (fs.existsSync(ideaRatingWidgetPath)) {
   const ideaRatingWidgetTemplate = fs.readFileSync(
@@ -313,7 +313,7 @@ if (fs.existsSync(ideaRatingWidgetPath)) {
   );
 }
 
-const toastPath = path.join(__dirname, '../src/components/_toast.hbs');
+const toastPath = path.join(__dirname, '../views/main/partials/components/_toast.hbs');
 if (fs.existsSync(toastPath)) {
   const toastTemplate = fs.readFileSync(toastPath, 'utf8');
   handlebars.registerPartial('_toast', toastTemplate);
@@ -321,14 +321,14 @@ if (fs.existsSync(toastPath)) {
 
 const buildStartUpPath = path.join(
   __dirname,
-  '../src/components/_build-start-up.hbs'
+  '../views/main/partials/components/_build-start-up.hbs'
 );
 if (fs.existsSync(buildStartUpPath)) {
   const buildStartUpTemplate = fs.readFileSync(buildStartUpPath, 'utf8');
   handlebars.registerPartial('components/build-start-up', buildStartUpTemplate);
 }
 
-const navbarPath = path.join(__dirname, '../src/components/_navbar.hbs');
+const navbarPath = path.join(__dirname, '../views/main/partials/components/_navbar.hbs');
 if (fs.existsSync(navbarPath)) {
   const navbarTemplate = fs.readFileSync(navbarPath, 'utf8');
   handlebars.registerPartial('shared/navbar', navbarTemplate);
@@ -385,7 +385,7 @@ if (fs.existsSync(enterpriseNavbarPath)) {
   );
 }
 
-const ideasListPath = path.join(__dirname, '../src/components/_ideas-list.hbs');
+const ideasListPath = path.join(__dirname, '../views/main/partials/components/_ideas-list.hbs');
 if (fs.existsSync(ideasListPath)) {
   const ideasListTemplate = fs.readFileSync(ideasListPath, 'utf8');
   handlebars.registerPartial('components/ideas-list', ideasListTemplate);
@@ -393,7 +393,7 @@ if (fs.existsSync(ideasListPath)) {
 
 const portfolioListPath = path.join(
   __dirname,
-  '../src/components/_portfolio-list.hbs'
+  '../views/main/partials/components/_portfolio-list.hbs'
 );
 if (fs.existsSync(portfolioListPath)) {
   const portfolioListTemplate = fs.readFileSync(portfolioListPath, 'utf8');
@@ -403,7 +403,7 @@ if (fs.existsSync(portfolioListPath)) {
   );
 }
 
-const ideaModelPath = path.join(__dirname, '../src/components/_idea-model.hbs');
+const ideaModelPath = path.join(__dirname, '../views/main/partials/components/_idea-model.hbs');
 if (fs.existsSync(ideaModelPath)) {
   const ideaModelTemplate = fs.readFileSync(ideaModelPath, 'utf8');
   handlebars.registerPartial('_idea-model', ideaModelTemplate);
@@ -411,7 +411,7 @@ if (fs.existsSync(ideaModelPath)) {
 
 const businessModelPath = path.join(
   __dirname,
-  '../src/components/_business-model.hbs'
+  '../views/main/partials/components/_business-model.hbs'
 );
 if (fs.existsSync(businessModelPath)) {
   const businessModelTemplate = fs.readFileSync(businessModelPath, 'utf8');
@@ -420,7 +420,7 @@ if (fs.existsSync(businessModelPath)) {
 
 const marketingModelPath = path.join(
   __dirname,
-  '../src/components/_marketing-model.hbs'
+  '../views/main/partials/components/_marketing-model.hbs'
 );
 if (fs.existsSync(marketingModelPath)) {
   const marketingModelTemplate = fs.readFileSync(marketingModelPath, 'utf8');
@@ -429,14 +429,14 @@ if (fs.existsSync(marketingModelPath)) {
 
 const financialModelPath = path.join(
   __dirname,
-  '../src/components/_financial-model.hbs'
+  '../views/main/partials/components/_financial-model.hbs'
 );
 if (fs.existsSync(financialModelPath)) {
   const financialModelTemplate = fs.readFileSync(financialModelPath, 'utf8');
   handlebars.registerPartial('_financial-model', financialModelTemplate);
 }
 
-const teamModelPath = path.join(__dirname, '../src/components/_team-model.hbs');
+const teamModelPath = path.join(__dirname, '../views/main/partials/components/_team-model.hbs');
 if (fs.existsSync(teamModelPath)) {
   const teamModelTemplate = fs.readFileSync(teamModelPath, 'utf8');
   handlebars.registerPartial('_team-model', teamModelTemplate);
@@ -444,14 +444,14 @@ if (fs.existsSync(teamModelPath)) {
 
 const legalModelPath = path.join(
   __dirname,
-  '../src/components/_legal-model.hbs'
+  '../views/main/partials/components/_legal-model.hbs'
 );
 if (fs.existsSync(legalModelPath)) {
   const legalModelTemplate = fs.readFileSync(legalModelPath, 'utf8');
   handlebars.registerPartial('_legal-model', legalModelTemplate);
 }
 
-const fundModelPath = path.join(__dirname, '../src/components/_fund-model.hbs');
+const fundModelPath = path.join(__dirname, '../views/main/partials/components/_fund-model.hbs');
 if (fs.existsSync(fundModelPath)) {
   const fundModelTemplate = fs.readFileSync(fundModelPath, 'utf8');
   handlebars.registerPartial('_fund-model', fundModelTemplate);

@@ -1,7 +1,7 @@
 /**
  * Enterprise repository handling database operations for enterprises
  */
-const BaseRepository = require('../../common/repositories/BaseRepository');
+const BaseRepository = require('../../shared/repositories/BaseRepository');
 const Enterprise = require('../../main/models/Enterprise');
 
 class EnterpriseRepository extends BaseRepository {

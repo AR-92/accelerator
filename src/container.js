@@ -37,7 +37,7 @@ const AIWorkflowRepository = require('./main/repositories/AIWorkflowRepository')
 const WorkflowStepRepository = require('./main/repositories/WorkflowStepRepository');
 
 // Import services
-const AuthService = require('./common/services/AuthService');
+const AuthService = require('./auth/services/AuthService');
 const IdeaService = require('./main/services/IdeaService');
 const VoteService = require('./main/services/VoteService');
 const StartupService = require('./main/services/StartupService');
@@ -56,21 +56,16 @@ const ProjectManagementService = require('./admin/services/ProjectManagementServ
 const AdminService = require('./admin/services/AdminService');
 
 // Import controllers
-const AuthControllerPart1 = require('./common/controllers/AuthControllerPart1');
-const AuthControllerPart2 = require('./common/controllers/AuthControllerPart2');
-const IdeaController = require('./main/controllers/IdeaControllerPart1');
-const VoteControllerPart1 = require('./main/controllers/VoteControllerPart1');
-const VoteControllerPart2 = require('./main/controllers/VoteControllerPart2');
+const AuthController = require('./auth/controllers/AuthController');
+const IdeaController = require('./ideas/controllers/IdeaController');
+const VoteController = require('./ideas/controllers/VoteController');
 const StartupControllerPart1 = require('./main/controllers/StartupControllerPart1');
 const StartupControllerPart2 = require('./main/controllers/StartupControllerPart2');
 const EnterpriseControllerPart1 = require('./main/controllers/EnterpriseControllerPart1');
 const EnterpriseControllerPart2 = require('./main/controllers/EnterpriseControllerPart2');
 const CorporateControllerPart1 = require('./main/controllers/CorporateControllerPart1');
 const CorporateControllerPart2 = require('./main/controllers/CorporateControllerPart2');
-const LearningControllerPart1 = require('./main/controllers/LearningControllerPart1');
-const LearningControllerPart2 = require('./main/controllers/LearningControllerPart2');
-const LearningControllerPart3 = require('./main/controllers/LearningControllerPart3');
-const LearningControllerPart4 = require('./main/controllers/LearningControllerPart4');
+const LearningController = require('./learning/controllers/LearningController');
 const HelpControllerPart1 = require('./main/controllers/HelpControllerPart1');
 const HelpControllerPart2 = require('./main/controllers/HelpControllerPart2');
 const HelpControllerPart3 = require('./main/controllers/HelpControllerPart3');
@@ -315,35 +310,18 @@ container.register(
 );
 
 // Register controllers
-container.register('authController', (c) => {
-  const authService = c.get('authService');
-  const part1 = new AuthControllerPart1(authService);
-  const part2 = new AuthControllerPart2(authService);
-  return {
-    login: part1.login.bind(part1),
-    register: part1.register.bind(part1),
-    logout: part1.logout.bind(part1),
-    switchBack: part1.switchBack.bind(part1),
-    // Add other methods if needed
-  };
-});
+container.register(
+  'authController',
+  (c) => new AuthController(c.get('authService'))
+);
 container.register(
   'ideaController',
   (c) => new IdeaController(c.get('ideaService'))
 );
-container.register('voteController', (c) => {
-  const voteService = c.get('voteService');
-  const part1 = new VoteControllerPart1(voteService);
-  const part2 = new VoteControllerPart2(voteService);
-  return {
-    getVotesForIdea: part1.getVotesForIdea.bind(part1),
-    addVote: part1.addVote.bind(part1),
-    getVoteStats: part1.getVoteStats.bind(part1),
-    getUserVotes: part1.getUserVotes.bind(part1),
-    updateVote: part2.updateVote.bind(part2),
-    deleteVote: part2.deleteVote.bind(part2),
-  };
-});
+container.register(
+  'voteController',
+  (c) => new VoteController(c.get('voteService'))
+);
 container.register('startupController', (c) => {
   const startupService = c.get('startupService');
   const part1 = new StartupControllerPart1(startupService);
@@ -394,31 +372,10 @@ container.register('corporateController', (c) => {
     exportToCSV: part2.exportToCSV.bind(part2),
   };
 });
-container.register('learningController', (c) => {
-  const learningService = c.get('learningService');
-  const part1 = new LearningControllerPart1(learningService);
-  const part2 = new LearningControllerPart2(learningService);
-  const part3 = new LearningControllerPart3(learningService);
-  const part4 = new LearningControllerPart4(learningService);
-  return {
-    getLearningCenter: part1.getLearningCenter.bind(part1),
-    getCategoryArticles: part1.getCategoryArticles.bind(part1),
-    getArticle: part2.getArticle.bind(part2),
-    searchArticles: part2.searchArticles.bind(part2),
-    getCategoriesAPI: part3.getCategoriesAPI.bind(part3),
-    getCategoryArticlesAPI: part3.getCategoryArticlesAPI.bind(part3),
-    getArticleAPI: part3.getArticleAPI.bind(part3),
-    searchArticlesAPI: part3.searchArticlesAPI.bind(part3),
-    getUserArticleProgressAPI: part3.getUserArticleProgressAPI.bind(part3),
-    updateUserArticleProgressAPI:
-      part4.updateUserArticleProgressAPI.bind(part4),
-    markArticleCompletedAPI: part4.markArticleCompletedAPI.bind(part4),
-    getUserLearningProgressAPI: part4.getUserLearningProgressAPI.bind(part4),
-    likeArticleAPI: part4.likeArticleAPI.bind(part4),
-    unlikeArticleAPI: part4.unlikeArticleAPI.bind(part4),
-    getLearningStatsAPI: part4.getLearningStatsAPI.bind(part4),
-  };
-});
+container.register(
+  'learningController',
+  (c) => new LearningController(c.get('learningService'))
+);
 container.register('helpController', (c) => {
   const helpService = c.get('helpService');
   const part1 = new HelpControllerPart1(helpService);

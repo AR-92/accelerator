@@ -15,10 +15,10 @@ const { getSecuritySettings } = require('./config/security');
 
 // Import container and routes
 const container = require('./src/container');
-const authRoutes = require('./src/main/routes/pages/auth');
+const authRoutes = require('./src/auth/routes/pages/auth');
 const pageRoutes = require('./src/main/routes/pages');
 const aiAssistantModelsRoutes = require('./src/main/routes/pages/ai-assistant-models');
-const apiRoutes = require('./src/common/routes/api/v1');
+const apiRoutes = require('./src/shared/routes/api/v1');
 const adminRoutes = require('./src/admin/routes/api/v1/admin');
 const adminPageRoutes = require('./src/admin/routes/pages/admin');
 
