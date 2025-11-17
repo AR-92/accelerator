@@ -1,17 +1,17 @@
 /**
  * Centralized error handling middleware
  */
-const { Logger } = require('../../../utils/logger');
+// const { Logger } = require('../../../utils/logger');
 
 // Create a logger for the error handler
-const logger = new Logger('ErrorHandler');
+// const logger = new Logger('ErrorHandler');
 
 /**
  * Global error handler middleware
  */
 const errorHandler = (error, req, res, next) => {
   // Log the error with detailed context
-  logger.error('Unhandled application error', {
+  console.error('Unhandled application error', {
     message: error.message,
     stack: error.stack,
     url: req.url,

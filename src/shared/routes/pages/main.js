@@ -324,112 +324,6 @@ router.get('/reports', (req, res) => {
   );
 });
 
-// GET settings overview
-router.get('/settings', (req, res) => {
-  res.render('pages/account/settings/settings-center', {
-    ...getPageData('Settings - Accelerator Platform', 'Settings'),
-    layout: 'settings',
-    activeOverview: true,
-  });
-});
-
-// GET settings accounts
-router.get('/settings/accounts', (req, res) => {
-  res.render('pages/account/settings/settings-accounts', {
-    ...getPageData('Account Settings', 'Settings'),
-    layout: 'settings-accounts',
-    activeAccounts: true,
-  });
-});
-
-// GET settings billing
-router.get('/settings/billing', (req, res) => {
-  res.render('pages/account/settings/settings-billing', {
-    ...getPageData('Billing & Payments', 'Settings'),
-    layout: 'settings-billing',
-    activeBilling: true,
-  });
-});
-
-// GET settings other
-router.get('/settings/other', (req, res) => {
-  res.render('pages/account/settings/settings-other', {
-    ...getPageData('Other Settings', 'Settings'),
-    layout: 'settings-other',
-    activeOther: true,
-  });
-});
-
-// GET settings profile
-router.get('/settings/profile', requireAuth, async (req, res) => {
-  try {
-    const user = await authService.getUserById(req.user.id);
-    res.render('pages/account/settings/profile', {
-      ...getPageData('Profile Settings', 'Settings'),
-      layout: 'settings-accounts',
-      activeProfile: true,
-      user: user,
-    });
-  } catch (error) {
-    console.error('Error loading profile:', error);
-    res.redirect('/auth');
-  }
-});
-
-// GET settings password
-router.get('/settings/password', (req, res) => {
-  res.render('pages/account/settings/password', {
-    ...getPageData('Password Settings', 'Settings'),
-    layout: 'settings-accounts',
-    activePassword: true,
-  });
-});
-
-// GET settings subscription
-router.get('/settings/subscription', (req, res) => {
-  res.render('pages/account/subscriptions/index', {
-    ...getPageData('Subscription Settings', 'Settings'),
-    layout: 'settings-billing',
-    activeSubscription: true,
-  });
-});
-
-// GET settings payment & billing
-router.get('/settings/payment-billing', (req, res) => {
-  res.render('pages/account/settings/payment-billing', {
-    ...getPageData('Payment & Billing', 'Settings'),
-    layout: 'settings-billing',
-    activePaymentBilling: true,
-  });
-});
-
-// GET settings votes
-router.get('/settings/votes', (req, res) => {
-  res.render('pages/account/settings/votes', {
-    ...getPageData('Vote Management', 'Settings'),
-    layout: 'settings-other',
-    activeVotes: true,
-  });
-});
-
-// GET settings rewards
-router.get('/settings/rewards', (req, res) => {
-  res.render('pages/account/settings/rewards', {
-    ...getPageData('Voting Rewards', 'Settings'),
-    layout: 'settings-other',
-    activeRewards: true,
-  });
-});
-
-// GET settings credits
-router.get('/settings/credits', (req, res) => {
-  res.render('pages/account/settings/credits', {
-    ...getPageData('Credits Management', 'Settings'),
-    layout: 'settings-billing',
-    activeCredits: true,
-  });
-});
-
 // GET subscriptions billing
 router.get('/subscriptions/billing', optionalAuth, (req, res) => {
   res.render('pages/account/billing/history', {
@@ -459,19 +353,6 @@ router.get('/subscriptions/payment', optionalAuth, (req, res) => {
   res.render('pages/account/payment/methods', {
     ...getPageData('Payment Methods', 'Subscriptions'),
     layout: 'main',
-  });
-});
-
-// POST settings preferences
-router.post('/settings/preferences', (req, res) => {
-  res.send('<div class="text-green-500">Preferences saved successfully!</div>');
-});
-
-// GET subscriptions
-router.get('/subscriptions', (req, res) => {
-  res.render('pages/account/subscriptions/index', {
-    ...getPageData('Subscriptions', 'Subscriptions'),
-    layout: 'settings-billing',
   });
 });
 

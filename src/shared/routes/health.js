@@ -35,9 +35,7 @@ router.get('/detailed', async (req, res) => {
 
     res.status(200).json(healthCheck);
   } catch (error) {
-    const { Logger } = require('../../utils/logger');
-    const healthLogger = new Logger('HealthCheck');
-    healthLogger.error('Detailed health check error:', error);
+    console.error('Detailed health check error:', error);
     res.status(500).json({
       status: 'ERROR',
       timestamp: new Date().toISOString(),

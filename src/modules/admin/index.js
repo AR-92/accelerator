@@ -51,43 +51,83 @@ module.exports = (container) => {
   // Register additional repositories
   container.register(
     'organizationRepository',
-    () => new OrganizationRepository(container.get('db'))
+    () =>
+      new OrganizationRepository(
+        container.get('db'),
+        container.get('createLogger')('OrganizationRepository')
+      )
   );
   container.register(
     'landingPageRepository',
-    () => new LandingPageRepository(container.get('db'))
+    () =>
+      new LandingPageRepository(
+        container.get('db'),
+        container.get('createLogger')('LandingPageRepository')
+      )
   );
   container.register(
     'packageRepository',
-    () => new PackageRepository(container.get('db'))
+    () =>
+      new PackageRepository(
+        container.get('db'),
+        container.get('createLogger')('PackageRepository')
+      )
   );
   container.register(
     'billingRepository',
-    () => new BillingRepository(container.get('db'))
+    () =>
+      new BillingRepository(
+        container.get('db'),
+        container.get('createLogger')('BillingRepository')
+      )
   );
   container.register(
     'rewardRepository',
-    () => new RewardRepository(container.get('db'))
+    () =>
+      new RewardRepository(
+        container.get('db'),
+        container.get('createLogger')('RewardRepository')
+      )
   );
   container.register(
     'transactionRepository',
-    () => new TransactionRepository(container.get('db'))
+    () =>
+      new TransactionRepository(
+        container.get('db'),
+        container.get('createLogger')('TransactionRepository')
+      )
   );
   container.register(
     'paymentMethodRepository',
-    () => new PaymentMethodRepository(container.get('db'))
+    () =>
+      new PaymentMethodRepository(
+        container.get('db'),
+        container.get('createLogger')('PaymentMethodRepository')
+      )
   );
   container.register(
     'aiModelRepository',
-    () => new AIModelRepository(container.get('db'))
+    () =>
+      new AIModelRepository(
+        container.get('db'),
+        container.get('createLogger')('AIModelRepository')
+      )
   );
   container.register(
     'aiWorkflowRepository',
-    () => new AIWorkflowRepository(container.get('db'))
+    () =>
+      new AIWorkflowRepository(
+        container.get('db'),
+        container.get('createLogger')('AIWorkflowRepository')
+      )
   );
   container.register(
     'workflowStepRepository',
-    () => new WorkflowStepRepository(container.get('db'))
+    () =>
+      new WorkflowStepRepository(
+        container.get('db'),
+        container.get('createLogger')('WorkflowStepRepository')
+      )
   );
 
   // Register additional services
@@ -208,7 +248,11 @@ module.exports = (container) => {
   );
   container.register(
     'adminDashboardController',
-    () => new AdminDashboardController(container.get('adminService'))
+    () =>
+      new AdminDashboardController(
+        container.get('adminService'),
+        container.get('createLogger')('AdminDashboard')
+      )
   );
   container.register(
     'adminSystemStatsController',
@@ -238,11 +282,7 @@ module.exports = (container) => {
   );
   container.register(
     'adminAIController',
-    () =>
-      new AdminAIController(
-        container.get('aiModelRepository'),
-        container.get('aiWorkflowRepository')
-      )
+    () => new AdminAIController(container.get('adminService'))
   );
   container.register(
     'adminCreditController',

@@ -5,8 +5,8 @@ const Idea = require('../models/Idea');
  * Idea repository for data access operations
  */
 class IdeaRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'ideas');
+  constructor(db, logger) {
+    super(db, 'ideas', logger);
   }
 
   /**

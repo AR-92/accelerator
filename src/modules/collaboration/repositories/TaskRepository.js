@@ -4,8 +4,8 @@ const BaseRepository = require('../../../../src/shared/repositories/BaseReposito
  * Task repository for data access operations
  */
 class TaskRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'tasks');
+  constructor(db, logger) {
+    super(db, 'tasks', logger);
   }
 
   /**

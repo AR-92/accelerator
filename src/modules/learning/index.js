@@ -16,11 +16,19 @@ module.exports = (container) => {
   // Register repositories
   container.register(
     'learningContentRepository',
-    () => new LearningContentRepository(container.get('db'))
+    () =>
+      new LearningContentRepository(
+        container.get('db'),
+        container.get('createLogger')('LearningContentRepository')
+      )
   );
   container.register(
     'learningCategoryRepository',
-    () => new LearningCategoryRepository(container.get('db'))
+    () =>
+      new LearningCategoryRepository(
+        container.get('db'),
+        container.get('createLogger')('LearningCategoryRepository')
+      )
   );
 
   // Register service

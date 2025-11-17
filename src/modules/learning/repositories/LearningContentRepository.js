@@ -6,8 +6,8 @@ const LearningCategory = require('../models/LearningCategory');
  * Learning Content repository for data access operations
  */
 class LearningContentRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'learning_articles');
+  constructor(db, logger) {
+    super(db, 'learning_articles', logger);
   }
 
   /**

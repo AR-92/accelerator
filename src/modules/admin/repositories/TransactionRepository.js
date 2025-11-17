@@ -6,8 +6,8 @@ const BaseRepository = require('../../../shared/repositories/BaseRepository');
  */
 
 class TransactionRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'transactions');
+  constructor(db, logger) {
+    super(db, 'transactions', logger);
   }
 
   /**

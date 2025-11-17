@@ -5,8 +5,8 @@ const Team = require('../models/Team');
  * Team repository for data access operations
  */
 class TeamRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'teams');
+  constructor(db, logger) {
+    super(db, 'teams', logger);
   }
 
   /**

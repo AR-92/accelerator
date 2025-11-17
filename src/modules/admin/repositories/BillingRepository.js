@@ -4,8 +4,8 @@ const BaseRepository = require('../../../shared/repositories/BaseRepository');
  * Billing repository for managing transactions and payments
  */
 class BillingRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'billing');
+  constructor(db, logger) {
+    super(db, 'billing', logger);
   }
 
   /**

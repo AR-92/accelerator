@@ -2,12 +2,10 @@
  * Base repository class with common database operations
  */
 class BaseRepository {
-  constructor(db, tableName) {
+  constructor(db, tableName, logger) {
     this.db = db;
     this.tableName = tableName;
-    // Initialize logger with table name context
-    const { Logger } = require('../../utils/logger');
-    this.logger = new Logger(`${tableName}Repository`);
+    this.logger = logger;
   }
 
   /**

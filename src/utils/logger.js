@@ -49,28 +49,33 @@ const consoleFormat = winston.format.combine(
     }
   )
 );
-// Create logger instance
-const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'info',
-  format: logFormat,
-  defaultMeta: { service: 'accelerator-app' },
-  transports: [
-    // // Log to single file for all levels, overwritten each server run
-    // new winston.transports.File({
-    //   filename: path.join(logsDir, 'server.log'),
-    // }),
+// Factory function for logger
+const createLogger = (configService) => {
+  const logsDir = path.join(__dirname, '../../../logs');
 
-    // Log to console in all environments with colorful, readable format
-    new winston.transports.Console({
-      format: consoleFormat,
-    }),
-  ],
-});
+  return winston.createLogger({
+    level: configService.logLevel,
+    format: logFormat,
+    defaultMeta: { service: 'accelerator-app' },
+    transports: [
+      // // Log to single file for all levels, overwritten each server run
+      // new winston.transports.File({
+      //   filename: path.join(logsDir, 'server.log'),
+      // }),
+
+      // Log to console in all environments with colorful, readable format
+      new winston.transports.Console({
+        format: consoleFormat,
+      }),
+    ],
+  });
+};
 /**
  * Logging utility with context and metadata
  */
 class Logger {
-  constructor(context = 'App') {
+  constructor(logger, context = 'App') {
+    this.logger = logger;
     this.context = context;
   }
   /**
@@ -79,7 +84,7 @@ class Logger {
    * @param {Object} meta - Additional metadata to log
    */
   info(message, meta = {}) {
-    logger.info(message, { context: this.context, ...meta });
+    this.logger.info(message, { context: this.context, ...meta });
   }
   /**
    * Log a warning message
@@ -87,7 +92,7 @@ class Logger {
    * @param {Object} meta - Additional metadata to log
    */
   warn(message, meta = {}) {
-    logger.warn(message, { context: this.context, ...meta });
+    this.logger.warn(message, { context: this.context, ...meta });
   }
   /**
    * Log an error message
@@ -96,13 +101,13 @@ class Logger {
    */
   error(message, meta = {}) {
     if (message instanceof Error) {
-      logger.error(message.message, {
+      this.logger.error(message.message, {
         context: this.context,
         stack: message.stack,
         ...meta,
       });
     } else {
-      logger.error(message, { context: this.context, ...meta });
+      this.logger.error(message, { context: this.context, ...meta });
     }
   }
   /**
@@ -111,7 +116,7 @@ class Logger {
    * @param {Object} meta - Additional metadata to log
    */
   debug(message, meta = {}) {
-    logger.debug(message, { context: this.context, ...meta });
+    this.logger.debug(message, { context: this.context, ...meta });
   }
   /**
    * Log a request
@@ -132,11 +137,11 @@ class Logger {
       sessionId: req.sessionID || 'none',
     };
     if (res.statusCode >= 400 && res.statusCode < 500) {
-      logger.warn('Request completed with client error', logData);
+      this.logger.warn('Request completed with client error', logData);
     } else if (res.statusCode >= 500) {
-      logger.error('Request completed with server error', logData);
+      this.logger.error('Request completed with server error', logData);
     } else {
-      logger.info('Request completed', logData);
+      this.logger.info('Request completed', logData);
     }
   }
   /**
@@ -148,7 +153,7 @@ class Logger {
    * @param {Object} meta - Additional metadata
    */
   logDatabaseQuery(operation, sql, params = [], duration, meta = {}) {
-    logger.info('Database query executed', {
+    this.logger.info('Database query executed', {
       context: this.context,
       operation,
       sql,
@@ -166,7 +171,7 @@ class Logger {
    * @param {Object} meta - Additional metadata
    */
   logDatabaseError(operation, sql, params = [], error, meta = {}) {
-    logger.error('Database query failed', {
+    this.logger.error('Database query failed', {
       context: this.context,
       operation,
       sql,
@@ -185,7 +190,7 @@ class Logger {
    * @param {Object} meta - Additional metadata
    */
   logAuthEvent(action, userId, email, ip, meta = {}) {
-    logger.info('Authentication event', {
+    this.logger.info('Authentication event', {
       context: this.context,
       action,
       userId,
@@ -201,7 +206,7 @@ class Logger {
    * @param {Object} details - Operation details
    */
   logBusinessOperation(operation, userId, details) {
-    logger.info('Business operation completed', {
+    this.logger.info('Business operation completed', {
       context: this.context,
       operation,
       userId,
@@ -229,4 +234,4 @@ class Logger {
     });
   }
 }
-module.exports = { logger, Logger };
+module.exports = { createLogger, Logger };

@@ -2,8 +2,9 @@
  * Admin dashboard controller handling dashboard, settings, and system health operations
  */
 class AdminDashboardController {
-  constructor(adminService) {
+  constructor(adminService, logger) {
     this.adminService = adminService;
+    this.logger = logger;
   }
 
   /**
@@ -12,14 +13,15 @@ class AdminDashboardController {
    * @param {Object} res - Express response object
    */
   async showDashboard(req, res) {
-    console.log('Admin dashboard controller called');
+    this.logger.info('Admin dashboard controller called');
     try {
-      console.log('Getting dashboard stats...');
+      this.logger.info('Getting dashboard stats...');
       const stats = await this.adminService.getDashboardStats();
-      console.log('Dashboard stats retrieved:', Object.keys(stats));
+      this.logger.info('Dashboard stats retrieved', {
+        keys: Object.keys(stats),
+      });
 
-      console.log('About to render admin dashboard template...');
-      console.log('Stats object:', JSON.stringify(stats, null, 2));
+      this.logger.info('About to render admin dashboard template...');
       res.render('pages/admin/dashboard', {
         title: 'Admin Dashboard - Accelerator Platform',
         layout: 'admin',
@@ -27,7 +29,7 @@ class AdminDashboardController {
         activeDashboard: true,
         user: res.locals.user,
       });
-      console.log('Admin dashboard rendered successfully');
+      this.logger.info('Admin dashboard rendered successfully');
     } catch (error) {
       console.error('Error loading admin dashboard:', error);
       console.error('Error stack:', error.stack);

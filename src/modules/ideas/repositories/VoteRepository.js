@@ -5,8 +5,8 @@ const Vote = require('../models/Vote');
  * Vote repository for data access operations
  */
 class VoteRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'votes');
+  constructor(db, logger) {
+    super(db, 'votes', logger);
   }
 
   /**

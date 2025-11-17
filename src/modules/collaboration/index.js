@@ -29,27 +29,51 @@ module.exports = (container) => {
   // Register repositories
   container.register(
     'collaborationRepository',
-    () => new CollaborationRepository(container.get('db'))
+    () =>
+      new CollaborationRepository(
+        container.get('db'),
+        container.get('createLogger')('CollaborationRepository')
+      )
   );
   container.register(
     'projectRepository',
-    () => new ProjectRepository(container.get('db'))
+    () =>
+      new ProjectRepository(
+        container.get('db'),
+        container.get('createLogger')('ProjectRepository')
+      )
   );
   container.register(
     'teamRepository',
-    () => new TeamRepository(container.get('db'))
+    () =>
+      new TeamRepository(
+        container.get('db'),
+        container.get('createLogger')('TeamRepository')
+      )
   );
   container.register(
     'taskRepository',
-    () => new TaskRepository(container.get('db'))
+    () =>
+      new TaskRepository(
+        container.get('db'),
+        container.get('createLogger')('TaskRepository')
+      )
   );
   container.register(
     'messageRepository',
-    () => new MessageRepository(container.get('db'))
+    () =>
+      new MessageRepository(
+        container.get('db'),
+        container.get('createLogger')('MessageRepository')
+      )
   );
   container.register(
     'projectCollaboratorRepository',
-    () => new ProjectCollaboratorRepository(container.get('db'))
+    () =>
+      new ProjectCollaboratorRepository(
+        container.get('db'),
+        container.get('createLogger')('ProjectCollaboratorRepository')
+      )
   );
 
   // Register services

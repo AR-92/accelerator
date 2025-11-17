@@ -3,7 +3,9 @@
 
 const requireAuth = (req, res, next) => {
   if (!req.session.userId) {
-    return res.redirect('/auth');
+    // Redirect to login with return URL
+    const returnUrl = encodeURIComponent(req.originalUrl);
+    return res.redirect(`/auth?returnUrl=${returnUrl}`);
   }
   req.user = req.session.user;
   res.locals.user = req.session.user;

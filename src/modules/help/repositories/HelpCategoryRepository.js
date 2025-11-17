@@ -5,8 +5,8 @@ const HelpCategory = require('../models/HelpCategory');
  * Help Category repository
  */
 class HelpCategoryRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'help_categories');
+  constructor(db, logger) {
+    super(db, 'help_categories', logger);
   }
 
   /**

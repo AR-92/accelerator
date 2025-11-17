@@ -16,11 +16,19 @@ module.exports = (container) => {
   // Register repositories
   container.register(
     'helpContentRepository',
-    () => new HelpContentRepository(container.get('db'))
+    () =>
+      new HelpContentRepository(
+        container.get('db'),
+        container.get('createLogger')('HelpContentRepository')
+      )
   );
   container.register(
     'helpCategoryRepository',
-    () => new HelpCategoryRepository(container.get('db'))
+    () =>
+      new HelpCategoryRepository(
+        container.get('db'),
+        container.get('createLogger')('HelpCategoryRepository')
+      )
   );
 
   // Register service

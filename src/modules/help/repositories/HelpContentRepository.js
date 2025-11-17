@@ -6,8 +6,8 @@ const HelpCategory = require('../models/HelpCategory');
  * Help Content repository for data access operations
  */
 class HelpContentRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'help_articles');
+  constructor(db, logger) {
+    super(db, 'help_articles', logger);
   }
 
   /**

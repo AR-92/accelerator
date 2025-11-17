@@ -1637,69 +1637,6 @@ class AdminService {
     }
   }
 
-  // Startups SCRUD methods
-  async getStartups(options = {}) {
-    try {
-      const page = options.page || 1;
-      const limit = options.limit || 20;
-      const offset = options.offset || 0;
-      const search = options.search;
-      const sortBy = options.sortBy || 'created_at';
-      const sortOrder = options.sortOrder || 'desc';
-
-      let whereClause = '';
-      let params = [];
-      let paramIndex = 1;
-
-      if (search) {
-        whereClause += ` AND (s.name ILIKE $${paramIndex} OR s.description ILIKE $${paramIndex} OR s.industry ILIKE $${paramIndex})`;
-        params.push(`%${search}%`);
-        paramIndex++;
-      }
-
-      const orderClause = `ORDER BY s.${sortBy} ${sortOrder.toUpperCase()}`;
-
-      const countQuery = `SELECT COUNT(*) as total FROM startups s ${whereClause}`;
-
-      const dataQuery = `
-        SELECT
-          s.*,
-          u.name as owner_name,
-          u.email as owner_email
-        FROM startups s
-        JOIN users u ON s.owner_user_id = u.id
-        WHERE u.deleted_at IS NULL ${whereClause}
-        ${orderClause}
-        LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
-      `;
-
-      params.push(limit, offset);
-
-      const [countResult, dataResult] = await Promise.all([
-        this.db.query(countQuery, params.slice(0, paramIndex - 2)),
-        this.db.query(dataQuery, params),
-      ]);
-
-      const total = parseInt(countResult.rows[0].total);
-      const totalPages = Math.ceil(total / limit);
-
-      return {
-        startups: dataResult.rows,
-        pagination: {
-          page,
-          limit,
-          total,
-          pages: totalPages,
-          hasPrev: page > 1,
-          hasNext: page < totalPages,
-        },
-      };
-    } catch (error) {
-      console.error('Error getting startups:', error);
-      throw error;
-    }
-  }
-
   async createStartup(startupData, adminInfo) {
     try {
       const query = `
@@ -1781,67 +1718,6 @@ class AdminService {
   }
 
   // Enterprises SCRUD methods
-  async getEnterprises(options = {}) {
-    try {
-      const page = options.page || 1;
-      const limit = options.limit || 20;
-      const offset = options.offset || 0;
-      const search = options.search;
-      const sortBy = options.sortBy || 'created_at';
-      const sortOrder = options.sortOrder || 'desc';
-
-      let whereClause = '';
-      let params = [];
-      let paramIndex = 1;
-
-      if (search) {
-        whereClause += ` AND (e.name ILIKE $${paramIndex} OR e.description ILIKE $${paramIndex} OR e.industry ILIKE $${paramIndex})`;
-        params.push(`%${search}%`);
-        paramIndex++;
-      }
-
-      const orderClause = `ORDER BY e.${sortBy} ${sortOrder.toUpperCase()}`;
-
-      const countQuery = `SELECT COUNT(*) as total FROM enterprises e ${whereClause}`;
-
-      const dataQuery = `
-        SELECT
-          e.*,
-          u.name as owner_name,
-          u.email as owner_email
-        FROM enterprises e
-        JOIN users u ON e.owner_user_id = u.id
-        WHERE u.deleted_at IS NULL ${whereClause}
-        ${orderClause}
-        LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
-      `;
-
-      params.push(limit, offset);
-
-      const [countResult, dataResult] = await Promise.all([
-        this.db.query(countQuery, params.slice(0, paramIndex - 2)),
-        this.db.query(dataQuery, params),
-      ]);
-
-      const total = parseInt(countResult.rows[0].total);
-      const totalPages = Math.ceil(total / limit);
-
-      return {
-        enterprises: dataResult.rows,
-        pagination: {
-          page,
-          limit,
-          total,
-          pages: totalPages,
-          hasPrev: page > 1,
-          hasNext: page < totalPages,
-        },
-      };
-    } catch (error) {
-      console.error('Error getting enterprises:', error);
-      throw error;
-    }
-  }
 
   async createEnterprise(enterpriseData, adminInfo) {
     try {
@@ -1915,67 +1791,6 @@ class AdminService {
   }
 
   // Corporates SCRUD methods
-  async getCorporates(options = {}) {
-    try {
-      const page = options.page || 1;
-      const limit = options.limit || 20;
-      const offset = options.offset || 0;
-      const search = options.search;
-      const sortBy = options.sortBy || 'created_at';
-      const sortOrder = options.sortOrder || 'desc';
-
-      let whereClause = '';
-      let params = [];
-      let paramIndex = 1;
-
-      if (search) {
-        whereClause += ` AND (c.name ILIKE $${paramIndex} OR c.description ILIKE $${paramIndex} OR c.industry ILIKE $${paramIndex})`;
-        params.push(`%${search}%`);
-        paramIndex++;
-      }
-
-      const orderClause = `ORDER BY c.${sortBy} ${sortOrder.toUpperCase()}`;
-
-      const countQuery = `SELECT COUNT(*) as total FROM corporates c ${whereClause}`;
-
-      const dataQuery = `
-        SELECT
-          c.*,
-          u.name as owner_name,
-          u.email as owner_email
-        FROM corporates c
-        JOIN users u ON c.owner_user_id = u.id
-        WHERE u.deleted_at IS NULL ${whereClause}
-        ${orderClause}
-        LIMIT $${paramIndex} OFFSET $${paramIndex + 1}
-      `;
-
-      params.push(limit, offset);
-
-      const [countResult, dataResult] = await Promise.all([
-        this.db.query(countQuery, params.slice(0, paramIndex - 2)),
-        this.db.query(dataQuery, params),
-      ]);
-
-      const total = parseInt(countResult.rows[0].total);
-      const totalPages = Math.ceil(total / limit);
-
-      return {
-        corporates: dataResult.rows,
-        pagination: {
-          page,
-          limit,
-          total,
-          pages: totalPages,
-          hasPrev: page > 1,
-          hasNext: page < totalPages,
-        },
-      };
-    } catch (error) {
-      console.error('Error getting corporates:', error);
-      throw error;
-    }
-  }
 
   async createCorporate(corporateData, adminInfo) {
     try {

@@ -114,8 +114,8 @@ const developmentSecurity = {
 };
 
 // Get security settings based on environment
-const getSecuritySettings = () => {
-  if (process.env.NODE_ENV === 'production') {
+const getSecuritySettings = (configService) => {
+  if (configService.isProduction) {
     return productionSecurity;
   } else {
     return developmentSecurity;

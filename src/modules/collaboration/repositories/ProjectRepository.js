@@ -5,8 +5,8 @@ const Project = require('../models/Project');
  * Project repository for data access operations
  */
 class ProjectRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'projects');
+  constructor(db, logger) {
+    super(db, 'projects', logger);
   }
 
   /**

@@ -1,8 +1,8 @@
 const BaseRepository = require('../../../../src/shared/repositories/BaseRepository');
 
 class AdminActivityRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'admin_activity_log');
+  constructor(db, logger) {
+    super(db, 'admin_activity_log', logger);
   }
 
   /**

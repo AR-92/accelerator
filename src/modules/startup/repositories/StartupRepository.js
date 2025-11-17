@@ -5,8 +5,8 @@ const Startup = require('../models/Startup');
  * Startup repository for data access operations
  */
 class StartupRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'startups');
+  constructor(db, logger) {
+    super(db, 'startups', logger);
   }
 
   /**

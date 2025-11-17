@@ -5,8 +5,8 @@ const BaseRepository = require('../../../shared/repositories/BaseRepository');
  * LandingPage repository for data access operations
  */
 class LandingPageRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'landing_pages');
+  constructor(db, logger) {
+    super(db, 'landing_pages', logger);
   }
 
   /**

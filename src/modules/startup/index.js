@@ -14,7 +14,11 @@ module.exports = (container) => {
   // Register repository
   container.register(
     'startupRepository',
-    () => new StartupRepository(container.get('db'))
+    () =>
+      new StartupRepository(
+        container.get('db'),
+        container.get('createLogger')('StartupRepository')
+      )
   );
 
   // Register service

@@ -14,6 +14,12 @@ module.exports = (authController) => {
   // GET main auth page (unified login/signup)
   router.get('/', (req, res) => {
     if (req.session.userId) {
+      // Check for return URL in session or query
+      const returnUrl = req.session.returnUrl || req.query.returnUrl;
+      if (returnUrl) {
+        delete req.session.returnUrl; // Clear it from session
+        return res.redirect(decodeURIComponent(returnUrl));
+      }
       // Redirect based on user role
       const user = req.session.user;
       if (user.role === 'admin') {
@@ -26,9 +32,16 @@ module.exports = (authController) => {
         return res.redirect('/pages/dashboard');
       }
     }
+
+    // Store return URL in session for post-login redirect
+    if (req.query.returnUrl) {
+      req.session.returnUrl = req.query.returnUrl;
+    }
+
     res.render('pages/auth/auth', {
       title: 'Sign In - Accelerator Platform',
       layout: 'auth',
+      returnUrl: req.query.returnUrl,
     });
   });
 
@@ -91,10 +104,23 @@ module.exports = (authController) => {
     authController.logout(req, res);
   });
 
+  // POST logout
+  router.post('/logout', (req, res) => {
+    authController.logout(req, res);
+  });
+
+  // GET logout
+  router.get('/logout', (req, res) => {
+    authController.logout(req, res);
+  });
+
   // POST switch back from impersonation
   router.post('/switch-back', requireAuth, (req, res) => {
-    const container5 = getContainer();
-    const authController = container5.get('authController');
+    authController.switchBack(req, res);
+  });
+
+  // GET switch back from impersonation
+  router.get('/switch-back', requireAuth, (req, res) => {
     authController.switchBack(req, res);
   });
 

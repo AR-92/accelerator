@@ -1,15 +1,10 @@
-const path = require('path');
-const { Logger } = require(
-  path.resolve(__dirname, '../../../../src/utils/logger')
-);
-
 /**
  * Authentication controller handling all auth operations
  */
 class AuthController {
-  constructor(authService) {
+  constructor(authService, logger) {
     this.authService = authService;
-    this.logger = new Logger('AuthController');
+    this.logger = logger;
   }
 
   /**
@@ -63,17 +58,28 @@ class AuthController {
         req.ip || req.connection.remoteAddress
       );
 
+      // Check for return URL
+      const returnUrl = req.session.returnUrl || req.query.returnUrl;
+      if (returnUrl) {
+        delete req.session.returnUrl; // Clear it from session
+      }
+
+      // Determine redirect URL
+      const redirectUrl = returnUrl
+        ? decodeURIComponent(returnUrl)
+        : '/pages/dashboard';
+
       // Check if this is an HTMX request
       if (req.headers['hx-request']) {
         return res.json({
           success: true,
           message: 'Login successful! Redirecting...',
-          redirect: '/pages/dashboard',
+          redirect: redirectUrl,
         });
       }
 
-      // Redirect to dashboard on successful login
-      res.redirect('/pages/dashboard');
+      // Redirect to intended page or dashboard on successful login
+      res.redirect(redirectUrl);
     } catch (error) {
       this.logger.error('Login error:', error, {
         email: req.body.email,

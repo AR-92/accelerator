@@ -5,8 +5,8 @@ const Collaboration = require('../models/Collaboration');
  * Collaboration repository for data access operations
  */
 class CollaborationRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'collaborations');
+  constructor(db, logger) {
+    super(db, 'collaborations', logger);
   }
 
   /**

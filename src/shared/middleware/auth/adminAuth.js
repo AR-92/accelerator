@@ -1,7 +1,14 @@
 // Admin authentication middleware
 // This can be used to protect routes that require admin authentication
 
-const { dbGet } = require('../../../../config/database');
+const { createDatabaseInterface } = require('../../../../config/database');
+const ConfigService = require('../../../utils/configService');
+const { createLogger } = require('../../../utils/logger');
+
+const configService = new ConfigService();
+const logger = createLogger(configService);
+const dbInterface = createDatabaseInterface(configService, () => logger);
+const { dbGet } = dbInterface;
 
 const requireAdminAuth = async (req, res, next) => {
   if (!req.session.userId) {

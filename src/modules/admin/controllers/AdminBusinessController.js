@@ -2,8 +2,10 @@
  * Admin business controller handling various admin operations
  */
 class AdminBusinessController {
-  constructor(adminService) {
-    this.adminService = adminService;
+  constructor(corporateService, enterpriseService, startupService) {
+    this.corporateService = corporateService;
+    this.enterpriseService = enterpriseService;
+    this.startupService = startupService;
   }
 
   async showIdeas(req, res) {
@@ -1630,7 +1632,7 @@ class AdminBusinessController {
       const sortBy = req.query.sortBy || 'created_at';
       const sortOrder = req.query.sortOrder || 'desc';
 
-      const result = await this.adminService.getStartups({
+      const result = await this.startupService.getAllStartups(null, {
         page,
         limit,
         search,
@@ -1800,7 +1802,7 @@ class AdminBusinessController {
       const sortBy = req.query.sortBy || 'created_at';
       const sortOrder = req.query.sortOrder || 'desc';
 
-      const result = await this.adminService.getEnterprises({
+      const result = await this.enterpriseService.getAllEnterprises({
         page,
         limit,
         search,
@@ -1970,7 +1972,7 @@ class AdminBusinessController {
       const sortBy = req.query.sortBy || 'created_at';
       const sortOrder = req.query.sortOrder || 'desc';
 
-      const result = await this.adminService.getCorporates({
+      const result = await this.corporateService.getAllCorporates({
         page,
         limit,
         search,

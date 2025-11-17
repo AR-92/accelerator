@@ -4,8 +4,8 @@ const BaseRepository = require('../../../shared/repositories/BaseRepository');
  * Reward repository for managing user rewards and achievements
  */
 class RewardRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'rewards');
+  constructor(db, logger) {
+    super(db, 'rewards', logger);
   }
 
   /**

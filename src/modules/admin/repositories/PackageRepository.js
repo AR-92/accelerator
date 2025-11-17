@@ -4,8 +4,8 @@ const BaseRepository = require('../../../shared/repositories/BaseRepository');
  * Package repository for managing credit packages
  */
 class PackageRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'packages');
+  constructor(db, logger) {
+    super(db, 'packages', logger);
   }
 
   /**

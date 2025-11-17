@@ -1,7 +1,7 @@
-const { Logger } = require('../utils/logger');
+// const { Logger } = require('../utils/logger');
 
 // Create a logger for the middleware with global context
-const logger = new Logger('RequestLogger');
+// const logger = new Logger('RequestLogger');
 
 /**
  * Middleware to log all requests with timing and metadata
@@ -15,7 +15,9 @@ const requestLogger = (req, res, next) => {
     const responseTime = Date.now() - start;
 
     // Log the request with timing and response information
-    logger.logRequest(req, res, responseTime);
+    console.log(
+      `Request: ${req.method} ${req.url} ${res.statusCode} ${responseTime}ms`
+    );
 
     // Call the original end method
     originalEnd.call(this, chunk, encoding);

@@ -13,7 +13,11 @@ const Enterprise = require('./models/Enterprise');
 module.exports = (container) => {
   container.register(
     'enterpriseRepository',
-    () => new EnterpriseRepository(container.get('db'))
+    () =>
+      new EnterpriseRepository(
+        container.get('db'),
+        container.get('createLogger')('EnterpriseRepository')
+      )
   );
   container.register(
     'enterpriseService',

@@ -5,8 +5,8 @@ const LearningCategory = require('../models/LearningCategory');
  * Learning Category repository
  */
 class LearningCategoryRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'learning_categories');
+  constructor(db, logger) {
+    super(db, 'learning_categories', logger);
   }
 
   /**

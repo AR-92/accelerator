@@ -4,8 +4,8 @@ const BaseRepository = require('../../../../src/shared/repositories/BaseReposito
  * Message repository for data access operations
  */
 class MessageRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'messages');
+  constructor(db, logger) {
+    super(db, 'messages', logger);
   }
 
   /**

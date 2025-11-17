@@ -5,8 +5,8 @@ const BaseRepository = require('../../../../src/shared/repositories/BaseReposito
 const Enterprise = require('../models/Enterprise');
 
 class EnterpriseRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'enterprises');
+  constructor(db, logger) {
+    super(db, 'enterprises', logger);
   }
 
   /**

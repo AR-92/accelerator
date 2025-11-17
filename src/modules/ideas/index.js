@@ -19,15 +19,27 @@ module.exports = (container) => {
   // Register repositories
   container.register(
     'ideaRepository',
-    () => new IdeaRepository(container.get('db'))
+    () =>
+      new IdeaRepository(
+        container.get('db'),
+        container.get('createLogger')('IdeaRepository')
+      )
   );
   container.register(
     'voteRepository',
-    () => new VoteRepository(container.get('db'))
+    () =>
+      new VoteRepository(
+        container.get('db'),
+        container.get('createLogger')('VoteRepository')
+      )
   );
   container.register(
     'portfolioRepository',
-    () => new PortfolioRepository(container.get('db'))
+    () =>
+      new PortfolioRepository(
+        container.get('db'),
+        container.get('createLogger')('PortfolioRepository')
+      )
   );
 
   // Register services

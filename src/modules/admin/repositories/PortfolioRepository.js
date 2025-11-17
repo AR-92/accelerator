@@ -5,8 +5,8 @@ const Portfolio = require('../models/Portfolio');
  * Portfolio repository for data access operations
  */
 class PortfolioRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'portfolio');
+  constructor(db, logger) {
+    super(db, 'portfolio', logger);
   }
 
   /**

@@ -14,19 +14,31 @@ module.exports = (container) => {
   // Register repository
   container.register(
     'userRepository',
-    () => new UserRepository(container.get('db'))
+    () =>
+      new UserRepository(
+        container.get('db'),
+        container.get('createLogger')('UserRepository')
+      )
   );
 
   // Register service
   container.register(
     'authService',
-    () => new AuthService(container.get('userRepository'))
+    () =>
+      new AuthService(
+        container.get('userRepository'),
+        container.get('createLogger')('AuthService')
+      )
   );
 
   // Register controller
   container.register(
     'authController',
-    () => new AuthController(container.get('authService'))
+    () =>
+      new AuthController(
+        container.get('authService'),
+        container.get('createLogger')('AuthController')
+      )
   );
 
   return {

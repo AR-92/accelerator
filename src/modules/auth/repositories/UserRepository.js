@@ -5,8 +5,8 @@ const User = require('../models/User');
  * User repository for data access operations
  */
 class UserRepository extends BaseRepository {
-  constructor(db) {
-    super(db, 'users');
+  constructor(db, logger) {
+    super(db, 'users', logger);
   }
 
   /**
