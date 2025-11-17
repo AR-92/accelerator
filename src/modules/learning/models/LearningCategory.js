@@ -1,4 +1,4 @@
-const BaseModel = require('../../../shared/models/BaseModel');
+const BaseModel = require('../../../../src/shared/models/BaseModel');
 
 /**
  * Learning Category model representing categories for learning content
@@ -70,7 +70,7 @@ class LearningCategory extends BaseModel {
     }
 
     if (errors.length > 0) {
-      const ValidationError = require('../../../shared/utils/errors/ValidationError');
+      const ValidationError = require('../../../../../shared/utils/errors/ValidationError');
       throw new ValidationError(errors[0], errors);
     }
   }

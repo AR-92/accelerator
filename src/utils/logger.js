@@ -2,10 +2,7 @@ const winston = require('winston');
 const path = require('path');
 // Create logs directory if it doesn't exist
 const fs = require('fs');
-const logsDir = path.join(__dirname, '../../logs');
-if (!fs.existsSync(logsDir)) {
-  fs.mkdirSync(logsDir, { recursive: true });
-}
+const logsDir = path.join(__dirname, '../../../logs');
 // Define custom format for logging
 const logFormat = winston.format.combine(
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
@@ -58,10 +55,10 @@ const logger = winston.createLogger({
   format: logFormat,
   defaultMeta: { service: 'accelerator-app' },
   transports: [
-    // Log to single file for all levels, overwritten each server run
-    new winston.transports.File({
-      filename: path.join(logsDir, 'server.log'),
-    }),
+    // // Log to single file for all levels, overwritten each server run
+    // new winston.transports.File({
+    //   filename: path.join(logsDir, 'server.log'),
+    // }),
 
     // Log to console in all environments with colorful, readable format
     new winston.transports.Console({

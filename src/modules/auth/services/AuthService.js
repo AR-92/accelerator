@@ -1,5 +1,8 @@
 const bcrypt = require('bcrypt');
-const { Logger } = require('../../../shared/utils/logger');
+const path = require('path');
+const { Logger } = require(
+  path.resolve(__dirname, '../../../../src/utils/logger')
+);
 
 /**
  * Authentication service handling user authentication logic
@@ -31,7 +34,7 @@ class AuthService {
         this.logger.warn('Registration failed - email already exists', {
           email,
         });
-        const ValidationError = require('../../../shared/utils/errors/ValidationError');
+        const ValidationError = require('../../../../../shared/utils/errors/ValidationError');
         throw new ValidationError('Registration failed', [
           'Email already registered',
         ]);
@@ -40,7 +43,7 @@ class AuthService {
       // Validate password strength
       if (!userData.password || userData.password.length < 6) {
         this.logger.warn('Registration failed - weak password', { email });
-        const ValidationError = require('../../../shared/utils/errors/ValidationError');
+        const ValidationError = require('../../../../../shared/utils/errors/ValidationError');
         throw new ValidationError('Registration failed', [
           'Password must be at least 6 characters long',
         ]);
@@ -88,7 +91,7 @@ class AuthService {
       const user = await this.userRepository.findByEmail(email);
       if (!user) {
         this.logger.warn('Login failed - user not found', { email });
-        const ValidationError = require('../../../shared/utils/errors/ValidationError');
+        const ValidationError = require('../../../../../shared/utils/errors/ValidationError');
         throw new ValidationError('Authentication failed', [
           'Invalid email or password',
         ]);
@@ -101,7 +104,7 @@ class AuthService {
           email,
           userId: user.id,
         });
-        const ValidationError = require('../../../shared/utils/errors/ValidationError');
+        const ValidationError = require('../../../../../shared/utils/errors/ValidationError');
         throw new ValidationError('Authentication failed', [
           'Invalid email or password',
         ]);
@@ -123,7 +126,7 @@ class AuthService {
   async getUserById(id) {
     const user = await this.userRepository.findById(id);
     if (!user) {
-      const NotFoundError = require('../../../shared/utils/errors/NotFoundError');
+      const NotFoundError = require('../../../../../shared/utils/errors/NotFoundError');
       throw new NotFoundError('User not found');
     }
     return user.toPublicJSON();
@@ -138,7 +141,7 @@ class AuthService {
   async updateProfile(id, userData) {
     const updated = await this.userRepository.update(id, userData);
     if (!updated) {
-      const NotFoundError = require('../../../shared/utils/errors/NotFoundError');
+      const NotFoundError = require('../../../../../shared/utils/errors/NotFoundError');
       throw new NotFoundError('User not found');
     }
 
@@ -161,7 +164,7 @@ class AuthService {
         this.logger.warn('Password change failed - user not found', {
           userId: id,
         });
-        const NotFoundError = require('../../../shared/utils/errors/NotFoundError');
+        const NotFoundError = require('../../../../../shared/utils/errors/NotFoundError');
         throw new NotFoundError('User not found');
       }
 
@@ -171,7 +174,7 @@ class AuthService {
         this.logger.warn('Password change failed - current password invalid', {
           userId: id,
         });
-        const ValidationError = require('../../../shared/utils/errors/ValidationError');
+        const ValidationError = require('../../../../../shared/utils/errors/ValidationError');
         throw new ValidationError('Password change failed', [
           'Current password is incorrect',
         ]);
@@ -182,7 +185,7 @@ class AuthService {
         this.logger.warn('Password change failed - new password too short', {
           userId: id,
         });
-        const ValidationError = require('../../../shared/utils/errors/ValidationError');
+        const ValidationError = require('../../../../../shared/utils/errors/ValidationError');
         throw new ValidationError('Password change failed', [
           'New password must be at least 6 characters long',
         ]);

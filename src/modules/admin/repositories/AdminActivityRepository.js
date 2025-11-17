@@ -1,4 +1,4 @@
-const BaseRepository = require('../../../shared/repositories/BaseRepository');
+const BaseRepository = require('../../../../src/shared/repositories/BaseRepository');
 
 class AdminActivityRepository extends BaseRepository {
   constructor(db) {

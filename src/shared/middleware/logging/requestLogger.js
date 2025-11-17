@@ -1,4 +1,4 @@
-const { Logger } = require('../../utils/logger');
+const { Logger } = require('../utils/logger');
 
 // Create a logger for the middleware with global context
 const logger = new Logger('RequestLogger');

@@ -26,20 +26,20 @@ const ProjectManagementService = require('./services/ProjectManagementService');
 const BusinessManagementService = require('./services/BusinessManagementService');
 
 // Import additional repositories used by admin
-const OrganizationRepository = require('../../main/repositories/OrganizationRepository');
-const LandingPageRepository = require('../../main/repositories/LandingPageRepository');
-const PackageRepository = require('../../main/repositories/PackageRepository');
-const BillingRepository = require('../../main/repositories/BillingRepository');
-const RewardRepository = require('../../main/repositories/RewardRepository');
-const TransactionRepository = require('../../main/repositories/TransactionRepository');
-const PaymentMethodRepository = require('../../main/repositories/PaymentMethodRepository');
-const AIModelRepository = require('../../main/repositories/AIModelRepository');
-const AIWorkflowRepository = require('../../main/repositories/AIWorkflowRepository');
-const WorkflowStepRepository = require('../../main/repositories/WorkflowStepRepository');
+const OrganizationRepository = require('./repositories/OrganizationRepository');
+const LandingPageRepository = require('./repositories/LandingPageRepository');
+const PackageRepository = require('./repositories/PackageRepository');
+const BillingRepository = require('./repositories/BillingRepository');
+const RewardRepository = require('./repositories/RewardRepository');
+const TransactionRepository = require('./repositories/TransactionRepository');
+const PaymentMethodRepository = require('./repositories/PaymentMethodRepository');
+const AIModelRepository = require('./repositories/AIModelRepository');
+const AIWorkflowRepository = require('./repositories/AIWorkflowRepository');
+const WorkflowStepRepository = require('./repositories/WorkflowStepRepository');
 
 // Import additional services
-const OrganizationService = require('../../main/services/OrganizationService');
-const LandingPageService = require('../../main/services/LandingPageService');
+const OrganizationService = require('./services/OrganizationService');
+const LandingPageService = require('./services/LandingPageService');
 
 module.exports = (container) => {
   // Register repositories

@@ -11,7 +11,7 @@ const IdeaService = require('./services/IdeaService');
 const VoteService = require('./services/VoteService');
 const IdeaRepository = require('./repositories/IdeaRepository');
 const VoteRepository = require('./repositories/VoteRepository');
-const PortfolioRepository = require('../../main/repositories/PortfolioRepository');
+const PortfolioRepository = require('../admin/repositories/PortfolioRepository');
 const Idea = require('./models/Idea');
 const Vote = require('./models/Vote');
 

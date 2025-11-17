@@ -1,4 +1,4 @@
-const BaseModel = require('../../../shared/models/BaseModel');
+const BaseModel = require('../../../../src/shared/models/BaseModel');
 
 /**
  * Vote model representing a vote on a project

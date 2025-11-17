@@ -1,7 +1,7 @@
 /**
  * Centralized error handling middleware
  */
-const { Logger } = require('../../utils/logger');
+const { Logger } = require('../../../utils/logger');
 
 // Create a logger for the error handler
 const logger = new Logger('ErrorHandler');

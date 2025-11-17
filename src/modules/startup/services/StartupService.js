@@ -25,7 +25,7 @@ class StartupService {
   async getStartupById(id) {
     const startup = await this.startupRepository.findById(id);
     if (!startup) {
-      const NotFoundError = require('../../../shared/utils/errors/NotFoundError');
+      const NotFoundError = require('../../../../../shared/utils/errors/NotFoundError');
       throw new NotFoundError('Startup not found');
     }
     return startup.toJSON();
@@ -55,13 +55,13 @@ class StartupService {
   async updateStartup(id, userId, startupData) {
     const startup = await this.startupRepository.findById(id);
     if (!startup) {
-      const NotFoundError = require('../../../shared/utils/errors/NotFoundError');
+      const NotFoundError = require('../../../../../shared/utils/errors/NotFoundError');
       throw new NotFoundError('Startup not found');
     }
 
     // Check ownership
     if (startup.userId !== userId) {
-      const ValidationError = require('../../../shared/utils/errors/ValidationError');
+      const ValidationError = require('../../../../../shared/utils/errors/ValidationError');
       throw new ValidationError('Update failed', [
         'You can only update your own startups',
       ]);
@@ -84,13 +84,13 @@ class StartupService {
   async deleteStartup(id, userId) {
     const startup = await this.startupRepository.findById(id);
     if (!startup) {
-      const NotFoundError = require('../../../shared/utils/errors/NotFoundError');
+      const NotFoundError = require('../../../../../shared/utils/errors/NotFoundError');
       throw new NotFoundError('Startup not found');
     }
 
     // Check ownership
     if (startup.userId !== userId) {
-      const ValidationError = require('../../../shared/utils/errors/ValidationError');
+      const ValidationError = require('../../../../../shared/utils/errors/ValidationError');
       throw new ValidationError('Delete failed', [
         'You can only delete your own startups',
       ]);

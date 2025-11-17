@@ -24,7 +24,7 @@ class LearningService {
   async getCategoryBySlug(slug) {
     const category = await this.categoryRepo.findBySlug(slug);
     if (!category) {
-      const NotFoundError = require('../../../shared/utils/errors/NotFoundError');
+      const NotFoundError = require('../../../../../shared/utils/errors/NotFoundError');
       throw new NotFoundError('Learning category not found');
     }
     return category.toPublicJSON();
@@ -81,7 +81,7 @@ class LearningService {
   async getArticleBySlug(slug) {
     const article = await this.contentRepo.findBySlug(slug);
     if (!article) {
-      const NotFoundError = require('../../../shared/utils/errors/NotFoundError');
+      const NotFoundError = require('../../../../../shared/utils/errors/NotFoundError');
       throw new NotFoundError('Learning article not found');
     }
 
@@ -102,7 +102,7 @@ class LearningService {
   async getArticlesByCategory(categorySlug, filters = {}) {
     const category = await this.categoryRepo.findBySlug(categorySlug);
     if (!category) {
-      const NotFoundError = require('../../../shared/utils/errors/NotFoundError');
+      const NotFoundError = require('../../../../../shared/utils/errors/NotFoundError');
       throw new NotFoundError('Learning category not found');
     }
 
@@ -303,7 +303,7 @@ class LearningService {
   async updateArticle(id, articleData) {
     const updated = await this.contentRepo.update(id, articleData);
     if (!updated) {
-      const NotFoundError = require('../../../shared/utils/errors/NotFoundError');
+      const NotFoundError = require('../../../../../shared/utils/errors/NotFoundError');
       throw new NotFoundError('Learning article not found');
     }
 
@@ -345,7 +345,7 @@ class LearningService {
   async updateCategory(id, categoryData) {
     const updated = await this.categoryRepo.update(id, categoryData);
     if (!updated) {
-      const NotFoundError = require('../../../shared/utils/errors/NotFoundError');
+      const NotFoundError = require('../../../../../shared/utils/errors/NotFoundError');
       throw new NotFoundError('Learning category not found');
     }
 

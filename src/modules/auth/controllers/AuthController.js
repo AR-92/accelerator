@@ -1,4 +1,7 @@
-const { Logger } = require('../../../shared/utils/logger');
+const path = require('path');
+const { Logger } = require(
+  path.resolve(__dirname, '../../../../src/utils/logger')
+);
 
 /**
  * Authentication controller handling all auth operations

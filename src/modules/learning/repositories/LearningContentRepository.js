@@ -1,4 +1,4 @@
-const BaseRepository = require('../../../shared/repositories/BaseRepository');
+const BaseRepository = require('../../../../src/shared/repositories/BaseRepository');
 const LearningContent = require('../models/LearningContent');
 const LearningCategory = require('../models/LearningCategory');
 

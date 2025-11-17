@@ -1,4 +1,4 @@
-const BaseModel = require('../../../shared/models/BaseModel');
+const BaseModel = require('../../../../src/shared/models/BaseModel');
 
 /**
  * Help Category model representing categories for help content

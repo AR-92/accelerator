@@ -1,7 +1,7 @@
 /**
  * Enterprise model representing an enterprise company
  */
-const BaseModel = require('../../../shared/models/BaseModel');
+const BaseModel = require('../../../../src/shared/models/BaseModel');
 
 class Enterprise extends BaseModel {
   constructor(data = {}) {

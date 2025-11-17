@@ -1,28 +1,35 @@
-const BaseModel = require('../../../../src/shared/models/BaseModel');
+const BaseModel = require('../../../shared/models/BaseModel');
 
 /**
- * Idea model representing a business idea
+ * Portfolio model representing a portfolio item
  */
-class Idea extends BaseModel {
+class Portfolio extends BaseModel {
   constructor(data = {}) {
     super(data);
-    this.userId = data.owner_user_id || data.user_id;
-    this.href = data.href;
+    this.userId = data.user_id;
     this.title = data.title;
-    this.type = data.type;
-    this.typeIcon = data.typeIcon;
-    this.rating = data.rating || (data.upvotes || 0) - (data.downvotes || 0);
     this.description = data.description;
+    this.category = data.category;
     this.tags = data.tags
       ? Array.isArray(data.tags)
         ? data.tags
         : JSON.parse(data.tags)
       : [];
-    this.isFavorite = data.isFavorite || data.is_favorite || false;
+    this.votes = data.votes || 0;
+    this.isPublic = data.isPublic || data.is_public || true;
+    this.image = data.image;
+    this.createdDate =
+      data.createdDate || data.created_date
+        ? new Date(data.createdDate || data.created_date)
+        : new Date();
+    this.updatedDate =
+      data.updatedDate || data.updated_date
+        ? new Date(data.updatedDate || data.updated_date)
+        : new Date();
   }
 
   /**
-   * Add a tag to the idea
+   * Add a tag to the portfolio
    * @param {string} tag
    */
   addTag(tag) {
@@ -33,7 +40,7 @@ class Idea extends BaseModel {
   }
 
   /**
-   * Remove a tag from the idea
+   * Remove a tag from the portfolio
    * @param {string} tag
    */
   removeTag(tag) {
@@ -45,7 +52,7 @@ class Idea extends BaseModel {
   }
 
   /**
-   * Check if idea has a specific tag
+   * Check if portfolio has a specific tag
    * @param {string} tag
    * @returns {boolean}
    */
@@ -73,17 +80,37 @@ class Idea extends BaseModel {
   }
 
   /**
+   * Increment vote count
+   */
+  incrementVotes() {
+    this.votes += 1;
+    this.touch();
+  }
+
+  /**
+   * Decrement vote count
+   */
+  decrementVotes() {
+    if (this.votes > 0) {
+      this.votes -= 1;
+      this.touch();
+    }
+  }
+
+  /**
    * Convert to JSON
    * @returns {Object}
    */
   toJSON() {
     const obj = super.toJSON();
     obj.tags = this.tags;
+    obj.createdDate = this.createdDate.toISOString();
+    obj.updatedDate = this.updatedDate.toISOString();
     return obj;
   }
 
   /**
-   * Validate idea data
+   * Validate portfolio data
    * @throws {ValidationError}
    */
   validate() {
@@ -93,39 +120,34 @@ class Idea extends BaseModel {
       errors.push('Title must be at least 3 characters');
     }
 
-    if (!this.href || this.href.trim().length === 0) {
-      errors.push('Href is required');
+    if (!this.category || this.category.trim().length === 0) {
+      errors.push('Category is required');
     }
 
-    if (!this.type || this.type.trim().length === 0) {
-      errors.push('Type is required');
-    }
-
-    if (this.rating < 0 || this.rating > 5) {
-      errors.push('Rating must be between 0 and 5');
+    if (this.votes < 0) {
+      errors.push('Votes cannot be negative');
     }
 
     if (errors.length > 0) {
       const ValidationError = require('../../utils/errors/ValidationError');
-      throw new ValidationError('Idea validation failed', errors);
+      throw new ValidationError('Portfolio validation failed', errors);
     }
   }
 
   /**
-   * Get validation rules for idea creation
+   * Get validation rules for portfolio creation
    * @returns {Object}
    */
   static getValidationRules() {
     return {
       title: { required: true, minLength: 3 },
-      href: { required: true },
-      type: { required: true },
-      typeIcon: { required: true },
-      rating: { required: false, min: 0, max: 5 },
       description: { required: false },
+      category: { required: true },
       tags: { required: false, type: 'array' },
+      isPublic: { required: false, type: 'boolean' },
+      image: { required: false },
     };
   }
 }
 
-module.exports = Idea;
+module.exports = Portfolio;

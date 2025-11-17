@@ -1,4 +1,4 @@
-const BaseModel = require('../../../shared/models/BaseModel');
+const BaseModel = require('../../../../src/shared/models/BaseModel');
 
 /**
  * Startup model representing a startup company
@@ -48,7 +48,7 @@ class Startup extends BaseModel {
     }
 
     if (errors.length > 0) {
-      const ValidationError = require('../../../shared/utils/errors/ValidationError');
+      const ValidationError = require('../../../../../shared/utils/errors/ValidationError');
       throw new ValidationError('Startup validation failed', errors);
     }
   }

@@ -5,7 +5,7 @@ const cors = require('cors');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const fs = require('fs');
-const { Logger } = require('./src/shared/utils/logger');
+const { Logger } = require('./src/utils/logger');
 const { handlebarsConfig } = require('./config/handlebars');
 const {
   errorHandler,
@@ -18,9 +18,9 @@ const container = require('./src/container');
 const authRoutes = require('./src/modules/auth/routes/pages')(
   container.get('authController')
 );
-const pageRoutes = require('./src/main/routes/pages');
-const aiAssistantModelsRoutes = require('./src/main/routes/pages/ai-assistant-models');
-const apiRoutes = require('./src/shared/routes/api/v1');
+const pageRoutes = require('./src/shared/routes/pages');
+const aiAssistantModelsRoutes = require('./src/shared/routes/pages/ai-assistant-models');
+// const apiRoutes = require('./src/shared/routes/api/v1');
 const adminRoutes = require('./src/modules/admin/routes/api/v1/admin');
 const adminPageRoutes = require('./src/modules/admin/routes/pages/admin');
 const startupApiRoutes = require('./src/modules/startup/routes/api');
@@ -30,6 +30,7 @@ const helpApiRoutes = require('./src/modules/help/routes/api');
 const helpPageRoutes = require('./src/modules/help/routes/pages');
 const collaborationApiRoutes = require('./src/modules/collaboration/routes/api');
 const collaborationPageRoutes = require('./src/modules/collaboration/routes/pages');
+const healthRoutes = require('./src/shared/routes/health');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -110,16 +111,16 @@ app.use(
 );
 
 // Import and use the request logging middleware
-const {
-  requestLogger,
-} = require('./src/shared/middleware/logging/requestLogger');
-app.use(requestLogger);
+// const {
+//   requestLogger,
+// } = require('./src/shared/middleware/logging/requestLogger');
+// app.use(requestLogger);
 
 // Use routes
 app.use('/auth', authRoutes);
 app.use('/pages', pageRoutes);
 app.use('/pages', aiAssistantModelsRoutes);
-app.use('/api', apiRoutes);
+// app.use('/api', apiRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/startups', startupApiRoutes);
 app.use('/api/learning', learningApiRoutes);
@@ -130,51 +131,7 @@ app.use('/api/collaborate', collaborationApiRoutes);
 app.use('/pages/collaborate', collaborationPageRoutes);
 console.log('Mounting admin routes at /admin');
 app.use('/admin', adminPageRoutes);
-
-// Health check endpoint - lightweight version for fast startup
-app.get('/health', (req, res) => {
-  // Return basic health status immediately without database checks
-  const healthCheck = {
-    status: 'OK',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    environment: process.env.NODE_ENV || 'development',
-    version: require('./package.json').version,
-    database: 'Initializing...', // Will be updated once DB is ready
-  };
-
-  res.status(200).json(healthCheck);
-});
-
-// Detailed health check endpoint
-app.get('/health/detailed', async (req, res) => {
-  try {
-    // Check basic server status
-    const healthCheck = {
-      status: 'OK',
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-      environment: process.env.NODE_ENV || 'development',
-      version: require('./package.json').version,
-    };
-
-    // Check database connection
-    const { testConnection } = require('./config/database');
-    const dbConnected = await testConnection();
-    healthCheck.database = dbConnected ? 'Connected' : 'Disconnected';
-
-    res.status(200).json(healthCheck);
-  } catch (error) {
-    const { Logger } = require('./src/utils/logger');
-    const healthLogger = new Logger('HealthCheck');
-    healthLogger.error('Detailed health check error:', error);
-    res.status(500).json({
-      status: 'ERROR',
-      timestamp: new Date().toISOString(),
-      message: error.message,
-    });
-  }
-});
+app.use('/health', healthRoutes);
 
 // Home route (redirect based on auth status)
 app.get('/', (req, res) => {

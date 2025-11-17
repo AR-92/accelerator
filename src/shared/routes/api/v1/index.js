@@ -1,10 +1,11 @@
 const express = require('express');
+const path = require('path');
 const router = express.Router();
 
-const container = require('../../../../container');
-const { requireAuth } = require('../../../../middleware/auth/auth');
-const aiRoutes = require('../../../../main/routes/api/v1/ai');
-const businessRoutes = require('../../../../main/routes/api/v1/business');
+const container = require('../../../container');
+const { requireAuth } = require('../../../shared/middleware/auth/auth');
+const aiRoutes = require('./ai');
+const businessRoutes = require('./business');
 // const adminRoutes = require('../../../../admin/routes/api/v1/admin');
 
 // Use routes
