@@ -287,13 +287,7 @@ const runMigrations = async () => {
     }
 
     // Optionally load seed data if needed
-    const seedFile = path.join(
-      __dirname,
-      '..',
-      'src',
-      'database',
-      'seedData.sql'
-    );
+    const seedFile = path.join(__dirname, '..', 'sql', 'seedData.sql');
     if (fs.existsSync(seedFile)) {
       dbLogger.info('Loading seed data from SQL file');
       const seedSql = fs.readFileSync(seedFile, 'utf8');

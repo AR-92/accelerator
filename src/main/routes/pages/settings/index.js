@@ -2,13 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { requireAuth } = require('../../../../middleware/auth/auth');
 const SettingsController = require('../../../../main/controllers/SettingsController');
-const AuthService = require('../../../../auth/services/AuthService');
-const UserRepository = require('../../../../main/repositories/UserRepository');
-const { db } = require('../../../../../config/database');
+const container = require('../../../../container');
 
 // Initialize dependencies
-const userRepository = new UserRepository(db);
-const authService = new AuthService(userRepository);
+const authService = container.get('authService');
 const settingsController = new SettingsController(authService);
 
 // Helper function for page data
