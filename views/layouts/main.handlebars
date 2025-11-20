@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/output.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- Hyperscript -->
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+     <script type="text/hyperscript">
+         def updateThemeIcon()
+           set isDark to document.documentElement.classList.contains('dark')
+           set moonSvg to '{{{icon 'moon' size='16' class='h-4 w-4'}}}'
+           set sunSvg to '{{{icon 'sun' size='16' class='h-4 w-4'}}}'
+           set iconElement to document.querySelector('#theme-toggle-icon')
+           if iconElement
+             if isDark
+               set iconElement.innerHTML to moonSvg
+             else
+               set iconElement.innerHTML to sunSvg
+             end
+           end
+         end
+
+         -- Load theme from localStorage on load and update icon
+         on load from document
+           set savedTheme to localStorage.getItem('theme')
+           if savedTheme is 'dark'
+             add .dark to document.documentElement
+           end
+           updateThemeIcon()
+         end
+     </script>
+  </head>
+<body>
+    <div class="min-h-screen">
+        {{> alert}}
+        {{{body}}}
+    </div>
+</body>
+</html>

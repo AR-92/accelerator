@@ -1,0 +1,29 @@
+/* _shadcn-utilities.css — map semantic token variables to convenient classes */
+@layer utilities {
+  .bg-primary { background-color: rgb(var(--color-primary)); }
+  .text-primary-foreground { color: rgb(var(--color-primary-foreground)); }
+
+  .bg-secondary { background-color: rgb(var(--color-secondary)); }
+  .text-secondary-foreground { color: rgb(var(--color-secondary-foreground)); }
+
+  .bg-destructive { background-color: rgb(var(--color-destructive)); }
+  .text-destructive-foreground { color: rgb(var(--color-destructive-foreground)); }
+
+  .bg-accent { background-color: rgb(var(--color-accent)); }
+  .text-accent-foreground { color: rgb(var(--color-accent-foreground)); }
+
+  .bg-card { background-color: rgb(var(--color-card)); }
+  .bg-muted { background-color: rgb(var(--color-muted)); }
+  .border-input { border-color: rgb(var(--color-input)); }
+  .border-default { border-color: rgb(var(--color-border)); }
+  .ring-default { box-shadow: 0 0 0 3px rgb(var(--color-ring) / 0.15); }
+
+  .text-foreground { color: rgb(var(--color-foreground)); }
+  .text-muted-foreground { color: rgb(var(--color-muted-foreground)); }
+
+  /* small convenience utilities */
+  .rounded { border-radius: var(--radius); }
+  .rounded-sm { border-radius: var(--radius-sm); }
+  .rounded-md { border-radius: var(--radius-md); }
+  .rounded-lg { border-radius: var(--radius-lg); }
+}

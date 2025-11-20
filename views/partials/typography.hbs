@@ -1,0 +1,12 @@
+{{!-- partials/typography.hbs --}}
+{{#if h1}}<h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">{{h1}}</h1>{{/if}}
+{{#if h2}}<h2 class="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">{{h2}}</h2>{{/if}}
+{{#if h3}}<h3 class="scroll-m-20 text-2xl font-semibold tracking-tight">{{h3}}</h3>{{/if}}
+{{#if h4}}<h4 class="scroll-m-20 text-xl font-semibold tracking-tight">{{h4}}</h4>{{/if}}
+{{#if p}}<p class="leading-7 [&:not(:first-child)]:mt-6">{{p}}</p>{{/if}}
+{{#if blockquote}}<blockquote class="mt-6 border-l-2 pl-6 italic">{{blockquote}}</blockquote>{{/if}}
+{{#if lead}}<p class="text-xl text-muted-foreground">{{lead}}</p>{{/if}}
+{{#if large}}<div class="text-lg font-semibold">{{large}}</div>{{/if}}
+{{#if small}}<small class="text-sm font-medium leading-none">{{small}}</small>{{/if}}
+{{#if muted}}<p class="text-sm text-muted-foreground">{{muted}}</p>{{/if}}
+{{#if inlineCode}}<code class="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">{{inlineCode}}</code>{{/if}}

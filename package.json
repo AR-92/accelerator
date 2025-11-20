@@ -1,0 +1,55 @@
+{
+  "name": "accelerator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-css": "npx postcss ./public/css/styles.css -o ./public/css/output.css --watch",
+    "build": "npx postcss ./public/css/styles.css -o ./public/css/output.css",
+    "start": "nodemon index.js",
+    "dev": "concurrently \"npm run build-css\" \"npm run start\"",
+    "test": "NODE_OPTIONS=\"--experimental-vm-modules\" jest",
+    "test:watch": "NODE_OPTIONS=\"--experimental-vm-modules\" jest --watch",
+    "test:coverage": "NODE_OPTIONS=\"--experimental-vm-modules\" jest --coverage",
+    "lint": "echo \"Linting not configured yet\" && exit 0",
+    "format": "echo \"Formatting not configured yet\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AR-92/accelerator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/AR-92/accelerator/issues"
+  },
+  "homepage": "https://github.com/AR-92/accelerator#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.84.0",
+    "@tailwindcss/postcss": "^4.1.17",
+    "animate.css": "^4.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.4",
+    "express-rate-limit": "^8.2.1",
+    "express-validator": "^7.3.1",
+    "helmet": "^8.1.0",
+    "lucide-static": "^0.554.0",
+    "postgres": "^3.4.7",
+    "tailwindcss-animate": "^1.0.7",
+    "winston": "^3.18.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.22",
+    "concurrently": "^9.2.1",
+    "jest": "^30.2.0",
+    "nodemon": "^3.1.11",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "supertest": "^7.1.4",
+    "tailwindcss": "^4.1.17"
+  }
+}

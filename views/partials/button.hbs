@@ -1,0 +1,4 @@
+{{!-- partials/button.hbs --}}
+<button type="{{type}}" class="btn {{#if (eq variant "default")}}bg-primary text-primary-foreground hover:bg-primary/90{{/if}}{{#if (eq variant "destructive")}}bg-destructive text-destructive-foreground hover:bg-destructive/90{{/if}}{{#if (eq variant "outline")}}border border-input bg-background hover:bg-accent hover:text-accent-foreground{{/if}}{{#if (eq variant "secondary")}}bg-secondary text-secondary-foreground hover:bg-secondary/80{{/if}}{{#if (eq variant "ghost")}}hover:bg-accent hover:text-accent-foreground{{/if}}{{#if (eq variant "link")}}text-primary underline-offset-4 hover:underline{{/if}} {{#if (eq size "sm")}}h-9 px-3{{/if}}{{#if (eq size "default")}}h-10 px-4 py-2{{/if}}{{#if (eq size "lg")}}h-11 px-8{{/if}}{{#if (eq size "icon")}}h-10 w-10{{/if}}{{#if (eq size "icon-sm")}}size-8{{/if}}{{#if (eq size "icon-lg")}}size-10{{/if}}" {{#if aria-label}}aria-label="{{aria-label}}"{{/if}}>
+  {{{label}}}
+</button>

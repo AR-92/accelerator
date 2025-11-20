@@ -1,0 +1,142 @@
+<div class="container mx-auto py-10">
+    <div class="flex flex-col space-y-8">
+        <!-- Header Section -->
+        <div class="flex items-center justify-end">
+            <button
+                id="theme-toggle-btn"
+                _='on click toggle .dark on document.documentElement
+  set isDark to document.documentElement.classList.contains("dark")
+  if isDark then localStorage.setItem("theme", "dark") else localStorage.setItem("theme", "light")
+  updateThemeIcon()'
+                class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 w-10"
+                title="Toggle theme"
+            >
+                <span id="theme-toggle-icon">{{{icon 'sun' size='16' class='h-4 w-4'}}}</span>
+            </button>
+        </div>
+
+        <!-- Database Status Card -->
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+            <div class="p-6">
+                <div class="flex items-center space-x-2 {{#if supabaseConnected}}text-green-600{{else}}text-destructive{{/if}}">
+                    {{#if supabaseConnected}}
+                        {{{icon 'check' class='h-5 w-5'}}}
+                        <h3 class="text-lg font-semibold">PostgreSQL Connected</h3>
+                    {{else}}
+                        {{{icon 'alert-triangle' class='h-5 w-5'}}}
+                        <h3 class="text-lg font-semibold">Database Connection Failed</h3>
+                    {{/if}}
+                </div>
+                <p class="mt-2 text-sm text-muted-foreground">
+                    {{#if supabaseConnected}}
+                        Direct PostgreSQL connection established successfully. Experience the power of HTMX, Hyperscript, and smooth animations!
+                    {{else}}
+                        {{error}} Please check your .env configuration and ensure your PostgreSQL database is accessible.
+                    {{/if}}
+                </p>
+            </div>
+        </div>
+
+        {{#if supabaseConnected}}
+        <!-- Todo Management Section -->
+        <div class="space-y-6">
+            <div>
+                <h2 class="text-2xl font-bold tracking-tight">Todo Management</h2>
+                <p class="text-muted-foreground">Create and manage your todos with real-time updates.</p>
+            </div>
+
+            <!-- Create Todo Card -->
+            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold mb-4">Create New Todo</h3>
+                     <form
+                         id="createTodoForm"
+                         hx-post="/api/todos"
+                         hx-target="body"
+                         hx-swap="beforeend"
+                         class="space-y-4"
+                     >
+                        <div class="space-y-2">
+                            <label for="title" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Title</label>
+                            <input
+                                type="text"
+                                name="title"
+                                required
+                                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                placeholder="Enter todo title..."
+                            >
+                        </div>
+                        <div class="space-y-2">
+                            <label for="description" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Description</label>
+                            <textarea
+                                name="description"
+                                rows="3"
+                                class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                placeholder="Enter todo description..."
+                            ></textarea>
+                        </div>
+                        <button
+                            type="submit"
+                            class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+                        >
+                            Create Todo
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+             <!-- Todos List Card -->
+             <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                 <div class="p-6">
+                     <h3 class="text-lg font-semibold mb-4">Your Todos</h3>
+                     <form
+                         hx-get="/api/todos"
+                         hx-target="#todosList"
+                         hx-trigger="change, input changed delay:300ms"
+                         class="mb-4 grid grid-cols-1 md:grid-cols-3 gap-2"
+                     >
+                         <input
+                             type="text"
+                             placeholder="Search todos..."
+                             name="search"
+                             class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                         >
+                         <select
+                             name="status"
+                             class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                         >
+                             <option value="">All Status</option>
+                             <option value="pending">Pending</option>
+                             <option value="completed">Completed</option>
+                         </select>
+                         <select
+                             name="limit"
+                             class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                         >
+                             <option value="5">5 per page</option>
+                             <option value="10" selected>10 per page</option>
+                             <option value="20">20 per page</option>
+                             <option value="50">50 per page</option>
+                         </select>
+                     </form>
+                     <div
+                         id="todosList"
+                         hx-get="/api/todos"
+                         hx-trigger="load, todoCreated from:body"
+                         hx-target="this"
+                         hx-swap="innerHTML"
+                         class="space-y-4"
+                     >
+                         <div class="flex items-center justify-center py-8">
+                             <div class="text-sm text-muted-foreground">Loading todos...</div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+        </div>
+        {{/if}}
+
+
+    </div>
+</div>
+</div>

@@ -1,0 +1,96 @@
+/* globals.css — Tailwind v4: imports, @theme tokens, and base layer */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----- Theme tokens (Tailwind v4: CSS-first) -----
+   Fill these with the exact shadcn values you want. These are the
+   canonical semantic variables the components will use. */
+@theme {
+  --color-background: 255 255 255;
+  --color-foreground: 15 23 42;
+  --color-muted-foreground: 115 115 115;
+
+  --color-primary: 59 130 246;
+  --color-primary-foreground: 248 250 252;
+
+  --color-secondary: 241 245 249;
+  --color-secondary-foreground: 59 130 246;
+
+  --color-card: 255 255 255;
+  --color-muted: 241 245 249;
+  --color-accent: 241 245 249;
+  --color-accent-foreground: 59 130 246;
+
+  --color-border: 226 232 240;
+  --color-input: 226 232 240;
+  --color-ring: 59 130 246;
+  --color-destructive: 239 68 68;
+  --color-destructive-foreground: 248 250 252;
+
+  /* radii */
+  --radius: 0.5rem;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+
+/* Fallbacks for environments that don't process @theme (optional) */
+:root {
+  --color-background: 255 255 255;
+  --color-foreground: 15 23 42;
+  --color-muted-foreground: 115 115 115;
+  --color-primary: 59 130 246;
+  --color-primary-foreground: 248 250 252;
+  --color-secondary: 241 245 249;
+  --color-secondary-foreground: 59 130 246;
+  --color-card: 255 255 255;
+  --color-muted: 241 245 249;
+  --color-accent: 241 245 249;
+  --color-accent-foreground: 59 130 246;
+  --color-border: 226 232 240;
+  --color-input: 226 232 240;
+  --color-ring: 59 130 246;
+  --color-destructive: 239 68 68;
+  --color-destructive-foreground: 248 250 252;
+
+  --radius: 0.5rem;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+.prose {
+  --tw-prose-body: rgb(var(--color-foreground));
+  --tw-prose-headings: rgb(var(--color-foreground));
+  --tw-prose-lead: rgb(var(--color-muted-foreground));
+  --tw-prose-links: rgb(var(--color-foreground));
+  --tw-prose-bold: rgb(var(--color-foreground));
+  --tw-prose-counters: rgb(var(--color-muted-foreground));
+  --tw-prose-bullets: rgb(var(--color-muted-foreground));
+  --tw-prose-hr: rgb(var(--color-border));
+  --tw-prose-quotes: rgb(var(--color-foreground));
+  --tw-prose-quote-borders: rgb(var(--color-border));
+  --tw-prose-captions: rgb(var(--color-muted-foreground));
+  --tw-prose-code: rgb(var(--color-foreground));
+  --tw-prose-pre-code: rgb(var(--color-muted-foreground));
+  --tw-prose-pre-bg: rgb(var(--color-muted));
+  --tw-prose-th-borders: rgb(var(--color-border));
+  --tw-prose-td-borders: rgb(var(--color-border));
+}
+
+/* Base helpers so semantic classes can be used in templates */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+}
