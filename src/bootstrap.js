@@ -70,6 +70,8 @@ const bootstrap = async () => {
   const helpPageRoutes = require('./modules/help/routes/pages');
   const collaborationApiRoutes = require('./modules/collaboration/routes/api');
   const collaborationPageRoutes = require('./modules/collaboration/routes/pages');
+  const ideasApiRoutes = require('./modules/ideas/routes/api');
+  const ideasPageRoutes = require('./modules/ideas/routes/pages');
   const healthRoutes = container.get('healthModule');
 
   app.use('/auth', authRoutes);
@@ -83,6 +85,8 @@ const bootstrap = async () => {
   app.use('/help', helpPageRoutes);
   app.use('/api/collaborate', collaborationApiRoutes);
   app.use('/pages/collaborate', collaborationPageRoutes);
+  app.use('/api/v1/ideas', ideasApiRoutes);
+  app.use('/pages', ideasPageRoutes);
   logger.info('Mounting admin routes at /admin');
   app.use('/admin', adminPageRoutes);
   app.use('/health', healthRoutes);

@@ -377,7 +377,7 @@ const createHandlebarsConfig = (pathService) => {
 
   const corporateNavbarPath = path.join(
     pathService.views,
-    'main/partials/_corporate-navbar.hbs'
+    'admin/partials/_corporate-navbar.hbs'
   );
   if (fs.existsSync(corporateNavbarPath)) {
     const corporateNavbarTemplate = fs.readFileSync(
@@ -392,7 +392,7 @@ const createHandlebarsConfig = (pathService) => {
 
   const enterpriseNavbarPath = path.join(
     pathService.views,
-    'main/partials/_enterprise-navbar.hbs'
+    'admin/partials/_enterprise-navbar.hbs'
   );
   if (fs.existsSync(enterpriseNavbarPath)) {
     const enterpriseNavbarTemplate = fs.readFileSync(

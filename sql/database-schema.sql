@@ -149,14 +149,34 @@ CREATE TABLE messages (
 -- IDEAS - Created after users
 CREATE TABLE ideas (
   id SERIAL PRIMARY KEY,
-  owner_user_id INTEGER NOT NULL,
+  user_id INTEGER NOT NULL,
+  href VARCHAR(255) UNIQUE NOT NULL,
   title VARCHAR(255) NOT NULL,
+  type VARCHAR(100) NOT NULL,
+  typeIcon VARCHAR(100) NOT NULL,
+  rating INTEGER DEFAULT 0 CHECK (rating >= 0 AND rating <= 5),
   description TEXT,
-  category VARCHAR(100),
-  status VARCHAR(50) DEFAULT 'draft',
   tags TEXT,
+  is_favorite BOOLEAN DEFAULT FALSE,
   upvotes INTEGER DEFAULT 0,
   downvotes INTEGER DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP
+);
+
+-- PORTFOLIO - Created after users
+CREATE TABLE portfolio (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  description TEXT,
+  category VARCHAR(100) NOT NULL,
+  tags TEXT,
+  votes INTEGER DEFAULT 0,
+  is_public BOOLEAN DEFAULT TRUE,
+  image VARCHAR(500),
+  created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP
 );
@@ -351,9 +371,17 @@ ALTER TABLE tasks
   FOREIGN KEY (assignee_user_id) REFERENCES users(id) ON DELETE SET NULL;
 
 ALTER TABLE messages
-  ADD CONSTRAINT messages_project_id_fkey 
+  ADD CONSTRAINT messages_project_id_fkey
   FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
-  ADD CONSTRAINT messages_user_id_fkey 
+  ADD CONSTRAINT messages_user_id_fkey
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
+
+ALTER TABLE ideas
+  ADD CONSTRAINT ideas_user_id_fkey
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
+
+ALTER TABLE portfolio
+  ADD CONSTRAINT portfolio_user_id_fkey
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
 
 
@@ -394,9 +422,17 @@ CREATE INDEX idx_users_banned_reason ON users(banned_reason);
 CREATE INDEX idx_users_banned_at ON users(banned_at);
 CREATE INDEX idx_users_theme ON users(theme);
 CREATE INDEX idx_collaborations_timestamp ON collaborations(timestamp);
-CREATE INDEX idx_ideas_owner ON ideas(owner_user_id);
-CREATE INDEX idx_ideas_status ON ideas(status);
+CREATE INDEX idx_ideas_user ON ideas(user_id);
+CREATE INDEX idx_ideas_href ON ideas(href);
+CREATE INDEX idx_ideas_type ON ideas(type);
+CREATE INDEX idx_ideas_rating ON ideas(rating);
+CREATE INDEX idx_ideas_is_favorite ON ideas(is_favorite);
 CREATE INDEX idx_ideas_created_at ON ideas(created_at);
+CREATE INDEX idx_portfolio_user ON portfolio(user_id);
+CREATE INDEX idx_portfolio_category ON portfolio(category);
+CREATE INDEX idx_portfolio_is_public ON portfolio(is_public);
+CREATE INDEX idx_portfolio_votes ON portfolio(votes);
+CREATE INDEX idx_portfolio_created_date ON portfolio(created_date);
 CREATE INDEX idx_startups_owner ON startups(owner_user_id);
 CREATE INDEX idx_startups_industry ON startups(industry);
 CREATE INDEX idx_enterprises_owner ON enterprises(owner_user_id);
@@ -723,3 +759,194 @@ LEFT JOIN projects pr ON r.project_id = pr.id
 LEFT JOIN users project_owner ON pr.owner_user_id = project_owner.id
 LEFT JOIN transactions t ON r.transaction_id = t.id
 WHERE giver.deleted_at IS NULL;
+-- CORPORATE TABLE - Comprehensive corporate entity management
+-- Supports enterprise management, initiative tracking, financial oversight, and analytics
+CREATE TABLE corporates (
+  -- Primary identification
+  id SERIAL PRIMARY KEY,
+  corporate_uuid UUID DEFAULT uuid_generate_v4() UNIQUE,
+  name VARCHAR(255) NOT NULL,
+  legal_name VARCHAR(255),                    -- Legal entity name
+  description TEXT,
+  
+  -- Corporate classification and structure
+  industry VARCHAR(100) NOT NULL,            -- Technology, Finance, Healthcare, etc.
+  sector VARCHAR(100),                        -- B2B, B2C, B2G, etc.
+  corporate_type VARCHAR(50) DEFAULT 'corporate', -- 'corporate'|'holding'|'conglomerate'|'subsidiary'
+  parent_corporate_id INTEGER,                -- For subsidiary relationships
+  subsidiary_level INTEGER DEFAULT 0,         -- Hierarchy level (0 = parent)
+  
+  -- Company metrics and information
+  founded_date DATE,
+  company_size VARCHAR(50),                   -- 'small'|'medium'|'large'|'enterprise'
+  employee_count INTEGER DEFAULT 0 CHECK (employee_count >= 0),
+  revenue DECIMAL(15,2),                      -- Annual revenue
+  valuation DECIMAL(15,2),                   -- Company valuation
+  market_cap DECIMAL(15,2),                  -- Market capitalization
+  
+  -- Contact and location information
+  website VARCHAR(500),
+  headquarters VARCHAR(255),                  -- Main headquarters address
+  location VARCHAR(255),                      -- Primary location/city
+  country VARCHAR(100),
+  phone VARCHAR(50),
+  email VARCHAR(255),
+  
+  -- Corporate status and verification
+  status VARCHAR(50) DEFAULT 'active',        -- 'active'|'inactive'|'acquired'|'failed'|'under_review'
+  verification_status VARCHAR(50) DEFAULT 'pending', -- 'verified'|'pending'|'rejected'
+  is_public BOOLEAN DEFAULT FALSE,            -- Whether corporate info is public
+  listing_status VARCHAR(50),                 -- 'private'|'public'|'delisted'
+  
+  -- Enterprise management metrics
+  total_enterprises INTEGER DEFAULT 0 CHECK (total_enterprises >= 0),
+  active_enterprises INTEGER DEFAULT 0 CHECK (active_enterprises >= 0),
+  total_initiatives INTEGER DEFAULT 0 CHECK (total_initiatives >= 0),
+  active_initiatives INTEGER DEFAULT 0 CHECK (active_initiatives >= 0),
+  corporate_users INTEGER DEFAULT 0 CHECK (corporate_users >= 0),
+  
+  -- Financial oversight and budgeting
+  total_budget DECIMAL(15,2) DEFAULT 0,       -- Total corporate budget
+  allocated_budget DECIMAL(15,2) DEFAULT 0,  -- Budget allocated to enterprises
+  available_budget DECIMAL(15,2) DEFAULT 0,  -- Remaining available budget
+  budget_variance DECIMAL(10,2) DEFAULT 0,   -- Budget variance percentage
+  fiscal_year_start DATE,                    -- Fiscal year start date
+  
+  -- Performance and analytics
+  avg_initiative_score DECIMAL(3,1) DEFAULT 0.0 CHECK (avg_initiative_score >= 0 AND avg_initiative_score <= 10),
+  avg_enterprise_cycle_time INTEGER DEFAULT 0, -- Average enterprise cycle time in days
+  success_rate DECIMAL(5,2) DEFAULT 0.0 CHECK (success_rate >= 0 AND success_rate <= 100),
+  growth_rate DECIMAL(5,2) DEFAULT 0.0,      -- Growth rate percentage
+  performance_score DECIMAL(3,1) DEFAULT 0.0 CHECK (performance_score >= 0 AND performance_score <= 10),
+  
+  -- Corporate governance and compliance
+  registration_number VARCHAR(100),           -- Business registration number
+  tax_id VARCHAR(100),                        -- Tax identification number
+  compliance_status VARCHAR(50) DEFAULT 'compliant', -- 'compliant'|'non_compliant'|'under_review'
+  last_audit_date DATE,
+  next_audit_date DATE,
+  certifications JSONB,                       -- Array of certifications and accreditations
+  
+  -- Executive and leadership information
+  ceo_name VARCHAR(255),
+  cfo_name VARCHAR(255),
+  coo_name VARCHAR(255),
+  board_members JSONB,                       -- Array of board member information
+  executive_team JSONB,                       -- Executive team details
+  
+  -- Integration and relationships
+  owner_user_id INTEGER,                      -- Corporate owner/admin user
+  organization_id INTEGER,                    -- Link to organizations table if needed
+  
+  -- Metadata and timestamps
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  deleted_at TIMESTAMP,                        -- Soft delete support
+  
+  -- Search and indexing support
+  search_vector tsvector,                     -- Full-text search vector
+  tags JSONB,                                -- Corporate tags and categories
+  
+  -- Constraints and checks
+  CONSTRAINT corporates_name_check CHECK (length(trim(name)) >= 2),
+  CONSTRAINT corporates_email_check CHECK (email IS NULL OR email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
+  CONSTRAINT corporates_website_check CHECK (website IS NULL OR website ~* '^https?://.+'),
+  CONSTRAINT corporates_status_check CHECK (status IN ('active', 'inactive', 'acquired', 'failed', 'under_review')),
+  CONSTRAINT corporates_verification_check CHECK (verification_status IN ('verified', 'pending', 'rejected')),
+  CONSTRAINT corporates_corporate_type_check CHECK (corporate_type IN ('corporate', 'holding', 'conglomerate', 'subsidiary')),
+  CONSTRAINT corporates_company_size_check CHECK (company_size IS NULL OR company_size IN ('small', 'medium', 'large', 'enterprise')),
+  CONSTRAINT corporates_compliance_check CHECK (compliance_status IN ('compliant', 'non_compliant', 'under_review'))
+);
+
+-- Create indexes for Corporate table
+CREATE INDEX idx_corporates_corporate_uuid ON corporates(corporate_uuid);
+CREATE INDEX idx_corporates_name ON corporates(name);
+CREATE INDEX idx_corporates_industry ON corporates(industry);
+CREATE INDEX idx_corporates_sector ON corporates(sector);
+CREATE INDEX idx_corporates_status ON corporates(status);
+CREATE INDEX idx_corporates_corporate_type ON corporates(corporate_type);
+CREATE INDEX idx_corporates_parent_corporate_id ON corporates(parent_corporate_id);
+CREATE INDEX idx_corporates_owner_user_id ON corporates(owner_user_id);
+CREATE INDEX idx_corporates_verification_status ON corporates(verification_status);
+CREATE INDEX idx_corporates_created_at ON corporates(created_at);
+CREATE INDEX idx_corporates_search_vector ON corporates USING gin(search_vector);
+
+-- Create trigger for updating search_vector
+CREATE OR REPLACE FUNCTION corporates_update_search_vector()
+RETURNS trigger AS $$
+BEGIN
+  NEW.search_vector := to_tsvector('english', 
+    COALESCE(NEW.name, '') || ' ' ||
+    COALESCE(NEW.description, '') || ' ' ||
+    COALESCE(NEW.industry, '') || ' ' ||
+    COALESCE(NEW.sector, '') || ' ' ||
+    COALESCE(NEW.location, '') || ' ' ||
+    COALESCE(NEW.country, '')
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_corporates_update_search_vector
+  BEFORE INSERT OR UPDATE ON corporates
+  FOR EACH ROW EXECUTE FUNCTION corporates_update_search_vector();
+
+-- Create trigger for updated_at
+CREATE TRIGGER trigger_corporates_updated_at
+  BEFORE UPDATE ON corporates
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Add comments for Corporate table
+COMMENT ON TABLE corporates IS 'Comprehensive corporate entity management table supporting enterprise management, initiative tracking, financial oversight, and analytics';
+COMMENT ON COLUMN corporates.id IS 'Primary key for corporate records';
+COMMENT ON COLUMN corporates.corporate_uuid IS 'Unique UUID for corporate identification';
+COMMENT ON COLUMN corporates.name IS 'Corporate display name';
+COMMENT ON COLUMN corporates.legal_name IS 'Official legal entity name';
+COMMENT ON COLUMN corporates.industry IS 'Primary industry classification';
+COMMENT ON COLUMN corporates.sector IS 'Business sector (B2B, B2C, B2G, etc.)';
+COMMENT ON COLUMN corporates.corporate_type IS 'Type of corporate entity';
+COMMENT ON COLUMN corporates.parent_corporate_id IS 'Parent corporate for subsidiary relationships';
+COMMENT ON COLUMN corporates.subsidiary_level IS 'Hierarchy level in corporate structure';
+COMMENT ON COLUMN corporates.company_size IS 'Company size classification';
+COMMENT ON COLUMN corporates.employee_count IS 'Total number of employees';
+COMMENT ON COLUMN corporates.revenue IS 'Annual revenue in USD';
+COMMENT ON COLUMN corporates.valuation IS 'Current company valuation';
+COMMENT ON COLUMN corporates.market_cap IS 'Market capitalization if publicly traded';
+COMMENT ON COLUMN corporates.headquarters IS 'Main headquarters address';
+COMMENT ON COLUMN corporates.location IS 'Primary operating location';
+COMMENT ON COLUMN corporates.status IS 'Current operational status';
+COMMENT ON COLUMN corporates.verification_status IS 'Corporate verification status';
+COMMENT ON COLUMN corporates.is_public IS 'Whether corporate information is public';
+COMMENT ON COLUMN corporates.listing_status IS 'Stock listing status';
+COMMENT ON COLUMN corporates.total_enterprises IS 'Total number of enterprises under corporate';
+COMMENT ON COLUMN corporates.active_enterprises IS 'Number of active enterprises';
+COMMENT ON COLUMN corporates.total_initiatives IS 'Total corporate initiatives';
+COMMENT ON COLUMN corporates.active_initiatives IS 'Number of active initiatives';
+COMMENT ON COLUMN corporates.corporate_users IS 'Number of corporate users';
+COMMENT ON COLUMN corporates.total_budget IS 'Total annual corporate budget';
+COMMENT ON COLUMN corporates.allocated_budget IS 'Budget allocated to enterprises';
+COMMENT ON COLUMN corporates.available_budget IS 'Remaining available budget';
+COMMENT ON COLUMN corporates.budget_variance IS 'Budget variance percentage';
+COMMENT ON COLUMN corporates.fiscal_year_start IS 'Fiscal year start date';
+COMMENT ON COLUMN corporates.avg_initiative_score IS 'Average initiative performance score (0-10)';
+COMMENT ON COLUMN corporates.avg_enterprise_cycle_time IS 'Average enterprise cycle time in days';
+COMMENT ON COLUMN corporates.success_rate IS 'Overall success rate percentage';
+COMMENT ON COLUMN corporates.growth_rate IS 'Growth rate percentage';
+COMMENT ON COLUMN corporates.performance_score IS 'Overall performance score (0-10)';
+COMMENT ON COLUMN corporates.registration_number IS 'Business registration number';
+COMMENT ON COLUMN corporates.tax_id IS 'Tax identification number';
+COMMENT ON COLUMN corporates.compliance_status IS 'Regulatory compliance status';
+COMMENT ON COLUMN corporates.last_audit_date IS 'Date of last compliance audit';
+COMMENT ON COLUMN corporates.next_audit_date IS 'Scheduled next audit date';
+COMMENT ON COLUMN corporates.certifications IS 'JSON array of certifications and accreditations';
+COMMENT ON COLUMN corporates.ceo_name IS 'Chief Executive Officer name';
+COMMENT ON COLUMN corporates.cfo_name IS 'Chief Financial Officer name';
+COMMENT ON COLUMN corporates.coo_name IS 'Chief Operating Officer name';
+COMMENT ON COLUMN corporates.board_members IS 'JSON array of board member information';
+COMMENT ON COLUMN corporates.executive_team IS 'JSON array of executive team details';
+COMMENT ON COLUMN corporates.owner_user_id IS 'Corporate owner/admin user reference';
+COMMENT ON COLUMN corporates.organization_id IS 'Link to organizations table';
+COMMENT ON COLUMN corporates.deleted_at IS 'Soft delete timestamp';
+COMMENT ON COLUMN corporates.search_vector IS 'Full-text search vector';
+COMMENT ON COLUMN corporates.tags IS 'JSON array of corporate tags and categories';
+
