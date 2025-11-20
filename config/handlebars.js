@@ -345,7 +345,7 @@ const createHandlebarsConfig = (pathService) => {
   );
   if (fs.existsSync(navbarPath)) {
     const navbarTemplate = fs.readFileSync(navbarPath, 'utf8');
-    handlebars.registerPartial('shared/navbar', navbarTemplate);
+    handlebars.registerPartial('components/navbar', navbarTemplate);
   }
 
   const learnNavbarPath = path.join(
