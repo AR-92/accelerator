@@ -259,6 +259,64 @@ class DatabaseService {
     }
   }
 
+  // List all tables in the database
+  async getAllTables() {
+    try {
+      logger.debug('Fetching all tables from Supabase...');
+
+      // Try RPC function first (requires creation in Supabase)
+      const { data, error } = await this.supabase.rpc('get_table_list');
+
+      if (!error && data) {
+        const tables = data.map(row => row.name || row).sort();
+        logger.debug(`Successfully fetched ${tables.length} tables from Supabase via RPC: ${tables.join(', ')}`);
+        return tables;
+      }
+
+      // Fallback: try direct query (may be restricted)
+      logger.warn('RPC not available, trying direct query...');
+      try {
+        const { data: altData, error: altError } = await this.supabase
+          .from('pg_catalog.pg_tables')
+          .select('tablename')
+          .eq('schemaname', 'public');
+
+        if (!altError && altData) {
+          const tables = altData.map(row => row.tablename).filter(name => !name.startsWith('_')).sort();
+          logger.debug(`Successfully fetched ${tables.length} tables from Supabase via pg_catalog: ${tables.join(', ')}`);
+          return tables;
+        }
+      } catch (altError) {
+        logger.warn('Direct query failed:', altError.message);
+      }
+
+      // Final fallback: return known tables
+      logger.warn('Using fallback table list. To get full list, create RPC function in Supabase SQL Editor:');
+      logger.warn(`
+CREATE OR REPLACE FUNCTION get_table_list()
+RETURNS TABLE(name text)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN QUERY
+  SELECT tablename::text
+  FROM pg_catalog.pg_tables
+  WHERE schemaname = 'public'
+  AND tablename NOT LIKE '\\_%'
+  ORDER BY tablename;
+END;
+$$;
+      `);
+      return ['todos']; // Known table
+    } catch (error) {
+      logger.error('Error fetching tables:', {
+        message: error.message,
+        stack: error.stack
+      });
+      return ['todos'];
+    }
+  }
+
   // Database health check
   async testConnection() {
     try {
@@ -344,4 +402,5 @@ INSERT INTO todos (title, description, completed) VALUES
   }
 }
 
+export { DatabaseService };
 export default new DatabaseService();

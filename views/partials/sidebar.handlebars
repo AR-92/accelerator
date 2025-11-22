@@ -1,13 +1,13 @@
 <!-- Sidebar -->
-<div class="w-80">
-  <div class="bg-white border border-gray-100 overflow-hidden">
+<div id="sidebar" class="w-56 transition-all duration-300">
+  <div class="bg-card border border-border overflow-hidden">
     <nav class="px-3 py-3 text-sm">
       <!-- Main Section -->
-      <div class="text-xs text-slate-400 px-3 pb-2">Main</div>
+       <div class="text-xs text-muted-foreground px-3 pb-2 sidebar-text">Main</div>
       <ul class="space-y-1">
-        <li>
-          <a href="/admin/dashboard"
-            class="flex items-center px-3 py-2 rounded-md bg-purple-200 text-purple-500 font-medium leading-[2.7] hover:bg-purple-200 hover:text-purple-500">
+         <li>
+           <a href="/admin/dashboard" title="Dashboard"
+             class="flex items-center px-3 py-2 rounded-md bg-accent text-accent-foreground font-medium leading-[2.7] hover:bg-accent hover:text-accent-foreground">
             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
               stroke-width="2" viewBox="0 0 24 24">
               <rect width="7" height="9" x="3" y="3" rx="1"></rect>
@@ -15,12 +15,12 @@
               <rect width="7" height="9" x="14" y="12" rx="1"></rect>
               <rect width="7" height="5" x="3" y="16" rx="1"></rect>
             </svg>
-            <span class="font-medium">Dashboard</span>
+            <span class="font-medium sidebar-text">Dashboard</span>
           </a>
         </li>
-        <li>
-          <a href="/todos"
-            class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+         <li>
+           <a href="/admin/todos" title="Todos"
+             class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
               stroke-width="2" viewBox="0 0 24 24">
               <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2.5"></path>
@@ -28,12 +28,24 @@
               <path d="M13.5 11H15a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2.5"></path>
               <path d="M12 16v3"></path>
             </svg>
-            <span class="font-medium">Todos</span>
+            <span class="font-medium sidebar-text">Todos</span>
           </a>
         </li>
-        <li>
-          <a href="/admin/users"
-            class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+         <li>
+           <a href="/admin/tables" title="Tables"
+             class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+            <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+              stroke-width="2" viewBox="0 0 24 24">
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+              <line x1="3" y1="9" x2="21" y2="9"></line>
+              <line x1="9" y1="21" x2="9" y2="9"></line>
+            </svg>
+            <span class="font-medium sidebar-text">Tables</span>
+          </a>
+        </li>
+         <li>
+           <a href="/admin/users" title="Users"
+             class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
               stroke-width="2" viewBox="0 0 24 24">
               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
@@ -41,12 +53,12 @@
               <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
               <circle cx="9" cy="7" r="4"></circle>
             </svg>
-            <span class="font-medium">Users</span>
+            <span class="font-medium sidebar-text">Users</span>
           </a>
         </li>
-        <li>
-          <a href="/admin/ideas"
-            class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+         <li>
+           <a href="/admin/ideas" title="Ideas"
+             class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
               stroke-width="2" viewBox="0 0 24 24">
               <path
@@ -55,24 +67,24 @@
               <path d="M9 18h6"></path>
               <path d="M10 22h4"></path>
             </svg>
-            <span class="font-medium">Ideas</span>
+            <span class="font-medium sidebar-text">Ideas</span>
           </a>
         </li>
-        <li>
-          <a href="/admin/votes"
-            class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+         <li>
+           <a href="/admin/votes" title="Votes"
+             class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
               stroke-width="2" viewBox="0 0 24 24">
               <path
                 d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5">
               </path>
             </svg>
-            <span class="font-medium">Votes</span>
+            <span class="font-medium sidebar-text">Votes</span>
           </a>
         </li>
-        <li>
-          <a href="/admin/collaborations"
-            class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+         <li>
+           <a href="/admin/collaborations" title="Collaborations"
+             class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
               stroke-width="2" viewBox="0 0 24 24">
               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
@@ -80,17 +92,17 @@
               <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
               <circle cx="9" cy="7" r="4"></circle>
             </svg>
-            <span class="font-medium">Collaborations</span>
+            <span class="font-medium sidebar-text">Collaborations</span>
           </a>
         </li>
       </ul>
 
       <!-- Content Section -->
-      <div class="text-xs text-slate-400 px-3 pt-4 pb-2">Content Management</div>
+       <div class="text-xs text-muted-foreground px-3 pt-4 pb-2 sidebar-text">Content Management</div>
       <ul class="space-y-1">
-        <li>
-          <a href="/admin/content"
-            class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+         <li>
+           <a href="/admin/content" title="Content"
+             class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
               stroke-width="2" viewBox="0 0 24 24">
               <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
@@ -99,66 +111,357 @@
               <path d="M16 13H8"></path>
               <path d="M16 17H8"></path>
             </svg>
-            <span class="font-medium">Content</span>
+            <span class="font-medium sidebar-text">Content</span>
           </a>
         </li>
-        <li>
-          <a href="/admin/landing-page"
-            class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+         <li>
+           <a href="/admin/landing-page" title="Landing Page"
+             class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
               stroke-width="2" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="10"></circle>
               <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
               <path d="M2 12h20"></path>
             </svg>
-            <span class="font-medium">Landing Page</span>
+            <span class="font-medium sidebar-text">Landing Page</span>
           </a>
         </li>
       </ul>
 
-      <!-- Financial Section -->
-      <div class="text-xs text-slate-400 px-3 pt-4 pb-2">Financial</div>
-      <ul class="space-y-1">
-        <li>
-          <a href="/admin/packages"
-            class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
-            <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
-              stroke-width="2" viewBox="0 0 24 24">
-              <path
-                d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z">
-              </path>
-              <path d="M12 22V12"></path>
-              <polyline points="3.29 7 12 12 20.71 7"></polyline>
-              <path d="m7.5 4.27 9 5.15"></path>
-            </svg>
-            Packages
-          </a>
-        </li>
-        <li>
-          <a href="/admin/billing"
-            class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
-            <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
-              stroke-width="2" viewBox="0 0 24 24">
-              <rect width="20" height="14" x="2" y="5" rx="2"></rect>
-              <line x1="2" y1="10" x2="22" y2="10"></line>
-            </svg>
-            Billing
-          </a>
-        </li>
-        <li>
-          <a href="/admin/rewards"
-            class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
-            <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
-              stroke-width="2" viewBox="0 0 24 24">
-              <rect x="3" y="8" width="18" height="4" rx="1"></rect>
-              <path d="M12 8v13"></path>
-              <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
-              <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path>
-            </svg>
-            Rewards
-          </a>
-        </li>
-      </ul>
+       <!-- System Section -->
+       <div class="text-xs text-muted-foreground px-3 pt-4 pb-2 sidebar-text">System</div>
+       <ul class="space-y-1">
+         <li>
+           <a href="/admin/system-health" title="System Health"
+             class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path
+                 d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2">
+               </path>
+             </svg>
+             <span class="font-medium sidebar-text">System Health</span>
+           </a>
+         </li>
+         <li>
+           <a href="/admin/notifications" title="Notifications"
+             class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path d="M10.268 21a2 2 0 0 0 3.464 0"></path>
+               <path
+                 d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326">
+               </path>
+             </svg>
+             <span class="font-medium sidebar-text">Notifications</span>
+           </a>
+         </li>
+         <li>
+           <a href="/admin/activity" title="Activity Log"
+             class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path
+                 d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2">
+               </path>
+             </svg>
+             <span class="font-medium sidebar-text">Activity Log</span>
+           </a>
+         </li>
+       </ul>
+
+        <!-- Business Section -->
+        <div class="text-xs text-muted-foreground px-3 pt-4 pb-2 sidebar-text">Business</div>
+       <ul class="space-y-1">
+          <li>
+            <a href="/admin/business-model" title="Business Model"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+               <line x1="3" y1="9" x2="21" y2="9"></line>
+               <line x1="9" y1="21" x2="9" y2="9"></line>
+             </svg>
+             <span class="sidebar-text">Business Model</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/business-plan" title="Business Plan"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+               <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+             </svg>
+             <span class="sidebar-text">Business Plan</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/financial-model" title="Financial Model"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+               <line x1="2" y1="10" x2="22" y2="10"></line>
+             </svg>
+             <span class="sidebar-text">Financial Model</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/pitchdeck" title="PitchDeck"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+               <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+             </svg>
+             <span class="sidebar-text">PitchDeck</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/valuation" title="Valuation"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+             </svg>
+             <span class="sidebar-text">Valuation</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/funding" title="Funding"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <rect x="3" y="8" width="18" height="4" rx="1"></rect>
+               <path d="M12 8v13"></path>
+               <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
+             </svg>
+             <span class="sidebar-text">Funding</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/team" title="Team"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+               <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+               <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+               <circle cx="9" cy="7" r="4"></circle>
+             </svg>
+             <span class="sidebar-text">Team</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/legal" title="Legal"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path d="M12 2l3 3 3-3v8a5 5 0 0 1-10 0V2z"></path>
+               <path d="M9 12l2 2 4-4"></path>
+             </svg>
+             <span class="sidebar-text">Legal</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/marketing" title="Marketing"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <circle cx="12" cy="12" r="10"></circle>
+               <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+               <path d="M2 12h20"></path>
+             </svg>
+             <span class="sidebar-text">Marketing</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/corporate" title="Corporate"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect>
+               <rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect>
+               <line x1="6" y1="6" x2="6.01" y2="6"></line>
+               <line x1="6" y1="10" x2="6.01" y2="10"></line>
+               <line x1="10" y1="6" x2="10.01" y2="6"></line>
+               <line x1="10" y1="10" x2="10.01" y2="10"></line>
+             </svg>
+             <span class="sidebar-text">Corporate</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/enterprises" title="Enterprises"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect>
+               <rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect>
+               <line x1="6" y1="6" x2="6.01" y2="6"></line>
+               <line x1="6" y1="10" x2="6.01" y2="10"></line>
+               <line x1="10" y1="6" x2="10.01" y2="6"></line>
+               <line x1="10" y1="10" x2="10.01" y2="10"></line>
+             </svg>
+             <span class="sidebar-text">Enterprises</span>
+           </a>
+         </li>
+       </ul>
+
+        <!-- Learning Section -->
+        <div class="text-xs text-muted-foreground px-3 pt-4 pb-2 sidebar-text">Learning</div>
+       <ul class="space-y-1">
+          <li>
+            <a href="/admin/learning-content" title="Learning Content"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+               <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+             </svg>
+             <span class="sidebar-text">Learning Content</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/learning-categories" title="Learning Categories"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"></path>
+               <path d="M8 5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2H8V5z"></path>
+             </svg>
+             <span class="sidebar-text">Learning Categories</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/learning-assessments" title="Learning Assessments"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2.5"></path>
+               <path d="M9 11V9a3 3 0 0 1 6 0v2"></path>
+               <path d="M13.5 11H15a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2.5"></path>
+               <path d="M12 16v3"></path>
+             </svg>
+             <span class="sidebar-text">Learning Assessments</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/learning-analytics" title="Learning Analytics"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path d="M3 3v18h18"></path>
+               <path d="M18 17V9"></path>
+               <path d="M13 17V5"></path>
+               <path d="M8 17v-3"></path>
+             </svg>
+             <span class="sidebar-text">Learning Analytics</span>
+           </a>
+         </li>
+       </ul>
+
+        <!-- Projects Section -->
+        <div class="text-xs text-muted-foreground px-3 pt-4 pb-2 sidebar-text">Projects</div>
+       <ul class="space-y-1">
+          <li>
+            <a href="/admin/messages" title="Messages"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+             </svg>
+             <span class="sidebar-text">Messages</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/project-collaborators" title="Project Collaborators"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+               <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+               <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+               <circle cx="9" cy="7" r="4"></circle>
+             </svg>
+             <span class="sidebar-text">Project Collaborators</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/calendar" title="Calendar"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+               <line x1="16" y1="2" x2="16" y2="6"></line>
+               <line x1="8" y1="2" x2="8" y2="6"></line>
+               <line x1="3" y1="10" x2="21" y2="10"></line>
+             </svg>
+             <span class="sidebar-text">Calendar</span>
+           </a>
+         </li>
+       </ul>
+
+        <!-- Help Section -->
+        <div class="text-xs text-muted-foreground px-3 pt-4 pb-2 sidebar-text">Help</div>
+       <ul class="space-y-1">
+          <li>
+            <a href="/admin/help-center" title="Help Center"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <circle cx="12" cy="12" r="10"></circle>
+               <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+               <path d="M12 17h.01"></path>
+             </svg>
+             <span class="sidebar-text">Help Center</span>
+           </a>
+         </li>
+       </ul>
+
+        <!-- Financial Section -->
+        <div class="text-xs text-muted-foreground px-3 pt-4 pb-2 sidebar-text">Financial</div>
+       <ul class="space-y-1">
+          <li>
+            <a href="/admin/packages" title="Packages"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <path
+                 d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z">
+               </path>
+               <path d="M12 22V12"></path>
+               <polyline points="3.29 7 12 12 20.71 7"></polyline>
+               <path d="m7.5 4.27 9 5.15"></path>
+             </svg>
+             <span class="sidebar-text">Packages</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/billing" title="Billing"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+               <line x1="2" y1="10" x2="22" y2="10"></line>
+             </svg>
+             <span class="sidebar-text">Billing</span>
+           </a>
+         </li>
+          <li>
+            <a href="/admin/rewards" title="Rewards"
+              class="flex items-center px-3 py-2 rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+             <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+               stroke-width="2" viewBox="0 0 24 24">
+               <rect x="3" y="8" width="18" height="4" rx="1"></rect>
+               <path d="M12 8v13"></path>
+               <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
+               <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path>
+             </svg>
+             <span class="sidebar-text">Rewards</span>
+           </a>
+         </li>
+       </ul>
     </nav>
   </div>
 </div>

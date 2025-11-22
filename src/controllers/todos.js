@@ -98,18 +98,42 @@ const renderTableRowsHtml = (todos) => {
 export const getHome = async (req, res) => {
   try {
     const isConnected = await databaseService.testConnection();
-    logger.info('Home page accessed');
+    logger.info('Dashboard page accessed');
 
-    res.render('home', {
-      title: 'Todo App',
-      message: '',
+    // Get some basic stats for the dashboard
+    let totalTodos = 0;
+    let completedTodos = 0;
+    let pendingTodos = 0;
+    let recentTodos = [];
+
+    if (isConnected) {
+      const allTodos = await Todo.findAll();
+      totalTodos = allTodos.length;
+      completedTodos = allTodos.filter(todo => todo.completed).length;
+      pendingTodos = totalTodos - completedTodos;
+
+      // Get recent todos (last 5)
+      recentTodos = allTodos
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .slice(0, 5);
+    }
+
+    res.render('main', {
+      title: 'Dashboard',
+      totalTodos,
+      completedTodos,
+      pendingTodos,
+      recentTodos,
       supabaseConnected: isConnected
     });
   } catch (error) {
-    logger.error('Error testing database connection:', error);
-    res.render('home', {
-      title: 'Todo App',
-      message: '',
+    logger.error('Error loading dashboard:', error);
+    res.render('main', {
+      title: 'Dashboard',
+      totalTodos: 0,
+      completedTodos: 0,
+      pendingTodos: 0,
+      recentTodos: [],
       supabaseConnected: false,
       error: error.message
     });
@@ -308,31 +332,31 @@ export const getTodosTable = async (req, res) => {
 
       const colspan = columns.length + 1 + 1; // checkbox + actions
 
-      res.render('main', {
-        title: 'Todos',
-        tableId: 'todos',
-        entityName: 'todo',
-        showCheckbox: true,
-        showBulkActions: true,
-        columns,
-        data: todos,
-        actions,
-        bulkActions,
-        pagination,
-        query: {
-          search: search || '',
-          status: status || ''
-        },
-        currentUrl: '/todos',
-        colspan,
-        supabaseConnected: isConnected
-      });
+       res.render('todos', {
+         title: 'Todos',
+         tableId: 'todos',
+         entityName: 'todo',
+         showCheckbox: true,
+         showBulkActions: true,
+         columns,
+         data: todos,
+         actions,
+         bulkActions,
+         pagination,
+         query: {
+           search: search || '',
+           status: status || ''
+         },
+         currentUrl: '/todos',
+         colspan,
+         supabaseConnected: isConnected
+       });
     }
   } catch (error) {
     logger.error('Error loading todos table:', error);
-    res.render('main', {
+    res.render('todos', {
       title: 'Todos',
-      todos: [],
+      data: [],
       pagination: {
         currentPage: 1,
         limit: 10,
@@ -357,6 +381,6 @@ export const getTodosTable = async (req, res) => {
 };
 
 export default function homeRoutes(app) {
-  app.get('/', getTodosTable);
-  app.get('/todos', getTodosTable);
+  app.get('/', getHome);
+  app.get('/todos', (req, res) => res.redirect('/admin/todos'));
 }

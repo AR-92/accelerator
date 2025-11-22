@@ -1,0 +1,58 @@
+<!-- Todos Management Content -->
+<div class="max-w-7xl mx-auto rounded-xl overflow-hidden bg-card ring-1 ring-border flex flex-col min-h-[600px] mx-4 my-4">
+
+  <!-- Page Header -->
+  <header class="sticky top-0 z-20 bg-card text-card-foreground p-5 border-b border-border">
+    <!-- Page Title and Description -->
+    <div class="mb-6 flex justify-between">
+
+      <div class="text-left">
+        <h1 class="text-3xl font-bold text-card-foreground mb-2">Todos Management</h1>
+        <p class="text-muted-foreground">Manage and organize all system todos efficiently</p>
+      </div>
+
+      <!-- Add Todo Button -->
+      <div class="flex items-center gap-3">
+        <button onclick="openAddTodoModal()"
+          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors">
+          <svg class="w-4 h-4 mr-2 lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"></path>
+            <path d="M12 5v14"></path>
+          </svg>
+          Add Todo
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Filters and Search -->
+    <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+      <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+         <!-- Search -->
+         <div class="relative">
+           <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+             <svg class="h-5 w-5 text-muted-foreground lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+               <circle cx="11" cy="11" r="8"></circle>
+               <path d="m21 21-4.35-4.35"></path>
+             </svg>
+           </div>
+           <input type="text" name="search" value="{{query.search}}"
+             class="block w-full pl-10 pr-3 py-2 border border-input rounded-md leading-5 bg-background placeholder-muted-foreground text-foreground focus:outline-none focus:ring-1 focus:ring-ring focus:border-ring sm:text-sm"
+             placeholder="Search todos..."
+             hx-get="/admin/todos" hx-target="#todosTableContainer" hx-trigger="input changed delay:300ms, keyup[key=='Enter']"
+             hx-include="[name='status'],[name='limit']">
+         </div>
+
+         <!-- Status Filter -->
+         <select name="status" hx-get="/admin/todos" hx-target="#todosTableContainer" hx-include="[name='search'],[name='limit']"
+           class="inline-flex items-center px-3 py-2 border border-input rounded-md text-sm font-medium text-foreground bg-background hover:bg-accent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring">
+          <option value="">All Status</option>
+          <option value="pending" {{#if (eq query.status 'pending')}}selected{{/if}}>Pending</option>
+          <option value="completed" {{#if (eq query.status 'completed')}}selected{{/if}}>Completed</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  {{> table}}
+</div>

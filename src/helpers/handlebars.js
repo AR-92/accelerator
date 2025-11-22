@@ -2,6 +2,11 @@ import icons from 'lucide-static';
 
 export const handlebarsHelpers = {
   eq: function(a, b) { return a === b; },
+  ne: function(a, b) { return a !== b; },
+  gt: function(a, b) { return a > b; },
+  gte: function(a, b) { return a >= b; },
+  lt: function(a, b) { return a < b; },
+  lte: function(a, b) { return a <= b; },
   len: function(arr) { return arr ? arr.length : 0; },
   add: function(...args) { return args.slice(0, -1).reduce((a, b) => a + b, 0); },
   statusClass: function(status) {

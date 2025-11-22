@@ -29,14 +29,11 @@
            end
          end
 
-         -- Load theme from localStorage on load and update icon
-         on load from document
-           set savedTheme to localStorage.getItem('theme')
-           if savedTheme is 'dark'
-             add .dark to document.documentElement
-           end
-           updateThemeIcon()
-         end
+          -- Load theme from localStorage on load and update icon
+          on load from document
+            initializeTheme()
+            initializeSidebar()
+          end
      </script>
 </head>
 <body>
@@ -198,6 +195,119 @@
         // Export functionality (placeholder)
         function exportToCSV() {
             // Export to CSV functionality would be implemented here
+        }
+
+        // Sidebar toggle functionality
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const isCollapsed = sidebar.classList.contains('w-16');
+
+            if (isCollapsed) {
+                sidebar.classList.remove('w-16');
+                sidebar.classList.add('w-56');
+                document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'inline');
+                // Restore normal padding and margins for expanded state
+                document.querySelectorAll('#sidebar a').forEach(link => {
+                    link.classList.remove('px-1', 'justify-center');
+                    link.classList.add('px-3');
+                });
+                document.querySelectorAll('#sidebar svg').forEach(icon => {
+                    icon.classList.add('mr-3');
+                });
+            } else {
+                sidebar.classList.remove('w-56');
+                sidebar.classList.add('w-16');
+                document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'none');
+                // Adjust padding for collapsed state and remove margins
+                document.querySelectorAll('#sidebar a').forEach(link => {
+                    link.classList.remove('px-3');
+                    link.classList.add('px-1', 'justify-center');
+                });
+                document.querySelectorAll('#sidebar svg').forEach(icon => {
+                    icon.classList.remove('mr-3');
+                });
+            }
+
+            // Save state to localStorage
+            localStorage.setItem('sidebarCollapsed', !isCollapsed);
+        }
+
+        // Initialize sidebar state on load
+        function initializeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+
+            if (isCollapsed) {
+                sidebar.classList.remove('w-56');
+                sidebar.classList.add('w-16');
+                document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'none');
+                // Apply collapsed padding and remove margins
+                document.querySelectorAll('#sidebar a').forEach(link => {
+                    link.classList.remove('px-3');
+                    link.classList.add('px-1', 'justify-center');
+                });
+                document.querySelectorAll('#sidebar svg').forEach(icon => {
+                    icon.classList.remove('mr-3');
+                });
+            }
+        }
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            const themeIcon = document.getElementById('theme-icon');
+
+            if (isDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                // Change to sun icon
+                themeIcon.innerHTML = `
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2"></path>
+                    <path d="M12 20v2"></path>
+                    <path d="m4.93 4.93 1.41 1.41"></path>
+                    <path d="m17.66 17.66 1.41 1.41"></path>
+                    <path d="M2 12h2"></path>
+                    <path d="M20 12h2"></path>
+                    <path d="m6.34 6.34-1.41-1.41"></path>
+                    <path d="m19.07 19.07-1.41-1.41"></path>
+                `;
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                // Change to moon icon
+                themeIcon.innerHTML = `
+                    <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>
+                `;
+            }
+        }
+
+        // Initialize theme on load
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('theme-icon');
+
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                // Set moon icon
+                themeIcon.innerHTML = `
+                    <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>
+                `;
+            } else {
+                // Set sun icon (default)
+                themeIcon.innerHTML = `
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2"></path>
+                    <path d="M12 20v2"></path>
+                    <path d="m4.93 4.93 1.41 1.41"></path>
+                    <path d="m17.66 17.66 1.41 1.41"></path>
+                    <path d="M2 12h2"></path>
+                    <path d="M20 12h2"></path>
+                    <path d="m6.34 6.34-1.41-1.41"></path>
+                    <path d="m19.07 19.07-1.41-1.41"></path>
+                `;
+            }
         }
     </script>
 </body>

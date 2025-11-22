@@ -1,12 +1,183 @@
 <!-- Admin Settings Content -->
-<div class="max-w-7xl mx-auto rounded-xl overflow-hidden bg-white ring-1 ring-gray-200 flex flex-col min-h-[600px] mx-4 my-4">
-  <header class="sticky top-0 z-20 bg-white text-gray-900 p-5 border-b border-gray-200">
+<div class="max-w-7xl mx-auto rounded-xl overflow-hidden bg-card ring-1 ring-border flex flex-col min-h-[600px] mx-4 my-4">
+  <header class="sticky top-0 z-20 bg-card text-card-foreground p-5 border-b border-border">
     <div class="text-left">
-      <h1 class="text-3xl font-bold text-gray-900 mb-2">Admin Settings</h1>
-      <p class="text-gray-600">System-wide configuration and settings</p>
+      <h1 class="text-3xl font-bold text-card-foreground mb-2">Admin Settings</h1>
+      <p class="text-muted-foreground">System-wide configuration and settings</p>
     </div>
   </header>
-  <div class="p-6">
-    <p>Admin settings interface goes here.</p>
-  </div>
+   <div class="p-6 space-y-6">
+      <!-- General Settings -->
+      <div class="bg-card rounded-lg border border-border">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">General Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Basic system configuration and preferences</p>
+        </div>
+       <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-foreground mb-2">Site Name</label>
+              <input type="text" name="siteName" value="{{settings.general.siteName}}" class="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring">
+           </div>
+           <div>
+             <label class="block text-sm font-medium text-card-foreground mb-2">Site Description</label>
+             <input type="text" name="siteDescription" value="{{settings.general.siteDescription}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent">
+           </div>
+         </div>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+           <div>
+             <label class="block text-sm font-medium text-card-foreground mb-2">Default Language</label>
+             <select name="defaultLanguage" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent">
+               <option value="en" {{#eq settings.general.defaultLanguage "en"}}selected{{/eq}}>English</option>
+               <option value="es" {{#eq settings.general.defaultLanguage "es"}}selected{{/eq}}>Spanish</option>
+               <option value="fr" {{#eq settings.general.defaultLanguage "fr"}}selected{{/eq}}>French</option>
+               <option value="de" {{#eq settings.general.defaultLanguage "de"}}selected{{/eq}}>German</option>
+             </select>
+           </div>
+           <div>
+             <label class="block text-sm font-medium text-card-foreground mb-2">Timezone</label>
+             <select name="timezone" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent">
+               <option value="UTC" {{#eq settings.general.timezone "UTC"}}selected{{/eq}}>UTC</option>
+               <option value="EST" {{#eq settings.general.timezone "EST"}}selected{{/eq}}>Eastern Time</option>
+               <option value="PST" {{#eq settings.general.timezone "PST"}}selected{{/eq}}>Pacific Time</option>
+               <option value="GMT" {{#eq settings.general.timezone "GMT"}}selected{{/eq}}>GMT</option>
+             </select>
+           </div>
+         </div>
+       </div>
+     </div>
+
+      <!-- Security Settings -->
+      <div class="bg-card rounded-lg border border-border">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Security Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure authentication and security policies</p>
+        </div>
+       <div class="p-6 space-y-6">
+         <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">Two-Factor Authentication</h4>
+              <p class="text-sm text-muted-foreground">Require 2FA for all admin accounts</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="twoFactorAuth" class="sr-only peer" {{#if settings.security.twoFactorAuth}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-ring rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+            </label>
+         </div>
+         <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">Session Timeout</h4>
+              <p class="text-sm text-muted-foreground">Automatically log out inactive users</p>
+            </div>
+            <select name="sessionTimeout" class="px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-background text-foreground">
+             <option value="30" {{#eq settings.security.sessionTimeout 30}}selected{{/eq}}>30 minutes</option>
+             <option value="60" {{#eq settings.security.sessionTimeout 60}}selected{{/eq}}>1 hour</option>
+             <option value="120" {{#eq settings.security.sessionTimeout 120}}selected{{/eq}}>2 hours</option>
+             <option value="240" {{#eq settings.security.sessionTimeout 240}}selected{{/eq}}>4 hours</option>
+           </select>
+         </div>
+         <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">Password Policy</h4>
+              <p class="text-sm text-muted-foreground">Enforce strong password requirements</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="passwordPolicy" class="sr-only peer" {{#if settings.security.passwordPolicy}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-ring rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+            </label>
+         </div>
+         <div>
+            <label class="block text-sm font-medium text-card-foreground mb-2">Minimum Password Length</label>
+            <input type="number" name="minPasswordLength" value="{{settings.security.minPasswordLength}}" min="6" max="20" class="w-24 px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-background text-foreground">
+         </div>
+       </div>
+     </div>
+
+      <!-- Email Settings -->
+      <div class="bg-card rounded-lg border border-border">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Email Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure email notifications and SMTP settings</p>
+        </div>
+       <div class="p-6 space-y-6">
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">SMTP Host</label>
+              <input type="text" name="smtpHost" value="{{settings.email.smtpHost}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-background text-foreground">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">SMTP Port</label>
+              <input type="number" name="smtpPort" value="{{settings.email.smtpPort}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent bg-background text-foreground">
+            </div>
+         </div>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+           <div>
+             <label class="block text-sm font-medium text-card-foreground mb-2">SMTP Username</label>
+             <input type="email" name="smtpUsername" value="{{settings.email.smtpUsername}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent">
+           </div>
+           <div>
+             <label class="block text-sm font-medium text-card-foreground mb-2">SMTP Password</label>
+             <input type="password" name="smtpPassword" value="{{settings.email.smtpPassword}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent">
+           </div>
+         </div>
+         <div class="flex items-center justify-between">
+           <div>
+             <h4 class="text-sm font-medium text-card-foreground">Email Notifications</h4>
+             <p class="text-sm text-muted-foreground">Send email notifications for important events</p>
+           </div>
+           <label class="relative inline-flex items-center cursor-pointer">
+             <input type="checkbox" name="emailNotifications" class="sr-only peer" {{#if settings.email.emailNotifications}}checked{{/if}}>
+             <div class="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+           </label>
+         </div>
+       </div>
+     </div>
+
+     <!-- Database Settings -->
+     <div class="bg-card rounded-lg border border-border">
+       <div class="p-6 border-b border-border">
+         <h3 class="text-lg font-semibold text-card-foreground">Database Settings</h3>
+         <p class="text-sm text-muted-foreground mt-1">Configure database connection and performance settings</p>
+       </div>
+       <div class="p-6 space-y-6">
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+           <div>
+             <label class="block text-sm font-medium text-card-foreground mb-2">Connection Pool Size</label>
+             <input type="number" name="connectionPoolSize" value="{{settings.database.connectionPoolSize}}" min="1" max="50" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent">
+           </div>
+           <div>
+             <label class="block text-sm font-medium text-card-foreground mb-2">Query Timeout (seconds)</label>
+             <input type="number" name="queryTimeout" value="{{settings.database.queryTimeout}}" min="5" max="300" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent">
+           </div>
+         </div>
+         <div class="flex items-center justify-between">
+           <div>
+             <h4 class="text-sm font-medium text-card-foreground">Database Logging</h4>
+             <p class="text-sm text-muted-foreground">Log all database queries for debugging</p>
+           </div>
+           <label class="relative inline-flex items-center cursor-pointer">
+             <input type="checkbox" name="databaseLogging" class="sr-only peer" {{#if settings.database.databaseLogging}}checked{{/if}}>
+             <div class="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+           </label>
+         </div>
+         <div class="flex items-center justify-between">
+           <div>
+             <h4 class="text-sm font-medium text-card-foreground">Auto Backup</h4>
+             <p class="text-sm text-muted-foreground">Automatically backup database daily</p>
+           </div>
+           <label class="relative inline-flex items-center cursor-pointer">
+             <input type="checkbox" name="autoBackup" class="sr-only peer" {{#if settings.database.autoBackup}}checked{{/if}}>
+             <div class="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+           </label>
+         </div>
+       </div>
+     </div>
+
+     <!-- Save Button -->
+     <div class="flex justify-end">
+       <button class="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium">
+         Save Settings
+       </button>
+     </div>
+   </div>
 </div>

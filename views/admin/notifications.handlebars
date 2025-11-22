@@ -1,12 +1,194 @@
 <!-- Notifications Content -->
-<div class="max-w-7xl mx-auto rounded-xl overflow-hidden bg-white ring-1 ring-gray-200 flex flex-col min-h-[600px] mx-4 my-4">
-  <header class="sticky top-0 z-20 bg-white text-gray-900 p-5 border-b border-gray-200">
+<div class="max-w-7xl mx-auto rounded-xl overflow-hidden bg-card ring-1 ring-border flex flex-col min-h-[600px] mx-4 my-4">
+  <header class="sticky top-0 z-20 bg-card text-card-foreground p-5 border-b border-border">
     <div class="text-left">
-      <h1 class="text-3xl font-bold text-gray-900 mb-2">Notifications</h1>
-      <p class="text-gray-600">Manage system notifications and alerts</p>
+      <h1 class="text-3xl font-bold text-card-foreground mb-2">Notifications</h1>
+      <p class="text-muted-foreground">Manage system notifications and alerts</p>
     </div>
   </header>
-  <div class="p-6">
-    <p>Notifications management interface goes here.</p>
-  </div>
+   <div class="p-6 space-y-6">
+     <!-- Notification Stats -->
+     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="bg-card rounded-lg border border-border p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-muted-foreground">Total Notifications</p>
+              <p class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{notificationStats.total}}</p>
+            </div>
+            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+              <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4.868 12.683A17.925 17.925 0 0112 21c7.962 0 12-1.21 12-2.683m-12 2.683a17.925 17.925 0 01-7.132-8.317M12 21V9a6 6 0 10-6-6v2"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-card rounded-lg border border-border p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-muted-foreground">Unread</p>
+              <p class="text-2xl font-bold text-orange-600 dark:text-orange-400">{{notificationStats.unread}}</p>
+            </div>
+            <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
+              <svg class="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+       <div class="bg-card rounded-lg border border-border p-6">
+         <div class="flex items-center justify-between">
+           <div>
+             <p class="text-sm font-medium text-muted-foreground">This Week</p>
+             <p class="text-2xl font-bold text-green-600">{{notificationStats.thisWeek}}</p>
+           </div>
+           <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+             <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+             </svg>
+           </div>
+         </div>
+       </div>
+
+       <div class="bg-card rounded-lg border border-border p-6">
+         <div class="flex items-center justify-between">
+           <div>
+             <p class="text-sm font-medium text-muted-foreground">System Alerts</p>
+             <p class="text-2xl font-bold text-red-600">{{notificationStats.systemAlerts}}</p>
+           </div>
+           <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+             <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+             </svg>
+           </div>
+         </div>
+       </div>
+     </div>
+
+     <!-- Notification Filters -->
+     <div class="bg-card rounded-lg border border-border">
+       <div class="p-6 border-b border-border">
+         <div class="flex items-center justify-between">
+           <h3 class="text-lg font-semibold text-card-foreground">Notifications</h3>
+           <div class="flex items-center space-x-4">
+             <select class="px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent">
+               <option value="all">All Types</option>
+               <option value="system">System</option>
+               <option value="user">User Activity</option>
+               <option value="security">Security</option>
+             </select>
+             <select class="px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent">
+               <option value="all">All Status</option>
+               <option value="unread">Unread</option>
+               <option value="read">Read</option>
+             </select>
+           </div>
+         </div>
+       </div>
+
+       <!-- Notification List -->
+       <div class="divide-y divide-gray-200">
+         {{#each notifications}}
+         <div class="p-6 hover:bg-accent transition-colors {{#unless is_read}}bg-blue-50{{/unless}}">
+           <div class="flex items-start space-x-4">
+             <div class="flex-shrink-0">
+               {{#if is_read}}
+               <div class="w-2 h-2 bg-muted rounded-full"></div>
+               {{else}}
+               <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+               {{/if}}
+             </div>
+             <div class="flex-1 min-w-0">
+               <div class="flex items-center justify-between">
+                 <p class="text-sm font-medium text-card-foreground">{{title}}</p>
+                 <p class="text-sm text-muted-foreground">{{created_at}}</p>
+               </div>
+               <p class="text-sm text-muted-foreground mt-1">{{message}}</p>
+               <div class="flex items-center mt-2 space-x-4">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{#eq type "system"}}bg-destructive/10 text-destructive{{else if eq type "user"}}bg-primary/10 text-primary{{else if eq type "security"}}bg-warning/10 text-warning{{else}}bg-muted/50 text-muted-foreground{{/eq}}">
+                   {{type}}
+                 </span>
+                 {{#if (eq priority "high")}}
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-destructive/10 text-destructive">
+                   High Priority
+                 </span>
+                 {{/if}}
+               </div>
+             </div>
+             <div class="flex items-center space-x-2">
+               {{#unless is_read}}
+               <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                 Mark as Read
+               </button>
+               {{/unless}}
+               <button class="text-muted-foreground hover:text-muted-foreground">
+                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+                 </svg>
+               </button>
+             </div>
+           </div>
+         </div>
+         {{/each}}
+       </div>
+
+       {{#if (gt notifications.length 0)}}
+       <!-- Pagination -->
+       <div class="px-6 py-4 border-t border-border">
+         <div class="flex items-center justify-between">
+           <div class="text-sm text-card-foreground">
+             Showing {{pagination.start}} to {{pagination.end}} of {{pagination.total}} notifications
+           </div>
+           <div class="flex items-center space-x-2">
+             {{#if pagination.hasPrev}}
+             <a href="?page={{pagination.prevPage}}" class="px-3 py-2 text-sm font-medium text-muted-foreground bg-card border border-input rounded-md hover:bg-accent">
+               Previous
+             </a>
+             {{/if}}
+             {{#each pagination.pages}}
+             <a href="?page={{this}}" class="px-3 py-2 text-sm font-medium {{#if (eq this ../pagination.currentPage)}}text-primary bg-accent border-primary{{else}}text-muted-foreground bg-card border-input{{/if}} border rounded-md hover:bg-accent">
+               {{this}}
+             </a>
+             {{/each}}
+             {{#if pagination.hasNext}}
+             <a href="?page={{pagination.nextPage}}" class="px-3 py-2 text-sm font-medium text-muted-foreground bg-card border border-input rounded-md hover:bg-accent">
+               Next
+             </a>
+             {{/if}}
+           </div>
+         </div>
+       </div>
+       {{else}}
+       <!-- Empty State -->
+       <div class="px-6 py-12 text-center">
+         <svg class="mx-auto h-12 w-12 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4.868 12.683A17.925 17.925 0 0112 21c7.962 0 12-1.21 12-2.683m-12 2.683a17.925 17.925 0 01-7.132-8.317M12 21V9a6 6 0 10-6-6v2"></path>
+         </svg>
+         <h3 class="mt-2 text-sm font-medium text-card-foreground">No notifications</h3>
+         <p class="mt-1 text-sm text-muted-foreground">You're all caught up! Check back later for new notifications.</p>
+       </div>
+       {{/if}}
+     </div>
+
+     <!-- Bulk Actions -->
+     {{#if notifications.length}}
+     <div class="bg-card rounded-lg border border-border p-6">
+       <div class="flex items-center justify-between">
+         <div>
+           <h3 class="text-lg font-semibold text-card-foreground">Bulk Actions</h3>
+           <p class="text-sm text-muted-foreground">Perform actions on multiple notifications</p>
+         </div>
+         <div class="flex items-center space-x-4">
+           <button class="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+             Mark Selected as Read
+           </button>
+           <button class="px-4 py-2 bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/90 transition-colors">
+             Delete Selected
+           </button>
+         </div>
+       </div>
+     </div>
+     {{/if}}
+   </div>
 </div>

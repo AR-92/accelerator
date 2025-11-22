@@ -1,38 +1,52 @@
 <!-- Top Navigation Bar -->
-<nav class="bg-white text-slate-800 px-4 border-b border-gray-200 flex items-center justify-between min-h-12">
+<nav class="bg-card text-card-foreground px-4 border-b border-border flex items-center justify-between min-h-12">
   <div class="flex items-center">
-    <div class="h-7 w-6 mr-4"><svg xmlns="http://www.w3.org/2000/svg" width="33" height="36" viewBox="0 0 33 36"
+      <div class="h-7 w-6 mr-4 text-primary"><svg xmlns="http://www.w3.org/2000/svg" width="33" height="36" viewBox="0 0 33 36"
         fill="none" class="h-full w-full">
         <path
           d="M31.6035 7.28044C31.1951 7.03803 30.7235 7.06833 30.3421 7.35872L26.4519 10.3182C25.9036 10.7348 25.5764 11.4317 25.5764 12.1868V21.1636C25.5764 24.2695 23.7757 26.9638 21.1966 27.7138L6.895 31.8726V14.5099C6.895 11.7171 8.5129 9.29549 10.8326 8.62128L31.4004 2.64179C31.9126 2.4928 32.2714 1.9701 32.2714 1.37165C32.2714 1.01561 32.1405 0.672189 31.9149 0.424727C31.687 0.177265 31.3823 0.0510083 31.0777 0.0611088L27.8352 0.177265C26.7972 0.215142 25.7615 0.3818 24.7551 0.674714L7.27635 5.75527C3.11314 6.9648 0.206787 11.2853 0.206787 16.2598V32.8423C0.206787 33.7033 0.716752 34.4508 1.44785 34.6629L5.68553 35.8876C5.8164 35.9255 5.95405 35.9457 6.09169 35.9457C6.22934 35.9457 6.36698 35.9255 6.49786 35.8876L24.8792 30.5444C29.2342 29.2793 32.2759 24.7594 32.2759 19.5526V8.52785C32.2759 8.00263 32.0209 7.52538 31.6103 7.28297L31.6035 7.28044Z"
-          fill="#9E28B5" />
+          fill="currentColor" />
       </svg></div>
-    <a href="#" class="ml-4 mr-4 text-black border-t-4 border-purple-500 font-medium leading-[2.7]">Catchup</a>
-    <a href="#" class="mr-4 text-gray-400 leading-[2.7]">tasks</a>
-    <a href="#" class="mr-4 text-gray-400 leading-[2.7]">projects</a>
-    <a href="#" class="mr-4 text-gray-400 leading-[2.7]">workload</a>
-     <a href="#" class="mr-4 text-gray-400 leading-[2.7]">timelines</a>
+       <div class="flex flex-col items-center justify-center ml-4 mr-4 group">
+         <div class="border-t-4 border-primary w-6 rounded-full opacity-100 group-hover:opacity-100"></div>
+         <a href="/" class="text-foreground font-medium text-sm leading-[2.7] group-hover:font-medium hover:font-medium">Dashboard</a>
+      </div>
+       <div class="flex flex-col items-center justify-center mr-4 group">
+         <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+         <a href="/todos" class="text-muted-foreground group-hover:text-foreground transition-colors text-sm leading-[2.7] group-hover:font-medium hover:font-medium">Todos</a>
+      </div>
+       <div class="flex flex-col items-center justify-center mr-4 group">
+         <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+         <a href="#" class="text-muted-foreground text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Projects</a>
+      </div>
+       <div class="flex flex-col items-center justify-center mr-4 group">
+         <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+         <a href="#" class="text-muted-foreground text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Workload</a>
+      </div>
+        <div class="flex flex-col items-center justify-center mr-4 group">
+         <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+          <a href="#" class="text-muted-foreground text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Timelines</a>
+        </div>
       </div>
   <div class="flex">
-    <div class="h-12 w-px bg-gray-300 mr-4"></div>
-    <div class="self-center mr-4">
-      <label class="relative block">
-        <span class="sr-only">Search</span>
-        <input class="w-64 pl-4 pr-4 py-1.5 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none"
-          placeholder="Search todos..." aria-label="Search" id="navSearchInput" name="search" value="{{query.search}}"
-          hx-get="/todos" hx-target="#todosTableContainer" hx-trigger="input changed delay:300ms, keyup[key=='Enter']"
-          hx-include="[name='status'],[name='limit']">
+     <div class="h-12 w-px bg-border mr-4"></div>
+     <div class="self-center mr-4">
+       <label class="relative block">
+         <span class="sr-only">Search</span>
+          <input class="w-64 pl-4 pr-4 py-1.5 rounded-md placeholder-muted-foreground placeholder:text-sm text-foreground bg-background border border-input focus:outline-none focus:ring-2 focus:ring-ring"
+           placeholder="Search..." aria-label="Search" id="navSearchInput" name="search" value="{{query.search}}"
+           hx-get="/todos" hx-trigger="keyup[key=='Enter']"
+           hx-include="[name='status'],[name='limit']">
       </label>
      </div>
-      <!-- Theme Toggle Button -->
-      <button class="ml-4 text-gray-600 rounded-full p-2 hover:bg-gray-200 focus:ring-0">
-       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-         class="lucide lucide-moon-icon lucide-moon">
-         <path
-           d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
-       </svg>
-      </button>
+       <!-- Theme Toggle Button -->
+       <button id="theme-toggle" class="ml-4 text-muted-foreground rounded-full p-2 hover:bg-accent focus:ring-0" onclick="toggleTheme()">
+        <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+        </svg>
+       </button>
 
       <!-- User Menu -->
       <div class="relative self-center" id="admin-user-menu">
@@ -50,7 +64,7 @@
           class="flex items-center justify-center w-5 h-5 rounded-md hover:bg-muted/50 transition-colors duration-200"
           id="admin-user-menu-arrow">
 
-          <svg class="w-4 h-4 text-muted-foreground lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg"
+          <svg class="w-3 h-3 text-muted-foreground lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg"
             width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
             <path d="m6 9 6 6 6-6"></path>
@@ -59,10 +73,10 @@
         </div>
       </button>
 
-      <!-- User Dropdown -->
-      <div
-        class="absolute right-0 mt-2 w-64 bg-white backdrop-blur-sm border border-gray-200 rounded-xl shadow-xl z-30 transition-all duration-200 opacity-0 invisible hidden"
-        id="admin-user-dropdown">
+       <!-- User Dropdown -->
+       <div
+         class="absolute right-0 mt-2 w-64 bg-popover backdrop-blur-sm border border-border rounded-xl shadow-xl z-30 transition-all duration-200 opacity-0 invisible hidden"
+         id="admin-user-dropdown">
         <div class="p-2">
           <a href="/admin/profile"
             class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">

@@ -1,0 +1,1089 @@
+Fetching tables and schemas from Supabase...
+
+=== Table: Accounts ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+updated_at: timestamp with time zone default=now()
+user_id: integer
+account_type: character varying (nullable) default='personal'::character varying
+display_name: text
+username: text (nullable)
+avatar_url: character varying (nullable)
+bio: text (nullable)
+location: character varying (nullable)
+website: character varying (nullable)
+linkedin_url: character varying (nullable)
+twitter_url: character varying (nullable)
+github_url: character varying (nullable)
+company: character varying (nullable)
+job_title: character varying (nullable)
+industry: character varying (nullable)
+skills: text (nullable)
+interests: text (nullable)
+is_public: boolean (nullable) default=true
+is_verified: boolean (nullable) default=false
+verification_token: character varying (nullable)
+email_verified: boolean (nullable) default=false
+email_verified_at: timestamp with time zone (nullable)
+last_login_at: timestamp with time zone (nullable)
+login_count: integer (nullable) default=0
+preferences: jsonb (nullable)
+timezone: character varying (nullable) default='UTC'::character varying
+language: character varying (nullable) default='en'::character varying
+
+=== Table: Activity Logs ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+user_id: integer (nullable)
+session_id: character varying (nullable)
+activity_type: character varying
+action: character varying
+entity_type: character varying (nullable)
+entity_id: bigint (nullable)
+description: text (nullable)
+ip_address: inet (nullable)
+user_agent: text (nullable)
+browser: character varying (nullable)
+os: character varying (nullable)
+device: character varying (nullable)
+location_country: character varying (nullable)
+location_city: character varying (nullable)
+status: character varying (nullable) default='success'::character varying
+error_message: text (nullable)
+error_code: character varying (nullable)
+duration_ms: integer (nullable)
+request_method: character varying (nullable)
+request_url: text (nullable)
+request_params: jsonb (nullable)
+response_status: integer (nullable)
+metadata: jsonb (nullable)
+severity: character varying (nullable) default='info'::character varying
+tags: text (nullable)
+
+=== Table: Billing ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+updated_at: timestamp with time zone default=now()
+user_id: integer (nullable)
+invoice_number: character varying (nullable)
+billing_type: character varying
+amount_cents: integer
+currency: character varying (nullable) default='USD'::character varying
+status: character varying
+description: text (nullable)
+due_date: timestamp with time zone (nullable)
+paid_at: timestamp with time zone (nullable)
+payment_method: character varying (nullable)
+provider: character varying (nullable)
+provider_tx_id: character varying (nullable)
+provider_invoice_id: character varying (nullable)
+tax_amount_cents: integer (nullable) default=0
+discount_amount_cents: integer (nullable) default=0
+total_amount_cents: integer
+billing_period_start: timestamp with time zone (nullable)
+billing_period_end: timestamp with time zone (nullable)
+subscription_id: character varying (nullable)
+plan_name: character varying (nullable)
+plan_features: jsonb (nullable)
+credits_purchased: integer (nullable) default=0
+credits_used: integer (nullable) default=0
+refund_amount_cents: integer (nullable) default=0
+refund_reason: text (nullable)
+refunded_at: timestamp with time zone (nullable)
+notes: text (nullable)
+metadata: jsonb (nullable)
+auto_renew: boolean (nullable) default=false
+next_billing_date: timestamp with time zone (nullable)
+cancellation_reason: text (nullable)
+cancelled_at: timestamp with time zone (nullable)
+
+=== Table: Business Model ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+updated_at: timestamp with time zone default=now()
+user_id: integer (nullable)
+session_id: character varying (nullable)
+status: character varying (nullable) default='draft'::character varying
+current_section: integer (nullable) default=1
+overall_progress: numeric (nullable) default=0.00
+core_function: text (nullable)
+key_activities: text (nullable)
+key_resources: text (nullable)
+key_partners: text (nullable)
+market_category: text (nullable)
+target_market: text (nullable)
+target_geographic_area: text (nullable)
+tam_estimate: text (nullable)
+sam_estimate: text (nullable)
+som_estimate: text (nullable)
+key_competitors: text (nullable)
+market_share_distribution: jsonb (nullable)
+competition_level: character varying (nullable)
+penetration_opportunities: text (nullable)
+market_challenges: text (nullable)
+business_risks: text (nullable)
+technical_risk_percentage: integer (nullable)
+market_risk_percentage: integer (nullable)
+operational_risk_percentage: integer (nullable)
+overall_risk_level: character varying (nullable)
+customer_job: text (nullable)
+customer_pains: text (nullable)
+customer_gains: text (nullable)
+solution_components: text (nullable)
+cost_structure: jsonb (nullable)
+revenue_streams: jsonb (nullable)
+monthly_costs_cents: integer (nullable) default=0
+monthly_revenue_cents: integer (nullable) default=0
+financial_projections: jsonb (nullable)
+exit_strategy: text (nullable)
+target_exit_timeframe: character varying (nullable)
+potential_acquirers: text (nullable)
+valuation_estimate: text (nullable)
+ai_suggestions: jsonb (nullable)
+confidence_scores: jsonb (nullable)
+processing_time_seconds: jsonb (nullable)
+auto_fill_data: jsonb (nullable)
+name: character varying
+description: text (nullable)
+business_type: character varying (nullable)
+industry: character varying (nullable)
+tags: text (nullable)
+is_public: boolean (nullable) default=false
+is_featured: boolean (nullable) default=false
+validation_score: integer (nullable) default=0
+
+=== Table: Business Plan ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+updated_at: timestamp with time zone default=now()
+user_id: integer (nullable)
+status: character varying (nullable) default='draft'::character varying
+version: character varying (nullable) default='1.0'::character varying
+company_name: character varying
+company_description: text (nullable)
+founded_date: date (nullable)
+location: character varying (nullable)
+legal_structure: character varying (nullable)
+current_stage: character varying (nullable)
+mission_statement: text (nullable)
+vision_statement: text (nullable)
+executive_summary: text (nullable)
+projected_revenue_year3: bigint (nullable)
+market_share_target: numeric (nullable)
+funding_required: bigint (nullable)
+industry_overview: text (nullable)
+market_size_current: bigint (nullable)
+market_size_projected: bigint (nullable)
+market_cagr: numeric (nullable)
+tam_estimate: bigint (nullable)
+sam_estimate: bigint (nullable)
+som_estimate: bigint (nullable)
+market_trends: jsonb (nullable)
+competitor_analysis: jsonb (nullable)
+competitive_landscape: text (nullable)
+core_product_offering: text (nullable)
+professional_services: text (nullable)
+unique_value_proposition: text (nullable)
+product_roadmap: jsonb (nullable)
+marketing_strategy: jsonb (nullable)
+sales_strategy: jsonb (nullable)
+customer_acquisition_channels: jsonb (nullable)
+technology_infrastructure: text (nullable)
+supply_chain_logistics: text (nullable)
+operational_metrics: jsonb (nullable)
+management_team: jsonb (nullable)
+advisory_board: jsonb (nullable)
+revenue_projections: jsonb (nullable)
+expense_breakdown: jsonb (nullable)
+key_financial_metrics: jsonb (nullable)
+customer_acquisition_cost: integer (nullable)
+lifetime_value: integer (nullable)
+payback_period_months: integer (nullable)
+ebitda_year3: bigint (nullable)
+use_of_funds: jsonb (nullable)
+funding_strategy: jsonb (nullable)
+investment_highlights: text (nullable)
+total_funding_sought: bigint (nullable)
+industry: character varying (nullable)
+tags: text (nullable)
+is_public: boolean (nullable) default=false
+is_featured: boolean (nullable) default=false
+
+=== Table: Calendar ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+updated_at: timestamp with time zone default=now()
+user_id: integer (nullable)
+title: character varying
+description: text (nullable)
+event_type: character varying (nullable) default='meeting'::character varying
+start_time: timestamp with time zone
+end_time: timestamp with time zone
+all_day: boolean (nullable) default=false
+location: character varying (nullable)
+is_virtual: boolean (nullable) default=false
+meeting_url: character varying (nullable)
+meeting_id: character varying (nullable)
+organizer_id: integer (nullable)
+participants: jsonb (nullable)
+max_participants: integer (nullable)
+is_private: boolean (nullable) default=false
+category: character varying (nullable)
+priority: character varying (nullable) default='medium'::character varying
+status: character varying (nullable) default='scheduled'::character varying
+is_recurring: boolean (nullable) default=false
+recurrence_pattern: jsonb (nullable)
+recurrence_end_date: timestamp with time zone (nullable)
+reminder_minutes: integer (nullable) default=15
+reminder_sent: boolean (nullable) default=false
+email_reminder: boolean (nullable) default=true
+push_notification: boolean (nullable) default=true
+external_calendar_id: character varying (nullable)
+sync_status: character varying (nullable) default='pending'::character varying
+last_synced_at: timestamp with time zone (nullable)
+project_id: integer (nullable)
+task_id: integer (nullable)
+color: character varying (nullable)
+tags: text (nullable)
+metadata: jsonb (nullable)
+
+=== Table: Corporate ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+
+=== Table: Credits ===
+Columns:
+id: bigint
+user_id: integer
+transaction_id: integer (nullable)
+reward_id: integer (nullable)
+credit_type: character varying default='purchased'::character varying
+amount: integer
+balance_after: integer
+description: text (nullable)
+metadata: jsonb (nullable)
+expires_at: timestamp without time zone (nullable)
+created_at: timestamp with time zone default=now()
+updated_at: timestamp with time zone (nullable) default=now()
+
+=== Table: Enterprises ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+
+=== Table: Financial Model ===
+Columns:
+id: bigint
+user_id: integer
+model_name: character varying default='Financial Model'::character varying
+model_description: text (nullable)
+model_status: character varying default='draft'::character varying
+progress_percentage: integer (nullable) default=0
+current_section: integer (nullable) default=1
+kpi_data: jsonb (nullable)
+kpi_completed: boolean (nullable) default=false
+kpi_completion_time: timestamp without time zone (nullable)
+monthly_revenue: numeric (nullable)
+growth_period: character varying (nullable)
+revenue_stage: character varying (nullable)
+revenue_assumptions_completed: boolean (nullable) default=false
+revenue_assumptions_completion_time: timestamp without time zone (nullable)
+revenue_streams: jsonb (nullable)
+revenue_streams_completed: boolean (nullable) default=false
+revenue_streams_completion_time: timestamp without time zone (nullable)
+monthly_cogs: numeric (nullable)
+cogs_breakdown: jsonb (nullable)
+cogs_completed: boolean (nullable) default=false
+cogs_completion_time: timestamp without time zone (nullable)
+opex_data: jsonb (nullable)
+total_monthly_opex: numeric (nullable)
+opex_completed: boolean (nullable) default=false
+opex_completion_time: timestamp without time zone (nullable)
+total_capex: numeric (nullable)
+capex_description: text (nullable)
+amortization_years: integer (nullable)
+capex_completed: boolean (nullable) default=false
+capex_completion_time: timestamp without time zone (nullable)
+statement_format: character varying (nullable)
+output_format: character varying (nullable)
+investor_capital: numeric (nullable)
+income_statement: jsonb (nullable)
+cash_flow_statement: jsonb (nullable)
+balance_sheet: jsonb (nullable)
+statements_completed: boolean (nullable) default=false
+statements_completion_time: timestamp without time zone (nullable)
+ratio_categories: jsonb (nullable)
+calculated_ratios: jsonb (nullable)
+ratios_completed: boolean (nullable) default=false
+ratios_completion_time: timestamp without time zone (nullable)
+model_completed: boolean (nullable) default=false
+model_completion_time: timestamp without time zone (nullable)
+total_time_seconds: integer (nullable)
+excel_file_path: character varying (nullable)
+pdf_file_path: character varying (nullable)
+share_token: character varying (nullable)
+ai_confidence_scores: jsonb (nullable)
+ai_suggestions: jsonb (nullable)
+auto_fill_enabled: boolean (nullable) default=true
+draft_saves: integer (nullable) default=0
+last_save_time: timestamp without time zone (nullable)
+section_times: jsonb (nullable)
+created_at: timestamp with time zone default=now()
+updated_at: timestamp with time zone (nullable) default=now()
+
+=== Table: Funding ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+total_funding_required: numeric
+funding_type: ARRAY
+funding_stage: text
+use_of_funds: jsonb
+revenue_model: jsonb
+market_size: jsonb
+investor_roi: jsonb (nullable)
+cap_table: jsonb (nullable)
+funding_rounds: jsonb (nullable)
+burn_rate: numeric (nullable)
+runway: integer (nullable)
+
+=== Table: Help Center ===
+Columns:
+id: bigint
+user_id: integer (nullable)
+content_type: character varying default='article'::character varying
+category_name: character varying
+category_slug: character varying
+subcategory_name: character varying (nullable)
+subcategory_slug: character varying (nullable)
+title: character varying
+slug: character varying
+excerpt: text (nullable)
+content: text
+content_format: character varying (nullable) default='markdown'::character varying
+meta_title: character varying (nullable)
+meta_description: text (nullable)
+meta_keywords: text (nullable)
+featured_image: character varying (nullable)
+sort_order: integer (nullable) default=0
+is_featured: boolean (nullable) default=false
+is_published: boolean (nullable) default=false
+is_active: boolean (nullable) default=true
+parent_help_center_id: integer (nullable)
+view_count: integer (nullable) default=0
+helpful_count: integer (nullable) default=0
+unhelpful_count: integer (nullable) default=0
+comment_count: integer (nullable) default=0
+share_count: integer (nullable) default=0
+download_count: integer (nullable) default=0
+difficulty_level: character varying (nullable) default='beginner'::character varying
+read_time_minutes: integer (nullable) default=3
+language: character varying (nullable) default='en'::character varying
+content_version: character varying (nullable) default='1.0'::character varying
+author_name: character varying (nullable)
+author_email: character varying (nullable)
+author_role: character varying (nullable)
+author_image: character varying (nullable)
+author_bio: text (nullable)
+last_editor_name: character varying (nullable)
+last_editor_email: character varying (nullable)
+tags: jsonb (nullable)
+topics: jsonb (nullable)
+target_audience: jsonb (nullable)
+attachments: jsonb (nullable)
+video_url: character varying (nullable)
+video_duration: integer (nullable)
+audio_url: character varying (nullable)
+audio_duration: integer (nullable)
+has_interactive_elements: boolean (nullable) default=false
+interactive_data: jsonb (nullable)
+quiz_data: jsonb (nullable)
+code_examples: jsonb (nullable)
+related_articles: jsonb (nullable)
+suggested_reading: jsonb (nullable)
+external_links: jsonb (nullable)
+help_type: character varying (nullable)
+support_ticket_required: boolean (nullable) default=false
+escalation_level: integer (nullable) default=0
+resolution_time_estimate: integer (nullable)
+search_rank: integer (nullable) default=0
+popularity_score: numeric (nullable) default=0.0
+user_rating: numeric (nullable) default=0.0
+user_rating_count: integer (nullable) default=0
+last_accessed: timestamp without time zone (nullable)
+access_frequency: integer (nullable) default=0
+translations: jsonb (nullable)
+region_specific: jsonb (nullable)
+cultural_notes: text (nullable)
+status: character varying (nullable) default='draft'::character varying
+review_required: boolean (nullable) default=false
+last_review_date: timestamp without time zone (nullable)
+next_review_date: timestamp without time zone (nullable)
+expiry_date: timestamp without time zone (nullable)
+api_endpoints: jsonb (nullable)
+related_products: jsonb (nullable)
+integration_guides: jsonb (nullable)
+user_feedback: jsonb (nullable)
+improvement_suggestions: jsonb (nullable)
+content_gaps: jsonb (nullable)
+content_hash: character varying (nullable)
+indexed_for_search: boolean (nullable) default=true
+search_vector: tsvector (nullable)
+published_at: timestamp without time zone (nullable)
+scheduled_publish_at: timestamp without time zone (nullable)
+archived_at: timestamp without time zone (nullable)
+created_at: timestamp with time zone default=now()
+updated_at: timestamp with time zone (nullable) default=now()
+created_by_user_id: integer (nullable)
+updated_by_user_id: integer (nullable)
+revision_count: integer (nullable) default=0
+last_change_summary: text (nullable)
+help_center_name: character varying (nullable)
+theme_config: jsonb (nullable)
+custom_css: text (nullable)
+custom_javascript: text (nullable)
+contact_methods: jsonb (nullable)
+support_hours: jsonb (nullable)
+escalation_contacts: jsonb (nullable)
+average_resolution_time: integer (nullable)
+customer_satisfaction_score: numeric (nullable)
+first_contact_resolution_rate: numeric (nullable)
+
+=== Table: Idea ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+title: text
+description: text
+category: text
+tags: ARRAY (nullable)
+problem_statement: text
+solution_overview: text
+target_market: jsonb
+competitive_advantage: text (nullable)
+business_model: text
+traction: jsonb (nullable)
+team: jsonb (nullable)
+funding_status: text
+ip_status: text (nullable)
+
+=== Table: Landing Page Management ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+
+=== Table: Legal ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+company_name: text
+company_type: text
+commercial_registration: text
+incorporation_date: date
+registered_address: text
+tax_id: text
+shareholders: jsonb
+directors: jsonb
+ip_assets: jsonb (nullable)
+contracts: jsonb (nullable)
+compliance_status: text
+regulatory_approvals: jsonb (nullable)
+
+=== Table: Marketing ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+target_audience: jsonb
+unique_value_proposition: text
+marketing_objectives: jsonb
+marketing_channels: ARRAY
+marketing_budget: numeric
+content_strategy: jsonb (nullable)
+brand_guidelines: jsonb (nullable)
+campaign_performance: jsonb (nullable)
+competitor_analysis: jsonb (nullable)
+market_research: jsonb (nullable)
+
+=== Table: PitchDeck ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+title_slide: jsonb
+problem_statement: text
+solution_overview: text
+market_opportunity: jsonb
+product_demo: text
+business_model: jsonb
+traction_metrics: jsonb
+competitive_advantage: text
+team_overview: jsonb
+financial_projections: jsonb
+funding_ask: jsonb
+contact_info: jsonb
+
+=== Table: Team ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+founders_count: integer
+employees_count: integer
+team_structure: text
+readiness_score: integer
+work_mode: text
+roles: jsonb
+skills_matrix: jsonb (nullable)
+hiring_plan: jsonb (nullable)
+compensation_structure: jsonb (nullable)
+performance_metrics: jsonb (nullable)
+development_plan: jsonb (nullable)
+
+=== Table: Valuation ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+valuation_date: date
+valuation_method: text
+enterprise_value: jsonb
+equity_value: jsonb
+per_share_value: numeric (nullable)
+key_assumptions: ARRAY
+comparable_companies: jsonb (nullable)
+precedent_transactions: jsonb (nullable)
+dcf_projections: jsonb (nullable)
+sensitivity_analysis: jsonb (nullable)
+risk_factors: ARRAY (nullable)
+
+=== Table: Votes Management ===
+Columns:
+id: bigint
+created_at: timestamp with time zone default=now()
+
+=== Table: collaborations ===
+Columns:
+id: integer default=nextval('collaborations_id_seq'::regclass)
+project_id: integer
+collaborator_user_id: integer
+role: character varying (nullable)
+status: character varying (nullable) default='pending'::character varying
+joined_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+timestamp: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+
+=== Table: corporates ===
+Columns:
+id: integer default=nextval('corporates_id_seq'::regclass)
+user_id: integer
+name: character varying
+description: text (nullable)
+industry: character varying
+founded_date: date (nullable)
+website: character varying (nullable)
+status: character varying (nullable) default='active'::character varying
+company_size: character varying (nullable)
+revenue: numeric (nullable)
+location: character varying (nullable)
+headquarters: character varying (nullable)
+employee_count: integer (nullable)
+sector: character varying (nullable)
+
+=== Table: enterprises ===
+Columns:
+id: integer default=nextval('enterprises_id_seq'::regclass)
+user_id: integer
+name: character varying
+description: text (nullable)
+industry: character varying
+founded_date: date (nullable)
+website: character varying (nullable)
+status: character varying (nullable) default='active'::character varying
+company_size: character varying (nullable)
+revenue: numeric (nullable)
+location: character varying (nullable)
+
+=== Table: ideas ===
+Columns:
+id: integer default=nextval('ideas_id_seq'::regclass)
+user_id: integer
+href: character varying
+title: character varying
+type: character varying
+type_icon: character varying
+rating: integer (nullable) default=0
+description: text (nullable)
+tags: jsonb (nullable) default='[]'::jsonb
+is_favorite: boolean (nullable) default=false
+upvotes: integer (nullable) default=0
+downvotes: integer (nullable) default=0
+views: integer (nullable) default=0
+status: character varying (nullable) default='active'::character varying
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_at: timestamp without time zone (nullable)
+
+=== Table: landing_pages ===
+Columns:
+id: integer default=nextval('landing_pages_id_seq'::regclass)
+section_type: character varying (nullable) default='hero'::character varying
+title: character varying
+subtitle: character varying (nullable)
+content: text (nullable)
+image_url: character varying (nullable)
+button_text: character varying (nullable)
+button_url: character varying (nullable)
+sort_order: integer (nullable) default=0
+is_active: boolean (nullable) default=true
+metadata: jsonb (nullable)
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_at: timestamp without time zone (nullable)
+
+=== Table: learning_analytics ===
+Columns:
+id: integer default=nextval('learning_analytics_id_seq'::regclass)
+uuid: uuid (nullable) default=uuid_generate_v4()
+user_id: integer (nullable)
+content_id: integer (nullable)
+category_id: integer (nullable)
+session_id: character varying (nullable)
+event_type: character varying
+event_data: jsonb (nullable)
+event_timestamp: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+session_duration_seconds: integer (nullable)
+time_on_page_seconds: integer (nullable)
+ip_address: inet (nullable)
+user_agent: text (nullable)
+device_type: character varying (nullable)
+browser: character varying (nullable)
+operating_system: character varying (nullable)
+country: character varying (nullable)
+city: character varying (nullable)
+referrer: character varying (nullable)
+utm_source: character varying (nullable)
+utm_medium: character varying (nullable)
+utm_campaign: character varying (nullable)
+search_query: text (nullable)
+scroll_depth_percentage: integer (nullable)
+click_count: integer (nullable) default=0
+interaction_points: jsonb (nullable)
+form_interactions: jsonb (nullable)
+learning_path_progress: jsonb (nullable)
+knowledge_gained_score: numeric (nullable)
+engagement_score: numeric (nullable) default=0.00
+satisfaction_rating: integer (nullable)
+page_load_time_ms: integer (nullable)
+video_buffer_events: integer (nullable) default=0
+video_play_events: integer (nullable) default=0
+video_pause_events: integer (nullable) default=0
+video_seek_events: integer (nullable) default=0
+is_processed: boolean (nullable) default=false
+aggregation_date: date (nullable)
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+
+=== Table: learning_assessments ===
+Columns:
+id: integer default=nextval('learning_assessments_id_seq'::regclass)
+uuid: uuid (nullable) default=uuid_generate_v4()
+content_id: integer
+title: character varying
+description: text (nullable)
+assessment_type: character varying
+passing_score: integer (nullable) default=70
+time_limit_minutes: integer (nullable)
+max_attempts: integer (nullable) default=3
+randomize_questions: boolean (nullable) default=false
+show_correct_answers: boolean (nullable) default=true
+allow_review: boolean (nullable) default=true
+questions: jsonb
+total_points: integer (nullable) default=100
+difficulty_level: character varying (nullable) default='intermediate'::character varying
+estimated_duration_minutes: integer (nullable) default=15
+prerequisites: jsonb (nullable)
+auto_grade: boolean (nullable) default=true
+instant_feedback: boolean (nullable) default=true
+detailed_feedback: jsonb (nullable)
+certificate_on_pass: boolean (nullable) default=false
+total_attempts: integer (nullable) default=0
+average_score: numeric (nullable) default=0.00
+pass_rate: numeric (nullable) default=0.00
+average_time_minutes: numeric (nullable) default=0.00
+is_active: boolean (nullable) default=true
+is_required: boolean (nullable) default=false
+available_from: timestamp without time zone (nullable)
+available_until: timestamp without time zone (nullable)
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+deleted_at: timestamp without time zone (nullable)
+
+=== Table: learning_categories ===
+Columns:
+id: integer default=nextval('learning_categories_id_seq'::regclass)
+uuid: uuid (nullable) default=uuid_generate_v4()
+name: character varying
+slug: character varying
+description: text (nullable)
+icon: character varying (nullable)
+color: character varying (nullable) default='#3B82F6'::character varying
+parent_id: integer (nullable)
+level: integer (nullable) default=0
+sort_order: integer (nullable) default=0
+category_type: character varying (nullable) default='general'::character varying
+is_active: boolean (nullable) default=true
+is_featured: boolean (nullable) default=false
+estimated_total_duration: integer (nullable)
+difficulty_distribution: jsonb (nullable)
+prerequisite_categories: ARRAY (nullable)
+banner_image: character varying (nullable)
+thumbnail_image: character varying (nullable)
+custom_css: text (nullable)
+content_count: integer (nullable) default=0
+total_views: integer (nullable) default=0
+total_completions: integer (nullable) default=0
+average_engagement: numeric (nullable) default=0.00
+default_sorting: character varying (nullable) default='newest'::character varying
+allow_user_contributions: boolean (nullable) default=false
+require_moderation: boolean (nullable) default=true
+seo_title: character varying (nullable)
+seo_description: text (nullable)
+seo_keywords: ARRAY (nullable)
+meta_description: text (nullable)
+access_level: character varying (nullable) default='public'::character varying
+target_audience: ARRAY (nullable)
+learning_outcomes: ARRAY (nullable)
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+deleted_at: timestamp without time zone (nullable)
+
+=== Table: learning_content ===
+Columns:
+id: integer default=nextval('learning_content_id_seq'::regclass)
+uuid: uuid (nullable) default=uuid_generate_v4()
+content_type: character varying default='article'::character varying
+category_id: integer
+subcategory_id: integer (nullable)
+title: character varying
+slug: character varying
+excerpt: text (nullable)
+content: text
+featured_image: character varying (nullable)
+difficulty_level: character varying (nullable) default='beginner'::character varying
+estimated_duration_minutes: integer (nullable) default=5
+prerequisites: ARRAY (nullable)
+learning_objectives: ARRAY (nullable)
+video_url: character varying (nullable)
+video_duration_seconds: integer (nullable)
+interactive_elements: jsonb (nullable)
+downloadable_resources: jsonb (nullable)
+code_examples: jsonb (nullable)
+author_id: integer (nullable)
+author_name: character varying (nullable)
+author_bio: text (nullable)
+author_image: character varying (nullable)
+co_authors: ARRAY (nullable)
+reviewer_id: integer (nullable)
+status: character varying (nullable) default='draft'::character varying
+is_featured: boolean (nullable) default=false
+is_premium: boolean (nullable) default=false
+required_credits: integer (nullable) default=0
+version: integer (nullable) default=1
+language: character varying (nullable) default='en'::character varying
+seo_title: character varying (nullable)
+seo_description: text (nullable)
+seo_keywords: ARRAY (nullable)
+meta_description: text (nullable)
+focus_keyword: character varying (nullable)
+view_count: integer (nullable) default=0
+like_count: integer (nullable) default=0
+bookmark_count: integer (nullable) default=0
+share_count: integer (nullable) default=0
+comment_count: integer (nullable) default=0
+completion_count: integer (nullable) default=0
+average_rating: numeric (nullable) default=0.00
+rating_count: integer (nullable) default=0
+read_time_distribution: jsonb (nullable)
+engagement_score: numeric (nullable) default=0.00
+bounce_rate: numeric (nullable) default=0.00
+completion_rate: numeric (nullable) default=0.00
+published_at: timestamp without time zone (nullable)
+archived_at: timestamp without time zone (nullable)
+last_reviewed_at: timestamp without time zone (nullable)
+next_review_date: timestamp without time zone (nullable)
+tags: ARRAY (nullable)
+topics: ARRAY (nullable)
+target_audience: ARRAY (nullable)
+industry_relevance: ARRAY (nullable)
+content_quality_score: numeric (nullable) default=0.00
+last_quality_check_at: timestamp without time zone (nullable)
+validation_status: character varying (nullable) default='pending'::character varying
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+deleted_at: timestamp without time zone (nullable)
+
+=== Table: learning_paths ===
+Columns:
+id: integer default=nextval('learning_paths_id_seq'::regclass)
+uuid: uuid (nullable) default=uuid_generate_v4()
+title: character varying
+slug: character varying
+description: text (nullable)
+tagline: character varying (nullable)
+path_type: character varying
+target_audience: ARRAY (nullable)
+prerequisites: jsonb (nullable)
+content_modules: jsonb
+total_duration_minutes: integer (nullable)
+difficulty_progression: jsonb (nullable)
+learning_objectives: ARRAY (nullable)
+skills_gained: ARRAY (nullable)
+outcomes_achieved: ARRAY (nullable)
+is_featured: boolean (nullable) default=false
+is_premium: boolean (nullable) default=false
+required_credits: integer (nullable) default=0
+certificate_earned: boolean (nullable) default=false
+certificate_template: character varying (nullable)
+enrolled_users: integer (nullable) default=0
+completed_users: integer (nullable) default=0
+average_completion_days: numeric (nullable)
+success_rate: numeric (nullable) default=0.00
+banner_image: character varying (nullable)
+thumbnail_image: character varying (nullable)
+path_diagram: jsonb (nullable)
+difficulty_level: character varying (nullable) default='intermediate'::character varying
+estimated_effort_hours: integer (nullable)
+language: character varying (nullable) default='en'::character varying
+seo_title: character varying (nullable)
+seo_description: text (nullable)
+seo_keywords: ARRAY (nullable)
+status: character varying (nullable) default='draft'::character varying
+published_at: timestamp without time zone (nullable)
+archived_at: timestamp without time zone (nullable)
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+deleted_at: timestamp without time zone (nullable)
+
+=== Table: messages ===
+Columns:
+id: integer default=nextval('messages_id_seq'::regclass)
+project_id: integer
+user_id: integer
+body: text
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+
+=== Table: notifications ===
+Columns:
+id: integer default=nextval('notifications_id_seq'::regclass)
+user_id: integer
+type: character varying
+title: character varying
+message: text
+action_url: character varying (nullable)
+action_text: character varying (nullable)
+is_read: boolean (nullable) default=false
+read_at: timestamp without time zone (nullable)
+expires_at: timestamp without time zone (nullable)
+priority: character varying (nullable) default='normal'::character varying
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+
+=== Table: portfolios ===
+Columns:
+id: integer default=nextval('portfolios_id_seq'::regclass)
+user_id: integer
+title: character varying
+description: text (nullable)
+category: character varying
+tags: jsonb (nullable) default='[]'::jsonb
+votes: integer (nullable) default=0
+upvotes: integer (nullable) default=0
+downvotes: integer (nullable) default=0
+is_public: boolean (nullable) default=true
+image: character varying (nullable)
+demo_url: character varying (nullable)
+source_url: character varying (nullable)
+created_date: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_date: timestamp without time zone (nullable)
+
+=== Table: project_collaborators ===
+Columns:
+project_id: integer
+user_id: integer
+role: character varying (nullable) default='member'::character varying
+joined_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+
+=== Table: projects ===
+Columns:
+id: integer default=nextval('projects_id_seq'::regclass)
+owner_user_id: integer
+organization_id: integer (nullable)
+title: character varying
+description: text (nullable)
+visibility: character varying (nullable) default='private'::character varying
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_at: timestamp without time zone (nullable)
+deleted_at: timestamp without time zone (nullable)
+
+=== Table: rewards ===
+Columns:
+id: integer default=nextval('rewards_id_seq'::regclass)
+user_id: integer
+admin_id: integer (nullable)
+type: character varying
+title: character varying
+description: text (nullable)
+credits: integer (nullable) default=0
+status: character varying (nullable) default='active'::character varying
+earned_at: timestamp without time zone (nullable)
+expires_at: timestamp without time zone (nullable)
+metadata: jsonb (nullable) default='{}'::jsonb
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_at: timestamp without time zone (nullable)
+
+=== Table: startups ===
+Columns:
+id: integer default=nextval('startups_id_seq'::regclass)
+user_id: integer
+name: character varying
+description: text (nullable)
+industry: character varying
+founded_date: date (nullable)
+website: character varying (nullable)
+status: character varying (nullable) default='active'::character varying
+
+=== Table: tasks ===
+Columns:
+id: integer default=nextval('tasks_id_seq'::regclass)
+project_id: integer
+title: character varying
+description: text (nullable)
+assignee_user_id: integer (nullable)
+status: character varying (nullable) default='todo'::character varying
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_at: timestamp without time zone (nullable)
+
+=== Table: todos ===
+Columns:
+id: integer default=nextval('todos_id_seq'::regclass)
+title: text
+description: text (nullable)
+completed: boolean (nullable) default=false
+created_at: timestamp with time zone (nullable) default=now()
+updated_at: timestamp with time zone (nullable) default=now()
+
+=== Table: user_assessment_attempts ===
+Columns:
+id: integer default=nextval('user_assessment_attempts_id_seq'::regclass)
+uuid: uuid (nullable) default=uuid_generate_v4()
+user_id: integer
+assessment_id: integer
+attempt_number: integer
+answers: jsonb
+score: integer
+points_earned: integer (nullable) default=0
+is_passed: boolean
+started_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+completed_at: timestamp without time zone (nullable)
+time_taken_seconds: integer (nullable)
+question_results: jsonb (nullable)
+correct_answers: integer (nullable) default=0
+incorrect_answers: integer (nullable) default=0
+skipped_questions: integer (nullable) default=0
+feedback_shown: boolean (nullable) default=false
+reviewed_at: timestamp without time zone (nullable)
+instructor_notes: text (nullable)
+ip_address: inet (nullable)
+user_agent: text (nullable)
+suspicious_activity: boolean (nullable) default=false
+integrity_flags: jsonb (nullable)
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+
+=== Table: user_learning_path_progress ===
+Columns:
+id: integer default=nextval('user_learning_path_progress_id_seq'::regclass)
+uuid: uuid (nullable) default=uuid_generate_v4()
+user_id: integer
+learning_path_id: integer
+current_module_index: integer (nullable) default=0
+completed_modules: integer (nullable) default=0
+total_modules: integer
+progress_percentage: integer (nullable) default=0
+enrolled_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+started_at: timestamp without time zone (nullable)
+last_access_date: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+completed_at: timestamp without time zone (nullable)
+total_time_spent_seconds: integer (nullable) default=0
+estimated_completion_date: timestamp without time zone (nullable)
+earned_points: integer (nullable) default=0
+earned_badges: ARRAY (nullable)
+certificate_earned: boolean (nullable) default=false
+certificate_earned_at: timestamp without time zone (nullable)
+certificate_id: character varying (nullable)
+average_module_score: numeric (nullable)
+overall_assessment_score: integer (nullable)
+understanding_level: character varying (nullable)
+satisfaction_rating: integer (nullable)
+module_progress: jsonb (nullable)
+assessment_results: jsonb (nullable)
+milestones_achieved: ARRAY (nullable)
+session_count: integer (nullable) default=0
+average_session_duration: integer (nullable) default=0
+streak_days: integer (nullable) default=0
+last_streak_date: timestamp without time zone (nullable)
+recommended_next_content: jsonb (nullable)
+personalized_notes: text (nullable)
+instructor_feedback: text (nullable)
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+
+=== Table: user_learning_progress ===
+Columns:
+id: integer default=nextval('user_learning_progress_id_seq'::regclass)
+uuid: uuid (nullable) default=uuid_generate_v4()
+user_id: integer
+content_id: integer
+progress_percentage: integer (nullable) default=0
+time_spent_seconds: integer (nullable) default=0
+is_completed: boolean (nullable) default=false
+is_bookmarked: boolean (nullable) default=false
+is_liked: boolean (nullable) default=false
+sections_completed: jsonb (nullable)
+quiz_scores: jsonb (nullable)
+assessment_results: jsonb (nullable)
+notes: text (nullable)
+highlights: jsonb (nullable)
+session_count: integer (nullable) default=0
+average_session_duration: integer (nullable) default=0
+last_position_seconds: integer (nullable) default=0
+completion_date: timestamp without time zone (nullable)
+first_access_date: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+last_access_date: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+understanding_level: character varying (nullable)
+confidence_level: character varying (nullable)
+would_recommend: boolean (nullable)
+difficulty_rating: integer (nullable)
+earned_points: integer (nullable) default=0
+earned_badges: ARRAY (nullable)
+certificate_earned: boolean (nullable) default=false
+certificate_id: character varying (nullable)
+certificate_earned_at: timestamp without time zone (nullable)
+shared_with_others: boolean (nullable) default=false
+discussion_participation: boolean (nullable) default=false
+helped_others: boolean (nullable) default=false
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+
+=== Table: user_settings ===
+Columns:
+id: integer default=nextval('user_settings_id_seq'::regclass)
+user_id: integer
+category: character varying (nullable) default='general'::character varying
+setting_key: character varying
+setting_value: text (nullable)
+setting_type: character varying (nullable) default='string'::character varying
+is_public: boolean (nullable) default=false
+created_at: timestamp without time zone (nullable) default=CURRENT_TIMESTAMP
+updated_at: timestamp without time zone (nullable)
+
