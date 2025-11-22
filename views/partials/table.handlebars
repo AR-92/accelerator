@@ -1,0 +1,176 @@
+{{!-- Generic Table Partial --}}
+<div id="{{tableId}}TableContainer" class="overflow-auto flex-1">
+  <table class="min-w-full table-auto bg-white">
+    <!-- Table Header -->
+    <thead class="bg-white border-b border-gray-200">
+      <tr>
+        {{#if showCheckbox}}
+        <th class="px-6 py-4 text-left font-semibold text-gray-900 uppercase text-xs tracking-wider">
+          <input type="checkbox" id="selectAll-{{tableId}}" class="rounded border-gray-300 text-primary focus:ring-primary"
+            aria-label="Select all {{entityName}}">
+        </th>
+        {{/if}}
+        {{#each columns}}
+        <th class="px-6 py-4 text-left font-semibold text-gray-900 uppercase text-xs tracking-wider{{#if hidden}} hidden {{responsive}} {{/if}}">{{label}}</th>
+        {{/each}}
+        {{#if actions}}
+        <th class="px-6 py-4 text-left font-semibold text-gray-900 uppercase text-xs tracking-wider">Actions</th>
+        {{/if}}
+      </tr>
+    </thead>
+    <!-- Table Body -->
+    <tbody class="text-sm text-gray-900">
+      {{#each data}}
+      <tr id="{{../entityName}}-row-{{id}}" class="h-16 border-b border-gray-200 hover:bg-gray-50 transition-colors duration-150">
+        {{#if ../showCheckbox}}
+        <td class="px-6 py-4">
+          <input type="checkbox" class="{{../entityName}}Checkbox rounded border-gray-300 text-primary focus:ring-primary"
+            value="{{id}}" data-{{../entityName}}-id="{{id}}" aria-label="Select {{../entityName}} {{title}}">
+        </td>
+        {{/if}}
+        {{#each ../columns}}
+        <td class="px-6 py-4{{#if hidden}} hidden {{responsive}} {{/if}}">
+          {{#if (eq type 'status')}}
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{statusClass (lookup ../this key)}}">{{lookup ../this key}}</span>
+          {{else if (eq type 'date')}}
+            <div class="text-sm text-gray-900">{{formatDate (lookup ../this key)}}</div>
+          {{else if (eq type 'title')}}
+            <div>
+              <div class="text-sm font-medium text-gray-900">{{lookup ../this key}}</div>
+              {{#if descriptionKey}}
+              <div class="text-sm text-gray-600">{{lookup ../this descriptionKey}}</div>
+              {{/if}}
+            </div>
+          {{else}}
+            <div class="text-sm text-gray-900">{{lookup ../this key}}</div>
+          {{/if}}
+        </td>
+        {{/each}}
+        {{#if ../actions}}
+        <td class="px-6 py-4">
+          <div class="relative">
+            <button onclick="toggleActionMenu('{{../entityName}}', {{id}})"
+              class="p-2 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-900 transition-colors"
+              aria-label="Actions menu">
+              <svg class="w-4 h-4 lucide lucide-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" width="24"
+                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="1"></circle>
+                <circle cx="12" cy="5" r="1"></circle>
+                <circle cx="12" cy="19" r="1"></circle>
+              </svg>
+            </button>
+            <div id="actionMenu-{{../entityName}}-{{id}}"
+              class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+              <div class="py-1">
+                {{#each ../actions}}
+                {{#if (eq type 'link')}}
+                <a href="{{url}}/{{../id}}"
+                  class="flex items-center px-4 py-2 text-sm text-gray-400 hover:bg-gray-100 transition-colors">
+                  {{{icon}}}
+                  {{label}}
+                </a>
+                {{else if (eq type 'button')}}
+                <button onclick="{{onclick}}({{../id}})"
+                  class="flex items-center w-full px-4 py-2 text-sm text-gray-400 hover:bg-gray-100 transition-colors">
+                  {{{icon}}}
+                  {{label}}
+                </button>
+                {{else if (eq type 'delete')}}
+                <button onclick="{{onclick}}({{../id}}, '{{../title}}')"
+                  class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                  {{{icon}}}
+                  {{label}}
+                </button>
+                {{/if}}
+                {{/each}}
+              </div>
+            </div>
+          </div>
+        </td>
+        {{/if}}
+      </tr>
+      {{else}}
+      <tr class="h-16">
+        <td colspan="{{colspan}}" class="px-6 py-8 text-center text-gray-600">
+          No {{entityName}} found.
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+    <!-- Table Footer -->
+    <tfoot>
+      <tr>
+        <td colspan="{{colspan}}" class="bg-white border-t border-gray-200 p-4">
+          <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-sm text-gray-700">
+              Showing {{pagination.start}}-{{pagination.end}} of {{pagination.total}} {{entityName}}
+            </div>
+
+            <div class="flex items-center gap-3">
+              <span class="text-sm text-gray-700 font-medium">Rows per page:</span>
+              <select id="rowsPerPage-{{tableId}}" name="limit"
+                class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                hx-get="{{currentUrl}}" hx-target="#{{tableId}}TableContainer" hx-include="[name='search'],[name='status']">
+                <option value="10"{{#if (eq pagination.limit 10)}} selected{{/if}}>10</option>
+                <option value="20"{{#if (eq pagination.limit 20)}} selected{{/if}}>20</option>
+                <option value="50"{{#if (eq pagination.limit 50)}} selected{{/if}}>50</option>
+                <option value="100"{{#if (eq pagination.limit 100)}} selected{{/if}}>100</option>
+              </select>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <!-- Pagination Controls -->
+              <nav class="flex items-center gap-1 text-sm">
+                {{#if pagination.hasPrev}}
+                <a href="?page={{pagination.prevPage}}&limit={{pagination.limit}}&search={{query.search}}&status={{query.status}}"
+                  class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 font-medium">
+                  <svg class="w-4 h-4 lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m15 18-6-6 6-6"></path>
+                  </svg>
+                </a>
+                {{/if}}
+                {{#each pagination.pages}}
+                <a href="?page={{this}}&limit={{../pagination.limit}}&search={{../query.search}}&status={{../query.status}}"
+                  class="inline-flex items-center justify-center w-10 h-10 rounded-lg{{#if (eq this ../pagination.currentPage)}} bg-primary text-primary-foreground scale-105{{else}} border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400{{/if}} transition-all duration-200 font-medium">{{this}}</a>
+                {{/each}}
+                {{#if pagination.hasNext}}
+                <a href="?page={{pagination.nextPage}}&limit={{pagination.limit}}&search={{query.search}}&status={{query.status}}"
+                  class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
+                  title="Next page">
+                  <svg class="w-4 h-4 lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </a>
+                {{/if}}
+              </nav>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+{{#if showBulkActions}}
+<!-- Bulk Actions Panel -->
+<div id="bulkActions-{{tableId}}"
+  class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white px-6 py-3 rounded-full z-30"
+  style="display: none;">
+  <div class="flex items-center gap-4">
+    <span id="selectedCount-{{tableId}}">0 {{entityName}} selected</span>
+    <div class="flex gap-2">
+      {{#each bulkActions}}
+      <button onclick="{{onclick}}" id="{{buttonId}}-{{../tableId}}"
+        class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-sm" disabled="">
+        {{label}}
+      </button>
+      {{/each}}
+    </div>
+  </div>
+</div>
+{{/if}}

@@ -38,10 +38,167 @@
            updateThemeIcon()
          end
      </script>
-  </head>
- <body>
+</head>
+<body>
     <div class="min-h-screen">
-        {{{body}}}
+        {{> nav}}
+        {{> filter-nav}}
+        <div class="flex">
+            {{> sidebar}}
+            <main class="flex-1 p-4">
+                {{{body}}}
+            </main>
+        </div>
     </div>
+
+    <!-- JavaScript Section -->
+    <script>
+        // Toggle action menu dropdown
+        function toggleActionMenu(entityName, id) {
+            const menu = document.getElementById(`actionMenu-${entityName}-${id}`);
+            const isHidden = menu.classList.contains('hidden');
+
+            // Hide all other menus
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+                if (m !== menu) m.classList.add('hidden');
+            });
+
+            // Toggle current menu
+            if (isHidden) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        }
+
+        // Toggle user menu dropdown
+        function toggleUserMenu() {
+            const menu = document.getElementById('admin-user-dropdown');
+            const isHidden = menu.classList.contains('hidden');
+            if (isHidden) {
+                menu.classList.remove('hidden');
+                setTimeout(() => menu.classList.remove('opacity-0', 'invisible'), 10);
+            } else {
+                menu.classList.add('opacity-0', 'invisible');
+                setTimeout(() => menu.classList.add('hidden'), 200);
+            }
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function (event) {
+            if (!event.target.closest('.relative') && !event.target.closest('#admin-user-menu')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.add('hidden');
+                });
+                const userMenu = document.getElementById('admin-user-dropdown');
+                userMenu.classList.add('opacity-0', 'invisible');
+                setTimeout(() => userMenu.classList.add('hidden'), 200);
+            }
+        });
+
+        // Handle checkbox selection for bulk actions
+        document.addEventListener('change', function (event) {
+            if (event.target.classList.contains('todoCheckbox') || event.target.id === 'selectAll') {
+                const checkboxes = document.querySelectorAll('.todoCheckbox');
+                const selectedCheckboxes = document.querySelectorAll('.todoCheckbox:checked');
+                const bulkActions = document.getElementById('bulkActions');
+                const selectedCount = document.getElementById('selectedCount');
+
+                if (event.target.id === 'selectAll') {
+                    checkboxes.forEach(cb => cb.checked = event.target.checked);
+                }
+
+                const count = selectedCheckboxes.length;
+                selectedCount.textContent = `${count} todo${count !== 1 ? 's' : ''} selected`;
+
+                if (count > 0) {
+                    bulkActions.style.display = 'block';
+                } else {
+                    bulkActions.style.display = 'none';
+                }
+
+                // Enable/disable bulk action buttons
+                const bulkCompleteBtn = document.getElementById('bulkCompleteBtn');
+                const bulkPendingBtn = document.getElementById('bulkPendingBtn');
+                const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+
+                bulkCompleteBtn.disabled = count === 0;
+                bulkPendingBtn.disabled = count === 0;
+                bulkDeleteBtn.disabled = count === 0;
+            }
+        });
+
+        // Bulk actions
+        function bulkMarkComplete() {
+            const selectedIds = Array.from(document.querySelectorAll('.todoCheckbox:checked')).map(cb => cb.value);
+            if (selectedIds.length === 0) return;
+
+            selectedIds.forEach(id => {
+                htmx.ajax('PUT', `/api/todos/${id}?completed=true`, {
+                    target: `#todo-row-${id}`,
+                    swap: 'outerHTML'
+                });
+            });
+        }
+
+        function bulkMarkPending() {
+            const selectedIds = Array.from(document.querySelectorAll('.todoCheckbox:checked')).map(cb => cb.value);
+            if (selectedIds.length === 0) return;
+
+            selectedIds.forEach(id => {
+                htmx.ajax('PUT', `/api/todos/${id}?completed=false`, {
+                    target: `#todo-row-${id}`,
+                    swap: 'outerHTML'
+                });
+            });
+        }
+
+        function bulkDelete() {
+            const selectedIds = Array.from(document.querySelectorAll('.todoCheckbox:checked')).map(cb => cb.value);
+            if (selectedIds.length === 0) return;
+
+            if (confirm(`Are you sure you want to delete ${selectedIds.length} todo${selectedIds.length !== 1 ? 's' : ''}?`)) {
+                selectedIds.forEach(id => {
+                    htmx.ajax('DELETE', `/api/todos/${id}`, {
+                        target: `#todo-row-${id}`,
+                        swap: 'outerHTML'
+                    });
+                });
+            }
+        }
+
+        // Individual actions
+        function editTodo(id) {
+            // This would open an edit modal or navigate to edit page
+            window.location.href = `/todos/${id}/edit`;
+        }
+
+        function toggleStatus(id, status) {
+            const completed = status === 'completed';
+            htmx.ajax('PUT', `/api/todos/${id}?completed=${completed}`, {
+                target: `#todo-row-${id}`,
+                swap: 'outerHTML'
+            });
+        }
+
+        function deleteTodo(id, title) {
+            if (confirm(`Are you sure you want to delete "${title}"?`)) {
+                htmx.ajax('DELETE', `/api/todos/${id}`, {
+                    target: `#todo-row-${id}`,
+                    swap: 'outerHTML'
+                });
+            }
+        }
+
+        // Create todo modal (placeholder)
+        function openCreateTodoModal() {
+            // This would open a modal for creating todos
+        }
+
+        // Export functionality (placeholder)
+        function exportToCSV() {
+            // Export to CSV functionality would be implemented here
+        }
+    </script>
 </body>
 </html>
