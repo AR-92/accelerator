@@ -7,14 +7,7 @@ const config = {
   nodeEnv: process.env.NODE_ENV || 'development',
   supabase: {
     url: process.env.SUPABASE_URL,
-    anonKey: process.env.SUPABASE_ANON_KEY,
-  },
-  database: {
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    name: process.env.DB_NAME,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    key: process.env.SUPABASE_KEY,
   },
   jwt: {
     secret: process.env.JWT_SECRET,

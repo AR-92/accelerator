@@ -1,0 +1,773 @@
+<!-- Top Navigation Bar -->
+ <nav class="bg-white text-slate-800 px-4 border-b border-gray-200 flex items-center justify-between min-h-12">
+  <div class="flex items-center">
+    <div class="h-7 w-6 mr-4"><svg xmlns="http://www.w3.org/2000/svg" width="33" height="36" viewBox="0 0 33 36"
+        fill="none" class="h-full w-full">
+        <path
+          d="M31.6035 7.28044C31.1951 7.03803 30.7235 7.06833 30.3421 7.35872L26.4519 10.3182C25.9036 10.7348 25.5764 11.4317 25.5764 12.1868V21.1636C25.5764 24.2695 23.7757 26.9638 21.1966 27.7138L6.895 31.8726V14.5099C6.895 11.7171 8.5129 9.29549 10.8326 8.62128L31.4004 2.64179C31.9126 2.4928 32.2714 1.9701 32.2714 1.37165C32.2714 1.01561 32.1405 0.672189 31.9149 0.424727C31.687 0.177265 31.3823 0.0510083 31.0777 0.0611088L27.8352 0.177265C26.7972 0.215142 25.7615 0.3818 24.7551 0.674714L7.27635 5.75527C3.11314 6.9648 0.206787 11.2853 0.206787 16.2598V32.8423C0.206787 33.7033 0.716752 34.4508 1.44785 34.6629L5.68553 35.8876C5.8164 35.9255 5.95405 35.9457 6.09169 35.9457C6.22934 35.9457 6.36698 35.9255 6.49786 35.8876L24.8792 30.5444C29.2342 29.2793 32.2759 24.7594 32.2759 19.5526V8.52785C32.2759 8.00263 32.0209 7.52538 31.6103 7.28297L31.6035 7.28044Z"
+          fill="#9E28B5" />
+      </svg></div>
+    <a href="#" class="ml-4 mr-4 text-black border-t-4 border-purple-500 font-medium leading-[2.7]">Catchup</a>
+    <a href="#" class="mr-4 text-gray-400 leading-[2.7]">tasks</a>
+    <a href="#" class="mr-4 text-gray-400 leading-[2.7]">projects</a>
+    <a href="#" class="mr-4 text-gray-400 leading-[2.7]">workload</a>
+     <a href="#" class="mr-4 text-gray-400 leading-[2.7]">timelines</a>
+      </div>
+  <div class="flex">
+    <div class="h-12 w-px bg-gray-300 mr-4"></div>
+    <div class="self-center mr-4">
+      <label class="relative block">
+        <span class="sr-only">Search</span>
+        <input class="w-64 pl-4 pr-4 py-1.5 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none"
+          placeholder="Search todos..." aria-label="Search" id="navSearchInput" name="search" value="{{query.search}}"
+          hx-get="/todos" hx-target="#todosTableContainer" hx-trigger="input changed delay:300ms, keyup[key=='Enter']"
+          hx-include="[name='status'],[name='limit']">
+      </label>
+     </div>
+      <!-- Theme Toggle Button -->
+      <button class="ml-4 text-gray-600 rounded-full p-2 hover:bg-gray-200 focus:ring-0">
+       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+         class="lucide lucide-moon-icon lucide-moon">
+         <path
+           d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+       </svg>
+      </button>
+
+      <!-- User Menu -->
+      <div class="relative self-center" id="admin-user-menu">
+      <button onclick="toggleUserMenu()"
+        class="flex items-center gap-3 h-10 px-3 rounded-xl hover:bg-muted/80 transition-all duration-200 hover:shadow-sm"
+        id="admin-user-menu-button">
+        <div class="hidden md:flex flex-col items-start min-w-0">
+          <span class="text-sm font-bold text-foreground leading-tight truncate max-w-32"> </span>
+          <span class="text-xs text-muted-foreground leading-tight flex items-center gap-1.5">
+            <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+            Administrator
+          </span>
+        </div>
+        <div
+          class="flex items-center justify-center w-5 h-5 rounded-md hover:bg-muted/50 transition-colors duration-200"
+          id="admin-user-menu-arrow">
+
+          <svg class="w-4 h-4 text-muted-foreground lucide lucide-chevron-down" xmlns="http://www.w3.org/2000/svg"
+            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+
+        </div>
+      </button>
+
+      <!-- User Dropdown -->
+      <div
+        class="absolute right-0 mt-2 w-64 bg-white backdrop-blur-sm border border-gray-200 rounded-xl shadow-xl z-30 transition-all duration-200 opacity-0 invisible hidden"
+        id="admin-user-dropdown">
+        <div class="p-2">
+          <a href="/admin/profile"
+            class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
+
+            <svg class="w-4 h-4 lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+
+            <span>Profile</span>
+          </a>
+          <a href="/admin/profile-settings"
+            class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
+
+            <svg class="w-4 h-4 lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915">
+              </path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+
+            <span>Profile Settings</span>
+          </a>
+          <a href="/admin/settings"
+            class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
+
+            <svg class="w-4 h-4 lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915">
+              </path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+
+            <span>Admin Settings</span>
+          </a>
+          <a href="/admin/system-health"
+            class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
+
+            <svg class="w-4 h-4 lucide lucide-activity" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2">
+              </path>
+            </svg>
+
+            <span>System Health</span>
+          </a>
+          <a href="/admin/notifications"
+            class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
+
+            <svg class="w-4 h-4 lucide lucide-bell" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M10.268 21a2 2 0 0 0 3.464 0"></path>
+              <path
+                d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326">
+              </path>
+            </svg>
+
+            <span>Notifications</span>
+          </a>
+          <a href="/admin/activity"
+            class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
+
+            <svg class="w-4 h-4 lucide lucide-activity" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2">
+              </path>
+            </svg>
+
+            <span>Activity Log</span>
+          </a>
+          <div class="border-t border-border/50 my-2"></div>
+          <a href="/"
+            class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
+
+            <svg class="w-4 h-4 lucide lucide-globe" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+              <path d="M2 12h20"></path>
+            </svg>
+
+            <span>Back to Site</span>
+          </a>
+          <div class="border-t border-border/50 my-2"></div>
+          <form action="/admin/logout" method="POST">
+            <button type="submit"
+              class="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
+
+              <svg class="w-4 h-4 lucide lucide-log-out" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="m16 17 5-5-5-5"></path>
+                <path d="M21 12H9"></path>
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              </svg>
+
+              <span>Logout</span>
+            </button>
+          </form>
+         </div>
+       </div>
+     </div>
+   </div>
+  </nav>
+
+<!-- Filter Navigation Bar -->
+ <nav class="bg-white text-slate-800 px-4 border-b border-gray-200 flex items-center justify-between min-h-10">
+   <!-- Left Section: Icon and Filter Links -->
+   <div class="flex items-center">
+     <!-- Filter Icon -->
+     <div class="w-8 h-8 mr-4 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+         stroke-linejoin="round" class="lucide lucide-panel-right-icon lucide-panel-right text-gray-400 w-5 h-5">
+         <rect width="18" height="18" x="3" y="3" rx="2" />
+         <path d="M15 3v18" />
+       </svg></div>
+      <!-- Filter Links -->
+      <a href="/todos" class="ml-4 mr-4 {{#unless query.status}}text-black border-t-4 border-purple-500 font-medium{{/unless}} {{#if query.status}}text-gray-400{{/if}} text-sm leading-[2.7]" hx-get="/todos" hx-target="#todosTableContainer">All Todos</a>
+      <a href="/todos?status=pending" class="mr-4 {{#if (eq query.status 'pending')}}text-black border-t-4 border-purple-500 font-medium{{else}}text-gray-400{{/if}} text-sm leading-[2.7]" hx-get="/todos?status=pending" hx-target="#todosTableContainer">Pending</a>
+      <a href="/todos?status=completed" class="mr-4 {{#if (eq query.status 'completed')}}text-black border-t-4 border-purple-500 font-medium{{else}}text-gray-400{{/if}} text-sm leading-[2.7]" hx-get="/todos?status=completed" hx-target="#todosTableContainer">Completed</a>
+   </div>
+   <!-- Right Section: Create Todo Button -->
+   <div>
+     <!-- Create Todo Button -->
+     <button onclick="openCreateTodoModal()" class="flex items-center gap-2 px-3 py-2 rounded-md text-gray-400 text-sm leading-[2.7] hover:bg-purple-200 hover:text-purple-500 focus:outline-none">
+       <svg class="w-4 h-4 lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+         <path d="M5 12h14"></path>
+         <path d="M12 5v14"></path>
+       </svg>
+       <span class="text-sm">Create Todo</span>
+     </button>
+   </div>
+ </nav>
+
+<!-- Main Layout Container -->
+ <div class="flex">
+  <!-- Sidebar -->
+   <div class="w-80">
+    <div class="bg-white border border-gray-100 overflow-hidden">
+
+
+      <nav class="px-3 py-3 text-sm">
+
+        <!-- Main Section -->
+        <div class="text-xs text-slate-400 px-3 pb-2">Main</div>
+        <ul class="space-y-1">
+          <li>
+            <a href="/admin/dashboard"
+              class="flex items-center px-3 py-2 rounded-md bg-purple-200 text-purple-500 font-medium leading-[2.7] hover:bg-purple-200 hover:text-purple-500">
+              <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                stroke-width="2" viewBox="0 0 24 24">
+                <rect width="7" height="9" x="3" y="3" rx="1"></rect>
+                <rect width="7" height="5" x="14" y="3" rx="1"></rect>
+                <rect width="7" height="9" x="14" y="12" rx="1"></rect>
+                <rect width="7" height="5" x="3" y="16" rx="1"></rect>
+              </svg>
+              <span class="font-medium">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/users"
+              class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+              <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                stroke-width="2" viewBox="0 0 24 24">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+              </svg>
+              <span class="font-medium">Users</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/ideas"
+              class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+              <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                stroke-width="2" viewBox="0 0 24 24">
+                <path
+                  d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5">
+                </path>
+                <path d="M9 18h6"></path>
+                <path d="M10 22h4"></path>
+              </svg>
+              <span class="font-medium">Ideas</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/votes"
+              class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+              <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                stroke-width="2" viewBox="0 0 24 24">
+                <path
+                  d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5">
+                </path>
+              </svg>
+              <span class="font-medium">Votes</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/collaborations"
+              class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+              <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                stroke-width="2" viewBox="0 0 24 24">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+              </svg>
+              <span class="font-medium">Collaborations</span>
+            </a>
+          </li>
+        </ul>
+
+        <!-- Content Section -->
+        <div class="text-xs text-slate-400 px-3 pt-4 pb-2">Content Management</div>
+        <ul class="space-y-1">
+          <li>
+            <a href="/admin/content"
+              class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+              <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                stroke-width="2" viewBox="0 0 24 24">
+                <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+                <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                <path d="M10 9H8"></path>
+                <path d="M16 13H8"></path>
+                <path d="M16 17H8"></path>
+              </svg>
+              <span class="font-medium">Content</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/landing-page"
+              class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+              <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                <path d="M2 12h20"></path>
+              </svg>
+              <span class="font-medium">Landing Page</span>
+            </a>
+          </li>
+        </ul>
+
+        <!-- Financial Section -->
+        <div class="text-xs text-slate-400 px-3 pt-4 pb-2">Financial</div>
+        <ul class="space-y-1">
+          <li>
+            <a href="/admin/packages"
+              class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+              <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                stroke-width="2" viewBox="0 0 24 24">
+                <path
+                  d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z">
+                </path>
+                <path d="M12 22V12"></path>
+                <polyline points="3.29 7 12 12 20.71 7"></polyline>
+                <path d="m7.5 4.27 9 5.15"></path>
+              </svg>
+              Packages
+            </a>
+          </li>
+          <li>
+            <a href="/admin/billing"
+              class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+              <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                stroke-width="2" viewBox="0 0 24 24">
+                <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                <line x1="2" y1="10" x2="22" y2="10"></line>
+              </svg>
+              Billing
+            </a>
+          </li>
+          <li>
+            <a href="/admin/rewards"
+              class="flex items-center px-3 py-2 rounded-md text-gray-400 hover:bg-purple-200 hover:text-purple-500">
+              <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                stroke-width="2" viewBox="0 0 24 24">
+                <rect x="3" y="8" width="18" height="4" rx="1"></rect>
+                <path d="M12 8v13"></path>
+                <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
+                <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path>
+              </svg>
+              Rewards
+            </a>
+          </li>
+        </ul>
+
+      </nav>
+    </div>
+   </div>
+
+  <!-- Main Content Area -->
+   <main class="flex-1 p-4">
+     <!-- Todos Container -->
+     <div
+       class="max-w-7xl mx-auto rounded-xl overflow-hidden bg-white ring-1 ring-gray-200 flex flex-col min-h-[600px] mx-4 my-4">
+
+       <!-- Page Header -->
+       <header class="sticky top-0 z-20 bg-white text-gray-900 p-5 border-b border-gray-200">
+        <!-- Page Title and Description -->
+        <div class="mb-6 flex justify-between">
+
+          <div class="text-left">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Todos</h1>
+            <p class="text-gray-600">Manage and organize all your tasks efficiently</p>
+          </div>
+
+        </div>
+         <div class="max-w-7xl mx-auto flex items-center gap-4">
+         </div>
+        </header>
+       <!-- Todos Table Container -->
+       <div id="todosTableContainer" class="overflow-auto flex-1">
+         <!-- Todos Table -->
+         <table class="min-w-full table-auto bg-white">
+           <!-- Table Header -->
+           <thead class="bg-white border-b border-gray-200">
+            <tr>
+              <th class="px-6 py-4 text-left font-semibold text-gray-900 uppercase text-xs tracking-wider">
+                <input type="checkbox" id="selectAll" class="rounded border-gray-300 text-primary focus:ring-primary"
+                  aria-label="Select all todos">
+              </th>
+              <th class="px-6 py-4 text-left font-semibold text-gray-900 uppercase text-xs tracking-wider">Todo</th>
+              <th class="px-6 py-4 text-left font-semibold text-gray-900 uppercase text-xs tracking-wider">Status</th>
+              <th
+                class="px-6 py-4 text-left font-semibold text-gray-900 uppercase text-xs tracking-wider hidden md:table-cell">
+                Priority</th>
+              <th
+                class="px-6 py-4 text-left font-semibold text-gray-900 uppercase text-xs tracking-wider hidden lg:table-cell">
+                Created</th>
+              <th
+                class="px-6 py-4 text-left font-semibold text-gray-900 uppercase text-xs tracking-wider hidden lg:table-cell">
+                Updated</th>
+              <th class="px-6 py-4 text-left font-semibold text-gray-900 uppercase text-xs tracking-wider">Actions</th>
+            </tr>
+           </thead>
+           <!-- Table Body -->
+           <tbody class="text-sm text-gray-900">
+            {{#if todos.length}}
+            {{#each todos}}
+            <tr id="todo-row-{{id}}"
+              class="h-16 border-b border-gray-200 hover:bg-gray-50 transition-colors duration-150">
+              <td class="px-6 py-4">
+                <input type="checkbox" class="todoCheckbox rounded border-gray-300 text-primary focus:ring-primary"
+                  value="{{id}}" data-todo-id="{{id}}" aria-label="Select todo {{title}}">
+              </td>
+              <td class="px-6 py-4">
+                <div>
+                  <div class="text-sm font-medium text-gray-900">{{title}}</div>
+                  {{#if description}}
+                  <div class="text-sm text-gray-600">{{description}}</div>
+                  {{/if}}
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <span
+                  class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{#if completed}}bg-green-100 text-green-800{{else}}bg-yellow-100 text-yellow-800{{/if}}">{{#if
+                  completed}}completed{{else}}pending{{/if}}</span>
+              </td>
+              <td class="px-6 py-4 hidden md:table-cell">
+                <div class="text-sm text-gray-900 font-medium">Medium</div>
+              </td>
+              <td class="px-6 py-4 hidden lg:table-cell">
+                <div class="text-sm text-gray-900">{{formatDate created_at}}</div>
+              </td>
+              <td class="px-6 py-4 hidden lg:table-cell">
+                <div class="text-sm text-gray-900">{{formatDate updated_at}}</div>
+              </td>
+              <td class="px-6 py-4">
+                <div class="relative">
+                  <button onclick="toggleActionMenu({{id}})"
+                    class="p-2 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-900 dark:text-gray-100 transition-colors"
+                    aria-label="Actions menu">
+
+                    <svg class="w-4 h-4 lucide lucide-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" width="24"
+                      height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="1"></circle>
+                      <circle cx="12" cy="5" r="1"></circle>
+                      <circle cx="12" cy="19" r="1"></circle>
+                    </svg>
+
+                  </button>
+                  <div id="actionMenu-{{id}}"
+                    class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+                    <div class="py-1">
+                      <a href="/todos/{{id}}"
+                        class="flex items-center px-4 py-2 text-sm text-gray-400 hover:bg-gray-100 transition-colors">
+
+                        <svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24"
+                          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path
+                            d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0">
+                          </path>
+                          <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+
+                        View Details
+                      </a>
+                      <button onclick="editTodo({{id}})"
+                        class="flex items-center w-full px-4 py-2 text-sm text-gray-400 hover:bg-gray-100 transition-colors">
+
+                        <svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24"
+                          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                          <path
+                            d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z">
+                          </path>
+                        </svg>
+
+                        Edit Todo
+                      </button>
+                      <button onclick="toggleStatus({{id}}, '{{#if completed}}pending{{else}}completed{{/if}}')"
+                        class="flex items-center w-full px-4 py-2 text-sm text-gray-400 hover:bg-gray-100 transition-colors">
+
+                        <svg class="w-4 h-4 mr-3 lucide lucide-circle-check" xmlns="http://www.w3.org/2000/svg"
+                          width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <path d="m9 12 2 2 4-4"></path>
+                        </svg>
+
+                        {{#if completed}}Mark Pending{{else}}Mark Complete{{/if}}
+                      </button>
+                      <button onclick="deleteTodo({{id}}, '{{title}}')"
+                        class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+
+                        <svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24"
+                          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M10 11v6"></path>
+                          <path d="M14 11v6"></path>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                          <path d="M3 6h18"></path>
+                          <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            {{/each}}
+            {{else}}
+            <tr class="h-16">
+              <td colspan="7" class="px-6 py-8 text-center text-gray-600">
+                {{#if supabaseConnected}}
+                No todos found. Create your first todo!
+                {{else}}
+                Database not connected. Please check your database configuration.
+                {{/if}}
+              </td>
+            </tr>
+            {{/if}}
+           </tbody>
+           <!-- Table Footer -->
+           <tfoot>
+            <tr>
+              <td colspan="7" class="bg-white border-t border-gray-200 p-4">
+                <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div class="text-sm text-gray-700">
+                    Showing {{pagination.start}}-{{pagination.end}} of {{pagination.total}} todos
+                  </div>
+
+                  <div class="flex items-center gap-3">
+                    <span class="text-sm text-gray-700 font-medium">Rows per page:</span>
+                    <select id="rowsPerPage" name="limit"
+                      class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
+                      hx-get="/todos" hx-target="#todosTableContainer" hx-include="[name='search'],[name='status']">
+                      <option value="10" {{#if (eq pagination.limit 10)}}selected{{/if}}>10</option>
+                      <option value="20" {{#if (eq pagination.limit 20)}}selected{{/if}}>20</option>
+                      <option value="50" {{#if (eq pagination.limit 50)}}selected{{/if}}>50</option>
+                      <option value="100" {{#if (eq pagination.limit 100)}}selected{{/if}}>100</option>
+                    </select>
+                  </div>
+
+                   <div class="flex items-center gap-2">
+                     <!-- Pagination Controls -->
+                     <nav class="flex items-center gap-1 text-sm">
+                      {{#if pagination.hasPrev}}
+                      <a href="?page={{pagination.prevPage}}&limit={{pagination.limit}}&search={{query.search}}&status={{query.status}}"
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 font-medium">
+                        <svg class="w-4 h-4 lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24"
+                          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path d="m15 18-6-6 6-6"></path>
+                        </svg>
+                      </a>
+                      {{/if}}
+                      {{#each pagination.pages}}
+                      <a href="?page={{this}}&limit={{../pagination.limit}}&search={{../query.search}}&status={{../query.status}}"
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-lg {{#if (eq this ../pagination.currentPage)}}bg-primary text-primary-foreground scale-105{{else}}border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400{{/if}} transition-all duration-200 font-medium">{{this}}</a>
+                      {{/each}}
+                      {{#if pagination.hasNext}}
+                      <a href="?page={{pagination.nextPage}}&limit={{pagination.limit}}&search={{query.search}}&status={{query.status}}"
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
+                        title="Next page">
+                        <svg class="w-4 h-4 lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24"
+                          height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round">
+                          <path d="m9 18 6-6-6-6"></path>
+                        </svg>
+                      </a>
+                      {{/if}}
+                    </nav>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+         </table>
+       </div>
+
+       <!-- Bulk Actions Panel -->
+       <div id="bulkActions"
+        class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white px-6 py-3 rounded-full z-30"
+        style="display: none;">
+        <div class="flex items-center gap-4">
+          <span id="selectedCount">0 todos selected</span>
+          <div class="flex gap-2">
+            <button onclick="bulkMarkComplete()" id="bulkCompleteBtn"
+              class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-sm" disabled="">
+              Mark Complete
+            </button>
+            <button onclick="bulkMarkPending()" id="bulkPendingBtn"
+              class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-sm" disabled="">
+              Mark Pending
+            </button>
+            <button onclick="bulkDelete()" id="bulkDeleteBtn"
+              class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm" disabled="">
+              Delete Selected
+            </button>
+          </div>
+        </div>
+      </div>
+     </div>
+ </div>
+
+<!-- JavaScript Section -->
+ <script>
+  // Toggle action menu dropdown
+  function toggleActionMenu(todoId) {
+    const menu = document.getElementById(`actionMenu-${todoId}`);
+    const isHidden = menu.classList.contains('hidden');
+
+    // Hide all other menus
+    document.querySelectorAll('.dropdown-menu').forEach(m => {
+      if (m !== menu) m.classList.add('hidden');
+    });
+
+    // Toggle current menu
+    if (isHidden) {
+      menu.classList.remove('hidden');
+    } else {
+      menu.classList.add('hidden');
+    }
+  }
+
+  // Toggle user menu dropdown
+  function toggleUserMenu() {
+    const menu = document.getElementById('admin-user-dropdown');
+    const isHidden = menu.classList.contains('hidden');
+    if (isHidden) {
+      menu.classList.remove('hidden');
+      setTimeout(() => menu.classList.remove('opacity-0', 'invisible'), 10);
+    } else {
+      menu.classList.add('opacity-0', 'invisible');
+      setTimeout(() => menu.classList.add('hidden'), 200);
+    }
+  }
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', function (event) {
+    if (!event.target.closest('.relative') && !event.target.closest('#admin-user-menu')) {
+      document.querySelectorAll('.dropdown-menu').forEach(menu => {
+        menu.classList.add('hidden');
+      });
+      const userMenu = document.getElementById('admin-user-dropdown');
+      userMenu.classList.add('opacity-0', 'invisible');
+      setTimeout(() => userMenu.classList.add('hidden'), 200);
+    }
+  });
+
+  // Handle checkbox selection for bulk actions
+  document.addEventListener('change', function (event) {
+    if (event.target.classList.contains('todoCheckbox') || event.target.id === 'selectAll') {
+      const checkboxes = document.querySelectorAll('.todoCheckbox');
+      const selectedCheckboxes = document.querySelectorAll('.todoCheckbox:checked');
+      const bulkActions = document.getElementById('bulkActions');
+      const selectedCount = document.getElementById('selectedCount');
+
+      if (event.target.id === 'selectAll') {
+        checkboxes.forEach(cb => cb.checked = event.target.checked);
+      }
+
+      const count = selectedCheckboxes.length;
+      selectedCount.textContent = `${count} todo${count !== 1 ? 's' : ''} selected`;
+
+      if (count > 0) {
+        bulkActions.style.display = 'block';
+      } else {
+        bulkActions.style.display = 'none';
+      }
+
+      // Enable/disable bulk action buttons
+      const bulkCompleteBtn = document.getElementById('bulkCompleteBtn');
+      const bulkPendingBtn = document.getElementById('bulkPendingBtn');
+      const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+
+      bulkCompleteBtn.disabled = count === 0;
+      bulkPendingBtn.disabled = count === 0;
+      bulkDeleteBtn.disabled = count === 0;
+    }
+  });
+
+  // Bulk actions
+  function bulkMarkComplete() {
+    const selectedIds = Array.from(document.querySelectorAll('.todoCheckbox:checked')).map(cb => cb.value);
+    if (selectedIds.length === 0) return;
+
+    selectedIds.forEach(id => {
+      htmx.ajax('PUT', `/api/todos/${id}?completed=true`, {
+        target: `#todo-row-${id}`,
+        swap: 'outerHTML'
+      });
+    });
+  }
+
+  function bulkMarkPending() {
+    const selectedIds = Array.from(document.querySelectorAll('.todoCheckbox:checked')).map(cb => cb.value);
+    if (selectedIds.length === 0) return;
+
+    selectedIds.forEach(id => {
+      htmx.ajax('PUT', `/api/todos/${id}?completed=false`, {
+        target: `#todo-row-${id}`,
+        swap: 'outerHTML'
+      });
+    });
+  }
+
+  function bulkDelete() {
+    const selectedIds = Array.from(document.querySelectorAll('.todoCheckbox:checked')).map(cb => cb.value);
+    if (selectedIds.length === 0) return;
+
+    if (confirm(`Are you sure you want to delete ${selectedIds.length} todo${selectedIds.length !== 1 ? 's' : ''}?`)) {
+      selectedIds.forEach(id => {
+        htmx.ajax('DELETE', `/api/todos/${id}`, {
+          target: `#todo-row-${id}`,
+          swap: 'outerHTML'
+        });
+      });
+    }
+  }
+
+  // Individual actions
+  function editTodo(id) {
+    // This would open an edit modal or navigate to edit page
+    window.location.href = `/todos/${id}/edit`;
+  }
+
+  function toggleStatus(id, status) {
+    const completed = status === 'completed';
+    htmx.ajax('PUT', `/api/todos/${id}?completed=${completed}`, {
+      target: `#todo-row-${id}`,
+      swap: 'outerHTML'
+    });
+  }
+
+  function deleteTodo(id, title) {
+    if (confirm(`Are you sure you want to delete "${title}"?`)) {
+      htmx.ajax('DELETE', `/api/todos/${id}`, {
+        target: `#todo-row-${id}`,
+        swap: 'outerHTML'
+      });
+    }
+  }
+
+  // Create todo modal (placeholder)
+  function openCreateTodoModal() {
+    // This would open a modal for creating todos
+  }
+
+  // Export functionality (placeholder)
+  function exportToCSV() {
+    // Export to CSV functionality would be implemented here
+  }
+</script>
+
+</div>
+</main>
+</div>

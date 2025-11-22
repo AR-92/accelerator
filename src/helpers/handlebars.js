@@ -2,6 +2,15 @@ import icons from 'lucide-static';
 
 export const handlebarsHelpers = {
   eq: function(a, b) { return a === b; },
+  formatDate: function(date) {
+    if (!date) return '';
+    const d = new Date(date);
+    return d.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  },
   icon: function(name, options) {
     const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1).replace(/-./g, match => match[1].toUpperCase());
     let svg = icons[capitalizedName];

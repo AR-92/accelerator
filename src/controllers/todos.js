@@ -1,4 +1,5 @@
 import Todo from '../models/Todo.js';
+import databaseService from '../services/supabase.js';
 import logger from '../utils/logger.js';
 import { validateTodoCreation, validateTodoUpdate, validateTodoDeletion } from '../middleware/validation.js';
 import { handlebarsHelpers } from '../helpers/handlebars.js';
@@ -132,28 +133,35 @@ const renderAlertHtml = (type, message, iconName) => {
 // Controller functions
 export const getTodos = async (req, res) => {
   try {
-    const allTodos = await Todo.findAll();
-    let filteredTodos = [...allTodos];
     const { search, status, page = 1, limit = 10 } = req.query;
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
+    const offset = (pageNum - 1) * limitNum;
+
+    // Build Supabase query with filters
+    let query = databaseService.supabase
+      .from('todos')
+      .select('*', { count: 'exact' });
 
     if (search) {
-      filteredTodos = filteredTodos.filter(todo =>
-        todo.title.toLowerCase().includes(search.toLowerCase()) ||
-        (todo.description && todo.description.toLowerCase().includes(search.toLowerCase()))
-      );
+      query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
     }
     if (status === 'pending') {
-      filteredTodos = filteredTodos.filter(todo => !todo.completed);
+      query = query.eq('completed', false);
     } else if (status === 'completed') {
-      filteredTodos = filteredTodos.filter(todo => todo.completed);
+      query = query.eq('completed', true);
     }
 
-    const total = filteredTodos.length;
-    const offset = (pageNum - 1) * limitNum;
-    const todos = filteredTodos.slice(offset, offset + limitNum);
+    // Apply pagination
+    query = query
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limitNum - 1);
 
+    const { data: todos, error, count } = await query;
+
+    if (error) throw error;
+
+    const total = count || 0;
     const filters = [];
     if (search) filters.push(`search: "${search}"`);
     if (status) filters.push(`status: ${status}`);
