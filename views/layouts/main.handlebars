@@ -30,11 +30,17 @@
            end
          end
 
-          -- Load theme from localStorage on load and update icon
-          on load from document
-            initializeTheme()
-            initializeSidebar()
-          end
+           -- Load theme from localStorage on load and update icon
+           on load from document
+             initializeTheme()
+             initializeSidebar()
+             highlightSidebarLink()
+           end
+
+           -- Update sidebar highlight after HTMX swaps
+           on htmx:afterSwap from document
+             highlightSidebarLink()
+           end
      </script>
 </head>
 <body>
@@ -311,6 +317,20 @@
                     <path d="M6.343 6.343h.01"/>
                 `;
             }
+        }
+
+        // Highlight current sidebar link
+        function highlightSidebarLink() {
+            const currentPath = window.location.pathname;
+            const sidebarLinks = document.querySelectorAll('#sidebar a');
+            sidebarLinks.forEach(link => {
+                link.classList.remove('bg-accent', 'text-foreground', 'font-bold');
+                link.classList.add('text-muted-foreground');
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('bg-accent', 'text-foreground', 'font-bold');
+                    link.classList.remove('text-muted-foreground');
+                }
+            });
         }
     </script>
 </body>

@@ -1,0 +1,56 @@
+<!-- Help Section Overview -->
+<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-foreground mb-2">Help Overview</h1>
+      <p class="text-muted-foreground">Overview of help center and support resources</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 gap-6 mb-8">
+      <!-- Help Center Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <path d="M12 17h.01"></path>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Help Center</h3>
+          </div>
+          <a href="/admin/help-center" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Total Articles</span>
+            <span class="text-sm font-medium">{{stats.helpCenter.total}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Published</span>
+            <span class="text-sm font-medium text-green-600">{{stats.helpCenter.published}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Draft</span>
+            <span class="text-sm font-medium text-orange-600">{{stats.helpCenter.draft}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-card rounded-lg border border-border p-6">
+      <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
+      <div class="grid grid-cols-1 gap-4">
+        <a href="/admin/help-center" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <path d="M12 17h.01"></path>
+          </svg>
+          <span class="text-sm font-medium text-center">Manage Help Center</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,206 @@
+<!-- Main Section Overview -->
+<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-foreground mb-2">Main Overview</h1>
+      <p class="text-muted-foreground">Overview of core system components and user management</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+      <!-- Todos Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2.5"></path>
+              <path d="M9 11V9a3 3 0 0 1 6 0v2"></path>
+              <path d="M13.5 11H15a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2.5"></path>
+              <path d="M12 16v3"></path>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Todos</h3>
+          </div>
+          <a href="/admin/todos" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Total</span>
+            <span class="text-sm font-medium">{{stats.todos.total}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Completed</span>
+            <span class="text-sm font-medium text-green-600">{{stats.todos.completed}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Pending</span>
+            <span class="text-sm font-medium text-orange-600">{{stats.todos.pending}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Users</h3>
+          </div>
+          <a href="/admin/users" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Total</span>
+            <span class="text-sm font-medium">{{stats.users.total}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Active</span>
+            <span class="text-sm font-medium text-green-600">{{stats.users.active}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Pending</span>
+            <span class="text-sm font-medium text-orange-600">{{stats.users.pending}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ideas Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+              <path d="M9 18h6"></path>
+              <path d="M10 22h4"></path>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Ideas</h3>
+          </div>
+          <a href="/admin/ideas" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Total</span>
+            <span class="text-sm font-medium">{{stats.ideas.total}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Approved</span>
+            <span class="text-sm font-medium text-green-600">{{stats.ideas.approved}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Pending</span>
+            <span class="text-sm font-medium text-orange-600">{{stats.ideas.pending}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Votes Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Votes</h3>
+          </div>
+          <a href="/admin/votes" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Total</span>
+            <span class="text-sm font-medium">{{stats.votes.total}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Upvotes</span>
+            <span class="text-sm font-medium text-green-600">{{stats.votes.upvotes}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Downvotes</span>
+            <span class="text-sm font-medium text-red-600">{{stats.votes.downvotes}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Collaborations Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Collaborations</h3>
+          </div>
+          <a href="/admin/collaborations" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Total</span>
+            <span class="text-sm font-medium">{{stats.collaborations.total}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Active</span>
+            <span class="text-sm font-medium text-green-600">{{stats.collaborations.active}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Archived</span>
+            <span class="text-sm font-medium text-gray-600">{{stats.collaborations.archived}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-card rounded-lg border border-border p-6">
+      <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <a href="/admin/todos" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2.5"></path>
+            <path d="M9 11V9a3 3 0 0 1 6 0v2"></path>
+            <path d="M13.5 11H15a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2.5"></path>
+            <path d="M12 16v3"></path>
+          </svg>
+          <span class="text-sm font-medium text-center">Manage Todos</span>
+        </a>
+        <a href="/admin/users" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+          </svg>
+          <span class="text-sm font-medium text-center">Manage Users</span>
+        </a>
+        <a href="/admin/ideas" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+            <path d="M9 18h6"></path>
+            <path d="M10 22h4"></path>
+          </svg>
+          <span class="text-sm font-medium text-center">Manage Ideas</span>
+        </a>
+        <a href="/admin/votes" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path>
+          </svg>
+          <span class="text-sm font-medium text-center">Manage Votes</span>
+        </a>
+        <a href="/admin/collaborations" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+          </svg>
+          <span class="text-sm font-medium text-center">Manage Collaborations</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

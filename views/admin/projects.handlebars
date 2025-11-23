@@ -1,0 +1,130 @@
+<!-- Projects Section Overview -->
+<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-foreground mb-2">Projects Overview</h1>
+      <p class="text-muted-foreground">Overview of project communications and collaborations</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <!-- Messages Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Messages</h3>
+          </div>
+          <a href="/admin/messages" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Total</span>
+            <span class="text-sm font-medium">{{stats.messages.total}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Unread</span>
+            <span class="text-sm font-medium text-orange-600">{{stats.messages.unread}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Read</span>
+            <span class="text-sm font-medium text-green-600">{{stats.messages.read}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Collaborators Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Collaborators</h3>
+          </div>
+          <a href="/admin/project-collaborators" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Total</span>
+            <span class="text-sm font-medium">{{stats.projectCollaborators.total}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Active</span>
+            <span class="text-sm font-medium text-green-600">{{stats.projectCollaborators.active}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Inactive</span>
+            <span class="text-sm font-medium text-gray-600">{{stats.projectCollaborators.inactive}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calendar Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Calendar</h3>
+          </div>
+          <a href="/admin/calendar" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Events</span>
+            <span class="text-sm font-medium">{{stats.calendar.totalEvents}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Upcoming</span>
+            <span class="text-sm font-medium text-blue-600">{{stats.calendar.upcoming}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Past</span>
+            <span class="text-sm font-medium text-gray-600">{{stats.calendar.past}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-card rounded-lg border border-border p-6">
+      <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
+      <div class="grid grid-cols-3 gap-4">
+        <a href="/admin/messages" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span class="text-sm font-medium text-center">Messages</span>
+        </a>
+        <a href="/admin/project-collaborators" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+          </svg>
+          <span class="text-sm font-medium text-center">Collaborators</span>
+        </a>
+        <a href="/admin/calendar" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span class="text-sm font-medium text-center">Calendar</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

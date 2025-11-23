@@ -1,32 +1,45 @@
 <!-- Top Navigation Bar -->
 <nav class="bg-card text-card-foreground px-4 border-b border-border flex items-center justify-between min-h-12">
-  <div class="flex items-center">
-      <div class="h-7 w-6 mr-4 text-primary"><svg xmlns="http://www.w3.org/2000/svg" width="33" height="36" viewBox="0 0 33 36"
+   <div class="flex items-center gap-4">
+             <div class="h-6 w-6 mr-6 text-primary"><svg xmlns="http://www.w3.org/2000/svg" width="33" height="36" viewBox="0 0 33 36"
         fill="none" class="h-full w-full">
         <path
           d="M31.6035 7.28044C31.1951 7.03803 30.7235 7.06833 30.3421 7.35872L26.4519 10.3182C25.9036 10.7348 25.5764 11.4317 25.5764 12.1868V21.1636C25.5764 24.2695 23.7757 26.9638 21.1966 27.7138L6.895 31.8726V14.5099C6.895 11.7171 8.5129 9.29549 10.8326 8.62128L31.4004 2.64179C31.9126 2.4928 32.2714 1.9701 32.2714 1.37165C32.2714 1.01561 32.1405 0.672189 31.9149 0.424727C31.687 0.177265 31.3823 0.0510083 31.0777 0.0611088L27.8352 0.177265C26.7972 0.215142 25.7615 0.3818 24.7551 0.674714L7.27635 5.75527C3.11314 6.9648 0.206787 11.2853 0.206787 16.2598V32.8423C0.206787 33.7033 0.716752 34.4508 1.44785 34.6629L5.68553 35.8876C5.8164 35.9255 5.95405 35.9457 6.09169 35.9457C6.22934 35.9457 6.36698 35.9255 6.49786 35.8876L24.8792 30.5444C29.2342 29.2793 32.2759 24.7594 32.2759 19.5526V8.52785C32.2759 8.00263 32.0209 7.52538 31.6103 7.28297L31.6035 7.28044Z"
           fill="currentColor" />
       </svg></div>
-       <div class="flex flex-col items-center justify-center ml-4 mr-4 group">
-         <div class="border-t-4 border-primary w-6 rounded-full opacity-100 group-hover:opacity-100"></div>
-         <a href="/" class="text-foreground font-medium text-sm leading-[2.7] group-hover:font-medium hover:font-medium">Dashboard</a>
-      </div>
-       <div class="flex flex-col items-center justify-center mr-4 group">
-         <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
-         <a href="/todos" class="text-muted-foreground group-hover:text-foreground transition-colors text-sm leading-[2.7] group-hover:font-medium hover:font-medium">Todos</a>
-      </div>
-       <div class="flex flex-col items-center justify-center mr-4 group">
-         <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
-         <a href="#" class="text-muted-foreground text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Projects</a>
-      </div>
-       <div class="flex flex-col items-center justify-center mr-4 group">
-         <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
-         <a href="#" class="text-muted-foreground text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Workload</a>
-      </div>
-        <div class="flex flex-col items-center justify-center mr-4 group">
-         <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
-          <a href="#" class="text-muted-foreground text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Timelines</a>
+
+         <div class="flex flex-col items-center justify-center group">
+            <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'main')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
+            <a href="/admin/main" class="text-{{#if (eq currentSection 'main')}}foreground{{else}}muted-foreground{{/if}} font-medium text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Main</a>
+         </div>
+        <div class="flex flex-col items-center justify-center group">
+           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'content-management')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
+           <a href="/admin/content-management" class="text-{{#if (eq currentSection 'content-management')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Content</a>
         </div>
+        <div class="flex flex-col items-center justify-center group">
+           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'system')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
+           <a href="/admin/system" class="text-{{#if (eq currentSection 'system')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">System</a>
+        </div>
+          <div class="flex flex-col items-center justify-center group">
+           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'business')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
+            <a href="/admin/business" class="text-{{#if (eq currentSection 'business')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Business</a>
+          </div>
+          <div class="flex flex-col items-center justify-center group">
+           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'learning')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
+            <a href="/admin/learning" class="text-{{#if (eq currentSection 'learning')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Learning</a>
+          </div>
+          <div class="flex flex-col items-center justify-center group">
+           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'projects')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
+            <a href="/admin/projects" class="text-{{#if (eq currentSection 'projects')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Projects</a>
+          </div>
+          <div class="flex flex-col items-center justify-center group">
+           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'help')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
+            <a href="/admin/help" class="text-{{#if (eq currentSection 'help')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Help</a>
+          </div>
+          <div class="flex flex-col items-center justify-center group">
+           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'financial')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
+            <a href="/admin/financial" class="text-{{#if (eq currentSection 'financial')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Financial</a>
+          </div>
       </div>
   <div class="flex">
      <div class="h-12 w-px bg-border mr-4"></div>

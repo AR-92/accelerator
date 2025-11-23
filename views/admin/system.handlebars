@@ -1,0 +1,128 @@
+<!-- System Section Overview -->
+<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-foreground mb-2">System Overview</h1>
+      <p class="text-muted-foreground">Overview of system health, notifications, and activity monitoring</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <!-- Notifications Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M10.268 21a2 2 0 0 0 3.464 0"></path>
+              <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Notifications</h3>
+          </div>
+          <a href="/admin/notifications" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Total</span>
+            <span class="text-sm font-medium">{{stats.notifications.total}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Unread</span>
+            <span class="text-sm font-medium text-orange-600">{{stats.notifications.unread}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Read</span>
+            <span class="text-sm font-medium text-green-600">{{stats.notifications.read}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity Logs Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Activity Logs</h3>
+          </div>
+          <a href="/admin/activity" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Total</span>
+            <span class="text-sm font-medium">{{stats.activityLogs.total}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Today</span>
+            <span class="text-sm font-medium text-blue-600">{{stats.activityLogs.today}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">This Week</span>
+            <span class="text-sm font-medium text-purple-600">{{stats.activityLogs.thisWeek}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- System Health Card -->
+    <div class="bg-card rounded-lg border border-border p-6 mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center">
+          <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
+          </svg>
+          <h3 class="text-lg font-semibold text-card-foreground">System Health</h3>
+        </div>
+        <a href="/admin/system-health" class="text-primary hover:text-primary/80 text-sm font-medium">View Details</a>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-green-600">●</div>
+          <div class="text-sm text-muted-foreground">Database</div>
+          <div class="text-xs text-green-600">Connected</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-blue-600">85%</div>
+          <div class="text-sm text-muted-foreground">Memory</div>
+          <div class="text-xs text-blue-600">Usage</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-purple-600">42</div>
+          <div class="text-sm text-muted-foreground">Tables</div>
+          <div class="text-xs text-purple-600">Active</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-orange-600">1.2k</div>
+          <div class="text-sm text-muted-foreground">Records</div>
+          <div class="text-xs text-orange-600">Total</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-card rounded-lg border border-border p-6">
+      <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <a href="/admin/system-health" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
+          </svg>
+          <span class="text-sm font-medium text-center">System Health</span>
+        </a>
+        <a href="/admin/notifications" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M10.268 21a2 2 0 0 0 3.464 0"></path>
+            <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path>
+          </svg>
+          <span class="text-sm font-medium text-center">Notifications</span>
+        </a>
+        <a href="/admin/activity" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
+          </svg>
+          <span class="text-sm font-medium text-center">Activity Logs</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

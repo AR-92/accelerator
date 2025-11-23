@@ -1,0 +1,134 @@
+<!-- Financial Section Overview -->
+<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-foreground mb-2">Financial Overview</h1>
+      <p class="text-muted-foreground">Overview of packages, billing, and rewards management</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <!-- Packages Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"></path>
+              <path d="M12 22V12"></path>
+              <polyline points="3.29 7 12 12 20.71 7"></polyline>
+              <path d="m7.5 4.27 9 5.15"></path>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Packages</h3>
+          </div>
+          <a href="/admin/packages" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Total</span>
+            <span class="text-sm font-medium">{{stats.packages.total}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Active</span>
+            <span class="text-sm font-medium text-green-600">{{stats.packages.active}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Inactive</span>
+            <span class="text-sm font-medium text-gray-600">{{stats.packages.inactive}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Billing Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="3" y="8" width="18" height="4" rx="1"></rect>
+              <path d="M12 8v13"></path>
+              <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Billing</h3>
+          </div>
+          <a href="/admin/billing" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Total</span>
+            <span class="text-sm font-medium">{{stats.billing.total}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Paid</span>
+            <span class="text-sm font-medium text-green-600">{{stats.billing.paid}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Pending</span>
+            <span class="text-sm font-medium text-orange-600">{{stats.billing.pending}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rewards Card -->
+      <div class="bg-card rounded-lg border border-border p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center">
+            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <rect x="3" y="8" width="18" height="4" rx="1"></rect>
+              <path d="M12 8v13"></path>
+              <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
+              <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path>
+            </svg>
+            <h3 class="text-lg font-semibold text-card-foreground">Rewards</h3>
+          </div>
+          <a href="/admin/rewards" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Total</span>
+            <span class="text-sm font-medium">{{stats.rewards.total}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Active</span>
+            <span class="text-sm font-medium text-green-600">{{stats.rewards.active}}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-sm text-muted-foreground">Inactive</span>
+            <span class="text-sm font-medium text-gray-600">{{stats.rewards.inactive}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-card rounded-lg border border-border p-6">
+      <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
+      <div class="grid grid-cols-3 gap-4">
+        <a href="/admin/packages" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"></path>
+            <path d="M12 22V12"></path>
+            <polyline points="3.29 7 12 12 20.71 7"></polyline>
+            <path d="m7.5 4.27 9 5.15"></path>
+          </svg>
+          <span class="text-sm font-medium text-center">Packages</span>
+        </a>
+        <a href="/admin/billing" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="3" y="8" width="18" height="4" rx="1"></rect>
+            <path d="M12 8v13"></path>
+            <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
+          </svg>
+          <span class="text-sm font-medium text-center">Billing</span>
+        </a>
+        <a href="/admin/rewards" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="3" y="8" width="18" height="4" rx="1"></rect>
+            <path d="M12 8v13"></path>
+            <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
+            <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path>
+          </svg>
+          <span class="text-sm font-medium text-center">Rewards</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

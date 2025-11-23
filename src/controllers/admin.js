@@ -7,7 +7,8 @@ export const getDashboard = (req, res) => {
   logger.info('Admin dashboard accessed');
   res.render('admin/dashboard', {
     title: 'Admin Dashboard',
-    currentPage: 'dashboard'
+    currentPage: 'dashboard',
+    currentSection: 'main'
   });
 };
 
@@ -98,6 +99,7 @@ export const getUsers = async (req, res) => {
     res.render('admin/users', {
       title: 'Users Management',
       currentPage: 'users',
+      currentSection: 'main',
       tableId: 'users',
       entityName: 'user',
       showCheckbox: true,
@@ -116,6 +118,7 @@ export const getUsers = async (req, res) => {
     res.render('admin/users', {
       title: 'Users Management',
       currentPage: 'users',
+      currentSection: 'main',
       data: [],
       pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
       query: { search: '', status: '' }
@@ -198,6 +201,7 @@ export const getIdeas = async (req, res) => {
     res.render('admin/ideas', {
       title: 'Ideas Management',
       currentPage: 'ideas',
+      currentSection: 'main',
       tableId: 'ideas',
       entityName: 'idea',
       showCheckbox: true,
@@ -216,6 +220,7 @@ export const getIdeas = async (req, res) => {
     res.render('admin/ideas', {
       title: 'Ideas Management',
       currentPage: 'ideas',
+      currentSection: 'main',
       data: [],
       pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
       query: { search: '', status: '' }
@@ -350,6 +355,7 @@ export const getVotes = async (req, res) => {
     res.render('admin/votes', {
       title: 'Votes Management',
       currentPage: 'votes',
+      currentSection: 'main',
       tableId: 'votes',
       entityName: 'vote',
       showCheckbox: true,
@@ -368,6 +374,7 @@ export const getVotes = async (req, res) => {
     res.render('admin/votes', {
       title: 'Votes Management',
       currentPage: 'votes',
+      currentSection: 'main',
       data: [],
       pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
       query: { search: '', status: '' }
@@ -449,6 +456,7 @@ export const getCollaborations = async (req, res) => {
     res.render('admin/collaborations', {
       title: 'Collaborations Management',
       currentPage: 'collaborations',
+      currentSection: 'main',
       tableId: 'collaborations',
       entityName: 'collaboration',
       showCheckbox: true,
@@ -467,6 +475,7 @@ export const getCollaborations = async (req, res) => {
     res.render('admin/collaborations', {
       title: 'Collaborations Management',
       currentPage: 'collaborations',
+      currentSection: 'main',
       data: [],
       pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
       query: { search: '', status: '' }
@@ -552,6 +561,7 @@ export const getContent = async (req, res) => {
     res.render('admin/content', {
       title: 'Content Management',
       currentPage: 'content',
+      currentSection: 'content-management',
       tableId: 'content',
       entityName: 'content',
       showCheckbox: true,
@@ -570,6 +580,7 @@ export const getContent = async (req, res) => {
     res.render('admin/content', {
       title: 'Content Management',
       currentPage: 'content',
+      currentSection: 'content-management',
       data: [],
       pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
       query: { search: '', status: '' }
@@ -616,11 +627,11 @@ export const getLandingPage = async (req, res) => {
     const colspan = columns.length + (false ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/landing-page', {
-      title: 'Landing Page Management', currentPage: 'landing-page', tableId: 'landing-page', entityName: 'section', showCheckbox: false, showBulkActions: false, columns, data: mappedSections, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/landing-page', colspan
+      title: 'Landing Page Management', currentPage: 'landing-page', currentSection: 'content-management', tableId: 'landing-page', entityName: 'section', showCheckbox: false, showBulkActions: false, columns, data: mappedSections, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/landing-page', colspan
     });
   } catch (error) {
     logger.error('Error loading landing page:', error);
-    res.render('admin/landing-page', { title: 'Landing Page Management', currentPage: 'landing-page', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/landing-page', { title: 'Landing Page Management', currentPage: 'landing-page', currentSection: 'content-management', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -724,11 +735,11 @@ export const getPackages = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/packages', {
-      title: 'Packages Management', currentPage: 'packages', tableId: 'packages', entityName: 'package', showCheckbox: true, showBulkActions: true, columns, data: packages, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/packages', colspan
+      title: 'Packages Management', currentPage: 'packages', currentSection: 'financial', tableId: 'packages', entityName: 'package', showCheckbox: true, showBulkActions: true, columns, data: packages, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/packages', colspan
     });
   } catch (error) {
     logger.error('Error loading packages:', error);
-    res.render('admin/packages', { title: 'Packages Management', currentPage: 'packages', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/packages', { title: 'Packages Management', currentPage: 'packages', currentSection: 'financial', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -779,11 +790,11 @@ export const getBilling = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/billing', {
-      title: 'Billing Management', currentPage: 'billing', tableId: 'billing', entityName: 'transaction', showCheckbox: true, showBulkActions: true, columns, data: mappedTransactions, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/billing', colspan
+      title: 'Billing Management', currentPage: 'billing', currentSection: 'financial', tableId: 'billing', entityName: 'transaction', showCheckbox: true, showBulkActions: true, columns, data: mappedTransactions, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/billing', colspan
     });
   } catch (error) {
     logger.error('Error loading billing:', error);
-    res.render('admin/billing', { title: 'Billing Management', currentPage: 'billing', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/billing', { title: 'Billing Management', currentPage: 'billing', currentSection: 'financial', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -827,11 +838,11 @@ export const getRewards = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/rewards', {
-      title: 'Rewards Management', currentPage: 'rewards', tableId: 'rewards', entityName: 'reward', showCheckbox: true, showBulkActions: true, columns, data: rewards, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/rewards', colspan
+      title: 'Rewards Management', currentPage: 'rewards', currentSection: 'financial', tableId: 'rewards', entityName: 'reward', showCheckbox: true, showBulkActions: true, columns, data: rewards, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/rewards', colspan
     });
   } catch (error) {
     logger.error('Error loading rewards:', error);
-    res.render('admin/rewards', { title: 'Rewards Management', currentPage: 'rewards', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/rewards', { title: 'Rewards Management', currentPage: 'rewards', currentSection: 'financial', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -869,6 +880,7 @@ export const getProfile = async (req, res) => {
     res.render('admin/profile', {
       title: 'Profile',
       currentPage: 'profile',
+      currentSection: 'main',
       profile
     });
   } catch (error) {
@@ -876,6 +888,7 @@ export const getProfile = async (req, res) => {
     res.render('admin/profile', {
       title: 'Profile',
       currentPage: 'profile',
+      currentSection: 'main',
       profile: {}
     });
   }
@@ -917,6 +930,7 @@ export const getProfileSettings = async (req, res) => {
     res.render('admin/profile-settings', {
       title: 'Profile Settings',
       currentPage: 'profile-settings',
+      currentSection: 'main',
       profileSettings
     });
   } catch (error) {
@@ -924,6 +938,7 @@ export const getProfileSettings = async (req, res) => {
     res.render('admin/profile-settings', {
       title: 'Profile Settings',
       currentPage: 'profile-settings',
+      currentSection: 'main',
       profileSettings: {}
     });
   }
@@ -966,6 +981,7 @@ export const getSettings = async (req, res) => {
     res.render('admin/settings', {
       title: 'Admin Settings',
       currentPage: 'settings',
+      currentSection: 'system',
       settings
     });
   } catch (error) {
@@ -973,6 +989,7 @@ export const getSettings = async (req, res) => {
     res.render('admin/settings', {
       title: 'Admin Settings',
       currentPage: 'settings',
+      currentSection: 'system',
       settings: {}
     });
   }
@@ -1046,6 +1063,7 @@ export const getSystemHealth = async (req, res) => {
     res.render('admin/system-health', {
       title: 'System Health',
       currentPage: 'system-health',
+      currentSection: 'system',
       systemMetrics
     });
   } catch (error) {
@@ -1053,6 +1071,7 @@ export const getSystemHealth = async (req, res) => {
     res.render('admin/system-health', {
       title: 'System Health',
       currentPage: 'system-health',
+      currentSection: 'system',
       systemMetrics: {
         dbConnected: false,
         memoryUsagePercent: 0,
@@ -1158,6 +1177,7 @@ export const getNotifications = async (req, res) => {
     res.render('admin/notifications', {
       title: 'Notifications',
       currentPage: 'notifications',
+      currentSection: 'system',
       tableId: 'notifications',
       entityName: 'notification',
       showCheckbox: true,
@@ -1178,6 +1198,7 @@ export const getNotifications = async (req, res) => {
     res.render('admin/notifications', {
       title: 'Notifications',
       currentPage: 'notifications',
+      currentSection: 'system',
       data: [],
       pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
       query: { search: '', status: '' }
@@ -1249,6 +1270,7 @@ export const getTables = async (req, res) => {
     res.render('admin/tables', {
       title: 'Database Tables',
       currentPage: 'tables',
+      currentSection: 'system',
       tableId: 'tables',
       entityName: 'table',
       showCheckbox: false,
@@ -1268,6 +1290,7 @@ export const getTables = async (req, res) => {
     res.render('admin/tables', {
       title: 'Database Tables',
       currentPage: 'tables',
+      currentSection: 'system',
       data: [],
       pagination: { currentPage: 1, limit: 50, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
       query: { search: '', status: '' },
@@ -1347,6 +1370,7 @@ export const getTodos = async (req, res) => {
     res.render('admin/todos', {
       title: 'Todos Management',
       currentPage: 'todos',
+      currentSection: 'system',
       tableId: 'todos',
       entityName: 'todo',
       showCheckbox: true,
@@ -1366,6 +1390,7 @@ export const getTodos = async (req, res) => {
     res.render('admin/todos', {
       title: 'Todos Management',
       currentPage: 'todos',
+      currentSection: 'system',
       data: [],
       pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
       query: { search: '', status: '' },
@@ -1459,6 +1484,7 @@ export const getActivity = async (req, res) => {
     res.render('admin/activity', {
       title: 'Activity Log',
       currentPage: 'activity',
+      currentSection: 'system',
       tableId: 'activity',
       entityName: 'activity',
       showCheckbox: false,
@@ -1479,6 +1505,7 @@ export const getActivity = async (req, res) => {
     res.render('admin/activity', {
       title: 'Activity Log',
       currentPage: 'activity',
+      currentSection: 'system',
       data: [],
       pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
       query: { search: '', status: '' }
@@ -1526,11 +1553,11 @@ export const getBusinessModel = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/business-model', {
-      title: 'Business Model Management', currentPage: 'business-model', tableId: 'business-model', entityName: 'business model', showCheckbox: true, showBulkActions: true, columns, data: businessModels, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/business-model', colspan
+      title: 'Business Model Management', currentPage: 'business-model', currentSection: 'business', tableId: 'business-model', entityName: 'business model', showCheckbox: true, showBulkActions: true, columns, data: businessModels, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/business-model', colspan
     });
   } catch (error) {
     logger.error('Error loading business models:', error);
-    res.render('admin/business-model', { title: 'Business Model Management', currentPage: 'business-model', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/business-model', { title: 'Business Model Management', currentPage: 'business-model', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1567,11 +1594,11 @@ export const getBusinessPlan = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/business-plan', {
-      title: 'Business Plan Management', currentPage: 'business-plan', tableId: 'business-plan', entityName: 'business plan', showCheckbox: true, showBulkActions: true, columns, data: businessPlans, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/business-plan', colspan
+      title: 'Business Plan Management', currentPage: 'business-plan', currentSection: 'business', tableId: 'business-plan', entityName: 'business plan', showCheckbox: true, showBulkActions: true, columns, data: businessPlans, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/business-plan', colspan
     });
   } catch (error) {
     logger.error('Error loading business plans:', error);
-    res.render('admin/business-plan', { title: 'Business Plan Management', currentPage: 'business-plan', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/business-plan', { title: 'Business Plan Management', currentPage: 'business-plan', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1608,11 +1635,11 @@ export const getFinancialModel = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/financial-model', {
-      title: 'Financial Model Management', currentPage: 'financial-model', tableId: 'financial-model', entityName: 'financial model', showCheckbox: true, showBulkActions: true, columns, data: financialModels, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/financial-model', colspan
+      title: 'Financial Model Management', currentPage: 'financial-model', currentSection: 'business', tableId: 'financial-model', entityName: 'financial model', showCheckbox: true, showBulkActions: true, columns, data: financialModels, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/financial-model', colspan
     });
   } catch (error) {
     logger.error('Error loading financial models:', error);
-    res.render('admin/financial-model', { title: 'Financial Model Management', currentPage: 'financial-model', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/financial-model', { title: 'Financial Model Management', currentPage: 'financial-model', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1648,11 +1675,11 @@ export const getPitchDeck = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/pitchdeck', {
-      title: 'PitchDeck Management', currentPage: 'pitchdeck', tableId: 'pitchdeck', entityName: 'pitchdeck', showCheckbox: true, showBulkActions: true, columns, data: pitchdecks, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/pitchdeck', colspan
+      title: 'PitchDeck Management', currentPage: 'pitchdeck', currentSection: 'business', tableId: 'pitchdeck', entityName: 'pitchdeck', showCheckbox: true, showBulkActions: true, columns, data: pitchdecks, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/pitchdeck', colspan
     });
   } catch (error) {
     logger.error('Error loading pitchdecks:', error);
-    res.render('admin/pitchdeck', { title: 'PitchDeck Management', currentPage: 'pitchdeck', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/pitchdeck', { title: 'PitchDeck Management', currentPage: 'pitchdeck', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1689,11 +1716,11 @@ export const getValuation = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/valuation', {
-      title: 'Valuation Management', currentPage: 'valuation', tableId: 'valuation', entityName: 'valuation', showCheckbox: true, showBulkActions: true, columns, data: valuations, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/valuation', colspan
+      title: 'Valuation Management', currentPage: 'valuation', currentSection: 'business', tableId: 'valuation', entityName: 'valuation', showCheckbox: true, showBulkActions: true, columns, data: valuations, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/valuation', colspan
     });
   } catch (error) {
     logger.error('Error loading valuations:', error);
-    res.render('admin/valuation', { title: 'Valuation Management', currentPage: 'valuation', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/valuation', { title: 'Valuation Management', currentPage: 'valuation', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1730,11 +1757,11 @@ export const getFunding = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/funding', {
-      title: 'Funding Management', currentPage: 'funding', tableId: 'funding', entityName: 'funding', showCheckbox: true, showBulkActions: true, columns, data: fundings, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/funding', colspan
+      title: 'Funding Management', currentPage: 'funding', currentSection: 'business', tableId: 'funding', entityName: 'funding', showCheckbox: true, showBulkActions: true, columns, data: fundings, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/funding', colspan
     });
   } catch (error) {
     logger.error('Error loading fundings:', error);
-    res.render('admin/funding', { title: 'Funding Management', currentPage: 'funding', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/funding', { title: 'Funding Management', currentPage: 'funding', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1771,11 +1798,11 @@ export const getTeam = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/team', {
-      title: 'Team Management', currentPage: 'team', tableId: 'team', entityName: 'team', showCheckbox: true, showBulkActions: true, columns, data: teams, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/team', colspan
+      title: 'Team Management', currentPage: 'team', currentSection: 'business', tableId: 'team', entityName: 'team', showCheckbox: true, showBulkActions: true, columns, data: teams, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/team', colspan
     });
   } catch (error) {
     logger.error('Error loading teams:', error);
-    res.render('admin/team', { title: 'Team Management', currentPage: 'team', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/team', { title: 'Team Management', currentPage: 'team', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1812,11 +1839,11 @@ export const getLegal = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/legal', {
-      title: 'Legal Management', currentPage: 'legal', tableId: 'legal', entityName: 'legal', showCheckbox: true, showBulkActions: true, columns, data: legals, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/legal', colspan
+      title: 'Legal Management', currentPage: 'legal', currentSection: 'business', tableId: 'legal', entityName: 'legal', showCheckbox: true, showBulkActions: true, columns, data: legals, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/legal', colspan
     });
   } catch (error) {
     logger.error('Error loading legals:', error);
-    res.render('admin/legal', { title: 'Legal Management', currentPage: 'legal', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/legal', { title: 'Legal Management', currentPage: 'legal', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1853,11 +1880,11 @@ export const getMarketing = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/marketing', {
-      title: 'Marketing Management', currentPage: 'marketing', tableId: 'marketing', entityName: 'marketing', showCheckbox: true, showBulkActions: true, columns, data: marketings, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/marketing', colspan
+      title: 'Marketing Management', currentPage: 'marketing', currentSection: 'business', tableId: 'marketing', entityName: 'marketing', showCheckbox: true, showBulkActions: true, columns, data: marketings, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/marketing', colspan
     });
   } catch (error) {
     logger.error('Error loading marketings:', error);
-    res.render('admin/marketing', { title: 'Marketing Management', currentPage: 'marketing', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/marketing', { title: 'Marketing Management', currentPage: 'marketing', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1894,11 +1921,11 @@ export const getCorporate = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/corporate', {
-      title: 'Corporate Management', currentPage: 'corporate', tableId: 'corporate', entityName: 'corporate', showCheckbox: true, showBulkActions: true, columns, data: corporates, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/corporate', colspan
+      title: 'Corporate Management', currentPage: 'corporate', currentSection: 'business', tableId: 'corporate', entityName: 'corporate', showCheckbox: true, showBulkActions: true, columns, data: corporates, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/corporate', colspan
     });
   } catch (error) {
     logger.error('Error loading corporates:', error);
-    res.render('admin/corporate', { title: 'Corporate Management', currentPage: 'corporate', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/corporate', { title: 'Corporate Management', currentPage: 'corporate', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1935,11 +1962,11 @@ export const getEnterprises = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/enterprises', {
-      title: 'Enterprises Management', currentPage: 'enterprises', tableId: 'enterprises', entityName: 'enterprise', showCheckbox: true, showBulkActions: true, columns, data: enterprises, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/enterprises', colspan
+      title: 'Enterprises Management', currentPage: 'enterprises', currentSection: 'business', tableId: 'enterprises', entityName: 'enterprise', showCheckbox: true, showBulkActions: true, columns, data: enterprises, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/enterprises', colspan
     });
   } catch (error) {
     logger.error('Error loading enterprises:', error);
-    res.render('admin/enterprises', { title: 'Enterprises Management', currentPage: 'enterprises', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/enterprises', { title: 'Enterprises Management', currentPage: 'enterprises', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1976,11 +2003,11 @@ export const getLearningContent = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/learning-content', {
-      title: 'Learning Content Management', currentPage: 'learning-content', tableId: 'learning-content', entityName: 'learning content', showCheckbox: true, showBulkActions: true, columns, data: learningContents, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/learning-content', colspan
+      title: 'Learning Content Management', currentPage: 'learning-content', currentSection: 'learning', tableId: 'learning-content', entityName: 'learning content', showCheckbox: true, showBulkActions: true, columns, data: learningContents, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/learning-content', colspan
     });
   } catch (error) {
     logger.error('Error loading learning contents:', error);
-    res.render('admin/learning-content', { title: 'Learning Content Management', currentPage: 'learning-content', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/learning-content', { title: 'Learning Content Management', currentPage: 'learning-content', currentSection: 'learning', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2017,11 +2044,11 @@ export const getLearningCategories = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/learning-categories', {
-      title: 'Learning Categories Management', currentPage: 'learning-categories', tableId: 'learning-categories', entityName: 'learning category', showCheckbox: true, showBulkActions: true, columns, data: learningCategories, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/learning-categories', colspan
+      title: 'Learning Categories Management', currentPage: 'learning-categories', currentSection: 'learning', tableId: 'learning-categories', entityName: 'learning category', showCheckbox: true, showBulkActions: true, columns, data: learningCategories, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/learning-categories', colspan
     });
   } catch (error) {
     logger.error('Error loading learning categories:', error);
-    res.render('admin/learning-categories', { title: 'Learning Categories Management', currentPage: 'learning-categories', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/learning-categories', { title: 'Learning Categories Management', currentPage: 'learning-categories', currentSection: 'learning', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2058,11 +2085,11 @@ export const getLearningAssessments = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/learning-assessments', {
-      title: 'Learning Assessments Management', currentPage: 'learning-assessments', tableId: 'learning-assessments', entityName: 'learning assessment', showCheckbox: true, showBulkActions: true, columns, data: learningAssessments, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/learning-assessments', colspan
+      title: 'Learning Assessments Management', currentPage: 'learning-assessments', currentSection: 'learning', tableId: 'learning-assessments', entityName: 'learning assessment', showCheckbox: true, showBulkActions: true, columns, data: learningAssessments, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/learning-assessments', colspan
     });
   } catch (error) {
     logger.error('Error loading learning assessments:', error);
-    res.render('admin/learning-assessments', { title: 'Learning Assessments Management', currentPage: 'learning-assessments', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/learning-assessments', { title: 'Learning Assessments Management', currentPage: 'learning-assessments', currentSection: 'learning', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2098,11 +2125,11 @@ export const getLearningAnalytics = async (req, res) => {
     const colspan = columns.length + (false ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/learning-analytics', {
-      title: 'Learning Analytics Management', currentPage: 'learning-analytics', tableId: 'learning-analytics', entityName: 'learning analytic', showCheckbox: false, showBulkActions: false, columns, data: learningAnalytics, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/learning-analytics', colspan
+      title: 'Learning Analytics Management', currentPage: 'learning-analytics', currentSection: 'learning', tableId: 'learning-analytics', entityName: 'learning analytic', showCheckbox: false, showBulkActions: false, columns, data: learningAnalytics, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/learning-analytics', colspan
     });
   } catch (error) {
     logger.error('Error loading learning analytics:', error);
-    res.render('admin/learning-analytics', { title: 'Learning Analytics Management', currentPage: 'learning-analytics', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/learning-analytics', { title: 'Learning Analytics Management', currentPage: 'learning-analytics', currentSection: 'learning', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2138,11 +2165,11 @@ export const getMessages = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/messages', {
-      title: 'Messages Management', currentPage: 'messages', tableId: 'messages', entityName: 'message', showCheckbox: true, showBulkActions: true, columns, data: messages, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/messages', colspan
+      title: 'Messages Management', currentPage: 'messages', currentSection: 'projects', tableId: 'messages', entityName: 'message', showCheckbox: true, showBulkActions: true, columns, data: messages, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/messages', colspan
     });
   } catch (error) {
     logger.error('Error loading messages:', error);
-    res.render('admin/messages', { title: 'Messages Management', currentPage: 'messages', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/messages', { title: 'Messages Management', currentPage: 'messages', currentSection: 'projects', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2179,11 +2206,11 @@ export const getProjectCollaborators = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/project-collaborators', {
-      title: 'Project Collaborators Management', currentPage: 'project-collaborators', tableId: 'project-collaborators', entityName: 'project collaborator', showCheckbox: true, showBulkActions: true, columns, data: projectCollaborators, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/project-collaborators', colspan
+      title: 'Project Collaborators Management', currentPage: 'project-collaborators', currentSection: 'projects', tableId: 'project-collaborators', entityName: 'project collaborator', showCheckbox: true, showBulkActions: true, columns, data: projectCollaborators, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/project-collaborators', colspan
     });
   } catch (error) {
     logger.error('Error loading project collaborators:', error);
-    res.render('admin/project-collaborators', { title: 'Project Collaborators Management', currentPage: 'project-collaborators', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/project-collaborators', { title: 'Project Collaborators Management', currentPage: 'project-collaborators', currentSection: 'projects', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2220,11 +2247,11 @@ export const getCalendar = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/calendar', {
-      title: 'Calendar Management', currentPage: 'calendar', tableId: 'calendar', entityName: 'calendar', showCheckbox: true, showBulkActions: true, columns, data: calendars, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/calendar', colspan
+      title: 'Calendar Management', currentPage: 'calendar', currentSection: 'projects', tableId: 'calendar', entityName: 'calendar', showCheckbox: true, showBulkActions: true, columns, data: calendars, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/calendar', colspan
     });
   } catch (error) {
     logger.error('Error loading calendars:', error);
-    res.render('admin/calendar', { title: 'Calendar Management', currentPage: 'calendar', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/calendar', { title: 'Calendar Management', currentPage: 'calendar', currentSection: 'projects', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2261,16 +2288,489 @@ export const getHelpCenter = async (req, res) => {
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/help-center', {
-      title: 'Help Center Management', currentPage: 'help-center', tableId: 'help-center', entityName: 'help center', showCheckbox: true, showBulkActions: true, columns, data: helpCenters, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/help-center', colspan
+      title: 'Help Center Management', currentPage: 'help-center', currentSection: 'help', tableId: 'help-center', entityName: 'help center', showCheckbox: true, showBulkActions: true, columns, data: helpCenters, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/help-center', colspan
     });
   } catch (error) {
     logger.error('Error loading help centers:', error);
-    res.render('admin/help-center', { title: 'Help Center Management', currentPage: 'help-center', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/help-center', { title: 'Help Center Management', currentPage: 'help-center', currentSection: 'help', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+  }
+};
+
+// Main Section Overview
+export const getMain = async (req, res) => {
+  try {
+    logger.info('Admin main section overview accessed');
+
+    // Get summary stats for Main section items
+    const stats = {
+      todos: { total: 0, completed: 0, pending: 0 },
+      users: { total: 0, active: 0, pending: 0 },
+      ideas: { total: 0, approved: 0, pending: 0 },
+      votes: { total: 0, upvotes: 0, downvotes: 0 },
+      collaborations: { total: 0, active: 0, archived: 0 }
+    };
+
+    // Fetch stats from database
+    try {
+      const [todosResult, usersResult, ideasResult, votesResult, collaborationsResult] = await Promise.all([
+        databaseService.supabase.from('todos').select('completed').order('created_at', { ascending: false }),
+        databaseService.supabase.from('Accounts').select('is_verified').order('created_at', { ascending: false }),
+        databaseService.supabase.from('ideas').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('ideas').select('upvotes, downvotes').order('created_at', { ascending: false }),
+        databaseService.supabase.from('collaborations').select('status').order('created_at', { ascending: false })
+      ]);
+
+      if (todosResult.data) {
+        stats.todos.total = todosResult.data.length;
+        stats.todos.completed = todosResult.data.filter(t => t.completed).length;
+        stats.todos.pending = stats.todos.total - stats.todos.completed;
+      }
+
+      if (usersResult.data) {
+        stats.users.total = usersResult.data.length;
+        stats.users.active = usersResult.data.filter(u => u.is_verified).length;
+        stats.users.pending = stats.users.total - stats.users.active;
+      }
+
+      if (ideasResult.data) {
+        stats.ideas.total = ideasResult.data.length;
+        stats.ideas.approved = ideasResult.data.filter(i => i.status === 'approved').length;
+        stats.ideas.pending = stats.ideas.total - stats.ideas.approved;
+      }
+
+      if (votesResult.data) {
+        stats.votes.total = votesResult.data.reduce((sum, v) => sum + (v.upvotes || 0) + (v.downvotes || 0), 0);
+        stats.votes.upvotes = votesResult.data.reduce((sum, v) => sum + (v.upvotes || 0), 0);
+        stats.votes.downvotes = votesResult.data.reduce((sum, v) => sum + (v.downvotes || 0), 0);
+      }
+
+      if (collaborationsResult.data) {
+        stats.collaborations.total = collaborationsResult.data.length;
+        stats.collaborations.active = collaborationsResult.data.filter(c => c.status === 'active').length;
+        stats.collaborations.archived = stats.collaborations.total - stats.collaborations.active;
+      }
+    } catch (error) {
+      logger.warn('Error fetching main section stats:', error.message);
+    }
+
+    res.render('admin/main', {
+      title: 'Main Overview',
+      currentPage: 'main',
+      currentSection: 'main',
+      stats
+    });
+  } catch (error) {
+    logger.error('Error loading main section overview:', error);
+    res.render('admin/main', {
+      title: 'Main Overview',
+      currentPage: 'main',
+      stats: {
+        todos: { total: 0, completed: 0, pending: 0 },
+        users: { total: 0, active: 0, pending: 0 },
+        ideas: { total: 0, approved: 0, pending: 0 },
+        votes: { total: 0, upvotes: 0, downvotes: 0 },
+        collaborations: { total: 0, active: 0, archived: 0 }
+      }
+    });
+  }
+};
+
+// Content Management Section Overview
+export const getContentManagement = async (req, res) => {
+  try {
+    logger.info('Admin content management section overview accessed');
+
+    const stats = {
+      content: { total: 0, published: 0, draft: 0 },
+      landingPages: { total: 0, active: 0, inactive: 0 }
+    };
+
+    try {
+      const [contentResult, landingPagesResult] = await Promise.all([
+        databaseService.supabase.from('learning_content').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('landing_pages').select('status').order('created_at', { ascending: false })
+      ]);
+
+      if (contentResult.data) {
+        stats.content.total = contentResult.data.length;
+        stats.content.published = contentResult.data.filter(c => c.status === 'published').length;
+        stats.content.draft = stats.content.total - stats.content.published;
+      }
+
+      if (landingPagesResult.data) {
+        stats.landingPages.total = landingPagesResult.data.length;
+        stats.landingPages.active = landingPagesResult.data.filter(l => l.status === 'active').length;
+        stats.landingPages.inactive = stats.landingPages.total - stats.landingPages.active;
+      }
+    } catch (error) {
+      logger.warn('Error fetching content management stats:', error.message);
+    }
+
+    res.render('admin/content-management', {
+      title: 'Content Management Overview',
+      currentPage: 'content-management',
+      currentSection: 'content-management',
+      stats
+    });
+  } catch (error) {
+    logger.error('Error loading content management section overview:', error);
+    res.render('admin/content-management', {
+      title: 'Content Management Overview',
+      currentPage: 'content-management',
+      currentSection: 'content-management',
+      stats: {
+        content: { total: 0, published: 0, draft: 0 },
+        landingPages: { total: 0, active: 0, inactive: 0 }
+      }
+    });
+  }
+};
+
+// System Section Overview
+export const getSystem = async (req, res) => {
+  try {
+    logger.info('Admin system section overview accessed');
+
+    const stats = {
+      notifications: { total: 0, unread: 0, read: 0 },
+      activityLogs: { total: 0, today: 0, thisWeek: 0 }
+    };
+
+    try {
+      const [notificationsResult, activityLogsResult] = await Promise.all([
+        databaseService.supabase.from('notifications').select('is_read').order('created_at', { ascending: false }),
+        databaseService.supabase.from('activity_logs').select('created_at').order('created_at', { ascending: false })
+      ]);
+
+      if (notificationsResult.data) {
+        stats.notifications.total = notificationsResult.data.length;
+        stats.notifications.unread = notificationsResult.data.filter(n => !n.is_read).length;
+        stats.notifications.read = stats.notifications.total - stats.notifications.unread;
+      }
+
+      if (activityLogsResult.data) {
+        stats.activityLogs.total = activityLogsResult.data.length;
+        const now = new Date();
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const weekAgo = new Date(today);
+        weekAgo.setDate(weekAgo.getDate() - 7);
+
+        stats.activityLogs.today = activityLogsResult.data.filter(a => new Date(a.created_at) >= today).length;
+        stats.activityLogs.thisWeek = activityLogsResult.data.filter(a => new Date(a.created_at) >= weekAgo).length;
+      }
+    } catch (error) {
+      logger.warn('Error fetching system stats:', error.message);
+    }
+
+    res.render('admin/system', {
+      title: 'System Overview',
+      currentPage: 'system',
+      currentSection: 'system',
+      stats
+    });
+  } catch (error) {
+    logger.error('Error loading system section overview:', error);
+    res.render('admin/system', {
+      title: 'System Overview',
+      currentPage: 'system',
+      currentSection: 'system',
+      stats: {
+        notifications: { total: 0, unread: 0, read: 0 },
+        activityLogs: { total: 0, today: 0, thisWeek: 0 }
+      }
+    });
+  }
+};
+
+// Business Section Overview
+export const getBusiness = async (req, res) => {
+  try {
+    logger.info('Admin business section overview accessed');
+
+    const stats = {
+      businessModels: { total: 0, active: 0, inactive: 0 },
+      businessPlans: { total: 0, completed: 0, draft: 0 },
+      financialModels: { total: 0, active: 0, inactive: 0 },
+      pitchdecks: { total: 0, approved: 0, pending: 0 },
+      valuations: { total: 0, completed: 0, pending: 0 },
+      funding: { total: 0, secured: 0, seeking: 0 },
+      teams: { total: 0, complete: 0, incomplete: 0 },
+      legal: { total: 0, compliant: 0, pending: 0 },
+      marketing: { total: 0, active: 0, inactive: 0 },
+      corporate: { total: 0, active: 0, inactive: 0 },
+      enterprises: { total: 0, active: 0, inactive: 0 }
+    };
+
+    try {
+      const results = await Promise.all([
+        databaseService.supabase.from('business_model').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('business_plan').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('financial_model').select('model_status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('pitchdeck').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('valuation').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('funding').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('team').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('legal').select('compliance_status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('marketing').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('corporates').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('enterprises').select('status').order('created_at', { ascending: false })
+      ]);
+
+      const tables = ['businessModels', 'businessPlans', 'financialModels', 'pitchdecks', 'valuations', 'funding', 'teams', 'legal', 'marketing', 'corporate', 'enterprises'];
+
+      results.forEach((result, index) => {
+        if (result.data) {
+          const tableName = tables[index];
+          stats[tableName].total = result.data.length;
+
+          if (tableName === 'financialModels') {
+            stats[tableName].active = result.data.filter(item => item.model_status === 'active').length;
+            stats[tableName].inactive = stats[tableName].total - stats[tableName].active;
+          } else if (tableName === 'legal') {
+            stats[tableName].compliant = result.data.filter(item => item.compliance_status === 'compliant').length;
+            stats[tableName].pending = stats[tableName].total - stats[tableName].compliant;
+          } else {
+            stats[tableName].active = result.data.filter(item => item.status === 'active').length;
+            stats[tableName].inactive = stats[tableName].total - stats[tableName].active;
+          }
+        }
+      });
+    } catch (error) {
+      logger.warn('Error fetching business stats:', error.message);
+    }
+
+    res.render('admin/business', {
+      title: 'Business Overview',
+      currentPage: 'business',
+      currentSection: 'business',
+      stats
+    });
+  } catch (error) {
+    logger.error('Error loading business section overview:', error);
+    res.render('admin/business', {
+      title: 'Business Overview',
+      currentPage: 'business',
+      currentSection: 'business',
+      stats: {}
+    });
+  }
+};
+
+// Learning Section Overview
+export const getLearning = async (req, res) => {
+  try {
+    logger.info('Admin learning section overview accessed');
+
+    const stats = {
+      learningContent: { total: 0, published: 0, draft: 0 },
+      learningCategories: { total: 0, active: 0, inactive: 0 },
+      learningAssessments: { total: 0, completed: 0, pending: 0 },
+      learningAnalytics: { totalViews: 0, avgCompletion: 0, popularContent: 0 }
+    };
+
+    try {
+      const [contentResult, categoriesResult, assessmentsResult] = await Promise.all([
+        databaseService.supabase.from('learning_content').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('learning_categories').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('learning_assessments').select('status').order('created_at', { ascending: false })
+      ]);
+
+      if (contentResult.data) {
+        stats.learningContent.total = contentResult.data.length;
+        stats.learningContent.published = contentResult.data.filter(c => c.status === 'published').length;
+        stats.learningContent.draft = stats.learningContent.total - stats.learningContent.published;
+      }
+
+      if (categoriesResult.data) {
+        stats.learningCategories.total = categoriesResult.data.length;
+        stats.learningCategories.active = categoriesResult.data.filter(c => c.status === 'active').length;
+        stats.learningCategories.inactive = stats.learningCategories.total - stats.learningCategories.active;
+      }
+
+      if (assessmentsResult.data) {
+        stats.learningAssessments.total = assessmentsResult.data.length;
+        stats.learningAssessments.completed = assessmentsResult.data.filter(a => a.status === 'completed').length;
+        stats.learningAssessments.pending = stats.learningAssessments.total - stats.learningAssessments.completed;
+      }
+    } catch (error) {
+      logger.warn('Error fetching learning stats:', error.message);
+    }
+
+    res.render('admin/learning', {
+      title: 'Learning Overview',
+      currentPage: 'learning',
+      currentSection: 'learning',
+      stats
+    });
+  } catch (error) {
+    logger.error('Error loading learning section overview:', error);
+    res.render('admin/learning', {
+      title: 'Learning Overview',
+      currentPage: 'learning',
+      currentSection: 'learning',
+      stats: {}
+    });
+  }
+};
+
+// Projects Section Overview
+export const getProjects = async (req, res) => {
+  try {
+    logger.info('Admin projects section overview accessed');
+
+    const stats = {
+      messages: { total: 0, unread: 0, read: 0 },
+      projectCollaborators: { total: 0, active: 0, inactive: 0 },
+      calendar: { totalEvents: 0, upcoming: 0, past: 0 }
+    };
+
+    try {
+      const [messagesResult, collaboratorsResult] = await Promise.all([
+        databaseService.supabase.from('messages').select('is_read').order('created_at', { ascending: false }),
+        databaseService.supabase.from('project_collaborators').select('status').order('created_at', { ascending: false })
+      ]);
+
+      if (messagesResult.data) {
+        stats.messages.total = messagesResult.data.length;
+        stats.messages.unread = messagesResult.data.filter(m => !m.is_read).length;
+        stats.messages.read = stats.messages.total - stats.messages.unread;
+      }
+
+      if (collaboratorsResult.data) {
+        stats.projectCollaborators.total = collaboratorsResult.data.length;
+        stats.projectCollaborators.active = collaboratorsResult.data.filter(c => c.status === 'active').length;
+        stats.projectCollaborators.inactive = stats.projectCollaborators.total - stats.projectCollaborators.active;
+      }
+    } catch (error) {
+      logger.warn('Error fetching projects stats:', error.message);
+    }
+
+    res.render('admin/projects', {
+      title: 'Projects Overview',
+      currentPage: 'projects',
+      currentSection: 'projects',
+      stats
+    });
+  } catch (error) {
+    logger.error('Error loading projects section overview:', error);
+    res.render('admin/projects', {
+      title: 'Projects Overview',
+      currentPage: 'projects',
+      currentSection: 'projects',
+      stats: {}
+    });
+  }
+};
+
+// Help Section Overview
+export const getHelp = async (req, res) => {
+  try {
+    logger.info('Admin help section overview accessed');
+
+    const stats = {
+      helpCenter: { total: 0, published: 0, draft: 0 }
+    };
+
+    try {
+      const helpCenterResult = await databaseService.supabase
+        .from('help_center')
+        .select('status')
+        .order('created_at', { ascending: false });
+
+      if (helpCenterResult.data) {
+        stats.helpCenter.total = helpCenterResult.data.length;
+        stats.helpCenter.published = helpCenterResult.data.filter(h => h.status === 'published').length;
+        stats.helpCenter.draft = stats.helpCenter.total - stats.helpCenter.published;
+      }
+    } catch (error) {
+      logger.warn('Error fetching help stats:', error.message);
+    }
+
+    res.render('admin/help', {
+      title: 'Help Overview',
+      currentPage: 'help',
+      currentSection: 'help',
+      stats
+    });
+  } catch (error) {
+    logger.error('Error loading help section overview:', error);
+    res.render('admin/help', {
+      title: 'Help Overview',
+      currentPage: 'help',
+      currentSection: 'help',
+      stats: {}
+    });
+  }
+};
+
+// Financial Section Overview
+export const getFinancial = async (req, res) => {
+  try {
+    logger.info('Admin financial section overview accessed');
+
+    const stats = {
+      packages: { total: 0, active: 0, inactive: 0 },
+      billing: { total: 0, paid: 0, pending: 0 },
+      rewards: { total: 0, active: 0, inactive: 0 }
+    };
+
+    try {
+      const [packagesResult, billingResult, rewardsResult] = await Promise.all([
+        databaseService.supabase.from('packages').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('Billing').select('status').order('created_at', { ascending: false }),
+        databaseService.supabase.from('rewards').select('status').order('created_at', { ascending: false })
+      ]);
+
+      if (packagesResult.data) {
+        stats.packages.total = packagesResult.data.length;
+        stats.packages.active = packagesResult.data.filter(p => p.status === 'active').length;
+        stats.packages.inactive = stats.packages.total - stats.packages.active;
+      }
+
+      if (billingResult.data) {
+        stats.billing.total = billingResult.data.length;
+        stats.billing.paid = billingResult.data.filter(b => b.status === 'paid').length;
+        stats.billing.pending = stats.billing.total - stats.billing.paid;
+      }
+
+      if (rewardsResult.data) {
+        stats.rewards.total = rewardsResult.data.length;
+        stats.rewards.active = rewardsResult.data.filter(r => r.status === 'active').length;
+        stats.rewards.inactive = stats.rewards.total - stats.rewards.active;
+      }
+    } catch (error) {
+      logger.warn('Error fetching financial stats:', error.message);
+    }
+
+    res.render('admin/financial', {
+      title: 'Financial Overview',
+      currentPage: 'financial',
+      currentSection: 'financial',
+      stats
+    });
+  } catch (error) {
+    logger.error('Error loading financial section overview:', error);
+    res.render('admin/financial', {
+      title: 'Financial Overview',
+      currentPage: 'financial',
+      currentSection: 'financial',
+      stats: {}
+    });
   }
 };
 
 // Route setup function
 export default function adminRoutes(app) {
+  // Section overview routes
+  app.get('/admin/main', getMain);
+  app.get('/admin/content-management', getContentManagement);
+  app.get('/admin/system', getSystem);
+  app.get('/admin/business', getBusiness);
+  app.get('/admin/learning', getLearning);
+  app.get('/admin/projects', getProjects);
+  app.get('/admin/help', getHelp);
+  app.get('/admin/financial', getFinancial);
+
   app.get('/admin/dashboard', getDashboard);
   app.get('/admin/users', getUsers);
   app.get('/admin/ideas', getIdeas);
