@@ -3,13 +3,30 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Supabase configuration
-const SUPABASE_URL = 'https://wgmuxgylmvrsttdxwarw.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_secret_W9KJiIrdyk_W7WDbPuHRLA_7R4XmT4u';
+// Load environment variables
+dotenv.config();
+
+// Supabase configuration from environment variables
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
+
+// Validate required environment variables
+if (!SUPABASE_URL) {
+  console.error('❌ Error: SUPABASE_URL environment variable is required');
+  console.error('Please set SUPABASE_URL in your .env file');
+  process.exit(1);
+}
+
+if (!SUPABASE_KEY) {
+  console.error('❌ Error: SUPABASE_KEY environment variable is required');
+  console.error('Please set SUPABASE_KEY in your .env file');
+  process.exit(1);
+}
 
 // OpenAPI spec endpoint
 const OPENAPI_ENDPOINT = `${SUPABASE_URL}/rest/v1/`;
@@ -24,7 +41,7 @@ async function fetchOpenAPISpec() {
     const response = await fetch(OPENAPI_ENDPOINT, {
       method: 'GET',
       headers: {
-        'apikey': SUPABASE_ANON_KEY,
+        'apikey': SUPABASE_KEY,
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
