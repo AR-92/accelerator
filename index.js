@@ -2,12 +2,10 @@ import 'dotenv/config';
 import app from './src/app.js';
 import config from './src/config/index.js';
 import logger from './src/utils/logger.js';
-import todosRoutes from './src/controllers/todos.js';
-import apiRoutes from './src/controllers/api.js';
-import adminRoutes from './src/controllers/admin.js';
+import apiRoutes from './src/controllers/api/index.js';
+import adminRoutes from './src/controllers/index.js';
 
 // Register routes
-todosRoutes(app);
 apiRoutes(app);
 adminRoutes(app);
 

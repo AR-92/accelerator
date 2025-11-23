@@ -1,4 +1,5 @@
 import icons from 'lucide-static';
+import { formatDate, statusClass, formatCurrency, formatNumber } from './format/index.js';
 
 export const handlebarsHelpers = {
   eq: function(a, b) { return a === b; },
@@ -9,29 +10,10 @@ export const handlebarsHelpers = {
   lte: function(a, b) { return a <= b; },
   len: function(arr) { return arr ? arr.length : 0; },
   add: function(...args) { return args.slice(0, -1).reduce((a, b) => a + b, 0); },
-  statusClass: function(status) {
-    switch (status) {
-      case 'completed':
-      case 'active':
-      case 'published':
-        return 'bg-green-100 text-green-800';
-      case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'inactive':
-        return 'bg-gray-100 text-gray-800';
-      default:
-        return 'bg-blue-100 text-blue-800';
-    }
-  },
-  formatDate: function(date) {
-    if (!date) return '';
-    const d = new Date(date);
-    return d.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  },
+  statusClass: statusClass,
+  formatDate: formatDate,
+  formatCurrency: formatCurrency,
+  formatNumber: formatNumber,
   icon: function(name, options) {
     if (!name || typeof name !== 'string') return '';
     const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1).replace(/-./g, match => match[1].toUpperCase());

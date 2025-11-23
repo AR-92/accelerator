@@ -4,8 +4,8 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import config from './config/index.js';
 import logger from './utils/logger.js';
-import { corsMiddleware, securityHeaders, rateLimiter, sanitizeInput } from './middleware/security.js';
-import errorHandler from './middleware/errorHandler.js';
+import { corsMiddleware, securityHeaders, rateLimiter, sanitizeInput } from './middleware/security/index.js';
+import { errorHandler } from './middleware/error/index.js';
 import { handlebarsHelpers } from './helpers/handlebars.js';
 
 const __filename = fileURLToPath(import.meta.url);

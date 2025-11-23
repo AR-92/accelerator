@@ -249,13 +249,16 @@ npm run test:watch
 ## Architecture Overview
 
 ### Controllers
-Route handlers that process requests and return responses. Located in `src/controllers/`.
+Route handlers that process requests and return responses. Located in `src/controllers/`. Controllers now use domain services for business logic separation.
+
+### Domain Services
+Specialized services that encapsulate business logic and database operations. Each service handles a specific domain (User, Activity, Business, etc.). Located in `src/services/domains/`.
 
 ### Models
 Data models that represent database entities and handle business logic. Located in `src/models/`.
 
 ### Services
-External service integrations (database, APIs, etc.). Located in `src/services/`.
+External service integrations (database, APIs, etc.). Located in `src/services/`. Includes a ServiceFactory for easy instantiation of domain services.
 
 ### Middleware
 Custom middleware for authentication, validation, security, etc. Located in `src/middleware/`.
