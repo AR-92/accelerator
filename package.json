@@ -8,6 +8,7 @@
     "build": "npx postcss ./public/css/styles.css -o ./public/css/output.css",
     "start": "nodemon index.js",
     "dev": "concurrently \"npm run build-css\" \"npm run start\"",
+    "fetch-openapi": "node db/fetch-openapi.js",
     "lint": "echo \"Linting not configured yet\" && exit 0",
     "format": "echo \"Formatting not configured yet\" && exit 0"
   },
