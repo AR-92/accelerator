@@ -19,7 +19,7 @@ const renderTodoHtml = (todo) => `
         <p class="text-xs text-muted-foreground">Created: ${new Date(todo.created_at).toLocaleDateString()}</p>
       </div>
       <div class="flex items-center space-x-2">
-        <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${todo.completed ? 'border-transparent bg-green-100 text-green-800' : 'border-transparent bg-yellow-100 text-yellow-800'}">
+        <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none    ${todo.completed ? 'border-transparent bg-green-100 text-green-800' : 'border-transparent bg-yellow-100 text-yellow-800'}">
           ${todo.completed ? 'Completed' : 'Pending'}
         </span>
          <button hx-get="/api/todos/${todo.id}/edit"
@@ -87,7 +87,7 @@ const renderPagination = (page, limit, total, query) => {
       <input type="hidden" name="limit" value="${limit}">
       <input type="hidden" name="search" value="${search}">
       <input type="hidden" name="status" value="${status}">
-      <input type="number" name="page" min="1" max="${totalPages}" value="${page}" placeholder="Page" class="w-16 h-8 text-xs text-center rounded border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring">
+      <input type="number" name="page" min="1" max="${totalPages}" value="${page}" placeholder="Page" class="w-16 h-8 text-xs text-center rounded border border-input bg-background focus:outline-none  
       <button type="submit" class="inline-flex items-center justify-center rounded-md text-xs font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-8 px-2">Go</button>
     </form>
   </div>`;

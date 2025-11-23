@@ -1,11 +1,20 @@
-<!-- Notifications Content -->
-<div class="max-w-7xl mx-auto rounded-xl overflow-hidden bg-card ring-1 ring-border flex flex-col min-h-[600px] mx-4 my-4">
-  <header class="sticky top-0 z-20 bg-card text-card-foreground p-5 border-b border-border">
-    <div class="text-left">
-      <h1 class="text-3xl font-bold text-card-foreground mb-2">Notifications</h1>
-      <p class="text-muted-foreground">Manage system notifications and alerts</p>
+<!-- Notifications Management Content -->
+<div class="max-w-7xl mx-auto rounded-xl overflow-hidden flex flex-col mx-4 my-4">
+
+  <!-- Page Header -->
+  <header class="sticky top-0 z-20 text-card-foreground p-5 border-b border-border">
+   <!-- Page Title and Description -->
+   <div class="mb-6 flex justify-between">
+
+     <div class="text-left">
+       <h1 class="text-3xl font-bold text-card-foreground mb-2">Notifications Management</h1>
+       <p class="text-muted-foreground">Manage and organize all system notifications efficiently</p>
+     </div>
+
+   </div>
+    <div class="max-w-7xl mx-auto flex items-center gap-4">
     </div>
-  </header>
+   </header>
    <div class="p-6 space-y-6">
      <!-- Notification Stats -->
      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -72,13 +81,13 @@
          <div class="flex items-center justify-between">
            <h3 class="text-lg font-semibold text-card-foreground">Notifications</h3>
            <div class="flex items-center space-x-4">
-             <select class="px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent">
+             <select class="px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
                <option value="all">All Types</option>
                <option value="system">System</option>
                <option value="user">User Activity</option>
                <option value="security">Security</option>
              </select>
-             <select class="px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent">
+             <select class="px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
                <option value="all">All Status</option>
                <option value="unread">Unread</option>
                <option value="read">Read</option>

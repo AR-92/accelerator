@@ -804,6 +804,14 @@
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
   }
+  .border-l-2 {
+    border-left-style: var(--tw-border-style);
+    border-left-width: 2px;
+  }
+  .border-l-4 {
+    border-left-style: var(--tw-border-style);
+    border-left-width: 4px;
+  }
   .border-blue-600 {
     border-color: var(--color-blue-600);
   }
@@ -956,6 +964,9 @@
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-success) 10%, transparent);
     }
+  }
+  .bg-transparent {
+    background-color: transparent;
   }
   .bg-warning {
     background-color: var(--color-warning);
@@ -1485,12 +1496,28 @@
       line-height: var(--tw-leading, var(--text-sm--line-height));
     }
   }
+  .placeholder\:text-foreground {
+    &::-moz-placeholder {
+      color: var(--color-foreground);
+    }
+    &::placeholder {
+      color: var(--color-foreground);
+    }
+  }
   .placeholder\:text-muted-foreground {
     &::-moz-placeholder {
       color: var(--color-muted-foreground);
     }
     &::placeholder {
       color: var(--color-muted-foreground);
+    }
+  }
+  .placeholder\:text-primary {
+    &::-moz-placeholder {
+      color: var(--color-primary);
+    }
+    &::placeholder {
+      color: var(--color-primary);
     }
   }
   .after\:absolute {
@@ -1775,6 +1802,13 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-muted-foreground);
+      }
+    }
+  }
+  .hover\:text-primary {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-primary);
       }
     }
   }

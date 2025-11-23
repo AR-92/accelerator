@@ -6,7 +6,7 @@
       <tr>
         {{#if showCheckbox}}
         <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider">
-          <input type="checkbox" id="selectAll-{{tableId}}" class="rounded border-input text-primary focus:ring-ring"
+          <input type="checkbox" id="selectAll-{{tableId}}" class="rounded border-input text-primary 
             aria-label="Select all {{entityName}}">
         </th>
         {{/if}}
@@ -24,7 +24,7 @@
       <tr id="{{../entityName}}-row-{{id}}" class="h-16 border-b border-border hover:bg-muted/50 transition-colors duration-150">
         {{#if ../showCheckbox}}
         <td class="px-6 py-4">
-          <input type="checkbox" class="{{../entityName}}Checkbox rounded border-input text-primary focus:ring-ring"
+          <input type="checkbox" class="{{../entityName}}Checkbox rounded border-input text-primary 
             value="{{id}}" data-{{../entityName}}-id="{{id}}" aria-label="Select {{../entityName}} {{title}}">
         </td>
         {{/if}}
@@ -110,7 +110,7 @@
             <div class="flex items-center gap-3">
               <span class="text-sm text-muted-foreground font-medium">Rows per page:</span>
               <select id="rowsPerPage-{{tableId}}" name="limit"
-                class="border border-input rounded-lg px-3 py-2 text-sm bg-background shadow-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring transition-colors"
+                class="border border-input rounded-lg px-3 py-2 text-sm bg-background shadow-sm focus:outline-none   focus:border-ring transition-colors"
                 hx-get="{{currentUrl}}" hx-target="#{{tableId}}TableContainer" hx-include="[name='search'],[name='status']">
                 <option value="10"{{#if (eq pagination.limit 10)}} selected{{/if}}>10</option>
                 <option value="20"{{#if (eq pagination.limit 20)}} selected{{/if}}>20</option>

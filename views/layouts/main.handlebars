@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
+    <link rel="icon" type="image/svg+xml" href="/images/favcon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -205,7 +206,7 @@
             if (isCollapsed) {
                 sidebar.classList.remove('w-16');
                 sidebar.classList.add('w-56');
-                document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'inline');
+                document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'flex');
                 // Restore normal padding and margins for expanded state
                 document.querySelectorAll('#sidebar a').forEach(link => {
                     link.classList.remove('px-1', 'justify-center');
@@ -249,6 +250,8 @@
                 document.querySelectorAll('#sidebar svg').forEach(icon => {
                     icon.classList.remove('mr-3');
                 });
+            } else {
+                document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'flex');
             }
         }
 
@@ -263,15 +266,15 @@
                 localStorage.setItem('theme', 'light');
                 // Change to sun icon
                 themeIcon.innerHTML = `
-                    <circle cx="12" cy="12" r="4"></circle>
-                    <path d="M12 2v2"></path>
-                    <path d="M12 20v2"></path>
-                    <path d="m4.93 4.93 1.41 1.41"></path>
-                    <path d="m17.66 17.66 1.41 1.41"></path>
-                    <path d="M2 12h2"></path>
-                    <path d="M20 12h2"></path>
-                    <path d="m6.34 6.34-1.41-1.41"></path>
-                    <path d="m19.07 19.07-1.41-1.41"></path>
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 4h.01"/>
+                    <path d="M20 12h.01"/>
+                    <path d="M12 20h.01"/>
+                    <path d="M4 12h.01"/>
+                    <path d="M17.657 6.343h.01"/>
+                    <path d="M17.657 17.657h.01"/>
+                    <path d="M6.343 17.657h.01"/>
+                    <path d="M6.343 6.343h.01"/>
                 `;
             } else {
                 html.classList.add('dark');
@@ -297,15 +300,15 @@
             } else {
                 // Set sun icon (default)
                 themeIcon.innerHTML = `
-                    <circle cx="12" cy="12" r="4"></circle>
-                    <path d="M12 2v2"></path>
-                    <path d="M12 20v2"></path>
-                    <path d="m4.93 4.93 1.41 1.41"></path>
-                    <path d="m17.66 17.66 1.41 1.41"></path>
-                    <path d="M2 12h2"></path>
-                    <path d="M20 12h2"></path>
-                    <path d="m6.34 6.34-1.41-1.41"></path>
-                    <path d="m19.07 19.07-1.41-1.41"></path>
+                    <circle cx="12" cy="12" r="4"/>
+                    <path d="M12 4h.01"/>
+                    <path d="M20 12h.01"/>
+                    <path d="M12 20h.01"/>
+                    <path d="M4 12h.01"/>
+                    <path d="M17.657 6.343h.01"/>
+                    <path d="M17.657 17.657h.01"/>
+                    <path d="M6.343 17.657h.01"/>
+                    <path d="M6.343 6.343h.01"/>
                 `;
             }
         }

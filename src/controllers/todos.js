@@ -15,7 +15,7 @@ const renderTableRowsHtml = (todos) => {
     {{#each todos}}
     <tr id="todo-row-{{id}}" class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150 even:bg-purple-100 dark:even:bg-purple-800">
       <td class="px-6 py-4">
-        <input type="checkbox" class="todoCheckbox rounded border-gray-300 text-primary focus:ring-primary" value="{{id}}" data-todo-id="{{id}}" aria-label="Select todo {{title}}">
+        <input type="checkbox" class="todoCheckbox rounded border-gray-300 text-primary  value="{{id}}" data-todo-id="{{id}}" aria-label="Select todo {{title}}">
       </td>
       <td class="px-6 py-4">
         <div>
@@ -220,7 +220,7 @@ export const getTodosTable = async (req, res) => {
           <thead class="bg-purple-200 dark:bg-purple-800">
             <tr>
                <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">
-                 <input type="checkbox" id="selectAll" class="rounded border-gray-300 text-primary focus:ring-primary" aria-label="Select all todos">
+                 <input type="checkbox" id="selectAll" class="rounded border-gray-300 text-primary  aria-label="Select all todos">
                </th>
                <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">Todo</th>
                <th class="px-6 py-4 text-left font-semibold text-black dark:text-white uppercase text-xs tracking-wider">Status</th>
@@ -243,7 +243,7 @@ export const getTodosTable = async (req, res) => {
 
                   <div class="flex items-center gap-3">
                     <span class="text-sm text-gray-600 font-medium">Rows per page:</span>
-                    <select id="rowsPerPage" name="limit" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors" hx-get="/todos" hx-target="#todosTableContainer" hx-include="[name='search'],[name='status']">
+                    <select id="rowsPerPage" name="limit" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white shadow-sm focus:outline-none   focus:border-primary transition-colors" hx-get="/todos" hx-target="#todosTableContainer" hx-include="[name='search'],[name='status']">
                       <option value="10" ${limitNum === 10 ? 'selected' : ''}>10</option>
                       <option value="20" ${limitNum === 20 ? 'selected' : ''}>20</option>
                       <option value="50" ${limitNum === 50 ? 'selected' : ''}>50</option>
