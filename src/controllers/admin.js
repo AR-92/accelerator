@@ -5,7 +5,7 @@ import Todo from '../models/Todo.js';
 // Admin Dashboard
 export const getDashboard = (req, res) => {
   logger.info('Admin dashboard accessed');
-  res.render('admin/dashboard', {
+  res.render('admin/other-pages/dashboard', {
     title: 'Admin Dashboard',
     currentPage: 'dashboard',
     currentSection: 'main'
@@ -51,7 +51,7 @@ export const getUsers = async (req, res) => {
     const actions = [
       {
         type: 'link',
-        url: '/admin/users',
+        url: '/admin/table-pages/users',
         label: 'View Details',
         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
       },
@@ -96,7 +96,7 @@ export const getUsers = async (req, res) => {
 
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/users', {
+    res.render('admin/table-pages/users', {
       title: 'Users Management',
       currentPage: 'users',
       currentSection: 'main',
@@ -110,12 +110,12 @@ export const getUsers = async (req, res) => {
       bulkActions,
       pagination,
       query: { search: '', status: '' },
-      currentUrl: '/admin/users',
+      currentUrl: '/admin/table-pages/users',
       colspan
     });
   } catch (error) {
     logger.error('Error loading users:', error);
-    res.render('admin/users', {
+    res.render('admin/table-pages/users', {
       title: 'Users Management',
       currentPage: 'users',
       currentSection: 'main',
@@ -153,7 +153,7 @@ export const getIdeas = async (req, res) => {
     const actions = [
       {
         type: 'link',
-        url: '/admin/ideas',
+        url: '/admin/table-pages/ideas',
         label: 'View Details',
         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
       },
@@ -198,7 +198,7 @@ export const getIdeas = async (req, res) => {
 
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/ideas', {
+    res.render('admin/table-pages/ideas', {
       title: 'Ideas Management',
       currentPage: 'ideas',
       currentSection: 'main',
@@ -212,12 +212,12 @@ export const getIdeas = async (req, res) => {
       bulkActions,
       pagination,
       query: { search: '', status: '' },
-      currentUrl: '/admin/ideas',
+      currentUrl: '/admin/table-pages/ideas',
       colspan
     });
   } catch (error) {
     logger.error('Error loading ideas:', error);
-    res.render('admin/ideas', {
+    res.render('admin/table-pages/ideas', {
       title: 'Ideas Management',
       currentPage: 'ideas',
       currentSection: 'main',
@@ -321,7 +321,7 @@ export const getVotes = async (req, res) => {
     const actions = [
       {
         type: 'link',
-        url: '/admin/votes',
+        url: '/admin/table-pages/votes',
         label: 'View Details',
         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
       },
@@ -352,7 +352,7 @@ export const getVotes = async (req, res) => {
 
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/votes', {
+    res.render('admin/table-pages/votes', {
       title: 'Votes Management',
       currentPage: 'votes',
       currentSection: 'main',
@@ -366,12 +366,12 @@ export const getVotes = async (req, res) => {
       bulkActions,
       pagination,
       query: { search: '', status: '' },
-      currentUrl: '/admin/votes',
+      currentUrl: '/admin/table-pages/votes',
       colspan
     });
   } catch (error) {
     logger.error('Error loading votes:', error);
-    res.render('admin/votes', {
+    res.render('admin/table-pages/votes', {
       title: 'Votes Management',
       currentPage: 'votes',
       currentSection: 'main',
@@ -409,7 +409,7 @@ export const getCollaborations = async (req, res) => {
     const actions = [
       {
         type: 'link',
-        url: '/admin/collaborations',
+        url: '/admin/table-pages/collaborations',
         label: 'View Details',
         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
       },
@@ -453,7 +453,7 @@ export const getCollaborations = async (req, res) => {
 
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/collaborations', {
+    res.render('admin/table-pages/collaborations', {
       title: 'Collaborations Management',
       currentPage: 'collaborations',
       currentSection: 'main',
@@ -467,12 +467,12 @@ export const getCollaborations = async (req, res) => {
       bulkActions,
       pagination,
       query: { search: '', status: '' },
-      currentUrl: '/admin/collaborations',
+      currentUrl: '/admin/table-pages/collaborations',
       colspan
     });
   } catch (error) {
     logger.error('Error loading collaborations:', error);
-    res.render('admin/collaborations', {
+    res.render('admin/table-pages/collaborations', {
       title: 'Collaborations Management',
       currentPage: 'collaborations',
       currentSection: 'main',
@@ -520,7 +520,7 @@ export const getContent = async (req, res) => {
     const actions = [
       {
         type: 'link',
-        url: '/admin/content',
+        url: '/admin/table-pages/content',
         label: 'View Details',
         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
       },
@@ -558,7 +558,7 @@ export const getContent = async (req, res) => {
 
     const colspan = contentColumns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/content', {
+    res.render('admin/table-pages/content', {
       title: 'Content Management',
       currentPage: 'content',
       currentSection: 'content-management',
@@ -572,12 +572,12 @@ export const getContent = async (req, res) => {
       bulkActions,
       pagination,
       query: { search: '', status: '' },
-      currentUrl: '/admin/content',
+      currentUrl: '/admin/table-pages/content',
       colspan
     });
   } catch (error) {
     logger.error('Error loading content:', error);
-    res.render('admin/content', {
+    res.render('admin/table-pages/content', {
       title: 'Content Management',
       currentPage: 'content',
       currentSection: 'content-management',
@@ -626,12 +626,12 @@ export const getLandingPage = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: mappedSections.length, start: 1, end: mappedSections.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (false ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/landing-page', {
-      title: 'Landing Page Management', currentPage: 'landing-page', currentSection: 'content-management', tableId: 'landing-page', entityName: 'section', showCheckbox: false, showBulkActions: false, columns, data: mappedSections, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/landing-page', colspan
+    res.render('admin/table-pages/landing-page', {
+      title: 'Landing Page Management', currentPage: 'landing-page', currentSection: 'content-management', tableId: 'landing-page', entityName: 'section', showCheckbox: false, showBulkActions: false, columns, data: mappedSections, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/landing-page', colspan
     });
   } catch (error) {
     logger.error('Error loading landing page:', error);
-    res.render('admin/landing-page', { title: 'Landing Page Management', currentPage: 'landing-page', currentSection: 'content-management', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/landing-page', { title: 'Landing Page Management', currentPage: 'landing-page', currentSection: 'content-management', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -734,12 +734,12 @@ export const getPackages = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: packages.length, start: 1, end: packages.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/packages', {
-      title: 'Packages Management', currentPage: 'packages', currentSection: 'financial', tableId: 'packages', entityName: 'package', showCheckbox: true, showBulkActions: true, columns, data: packages, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/packages', colspan
+    res.render('admin/table-pages/packages', {
+      title: 'Packages Management', currentPage: 'packages', currentSection: 'financial', tableId: 'packages', entityName: 'package', showCheckbox: true, showBulkActions: true, columns, data: packages, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/packages', colspan
     });
   } catch (error) {
     logger.error('Error loading packages:', error);
-    res.render('admin/packages', { title: 'Packages Management', currentPage: 'packages', currentSection: 'financial', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/packages', { title: 'Packages Management', currentPage: 'packages', currentSection: 'financial', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -778,7 +778,7 @@ export const getBilling = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/billing', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/table-pages/billing', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'refundTransaction', label: 'Refund', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-undo-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 7v6h6"></path><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path></svg>' }
     ];
 
@@ -789,12 +789,12 @@ export const getBilling = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: mappedTransactions.length, start: 1, end: mappedTransactions.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/billing', {
-      title: 'Billing Management', currentPage: 'billing', currentSection: 'financial', tableId: 'billing', entityName: 'transaction', showCheckbox: true, showBulkActions: true, columns, data: mappedTransactions, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/billing', colspan
+    res.render('admin/table-pages/billing', {
+      title: 'Billing Management', currentPage: 'billing', currentSection: 'financial', tableId: 'billing', entityName: 'transaction', showCheckbox: true, showBulkActions: true, columns, data: mappedTransactions, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/billing', colspan
     });
   } catch (error) {
     logger.error('Error loading billing:', error);
-    res.render('admin/billing', { title: 'Billing Management', currentPage: 'billing', currentSection: 'financial', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/billing', { title: 'Billing Management', currentPage: 'billing', currentSection: 'financial', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -837,12 +837,12 @@ export const getRewards = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: rewards.length, start: 1, end: rewards.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/rewards', {
-      title: 'Rewards Management', currentPage: 'rewards', currentSection: 'financial', tableId: 'rewards', entityName: 'reward', showCheckbox: true, showBulkActions: true, columns, data: rewards, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/rewards', colspan
+    res.render('admin/table-pages/rewards', {
+      title: 'Rewards Management', currentPage: 'rewards', currentSection: 'financial', tableId: 'rewards', entityName: 'reward', showCheckbox: true, showBulkActions: true, columns, data: rewards, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/rewards', colspan
     });
   } catch (error) {
     logger.error('Error loading rewards:', error);
-    res.render('admin/rewards', { title: 'Rewards Management', currentPage: 'rewards', currentSection: 'financial', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/rewards', { title: 'Rewards Management', currentPage: 'rewards', currentSection: 'financial', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -877,7 +877,7 @@ export const getProfile = async (req, res) => {
       }
     };
 
-    res.render('admin/profile', {
+    res.render('admin/other-pages/profile', {
       title: 'Profile',
       currentPage: 'profile',
       currentSection: 'main',
@@ -885,7 +885,7 @@ export const getProfile = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading profile:', error);
-    res.render('admin/profile', {
+    res.render('admin/other-pages/profile', {
       title: 'Profile',
       currentPage: 'profile',
       currentSection: 'main',
@@ -927,7 +927,7 @@ export const getProfileSettings = async (req, res) => {
       }
     };
 
-    res.render('admin/profile-settings', {
+    res.render('admin/other-pages/profile-settings', {
       title: 'Profile Settings',
       currentPage: 'profile-settings',
       currentSection: 'main',
@@ -935,7 +935,7 @@ export const getProfileSettings = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading profile settings:', error);
-    res.render('admin/profile-settings', {
+    res.render('admin/other-pages/profile-settings', {
       title: 'Profile Settings',
       currentPage: 'profile-settings',
       currentSection: 'main',
@@ -978,7 +978,7 @@ export const getSettings = async (req, res) => {
       }
     };
 
-    res.render('admin/settings', {
+    res.render('admin/other-pages/settings', {
       title: 'Admin Settings',
       currentPage: 'settings',
       currentSection: 'system',
@@ -986,7 +986,7 @@ export const getSettings = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading admin settings:', error);
-    res.render('admin/settings', {
+    res.render('admin/other-pages/settings', {
       title: 'Admin Settings',
       currentPage: 'settings',
       currentSection: 'system',
@@ -1060,7 +1060,7 @@ export const getSystemHealth = async (req, res) => {
       activeConnections: Math.floor(Math.random() * 10) + 1
     };
 
-    res.render('admin/system-health', {
+    res.render('admin/other-pages/system-health', {
       title: 'System Health',
       currentPage: 'system-health',
       currentSection: 'system',
@@ -1068,7 +1068,7 @@ export const getSystemHealth = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading system health:', error);
-    res.render('admin/system-health', {
+    res.render('admin/other-pages/system-health', {
       title: 'System Health',
       currentPage: 'system-health',
       currentSection: 'system',
@@ -1129,7 +1129,7 @@ export const getNotifications = async (req, res) => {
     const actions = [
       {
         type: 'link',
-        url: '/admin/notifications',
+        url: '/admin/other-pages/notifications',
         label: 'View Details',
         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
       },
@@ -1174,7 +1174,7 @@ export const getNotifications = async (req, res) => {
       systemAlerts: mappedNotifications.filter(n => n.type === 'system' && n.priority === 'high').length
     };
 
-    res.render('admin/notifications', {
+    res.render('admin/other-pages/notifications', {
       title: 'Notifications',
       currentPage: 'notifications',
       currentSection: 'system',
@@ -1188,14 +1188,14 @@ export const getNotifications = async (req, res) => {
       bulkActions,
       pagination,
       query: { search: '', status: '' },
-      currentUrl: '/admin/notifications',
+      currentUrl: '/admin/other-pages/notifications',
       colspan,
       notifications: mappedNotifications,
       notificationStats
     });
   } catch (error) {
     logger.error('Error loading notifications:', error);
-    res.render('admin/notifications', {
+    res.render('admin/other-pages/notifications', {
       title: 'Notifications',
       currentPage: 'notifications',
       currentSection: 'system',
@@ -1227,7 +1227,7 @@ export const getTables = async (req, res) => {
     const actions = [
       {
         type: 'link',
-        url: '/admin/tables',
+        url: '/admin/table-pages/tables',
         label: 'View Records',
         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
       }
@@ -1267,7 +1267,7 @@ export const getTables = async (req, res) => {
 
     const colspan = columns.length + 1; // checkbox not shown
 
-    res.render('admin/tables', {
+    res.render('admin/table-pages/tables', {
       title: 'Database Tables',
       currentPage: 'tables',
       currentSection: 'system',
@@ -1281,13 +1281,13 @@ export const getTables = async (req, res) => {
       bulkActions: [],
       pagination,
       query: { search: '', status: '' },
-      currentUrl: '/admin/tables',
+      currentUrl: '/admin/table-pages/tables',
       colspan,
       supabaseConnected: isConnected
     });
   } catch (error) {
     logger.error('Error loading tables:', error);
-    res.render('admin/tables', {
+    res.render('admin/table-pages/tables', {
       title: 'Database Tables',
       currentPage: 'tables',
       currentSection: 'system',
@@ -1322,7 +1322,7 @@ export const getTodos = async (req, res) => {
     const actions = [
       {
         type: 'link',
-        url: '/admin/todos',
+        url: '/admin/table-pages/todos',
         label: 'View Details',
         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
       },
@@ -1367,7 +1367,7 @@ export const getTodos = async (req, res) => {
 
     const colspan = columns.length + 1 + 1; // checkbox + actions
 
-    res.render('admin/todos', {
+    res.render('admin/table-pages/todos', {
       title: 'Todos Management',
       currentPage: 'todos',
       currentSection: 'system',
@@ -1381,13 +1381,13 @@ export const getTodos = async (req, res) => {
       bulkActions,
       pagination,
       query: { search: '', status: '' },
-      currentUrl: '/admin/todos',
+      currentUrl: '/admin/table-pages/todos',
       colspan,
       supabaseConnected: isConnected
     });
   } catch (error) {
     logger.error('Error loading todos:', error);
-    res.render('admin/todos', {
+    res.render('admin/table-pages/todos', {
       title: 'Todos Management',
       currentPage: 'todos',
       currentSection: 'system',
@@ -1445,7 +1445,7 @@ export const getActivity = async (req, res) => {
     const actions = [
       {
         type: 'link',
-        url: '/admin/activity',
+        url: '/admin/other-pages/activity',
         label: 'View Details',
         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
       }
@@ -1481,7 +1481,7 @@ export const getActivity = async (req, res) => {
       failed: mappedActivities.filter(a => a.status === 'failed').length
     };
 
-    res.render('admin/activity', {
+    res.render('admin/other-pages/activity', {
       title: 'Activity Log',
       currentPage: 'activity',
       currentSection: 'system',
@@ -1495,14 +1495,14 @@ export const getActivity = async (req, res) => {
       bulkActions,
       pagination,
       query: { search: '', status: '' },
-      currentUrl: '/admin/activity',
+      currentUrl: '/admin/other-pages/activity',
       colspan,
       activities: mappedActivities,
       activityStats
     });
   } catch (error) {
     logger.error('Error loading activity logs:', error);
-    res.render('admin/activity', {
+    res.render('admin/other-pages/activity', {
       title: 'Activity Log',
       currentPage: 'activity',
       currentSection: 'system',
@@ -1544,7 +1544,7 @@ export const getBusinessModel = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/business-model', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/other-pages/business-model', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editBusinessModel', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteBusinessModel', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -1552,12 +1552,12 @@ export const getBusinessModel = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: businessModels.length, start: 1, end: businessModels.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/business-model', {
-      title: 'Business Model Management', currentPage: 'business-model', currentSection: 'business', tableId: 'business-model', entityName: 'business model', showCheckbox: true, showBulkActions: true, columns, data: businessModels, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/business-model', colspan
+    res.render('admin/other-pages/business-model', {
+      title: 'Business Model Management', currentPage: 'business-model', currentSection: 'business', tableId: 'business-model', entityName: 'business model', showCheckbox: true, showBulkActions: true, columns, data: businessModels, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/other-pages/business-model', colspan
     });
   } catch (error) {
     logger.error('Error loading business models:', error);
-    res.render('admin/business-model', { title: 'Business Model Management', currentPage: 'business-model', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/other-pages/business-model', { title: 'Business Model Management', currentPage: 'business-model', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1585,7 +1585,7 @@ export const getBusinessPlan = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/business-plan', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/other-pages/business-plan', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editBusinessPlan', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteBusinessPlan', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -1593,12 +1593,12 @@ export const getBusinessPlan = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: businessPlans.length, start: 1, end: businessPlans.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/business-plan', {
-      title: 'Business Plan Management', currentPage: 'business-plan', currentSection: 'business', tableId: 'business-plan', entityName: 'business plan', showCheckbox: true, showBulkActions: true, columns, data: businessPlans, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/business-plan', colspan
+    res.render('admin/other-pages/business-plan', {
+      title: 'Business Plan Management', currentPage: 'business-plan', currentSection: 'business', tableId: 'business-plan', entityName: 'business plan', showCheckbox: true, showBulkActions: true, columns, data: businessPlans, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/other-pages/business-plan', colspan
     });
   } catch (error) {
     logger.error('Error loading business plans:', error);
-    res.render('admin/business-plan', { title: 'Business Plan Management', currentPage: 'business-plan', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/other-pages/business-plan', { title: 'Business Plan Management', currentPage: 'business-plan', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1626,7 +1626,7 @@ export const getFinancialModel = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/financial-model', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/other-pages/financial-model', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editFinancialModel', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteFinancialModel', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -1634,12 +1634,12 @@ export const getFinancialModel = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: financialModels.length, start: 1, end: financialModels.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/financial-model', {
-      title: 'Financial Model Management', currentPage: 'financial-model', currentSection: 'business', tableId: 'financial-model', entityName: 'financial model', showCheckbox: true, showBulkActions: true, columns, data: financialModels, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/financial-model', colspan
+    res.render('admin/other-pages/financial-model', {
+      title: 'Financial Model Management', currentPage: 'financial-model', currentSection: 'business', tableId: 'financial-model', entityName: 'financial model', showCheckbox: true, showBulkActions: true, columns, data: financialModels, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/other-pages/financial-model', colspan
     });
   } catch (error) {
     logger.error('Error loading financial models:', error);
-    res.render('admin/financial-model', { title: 'Financial Model Management', currentPage: 'financial-model', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/other-pages/financial-model', { title: 'Financial Model Management', currentPage: 'financial-model', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1666,7 +1666,7 @@ export const getPitchDeck = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/pitchdeck', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/table-pages/pitchdeck', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editPitchDeck', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deletePitchDeck', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -1674,12 +1674,12 @@ export const getPitchDeck = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: pitchdecks.length, start: 1, end: pitchdecks.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/pitchdeck', {
-      title: 'PitchDeck Management', currentPage: 'pitchdeck', currentSection: 'business', tableId: 'pitchdeck', entityName: 'pitchdeck', showCheckbox: true, showBulkActions: true, columns, data: pitchdecks, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/pitchdeck', colspan
+    res.render('admin/table-pages/pitchdeck', {
+      title: 'PitchDeck Management', currentPage: 'pitchdeck', currentSection: 'business', tableId: 'pitchdeck', entityName: 'pitchdeck', showCheckbox: true, showBulkActions: true, columns, data: pitchdecks, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/pitchdeck', colspan
     });
   } catch (error) {
     logger.error('Error loading pitchdecks:', error);
-    res.render('admin/pitchdeck', { title: 'PitchDeck Management', currentPage: 'pitchdeck', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/pitchdeck', { title: 'PitchDeck Management', currentPage: 'pitchdeck', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1707,7 +1707,7 @@ export const getValuation = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/valuation', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/table-pages/valuation', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editValuation', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteValuation', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -1715,12 +1715,12 @@ export const getValuation = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: valuations.length, start: 1, end: valuations.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/valuation', {
-      title: 'Valuation Management', currentPage: 'valuation', currentSection: 'business', tableId: 'valuation', entityName: 'valuation', showCheckbox: true, showBulkActions: true, columns, data: valuations, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/valuation', colspan
+    res.render('admin/table-pages/valuation', {
+      title: 'Valuation Management', currentPage: 'valuation', currentSection: 'business', tableId: 'valuation', entityName: 'valuation', showCheckbox: true, showBulkActions: true, columns, data: valuations, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/valuation', colspan
     });
   } catch (error) {
     logger.error('Error loading valuations:', error);
-    res.render('admin/valuation', { title: 'Valuation Management', currentPage: 'valuation', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/valuation', { title: 'Valuation Management', currentPage: 'valuation', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1748,7 +1748,7 @@ export const getFunding = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/funding', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/table-pages/funding', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editFunding', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteFunding', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -1756,12 +1756,12 @@ export const getFunding = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: fundings.length, start: 1, end: fundings.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/funding', {
-      title: 'Funding Management', currentPage: 'funding', currentSection: 'business', tableId: 'funding', entityName: 'funding', showCheckbox: true, showBulkActions: true, columns, data: fundings, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/funding', colspan
+    res.render('admin/table-pages/funding', {
+      title: 'Funding Management', currentPage: 'funding', currentSection: 'business', tableId: 'funding', entityName: 'funding', showCheckbox: true, showBulkActions: true, columns, data: fundings, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/funding', colspan
     });
   } catch (error) {
     logger.error('Error loading fundings:', error);
-    res.render('admin/funding', { title: 'Funding Management', currentPage: 'funding', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/funding', { title: 'Funding Management', currentPage: 'funding', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1789,7 +1789,7 @@ export const getTeam = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/team', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/table-pages/team', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editTeam', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteTeam', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -1797,12 +1797,12 @@ export const getTeam = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: teams.length, start: 1, end: teams.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/team', {
-      title: 'Team Management', currentPage: 'team', currentSection: 'business', tableId: 'team', entityName: 'team', showCheckbox: true, showBulkActions: true, columns, data: teams, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/team', colspan
+    res.render('admin/table-pages/team', {
+      title: 'Team Management', currentPage: 'team', currentSection: 'business', tableId: 'team', entityName: 'team', showCheckbox: true, showBulkActions: true, columns, data: teams, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/team', colspan
     });
   } catch (error) {
     logger.error('Error loading teams:', error);
-    res.render('admin/team', { title: 'Team Management', currentPage: 'team', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/team', { title: 'Team Management', currentPage: 'team', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1830,7 +1830,7 @@ export const getLegal = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/legal', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/table-pages/legal', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editLegal', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteLegal', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -1838,12 +1838,12 @@ export const getLegal = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: legals.length, start: 1, end: legals.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/legal', {
-      title: 'Legal Management', currentPage: 'legal', currentSection: 'business', tableId: 'legal', entityName: 'legal', showCheckbox: true, showBulkActions: true, columns, data: legals, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/legal', colspan
+    res.render('admin/table-pages/legal', {
+      title: 'Legal Management', currentPage: 'legal', currentSection: 'business', tableId: 'legal', entityName: 'legal', showCheckbox: true, showBulkActions: true, columns, data: legals, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/legal', colspan
     });
   } catch (error) {
     logger.error('Error loading legals:', error);
-    res.render('admin/legal', { title: 'Legal Management', currentPage: 'legal', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/legal', { title: 'Legal Management', currentPage: 'legal', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1871,7 +1871,7 @@ export const getMarketing = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/marketing', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/table-pages/marketing', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editMarketing', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteMarketing', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -1879,12 +1879,12 @@ export const getMarketing = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: marketings.length, start: 1, end: marketings.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/marketing', {
-      title: 'Marketing Management', currentPage: 'marketing', currentSection: 'business', tableId: 'marketing', entityName: 'marketing', showCheckbox: true, showBulkActions: true, columns, data: marketings, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/marketing', colspan
+    res.render('admin/table-pages/marketing', {
+      title: 'Marketing Management', currentPage: 'marketing', currentSection: 'business', tableId: 'marketing', entityName: 'marketing', showCheckbox: true, showBulkActions: true, columns, data: marketings, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/marketing', colspan
     });
   } catch (error) {
     logger.error('Error loading marketings:', error);
-    res.render('admin/marketing', { title: 'Marketing Management', currentPage: 'marketing', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/marketing', { title: 'Marketing Management', currentPage: 'marketing', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1912,7 +1912,7 @@ export const getCorporate = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/corporate', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/table-pages/corporate', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editCorporate', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteCorporate', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -1920,12 +1920,12 @@ export const getCorporate = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: corporates.length, start: 1, end: corporates.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/corporate', {
-      title: 'Corporate Management', currentPage: 'corporate', currentSection: 'business', tableId: 'corporate', entityName: 'corporate', showCheckbox: true, showBulkActions: true, columns, data: corporates, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/corporate', colspan
+    res.render('admin/table-pages/corporate', {
+      title: 'Corporate Management', currentPage: 'corporate', currentSection: 'business', tableId: 'corporate', entityName: 'corporate', showCheckbox: true, showBulkActions: true, columns, data: corporates, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/corporate', colspan
     });
   } catch (error) {
     logger.error('Error loading corporates:', error);
-    res.render('admin/corporate', { title: 'Corporate Management', currentPage: 'corporate', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/corporate', { title: 'Corporate Management', currentPage: 'corporate', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1953,7 +1953,7 @@ export const getEnterprises = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/enterprises', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/table-pages/enterprises', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editEnterprise', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteEnterprise', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -1961,12 +1961,12 @@ export const getEnterprises = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: enterprises.length, start: 1, end: enterprises.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/enterprises', {
-      title: 'Enterprises Management', currentPage: 'enterprises', currentSection: 'business', tableId: 'enterprises', entityName: 'enterprise', showCheckbox: true, showBulkActions: true, columns, data: enterprises, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/enterprises', colspan
+    res.render('admin/table-pages/enterprises', {
+      title: 'Enterprises Management', currentPage: 'enterprises', currentSection: 'business', tableId: 'enterprises', entityName: 'enterprise', showCheckbox: true, showBulkActions: true, columns, data: enterprises, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/enterprises', colspan
     });
   } catch (error) {
     logger.error('Error loading enterprises:', error);
-    res.render('admin/enterprises', { title: 'Enterprises Management', currentPage: 'enterprises', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/enterprises', { title: 'Enterprises Management', currentPage: 'enterprises', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -1994,7 +1994,7 @@ export const getLearningContent = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/learning-content', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/other-pages/learning-content', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editLearningContent', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteLearningContent', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -2002,12 +2002,12 @@ export const getLearningContent = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: learningContents.length, start: 1, end: learningContents.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/learning-content', {
-      title: 'Learning Content Management', currentPage: 'learning-content', currentSection: 'learning', tableId: 'learning-content', entityName: 'learning content', showCheckbox: true, showBulkActions: true, columns, data: learningContents, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/learning-content', colspan
+    res.render('admin/other-pages/learning-content', {
+      title: 'Learning Content Management', currentPage: 'learning-content', currentSection: 'learning', tableId: 'learning-content', entityName: 'learning content', showCheckbox: true, showBulkActions: true, columns, data: learningContents, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/other-pages/learning-content', colspan
     });
   } catch (error) {
     logger.error('Error loading learning contents:', error);
-    res.render('admin/learning-content', { title: 'Learning Content Management', currentPage: 'learning-content', currentSection: 'learning', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/other-pages/learning-content', { title: 'Learning Content Management', currentPage: 'learning-content', currentSection: 'learning', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2035,7 +2035,7 @@ export const getLearningCategories = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/learning-categories', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/other-pages/learning-categories', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editLearningCategory', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteLearningCategory', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -2043,12 +2043,12 @@ export const getLearningCategories = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: learningCategories.length, start: 1, end: learningCategories.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/learning-categories', {
-      title: 'Learning Categories Management', currentPage: 'learning-categories', currentSection: 'learning', tableId: 'learning-categories', entityName: 'learning category', showCheckbox: true, showBulkActions: true, columns, data: learningCategories, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/learning-categories', colspan
+    res.render('admin/other-pages/learning-categories', {
+      title: 'Learning Categories Management', currentPage: 'learning-categories', currentSection: 'learning', tableId: 'learning-categories', entityName: 'learning category', showCheckbox: true, showBulkActions: true, columns, data: learningCategories, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/other-pages/learning-categories', colspan
     });
   } catch (error) {
     logger.error('Error loading learning categories:', error);
-    res.render('admin/learning-categories', { title: 'Learning Categories Management', currentPage: 'learning-categories', currentSection: 'learning', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/other-pages/learning-categories', { title: 'Learning Categories Management', currentPage: 'learning-categories', currentSection: 'learning', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2076,7 +2076,7 @@ export const getLearningAssessments = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/learning-assessments', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/other-pages/learning-assessments', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editLearningAssessment', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteLearningAssessment', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -2084,12 +2084,12 @@ export const getLearningAssessments = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: learningAssessments.length, start: 1, end: learningAssessments.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/learning-assessments', {
-      title: 'Learning Assessments Management', currentPage: 'learning-assessments', currentSection: 'learning', tableId: 'learning-assessments', entityName: 'learning assessment', showCheckbox: true, showBulkActions: true, columns, data: learningAssessments, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/learning-assessments', colspan
+    res.render('admin/other-pages/learning-assessments', {
+      title: 'Learning Assessments Management', currentPage: 'learning-assessments', currentSection: 'learning', tableId: 'learning-assessments', entityName: 'learning assessment', showCheckbox: true, showBulkActions: true, columns, data: learningAssessments, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/other-pages/learning-assessments', colspan
     });
   } catch (error) {
     logger.error('Error loading learning assessments:', error);
-    res.render('admin/learning-assessments', { title: 'Learning Assessments Management', currentPage: 'learning-assessments', currentSection: 'learning', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/other-pages/learning-assessments', { title: 'Learning Assessments Management', currentPage: 'learning-assessments', currentSection: 'learning', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2118,18 +2118,18 @@ export const getLearningAnalytics = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/learning-analytics', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' }
+      { type: 'link', url: '/admin/other-pages/learning-analytics', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' }
     ];
 
     const pagination = { currentPage: 1, limit: 100, total: learningAnalytics.length, start: 1, end: learningAnalytics.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (false ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/learning-analytics', {
-      title: 'Learning Analytics Management', currentPage: 'learning-analytics', currentSection: 'learning', tableId: 'learning-analytics', entityName: 'learning analytic', showCheckbox: false, showBulkActions: false, columns, data: learningAnalytics, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/learning-analytics', colspan
+    res.render('admin/other-pages/learning-analytics', {
+      title: 'Learning Analytics Management', currentPage: 'learning-analytics', currentSection: 'learning', tableId: 'learning-analytics', entityName: 'learning analytic', showCheckbox: false, showBulkActions: false, columns, data: learningAnalytics, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/other-pages/learning-analytics', colspan
     });
   } catch (error) {
     logger.error('Error loading learning analytics:', error);
-    res.render('admin/learning-analytics', { title: 'Learning Analytics Management', currentPage: 'learning-analytics', currentSection: 'learning', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/other-pages/learning-analytics', { title: 'Learning Analytics Management', currentPage: 'learning-analytics', currentSection: 'learning', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2157,19 +2157,19 @@ export const getMessages = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/messages', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/table-pages/messages', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'delete', onclick: 'deleteMessage', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
 
     const pagination = { currentPage: 1, limit: 10, total: messages.length, start: 1, end: messages.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/messages', {
-      title: 'Messages Management', currentPage: 'messages', currentSection: 'projects', tableId: 'messages', entityName: 'message', showCheckbox: true, showBulkActions: true, columns, data: messages, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/messages', colspan
+    res.render('admin/table-pages/messages', {
+      title: 'Messages Management', currentPage: 'messages', currentSection: 'projects', tableId: 'messages', entityName: 'message', showCheckbox: true, showBulkActions: true, columns, data: messages, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/messages', colspan
     });
   } catch (error) {
     logger.error('Error loading messages:', error);
-    res.render('admin/messages', { title: 'Messages Management', currentPage: 'messages', currentSection: 'projects', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/messages', { title: 'Messages Management', currentPage: 'messages', currentSection: 'projects', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2197,7 +2197,7 @@ export const getProjectCollaborators = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/project-collaborators', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/table-pages/project-collaborators', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editProjectCollaborator', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteProjectCollaborator', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -2205,12 +2205,12 @@ export const getProjectCollaborators = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: projectCollaborators.length, start: 1, end: projectCollaborators.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/project-collaborators', {
-      title: 'Project Collaborators Management', currentPage: 'project-collaborators', currentSection: 'projects', tableId: 'project-collaborators', entityName: 'project collaborator', showCheckbox: true, showBulkActions: true, columns, data: projectCollaborators, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/project-collaborators', colspan
+    res.render('admin/table-pages/project-collaborators', {
+      title: 'Project Collaborators Management', currentPage: 'project-collaborators', currentSection: 'projects', tableId: 'project-collaborators', entityName: 'project collaborator', showCheckbox: true, showBulkActions: true, columns, data: projectCollaborators, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/project-collaborators', colspan
     });
   } catch (error) {
     logger.error('Error loading project collaborators:', error);
-    res.render('admin/project-collaborators', { title: 'Project Collaborators Management', currentPage: 'project-collaborators', currentSection: 'projects', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/project-collaborators', { title: 'Project Collaborators Management', currentPage: 'project-collaborators', currentSection: 'projects', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2238,7 +2238,7 @@ export const getCalendar = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/calendar', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/table-pages/calendar', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editCalendar', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteCalendar', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -2246,12 +2246,12 @@ export const getCalendar = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: calendars.length, start: 1, end: calendars.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/calendar', {
-      title: 'Calendar Management', currentPage: 'calendar', currentSection: 'projects', tableId: 'calendar', entityName: 'calendar', showCheckbox: true, showBulkActions: true, columns, data: calendars, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/calendar', colspan
+    res.render('admin/table-pages/calendar', {
+      title: 'Calendar Management', currentPage: 'calendar', currentSection: 'projects', tableId: 'calendar', entityName: 'calendar', showCheckbox: true, showBulkActions: true, columns, data: calendars, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/calendar', colspan
     });
   } catch (error) {
     logger.error('Error loading calendars:', error);
-    res.render('admin/calendar', { title: 'Calendar Management', currentPage: 'calendar', currentSection: 'projects', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/calendar', { title: 'Calendar Management', currentPage: 'calendar', currentSection: 'projects', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2279,7 +2279,7 @@ export const getHelpCenter = async (req, res) => {
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/help-center', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
+      { type: 'link', url: '/admin/other-pages/help-center', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
       { type: 'button', onclick: 'editHelpCenter', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
       { type: 'delete', onclick: 'deleteHelpCenter', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
@@ -2287,12 +2287,12 @@ export const getHelpCenter = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: helpCenters.length, start: 1, end: helpCenters.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/help-center', {
-      title: 'Help Center Management', currentPage: 'help-center', currentSection: 'help', tableId: 'help-center', entityName: 'help center', showCheckbox: true, showBulkActions: true, columns, data: helpCenters, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/help-center', colspan
+    res.render('admin/other-pages/help-center', {
+      title: 'Help Center Management', currentPage: 'help-center', currentSection: 'help', tableId: 'help-center', entityName: 'help center', showCheckbox: true, showBulkActions: true, columns, data: helpCenters, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/other-pages/help-center', colspan
     });
   } catch (error) {
     logger.error('Error loading help centers:', error);
-    res.render('admin/help-center', { title: 'Help Center Management', currentPage: 'help-center', currentSection: 'help', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/other-pages/help-center', { title: 'Help Center Management', currentPage: 'help-center', currentSection: 'help', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };
 
@@ -2353,7 +2353,7 @@ export const getMain = async (req, res) => {
       logger.warn('Error fetching main section stats:', error.message);
     }
 
-    res.render('admin/main', {
+    res.render('admin/other-pages/main', {
       title: 'Main Overview',
       currentPage: 'main',
       currentSection: 'main',
@@ -2361,7 +2361,7 @@ export const getMain = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading main section overview:', error);
-    res.render('admin/main', {
+    res.render('admin/other-pages/main', {
       title: 'Main Overview',
       currentPage: 'main',
       stats: {
@@ -2406,7 +2406,7 @@ export const getContentManagement = async (req, res) => {
       logger.warn('Error fetching content management stats:', error.message);
     }
 
-    res.render('admin/content-management', {
+    res.render('admin/other-pages/content-management', {
       title: 'Content Management Overview',
       currentPage: 'content-management',
       currentSection: 'content-management',
@@ -2414,7 +2414,7 @@ export const getContentManagement = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading content management section overview:', error);
-    res.render('admin/content-management', {
+    res.render('admin/other-pages/content-management', {
       title: 'Content Management Overview',
       currentPage: 'content-management',
       currentSection: 'content-management',
@@ -2462,7 +2462,7 @@ export const getSystem = async (req, res) => {
       logger.warn('Error fetching system stats:', error.message);
     }
 
-    res.render('admin/system', {
+    res.render('admin/other-pages/system', {
       title: 'System Overview',
       currentPage: 'system',
       currentSection: 'system',
@@ -2470,7 +2470,7 @@ export const getSystem = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading system section overview:', error);
-    res.render('admin/system', {
+    res.render('admin/other-pages/system', {
       title: 'System Overview',
       currentPage: 'system',
       currentSection: 'system',
@@ -2539,7 +2539,7 @@ export const getBusiness = async (req, res) => {
       logger.warn('Error fetching business stats:', error.message);
     }
 
-    res.render('admin/business', {
+    res.render('admin/other-pages/business', {
       title: 'Business Overview',
       currentPage: 'business',
       currentSection: 'business',
@@ -2547,7 +2547,7 @@ export const getBusiness = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading business section overview:', error);
-    res.render('admin/business', {
+    res.render('admin/other-pages/business', {
       title: 'Business Overview',
       currentPage: 'business',
       currentSection: 'business',
@@ -2596,7 +2596,7 @@ export const getLearning = async (req, res) => {
       logger.warn('Error fetching learning stats:', error.message);
     }
 
-    res.render('admin/learning', {
+    res.render('admin/other-pages/learning', {
       title: 'Learning Overview',
       currentPage: 'learning',
       currentSection: 'learning',
@@ -2604,7 +2604,7 @@ export const getLearning = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading learning section overview:', error);
-    res.render('admin/learning', {
+    res.render('admin/other-pages/learning', {
       title: 'Learning Overview',
       currentPage: 'learning',
       currentSection: 'learning',
@@ -2645,7 +2645,7 @@ export const getProjects = async (req, res) => {
       logger.warn('Error fetching projects stats:', error.message);
     }
 
-    res.render('admin/projects', {
+    res.render('admin/other-pages/projects', {
       title: 'Projects Overview',
       currentPage: 'projects',
       currentSection: 'projects',
@@ -2653,7 +2653,7 @@ export const getProjects = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading projects section overview:', error);
-    res.render('admin/projects', {
+    res.render('admin/other-pages/projects', {
       title: 'Projects Overview',
       currentPage: 'projects',
       currentSection: 'projects',
@@ -2686,7 +2686,7 @@ export const getHelp = async (req, res) => {
       logger.warn('Error fetching help stats:', error.message);
     }
 
-    res.render('admin/help', {
+    res.render('admin/other-pages/help', {
       title: 'Help Overview',
       currentPage: 'help',
       currentSection: 'help',
@@ -2694,7 +2694,7 @@ export const getHelp = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading help section overview:', error);
-    res.render('admin/help', {
+    res.render('admin/other-pages/help', {
       title: 'Help Overview',
       currentPage: 'help',
       currentSection: 'help',
@@ -2742,7 +2742,7 @@ export const getFinancial = async (req, res) => {
       logger.warn('Error fetching financial stats:', error.message);
     }
 
-    res.render('admin/financial', {
+    res.render('admin/other-pages/financial', {
       title: 'Financial Overview',
       currentPage: 'financial',
       currentSection: 'financial',
@@ -2750,7 +2750,7 @@ export const getFinancial = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading financial section overview:', error);
-    res.render('admin/financial', {
+    res.render('admin/other-pages/financial', {
       title: 'Financial Overview',
       currentPage: 'financial',
       currentSection: 'financial',
@@ -2762,51 +2762,51 @@ export const getFinancial = async (req, res) => {
 // Route setup function
 export default function adminRoutes(app) {
   // Section overview routes
-  app.get('/admin/main', getMain);
-  app.get('/admin/content-management', getContentManagement);
-  app.get('/admin/system', getSystem);
-  app.get('/admin/business', getBusiness);
-  app.get('/admin/learning', getLearning);
-  app.get('/admin/projects', getProjects);
-  app.get('/admin/help', getHelp);
-  app.get('/admin/financial', getFinancial);
+  app.get('/admin/other-pages/main', getMain);
+  app.get('/admin/other-pages/content-management', getContentManagement);
+  app.get('/admin/other-pages/system', getSystem);
+  app.get('/admin/other-pages/business', getBusiness);
+  app.get('/admin/other-pages/learning', getLearning);
+  app.get('/admin/other-pages/projects', getProjects);
+  app.get('/admin/other-pages/help', getHelp);
+  app.get('/admin/other-pages/financial', getFinancial);
 
-  app.get('/admin/dashboard', getDashboard);
-  app.get('/admin/users', getUsers);
-  app.get('/admin/ideas', getIdeas);
-  app.get('/admin/votes', getVotes);
-  app.get('/admin/collaborations', getCollaborations);
-  app.get('/admin/content', getContent);
-  app.get('/admin/landing-page', getLandingPage);
-  app.get('/admin/packages', getPackages);
-  app.get('/admin/billing', getBilling);
-  app.get('/admin/tables', getTables);
-  app.get('/admin/todos', getTodos);
-  app.get('/admin/rewards', getRewards);
-  app.get('/admin/profile', getProfile);
-  app.get('/admin/profile-settings', getProfileSettings);
-  app.get('/admin/settings', getSettings);
-  app.get('/admin/system-health', getSystemHealth);
-  app.get('/admin/notifications', getNotifications);
-  app.get('/admin/activity', getActivity);
-  app.get('/admin/business-model', getBusinessModel);
-  app.get('/admin/business-plan', getBusinessPlan);
-  app.get('/admin/financial-model', getFinancialModel);
-  app.get('/admin/pitchdeck', getPitchDeck);
-  app.get('/admin/valuation', getValuation);
-  app.get('/admin/funding', getFunding);
-  app.get('/admin/team', getTeam);
-  app.get('/admin/legal', getLegal);
-  app.get('/admin/marketing', getMarketing);
-  app.get('/admin/corporate', getCorporate);
-  app.get('/admin/enterprises', getEnterprises);
-  app.get('/admin/learning-content', getLearningContent);
-  app.get('/admin/learning-categories', getLearningCategories);
-  app.get('/admin/learning-assessments', getLearningAssessments);
-  app.get('/admin/learning-analytics', getLearningAnalytics);
-  app.get('/admin/messages', getMessages);
-  app.get('/admin/project-collaborators', getProjectCollaborators);
-  app.get('/admin/calendar', getCalendar);
-  app.get('/admin/help-center', getHelpCenter);
+  app.get('/admin/other-pages/dashboard', getDashboard);
+  app.get('/admin/table-pages/users', getUsers);
+  app.get('/admin/table-pages/ideas', getIdeas);
+  app.get('/admin/table-pages/votes', getVotes);
+  app.get('/admin/table-pages/collaborations', getCollaborations);
+  app.get('/admin/table-pages/content', getContent);
+  app.get('/admin/table-pages/landing-page', getLandingPage);
+  app.get('/admin/table-pages/packages', getPackages);
+  app.get('/admin/table-pages/billing', getBilling);
+  app.get('/admin/table-pages/tables', getTables);
+  app.get('/admin/table-pages/todos', getTodos);
+  app.get('/admin/table-pages/rewards', getRewards);
+  app.get('/admin/other-pages/profile', getProfile);
+  app.get('/admin/other-pages/profile-settings', getProfileSettings);
+  app.get('/admin/other-pages/settings', getSettings);
+  app.get('/admin/other-pages/system-health', getSystemHealth);
+  app.get('/admin/other-pages/notifications', getNotifications);
+  app.get('/admin/other-pages/activity', getActivity);
+  app.get('/admin/other-pages/business-model', getBusinessModel);
+  app.get('/admin/other-pages/business-plan', getBusinessPlan);
+  app.get('/admin/other-pages/financial-model', getFinancialModel);
+  app.get('/admin/table-pages/pitchdeck', getPitchDeck);
+  app.get('/admin/table-pages/valuation', getValuation);
+  app.get('/admin/table-pages/funding', getFunding);
+  app.get('/admin/table-pages/team', getTeam);
+  app.get('/admin/table-pages/legal', getLegal);
+  app.get('/admin/table-pages/marketing', getMarketing);
+  app.get('/admin/table-pages/corporate', getCorporate);
+  app.get('/admin/table-pages/enterprises', getEnterprises);
+  app.get('/admin/other-pages/learning-content', getLearningContent);
+  app.get('/admin/other-pages/learning-categories', getLearningCategories);
+  app.get('/admin/other-pages/learning-assessments', getLearningAssessments);
+  app.get('/admin/other-pages/learning-analytics', getLearningAnalytics);
+  app.get('/admin/table-pages/messages', getMessages);
+  app.get('/admin/table-pages/project-collaborators', getProjectCollaborators);
+  app.get('/admin/table-pages/calendar', getCalendar);
+  app.get('/admin/other-pages/help-center', getHelpCenter);
   app.post('/admin/logout', postLogout);
 }

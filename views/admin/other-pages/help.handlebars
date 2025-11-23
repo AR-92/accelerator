@@ -1,0 +1,26 @@
+<!-- Help Section Overview -->
+<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-foreground mb-2">Help Overview</h1>
+      <p class="text-muted-foreground">Overview of help center and support resources</p>
+    </div>
+
+     <!-- Stats Grid -->
+     <div class="grid grid-cols-1 gap-6 mb-8">
+ {{#> stats-card icon="help-circle" title="Help Center" link="/admin/help-center"}}
+{{> stats-item label="Total Articles" value=stats.helpCenter.total}}
+{{> stats-item label="Published" value=stats.helpCenter.published color="text-green-600"}}
+{{> stats-item label="Draft" value=stats.helpCenter.draft color="text-orange-600"}}
+ {{/stats-card}}
+     </div>
+
+     <!-- Quick Actions -->
+     <div class="bg-card rounded-lg border border-border p-6">
+       <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
+       <div class="grid grid-cols-1 gap-4">
+{{> quick-action link="/admin/help-center" icon="help-circle" text="Manage Help Center"}}
+       </div>
+     </div>
+  </div>
+</div>

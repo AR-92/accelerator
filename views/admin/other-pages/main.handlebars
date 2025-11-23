@@ -1,0 +1,54 @@
+<!-- Main Section Overview -->
+<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-foreground mb-2">Main Overview</h1>
+      <p class="text-muted-foreground">Overview of core system components and user management</p>
+    </div>
+
+     <!-- Stats Grid -->
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+{{#> stats-card icon="clipboard-list" title="Todos" link="/admin/todos"}}
+{{> stats-item label="Total" value=stats.todos.total}}
+{{> stats-item label="Completed" value=stats.todos.completed color="text-green-600"}}
+{{> stats-item label="Pending" value=stats.todos.pending color="text-orange-600"}}
+{{/stats-card}}
+
+{{#> stats-card icon="users" title="Users" link="/admin/users"}}
+{{> stats-item label="Total" value=stats.users.total}}
+{{> stats-item label="Active" value=stats.users.active color="text-green-600"}}
+{{> stats-item label="Pending" value=stats.users.pending color="text-orange-600"}}
+{{/stats-card}}
+
+{{#> stats-card icon="lightbulb" title="Ideas" link="/admin/ideas"}}
+{{> stats-item label="Total" value=stats.ideas.total}}
+{{> stats-item label="Approved" value=stats.ideas.approved color="text-green-600"}}
+{{> stats-item label="Pending" value=stats.ideas.pending color="text-orange-600"}}
+{{/stats-card}}
+
+{{#> stats-card icon="heart" title="Votes" link="/admin/votes"}}
+{{> stats-item label="Total" value=stats.votes.total}}
+{{> stats-item label="Upvotes" value=stats.votes.upvotes color="text-green-600"}}
+{{> stats-item label="Downvotes" value=stats.votes.downvotes color="text-red-600"}}
+{{/stats-card}}
+
+{{#> stats-card icon="users" title="Collaborations" link="/admin/collaborations"}}
+{{> stats-item label="Total" value=stats.collaborations.total}}
+{{> stats-item label="Active" value=stats.collaborations.active color="text-green-600"}}
+{{> stats-item label="Archived" value=stats.collaborations.archived color="text-gray-600"}}
+{{/stats-card}}
+     </div>
+
+     <!-- Quick Actions -->
+     <div class="bg-card rounded-lg border border-border p-6">
+       <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
+       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+{{> quick-action link="/admin/todos" icon="clipboard-list" text="Manage Todos"}}
+{{> quick-action link="/admin/users" icon="users" text="Manage Users"}}
+{{> quick-action link="/admin/ideas" icon="lightbulb" text="Manage Ideas"}}
+{{> quick-action link="/admin/votes" icon="heart" text="Manage Votes"}}
+{{> quick-action link="/admin/collaborations" icon="users" text="Manage Collaborations"}}
+       </div>
+     </div>
+  </div>
+</div>

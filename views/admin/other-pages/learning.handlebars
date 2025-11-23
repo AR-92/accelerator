@@ -1,0 +1,47 @@
+<!-- Learning Section Overview -->
+<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-foreground mb-2">Learning Overview</h1>
+      <p class="text-muted-foreground">Overview of learning content, categories, and assessments</p>
+    </div>
+
+     <!-- Stats Grid -->
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+ {{#> stats-card icon="file-text" title="Content" link="/admin/learning-content"}}
+{{> stats-item label="Total" value=stats.learningContent.total}}
+{{> stats-item label="Published" value=stats.learningContent.published color="text-green-600"}}
+{{> stats-item label="Draft" value=stats.learningContent.draft color="text-orange-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="folder" title="Categories" link="/admin/learning-categories"}}
+{{> stats-item label="Total" value=stats.learningCategories.total}}
+{{> stats-item label="Active" value=stats.learningCategories.active color="text-green-600"}}
+{{> stats-item label="Inactive" value=stats.learningCategories.inactive color="text-gray-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="lock" title="Assessments" link="/admin/learning-assessments"}}
+{{> stats-item label="Total" value=stats.learningAssessments.total}}
+{{> stats-item label="Completed" value=stats.learningAssessments.completed color="text-green-600"}}
+{{> stats-item label="Pending" value=stats.learningAssessments.pending color="text-orange-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="bar-chart-3" title="Analytics" link="/admin/learning-analytics"}}
+{{> stats-item label="Views" value=stats.learningAnalytics.totalViews}}
+{{> stats-item label="Completion" value=stats.learningAnalytics.avgCompletion unit="%" color="text-blue-600"}}
+{{> stats-item label="Popular" value=stats.learningAnalytics.popularContent color="text-purple-600"}}
+ {{/stats-card}}
+     </div>
+
+     <!-- Quick Actions -->
+     <div class="bg-card rounded-lg border border-border p-6">
+       <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
+       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+{{> quick-action link="/admin/learning-content" icon="file-text" text="Learning Content"}}
+{{> quick-action link="/admin/learning-categories" icon="folder" text="Categories"}}
+{{> quick-action link="/admin/learning-assessments" icon="lock" text="Assessments"}}
+{{> quick-action link="/admin/learning-analytics" icon="bar-chart-3" text="Analytics"}}
+       </div>
+     </div>
+  </div>
+</div>

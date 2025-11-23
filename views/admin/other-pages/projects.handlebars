@@ -1,0 +1,40 @@
+<!-- Projects Section Overview -->
+<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-foreground mb-2">Projects Overview</h1>
+      <p class="text-muted-foreground">Overview of project communications and collaborations</p>
+    </div>
+
+     <!-- Stats Grid -->
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+ {{#> stats-card icon="message-square" title="Messages" link="/admin/messages"}}
+{{> stats-item label="Total" value=stats.messages.total}}
+{{> stats-item label="Unread" value=stats.messages.unread color="text-orange-600"}}
+{{> stats-item label="Read" value=stats.messages.read color="text-green-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="users" title="Collaborators" link="/admin/project-collaborators"}}
+{{> stats-item label="Total" value=stats.projectCollaborators.total}}
+{{> stats-item label="Active" value=stats.projectCollaborators.active color="text-green-600"}}
+{{> stats-item label="Inactive" value=stats.projectCollaborators.inactive color="text-gray-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="calendar" title="Calendar" link="/admin/calendar"}}
+{{> stats-item label="Events" value=stats.calendar.totalEvents}}
+{{> stats-item label="Upcoming" value=stats.calendar.upcoming color="text-blue-600"}}
+{{> stats-item label="Past" value=stats.calendar.past color="text-gray-600"}}
+ {{/stats-card}}
+     </div>
+
+     <!-- Quick Actions -->
+     <div class="bg-card rounded-lg border border-border p-6">
+       <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
+       <div class="grid grid-cols-3 gap-4">
+{{> quick-action link="/admin/messages" icon="message-square" text="Messages"}}
+{{> quick-action link="/admin/project-collaborators" icon="users" text="Collaborators"}}
+{{> quick-action link="/admin/calendar" icon="calendar" text="Calendar"}}
+       </div>
+     </div>
+  </div>
+</div>

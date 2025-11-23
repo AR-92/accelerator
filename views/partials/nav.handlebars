@@ -8,38 +8,14 @@
           fill="currentColor" />
       </svg></div>
 
-         <div class="flex flex-col items-center justify-center group">
-            <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'main')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
-            <a href="/admin/main" class="text-{{#if (eq currentSection 'main')}}foreground{{else}}muted-foreground{{/if}} font-medium text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Main</a>
-         </div>
-        <div class="flex flex-col items-center justify-center group">
-           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'content-management')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
-           <a href="/admin/content-management" class="text-{{#if (eq currentSection 'content-management')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Content</a>
-        </div>
-        <div class="flex flex-col items-center justify-center group">
-           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'system')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
-           <a href="/admin/system" class="text-{{#if (eq currentSection 'system')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">System</a>
-        </div>
-          <div class="flex flex-col items-center justify-center group">
-           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'business')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
-            <a href="/admin/business" class="text-{{#if (eq currentSection 'business')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Business</a>
-          </div>
-          <div class="flex flex-col items-center justify-center group">
-           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'learning')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
-            <a href="/admin/learning" class="text-{{#if (eq currentSection 'learning')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Learning</a>
-          </div>
-          <div class="flex flex-col items-center justify-center group">
-           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'projects')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
-            <a href="/admin/projects" class="text-{{#if (eq currentSection 'projects')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Projects</a>
-          </div>
-          <div class="flex flex-col items-center justify-center group">
-           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'help')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
-            <a href="/admin/help" class="text-{{#if (eq currentSection 'help')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Help</a>
-          </div>
-          <div class="flex flex-col items-center justify-center group">
-           <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection 'financial')}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
-            <a href="/admin/financial" class="text-{{#if (eq currentSection 'financial')}}foreground{{else}}muted-foreground{{/if}} text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Financial</a>
-          </div>
+{{> nav-item section="main" text="Main"}}
+{{> nav-item section="content-management" text="Content"}}
+{{> nav-item section="system" text="System"}}
+{{> nav-item section="business" text="Business"}}
+{{> nav-item section="learning" text="Learning"}}
+{{> nav-item section="projects" text="Projects"}}
+{{> nav-item section="help" text="Help"}}
+{{> nav-item section="financial" text="Financial"}}
       </div>
   <div class="flex">
      <div class="h-12 w-px bg-border mr-4"></div>
@@ -53,9 +29,9 @@
       </label>
      </div>
        <!-- Theme Toggle Button -->
-        <button id="theme-toggle" class="ml-4 text-muted-foreground hover:text-primary rounded-full p-2 cursor-pointer font-medium" onclick="toggleTheme()">
-         <span id="theme-icon">{{{icon 'moon' size='20'}}}</span>
-        </button>
+         <button id="theme-toggle" class="ml-4 text-muted-foreground hover:text-primary rounded-full p-2 cursor-pointer font-medium" onclick="toggleTheme()">
+          <span id="theme-icon"></span>
+         </button>
 
       <!-- User Menu -->
       <div class="relative self-center" id="admin-user-menu">
@@ -82,58 +58,16 @@
        <div
          class="absolute right-0 mt-2 w-64 bg-popover backdrop-blur-sm border border-border rounded-xl shadow-xl z-30 transition-all duration-200 opacity-0 invisible hidden"
          id="admin-user-dropdown">
-        <div class="p-2">
-          <a href="/admin/profile"
-            class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
-
-             {{{icon 'user' size='16' class='w-4 h-4'}}}
-
-            <span>Profile</span>
-          </a>
-           <a href="/admin/profile-settings"
-             class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
-
-             {{{icon 'settings' size='16' class='w-4 h-4'}}}
-
-             <span>Profile Settings</span>
-           </a>
-           <a href="/admin/settings"
-             class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
-
-             {{{icon 'settings' size='16' class='w-4 h-4'}}}
-
-             <span>Admin Settings</span>
-           </a>
-           <a href="/admin/system-health"
-             class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
-
-             {{{icon 'activity' size='16' class='w-4 h-4'}}}
-
-             <span>System Health</span>
-           </a>
-           <a href="/admin/notifications"
-             class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
-
-             {{{icon 'bell' size='16' class='w-4 h-4'}}}
-
-             <span>Notifications</span>
-           </a>
-           <a href="/admin/activity"
-             class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
-
-             {{{icon 'activity' size='16' class='w-4 h-4'}}}
-
-             <span>Activity Log</span>
-           </a>
-          <div class="border-t border-border/50 my-2"></div>
-           <a href="/"
-             class="flex items-center gap-3 px-3 py-2.5 text-sm text-foreground hover:bg-muted/80 rounded-lg transition-colors">
-
-             {{{icon 'globe' size='16' class='w-4 h-4'}}}
-
-             <span>Back to Site</span>
-           </a>
-          <div class="border-t border-border/50 my-2"></div>
+         <div class="p-2">
+{{#> dropdown-item href="/admin/other-pages/profile" text="Profile"}}{{{icon 'user' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
+{{#> dropdown-item href="/admin/other-pages/profile-settings" text="Profile Settings"}}{{{icon 'settings' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
+{{#> dropdown-item href="/admin/other-pages/settings" text="Admin Settings"}}{{{icon 'settings' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
+{{#> dropdown-item href="/admin/other-pages/system-health" text="System Health"}}{{{icon 'activity' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
+{{#> dropdown-item href="/admin/other-pages/notifications" text="Notifications"}}{{{icon 'bell' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
+{{#> dropdown-item href="/admin/other-pages/activity" text="Activity Log"}}{{{icon 'activity' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
+           <div class="border-t border-border/50 my-2"></div>
+{{#> dropdown-item href="/" text="Back to Site"}}{{{icon 'globe' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
+           <div class="border-t border-border/50 my-2"></div>
           <form action="/admin/logout" method="POST">
              <button type="submit"
                class="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-destructive hover:bg-destructive/10 rounded-lg transition-colors">

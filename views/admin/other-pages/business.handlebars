@@ -1,0 +1,96 @@
+<!-- Business Section Overview -->
+<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-foreground mb-2">Business Overview</h1>
+      <p class="text-muted-foreground">Overview of business models, plans, financials, and operations</p>
+    </div>
+
+     <!-- Stats Grid -->
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+{{#> stats-card icon="table" title="Business Models" link="/admin/business-model"}}
+{{> stats-item label="Total" value=stats.businessModels.total}}
+{{> stats-item label="Active" value=stats.businessModels.active color="text-green-600"}}
+{{> stats-item label="Inactive" value=stats.businessModels.inactive color="text-gray-600"}}
+{{/stats-card}}
+
+ {{#> stats-card icon="file-text" title="Business Plans" link="/admin/business-plan"}}
+{{> stats-item label="Total" value=stats.businessPlans.total}}
+{{> stats-item label="Completed" value=stats.businessPlans.completed color="text-green-600"}}
+{{> stats-item label="Draft" value=stats.businessPlans.draft color="text-orange-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="credit-card" title="Financial Models" link="/admin/financial-model"}}
+{{> stats-item label="Total" value=stats.financialModels.total}}
+{{> stats-item label="Active" value=stats.financialModels.active color="text-green-600"}}
+{{> stats-item label="Inactive" value=stats.financialModels.inactive color="text-gray-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="file-text" title="Pitchdecks" link="/admin/pitchdeck"}}
+{{> stats-item label="Total" value=stats.pitchdecks.total}}
+{{> stats-item label="Approved" value=stats.pitchdecks.approved color="text-green-600"}}
+{{> stats-item label="Pending" value=stats.pitchdecks.pending color="text-orange-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="dollar-sign" title="Valuations" link="/admin/valuation"}}
+{{> stats-item label="Total" value=stats.valuations.total}}
+{{> stats-item label="Completed" value=stats.valuations.completed color="text-green-600"}}
+{{> stats-item label="Pending" value=stats.valuations.pending color="text-orange-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="wallet" title="Funding" link="/admin/funding"}}
+{{> stats-item label="Total" value=stats.funding.total}}
+{{> stats-item label="Secured" value=stats.funding.secured color="text-green-600"}}
+{{> stats-item label="Seeking" value=stats.funding.seeking color="text-orange-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="users" title="Teams" link="/admin/team"}}
+{{> stats-item label="Total" value=stats.teams.total}}
+{{> stats-item label="Complete" value=stats.teams.complete color="text-green-600"}}
+{{> stats-item label="Incomplete" value=stats.teams.incomplete color="text-orange-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="shield-check" title="Legal" link="/admin/legal"}}
+{{> stats-item label="Total" value=stats.legal.total}}
+{{> stats-item label="Compliant" value=stats.legal.compliant color="text-green-600"}}
+{{> stats-item label="Pending" value=stats.legal.pending color="text-orange-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="globe" title="Marketing" link="/admin/marketing"}}
+{{> stats-item label="Total" value=stats.marketing.total}}
+{{> stats-item label="Active" value=stats.marketing.active color="text-green-600"}}
+{{> stats-item label="Inactive" value=stats.marketing.inactive color="text-gray-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="building-2" title="Corporate" link="/admin/corporate"}}
+{{> stats-item label="Total" value=stats.corporate.total}}
+{{> stats-item label="Active" value=stats.corporate.active color="text-green-600"}}
+{{> stats-item label="Inactive" value=stats.corporate.inactive color="text-gray-600"}}
+ {{/stats-card}}
+
+ {{#> stats-card icon="building-2" title="Enterprises" link="/admin/enterprises"}}
+{{> stats-item label="Total" value=stats.enterprises.total}}
+{{> stats-item label="Active" value=stats.enterprises.active color="text-green-600"}}
+{{> stats-item label="Inactive" value=stats.enterprises.inactive color="text-gray-600"}}
+ {{/stats-card}}
+     </div>
+
+     <!-- Quick Actions -->
+     <div class="bg-card rounded-lg border border-border p-6">
+       <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
+       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+{{> quick-action link="/admin/business-model" icon="table" text="Business Models"}}
+{{> quick-action link="/admin/business-plan" icon="file-text" text="Business Plans"}}
+{{> quick-action link="/admin/financial-model" icon="credit-card" text="Financial Models"}}
+{{> quick-action link="/admin/pitchdeck" icon="file-text" text="Pitchdecks"}}
+{{> quick-action link="/admin/valuation" icon="dollar-sign" text="Valuations"}}
+{{> quick-action link="/admin/funding" icon="wallet" text="Funding"}}
+{{> quick-action link="/admin/team" icon="users" text="Teams"}}
+{{> quick-action link="/admin/legal" icon="shield-check" text="Legal"}}
+{{> quick-action link="/admin/marketing" icon="globe" text="Marketing"}}
+{{> quick-action link="/admin/corporate" icon="building-2" text="Corporate"}}
+{{> quick-action link="/admin/enterprises" icon="building-2" text="Enterprises"}}
+       </div>
+     </div>
+  </div>
+</div>

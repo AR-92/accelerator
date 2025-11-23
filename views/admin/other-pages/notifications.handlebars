@@ -16,56 +16,25 @@
     </div>
    </header>
    <div class="p-6 space-y-6">
-     <!-- Notification Stats -->
-     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div class="bg-card rounded-lg border border-border p-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-muted-foreground">Total Notifications</p>
-              <p class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{notificationStats.total}}</p>
-            </div>
-             <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-               {{{icon 'bell' size='24' class='text-blue-600 dark:text-blue-400'}}}
-             </div>
-          </div>
-        </div>
+      <!-- Notification Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+{{#> stats-card icon="bell" title="Notifications" link="#"}}
+{{> stats-item label="Total" value=notificationStats.total}}
+{{> stats-item label="Unread" value=notificationStats.unread color="text-orange-600"}}
+{{/stats-card}}
 
-        <div class="bg-card rounded-lg border border-border p-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-muted-foreground">Unread</p>
-              <p class="text-2xl font-bold text-orange-600 dark:text-orange-400">{{notificationStats.unread}}</p>
-            </div>
-             <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
-               {{{icon 'alert-triangle' size='24' class='text-orange-600 dark:text-orange-400'}}}
-             </div>
-          </div>
-        </div>
+{{#> stats-card icon="alert-triangle" title="Unread" link="#"}}
+{{> stats-item label="Count" value=notificationStats.unread}}
+{{/stats-card}}
 
-       <div class="bg-card rounded-lg border border-border p-6">
-         <div class="flex items-center justify-between">
-           <div>
-             <p class="text-sm font-medium text-muted-foreground">This Week</p>
-             <p class="text-2xl font-bold text-green-600">{{notificationStats.thisWeek}}</p>
-           </div>
-            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-              {{{icon 'calendar' size='24' class='text-green-600'}}}
-            </div>
-         </div>
-       </div>
+{{#> stats-card icon="calendar" title="This Week" link="#"}}
+{{> stats-item label="Notifications" value=notificationStats.thisWeek}}
+{{/stats-card}}
 
-       <div class="bg-card rounded-lg border border-border p-6">
-         <div class="flex items-center justify-between">
-           <div>
-             <p class="text-sm font-medium text-muted-foreground">System Alerts</p>
-             <p class="text-2xl font-bold text-red-600">{{notificationStats.systemAlerts}}</p>
-           </div>
-            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-              {{{icon 'alert-triangle' size='24' class='text-red-600'}}}
-            </div>
-         </div>
-       </div>
-     </div>
+{{#> stats-card icon="alert-triangle" title="System Alerts" link="#"}}
+{{> stats-item label="Count" value=notificationStats.systemAlerts}}
+{{/stats-card}}
+      </div>
 
      <!-- Notification Filters -->
      <div class="bg-card rounded-lg border border-border">
