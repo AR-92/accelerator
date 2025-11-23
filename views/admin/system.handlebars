@@ -11,14 +11,11 @@
       <!-- Notifications Card -->
       <div class="bg-card rounded-lg border border-border p-6">
         <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center">
-            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M10.268 21a2 2 0 0 0 3.464 0"></path>
-              <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path>
-            </svg>
-            <h3 class="text-lg font-semibold text-card-foreground">Notifications</h3>
-          </div>
-          <a href="/admin/notifications" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+           <div class="flex items-center">
+             {{{icon 'bell' size='32' class='text-primary mr-3'}}}
+             <h3 class="text-lg font-semibold text-card-foreground">Notifications</h3>
+           </div>
+          <a href="/admin/notifications" class="text-primary hover:text-primary/80 text-sm font-medium" title="View All">{{{icon "chevron-right" size="16" class="text-primary hover:text-primary/80"}}}</a>
         </div>
         <div class="space-y-2">
           <div class="flex justify-between">
@@ -39,13 +36,11 @@
       <!-- Activity Logs Card -->
       <div class="bg-card rounded-lg border border-border p-6">
         <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center">
-            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
-            </svg>
-            <h3 class="text-lg font-semibold text-card-foreground">Activity Logs</h3>
-          </div>
-          <a href="/admin/activity" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+           <div class="flex items-center">
+             {{{icon 'activity' size='32' class='text-primary mr-3'}}}
+             <h3 class="text-lg font-semibold text-card-foreground">Activity Logs</h3>
+           </div>
+          <a href="/admin/activity" class="text-primary hover:text-primary/80 text-sm font-medium" title="View All">{{{icon "chevron-right" size="16" class="text-primary hover:text-primary/80"}}}</a>
         </div>
         <div class="space-y-2">
           <div class="flex justify-between">
@@ -67,12 +62,10 @@
     <!-- System Health Card -->
     <div class="bg-card rounded-lg border border-border p-6 mb-8">
       <div class="flex items-center justify-between mb-4">
-        <div class="flex items-center">
-          <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
-          </svg>
-          <h3 class="text-lg font-semibold text-card-foreground">System Health</h3>
-        </div>
+         <div class="flex items-center">
+           {{{icon 'activity' size='32' class='text-primary mr-3'}}}
+           <h3 class="text-lg font-semibold text-card-foreground">System Health</h3>
+         </div>
         <a href="/admin/system-health" class="text-primary hover:text-primary/80 text-sm font-medium">View Details</a>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -103,25 +96,18 @@
     <div class="bg-card rounded-lg border border-border p-6">
       <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
       <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <a href="/admin/system-health" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
-          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
-          </svg>
-          <span class="text-sm font-medium text-center">System Health</span>
-        </a>
-        <a href="/admin/notifications" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
-          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M10.268 21a2 2 0 0 0 3.464 0"></path>
-            <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path>
-          </svg>
-          <span class="text-sm font-medium text-center">Notifications</span>
-        </a>
-        <a href="/admin/activity" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
-          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path>
-          </svg>
-          <span class="text-sm font-medium text-center">Activity Logs</span>
-        </a>
+         <a href="/admin/system-health" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+           {{{icon 'activity' size='24' class='text-primary mb-2'}}}
+           <span class="text-sm font-medium text-center">System Health</span>
+         </a>
+         <a href="/admin/notifications" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+           {{{icon 'bell' size='24' class='text-primary mb-2'}}}
+           <span class="text-sm font-medium text-center">Notifications</span>
+         </a>
+         <a href="/admin/activity" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+           {{{icon 'activity' size='24' class='text-primary mb-2'}}}
+           <span class="text-sm font-medium text-center">Activity Logs</span>
+         </a>
       </div>
     </div>
   </div>

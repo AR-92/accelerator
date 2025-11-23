@@ -19,11 +19,9 @@
       <!-- Profile Header -->
       <div class="bg-card rounded-lg border border-border p-6">
         <div class="flex items-center space-x-6">
-          <div class="w-20 h-20 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center">
-            <svg class="w-10 h-10 text-primary-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-          </div>
+           <div class="w-20 h-20 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center">
+             {{{icon 'user' size='40' class='text-primary-foreground'}}}
+           </div>
           <div class="flex-1">
             <h2 class="text-2xl font-bold text-card-foreground">{{profile.name}}</h2>
             <p class="text-muted-foreground">{{profile.role}}</p>

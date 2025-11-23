@@ -11,14 +11,11 @@
       <!-- Learning Content Card -->
       <div class="bg-card rounded-lg border border-border p-6">
         <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center">
-            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
-              <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
-            </svg>
-            <h3 class="text-lg font-semibold text-card-foreground">Content</h3>
-          </div>
-          <a href="/admin/learning-content" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+           <div class="flex items-center">
+             {{{icon "file" size="32" class="text-primary mr-3"}}}
+             <h3 class="text-lg font-semibold text-card-foreground">Content</h3>
+           </div>
+          <a href="/admin/learning-content" class="text-primary hover:text-primary/80 text-sm font-medium" title="View All">{{{icon "chevron-right" size="16" class="text-primary hover:text-primary/80"}}}</a>
         </div>
         <div class="space-y-2">
           <div class="flex justify-between">
@@ -39,14 +36,11 @@
       <!-- Learning Categories Card -->
       <div class="bg-card rounded-lg border border-border p-6">
         <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center">
-            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"></path>
-              <path d="M8 5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2H8V5z"></path>
-            </svg>
-            <h3 class="text-lg font-semibold text-card-foreground">Categories</h3>
-          </div>
-          <a href="/admin/learning-categories" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+           <div class="flex items-center">
+             {{{icon "briefcase" size="32" class="text-primary mr-3"}}}
+             <h3 class="text-lg font-semibold text-card-foreground">Categories</h3>
+           </div>
+          <a href="/admin/learning-categories" class="text-primary hover:text-primary/80 text-sm font-medium" title="View All">{{{icon "chevron-right" size="16" class="text-primary hover:text-primary/80"}}}</a>
         </div>
         <div class="space-y-2">
           <div class="flex justify-between">
@@ -67,16 +61,11 @@
       <!-- Learning Assessments Card -->
       <div class="bg-card rounded-lg border border-border p-6">
         <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center">
-            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2.5"></path>
-              <path d="M9 11V9a3 3 0 0 1 6 0v2"></path>
-              <path d="M13.5 11H15a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2.5"></path>
-              <path d="M12 16v3"></path>
-            </svg>
-            <h3 class="text-lg font-semibold text-card-foreground">Assessments</h3>
-          </div>
-          <a href="/admin/learning-assessments" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+           <div class="flex items-center">
+             {{{icon "lock" size="32" class="text-primary mr-3"}}}
+             <h3 class="text-lg font-semibold text-card-foreground">Assessments</h3>
+           </div>
+          <a href="/admin/learning-assessments" class="text-primary hover:text-primary/80 text-sm font-medium" title="View All">{{{icon "chevron-right" size="16" class="text-primary hover:text-primary/80"}}}</a>
         </div>
         <div class="space-y-2">
           <div class="flex justify-between">
@@ -97,16 +86,11 @@
       <!-- Learning Analytics Card -->
       <div class="bg-card rounded-lg border border-border p-6">
         <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center">
-            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M3 3v18h18"></path>
-              <path d="M18 17V9"></path>
-              <path d="M13 17V5"></path>
-              <path d="M8 17v-3"></path>
-            </svg>
-            <h3 class="text-lg font-semibold text-card-foreground">Analytics</h3>
-          </div>
-          <a href="/admin/learning-analytics" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+           <div class="flex items-center">
+             {{{icon "bar-chart-3" size="32" class="text-primary mr-3"}}}
+             <h3 class="text-lg font-semibold text-card-foreground">Analytics</h3>
+           </div>
+          <a href="/admin/learning-analytics" class="text-primary hover:text-primary/80 text-sm font-medium" title="View All">{{{icon "chevron-right" size="16" class="text-primary hover:text-primary/80"}}}</a>
         </div>
         <div class="space-y-2">
           <div class="flex justify-between">
@@ -129,38 +113,22 @@
     <div class="bg-card rounded-lg border border-border p-6">
       <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <a href="/admin/learning-content" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
-          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
-            <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
-          </svg>
-          <span class="text-sm font-medium text-center">Learning Content</span>
-        </a>
-        <a href="/admin/learning-categories" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
-          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"></path>
-            <path d="M8 5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2H8V5z"></path>
-          </svg>
-          <span class="text-sm font-medium text-center">Categories</span>
-        </a>
-        <a href="/admin/learning-assessments" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
-          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2.5"></path>
-            <path d="M9 11V9a3 3 0 0 1 6 0v2"></path>
-            <path d="M13.5 11H15a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2.5"></path>
-            <path d="M12 16v3"></path>
-          </svg>
-          <span class="text-sm font-medium text-center">Assessments</span>
-        </a>
-        <a href="/admin/learning-analytics" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
-          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M3 3v18h18"></path>
-            <path d="M18 17V9"></path>
-            <path d="M13 17V5"></path>
-            <path d="M8 17v-3"></path>
-          </svg>
-          <span class="text-sm font-medium text-center">Analytics</span>
-        </a>
+         <a href="/admin/learning-content" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+           {{{icon "file" size="24" class="text-primary mb-2"}}}
+           <span class="text-sm font-medium text-center">Learning Content</span>
+         </a>
+         <a href="/admin/learning-categories" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+           {{{icon "briefcase" size="24" class="text-primary mb-2"}}}
+           <span class="text-sm font-medium text-center">Categories</span>
+         </a>
+         <a href="/admin/learning-assessments" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+           {{{icon "lock" size="24" class="text-primary mb-2"}}}
+           <span class="text-sm font-medium text-center">Assessments</span>
+         </a>
+         <a href="/admin/learning-analytics" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+           {{{icon "bar-chart-3" size="24" class="text-primary mb-2"}}}
+           <span class="text-sm font-medium text-center">Analytics</span>
+         </a>
       </div>
     </div>
   </div>

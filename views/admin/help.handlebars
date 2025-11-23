@@ -11,15 +11,11 @@
       <!-- Help Center Card -->
       <div class="bg-card rounded-lg border border-border p-6">
         <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center">
-            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10"></circle>
-              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-              <path d="M12 17h.01"></path>
-            </svg>
-            <h3 class="text-lg font-semibold text-card-foreground">Help Center</h3>
-          </div>
-          <a href="/admin/help-center" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+           <div class="flex items-center">
+             {{{icon "help-circle" size="32" class="text-primary mr-3"}}}
+             <h3 class="text-lg font-semibold text-card-foreground">Help Center</h3>
+           </div>
+          <a href="/admin/help-center" class="text-primary hover:text-primary/80 text-sm font-medium" title="View All">{{{icon "chevron-right" size="16" class="text-primary hover:text-primary/80"}}}</a>
         </div>
         <div class="space-y-2">
           <div class="flex justify-between">
@@ -42,14 +38,10 @@
     <div class="bg-card rounded-lg border border-border p-6">
       <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
       <div class="grid grid-cols-1 gap-4">
-        <a href="/admin/help-center" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
-          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-            <path d="M12 17h.01"></path>
-          </svg>
-          <span class="text-sm font-medium text-center">Manage Help Center</span>
-        </a>
+         <a href="/admin/help-center" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+           {{{icon "help-circle" size="24" class="text-primary mb-2"}}}
+           <span class="text-sm font-medium text-center">Manage Help Center</span>
+         </a>
       </div>
     </div>
   </div>

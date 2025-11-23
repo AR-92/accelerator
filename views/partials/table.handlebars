@@ -49,17 +49,11 @@
         {{#if ../actions}}
         <td class="px-6 py-4">
           <div class="relative">
-            <button onclick="toggleActionMenu('{{../entityName}}', {{id}})"
-              class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors"
-              aria-label="Actions menu">
-              <svg class="w-4 h-4 lucide lucide-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" width="24"
-                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="1"></circle>
-                <circle cx="12" cy="5" r="1"></circle>
-                <circle cx="12" cy="19" r="1"></circle>
-              </svg>
-            </button>
+             <button onclick="toggleActionMenu('{{../entityName}}', {{id}})"
+               class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors"
+               aria-label="Actions menu">
+               {{{icon 'ellipsis-vertical' size='16' class='w-4 h-4'}}}
+             </button>
             <div id="actionMenu-{{../entityName}}-{{id}}"
               class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-popover rounded-md shadow-lg z-10 border border-border">
                <div class="py-1">
@@ -123,29 +117,21 @@
               <!-- Pagination Controls -->
               <nav class="flex items-center gap-1 text-sm">
                 {{#if pagination.hasPrev}}
-                <a href="?page={{pagination.prevPage}}&limit={{pagination.limit}}&search={{query.search}}&status={{query.status}}"
-                  class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200 font-medium">
-                  <svg class="w-4 h-4 lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24"
-                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m15 18-6-6 6-6"></path>
-                  </svg>
-                </a>
+                 <a href="?page={{pagination.prevPage}}&limit={{pagination.limit}}&search={{query.search}}&status={{query.status}}"
+                   class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200 font-medium">
+                   {{{icon 'chevron-left' size='16' class='w-4 h-4'}}}
+                 </a>
                 {{/if}}
                 {{#each pagination.pages}}
                 <a href="?page={{this}}&limit={{../pagination.limit}}&search={{../query.search}}&status={{../query.status}}"
                   class="inline-flex items-center justify-center w-10 h-10 rounded-lg{{#if (eq this ../pagination.currentPage)}} bg-primary text-primary-foreground scale-105{{else}} border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground{{/if}} transition-all duration-200 font-medium">{{this}}</a>
                 {{/each}}
                 {{#if pagination.hasNext}}
-                <a href="?page={{pagination.nextPage}}&limit={{pagination.limit}}&search={{query.search}}&status={{query.status}}"
-                  class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200"
-                  title="Next page">
-                  <svg class="w-4 h-4 lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24"
-                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="m9 18 6-6-6-6"></path>
-                  </svg>
-                </a>
+                 <a href="?page={{pagination.nextPage}}&limit={{pagination.limit}}&search={{query.search}}&status={{query.status}}"
+                   class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200"
+                   title="Next page">
+                   {{{icon 'chevron-right' size='16' class='w-4 h-4'}}}
+                 </a>
                 {{/if}}
               </nav>
             </div>

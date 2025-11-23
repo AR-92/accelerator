@@ -11,17 +11,11 @@
       <!-- Content Card -->
       <div class="bg-card rounded-lg border border-border p-6">
         <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center">
-            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
-              <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
-              <path d="M10 9H8"></path>
-              <path d="M16 13H8"></path>
-              <path d="M16 17H8"></path>
-            </svg>
-            <h3 class="text-lg font-semibold text-card-foreground">Content</h3>
-          </div>
-          <a href="/admin/content" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+           <div class="flex items-center">
+             {{{icon 'file-text' size='32' class='text-primary mr-3'}}}
+             <h3 class="text-lg font-semibold text-card-foreground">Content</h3>
+           </div>
+          <a href="/admin/content" class="text-primary hover:text-primary/80 text-sm font-medium" title="View All">{{{icon "chevron-right" size="16" class="text-primary hover:text-primary/80"}}}</a>
         </div>
         <div class="space-y-2">
           <div class="flex justify-between">
@@ -42,15 +36,11 @@
       <!-- Landing Pages Card -->
       <div class="bg-card rounded-lg border border-border p-6">
         <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center">
-            <svg class="w-8 h-8 text-primary mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10"></circle>
-              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
-              <path d="M2 12h20"></path>
-            </svg>
-            <h3 class="text-lg font-semibold text-card-foreground">Landing Pages</h3>
-          </div>
-          <a href="/admin/landing-page" class="text-primary hover:text-primary/80 text-sm font-medium">View All</a>
+           <div class="flex items-center">
+             {{{icon 'globe' size='32' class='text-primary mr-3'}}}
+             <h3 class="text-lg font-semibold text-card-foreground">Landing Pages</h3>
+           </div>
+          <a href="/admin/landing-page" class="text-primary hover:text-primary/80 text-sm font-medium" title="View All">{{{icon "chevron-right" size="16" class="text-primary hover:text-primary/80"}}}</a>
         </div>
         <div class="space-y-2">
           <div class="flex justify-between">
@@ -73,21 +63,14 @@
     <div class="bg-card rounded-lg border border-border p-6">
       <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
       <div class="grid grid-cols-2 gap-4">
-        <a href="/admin/content" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
-          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
-            <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
-          </svg>
-          <span class="text-sm font-medium text-center">Manage Content</span>
-        </a>
-        <a href="/admin/landing-page" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
-          <svg class="w-6 h-6 text-primary mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
-            <path d="M2 12h20"></path>
-          </svg>
-          <span class="text-sm font-medium text-center">Manage Landing Pages</span>
-        </a>
+         <a href="/admin/content" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+           {{{icon 'file-text' size='24' class='text-primary mb-2'}}}
+           <span class="text-sm font-medium text-center">Manage Content</span>
+         </a>
+         <a href="/admin/landing-page" class="flex flex-col items-center p-4 rounded-lg border border-border hover:bg-accent hover:border-accent-foreground/20 transition-colors">
+           {{{icon 'globe' size='24' class='text-primary mb-2'}}}
+           <span class="text-sm font-medium text-center">Manage Landing Pages</span>
+         </a>
       </div>
     </div>
   </div>

@@ -24,11 +24,9 @@
               <p class="text-sm font-medium text-muted-foreground">Total Notifications</p>
               <p class="text-2xl font-bold text-blue-600 dark:text-blue-400">{{notificationStats.total}}</p>
             </div>
-            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-              <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4.868 12.683A17.925 17.925 0 0112 21c7.962 0 12-1.21 12-2.683m-12 2.683a17.925 17.925 0 01-7.132-8.317M12 21V9a6 6 0 10-6-6v2"></path>
-              </svg>
-            </div>
+             <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+               {{{icon 'bell' size='24' class='text-blue-600 dark:text-blue-400'}}}
+             </div>
           </div>
         </div>
 
@@ -38,11 +36,9 @@
               <p class="text-sm font-medium text-muted-foreground">Unread</p>
               <p class="text-2xl font-bold text-orange-600 dark:text-orange-400">{{notificationStats.unread}}</p>
             </div>
-            <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
-              <svg class="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-              </svg>
-            </div>
+             <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
+               {{{icon 'alert-triangle' size='24' class='text-orange-600 dark:text-orange-400'}}}
+             </div>
           </div>
         </div>
 
@@ -52,11 +48,9 @@
              <p class="text-sm font-medium text-muted-foreground">This Week</p>
              <p class="text-2xl font-bold text-green-600">{{notificationStats.thisWeek}}</p>
            </div>
-           <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-             <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-             </svg>
-           </div>
+            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+              {{{icon 'calendar' size='24' class='text-green-600'}}}
+            </div>
          </div>
        </div>
 
@@ -66,11 +60,9 @@
              <p class="text-sm font-medium text-muted-foreground">System Alerts</p>
              <p class="text-2xl font-bold text-red-600">{{notificationStats.systemAlerts}}</p>
            </div>
-           <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-             <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-             </svg>
-           </div>
+            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+              {{{icon 'alert-triangle' size='24' class='text-red-600'}}}
+            </div>
          </div>
        </div>
      </div>
@@ -131,11 +123,9 @@
                  Mark as Read
                </button>
                {{/unless}}
-               <button class="text-muted-foreground hover:text-muted-foreground">
-                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
-                 </svg>
-               </button>
+                <button class="text-muted-foreground hover:text-muted-foreground">
+                  {{{icon 'more-vertical' size='16'}}}
+                </button>
              </div>
            </div>
          </div>
@@ -171,9 +161,7 @@
        {{else}}
        <!-- Empty State -->
        <div class="px-6 py-12 text-center">
-         <svg class="mx-auto h-12 w-12 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4.868 12.683A17.925 17.925 0 0112 21c7.962 0 12-1.21 12-2.683m-12 2.683a17.925 17.925 0 01-7.132-8.317M12 21V9a6 6 0 10-6-6v2"></path>
-         </svg>
+{{{icon 'bell' size='48' class='mx-auto text-muted-foreground'}}}
          <h3 class="mt-2 text-sm font-medium text-card-foreground">No notifications</h3>
          <p class="mt-1 text-sm text-muted-foreground">You're all caught up! Check back later for new notifications.</p>
        </div>
