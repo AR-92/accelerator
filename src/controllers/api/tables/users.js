@@ -1,5 +1,5 @@
  import logger from '../../../utils/logger.js';
- import serviceFactory from '../../../services/index.js';
+ import { databaseService } from '../../../services/index.js';
  import { validateUserCreation, validateUserUpdate, validateUserDeletion } from '../../../middleware/validation/index.js';
  import { formatDate } from '../../../helpers/format/index.js';
  import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,11 +12,20 @@ export const getUsers = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const userService = serviceFactory.getUserService();
-    const { data: users, count } = await userService.getAllUsers(
-      { search, role, status },
-      { page: pageNum, limit: limitNum }
-    );
+    const offset = (pageNum - 1) * limitNum;
+    let query = databaseService.supabase
+      .from('Accounts')
+      .select('*', { count: 'exact' });
+
+    if (status) query = query.eq('status', status);
+    if (role) query = query.eq('role', role);
+    if (search) query = query.or(`first_name.ilike.%${search}%,last_name.ilike.%${search}%,email.ilike.%${search}%`);
+
+    const { data: users, error, count } = await query
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     logger.info(`Fetched ${users.length} of ${total} users`);
@@ -116,16 +125,21 @@ export const createUser = [
     try {
       const { first_name, last_name, email, username, password, role, status } = req.body;
 
-      const userService = serviceFactory.getUserService();
-      const user = await userService.createUser({
-        first_name,
-        last_name,
-        email,
-        username,
-        password, // In production, this should be hashed
-        role: role || 'user',
-        status: status || 'active'
-      });
+      const { data: user, error } = await databaseService.supabase
+        .from('Accounts')
+        .insert([{
+          first_name,
+          last_name,
+          email,
+          username,
+          password, // In production, this should be hashed
+          role: role || 'user',
+          status: status || 'active',
+          created_at: new Date().toISOString()
+        }])
+        .select()
+        .single();
+      if (error) throw error;
 
       logger.info(`Created user with ID: ${user.id}`);
 
@@ -251,16 +265,21 @@ export const updateUser = [
       const { id } = req.params;
       const { first_name, last_name, email, username, role, status } = req.body;
 
-      const userService = serviceFactory.getUserService();
-      const user = await userService.updateUser(id, {
-        first_name,
-        last_name,
-        email,
-        username,
-        role,
-        status,
-        updated_at: new Date().toISOString()
-      });
+      const { data: user, error } = await databaseService.supabase
+        .from('Accounts')
+        .update({
+          first_name,
+          last_name,
+          email,
+          username,
+          role,
+          status,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', id)
+        .select()
+        .single();
+      if (error) throw error;
 
       logger.info(`Updated user with ID: ${id}`);
 
@@ -384,15 +403,21 @@ export const deleteUser = [
     try {
       const { id } = req.params;
 
-      const userService = serviceFactory.getUserService();
-
       // First check if user exists
-      const existingUser = await userService.getUserById(id);
-      if (!existingUser) {
+      const { data: existingUser, error: findError } = await databaseService.supabase
+        .from('Accounts')
+        .select('*')
+        .eq('id', id)
+        .single();
+      if (findError || !existingUser) {
         return res.status(404).json({ success: false, error: 'User not found' });
       }
 
-      await userService.deleteUser(id);
+      const { error: deleteError } = await databaseService.supabase
+        .from('Accounts')
+        .delete()
+        .eq('id', id);
+      if (deleteError) throw deleteError;
 
       const fullName = `${existingUser.first_name} ${existingUser.last_name}`;
       logger.info(`Deleted user with ID: ${id}`);

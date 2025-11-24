@@ -1,13 +1,32 @@
 import logger from '../../utils/logger.js';
-import serviceFactory from '../../services/index.js';
+import { databaseService } from '../../services/index.js';
 
 // Learning Section Overview
 export const getLearning = async (req, res) => {
   try {
     logger.info('Admin learning section overview accessed');
 
-    const learningOverviewService = serviceFactory.getLearningOverviewService();
-    const stats = await learningOverviewService.getLearningStats();
+    // Get learning stats
+    const { count: totalContent, error: contentError } = await databaseService.supabase
+      .from('learning_content')
+      .select('*', { count: 'exact', head: true });
+    if (contentError) throw contentError;
+
+    const { count: totalCategories, error: catError } = await databaseService.supabase
+      .from('learning_categories')
+      .select('*', { count: 'exact', head: true });
+    if (catError) throw catError;
+
+    const { count: totalAssessments, error: assessError } = await databaseService.supabase
+      .from('learning_assessments')
+      .select('*', { count: 'exact', head: true });
+    if (assessError) throw assessError;
+
+    const stats = {
+      totalContent: totalContent || 0,
+      totalCategories: totalCategories || 0,
+      totalAssessments: totalAssessments || 0
+    };
 
     res.render('admin/other-pages/learning', {
       title: 'Learning Overview',

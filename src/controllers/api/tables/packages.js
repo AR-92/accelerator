@@ -1,5 +1,5 @@
  import logger from '../../../utils/logger.js';
- import serviceFactory from '../../../services/index.js';
+ import { databaseService } from '../../../services/index.js';
  import { validatePackageCreation, validatePackageUpdate, validatePackageDeletion } from '../../../middleware/validation/index.js';
  import { formatDate } from '../../../helpers/format/index.js';
  import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,11 +12,23 @@ export const getPackages = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const financialService = serviceFactory.getFinancialService();
-    const { data: packages, count } = await financialService.package.getAllPackages(
-      { search, package_type, status },
-      { page: pageNum, limit: limitNum }
-    );
+    let query = databaseService.supabase.from('packages').select('*', { count: 'exact' });
+
+    if (search) {
+      query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
+    }
+
+    if (package_type) {
+      query = query.eq('package_type', package_type);
+    }
+
+    if (status) {
+      query = query.eq('status', status);
+    }
+
+    const { data: packages, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     logger.info(`Fetched ${packages.length} of ${total} packages`);
@@ -110,15 +122,20 @@ export const createPackage = [
     try {
       const { name, description, package_type, price, features, status } = req.body;
 
-      const financialService = serviceFactory.getFinancialService();
-      const pkg = await financialService.package.createPackage({
-        name,
-        description,
-        package_type,
-        price,
-        features,
-        status: status || 'active'
-      });
+      const { data: pkg, error } = await databaseService.supabase
+        .from('packages')
+        .insert([{
+          name,
+          description,
+          package_type,
+          price,
+          features,
+          status: status || 'active'
+        }])
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Created package with ID: ${pkg.id}`);
 
@@ -238,16 +255,22 @@ export const updatePackage = [
       const { id } = req.params;
       const { name, description, package_type, price, features, status } = req.body;
 
-      const financialService = serviceFactory.getFinancialService();
-      const pkg = await financialService.package.updatePackage(id, {
-        name,
-        description,
-        package_type,
-        price,
-        features,
-        status,
-        updated_at: new Date().toISOString()
-      });
+      const { data: pkg, error } = await databaseService.supabase
+        .from('packages')
+        .update({
+          name,
+          description,
+          package_type,
+          price,
+          features,
+          status,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Updated package with ID: ${id}`);
 
@@ -365,15 +388,24 @@ export const deletePackage = [
     try {
       const { id } = req.params;
 
-      const financialService = serviceFactory.getFinancialService();
-
       // First check if package exists
-      const existingPackage = await financialService.package.getPackageById(id);
+      const { data: existingPackage, error: fetchError } = await databaseService.supabase
+        .from('packages')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
       if (!existingPackage) {
         return res.status(404).json({ success: false, error: 'Package not found' });
       }
 
-      await financialService.package.deletePackage(id);
+      const { error } = await databaseService.supabase
+        .from('packages')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
 
       const name = existingPackage.name;
       logger.info(`Deleted package with ID: ${id}`);

@@ -1,5 +1,5 @@
 import logger from '../../../utils/logger.js';
-import serviceFactory from '../../../services/index.js';
+import { databaseService } from '../../../services/index.js';
 import { validateLearningAnalyticsCreation, validateLearningAnalyticsUpdate, validateLearningAnalyticsDeletion } from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,16 +12,27 @@ export const getLearningAnalytics = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const learningService = serviceFactory.getLearningService();
-    const { data: analytics, count } = await learningService.analytics.getAllLearningAnalytics(
-      {
-        search,
-        event_type,
-        country,
-        is_processed: is_processed !== undefined ? is_processed === 'true' : undefined
-      },
-      { page: pageNum, limit: limitNum }
-    );
+    let query = databaseService.supabase.from('learning_analytics').select('*', { count: 'exact' });
+
+    if (search) {
+      query = query.or(`event_type.ilike.%${search}%,user_id.ilike.%${search}%`);
+    }
+
+    if (event_type) {
+      query = query.eq('event_type', event_type);
+    }
+
+    if (country) {
+      query = query.eq('country', country);
+    }
+
+    if (is_processed !== undefined) {
+      query = query.eq('is_processed', is_processed === 'true');
+    }
+
+    const { data: analytics, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     const filters = [];
@@ -146,8 +157,13 @@ export const createLearningAnalyticsEvent = [
     try {
       const eventData = req.body;
 
-      const learningService = serviceFactory.getLearningService();
-      const event = await learningService.analytics.createLearningAnalytics(eventData);
+      const { data: event, error } = await databaseService.supabase
+        .from('learning_analytics')
+        .insert([eventData])
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Created learning analytics event with ID: ${event.id}`);
 
@@ -201,9 +217,14 @@ export const updateLearningAnalyticsEvent = [
       const { id } = req.params;
       const updates = req.body;
 
-      const learningService = serviceFactory.getLearningService();
-      const event = await learningService.analytics.updateLearningAnalytics(id, updates);
+      const { data: event, error } = await databaseService.supabase
+        .from('learning_analytics')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
 
+      if (error) throw error;
       if (!event) {
         return res.status(404).json({ success: false, error: 'Learning analytics event not found' });
       }
@@ -258,15 +279,25 @@ export const deleteLearningAnalyticsEvent = [
   async (req, res) => {
     try {
       const { id } = req.params;
-      const learningService = serviceFactory.getLearningService();
 
       // Check if event exists
-      const existingEvent = await learningService.analytics.getLearningAnalyticsById(id);
+      const { data: existingEvent, error: fetchError } = await databaseService.supabase
+        .from('learning_analytics')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
       if (!existingEvent) {
         return res.status(404).json({ success: false, error: 'Learning analytics event not found' });
       }
 
-      await learningService.analytics.deleteLearningAnalytics(id);
+      const { error } = await databaseService.supabase
+        .from('learning_analytics')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
 
       logger.info(`Deleted learning analytics event with ID: ${id}`);
 

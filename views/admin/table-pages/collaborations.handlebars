@@ -18,3 +18,18 @@
 
    {{> table}}
  </div>
+{{!-- these are the filter links for the table --}}
+<div id="collaborations-filter-links" class="hidden" _="on load set #filter-links.innerHTML to #collaborations-filter-links.innerHTML">
+  <div class="flex flex-col items-center justify-center group">
+    <div class="border-t-4 border-primary w-6 rounded-full opacity-100 group-hover:opacity-100"></div>
+    <a id="all-collaborations-btn" href="/admin/table-pages/collaborations" hx-get="/admin/table-pages/collaborations" hx-target="#collaborationsTableContainer" class="text-foreground font-medium text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">All Collaborations</a>
+  </div>
+  <div class="flex flex-col items-center justify-center group">
+    <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="active-collaborations-btn" href="/admin/table-pages/collaborations?status=active" hx-get="/admin/table-pages/collaborations?status=active" hx-target="#collaborationsTableContainer" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Active</a>
+  </div>
+  <div class="flex flex-col items-center justify-center group">
+    <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="inactive-collaborations-btn" href="/admin/table-pages/collaborations?status=inactive" hx-get="/admin/table-pages/collaborations?status=inactive" hx-target="#collaborationsTableContainer" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Inactive</a>
+  </div>
+</div>

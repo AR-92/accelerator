@@ -1,6 +1,6 @@
 <!-- Projects Section Overview -->
 <div class="min-h-screen bg-background">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+   <div id="projects-main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-8">
       <h1 class="text-3xl font-bold text-foreground mb-2">Projects Overview</h1>
       <p class="text-muted-foreground">Overview of project communications and collaborations</p>
@@ -31,10 +31,25 @@
      <div class="bg-card rounded-lg border border-border p-6">
        <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
        <div class="grid grid-cols-3 gap-4">
-{{> quick-action link="/admin/messages" icon="message-square" text="Messages"}}
-{{> quick-action link="/admin/project-collaborators" icon="users" text="Collaborators"}}
-{{> quick-action link="/admin/calendar" icon="calendar" text="Calendar"}}
-       </div>
-     </div>
-  </div>
+ {{> quick-action link="/admin/table-pages/messages" icon="message-square" text="Messages"}}
+ {{> quick-action link="/admin/table-pages/project-collaborators" icon="users" text="Collaborators"}}
+ {{> quick-action link="/admin/table-pages/calendar" icon="calendar" text="Calendar"}}
+        </div>
+      </div>
+   </div>
+ </div>
+{{!-- these are the quick links in this page that should be shown on the filter nav as links using htmx on load on this id : id="filter-links" --}}
+<div id="projects-filter-links" class="hidden" _="on load set #filter-links.innerHTML to #projects-filter-links.innerHTML">
+ <div class="flex flex-col items-center justify-center group">
+   <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="messages-btn" href="/admin/table-pages/messages" hx-get="/admin/table-pages/messages" hx-target="#projects-main-content" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Messages</a>
+ </div>
+ <div class="flex flex-col items-center justify-center group">
+   <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="collaborators-btn" href="/admin/table-pages/project-collaborators" hx-get="/admin/table-pages/project-collaborators" hx-target="#projects-main-content" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Collaborators</a>
+ </div>
+ <div class="flex flex-col items-center justify-center group">
+   <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="calendar-btn" href="/admin/table-pages/calendar" hx-get="/admin/table-pages/calendar" hx-target="#projects-main-content" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Calendar</a>
+ </div>
 </div>

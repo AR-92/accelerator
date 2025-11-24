@@ -1,5 +1,5 @@
 import logger from '../../../utils/logger.js';
-import serviceFactory from '../../../services/index.js';
+import { databaseService } from '../../../services/index.js';
 import { validateAccountCreation, validateAccountUpdate, validateAccountDeletion } from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,15 +12,20 @@ export const getAccounts = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const accountService = serviceFactory.getAccountService();
-    const { data: accounts, count } = await accountService.getAllAccounts(
-      {
-        search,
-        account_type,
-        is_verified: is_verified !== undefined ? is_verified === 'true' : undefined
-      },
-      { page: pageNum, limit: limitNum }
-    );
+    const offset = (pageNum - 1) * limitNum;
+    let query = databaseService.supabase
+      .from('Accounts')
+      .select('*', { count: 'exact' });
+
+    if (account_type) query = query.eq('account_type', account_type);
+    if (is_verified !== undefined) query = query.eq('is_verified', is_verified === 'true');
+    if (search) query = query.or(`display_name.ilike.%${search}%,username.ilike.%${search}%,bio.ilike.%${search}%`);
+
+    const { data: accounts, error, count } = await query
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     const filters = [];

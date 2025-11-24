@@ -1,13 +1,32 @@
 import logger from '../../utils/logger.js';
-import serviceFactory from '../../services/index.js';
+import { databaseService } from '../../services/index.js';
 
 // Financial Section Overview
 export const getFinancial = async (req, res) => {
   try {
     logger.info('Admin financial section overview accessed');
 
-    const financialOverviewService = serviceFactory.getFinancialOverviewService();
-    const stats = await financialOverviewService.getFinancialStats();
+    // Get financial stats
+    const { count: totalBilling, error: billError } = await databaseService.supabase
+      .from('billing')
+      .select('*', { count: 'exact', head: true });
+    if (billError) throw billError;
+
+    const { count: totalPackages, error: packError } = await databaseService.supabase
+      .from('packages')
+      .select('*', { count: 'exact', head: true });
+    if (packError) throw packError;
+
+    const { count: totalRewards, error: rewError } = await databaseService.supabase
+      .from('rewards')
+      .select('*', { count: 'exact', head: true });
+    if (rewError) throw rewError;
+
+    const stats = {
+      totalBilling: totalBilling || 0,
+      totalPackages: totalPackages || 0,
+      totalRewards: totalRewards || 0
+    };
 
     res.render('admin/other-pages/financial', {
       title: 'Financial Overview',

@@ -1,6 +1,5 @@
-import databaseService from '../../../services/supabase.js';
+import { databaseService } from '../../../services/index.js';
 import logger from '../../../utils/logger.js';
-import Todo from '../../../models/Todo.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
 import { renderTableRowsHtml } from '../../../helpers/render/index.js';
 
@@ -16,7 +15,10 @@ export const getHome = async (req, res) => {
     let recentTodos = [];
 
     if (isConnected) {
-      const allTodos = await Todo.findAll();
+      const { data: allTodos, error } = await databaseService.supabase
+        .from('todos')
+        .select('*');
+      if (error) throw error;
       totalTodos = allTodos.length;
       completedTodos = allTodos.filter(todo => todo.completed).length;
       pendingTodos = totalTodos - completedTodos;
@@ -62,7 +64,10 @@ export const getTodosTable = async (req, res) => {
 
     if (isConnected) {
       // Database is connected, fetch real data
-      let allTodos = await Todo.findAll();
+      const { data: allTodos, error } = await databaseService.supabase
+        .from('todos')
+        .select('*');
+      if (error) throw error;
       filteredTodos = [...allTodos];
 
       if (search) {

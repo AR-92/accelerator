@@ -194,6 +194,72 @@
             }
         }
 
+         // User actions
+         function openCreateUserModal() {
+             document.getElementById('createUserModal').classList.remove('hidden');
+         }
+
+         function editUser(id) {
+             // Fetch user data and populate modal
+             fetch(`/api/users/${id}`)
+                 .then(response => response.json())
+                 .then(user => {
+                     document.getElementById('editUserId').value = user.id;
+                     document.getElementById('editUserName').value = user.display_name || '';
+                     document.getElementById('editUserEmail').value = user.username || '';
+                     document.getElementById('editUserStatus').value = user.is_verified ? 'active' : 'inactive';
+                     document.getElementById('editUserForm').setAttribute('hx-put', `/api/users/${id}`);
+                     document.getElementById('editUserForm').setAttribute('hx-target', `#user-row-${id}`);
+                     document.getElementById('editUserModal').classList.remove('hidden');
+                 })
+                 .catch(error => console.error('Error fetching user:', error));
+         }
+
+        function deleteUser(id, title) {
+            if (confirm(`Are you sure you want to delete "${title}"?`)) {
+                htmx.ajax('DELETE', `/api/users/${id}`, {
+                    target: `#user-row-${id}`,
+                    swap: 'outerHTML'
+                });
+            }
+        }
+
+         function toggleUserStatus(id, currentStatus) {
+             const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+             htmx.ajax('PUT', `/api/users/${id}?status=${newStatus}`, {
+                 target: `#user-row-${id}`,
+                 swap: 'outerHTML'
+             });
+         }
+
+         // Idea actions
+         function openCreateIdeaModal() {
+             document.getElementById('createIdeaModal').classList.remove('hidden');
+         }
+
+         function approveIdea(id) {
+             htmx.ajax('PUT', `/api/ideas/${id}?status=approved`, {
+                 target: `#idea-row-${id}`,
+                 swap: 'outerHTML'
+             });
+         }
+
+         function rejectIdea(id) {
+             htmx.ajax('PUT', `/api/ideas/${id}?status=rejected`, {
+                 target: `#idea-row-${id}`,
+                 swap: 'outerHTML'
+             });
+         }
+
+         function deleteIdea(id, title) {
+             if (confirm(`Are you sure you want to delete "${title}"?`)) {
+                 htmx.ajax('DELETE', `/api/ideas/${id}`, {
+                     target: `#idea-row-${id}`,
+                     swap: 'outerHTML'
+                 });
+             }
+         }
+
         // Create todo modal (placeholder)
         function openCreateTodoModal() {
             // This would open a modal for creating todos

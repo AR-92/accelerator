@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import serviceFactory from '../../services/index.js';
+import { databaseService } from '../../services/index.js';
 
 // Database Tables Overview
 export const getTables = async (req, res) => {

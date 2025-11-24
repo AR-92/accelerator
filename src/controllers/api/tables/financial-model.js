@@ -1,5 +1,5 @@
 import logger from '../../../utils/logger.js';
-import databaseService from '../../../services/supabase.js';
+import { databaseService } from '../../../services/index.js';
 
 
 // Financial Model API

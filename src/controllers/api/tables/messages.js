@@ -1,5 +1,5 @@
 import logger from '../../../utils/logger.js';
-import serviceFactory from '../../../services/index.js';
+import { databaseService } from '../../../services/index.js';
 import { validateMessageCreation, validateMessageUpdate, validateMessageDeletion } from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,13 +12,23 @@ export const getMessages = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const filters = {};
-    if (search) filters.search = search;
-    if (project_id) filters.project_id = project_id;
-    if (user_id) filters.user_id = user_id;
+    let query = databaseService.supabase.from('messages').select('*', { count: 'exact' });
 
-    const messageService = serviceFactory.getMessageService();
-    const { data: messages, count } = await messageService.getAllMessages(filters, { page: pageNum, limit: limitNum });
+    if (search) {
+      query = query.or(`content.ilike.%${search}%,subject.ilike.%${search}%`);
+    }
+
+    if (project_id) {
+      query = query.eq('project_id', project_id);
+    }
+
+    if (user_id) {
+      query = query.eq('user_id', user_id);
+    }
+
+    const { data: messages, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     const filterStrings = [];
@@ -107,9 +117,14 @@ export const getMessages = async (req, res) => {
 export const getMessage = async (req, res) => {
   try {
     const { id } = req.params;
-    const messageService = serviceFactory.getMessageService();
-    const message = await messageService.getMessageById(id);
 
+    const { data: message, error } = await databaseService.supabase
+      .from('messages')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) throw error;
     if (!message) {
       return res.status(404).json({ success: false, error: 'Message not found' });
     }
@@ -127,8 +142,14 @@ export const createMessage = [
   async (req, res) => {
     try {
       const messageData = req.body;
-      const messageService = serviceFactory.getMessageService();
-      const message = await messageService.createMessage(messageData);
+
+      const { data: message, error } = await databaseService.supabase
+        .from('messages')
+        .insert([messageData])
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Created message with ID: ${message.id}`);
 
@@ -182,9 +203,14 @@ export const updateMessage = [
       const { id } = req.params;
       const updates = req.body;
 
-      const messageService = serviceFactory.getMessageService();
-      const message = await messageService.updateMessage(id, updates);
+      const { data: message, error } = await databaseService.supabase
+        .from('messages')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
 
+      if (error) throw error;
       if (!message) {
         return res.status(404).json({ success: false, error: 'Message not found' });
       }
@@ -240,15 +266,24 @@ export const deleteMessage = [
     try {
       const { id } = req.params;
 
-      const messageService = serviceFactory.getMessageService();
-
       // Check if message exists
-      const existingMessage = await messageService.getMessageById(id);
+      const { data: existingMessage, error: fetchError } = await databaseService.supabase
+        .from('messages')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
       if (!existingMessage) {
         return res.status(404).json({ success: false, error: 'Message not found' });
       }
 
-      await messageService.deleteMessage(id);
+      const { error } = await databaseService.supabase
+        .from('messages')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
 
       logger.info(`Deleted message with ID: ${id}`);
 

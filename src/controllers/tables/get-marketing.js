@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import databaseService from '../../services/supabase.js';
+import { databaseService } from '../../services/index.js';
 
 // Marketing Management
 export const getMarketing = async (req, res) => {
@@ -16,6 +16,18 @@ export const getMarketing = async (req, res) => {
       throw error;
     }
 
+    let filteredMarketings = marketings;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredMarketings = marketings.filter(mkt => {
+        return (mkt.unique_value_proposition && mkt.unique_value_proposition.toLowerCase().includes(search)) ||
+               (mkt.marketing_channels && mkt.marketing_channels.toLowerCase().includes(search)) ||
+               (mkt.marketing_budget && mkt.marketing_budget.toLowerCase().includes(search)) ||
+               (mkt.target_audience && mkt.target_audience.toLowerCase().includes(search));
+      });
+    }
+
     const columns = [
       { key: 'unique_value_proposition', label: 'UVP', type: 'text' },
       { key: 'marketing_channels', label: 'Channels', type: 'text' },
@@ -30,14 +42,14 @@ export const getMarketing = async (req, res) => {
       { type: 'delete', onclick: 'deleteMarketing', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
 
-    const pagination = { currentPage: 1, limit: 10, total: marketings.length, start: 1, end: marketings.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
+    const pagination = { currentPage: 1, limit: 10, total: filteredMarketings.length, start: 1, end: filteredMarketings.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/table-pages/marketing', {
-      title: 'Marketing Management', currentPage: 'marketing', currentSection: 'business', tableId: 'marketing', entityName: 'marketing', showCheckbox: true, showBulkActions: true, columns, data: marketings, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/marketing', colspan
+      title: 'Marketing Management', currentPage: 'marketing', currentSection: 'business', isTablePage: true, tableId: 'marketing', entityName: 'marketing', showCheckbox: true, showBulkActions: true, columns, data: filteredMarketings, actions, bulkActions: [], pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/marketing', colspan
     });
   } catch (error) {
     logger.error('Error loading marketings:', error);
-    res.render('admin/table-pages/marketing', { title: 'Marketing Management', currentPage: 'marketing', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/marketing', { title: 'Marketing Management', currentPage: 'marketing', currentSection: 'business', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };

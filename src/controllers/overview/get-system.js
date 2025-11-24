@@ -1,13 +1,26 @@
 import logger from '../../utils/logger.js';
-import serviceFactory from '../../services/index.js';
+import { databaseService } from '../../services/index.js';
 
 // System Section Overview
 export const getSystem = async (req, res) => {
   try {
     logger.info('Admin system section overview accessed');
 
-    const systemOverviewService = serviceFactory.getSystemOverviewService();
-    const stats = await systemOverviewService.getSystemStats();
+    // Get system stats
+    const { count: totalUsers, error: userError } = await databaseService.supabase
+      .from('users')
+      .select('*', { count: 'exact', head: true });
+    if (userError) throw userError;
+
+    const { count: totalActivities, error: actError } = await databaseService.supabase
+      .from('activity_logs')
+      .select('*', { count: 'exact', head: true });
+    if (actError) throw actError;
+
+    const stats = {
+      totalUsers: totalUsers || 0,
+      totalActivities: totalActivities || 0
+    };
 
     res.render('admin/other-pages/system', {
       title: 'System Overview',

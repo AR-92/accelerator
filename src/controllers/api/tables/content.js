@@ -1,5 +1,5 @@
  import logger from '../../../utils/logger.js';
- import serviceFactory from '../../../services/index.js';
+ import { databaseService } from '../../../services/index.js';
  import { validateContentCreation, validateContentUpdate, validateContentDeletion } from '../../../middleware/validation/index.js';
  import { formatDate } from '../../../helpers/format/index.js';
  import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,11 +12,23 @@ export const getContent = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const contentService = serviceFactory.getContentService();
-    const { data: contents, count } = await contentService.getAllContent(
-      { search, content_type, status },
-      { page: pageNum, limit: limitNum }
-    );
+    let query = databaseService.supabase.from('content').select('*', { count: 'exact' });
+
+    if (search) {
+      query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+    }
+
+    if (content_type) {
+      query = query.eq('content_type', content_type);
+    }
+
+    if (status) {
+      query = query.eq('status', status);
+    }
+
+    const { data: contents, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     logger.info(`Fetched ${contents.length} of ${total} content items`);
@@ -110,17 +122,22 @@ export const createContent = [
     try {
       const { title, description, content, content_type, status, author_id, tags, metadata } = req.body;
 
-      const contentService = serviceFactory.getContentService();
-      const contentItem = await contentService.createContent({
-        title,
-        description,
-        content,
-        content_type,
-        status: status || 'draft',
-        author_id,
-        tags,
-        metadata
-      });
+      const { data: contentItem, error } = await databaseService.supabase
+        .from('content')
+        .insert([{
+          title,
+          description,
+          content,
+          content_type,
+          status: status || 'draft',
+          author_id,
+          tags,
+          metadata
+        }])
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Created content with ID: ${contentItem.id}`);
 
@@ -240,18 +257,24 @@ export const updateContent = [
       const { id } = req.params;
       const { title, description, content, content_type, status, author_id, tags, metadata } = req.body;
 
-      const contentService = serviceFactory.getContentService();
-      const contentItem = await contentService.updateContent(id, {
-        title,
-        description,
-        content,
-        content_type,
-        status,
-        author_id,
-        tags,
-        metadata,
-        updated_at: new Date().toISOString()
-      });
+      const { data: contentItem, error } = await databaseService.supabase
+        .from('content')
+        .update({
+          title,
+          description,
+          content,
+          content_type,
+          status,
+          author_id,
+          tags,
+          metadata,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Updated content with ID: ${id}`);
 
@@ -369,15 +392,24 @@ export const deleteContent = [
     try {
       const { id } = req.params;
 
-      const contentService = serviceFactory.getContentService();
-
       // First check if content exists
-      const existingContent = await contentService.getContentById(id);
+      const { data: existingContent, error: fetchError } = await databaseService.supabase
+        .from('content')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
       if (!existingContent) {
         return res.status(404).json({ success: false, error: 'Content not found' });
       }
 
-      await contentService.deleteContent(id);
+      const { error } = await databaseService.supabase
+        .from('content')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
 
       const title = existingContent.title;
       logger.info(`Deleted content with ID: ${id}`);

@@ -1,5 +1,5 @@
  import logger from '../../utils/logger.js';
- import serviceFactory from '../../services/index.js';
+ import { databaseService } from '../../services/index.js';
 
 // Messages Management
 export const getMessages = async (req, res) => {
@@ -8,6 +8,17 @@ export const getMessages = async (req, res) => {
 
     const messageService = serviceFactory.getMessageService();
     const { data: messages } = await messageService.getAllMessages({}, { limit: 1000 }); // Get all for admin view
+
+    let filteredMessages = messages;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredMessages = messages.filter(msg => {
+        return (msg.sender_id && msg.sender_id.toString().toLowerCase().includes(search)) ||
+               (msg.receiver_id && msg.receiver_id.toString().toLowerCase().includes(search)) ||
+               (msg.subject && msg.subject.toLowerCase().includes(search));
+      });
+    }
 
     const columns = [
       { key: 'sender_id', label: 'Sender', type: 'text' },
@@ -28,14 +39,14 @@ export const getMessages = async (req, res) => {
       { onclick: 'bulkDeleteMessages', buttonId: 'bulkDeleteBtn', label: 'Delete Selected' }
     ];
 
-    const pagination = { currentPage: 1, limit: 10, total: messages.length, start: 1, end: messages.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
+    const pagination = { currentPage: 1, limit: 10, total: filteredMessages.length, start: 1, end: filteredMessages.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/table-pages/messages', {
-      title: 'Messages Management', currentPage: 'messages', currentSection: 'main', tableId: 'messages', entityName: 'message', showCheckbox: true, showBulkActions: true, columns, data: messages, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/messages', colspan
+      title: 'Messages Management', currentPage: 'messages', currentSection: 'main', isTablePage: true, tableId: 'messages', entityName: 'message', showCheckbox: true, showBulkActions: true, columns, data: filteredMessages, actions, bulkActions, pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/messages', colspan
     });
   } catch (error) {
     logger.error('Error loading messages:', error);
-    res.render('admin/table-pages/messages', { title: 'Messages Management', currentPage: 'messages', currentSection: 'main', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/messages', { title: 'Messages Management', currentPage: 'messages', currentSection: 'main', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };

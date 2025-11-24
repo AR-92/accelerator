@@ -1,5 +1,5 @@
  import logger from '../../utils/logger.js';
- import serviceFactory from '../../services/index.js';
+ import { databaseService } from '../../services/index.js';
 
 // Learning Assessments Management
 export const getLearningAssessments = async (req, res) => {
@@ -8,6 +8,18 @@ export const getLearningAssessments = async (req, res) => {
 
     const learningService = serviceFactory.getLearningService();
     const { data: learningAssessments } = await learningService.assessment.getAllLearningAssessments({}, { limit: 1000 }); // Get all for admin view
+
+    let filteredLearningAssessments = learningAssessments;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredLearningAssessments = learningAssessments.filter(assessment => {
+        return (assessment.title && assessment.title.toLowerCase().includes(search)) ||
+               (assessment.assessment_type && assessment.assessment_type.toLowerCase().includes(search)) ||
+               (assessment.difficulty_level && assessment.difficulty_level.toLowerCase().includes(search)) ||
+               (assessment.passing_score && assessment.passing_score.toString().toLowerCase().includes(search));
+      });
+    }
 
     const columns = [
       { key: 'title', label: 'Title', type: 'text' },
@@ -23,14 +35,14 @@ export const getLearningAssessments = async (req, res) => {
       { type: 'delete', onclick: 'deleteLearningAssessment', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
 
-    const pagination = { currentPage: 1, limit: 10, total: learningAssessments.length, start: 1, end: learningAssessments.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
+    const pagination = { currentPage: 1, limit: 10, total: filteredLearningAssessments.length, start: 1, end: filteredLearningAssessments.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/other-pages/learning-assessments', {
-      title: 'Learning Assessments Management', currentPage: 'learning-assessments', currentSection: 'learning', tableId: 'learning-assessments', entityName: 'learning assessment', showCheckbox: true, showBulkActions: true, columns, data: learningAssessments, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/other-pages/learning-assessments', colspan
+      title: 'Learning Assessments Management', currentPage: 'learning-assessments', currentSection: 'learning', isTablePage: true, tableId: 'learning-assessments', entityName: 'learning assessment', showCheckbox: true, showBulkActions: true, columns, data: filteredLearningAssessments, actions, bulkActions: [], pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/other-pages/learning-assessments', colspan
     });
   } catch (error) {
     logger.error('Error loading learning assessments:', error);
-    res.render('admin/other-pages/learning-assessments', { title: 'Learning Assessments Management', currentPage: 'learning-assessments', currentSection: 'learning', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/other-pages/learning-assessments', { title: 'Learning Assessments Management', currentPage: 'learning-assessments', currentSection: 'learning', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };

@@ -1,5 +1,5 @@
 import logger from '../../../utils/logger.js';
-import serviceFactory from '../../../services/index.js';
+import { databaseService } from '../../../services/index.js';
 import { validateHelpCenterCreation, validateHelpCenterUpdate, validateHelpCenterDeletion } from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,14 +12,27 @@ export const getHelpCenter = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const filters = {};
-    if (search) filters.search = search;
-    if (content_type) filters.content_type = content_type;
-    if (category_name) filters.category_name = category_name;
-    if (is_published !== undefined) filters.is_published = is_published === 'true';
+    let query = databaseService.supabase.from('help_center').select('*', { count: 'exact' });
 
-    const helpCenterService = serviceFactory.getHelpCenterService();
-    const { data: articles, count } = await helpCenterService.getAllHelpCenterArticles(filters, { page: pageNum, limit: limitNum });
+    if (search) {
+      query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
+    }
+
+    if (content_type) {
+      query = query.eq('content_type', content_type);
+    }
+
+    if (category_name) {
+      query = query.eq('category_name', category_name);
+    }
+
+    if (is_published !== undefined) {
+      query = query.eq('is_published', is_published === 'true');
+    }
+
+    const { data: articles, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     const filterStrings = [];
@@ -142,8 +155,14 @@ export const createHelpCenterArticle = [
   async (req, res) => {
     try {
       const articleData = req.body;
-      const helpCenterService = serviceFactory.getHelpCenterService();
-      const article = await helpCenterService.createHelpCenterArticle(articleData);
+
+      const { data: article, error } = await databaseService.supabase
+        .from('help_center')
+        .insert([articleData])
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Created help center article with ID: ${article.id}`);
 
@@ -197,9 +216,14 @@ export const updateHelpCenterArticle = [
       const { id } = req.params;
       const updates = req.body;
 
-      const helpCenterService = serviceFactory.getHelpCenterService();
-      const article = await helpCenterService.updateHelpCenterArticle(id, updates);
+      const { data: article, error } = await databaseService.supabase
+        .from('help_center')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
 
+      if (error) throw error;
       if (!article) {
         return res.status(404).json({ success: false, error: 'Help center article not found' });
       }
@@ -255,15 +279,24 @@ export const deleteHelpCenterArticle = [
     try {
       const { id } = req.params;
 
-      const helpCenterService = serviceFactory.getHelpCenterService();
-
       // Check if article exists
-      const existingArticle = await helpCenterService.getHelpCenterArticleById(id);
+      const { data: existingArticle, error: fetchError } = await databaseService.supabase
+        .from('help_center')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
       if (!existingArticle) {
         return res.status(404).json({ success: false, error: 'Help center article not found' });
       }
 
-      await helpCenterService.deleteHelpCenterArticle(id);
+      const { error } = await databaseService.supabase
+        .from('help_center')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
 
       logger.info(`Deleted help center article with ID: ${id}`);
 

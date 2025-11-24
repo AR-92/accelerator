@@ -1,5 +1,5 @@
 import logger from '../../../utils/logger.js';
-import databaseService from '../../../services/supabase.js';
+import { databaseService } from '../../../services/index.js';
 import { validatePortfolioCreation, validatePortfolioUpdate, validatePortfolioDeletion } from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';

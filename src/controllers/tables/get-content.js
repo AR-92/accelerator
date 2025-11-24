@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import databaseService from '../../services/supabase.js';
+import { databaseService } from '../../services/index.js';
 
 // Content Management
 export const getContent = async (req, res) => {
@@ -26,6 +26,18 @@ export const getContent = async (req, res) => {
       status: item.status,
       created_at: item.created_at
     }));
+
+    let filteredContent = mappedContent;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredContent = mappedContent.filter(item => {
+        return (item.title && item.title.toLowerCase().includes(search)) ||
+               (item.description && item.description.toLowerCase().includes(search)) ||
+               (item.type && item.type.toLowerCase().includes(search)) ||
+               (item.status && item.status.toLowerCase().includes(search));
+      });
+    }
 
     const contentColumns = [
       { key: 'title', label: 'Title', type: 'text' },
@@ -64,9 +76,9 @@ export const getContent = async (req, res) => {
     const pagination = {
       currentPage: 1,
       limit: 10,
-      total: mappedContent.length,
+      total: filteredContent.length,
       start: 1,
-      end: mappedContent.length,
+      end: filteredContent.length,
       hasPrev: false,
       hasNext: false,
       prevPage: 0,
@@ -80,16 +92,17 @@ export const getContent = async (req, res) => {
       title: 'Content Management',
       currentPage: 'content',
       currentSection: 'content-management',
+      isTablePage: true,
       tableId: 'content',
       entityName: 'content',
       showCheckbox: true,
       showBulkActions: true,
       columns: contentColumns,
-      data: mappedContent,
+      data: filteredContent,
       actions,
       bulkActions,
       pagination,
-      query: { search: '', status: '' },
+      query: { search: req.query.search || '', status: '' },
       currentUrl: '/admin/table-pages/content',
       colspan
     });

@@ -1,13 +1,15 @@
 import logger from '../../utils/logger.js';
-import serviceFactory from '../../services/index.js';
+import { databaseService } from '../../services/index.js';
 
 // Todos Management
 export const getTodos = async (req, res) => {
   try {
     logger.info('Admin todos page accessed');
 
-    const todoService = serviceFactory.getTodoService();
-    const { data: todos } = await todoService.getAllTodos({}, { limit: 1000 }); // Get all for admin view
+    const { data: todos, error } = await databaseService.supabase
+      .from('todos')
+      .select('*');
+    if (error) throw error;
 
     const isConnected = true; // Assume connected if service works
 
@@ -70,6 +72,7 @@ export const getTodos = async (req, res) => {
       title: 'Todos Management',
       currentPage: 'todos',
       currentSection: 'system',
+      isTablePage: true,
       tableId: 'todos',
       entityName: 'todo',
       showCheckbox: true,

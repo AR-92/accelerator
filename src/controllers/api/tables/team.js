@@ -1,5 +1,5 @@
 import logger from '../../../utils/logger.js';
-import databaseService from '../../../services/supabase.js';
+import { databaseService } from '../../../services/index.js';
 
 
 // Team API
@@ -11,7 +11,7 @@ export const getTeam = async (req, res) => {
     const offset = (pageNum - 1) * limitNum;
 
     let query = databaseService.supabase
-      .from('team')
+      .from('Team')
       .select('*', { count: 'exact' });
 
     if (search) {

@@ -1,9 +1,9 @@
-import Todo from '../../../models/Todo.js';
-import databaseService from '../../../services/supabase.js';
+import { databaseService } from '../../../services/index.js';
 import logger from '../../../utils/logger.js';
 import { validateTodoCreation, validateTodoUpdate, validateTodoDeletion } from '../../../middleware/validation/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
 import { renderTodoHtml, renderPagination, renderAlertHtml } from '../../../helpers/render/index.js';
+import { createUser, updateUser, deleteUser } from './users.js';
 
 // Controller functions
 export const getTodos = async (req, res) => {
@@ -66,7 +66,12 @@ export const createTodo = [
   async (req, res) => {
     try {
       const { title, description } = req.body;
-      const todo = await Todo.create({ title, description });
+      const { data: todo, error } = await databaseService.supabase
+        .from('todos')
+        .insert({ title, description })
+        .select()
+        .single();
+      if (error) throw error;
       logger.info(`Created todo with ID: ${todo.id}`);
 
       if (isHtmxRequest(req)) {
@@ -92,9 +97,13 @@ export const updateTodo = [
       const { id } = req.params;
       const todoId = parseInt(id, 10);
 
-      // Find existing todo
-      const existingTodo = await Todo.findById(todoId);
-      if (!existingTodo) {
+      // Check if todo exists
+      const { data: existingTodo, error: findError } = await databaseService.supabase
+        .from('todos')
+        .select('*')
+        .eq('id', todoId)
+        .single();
+      if (findError || !existingTodo) {
         return res.status(404).json({ success: false, error: 'Todo not found' });
       }
 
@@ -111,7 +120,13 @@ export const updateTodo = [
       if (description !== undefined) updates.description = description;
       if (completed !== undefined) updates.completed = completed;
 
-      const updatedTodo = await existingTodo.update(updates);
+      const { data: updatedTodo, error: updateError } = await databaseService.supabase
+        .from('todos')
+        .update(updates)
+        .eq('id', todoId)
+        .select()
+        .single();
+      if (updateError) throw updateError;
       logger.info(`Updated todo with ID: ${todoId}`);
 
       if (isHtmxRequest(req)) {
@@ -136,8 +151,12 @@ export const getEditTodo = async (req, res) => {
   try {
     const { id } = req.params;
     const todoId = parseInt(id, 10);
-    const todo = await Todo.findById(todoId);
-    if (!todo) {
+    const { data: todo, error } = await databaseService.supabase
+      .from('todos')
+      .select('*')
+      .eq('id', todoId)
+      .single();
+    if (error || !todo) {
       return res.status(404).send('Todo not found');
     }
 
@@ -170,8 +189,12 @@ export const getTodoView = async (req, res) => {
   try {
     const { id } = req.params;
     const todoId = parseInt(id, 10);
-    const todo = await Todo.findById(todoId);
-    if (!todo) {
+    const { data: todo, error } = await databaseService.supabase
+      .from('todos')
+      .select('*')
+      .eq('id', todoId)
+      .single();
+    if (error || !todo) {
       return res.status(404).send('Todo not found');
     }
     res.send(renderTodoHtml(todo));
@@ -189,13 +212,21 @@ export const deleteTodo = [
       const todoId = parseInt(id);
 
       // Check if todo exists
-      const existingTodo = await Todo.findById(todoId);
-      if (!existingTodo) {
+      const { data: existingTodo, error: findError } = await databaseService.supabase
+        .from('todos')
+        .select('title')
+        .eq('id', todoId)
+        .single();
+      if (findError || !existingTodo) {
         return res.status(404).json({ success: false, error: 'Todo not found' });
       }
 
       const title = existingTodo.title;
-      await existingTodo.delete();
+      const { error: deleteError } = await databaseService.supabase
+        .from('todos')
+        .delete()
+        .eq('id', todoId);
+      if (deleteError) throw deleteError;
       logger.info(`Deleted todo with ID: ${todoId}`);
 
       if (isHtmxRequest(req)) {
@@ -214,6 +245,92 @@ export const deleteTodo = [
   }
 ];
 
+// User CRUD
+export const getUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { data: user, error } = await databaseService.supabase
+      .from('users')
+      .select('*')
+      .eq('id', id)
+      .single();
+    if (error || !user) {
+      return res.status(404).json({ success: false, error: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    logger.error('Error fetching user:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+// Idea CRUD
+export const createIdea = async (req, res) => {
+  try {
+    const { title, description, author } = req.body;
+    const { data, error } = await databaseService.supabase
+      .from('ideas')
+      .insert([{ title, description, author, status: 'pending' }])
+      .select()
+      .single();
+    if (error) throw error;
+
+    logger.info(`Created idea with ID: ${data.id}`);
+
+    // Return new row HTML
+    const rowHtml = '<tr id="idea-row-' + data.id + '"><td colspan="7">Idea created</td></tr>';
+    res.send(rowHtml);
+  } catch (error) {
+    logger.error('Error creating idea:', error);
+    res.status(500).send('Error creating idea');
+  }
+};
+
+export const updateIdea = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.query;
+    const { error } = await databaseService.supabase
+      .from('ideas')
+      .update({ status })
+      .eq('id', id);
+    if (error) throw error;
+
+    // Fetch updated idea
+    const { data: idea } = await databaseService.supabase
+      .from('ideas')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    logger.info(`Updated idea with ID: ${id}`);
+
+    // Return updated row HTML
+    const rowHtml = '<tr id="idea-row-' + idea.id + '"><td colspan="7">Idea updated</td></tr>';
+    res.send(rowHtml);
+  } catch (error) {
+    logger.error('Error updating idea:', error);
+    res.status(500).send('Error updating idea');
+  }
+};
+
+export const deleteIdea = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { error } = await databaseService.supabase
+      .from('ideas')
+      .delete()
+      .eq('id', id);
+    if (error) throw error;
+
+    logger.info(`Deleted idea with ID: ${id}`);
+    res.send('');
+  } catch (error) {
+    logger.error('Error deleting idea:', error);
+    res.status(500).send('Error deleting idea');
+  }
+};
+
 // Route setup function
 export default function apiRoutes(app) {
   app.get('/api/todos', getTodos);
@@ -222,4 +339,15 @@ export default function apiRoutes(app) {
   app.post('/api/todos', ...createTodo);
   app.put('/api/todos/:id', ...updateTodo);
   app.delete('/api/todos/:id', ...deleteTodo);
+
+   // User routes
+   app.get('/api/users/:id', getUser);
+   app.post('/api/users', createUser);
+   app.put('/api/users/:id', updateUser);
+   app.delete('/api/users/:id', deleteUser);
+
+   // Idea routes
+   app.post('/api/ideas', createIdea);
+   app.put('/api/ideas/:id', updateIdea);
+   app.delete('/api/ideas/:id', deleteIdea);
 }

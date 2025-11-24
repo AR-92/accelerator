@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import databaseService from '../../services/supabase.js';
+import { databaseService } from '../../services/index.js';
 
 // Rewards Management
 export const getRewards = async (req, res) => {
@@ -15,6 +15,18 @@ export const getRewards = async (req, res) => {
     if (error) {
       logger.error('Error fetching rewards:', error);
       throw error;
+    }
+
+    let filteredRewards = rewards;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredRewards = rewards.filter(reward => {
+        return (reward.title && reward.title.toLowerCase().includes(search)) ||
+               (reward.type && reward.type.toLowerCase().includes(search)) ||
+               (reward.status && reward.status.toLowerCase().includes(search)) ||
+               (reward.author && reward.author.toLowerCase().includes(search));
+      });
     }
 
     const columns = [
@@ -37,14 +49,14 @@ export const getRewards = async (req, res) => {
       { onclick: 'bulkDeleteRewards', buttonId: 'bulkDeleteBtn', label: 'Delete Selected' }
     ];
 
-    const pagination = { currentPage: 1, limit: 10, total: rewards.length, start: 1, end: rewards.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
+    const pagination = { currentPage: 1, limit: 10, total: filteredRewards.length, start: 1, end: filteredRewards.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/table-pages/rewards', {
-      title: 'Rewards Management', currentPage: 'rewards', currentSection: 'financial', tableId: 'rewards', entityName: 'reward', showCheckbox: true, showBulkActions: true, columns, data: rewards, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/rewards', colspan
+      title: 'Rewards Management', currentPage: 'rewards', currentSection: 'financial', isTablePage: true, tableId: 'rewards', entityName: 'reward', showCheckbox: true, showBulkActions: true, columns, data: filteredRewards, actions, bulkActions, pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/rewards', colspan
     });
   } catch (error) {
     logger.error('Error loading rewards:', error);
-    res.render('admin/table-pages/rewards', { title: 'Rewards Management', currentPage: 'rewards', currentSection: 'financial', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/rewards', { title: 'Rewards Management', currentPage: 'rewards', currentSection: 'financial', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };

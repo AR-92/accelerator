@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import databaseService from '../../services/supabase.js';
+import { databaseService } from '../../services/index.js';
 
 // Collaborations Management
 export const getCollaborations = async (req, res) => {
@@ -15,6 +15,18 @@ export const getCollaborations = async (req, res) => {
     if (error) {
       logger.error('Error fetching collaborations:', error);
       throw error;
+    }
+
+    let filteredCollaborations = collaborations;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredCollaborations = collaborations.filter(collab => {
+        return (collab.name && collab.name.toLowerCase().includes(search)) ||
+               (collab.description && collab.description.toLowerCase().includes(search)) ||
+               (collab.members_count && collab.members_count.toString().toLowerCase().includes(search)) ||
+               (collab.status && collab.status.toLowerCase().includes(search));
+      });
     }
 
     const columns = [
@@ -60,9 +72,9 @@ export const getCollaborations = async (req, res) => {
     const pagination = {
       currentPage: 1,
       limit: 10,
-      total: collaborations.length,
+      total: filteredCollaborations.length,
       start: 1,
-      end: collaborations.length,
+      end: filteredCollaborations.length,
       hasPrev: false,
       hasNext: false,
       prevPage: 0,
@@ -76,16 +88,17 @@ export const getCollaborations = async (req, res) => {
       title: 'Collaborations Management',
       currentPage: 'collaborations',
       currentSection: 'main',
+      isTablePage: true,
       tableId: 'collaborations',
       entityName: 'collaboration',
       showCheckbox: true,
       showBulkActions: true,
       columns,
-      data: collaborations,
+      data: filteredCollaborations,
       actions,
       bulkActions,
       pagination,
-      query: { search: '', status: '' },
+      query: { search: req.query.search || '', status: '' },
       currentUrl: '/admin/table-pages/collaborations',
       colspan
     });
@@ -95,6 +108,7 @@ export const getCollaborations = async (req, res) => {
       title: 'Collaborations Management',
       currentPage: 'collaborations',
       currentSection: 'main',
+      isTablePage: true,
       data: [],
       pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
       query: { search: '', status: '' }

@@ -1,5 +1,5 @@
 import logger from '../../../utils/logger.js';
-import databaseService from '../../../services/supabase.js';
+import { databaseService } from '../../../services/index.js';
 import { validateVoteCreation, validateVoteUpdate, validateVoteDeletion } from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -14,7 +14,7 @@ export const getVotes = async (req, res) => {
     const offset = (pageNum - 1) * limitNum;
 
     let query = databaseService.supabase
-      .from('votes')
+      .from('Votes Management')
       .select('*', { count: 'exact' });
 
     if (search) {
@@ -131,7 +131,7 @@ export const createVote = [
       const { user_id, idea_id, vote_type } = req.body;
 
       const { data: vote, error } = await databaseService.supabase
-        .from('votes')
+        .from('Votes Management')
         .insert({
           user_id,
           idea_id,
@@ -261,7 +261,7 @@ export const updateVote = [
       const { user_id, idea_id, vote_type } = req.body;
 
       const { data: vote, error } = await databaseService.supabase
-        .from('votes')
+        .from('Votes Management')
         .update({
           user_id,
           idea_id,
@@ -392,7 +392,7 @@ export const deleteVote = [
 
       // First check if vote exists
       const { data: existingVote, error: fetchError } = await databaseService.supabase
-        .from('votes')
+        .from('Votes Management')
         .select('id')
         .eq('id', id)
         .single();
@@ -402,7 +402,7 @@ export const deleteVote = [
       }
 
       const { error } = await databaseService.supabase
-        .from('votes')
+        .from('Votes Management')
         .delete()
         .eq('id', id);
 

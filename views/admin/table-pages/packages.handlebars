@@ -18,3 +18,18 @@
 
    {{> table}}
  </div>
+{{!-- these are the filter links for the table --}}
+<div id="packages-filter-links" class="hidden" _="on load set #filter-links.innerHTML to #packages-filter-links.innerHTML">
+  <div class="flex flex-col items-center justify-center group">
+    <div class="border-t-4 border-primary w-6 rounded-full opacity-100 group-hover:opacity-100"></div>
+    <a id="all-packages-btn" href="/admin/table-pages/packages" hx-get="/admin/table-pages/packages" hx-target="#packagesTableContainer" class="text-foreground font-medium text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">All Packages</a>
+  </div>
+  <div class="flex flex-col items-center justify-center group">
+    <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="active-packages-btn" href="/admin/table-pages/packages?status=active" hx-get="/admin/table-pages/packages?status=active" hx-target="#packagesTableContainer" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Active</a>
+  </div>
+  <div class="flex flex-col items-center justify-center group">
+    <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="inactive-packages-btn" href="/admin/table-pages/packages?status=inactive" hx-get="/admin/table-pages/packages?status=inactive" hx-target="#packagesTableContainer" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Inactive</a>
+  </div>
+</div>

@@ -22,10 +22,9 @@
      <div class="self-center mr-4">
        <label class="relative block">
          <span class="sr-only">Search</span>
-           <input class="w-64 pl-4 pr-4 py-1.5 rounded-md placeholder:text-sm text-foreground bg-transparent focus:outline-none"
-            placeholder="Search Here ..." aria-label="Search" id="navSearchInput" name="search" value="{{query.search}}"
-           hx-get="/todos" hx-trigger="keyup[key=='Enter']"
-           hx-include="[name='status'],[name='limit']" />
+            <input class="w-64 pl-4 pr-4 py-1.5 rounded-md placeholder:text-sm text-foreground bg-transparent focus:outline-none"
+             placeholder="Search {{#if isTablePage}}{{currentPage}}{{else}}here{{/if}} ..." aria-label="Search" id="navSearchInput" name="search" value="{{query.search}}"
+            {{#if isTablePage}}hx-get="/admin/table-pages/{{currentPage}}" hx-trigger="keyup[key=='Enter']" hx-include="[name='status'],[name='limit']"{{/if}} />
       </label>
      </div>
        <!-- Theme Toggle Button -->

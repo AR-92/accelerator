@@ -1,13 +1,20 @@
 import logger from '../../utils/logger.js';
-import serviceFactory from '../../services/index.js';
+import { databaseService } from '../../services/index.js';
 
 // Help Section Overview
 export const getHelp = async (req, res) => {
   try {
     logger.info('Admin help section overview accessed');
 
-    const helpOverviewService = serviceFactory.getHelpOverviewService();
-    const stats = await helpOverviewService.getHelpStats();
+    // Get help stats
+    const { count: totalArticles, error: artError } = await databaseService.supabase
+      .from('help_center')
+      .select('*', { count: 'exact', head: true });
+    if (artError) throw artError;
+
+    const stats = {
+      totalArticles: totalArticles || 0
+    };
 
     res.render('admin/other-pages/help', {
       title: 'Help Overview',

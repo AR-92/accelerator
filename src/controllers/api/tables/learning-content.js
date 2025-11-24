@@ -1,5 +1,5 @@
  import logger from '../../../utils/logger.js';
- import serviceFactory from '../../../services/index.js';
+ import { databaseService } from '../../../services/index.js';
  import { validateLearningContentCreation, validateLearningContentUpdate, validateLearningContentDeletion } from '../../../middleware/validation/index.js';
  import { formatDate } from '../../../helpers/format/index.js';
  import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,11 +12,31 @@ export const getLearningContent = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const learningService = serviceFactory.getLearningService();
-    const { data: content, count } = await learningService.content.getAllLearningContent(
-      { search, content_type, category_id, difficulty_level, status },
-      { page: pageNum, limit: limitNum }
-    );
+    let query = databaseService.supabase.from('learning_content').select('*', { count: 'exact' });
+
+    if (search) {
+      query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+    }
+
+    if (content_type) {
+      query = query.eq('content_type', content_type);
+    }
+
+    if (category_id) {
+      query = query.eq('category_id', category_id);
+    }
+
+    if (difficulty_level) {
+      query = query.eq('difficulty_level', difficulty_level);
+    }
+
+    if (status) {
+      query = query.eq('status', status);
+    }
+
+    const { data: content, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     const filters = [];
@@ -154,8 +174,13 @@ export const createLearningContent = [
     try {
       const contentData = req.body;
 
-      const learningService = serviceFactory.getLearningService();
-      const content = await learningService.content.createLearningContent(contentData);
+      const { data: content, error } = await databaseService.supabase
+        .from('learning_content')
+        .insert([contentData])
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Created learning content with ID: ${content.id}`);
 
@@ -209,9 +234,14 @@ export const updateLearningContent = [
       const { id } = req.params;
       const updates = req.body;
 
-      const learningService = serviceFactory.getLearningService();
-      const content = await learningService.content.updateLearningContent(id, updates);
+      const { data: content, error } = await databaseService.supabase
+        .from('learning_content')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
 
+      if (error) throw error;
       if (!content) {
         return res.status(404).json({ success: false, error: 'Learning content not found' });
       }
@@ -267,15 +297,24 @@ export const deleteLearningContent = [
     try {
       const { id } = req.params;
 
-      const learningService = serviceFactory.getLearningService();
-
       // Check if content exists
-      const existingContent = await learningService.content.getLearningContentById(id);
+      const { data: existingContent, error: fetchError } = await databaseService.supabase
+        .from('learning_content')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
       if (!existingContent) {
         return res.status(404).json({ success: false, error: 'Learning content not found' });
       }
 
-      await learningService.content.deleteLearningContent(id);
+      const { error } = await databaseService.supabase
+        .from('learning_content')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
 
       logger.info(`Deleted learning content with ID: ${id}`);
 

@@ -1,5 +1,5 @@
  import logger from '../../../utils/logger.js';
- import serviceFactory from '../../../services/index.js';
+ import { databaseService } from '../../../services/index.js';
  import { validateRewardCreation, validateRewardUpdate, validateRewardDeletion } from '../../../middleware/validation/index.js';
  import { formatDate } from '../../../helpers/format/index.js';
  import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,11 +12,23 @@ export const getRewards = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const financialService = serviceFactory.getFinancialService();
-    const { data: rewards, count } = await financialService.reward.getAllRewards(
-      { search, status, type },
-      { page: pageNum, limit: limitNum }
-    );
+    let query = databaseService.supabase.from('rewards').select('*', { count: 'exact' });
+
+    if (search) {
+      query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+    }
+
+    if (status) {
+      query = query.eq('status', status);
+    }
+
+    if (type) {
+      query = query.eq('type', type);
+    }
+
+    const { data: rewards, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     const filters = [];
@@ -144,8 +156,13 @@ export const createReward = [
     try {
       const rewardData = req.body;
 
-      const financialService = serviceFactory.getFinancialService();
-      const reward = await financialService.reward.createReward(rewardData);
+      const { data: reward, error } = await databaseService.supabase
+        .from('rewards')
+        .insert([rewardData])
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Created reward with ID: ${reward.id}`);
 
@@ -199,9 +216,14 @@ export const updateReward = [
       const { id } = req.params;
       const updates = req.body;
 
-      const financialService = serviceFactory.getFinancialService();
-      const reward = await financialService.reward.updateReward(id, updates);
+      const { data: reward, error } = await databaseService.supabase
+        .from('rewards')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
 
+      if (error) throw error;
       if (!reward) {
         return res.status(404).json({ success: false, error: 'Reward not found' });
       }
@@ -257,15 +279,24 @@ export const deleteReward = [
     try {
       const { id } = req.params;
 
-      const financialService = serviceFactory.getFinancialService();
-
       // Check if reward exists
-      const existingReward = await financialService.reward.getRewardById(id);
+      const { data: existingReward, error: fetchError } = await databaseService.supabase
+        .from('rewards')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
       if (!existingReward) {
         return res.status(404).json({ success: false, error: 'Reward not found' });
       }
 
-      await financialService.reward.deleteReward(id);
+      const { error } = await databaseService.supabase
+        .from('rewards')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
 
       logger.info(`Deleted reward with ID: ${id}`);
 

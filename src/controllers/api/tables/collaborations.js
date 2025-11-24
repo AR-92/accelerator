@@ -1,5 +1,5 @@
  import logger from '../../../utils/logger.js';
- import serviceFactory from '../../../services/index.js';
+ import { databaseService } from '../../../services/index.js';
  import { validateCollaborationCreation, validateCollaborationUpdate, validateCollaborationDeletion } from '../../../middleware/validation/index.js';
  import { formatDate } from '../../../helpers/format/index.js';
  import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,11 +12,27 @@ export const getCollaborations = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const projectService = serviceFactory.getProjectService();
-    const { data: collaborations, count } = await projectService.collaboration.getAllCollaborations(
-      { search, user_id, project_id, status },
-      { page: pageNum, limit: limitNum }
-    );
+    let query = databaseService.supabase.from('collaborations').select('*', { count: 'exact' });
+
+    if (search) {
+      query = query.or(`message.ilike.%${search}%`);
+    }
+
+    if (user_id) {
+      query = query.eq('user_id', user_id);
+    }
+
+    if (project_id) {
+      query = query.eq('project_id', project_id);
+    }
+
+    if (status) {
+      query = query.eq('status', status);
+    }
+
+    const { data: collaborations, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     logger.info(`Fetched ${collaborations.length} of ${total} collaborations`);
@@ -110,14 +126,19 @@ export const createCollaboration = [
     try {
       const { user_id, project_id, role, permissions, status } = req.body;
 
-      const projectService = serviceFactory.getProjectService();
-      const collaboration = await projectService.collaboration.createCollaboration({
-        user_id,
-        project_id,
-        role,
-        permissions,
-        status: status || 'pending'
-      });
+      const { data: collaboration, error } = await databaseService.supabase
+        .from('collaborations')
+        .insert([{
+          user_id,
+          project_id,
+          role,
+          permissions,
+          status: status || 'pending'
+        }])
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Created collaboration with ID: ${collaboration.id}`);
 
@@ -239,15 +260,21 @@ export const updateCollaboration = [
       const { id } = req.params;
       const { user_id, project_id, role, permissions, status } = req.body;
 
-      const projectService = serviceFactory.getProjectService();
-      const collaboration = await projectService.collaboration.updateCollaboration(id, {
-        user_id,
-        project_id,
-        role,
-        permissions,
-        status,
-        updated_at: new Date().toISOString()
-      });
+      const { data: collaboration, error } = await databaseService.supabase
+        .from('collaborations')
+        .update({
+          user_id,
+          project_id,
+          role,
+          permissions,
+          status,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Updated collaboration with ID: ${id}`);
 
@@ -367,15 +394,24 @@ export const deleteCollaboration = [
     try {
       const { id } = req.params;
 
-      const projectService = serviceFactory.getProjectService();
-
       // First check if collaboration exists
-      const existingCollaboration = await projectService.collaboration.getCollaborationById(id);
+      const { data: existingCollaboration, error: fetchError } = await databaseService.supabase
+        .from('collaborations')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
       if (!existingCollaboration) {
         return res.status(404).json({ success: false, error: 'Collaboration not found' });
       }
 
-      await projectService.collaboration.deleteCollaboration(id);
+      const { error } = await databaseService.supabase
+        .from('collaborations')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
 
       logger.info(`Deleted collaboration with ID: ${id}`);
 

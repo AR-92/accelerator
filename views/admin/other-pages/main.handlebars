@@ -1,6 +1,6 @@
 <!-- Main Section Overview -->
 <div class="min-h-screen bg-background">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+   <div id="main-main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-8">
       <h1 class="text-3xl font-bold text-foreground mb-2">Main Overview</h1>
       <p class="text-muted-foreground">Overview of core system components and user management</p>
@@ -43,12 +43,35 @@
      <div class="bg-card rounded-lg border border-border p-6">
        <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-{{> quick-action link="/admin/todos" icon="clipboard-list" text="Manage Todos"}}
-{{> quick-action link="/admin/users" icon="users" text="Manage Users"}}
-{{> quick-action link="/admin/ideas" icon="lightbulb" text="Manage Ideas"}}
-{{> quick-action link="/admin/votes" icon="heart" text="Manage Votes"}}
-{{> quick-action link="/admin/collaborations" icon="users" text="Manage Collaborations"}}
-       </div>
-     </div>
-  </div>
+ {{> quick-action link="/admin/todos" icon="clipboard-list" text="Manage Todos"}}
+ {{> quick-action link="/admin/table-pages/users" icon="users" text="Manage Users"}}
+ {{> quick-action link="/admin/table-pages/ideas" icon="lightbulb" text="Manage Ideas"}}
+ {{> quick-action link="/admin/table-pages/votes" icon="heart" text="Manage Votes"}}
+ {{> quick-action link="/admin/table-pages/collaborations" icon="users" text="Manage Collaborations"}}
+        </div>
+      </div>
+   </div>
+ </div>
+{{!-- these are the quick links in this page that should be shown on the filter nav as links using htmx on load on this id : id="filter-links" --}}
+<div id="main-filter-links" class="hidden" _="on load set #filter-links.innerHTML to #main-filter-links.innerHTML">
+ <div class="flex flex-col items-center justify-center group">
+   <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+   <a id="manage-todos-btn" href="/admin/todos" hx-get="/admin/todos" hx-target="#main-main-content" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Manage Todos</a>
+ </div>
+ <div class="flex flex-col items-center justify-center group">
+   <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="manage-users-btn" href="/admin/table-pages/users" hx-get="/admin/table-pages/users" hx-target="#main-main-content" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Manage Users</a>
+ </div>
+ <div class="flex flex-col items-center justify-center group">
+   <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="manage-ideas-btn" href="/admin/table-pages/ideas" hx-get="/admin/table-pages/ideas" hx-target="#main-main-content" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Manage Ideas</a>
+ </div>
+ <div class="flex flex-col items-center justify-center group">
+   <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="manage-votes-btn" href="/admin/table-pages/votes" hx-get="/admin/table-pages/votes" hx-target="#main-main-content" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Manage Votes</a>
+ </div>
+ <div class="flex flex-col items-center justify-center group">
+   <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="manage-collaborations-btn" href="/admin/table-pages/collaborations" hx-get="/admin/table-pages/collaborations" hx-target="#main-main-content" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Manage Collaborations</a>
+ </div>
 </div>

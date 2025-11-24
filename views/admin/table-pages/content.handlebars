@@ -18,3 +18,18 @@
 
    {{> table}}
  </div>
+{{!-- these are the filter links for the table --}}
+<div id="content-filter-links" class="hidden" _="on load set #filter-links.innerHTML to #content-filter-links.innerHTML">
+  <div class="flex flex-col items-center justify-center group">
+    <div class="border-t-4 border-primary w-6 rounded-full opacity-100 group-hover:opacity-100"></div>
+    <a id="all-content-btn" href="/admin/table-pages/content" hx-get="/admin/table-pages/content" hx-target="#contentTableContainer" class="text-foreground font-medium text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">All Content</a>
+  </div>
+  <div class="flex flex-col items-center justify-center group">
+    <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="published-content-btn" href="/admin/table-pages/content?status=published" hx-get="/admin/table-pages/content?status=published" hx-target="#contentTableContainer" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Published</a>
+  </div>
+  <div class="flex flex-col items-center justify-center group">
+    <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="draft-content-btn" href="/admin/table-pages/content?status=draft" hx-get="/admin/table-pages/content?status=draft" hx-target="#contentTableContainer" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Draft</a>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import { handleValidationErrors } from '../common.js';
 // Idea validation rules
 export const validateIdeaCreation = [
   body('user_id')
+    .optional()
     .isInt({ min: 1 })
     .withMessage('Valid user ID is required'),
 

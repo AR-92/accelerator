@@ -1,13 +1,32 @@
 import logger from '../../utils/logger.js';
-import serviceFactory from '../../services/index.js';
+import { databaseService } from '../../services/index.js';
 
 // Main Section Overview
 export const getMain = async (req, res) => {
   try {
     logger.info('Admin main section overview accessed');
 
-    const mainOverviewService = serviceFactory.getMainOverviewService();
-    const stats = await mainOverviewService.getMainStats();
+    // Get main stats
+    const { count: totalUsers, error: userError } = await databaseService.supabase
+      .from('accounts')
+      .select('*', { count: 'exact', head: true });
+    if (userError) throw userError;
+
+    const { count: totalProjects, error: projError } = await databaseService.supabase
+      .from('projects')
+      .select('*', { count: 'exact', head: true });
+    if (projError) throw projError;
+
+    const { count: totalContent, error: contError } = await databaseService.supabase
+      .from('content')
+      .select('*', { count: 'exact', head: true });
+    if (contError) throw contError;
+
+    const stats = {
+      totalUsers: totalUsers || 0,
+      totalProjects: totalProjects || 0,
+      totalContent: totalContent || 0
+    };
 
     res.render('admin/other-pages/main', {
       title: 'Main Overview',

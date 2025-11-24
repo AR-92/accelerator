@@ -1,5 +1,5 @@
 import logger from '../../../utils/logger.js';
-import databaseService from '../../../services/supabase.js';
+import { databaseService } from '../../../services/index.js';
 
 
 // Legal API
@@ -11,7 +11,7 @@ export const getLegal = async (req, res) => {
     const offset = (pageNum - 1) * limitNum;
 
     let query = databaseService.supabase
-      .from('legal')
+      .from('Legal')
       .select('*', { count: 'exact' });
 
     if (search) {

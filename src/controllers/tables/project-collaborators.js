@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import databaseService from '../../services/supabase.js';
+import { databaseService } from '../../services/index.js';
 
 // Project Collaborators Management
 export const getProjectCollaborators = async (req, res) => {
@@ -16,6 +16,18 @@ export const getProjectCollaborators = async (req, res) => {
       throw error;
     }
 
+    let filteredProjectCollaborators = projectCollaborators;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredProjectCollaborators = projectCollaborators.filter(collaborator => {
+        return (collaborator.project_id && collaborator.project_id.toString().toLowerCase().includes(search)) ||
+               (collaborator.user_id && collaborator.user_id.toString().toLowerCase().includes(search)) ||
+               (collaborator.role && collaborator.role.toLowerCase().includes(search)) ||
+               (collaborator.status && collaborator.status.toLowerCase().includes(search));
+      });
+    }
+
     const columns = [
       { key: 'project_id', label: 'Project ID', type: 'text' },
       { key: 'user_id', label: 'User ID', type: 'text' },
@@ -30,14 +42,14 @@ export const getProjectCollaborators = async (req, res) => {
       { type: 'delete', onclick: 'deleteProjectCollaborator', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
 
-    const pagination = { currentPage: 1, limit: 10, total: projectCollaborators.length, start: 1, end: projectCollaborators.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
+    const pagination = { currentPage: 1, limit: 10, total: filteredProjectCollaborators.length, start: 1, end: filteredProjectCollaborators.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/table-pages/project-collaborators', {
-      title: 'Project Collaborators Management', currentPage: 'project-collaborators', currentSection: 'projects', tableId: 'project-collaborators', entityName: 'project collaborator', showCheckbox: true, showBulkActions: true, columns, data: projectCollaborators, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/project-collaborators', colspan
+      title: 'Project Collaborators Management', currentPage: 'project-collaborators', currentSection: 'projects', isTablePage: true, tableId: 'project-collaborators', entityName: 'project collaborator', showCheckbox: true, showBulkActions: true, columns, data: filteredProjectCollaborators, actions, bulkActions: [], pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/project-collaborators', colspan
     });
   } catch (error) {
     logger.error('Error loading project collaborators:', error);
-    res.render('admin/table-pages/project-collaborators', { title: 'Project Collaborators Management', currentPage: 'project-collaborators', currentSection: 'projects', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/project-collaborators', { title: 'Project Collaborators Management', currentPage: 'project-collaborators', currentSection: 'projects', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };

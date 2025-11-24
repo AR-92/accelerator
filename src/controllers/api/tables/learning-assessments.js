@@ -1,5 +1,5 @@
  import logger from '../../../utils/logger.js';
- import serviceFactory from '../../../services/index.js';
+ import { databaseService } from '../../../services/index.js';
  import { validateLearningAssessmentCreation, validateLearningAssessmentUpdate, validateLearningAssessmentDeletion } from '../../../middleware/validation/index.js';
  import { formatDate } from '../../../helpers/format/index.js';
  import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,16 +12,27 @@ export const getLearningAssessments = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const learningService = serviceFactory.getLearningService();
-    const { data: assessments, count } = await learningService.assessment.getAllLearningAssessments(
-      {
-        search,
-        assessment_type,
-        difficulty_level,
-        is_active: is_active !== undefined ? is_active === 'true' : undefined
-      },
-      { page: pageNum, limit: limitNum }
-    );
+    let query = databaseService.supabase.from('learning_assessments').select('*', { count: 'exact' });
+
+    if (search) {
+      query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+    }
+
+    if (assessment_type) {
+      query = query.eq('assessment_type', assessment_type);
+    }
+
+    if (difficulty_level) {
+      query = query.eq('difficulty_level', difficulty_level);
+    }
+
+    if (is_active !== undefined) {
+      query = query.eq('is_active', is_active === 'true');
+    }
+
+    const { data: assessments, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     const filters = [];
@@ -152,8 +163,13 @@ export const createLearningAssessment = [
     try {
       const assessmentData = req.body;
 
-      const learningService = serviceFactory.getLearningService();
-      const assessment = await learningService.assessment.createLearningAssessment(assessmentData);
+      const { data: assessment, error } = await databaseService.supabase
+        .from('learning_assessments')
+        .insert([assessmentData])
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Created learning assessment with ID: ${assessment.id}`);
 
@@ -207,9 +223,14 @@ export const updateLearningAssessment = [
       const { id } = req.params;
       const updates = req.body;
 
-      const learningService = serviceFactory.getLearningService();
-      const assessment = await learningService.assessment.updateLearningAssessment(id, updates);
+      const { data: assessment, error } = await databaseService.supabase
+        .from('learning_assessments')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
 
+      if (error) throw error;
       if (!assessment) {
         return res.status(404).json({ success: false, error: 'Learning assessment not found' });
       }
@@ -264,15 +285,25 @@ export const deleteLearningAssessment = [
   async (req, res) => {
     try {
       const { id } = req.params;
-      const learningService = serviceFactory.getLearningService();
 
       // Check if assessment exists and get title for message
-      const existingAssessment = await learningService.assessment.getLearningAssessmentById(id);
+      const { data: existingAssessment, error: fetchError } = await databaseService.supabase
+        .from('learning_assessments')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
       if (!existingAssessment) {
         return res.status(404).json({ success: false, error: 'Learning assessment not found' });
       }
 
-      await learningService.assessment.deleteLearningAssessment(id);
+      const { error } = await databaseService.supabase
+        .from('learning_assessments')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
 
       logger.info(`Deleted learning assessment with ID: ${id}`);
 

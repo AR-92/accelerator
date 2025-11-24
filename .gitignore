@@ -11,6 +11,9 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# Generated API files
+openapi.json
+
 # Logs
 logs
 *.log

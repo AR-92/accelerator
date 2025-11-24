@@ -1,5 +1,5 @@
 import logger from '../../../utils/logger.js';
-import serviceFactory from '../../../services/index.js';
+import { databaseService } from '../../../services/index.js';
 import { validateIdeaCreation, validateIdeaUpdate, validateIdeaDeletion } from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -17,8 +17,20 @@ export const getIdeas = async (req, res) => {
     if (status) filters.status = status;
     if (type) filters.type = type;
 
-    const ideaService = serviceFactory.getIdeaService();
-    const { data: ideas, count } = await ideaService.getAllIdeas(filters, { page: pageNum, limit: limitNum });
+    const offset = (pageNum - 1) * limitNum;
+    let query = databaseService.supabase
+      .from('ideas')
+      .select('*', { count: 'exact' });
+
+    if (status) query = query.eq('status', status);
+    if (type) query = query.eq('type', type);
+    if (search) query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+
+    const { data: ideas, error, count } = await query
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     const filterStrings = [];
@@ -44,9 +56,9 @@ export const getIdeas = async (req, res) => {
               </div>
             </div>
           </td>
-          <td class="px-6 py-4">
-            <div class="text-sm text-gray-900">${idea.author || 'Anonymous'}</div>
-          </td>
+           <td class="px-6 py-4">
+             <div class="text-sm text-gray-900">${idea.user_id || 'Anonymous'}</div>
+           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
               idea.status === 'active' ? 'bg-green-100 text-green-800' :

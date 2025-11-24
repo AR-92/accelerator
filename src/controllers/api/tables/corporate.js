@@ -1,5 +1,5 @@
 import logger from '../../../utils/logger.js';
-import serviceFactory from '../../../services/index.js';
+import { databaseService } from '../../../services/index.js';
 import { validateCorporateCreation, validateCorporateUpdate, validateCorporateDeletion, validateEnterpriseCreation, validateEnterpriseUpdate, validateEnterpriseDeletion, validateStartupCreation, validateStartupUpdate, validateStartupDeletion } from '../../../middleware/validation/index.js';
 import { formatDate, formatCurrency } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,15 +12,23 @@ export const getCorporates = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const businessService = serviceFactory.getBusinessService();
-    const { data: corporates, count } = await businessService.corporate.getAllCorporates(
-      {
-        search,
-        industry,
-        status
-      },
-      { page: pageNum, limit: limitNum }
-    );
+    let query = databaseService.supabase.from('corporate').select('*', { count: 'exact' });
+
+    if (search) {
+      query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
+    }
+
+    if (industry) {
+      query = query.eq('industry', industry);
+    }
+
+    if (status) {
+      query = query.eq('status', status);
+    }
+
+    const { data: corporates, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+
+    if (error) throw error;
 
     const totalPages = Math.ceil(count / limitNum);
 
@@ -116,10 +124,11 @@ export const updateCorporate = [
     const { id } = req.params;
     const { name, description, industry, founded_date, website, status, revenue, location, headquarters, employee_count, sector } = req.body;
 
-    const businessService = serviceFactory.getBusinessService();
-    const corporate = await businessService.corporate.updateCorporate(id, {
-      name,
-      description,
+    const { data: corporate, error } = await databaseService.supabase
+      .from('corporate')
+      .update({
+        name,
+        description,
       industry,
       founded_date,
       website,
@@ -258,15 +267,25 @@ export const updateCorporate = [
 export const deleteCorporate = async (req, res) => {
   try {
     const { id } = req.params;
-    const businessService = serviceFactory.getBusinessService();
 
     // Check if corporate exists and get name for message
-    const existingCorporate = await businessService.corporate.getCorporateById(id);
+    const { data: existingCorporate, error: fetchError } = await databaseService.supabase
+      .from('corporate')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (fetchError) throw fetchError;
     if (!existingCorporate) {
       return res.status(404).json({ success: false, error: 'Corporate not found' });
     }
 
-    await businessService.corporate.deleteCorporate(id);
+    const { error } = await databaseService.supabase
+      .from('corporate')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw error;
 
     logger.info(`Deleted corporate with ID: ${id}`);
 
@@ -318,18 +337,23 @@ export const createEnterprise = async (req, res) => {
   try {
     const { user_id, name, description, industry, founded_date, website, status, revenue, location } = req.body;
 
-    const businessService = serviceFactory.getBusinessService();
-    const enterprise = await businessService.enterprise.createEnterprise({
-      user_id: user_id || req.user?.id || 1,
-      name,
-      description,
-      industry,
-      founded_date,
-      website,
-      status: status || 'active',
-      revenue,
-      location
-    });
+    const { data: enterprise, error } = await databaseService.supabase
+      .from('enterprises')
+      .insert([{
+        user_id: user_id || req.user?.id || 1,
+        name,
+        description,
+        industry,
+        founded_date,
+        website,
+        status: status || 'active',
+        revenue,
+        location
+      }])
+      .select()
+      .single();
+
+    if (error) throw error;
 
     logger.info(`Created enterprise with ID: ${enterprise.id}`);
 
@@ -458,18 +482,24 @@ export const updateEnterprise = async (req, res) => {
     const { id } = req.params;
     const { name, description, industry, founded_date, website, status, revenue, location } = req.body;
 
-    const businessService = serviceFactory.getBusinessService();
-    const enterprise = await businessService.enterprise.updateEnterprise(id, {
-      name,
-      description,
-      industry,
-      founded_date,
-      website,
-      status,
-      revenue,
-      location,
-      updated_at: new Date().toISOString()
-    });
+    const { data: enterprise, error } = await databaseService.supabase
+      .from('enterprises')
+      .update({
+        name,
+        description,
+        industry,
+        founded_date,
+        website,
+        status,
+        revenue,
+        location,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
 
     logger.info(`Updated enterprise with ID: ${id}`);
 
@@ -595,15 +625,25 @@ export const updateEnterprise = async (req, res) => {
 export const deleteEnterprise = async (req, res) => {
   try {
     const { id } = req.params;
-    const businessService = serviceFactory.getBusinessService();
 
     // Check if enterprise exists and get name for message
-    const existingEnterprise = await businessService.enterprise.getEnterpriseById(id);
+    const { data: existingEnterprise, error: fetchError } = await databaseService.supabase
+      .from('enterprises')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (fetchError) throw fetchError;
     if (!existingEnterprise) {
       return res.status(404).json({ success: false, error: 'Enterprise not found' });
     }
 
-    await businessService.enterprise.deleteEnterprise(id);
+    const { error } = await databaseService.supabase
+      .from('enterprises')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw error;
 
     logger.info(`Deleted enterprise with ID: ${id}`);
 
@@ -655,16 +695,21 @@ export const createStartup = async (req, res) => {
   try {
     const { user_id, name, description, industry, founded_date, website, status } = req.body;
 
-    const businessService = serviceFactory.getBusinessService();
-    const startup = await businessService.startup.createStartup({
-      user_id: user_id || req.user?.id || 1,
-      name,
-      description,
-      industry,
-      founded_date,
-      website,
-      status: status || 'active'
-    });
+    const { data: startup, error } = await databaseService.supabase
+      .from('startups')
+      .insert([{
+        user_id: user_id || req.user?.id || 1,
+        name,
+        description,
+        industry,
+        founded_date,
+        website,
+        status: status || 'active'
+      }])
+      .select()
+      .single();
+
+    if (error) throw error;
 
     logger.info(`Created startup with ID: ${startup.id}`);
 
@@ -793,16 +838,22 @@ export const updateStartup = async (req, res) => {
     const { id } = req.params;
     const { name, description, industry, founded_date, website, status } = req.body;
 
-    const businessService = serviceFactory.getBusinessService();
-    const startup = await businessService.startup.updateStartup(id, {
-      name,
-      description,
-      industry,
-      founded_date,
-      website,
-      status,
-      updated_at: new Date().toISOString()
-    });
+    const { data: startup, error } = await databaseService.supabase
+      .from('startups')
+      .update({
+        name,
+        description,
+        industry,
+        founded_date,
+        website,
+        status,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
 
     logger.info(`Updated startup with ID: ${id}`);
 
@@ -928,15 +979,25 @@ export const updateStartup = async (req, res) => {
 export const deleteStartup = async (req, res) => {
   try {
     const { id } = req.params;
-    const businessService = serviceFactory.getBusinessService();
 
     // Check if startup exists and get name for message
-    const existingStartup = await businessService.startup.getStartupById(id);
+    const { data: existingStartup, error: fetchError } = await databaseService.supabase
+      .from('startups')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (fetchError) throw fetchError;
     if (!existingStartup) {
       return res.status(404).json({ success: false, error: 'Startup not found' });
     }
 
-    await businessService.startup.deleteStartup(id);
+    const { error } = await databaseService.supabase
+      .from('startups')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw error;
 
     logger.info(`Deleted startup with ID: ${id}`);
 

@@ -1,16 +1,37 @@
 import logger from '../../utils/logger.js';
 import databaseService from '../../services/supabase.js';
+import { isHtmxRequest } from '../../helpers/http/index.js';
 
 // Users Management
 export const getUsers = async (req, res) => {
   try {
     logger.info('Admin users page accessed');
 
-    // Fetch real data from Supabase Accounts table
-    const { data: users, error } = await databaseService.supabase
+    const { search, status, page = 1, limit = 10 } = req.query;
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+    const offset = (pageNum - 1) * limitNum;
+
+    // Build Supabase query with filters
+    let query = databaseService.supabase
       .from('Accounts')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .select('*', { count: 'exact' });
+
+    if (search) {
+      query = query.or(`display_name.ilike.%${search}%,username.ilike.%${search}%`);
+    }
+    if (status === 'active') {
+      query = query.eq('is_verified', true);
+    } else if (status === 'inactive') {
+      query = query.eq('is_verified', false);
+    }
+
+    // Apply pagination
+    query = query
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limitNum - 1);
+
+    const { data: users, error, count } = await query;
 
     if (error) {
       logger.error('Error fetching users:', error);
@@ -22,11 +43,30 @@ export const getUsers = async (req, res) => {
       id: user.id,
       name: user.display_name || user.username || `User ${user.id}`,
       email: user.username ? `${user.username}@example.com` : `user${user.id}@example.com`, // Placeholder since email not in Accounts
-      status: user.is_verified ? 'active' : 'pending',
+      status: user.is_verified ? 'active' : 'inactive',
       role: user.account_type === 'business' ? 'Business' : 'User',
       created_at: user.created_at,
       last_login: user.last_login_at
     }));
+
+    const total = count || 0;
+    const totalPages = Math.ceil(total / limitNum);
+    const start = offset + 1;
+    const end = Math.min(offset + limitNum, total);
+    const hasPrev = pageNum > 1;
+    const hasNext = pageNum < totalPages;
+    const prevPage = hasPrev ? pageNum - 1 : null;
+    const nextPage = hasNext ? pageNum + 1 : null;
+    const pages = [];
+    for (let i = Math.max(1, pageNum - 2); i <= Math.min(totalPages, pageNum + 2); i++) {
+      pages.push(i);
+    }
+
+    const filters = [];
+    if (search) filters.push(`search: "${search}"`);
+    if (status) filters.push(`status: ${status}`);
+    if (pageNum > 1) filters.push(`page: ${pageNum}`);
+    logger.info(`Fetched ${mappedUsers.length} of ${total} users${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`);
 
     const columns = [
       { key: 'name', label: 'Name', type: 'text' },
@@ -71,37 +111,154 @@ export const getUsers = async (req, res) => {
     ];
 
     const pagination = {
-      currentPage: 1,
-      limit: 10,
-      total: mappedUsers.length,
-      start: 1,
-      end: mappedUsers.length,
-      hasPrev: false,
-      hasNext: false,
-      prevPage: 0,
-      nextPage: 2,
-      pages: [1]
+      currentPage: pageNum,
+      limit: limitNum,
+      total,
+      start,
+      end,
+      hasPrev,
+      hasNext,
+      prevPage,
+      nextPage,
+      pages
     };
 
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/table-pages/users', {
-      title: 'Users Management',
-      currentPage: 'users',
-      currentSection: 'main',
-      tableId: 'users',
-      entityName: 'user',
-      showCheckbox: true,
-      showBulkActions: true,
-      columns,
-      data: mappedUsers,
-      actions,
-      bulkActions,
-      pagination,
-      query: { search: '', status: '' },
-      currentUrl: '/admin/table-pages/users',
-      colspan
-    });
+    if (isHtmxRequest(req)) {
+      // For HTMX requests, render just the table HTML
+      const tableHtml = `
+        <table class="min-w-full table-auto bg-card">
+          <!-- Table Header -->
+          <thead class="bg-card border-b border-border">
+            <tr>
+              <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">
+                <input type="checkbox" id="selectAll-users" class="rounded border-input text-primary" aria-label="Select all users">
+              </th>
+              ${columns.map(col => `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider${col.hidden ? ' hidden ' + col.responsive : ''} bg-muted">${col.label}</th>`).join('')}
+              <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">Actions</th>
+            </tr>
+          </thead>
+          <!-- Table Body -->
+          <tbody class="text-sm text-card-foreground">
+            ${mappedUsers.length > 0 ? mappedUsers.map(user => `
+              <tr id="user-row-${user.id}" class="h-16 border-b border-border hover:bg-muted/50 even:bg-muted/30 transition-colors duration-150">
+                <td class="px-6 py-4">
+                  <input type="checkbox" class="userCheckbox rounded border-input text-primary value="${user.id}" data-user-id="${user.id}" aria-label="Select user ${user.name}">
+                </td>
+                <td class="px-6 py-4">
+                  <div class="text-sm text-card-foreground truncate max-w-xs" title="${user.name}">${user.name}</div>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="text-sm text-card-foreground truncate max-w-xs" title="${user.email}">${user.email}</div>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${user.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">${user.status === 'active' ? 'Active' : 'Inactive'}</span>
+                </td>
+                <td class="px-6 py-4 hidden md:table-cell">
+                  <div class="text-sm text-card-foreground truncate max-w-xs" title="${user.role}">${user.role}</div>
+                </td>
+                <td class="px-6 py-4 hidden lg:table-cell">
+                  <div class="text-sm text-card-foreground">${new Date(user.created_at).toLocaleDateString()}</div>
+                </td>
+                <td class="px-6 py-4 hidden lg:table-cell">
+                  <div class="text-sm text-card-foreground">${user.last_login ? new Date(user.last_login).toLocaleDateString() : 'Never'}</div>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="relative">
+                    <button onclick="toggleActionMenu('user', ${user.id})" class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors" aria-label="Actions menu">
+                      <svg class="w-4 h-4 lucide lucide-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                    </button>
+                    <div id="actionMenu-user-${user.id}" class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-popover rounded-md shadow-lg z-10 border border-border">
+                      <div class="py-1">
+                        <a href="/admin/table-pages/users" class="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                          <svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                          View Details
+                        </a>
+                        <button onclick="editUser(${user.id})" class="flex items-center w-full px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                          <svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>
+                          Edit User
+                        </button>
+                        <button onclick="toggleUserStatus(${user.id}, '${user.status}')" class="flex items-center w-full px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                          <svg class="w-4 h-4 mr-3 lucide lucide-user-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="16,11 18,13 22,9"></polyline></svg>
+                          ${user.status === 'active' ? 'Deactivate' : 'Activate'}
+                        </button>
+                        <button onclick="deleteUser(${user.id}, '${user.name}')" class="flex items-center w-full px-4 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors">
+                          <svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            `).join('') : `
+              <tr class="h-16">
+                <td colspan="${colspan}" class="px-6 py-8 text-center text-muted-foreground">
+                  <div class="flex flex-col items-center justify-center py-12">
+                    <svg class="w-16 h-16 text-muted-foreground/50 mb-4 lucide lucide-clipboard-list" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h2"/><path d="M8 16h2"/></svg>
+                    <p class="text-lg font-medium text-muted-foreground mb-2">No users found</p>
+                    <p class="text-sm text-muted-foreground/70">Get started by creating your first user.</p>
+                  </div>
+                </td>
+              </tr>
+            `}
+          </tbody>
+          <!-- Table Footer -->
+          <tfoot>
+            <tr>
+              <td colspan="${colspan}" class="bg-card border-t border-border p-4">
+                <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div class="text-sm text-muted-foreground">
+                    Showing ${start}-${end} of ${total} users
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span class="text-sm text-muted-foreground font-medium">Rows per page:</span>
+                    <select id="rowsPerPage-users" name="limit" class="border border-input rounded-lg px-3 py-2 text-sm bg-background shadow-sm focus:outline-none focus:border-ring transition-colors" hx-get="/admin/table-pages/users" hx-target="#usersTableContainer" hx-include="[name='search'],[name='status']">
+                      <option value="10" ${limitNum === 10 ? 'selected' : ''}>10</option>
+                      <option value="20" ${limitNum === 20 ? 'selected' : ''}>20</option>
+                      <option value="50" ${limitNum === 50 ? 'selected' : ''}>50</option>
+                      <option value="100" ${limitNum === 100 ? 'selected' : ''}>100</option>
+                    </select>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <nav class="flex items-center gap-1 text-sm">
+                      ${hasPrev ? `<a href="?page=${prevPage}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200 font-medium" hx-get="/admin/table-pages/users?page=${prevPage}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" hx-target="#usersTableContainer">
+                        <svg class="w-4 h-4 lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                      </a>` : ''}
+                      ${pages.map(p => `<a href="?page=${p}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg${p === pageNum ? ' bg-primary text-primary-foreground scale-105' : ' border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground'} transition-all duration-200 font-medium" hx-get="/admin/table-pages/users?page=${p}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" hx-target="#usersTableContainer">${p}</a>`).join('')}
+                      ${hasNext ? `<a href="?page=${nextPage}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200" hx-get="/admin/table-pages/users?page=${nextPage}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" hx-target="#usersTableContainer" title="Next page">
+                        <svg class="w-4 h-4 lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                      </a>` : ''}
+                    </nav>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      `;
+      res.send(tableHtml);
+    } else {
+      res.render('admin/table-pages/users', {
+        title: 'Users Management',
+        currentPage: 'users',
+        currentSection: 'main',
+        isTablePage: true,
+        tableId: 'users',
+        entityName: 'user',
+        showCheckbox: true,
+        showBulkActions: true,
+        columns,
+        data: mappedUsers,
+        actions,
+        bulkActions,
+        pagination,
+        query: { search: search || '', status: status || '' },
+        currentUrl: '/admin/table-pages/users',
+        colspan
+      });
+    }
   } catch (error) {
     logger.error('Error loading users:', error);
     res.render('admin/table-pages/users', {

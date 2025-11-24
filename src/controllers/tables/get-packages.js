@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import databaseService from '../../services/supabase.js';
+import { databaseService } from '../../services/index.js';
 
 // Packages Management
 export const getPackages = async (req, res) => {
@@ -73,6 +73,19 @@ export const getPackages = async (req, res) => {
       };
     });
 
+    let filteredPackages = packages;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredPackages = packages.filter(pkg => {
+        return (pkg.name && pkg.name.toLowerCase().includes(search)) ||
+               (pkg.description && pkg.description.toLowerCase().includes(search)) ||
+               (pkg.price && pkg.price.toLowerCase().includes(search)) ||
+               (pkg.status && pkg.status.toLowerCase().includes(search)) ||
+               (pkg.features && pkg.features.toLowerCase().includes(search));
+      });
+    }
+
     const columns = [
       { key: 'name', label: 'Package Name', type: 'text' },
       { key: 'description', label: 'Description', type: 'text' },
@@ -97,14 +110,14 @@ export const getPackages = async (req, res) => {
       { onclick: 'bulkDeletePackages', buttonId: 'bulkDeleteBtn', label: 'Delete Selected' }
     ];
 
-    const pagination = { currentPage: 1, limit: 10, total: packages.length, start: 1, end: packages.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
+    const pagination = { currentPage: 1, limit: 10, total: filteredPackages.length, start: 1, end: filteredPackages.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/table-pages/packages', {
-      title: 'Packages Management', currentPage: 'packages', currentSection: 'financial', tableId: 'packages', entityName: 'package', showCheckbox: true, showBulkActions: true, columns, data: packages, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/packages', colspan
+      title: 'Packages Management', currentPage: 'packages', currentSection: 'financial', isTablePage: true, tableId: 'packages', entityName: 'package', showCheckbox: true, showBulkActions: true, columns, data: filteredPackages, actions, bulkActions, pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/packages', colspan
     });
   } catch (error) {
     logger.error('Error loading packages:', error);
-    res.render('admin/table-pages/packages', { title: 'Packages Management', currentPage: 'packages', currentSection: 'financial', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/packages', { title: 'Packages Management', currentPage: 'packages', currentSection: 'financial', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: ', status: ' } });
   }
 };

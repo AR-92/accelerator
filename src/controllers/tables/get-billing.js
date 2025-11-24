@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import databaseService from '../../services/supabase.js';
+import { databaseService } from '../../services/index.js';
 
 // Billing Management
 export const getBilling = async (req, res) => {
@@ -8,7 +8,7 @@ export const getBilling = async (req, res) => {
 
     // Fetch real data from Supabase billing table
     const { data: transactions, error } = await databaseService.supabase
-      .from('Billing')
+      .from('billing')
       .select('*')
       .order('created_at', { ascending: false });
 
@@ -27,6 +27,18 @@ export const getBilling = async (req, res) => {
       package: tx.plan_name || 'N/A'
     }));
 
+    let filteredTransactions = mappedTransactions;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredTransactions = mappedTransactions.filter(tx => {
+        return (tx.user && tx.user.toLowerCase().includes(search)) ||
+               (tx.package && tx.package.toLowerCase().includes(search)) ||
+               (tx.amount && tx.amount.toLowerCase().includes(search)) ||
+               (tx.status && tx.status.toLowerCase().includes(search));
+      });
+    }
+
     const columns = [
       { key: 'user', label: 'User', type: 'text' },
       { key: 'package', label: 'Package', type: 'text' },
@@ -44,14 +56,14 @@ export const getBilling = async (req, res) => {
       { onclick: 'bulkRefundTransactions', buttonId: 'bulkRefundBtn', label: 'Refund Selected' }
     ];
 
-    const pagination = { currentPage: 1, limit: 10, total: mappedTransactions.length, start: 1, end: mappedTransactions.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
+    const pagination = { currentPage: 1, limit: 10, total: filteredTransactions.length, start: 1, end: filteredTransactions.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/table-pages/billing', {
-      title: 'Billing Management', currentPage: 'billing', currentSection: 'financial', tableId: 'billing', entityName: 'transaction', showCheckbox: true, showBulkActions: true, columns, data: mappedTransactions, actions, bulkActions, pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/billing', colspan
+      title: 'Billing Management', currentPage: 'billing', currentSection: 'financial', isTablePage: true, tableId: 'billing', entityName: 'transaction', showCheckbox: true, showBulkActions: true, columns, data: filteredTransactions, actions, bulkActions, pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/billing', colspan
     });
   } catch (error) {
     logger.error('Error loading billing:', error);
-    res.render('admin/table-pages/billing', { title: 'Billing Management', currentPage: 'billing', currentSection: 'financial', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/billing', { title: 'Billing Management', currentPage: 'billing', currentSection: 'financial', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };

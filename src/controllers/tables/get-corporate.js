@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import databaseService from '../../services/supabase.js';
+import { databaseService } from '../../services/index.js';
 
 // Corporate Management
 export const getCorporate = async (req, res) => {
@@ -7,21 +7,32 @@ export const getCorporate = async (req, res) => {
     logger.info('Admin corporate page accessed');
 
     const { data: corporates, error } = await databaseService.supabase
-      .from('corporates')
+      .from('corporate')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('name', { ascending: false });
 
     if (error) {
       logger.error('Error fetching corporates:', error);
       throw error;
     }
 
+    let filteredCorporates = corporates;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredCorporates = corporates.filter(corp => {
+        return (corp.name && corp.name.toLowerCase().includes(search)) ||
+               (corp.industry && corp.industry.toLowerCase().includes(search)) ||
+               (corp.company_size && corp.company_size.toLowerCase().includes(search)) ||
+               (corp.status && corp.status.toLowerCase().includes(search));
+      });
+    }
+
     const columns = [
       { key: 'name', label: 'Name', type: 'text' },
       { key: 'industry', label: 'Industry', type: 'text' },
       { key: 'company_size', label: 'Size', type: 'text' },
-      { key: 'status', label: 'Status', type: 'status' },
-      { key: 'created_at', label: 'Created', type: 'date', hidden: true, responsive: 'lg:table-cell' }
+      { key: 'status', label: 'Status', type: 'status' }
     ];
 
     const actions = [
@@ -30,14 +41,14 @@ export const getCorporate = async (req, res) => {
       { type: 'delete', onclick: 'deleteCorporate', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
 
-    const pagination = { currentPage: 1, limit: 10, total: corporates.length, start: 1, end: corporates.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
+    const pagination = { currentPage: 1, limit: 10, total: filteredCorporates.length, start: 1, end: filteredCorporates.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/table-pages/corporate', {
-      title: 'Corporate Management', currentPage: 'corporate', currentSection: 'business', tableId: 'corporate', entityName: 'corporate', showCheckbox: true, showBulkActions: true, columns, data: corporates, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/corporate', colspan
+      title: 'Corporate Management', currentPage: 'corporate', currentSection: 'business', isTablePage: true, tableId: 'corporate', entityName: 'corporate', showCheckbox: true, showBulkActions: true, columns, data: filteredCorporates, actions, bulkActions: [], pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/corporate', colspan
     });
   } catch (error) {
     logger.error('Error loading corporates:', error);
-    res.render('admin/table-pages/corporate', { title: 'Corporate Management', currentPage: 'corporate', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/corporate', { title: 'Corporate Management', currentPage: 'corporate', currentSection: 'business', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };

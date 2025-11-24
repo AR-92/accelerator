@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import databaseService from '../../services/supabase.js';
+import { databaseService } from '../../services/index.js';
 
 // Business Model Management
 export const getBusinessModel = async (req, res) => {
@@ -16,6 +16,18 @@ export const getBusinessModel = async (req, res) => {
       throw error;
     }
 
+    let filteredBusinessModels = businessModels;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredBusinessModels = businessModels.filter(model => {
+        return (model.name && model.name.toLowerCase().includes(search)) ||
+               (model.business_type && model.business_type.toLowerCase().includes(search)) ||
+               (model.industry && model.industry.toLowerCase().includes(search)) ||
+               (model.status && model.status.toLowerCase().includes(search));
+      });
+    }
+
     const columns = [
       { key: 'name', label: 'Name', type: 'text' },
       { key: 'business_type', label: 'Type', type: 'text' },
@@ -30,14 +42,14 @@ export const getBusinessModel = async (req, res) => {
       { type: 'delete', onclick: 'deleteBusinessModel', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
 
-    const pagination = { currentPage: 1, limit: 10, total: businessModels.length, start: 1, end: businessModels.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
+    const pagination = { currentPage: 1, limit: 10, total: filteredBusinessModels.length, start: 1, end: filteredBusinessModels.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/other-pages/business-model', {
-      title: 'Business Model Management', currentPage: 'business-model', currentSection: 'business', tableId: 'business-model', entityName: 'business model', showCheckbox: true, showBulkActions: true, columns, data: businessModels, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/other-pages/business-model', colspan
+    res.render('admin/table-pages/business-model', {
+      title: 'Business Model Management', currentPage: 'business-model', currentSection: 'business', isTablePage: true, tableId: 'business-model', entityName: 'business model', showCheckbox: true, showBulkActions: true, columns, data: filteredBusinessModels, actions, bulkActions: [], pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/business-model', colspan
     });
   } catch (error) {
     logger.error('Error loading business models:', error);
-    res.render('admin/other-pages/business-model', { title: 'Business Model Management', currentPage: 'business-model', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/business-model', { title: 'Business Model Management', currentPage: 'business-model', currentSection: 'business', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };

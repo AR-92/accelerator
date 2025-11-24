@@ -1,5 +1,5 @@
  import logger from '../../../utils/logger.js';
- import serviceFactory from '../../../services/index.js';
+ import { databaseService } from '../../../services/index.js';
  import { validateLearningCategoryCreation, validateLearningCategoryUpdate, validateLearningCategoryDeletion } from '../../../middleware/validation/index.js';
  import { formatDate } from '../../../helpers/format/index.js';
  import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,16 +12,27 @@ export const getLearningCategories = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const learningService = serviceFactory.getLearningService();
-    const { data: categories, count } = await learningService.category.getAllLearningCategories(
-      {
-        search,
-        category_type,
-        is_active: is_active !== undefined ? is_active === 'true' : undefined,
-        is_featured: is_featured !== undefined ? is_featured === 'true' : undefined
-      },
-      { page: pageNum, limit: limitNum }
-    );
+    let query = databaseService.supabase.from('learning_categories').select('*', { count: 'exact' });
+
+    if (search) {
+      query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
+    }
+
+    if (category_type) {
+      query = query.eq('category_type', category_type);
+    }
+
+    if (is_active !== undefined) {
+      query = query.eq('is_active', is_active === 'true');
+    }
+
+    if (is_featured !== undefined) {
+      query = query.eq('is_featured', is_featured === 'true');
+    }
+
+    const { data: categories, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     const filters = [];
@@ -154,8 +165,13 @@ export const createLearningCategory = [
     try {
       const categoryData = req.body;
 
-      const learningService = serviceFactory.getLearningService();
-      const category = await learningService.category.createLearningCategory(categoryData);
+      const { data: category, error } = await databaseService.supabase
+        .from('learning_categories')
+        .insert([categoryData])
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Created learning category with ID: ${category.id}`);
 
@@ -209,9 +225,14 @@ export const updateLearningCategory = [
       const { id } = req.params;
       const updates = req.body;
 
-      const learningService = serviceFactory.getLearningService();
-      const category = await learningService.category.updateLearningCategory(id, updates);
+      const { data: category, error } = await databaseService.supabase
+        .from('learning_categories')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
 
+      if (error) throw error;
       if (!category) {
         return res.status(404).json({ success: false, error: 'Learning category not found' });
       }
@@ -267,15 +288,24 @@ export const deleteLearningCategory = [
     try {
       const { id } = req.params;
 
-      const learningService = serviceFactory.getLearningService();
-
       // Check if category exists
-      const existingCategory = await learningService.category.getLearningCategoryById(id);
+      const { data: existingCategory, error: fetchError } = await databaseService.supabase
+        .from('learning_categories')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
       if (!existingCategory) {
         return res.status(404).json({ success: false, error: 'Learning category not found' });
       }
 
-      await learningService.category.deleteLearningCategory(id);
+      const { error } = await databaseService.supabase
+        .from('learning_categories')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
 
       logger.info(`Deleted learning category with ID: ${id}`);
 

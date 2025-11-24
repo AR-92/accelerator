@@ -1,6 +1,6 @@
 <!-- System Section Overview -->
 <div class="min-h-screen bg-background">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+   <div id="system-main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="mb-8">
       <h1 class="text-3xl font-bold text-foreground mb-2">System Overview</h1>
       <p class="text-muted-foreground">Overview of system health, notifications, and activity monitoring</p>
@@ -61,7 +61,22 @@
 {{> quick-action link="/admin/system-health" icon="activity" text="System Health"}}
 {{> quick-action link="/admin/notifications" icon="bell" text="Notifications"}}
 {{> quick-action link="/admin/activity" icon="activity" text="Activity Logs"}}
-       </div>
-     </div>
-  </div>
+        </div>
+      </div>
+   </div>
+ </div>
+{{!-- these are the quick links in this page that should be shown on the filter nav as links using htmx on load on this id : id="filter-links" --}}
+<div id="system-filter-links" class="hidden" _="on load set #filter-links.innerHTML to #system-filter-links.innerHTML">
+ <div class="flex flex-col items-center justify-center group">
+   <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+   <a id="system-health-btn" href="/admin/system-health" hx-get="/admin/system-health" hx-target="#system-main-content" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">System Health</a>
+ </div>
+ <div class="flex flex-col items-center justify-center group">
+   <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+   <a id="notifications-btn" href="/admin/notifications" hx-get="/admin/notifications" hx-target="#system-main-content" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Notifications</a>
+ </div>
+ <div class="flex flex-col items-center justify-center group">
+   <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+   <a id="activity-logs-btn" href="/admin/activity" hx-get="/admin/activity" hx-target="#system-main-content" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Activity Logs</a>
+ </div>
 </div>

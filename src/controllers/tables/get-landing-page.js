@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import databaseService from '../../services/supabase.js';
+import { databaseService } from '../../services/index.js';
 
 // Landing Page Management
 export const getLandingPage = async (req, res) => {
@@ -8,7 +8,7 @@ export const getLandingPage = async (req, res) => {
 
     // Fetch real data from Supabase landing_pages table
     const { data: sections, error } = await databaseService.supabase
-      .from('landing_pages')
+      .from('landing_page_management')
       .select('*')
       .order('created_at', { ascending: false });
 
@@ -25,6 +25,16 @@ export const getLandingPage = async (req, res) => {
       last_updated: section.updated_at || section.created_at
     }));
 
+    let filteredSections = mappedSections;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredSections = mappedSections.filter(section => {
+        return (section.name && section.name.toLowerCase().includes(search)) ||
+               (section.status && section.status.toLowerCase().includes(search));
+      });
+    }
+
     const columns = [
       { key: 'name', label: 'Section Name', type: 'text' },
       { key: 'status', label: 'Status', type: 'status' },
@@ -36,14 +46,14 @@ export const getLandingPage = async (req, res) => {
       { type: 'button', onclick: 'toggleSection', label: 'Toggle', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-power" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>' }
     ];
 
-    const pagination = { currentPage: 1, limit: 10, total: mappedSections.length, start: 1, end: mappedSections.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
+    const pagination = { currentPage: 1, limit: 10, total: filteredSections.length, start: 1, end: filteredSections.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (false ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/table-pages/landing-page', {
-      title: 'Landing Page Management', currentPage: 'landing-page', currentSection: 'content-management', tableId: 'landing-page', entityName: 'section', showCheckbox: false, showBulkActions: false, columns, data: mappedSections, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/landing-page', colspan
+      title: 'Landing Page Management', currentPage: 'landing-page', currentSection: 'content-management', isTablePage: true, tableId: 'landing-page', entityName: 'section', showCheckbox: false, showBulkActions: false, columns, data: filteredSections, actions, bulkActions: [], pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/landing-page', colspan
     });
   } catch (error) {
     logger.error('Error loading landing page:', error);
-    res.render('admin/table-pages/landing-page', { title: 'Landing Page Management', currentPage: 'landing-page', currentSection: 'content-management', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/landing-page', { title: 'Landing Page Management', currentPage: 'landing-page', currentSection: 'content-management', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };

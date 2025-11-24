@@ -109,8 +109,8 @@ export default function apiRoutes(app) {
   calendarRoutes(app);
   helpCenterRoutes(app);
 
-   // Other API routes
-   accountsRoutes(app);
-   todoApiRoutes(app);
-   portfoliosRoutes(app);
+    // Other API routes
+     accountsRoutes(app);
+     todoApiRoutes(app);
+     portfoliosRoutes(app);
 }

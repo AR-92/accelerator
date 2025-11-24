@@ -18,3 +18,18 @@
 
    {{> table}}
  </div>
+{{!-- these are the filter links for the table --}}
+<div id="business-model-filter-links" class="hidden" _="on load set #filter-links.innerHTML to #business-model-filter-links.innerHTML">
+  <div class="flex flex-col items-center justify-center group">
+    <div class="border-t-4 border-primary w-6 rounded-full opacity-100 group-hover:opacity-100"></div>
+    <a id="all-business-model-btn" href="/admin/table-pages/business-model" hx-get="/admin/table-pages/business-model" hx-target="#business-modelTableContainer" class="text-foreground font-medium text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">All Business Model</a>
+  </div>
+  <div class="flex flex-col items-center justify-center group">
+    <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="active-business-model-btn" href="/admin/table-pages/business-model?status=active" hx-get="/admin/table-pages/business-model?status=active" hx-target="#business-modelTableContainer" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Active</a>
+  </div>
+  <div class="flex flex-col items-center justify-center group">
+    <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="inactive-business-model-btn" href="/admin/table-pages/business-model?status=inactive" hx-get="/admin/table-pages/business-model?status=inactive" hx-target="#business-modelTableContainer" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Inactive</a>
+  </div>
+</div>

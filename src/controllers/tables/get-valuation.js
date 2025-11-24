@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import databaseService from '../../services/supabase.js';
+import { databaseService } from '../../services/index.js';
 
 // Valuation Management
 export const getValuation = async (req, res) => {
@@ -16,6 +16,17 @@ export const getValuation = async (req, res) => {
       throw error;
     }
 
+    let filteredValuations = valuations;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredValuations = valuations.filter(valuation => {
+        return (valuation.valuation_method && valuation.valuation_method.toLowerCase().includes(search)) ||
+               (valuation.enterprise_value && valuation.enterprise_value.toLowerCase().includes(search)) ||
+               (valuation.equity_value && valuation.equity_value.toLowerCase().includes(search));
+      });
+    }
+
     const columns = [
       { key: 'valuation_date', label: 'Date', type: 'date' },
       { key: 'valuation_method', label: 'Method', type: 'text' },
@@ -30,14 +41,14 @@ export const getValuation = async (req, res) => {
       { type: 'delete', onclick: 'deleteValuation', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
     ];
 
-    const pagination = { currentPage: 1, limit: 10, total: valuations.length, start: 1, end: valuations.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
+    const pagination = { currentPage: 1, limit: 10, total: filteredValuations.length, start: 1, end: filteredValuations.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     res.render('admin/table-pages/valuation', {
-      title: 'Valuation Management', currentPage: 'valuation', currentSection: 'business', tableId: 'valuation', entityName: 'valuation', showCheckbox: true, showBulkActions: true, columns, data: valuations, actions, bulkActions: [], pagination, query: { search: '', status: '' }, currentUrl: '/admin/table-pages/valuation', colspan
+      title: 'Valuation Management', currentPage: 'valuation', currentSection: 'business', isTablePage: true, tableId: 'valuation', entityName: 'valuation', showCheckbox: true, showBulkActions: true, columns, data: filteredValuations, actions, bulkActions: [], pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/valuation', colspan
     });
   } catch (error) {
     logger.error('Error loading valuations:', error);
-    res.render('admin/table-pages/valuation', { title: 'Valuation Management', currentPage: 'valuation', currentSection: 'business', data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/valuation', { title: 'Valuation Management', currentPage: 'valuation', currentSection: 'business', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };

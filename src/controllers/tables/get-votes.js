@@ -1,5 +1,5 @@
 import logger from '../../utils/logger.js';
-import databaseService from '../../services/supabase.js';
+import { databaseService } from '../../services/index.js';
 
 // Votes Management
 export const getVotes = async (req, res) => {
@@ -8,14 +8,14 @@ export const getVotes = async (req, res) => {
 
     // Fetch vote data from ideas and portfolios tables
     const { data: ideas, error: ideasError } = await databaseService.supabase
-      .from('ideas')
+      .from('idea')
       .select('id, title, upvotes, downvotes, created_at')
       .order('created_at', { ascending: false });
 
     const { data: portfolios, error: portfoliosError } = await databaseService.supabase
       .from('portfolios')
-      .select('id, title, votes, upvotes, downvotes, created_at')
-      .order('created_at', { ascending: false });
+      .select('id, title, votes, upvotes, downvotes, created_date')
+      .order('created_date', { ascending: false });
 
     if (ideasError) {
       logger.error('Error fetching ideas votes:', ideasError);
@@ -64,7 +64,7 @@ export const getVotes = async (req, res) => {
             entity_title: portfolio.title,
             vote_type: 'upvote',
             vote_count: portfolio.upvotes,
-            created_at: portfolio.created_at
+            created_at: portfolio.created_date
           });
         }
         if (portfolio.downvotes > 0) {
@@ -74,7 +74,7 @@ export const getVotes = async (req, res) => {
             entity_title: portfolio.title,
             vote_type: 'downvote',
             vote_count: portfolio.downvotes,
-            created_at: portfolio.created_at
+            created_at: portfolio.created_date
           });
         }
       });
@@ -82,6 +82,18 @@ export const getVotes = async (req, res) => {
 
     // Sort by creation date
     votes.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+    let filteredVotes = votes;
+
+    if (req.query.search) {
+      const search = req.query.search.toLowerCase();
+      filteredVotes = votes.filter(vote => {
+        return (vote.entity_type && vote.entity_type.toLowerCase().includes(search)) ||
+               (vote.entity_title && vote.entity_title.toLowerCase().includes(search)) ||
+               (vote.vote_type && vote.vote_type.toLowerCase().includes(search)) ||
+               (vote.vote_count && vote.vote_count.toString().toLowerCase().includes(search));
+      });
+    }
 
     const columns = [
       { key: 'entity_type', label: 'Type', type: 'text' },
@@ -113,9 +125,9 @@ export const getVotes = async (req, res) => {
     const pagination = {
       currentPage: 1,
       limit: 10,
-      total: votes.length,
+      total: filteredVotes.length,
       start: 1,
-      end: votes.length,
+      end: filteredVotes.length,
       hasPrev: false,
       hasNext: false,
       prevPage: 0,
@@ -129,16 +141,17 @@ export const getVotes = async (req, res) => {
       title: 'Votes Management',
       currentPage: 'votes',
       currentSection: 'main',
+      isTablePage: true,
       tableId: 'votes',
       entityName: 'vote',
       showCheckbox: true,
       showBulkActions: true,
       columns,
-      data: votes,
+      data: filteredVotes,
       actions,
       bulkActions,
       pagination,
-      query: { search: '', status: '' },
+      query: { search: req.query.search || '', status: '' },
       currentUrl: '/admin/table-pages/votes',
       colspan
     });
@@ -148,6 +161,7 @@ export const getVotes = async (req, res) => {
       title: 'Votes Management',
       currentPage: 'votes',
       currentSection: 'main',
+      isTablePage: true,
       data: [],
       pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
       query: { search: '', status: '' }

@@ -1,5 +1,5 @@
  import logger from '../../../utils/logger.js';
- import serviceFactory from '../../../services/index.js';
+ import { databaseService } from '../../../services/index.js';
  import { validateProjectCollaboratorCreation, validateProjectCollaboratorUpdate, validateProjectCollaboratorDeletion } from '../../../middleware/validation/index.js';
  import { formatDate } from '../../../helpers/format/index.js';
  import { isHtmxRequest } from '../../../helpers/http/index.js';
@@ -12,11 +12,19 @@ export const getProjectCollaborators = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    const projectService = serviceFactory.getProjectService();
-    const { data: collaborators, count } = await projectService.collaborator.getAllProjectCollaborators(
-      { project_id, role },
-      { page: pageNum, limit: limitNum }
-    );
+    let query = databaseService.supabase.from('project_collaborators').select('*', { count: 'exact' });
+
+    if (project_id) {
+      query = query.eq('project_id', project_id);
+    }
+
+    if (role) {
+      query = query.eq('role', role);
+    }
+
+    const { data: collaborators, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+
+    if (error) throw error;
 
     const total = count || 0;
     const filters = [];
@@ -110,9 +118,13 @@ export const getProjectCollaborator = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const projectService = serviceFactory.getProjectService();
-    const collaborator = await projectService.collaborator.getCollaboratorById(id);
+    const { data: collaborator, error } = await databaseService.supabase
+      .from('project_collaborators')
+      .select('*')
+      .eq('id', id)
+      .single();
 
+    if (error) throw error;
     if (!collaborator) {
       return res.status(404).json({ success: false, error: 'Project collaborator not found' });
     }
@@ -131,8 +143,13 @@ export const createProjectCollaborator = [
     try {
       const collaboratorData = req.body;
 
-      const projectService = serviceFactory.getProjectService();
-      const collaborator = await projectService.collaborator.addCollaborator(collaboratorData);
+      const { data: collaborator, error } = await databaseService.supabase
+        .from('project_collaborators')
+        .insert([collaboratorData])
+        .select()
+        .single();
+
+      if (error) throw error;
 
       logger.info(`Created project collaborator with ID: ${collaborator.id}`);
 
@@ -186,9 +203,14 @@ export const updateProjectCollaborator = [
       const { id } = req.params;
       const updates = req.body;
 
-      const projectService = serviceFactory.getProjectService();
-      const collaborator = await projectService.collaborator.updateCollaborator(id, updates);
+      const { data: collaborator, error } = await databaseService.supabase
+        .from('project_collaborators')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
 
+      if (error) throw error;
       if (!collaborator) {
         return res.status(404).json({ success: false, error: 'Project collaborator not found' });
       }
@@ -244,15 +266,24 @@ export const deleteProjectCollaborator = [
     try {
       const { id } = req.params;
 
-      const projectService = serviceFactory.getProjectService();
-
       // Check if collaborator exists
-      const existingCollaborator = await projectService.collaborator.getCollaboratorById(id);
+      const { data: existingCollaborator, error: fetchError } = await databaseService.supabase
+        .from('project_collaborators')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
       if (!existingCollaborator) {
         return res.status(404).json({ success: false, error: 'Project collaborator not found' });
       }
 
-      await projectService.collaborator.removeCollaborator(id);
+      const { error } = await databaseService.supabase
+        .from('project_collaborators')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
 
       logger.info(`Deleted project collaborator with ID: ${id}`);
 
