@@ -4,24 +4,24 @@
     <!-- Table Header -->
     <thead class="bg-card border-b border-border">
       <tr>
-        {{#if showCheckbox}}
-        <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider">
-          <input type="checkbox" id="selectAll-{{tableId}}" class="rounded border-input text-primary 
-            aria-label="Select all {{entityName}}">
-        </th>
-        {{/if}}
-        {{#each columns}}
-        <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider{{#if hidden}} hidden {{responsive}} {{/if}}">{{label}}</th>
-        {{/each}}
-        {{#if actions}}
-        <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider">Actions</th>
-        {{/if}}
+    {{#if showCheckbox}}
+     <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">
+      <input type="checkbox" id="selectAll-{{tableId}}" class="rounded border-input text-primary
+        aria-label="Select all {{entityName}}">
+    </th>
+    {{/if}}
+    {{#each columns}}
+     <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider{{#if hidden}} hidden {{responsive}} {{/if}} bg-muted">{{label}}</th>
+    {{/each}}
+    {{#if actions}}
+     <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">Actions</th>
+    {{/if}}
       </tr>
     </thead>
     <!-- Table Body -->
     <tbody class="text-sm text-card-foreground">
       {{#each data}}
-      <tr id="{{../entityName}}-row-{{id}}" class="h-16 border-b border-border hover:bg-muted/50 transition-colors duration-150">
+        <tr id="{{../entityName}}-row-{{id}}" class="h-16 border-b border-border hover:bg-muted/50 even:bg-muted/30 transition-colors duration-150">
         {{#if ../showCheckbox}}
         <td class="px-6 py-4">
           <input type="checkbox" class="{{../entityName}}Checkbox rounded border-input text-primary 
@@ -84,13 +84,17 @@
         </td>
         {{/if}}
       </tr>
-      {{else}}
-       <tr class="h-16">
-         <td colspan="{{colspan}}" class="px-6 py-8 text-center text-muted-foreground">
-           No {{entityName}} found.
-         </td>
-       </tr>
-      {{/each}}
+       {{else}}
+        <tr class="h-16">
+          <td colspan="{{colspan}}" class="px-6 py-8 text-center text-muted-foreground">
+            <div class="flex flex-col items-center justify-center py-12">
+              {{{icon 'clipboard-list' size='64' class='w-16 h-16 text-muted-foreground/50 mb-4'}}}
+              <p class="text-lg font-medium text-muted-foreground mb-2">No {{entityName}} found</p>
+              <p class="text-sm text-muted-foreground/70">Get started by creating your first {{entityName}}.</p>
+            </div>
+          </td>
+        </tr>
+       {{/each}}
     </tbody>
     <!-- Table Footer -->
     <tfoot>
