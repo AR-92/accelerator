@@ -107,11 +107,10 @@
 
             <div class="flex items-center gap-3">
               <span class="text-sm text-muted-foreground font-medium">Rows per page:</span>
-               <select id="rowsPerPage-{{tableId}}" name="limit"
-                 class="border border-input rounded-lg px-3 py-2 text-sm bg-background shadow-sm focus:outline-none   focus:border-ring transition-colors"
-                 hx-get="{{currentUrl}}" hx-target="#{{tableId}}TableContainer"
-                 hx-include="[id='currentSearch'],[id='currentStatus']"
-                 hx-on:htmx:before-request="document.getElementById('currentLimit').value = document.getElementById('rowsPerPage-{{tableId}}').value">
+                 <select id="rowsPerPage-{{tableId}}" name="limit"
+                   class="border border-input rounded-lg px-3 py-2 text-sm bg-background shadow-sm focus:outline-none   focus:border-ring transition-colors"
+                   hx-get="{{currentUrl}}" hx-target="#{{tableId}}TableContainer"
+                   hx-vals="js:{limit: document.getElementById('rowsPerPage-{{tableId}}').value}">
                 <option value="10"{{#if (eq pagination.limit 10)}} selected{{/if}}>10</option>
                 <option value="20"{{#if (eq pagination.limit 20)}} selected{{/if}}>20</option>
                 <option value="50"{{#if (eq pagination.limit 50)}} selected{{/if}}>50</option>
@@ -122,29 +121,26 @@
             <div class="flex items-center gap-2">
               <!-- Pagination Controls -->
               <nav class="flex items-center gap-1 text-sm">
-                  {{#if pagination.hasPrev}}
-                  <button hx-get="{{currentUrl}}?page={{pagination.prevPage}}"
-                    hx-target="#{{tableId}}TableContainer"
-                    hx-include="[id='currentSearch'],[id='currentStatus'],[id='currentLimit']"
-                    class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200 font-medium">
-                    {{{icon 'chevron-left' size='16' class='w-4 h-4'}}}
-                  </button>
-                 {{/if}}
-                 {{#each pagination.pages}}
-                 <button hx-get="{{../currentUrl}}?page={{this}}"
-                   hx-target="#{{../tableId}}TableContainer"
-                   hx-include="[id='currentSearch'],[id='currentStatus'],[id='currentLimit']"
-                   class="inline-flex items-center justify-center w-10 h-10 rounded-lg{{#if (eq this ../pagination.currentPage)}} bg-primary text-primary-foreground scale-105{{else}} border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground{{/if}} transition-all duration-200 font-medium">{{this}}</button>
-                 {{/each}}
-                 {{#if pagination.hasNext}}
-                  <button hx-get="{{currentUrl}}?page={{pagination.nextPage}}"
-                    hx-target="#{{tableId}}TableContainer"
-                    hx-include="[id='currentSearch'],[id='currentStatus'],[id='currentLimit']"
-                    class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200"
-                    title="Next page">
-                    {{{icon 'chevron-right' size='16' class='w-4 h-4'}}}
-                  </button>
-                 {{/if}}
+                   {{#if pagination.hasPrev}}
+                    <button hx-get="{{currentUrl}}?page={{pagination.prevPage}}"
+                      hx-target="#{{tableId}}TableContainer"
+                      class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200 font-medium">
+                     {{{icon 'chevron-left' size='16' class='w-4 h-4'}}}
+                   </button>
+                  {{/if}}
+                  {{#each pagination.pages}}
+                   <button hx-get="{{../currentUrl}}?page={{this}}"
+                     hx-target="#{{../tableId}}TableContainer"
+                     class="inline-flex items-center justify-center w-10 h-10 rounded-lg{{#if (eq this ../pagination.currentPage)}} bg-primary text-primary-foreground scale-105{{else}} border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground{{/if}} transition-all duration-200 font-medium">{{this}}</button>
+                  {{/each}}
+                  {{#if pagination.hasNext}}
+                    <button hx-get="{{currentUrl}}?page={{pagination.nextPage}}"
+                      hx-target="#{{tableId}}TableContainer"
+                      class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200"
+                      title="Next page">
+                     {{{icon 'chevron-right' size='16' class='w-4 h-4'}}}
+                   </button>
+                  {{/if}}
               </nav>
             </div>
           </div>

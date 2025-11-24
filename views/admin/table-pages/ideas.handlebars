@@ -23,43 +23,7 @@
       </div>
 
     </div>
-      <!-- Hidden inputs for current filter values -->
-      <input type="hidden" id="currentSearch" name="search" value="{{query.search}}">
-      <input type="hidden" id="currentStatus" name="status" value="{{query.status}}">
-      <input type="hidden" id="currentLimit" name="limit" value="{{pagination.limit}}">
 
-      <div class="max-w-7xl mx-auto flex items-center gap-4">
-       <!-- Search Input -->
-       <div class="flex-1 max-w-md">
-         <div class="relative">
-           <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-             <svg class="h-5 w-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-             </svg>
-           </div>
-            <input type="text" id="searchInput" name="search" value="{{query.search}}" placeholder="Search ideas..."
-              class="block w-full pl-10 pr-3 py-2 border border-input rounded-lg bg-background text-card-foreground placeholder-muted-foreground focus:ring-2 focus:ring-primary focus:border-transparent"
-              hx-get="/admin/table-pages/ideas" hx-target="#ideasTableContainer" hx-trigger="input changed delay:300ms, search"
-              hx-include="[id='currentStatus'],[id='currentLimit']"
-              hx-on:htmx:before-request="document.getElementById('currentSearch').value = document.getElementById('searchInput').value">
-         </div>
-       </div>
-
-       <!-- Status Filter -->
-       <div class="flex items-center gap-2">
-          <select id="statusFilter" name="status" class="border border-input rounded-lg px-3 py-2 text-sm bg-background shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-            hx-get="/admin/table-pages/ideas" hx-target="#ideasTableContainer"
-            hx-include="[id='currentSearch'],[id='currentLimit']"
-            hx-on:htmx:before-request="document.getElementById('currentStatus').value = document.getElementById('statusFilter').value">
-           <option value="">All Status</option>
-           <option value="pending" {{#if (eq query.status 'pending')}}selected{{/if}}>Pending</option>
-           <option value="approved" {{#if (eq query.status 'approved')}}selected{{/if}}>Approved</option>
-           <option value="rejected" {{#if (eq query.status 'rejected')}}selected{{/if}}>Rejected</option>
-           <option value="active" {{#if (eq query.status 'active')}}selected{{/if}}>Active</option>
-           <option value="draft" {{#if (eq query.status 'draft')}}selected{{/if}}>Draft</option>
-         </select>
-       </div>
-     </div>
     </header>
 
     {{> table}}
@@ -151,73 +115,5 @@
      </div>
    </div>
 
-  {{!-- these are the filter links for the table --}}
-  <div id="ideas-filter-links" class="hidden" _="on load set #filter-links.innerHTML to #ideas-filter-links.innerHTML">
-
-  <!-- Include ideas JavaScript -->
-  <script src="/js/ideas.js"></script>
-
-  <!-- Script to sync hidden inputs and update filter states -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Sync hidden inputs with current values
-      const searchInput = document.getElementById('searchInput');
-      const statusFilter = document.getElementById('statusFilter');
-      const rowsPerPage = document.getElementById('rowsPerPage-ideas');
-
-      function updateHiddenInputs() {
-        document.getElementById('currentSearch').value = searchInput?.value || '';
-        document.getElementById('currentStatus').value = statusFilter?.value || '';
-        document.getElementById('currentLimit').value = rowsPerPage?.value || '10';
-      }
-
-      // Update on input changes
-      searchInput?.addEventListener('input', updateHiddenInputs);
-      statusFilter?.addEventListener('change', updateHiddenInputs);
-      rowsPerPage?.addEventListener('change', updateHiddenInputs);
-
-      // Initial sync
-      updateHiddenInputs();
-    });
-
-    // Update filter UI after HTMX requests
-    document.addEventListener('htmx:afterRequest', function(evt) {
-      // Update search input value from hidden input
-      const searchInput = document.getElementById('searchInput');
-      const currentSearch = document.getElementById('currentSearch');
-      if (searchInput && currentSearch) {
-        searchInput.value = currentSearch.value;
-      }
-
-      // Update status filter value from hidden input
-      const statusFilter = document.getElementById('statusFilter');
-      const currentStatus = document.getElementById('currentStatus');
-      if (statusFilter && currentStatus) {
-        statusFilter.value = currentStatus.value;
-      }
-
-      // Update rows per page value from hidden input
-      const rowsPerPage = document.getElementById('rowsPerPage-ideas');
-      const currentLimit = document.getElementById('currentLimit');
-      if (rowsPerPage && currentLimit) {
-        rowsPerPage.value = currentLimit.value;
-      }
-    });
-  </script>
-   <div class="flex flex-col items-center justify-center group">
-     <div class="border-t-4 border-primary w-6 rounded-full opacity-100 group-hover:opacity-100"></div>
-     <a id="all-ideas-btn" href="/admin/table-pages/ideas" hx-get="/admin/table-pages/ideas" hx-target="#ideasTableContainer" class="text-foreground font-medium text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">All Ideas</a>
-   </div>
-   <div class="flex flex-col items-center justify-center group">
-     <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
-     <a id="pending-ideas-btn" href="/admin/table-pages/ideas?status=pending" hx-get="/admin/table-pages/ideas?status=pending" hx-target="#ideasTableContainer" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Pending</a>
-   </div>
-   <div class="flex flex-col items-center justify-center group">
-     <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
-     <a id="approved-ideas-btn" href="/admin/table-pages/ideas?status=approved" hx-get="/admin/table-pages/ideas?status=approved" hx-target="#ideasTableContainer" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Approved</a>
-   </div>
-   <div class="flex flex-col items-center justify-center group">
-     <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
-     <a id="rejected-ideas-btn" href="/admin/table-pages/ideas?status=rejected" hx-get="/admin/table-pages/ideas?status=rejected" hx-target="#ideasTableContainer" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Rejected</a>
-   </div>
- </div>
+   <!-- Include ideas JavaScript -->
+   <script src="/js/ideas.js"></script>

@@ -6,9 +6,38 @@
         <button id="sidebar-toggle" class="w-6 h-6 ml-1 mr-6 flex items-center justify-center hover:bg-accent rounded-md transition-colors" onclick="toggleSidebar()" title="Toggle Sidebar">
          {{{icon 'panel-right' size='16' class='text-muted-foreground w-4 h-4'}}}
        </button>
-        <!-- Filter Links -->
-        <div id="filter-links" class="flex gap-4">
-        </div>
+         <!-- Filter Links -->
+         <div id="filter-links" class="flex gap-4">
+           {{#if (eq currentPage 'ideas')}}
+             <!-- Status Filter Buttons -->
+             <div class="flex items-center gap-1">
+               <div class="flex flex-col items-center justify-center group">
+                 <div class="border-t-4 border-primary w-6 rounded-full {{#unless query.status}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/unless}}"></div>
+                 <button id="filter-link-all" type="button" hx-get="/admin/table-pages/ideas" hx-target="#ideasTableContainer" class="{{#unless query.status}}text-foreground font-medium{{else}}text-muted-foreground{{/unless}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">All ({{filterCounts.all}})</button>
+               </div>
+               <div class="flex flex-col items-center justify-center group">
+                 <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq query.status 'pending')}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
+                 <button id="filter-link-pending" type="button" hx-get="/admin/table-pages/ideas?status=pending" hx-target="#ideasTableContainer" class="{{#if (eq query.status 'pending')}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Pending ({{filterCounts.pending}})</button>
+               </div>
+               <div class="flex flex-col items-center justify-center group">
+                 <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq query.status 'approved')}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
+                 <button id="filter-link-approved" type="button" hx-get="/admin/table-pages/ideas?status=approved" hx-target="#ideasTableContainer" class="{{#if (eq query.status 'approved')}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Approved ({{filterCounts.approved}})</button>
+               </div>
+               <div class="flex flex-col items-center justify-center group">
+                 <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq query.status 'rejected')}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
+                 <button id="filter-link-rejected" type="button" hx-get="/admin/table-pages/ideas?status=rejected" hx-target="#ideasTableContainer" class="{{#if (eq query.status 'rejected')}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Rejected ({{filterCounts.rejected}})</button>
+               </div>
+               <div class="flex flex-col items-center justify-center group">
+                 <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq query.status 'active')}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
+                 <button id="filter-link-active" type="button" hx-get="/admin/table-pages/ideas?status=active" hx-target="#ideasTableContainer" class="{{#if (eq query.status 'active')}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Active ({{filterCounts.active}})</button>
+               </div>
+               <div class="flex flex-col items-center justify-center group">
+                 <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq query.status 'draft')}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
+                 <button id="filter-link-draft" type="button" hx-get="/admin/table-pages/ideas?status=draft" hx-target="#ideasTableContainer" class="{{#if (eq query.status 'draft')}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Draft ({{filterCounts.draft}})</button>
+               </div>
+             </div>
+           {{/if}}
+         </div>
    </div>
     <!-- Right Section: Create Button -->
     <div>

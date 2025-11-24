@@ -11,10 +11,15 @@
        <p class="text-muted-foreground">Manage and organize all system todos efficiently</p>
      </div>
 
-   </div>
-    <div class="max-w-7xl mx-auto flex items-center gap-4">
     </div>
-   </header>
+     <!-- Hidden inputs for current filter values -->
+     <input type="hidden" id="currentSearch" name="search" value="{{query.search}}">
+     <input type="hidden" id="currentStatus" name="status" value="{{query.status}}">
+     <input type="hidden" id="currentLimit" name="limit" value="{{pagination.limit}}">
+
+     <div class="max-w-7xl mx-auto flex items-center gap-4">
+     </div>
+    </header>
 
     {{> table}}
   </div>

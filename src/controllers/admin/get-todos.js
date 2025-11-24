@@ -6,10 +6,53 @@ export const getTodos = async (req, res) => {
   try {
     logger.info('Admin todos page accessed');
 
-    const { data: todos, error } = await databaseService.supabase
+    const { search, status, page = 1, limit = 10 } = req.query;
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+    const offset = (pageNum - 1) * limitNum;
+
+    // Build query with filters
+    let query = databaseService.supabase
       .from('todos')
-      .select('*');
+      .select('*', { count: 'exact' });
+
+    if (search && search.trim()) {
+      query = query.or(`title.ilike.%${search.trim()}%,description.ilike.%${search.trim()}%`);
+    }
+    if (status && status.trim()) {
+      if (status === 'completed') {
+        query = query.eq('completed', true);
+      } else if (status === 'pending') {
+        query = query.eq('completed', false);
+      }
+    }
+
+    // Apply pagination
+    query = query
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limitNum - 1);
+
+    const { data: todos, error, count } = await query;
     if (error) throw error;
+
+    const total = count || 0;
+    const totalPages = Math.ceil(total / limitNum);
+    const start = offset + 1;
+    const end = Math.min(offset + limitNum, total);
+    const hasPrev = pageNum > 1;
+    const hasNext = pageNum < totalPages;
+    const prevPage = hasPrev ? pageNum - 1 : null;
+    const nextPage = hasNext ? pageNum + 1 : null;
+    const pages = [];
+    for (let i = Math.max(1, pageNum - 2); i <= Math.min(totalPages, pageNum + 2); i++) {
+      pages.push(i);
+    }
+
+    const filters = [];
+    if (search) filters.push(`search: "${search}"`);
+    if (status) filters.push(`status: ${status}`);
+    if (pageNum > 1) filters.push(`page: ${pageNum}`);
+    logger.info(`Fetched ${todos.length} of ${total} todos${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`);
 
     const isConnected = true; // Assume connected if service works
 
@@ -54,16 +97,16 @@ export const getTodos = async (req, res) => {
     ];
 
     const pagination = {
-      currentPage: 1,
-      limit: 10,
-      total: todos.length,
-      start: 1,
-      end: todos.length,
-      hasPrev: false,
-      hasNext: false,
-      prevPage: 0,
-      nextPage: 2,
-      pages: [1]
+      currentPage: pageNum,
+      limit: limitNum,
+      total,
+      start,
+      end,
+      hasPrev,
+      hasNext,
+      prevPage,
+      nextPage,
+      pages
     };
 
     const colspan = columns.length + 1 + 1; // checkbox + actions
@@ -80,10 +123,10 @@ export const getTodos = async (req, res) => {
       columns,
       data: todos,
       actions,
-      bulkActions,
-      pagination,
-      query: { search: '', status: '' },
-      currentUrl: '/admin/table-pages/todos',
+       bulkActions,
+       pagination,
+       query: { search: search || '', status: status || '' },
+       currentUrl: '/admin/table-pages/todos',
       colspan,
       supabaseConnected: isConnected
     });

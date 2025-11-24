@@ -106,7 +106,7 @@ export default function adminRoutes(app) {
   app.get('/admin/system-health', getSystemHealth);
   app.get('/admin/notifications', getNotifications);
   app.get('/admin/tables', getTables);
-  app.get('/admin/todos', getTodos);
+  app.get('/admin/table-pages/todos', getTodos);
   app.get('/admin/activity', getActivity);
   app.post('/admin/logout', postLogout);
 
