@@ -1,8 +1,8 @@
 {{!-- Generic Table Partial --}}
-<div id="{{tableId}}TableContainer" class="overflow-auto flex-1">
-  <table class="min-w-full table-auto bg-card">
+<div id="{{tableId}}TableContainer" class="overflow-auto flex-1 rounded-xl">
+  <table class="min-w-full table-auto bg-card rounded-md">
     <!-- Table Header -->
-    <thead class="bg-card border-b border-border">
+    <thead class="bg-card border-b border-border rounded-t-xl">
       <tr>
     {{#if showCheckbox}}
      <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">
@@ -46,43 +46,19 @@
             {{/if}}
         </td>
         {{/each}}
-        {{#if ../actions}}
-        <td class="px-6 py-4">
-          <div class="relative">
-             <button onclick="toggleActionMenu('{{../entityName}}', {{id}})"
-               class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors"
-               aria-label="Actions menu">
-               {{{icon 'ellipsis-vertical' size='16' class='w-4 h-4'}}}
-             </button>
-            <div id="actionMenu-{{../entityName}}-{{id}}"
-              class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-popover rounded-md shadow-lg z-10 border border-border">
-               <div class="py-1">
-                 {{#each ../actions}}
-                 {{#if (eq type 'link')}}
-                 <a href="{{url}}/{{../id}}"
-                   class="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
-                   {{{icon}}}
-                   {{label}}
-                 </a>
-                 {{else if (eq type 'button')}}
-                 <button onclick="{{onclick}}({{../id}})"
-                   class="flex items-center w-full px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
-                   {{{icon}}}
-                   {{label}}
-                 </button>
-                 {{else if (eq type 'delete')}}
-                 <button onclick="{{onclick}}({{../id}}, '{{../title}}')"
-                   class="flex items-center w-full px-4 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors">
-                   {{{icon}}}
-                   {{label}}
-                 </button>
-                 {{/if}}
-                 {{/each}}
-               </div>
-            </div>
-          </div>
-        </td>
-        {{/if}}
+         {{#if ../actions}}
+         <td class="px-6 py-4">
+           <div class="relative">
+              <button onclick="toggleActionMenu(this)"
+                class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors"
+                aria-label="Actions menu for {{../entityName}} {{id}}"
+                data-entity="{{../entityName}}"
+                data-id="{{id}}">
+                {{{icon 'ellipsis-vertical' size='16' class='w-4 h-4'}}}
+              </button>
+           </div>
+         </td>
+         {{/if}}
       </tr>
        {{else}}
         <tr class="h-16">
@@ -96,61 +72,96 @@
         </tr>
        {{/each}}
     </tbody>
-    <!-- Table Footer -->
-    <tfoot>
-      <tr>
-        <td colspan="{{colspan}}" class="bg-card border-t border-border p-4">
-          <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="text-sm text-muted-foreground">
-              Showing {{pagination.start}}-{{pagination.end}} of {{pagination.total}} {{entityName}}
-            </div>
+     <!-- Table Footer -->
+     <tfoot>
+       <tr>
+         <td colspan="{{colspan}}" class="bg-card border-t border-border px-4 py-3">
+           <div class="max-w-7xl mx-auto flex items-center justify-between">
+             <div class="text-xs text-muted-foreground">
+               {{pagination.start}}-{{pagination.end}} of {{pagination.total}}
+             </div>
 
-            <div class="flex items-center gap-3">
-              <span class="text-sm text-muted-foreground font-medium">Rows per page:</span>
-                 <select id="rowsPerPage-{{tableId}}" name="limit"
-                   class="border border-input rounded-lg px-3 py-2 text-sm bg-background shadow-sm focus:outline-none   focus:border-ring transition-colors"
-                   hx-get="{{currentUrl}}" hx-target="#{{tableId}}TableContainer"
-                   hx-vals="js:{limit: document.getElementById('rowsPerPage-{{tableId}}').value}">
-                <option value="10"{{#if (eq pagination.limit 10)}} selected{{/if}}>10</option>
-                <option value="20"{{#if (eq pagination.limit 20)}} selected{{/if}}>20</option>
-                <option value="50"{{#if (eq pagination.limit 50)}} selected{{/if}}>50</option>
-                <option value="100"{{#if (eq pagination.limit 100)}} selected{{/if}}>100</option>
-              </select>
-            </div>
+             <div class="flex items-center gap-3">
+               <select id="rowsPerPage-{{tableId}}" name="limit"
+                 class="border border-input rounded px-2 py-1 text-xs bg-background focus:outline-none focus:border-ring transition-colors"
+                 hx-get="{{currentUrl}}" hx-target="#{{tableId}}TableContainer"
+                 hx-vals="js:{limit: document.getElementById('rowsPerPage-{{tableId}}').value}">
+                 <option value="10"{{#if (eq pagination.limit 10)}} selected{{/if}}>10</option>
+                 <option value="20"{{#if (eq pagination.limit 20)}} selected{{/if}}>20</option>
+                 <option value="50"{{#if (eq pagination.limit 50)}} selected{{/if}}>50</option>
+                 <option value="100"{{#if (eq pagination.limit 100)}} selected{{/if}}>100</option>
+               </select>
 
-            <div class="flex items-center gap-2">
-              <!-- Pagination Controls -->
-              <nav class="flex items-center gap-1 text-sm">
-                   {{#if pagination.hasPrev}}
-                    <button hx-get="{{currentUrl}}?page={{pagination.prevPage}}"
-                      hx-target="#{{tableId}}TableContainer"
-                      class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200 font-medium">
-                     {{{icon 'chevron-left' size='16' class='w-4 h-4'}}}
-                   </button>
-                  {{/if}}
-                  {{#each pagination.pages}}
-                   <button hx-get="{{../currentUrl}}?page={{this}}"
-                     hx-target="#{{../tableId}}TableContainer"
-                     class="inline-flex items-center justify-center w-10 h-10 rounded-lg{{#if (eq this ../pagination.currentPage)}} bg-primary text-primary-foreground scale-105{{else}} border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground{{/if}} transition-all duration-200 font-medium">{{this}}</button>
-                  {{/each}}
-                  {{#if pagination.hasNext}}
-                    <button hx-get="{{currentUrl}}?page={{pagination.nextPage}}"
-                      hx-target="#{{tableId}}TableContainer"
-                      class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200"
-                      title="Next page">
-                     {{{icon 'chevron-right' size='16' class='w-4 h-4'}}}
-                   </button>
-                  {{/if}}
-              </nav>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
-</div>
+               <!-- Pagination Controls -->
+               <nav class="flex items-center gap-1">
+                    {{#if pagination.hasPrev}}
+                     <button hx-get="{{currentUrl}}?page={{pagination.prevPage}}"
+                       hx-target="#{{tableId}}TableContainer"
+                       class="inline-flex items-center justify-center w-8 h-8 rounded border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+                       title="Previous page">
+                      {{{icon 'chevron-left' size='14' class='w-3.5 h-3.5'}}}
+                    </button>
+                   {{/if}}
+                   {{#each pagination.pages}}
+                    <button hx-get="{{../currentUrl}}?page={{this}}"
+                      hx-target="#{{../tableId}}TableContainer"
+                      class="inline-flex items-center justify-center px-2 py-1 rounded{{#if (eq this ../pagination.currentPage)}} bg-muted text-foreground{{else}} text-muted-foreground hover:text-foreground{{/if}} transition-colors text-xs font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">{{this}}</button>
+                   {{/each}}
+                   {{#if pagination.hasNext}}
+                     <button hx-get="{{currentUrl}}?page={{pagination.nextPage}}"
+                       hx-target="#{{tableId}}TableContainer"
+                       class="inline-flex items-center justify-center w-8 h-8 rounded border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+                       title="Next page">
+                      {{{icon 'chevron-right' size='14' class='w-3.5 h-3.5'}}}
+                    </button>
+                   {{/if}}
+               </nav>
+             </div>
+           </div>
+         </td>
+       </tr>
+     </tfoot>
+   </table>
 
-{{#if showBulkActions}}
+   <!-- Action Dropdowns (moved outside table to prevent overflow clipping) -->
+    {{#each data}}
+    <div id="actionMenu-{{../entityName}}-{{id}}"
+      class="dropdown-menu fixed w-48 bg-popover rounded-md shadow-lg border border-border"
+      style="display: none;">
+     <div class="py-1">
+       {{#each ../actions}}
+       {{#if (eq type 'link')}}
+       <a href="{{url}}/{{../id}}"
+         class="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+         {{{icon}}}
+         {{label}}
+       </a>
+       {{else if (eq type 'button')}}
+       <button onclick="{{onclick}}({{../id}})"
+         class="flex items-center w-full px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+         {{{icon}}}
+         {{label}}
+       </button>
+       {{else if (eq type 'delete')}}
+       <button onclick="{{onclick}}({{../id}}, '{{../title}}')"
+         class="flex items-center w-full px-4 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors">
+         {{{icon}}}
+         {{label}}
+       </button>
+       {{else}}
+       <div class="px-4 py-2 text-sm text-muted-foreground">No actions available</div>
+       {{/if}}
+       {{/each}}
+       {{#unless ../actions}}
+       <div class="px-4 py-2 text-sm text-muted-foreground">No actions configured</div>
+       {{/unless}}
+     </div>
+   </div>
+   {{/each}}
+
+  </div>
+
+ {{#if showBulkActions}}
 <!-- Bulk Actions Panel -->
 <div id="bulkActions-{{tableId}}"
   class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-6 py-3 rounded-full z-30"

@@ -178,6 +178,32 @@ export const createIdea = [
   async (req, res) => {
     try {
       const ideaData = req.body;
+
+      // Auto-generate href from title if not provided
+      if (!ideaData.href && ideaData.title) {
+        ideaData.href = ideaData.title
+          .toLowerCase()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .trim();
+      }
+
+      // Set defaults
+      ideaData.status = ideaData.status || 'draft';
+      ideaData.upvotes = ideaData.upvotes || 0;
+
+      // Set type_icon based on type
+      const typeIcons = {
+        product: '📦',
+        service: '🛠️',
+        app: '📱',
+        platform: '🌐',
+        tool: '🔧',
+        other: '💡'
+      };
+      ideaData.type_icon = typeIcons[ideaData.type] || '💡';
+
       const ideaService = serviceFactory.getIdeaService();
       const idea = await ideaService.createIdea(ideaData);
 
@@ -191,12 +217,15 @@ export const createIdea = [
                 <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <div class="flex-1">Idea "${idea.title}" created successfully!</div>
+                <div class="flex-1">
+                  <div>Idea "${idea.title}" created successfully!</div>
+                  <button onclick="editIdea(${idea.id})" class="mt-2 px-3 py-1 text-xs bg-green-100 hover:bg-green-200 text-green-800 rounded">Edit Idea</button>
+                </div>
               </div>
             </div>
           </div>
           <script>
-            setTimeout(() => document.querySelector('.fixed').remove(), 5000);
+            setTimeout(() => document.querySelector('.fixed').remove(), 2000);
             htmx.trigger('#ideasTableContainer', 'ideaCreated');
           </script>
         `);
@@ -230,8 +259,30 @@ export const updateIdea = [
   validateIdeaUpdate,
   async (req, res) => {
     try {
-      const { id } = req.params;
-      const updates = req.body;
+      const { id, ...updates } = req.body;
+
+      // Regenerate href if title changed
+      if (updates.title) {
+        updates.href = updates.title
+          .toLowerCase()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-')
+          .trim();
+      }
+
+      // Update type_icon if type changed
+      if (updates.type) {
+        const typeIcons = {
+          product: '📦',
+          service: '🛠️',
+          app: '📱',
+          platform: '🌐',
+          tool: '🔧',
+          other: '💡'
+        };
+        updates.type_icon = typeIcons[updates.type] || '💡';
+      }
 
       const ideaService = serviceFactory.getIdeaService();
       const idea = await ideaService.updateIdea(id, updates);
@@ -244,20 +295,18 @@ export const updateIdea = [
 
       if (isHtmxRequest(req)) {
         res.send(`
-          <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
-            <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-green-50 text-green-800 border-green-200">
-              <div class="flex items-start gap-3">
-                <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                </svg>
-                <div class="flex-1">Idea "${idea.title}" updated successfully!</div>
-              </div>
-            </div>
+          <div class="fixed top-4 right-4 z-50 max-w-sm w-full bg-green-50 text-green-800 border border-green-200 rounded-lg px-4 py-3 text-sm">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+            <div class="flex-1">Idea "${idea.title}" updated successfully!</div>
           </div>
-          <script>
-            setTimeout(() => document.querySelector('.fixed').remove(), 5000);
-            htmx.trigger('#ideasTableContainer', 'ideaUpdated');
-          </script>
+        </div>
+        <script>
+          htmx.ajax('GET', window.location.pathname + window.location.search, {target: '#ideasTableContainer'});
+          htmx.ajax('GET', window.location.pathname + '/filter-nav' + window.location.search, {target: '#filter-links'});
+        </script>
         `);
       } else {
         res.json({ success: true, data: idea });
@@ -304,22 +353,7 @@ export const deleteIdea = [
       logger.info(`Deleted idea with ID: ${id}`);
 
       if (isHtmxRequest(req)) {
-        res.send(`
-          <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
-            <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-red-50 text-red-800 border-red-200">
-              <div class="flex items-start gap-3">
-                <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                </svg>
-                <div class="flex-1">Idea "${existingIdea.title}" has been deleted!</div>
-              </div>
-            </div>
-          </div>
-          <script>
-            setTimeout(() => document.querySelector('.fixed').remove(), 5000);
-            htmx.trigger('#ideasTableContainer', 'ideaDeleted');
-          </script>
-        `);
+        res.send(`<div class="success">Idea "${existingIdea.title}" has been deleted!</div>`);
       } else {
         res.json({ success: true, message: 'Idea deleted successfully' });
       }
@@ -361,19 +395,17 @@ export const voteIdea = async (req, res) => {
 
     if (isHtmxRequest(req)) {
       res.send(`
-        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
-          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-green-50 text-green-800 border-green-200">
-            <div class="flex items-start gap-3">
-              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
-              </svg>
-              <div class="flex-1">${voteType === 'up' ? 'Upvote' : 'Downvote'} recorded successfully!</div>
-            </div>
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full bg-green-50 text-green-800 border border-green-200 rounded-lg px-4 py-3 text-sm">
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+            </svg>
+            <div class="flex-1">${voteType === 'up' ? 'Upvote' : 'Downvote'} recorded successfully!</div>
           </div>
         </div>
         <script>
-          setTimeout(() => document.querySelector('.fixed').remove(), 3000);
-          htmx.trigger('#ideasTableContainer', 'ideaVoted');
+          htmx.ajax('GET', window.location.pathname + window.location.search, {target: '#ideasTableContainer'});
+          htmx.ajax('GET', window.location.pathname + '/filter-nav' + window.location.search, {target: '#filter-links'});
         </script>
       `);
     } else {
@@ -416,19 +448,17 @@ export const approveIdea = async (req, res) => {
 
     if (isHtmxRequest(req)) {
       res.send(`
-        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
-          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-green-50 text-green-800 border-green-200">
-            <div class="flex items-start gap-3">
-              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-              <div class="flex-1">Idea "${idea.title}" approved successfully!</div>
-            </div>
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full bg-green-50 text-green-800 border border-green-200 rounded-lg px-4 py-3 text-sm">
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">Idea "${idea.title}" approved successfully!</div>
           </div>
         </div>
         <script>
-          setTimeout(() => document.querySelector('.fixed').remove(), 5000);
-          htmx.trigger('#ideasTableContainer', 'ideaUpdated');
+          htmx.ajax('GET', window.location.pathname + window.location.search, {target: '#ideasTableContainer'});
+          htmx.ajax('GET', window.location.pathname + '/filter-nav' + window.location.search, {target: '#filter-links'});
         </script>
       `);
     } else {
@@ -471,19 +501,17 @@ export const rejectIdea = async (req, res) => {
 
     if (isHtmxRequest(req)) {
       res.send(`
-        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
-          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-yellow-50 text-yellow-800 border-yellow-200">
-            <div class="flex items-start gap-3">
-              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-              </svg>
-              <div class="flex-1">Idea "${idea.title}" rejected!</div>
-            </div>
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full bg-yellow-50 text-yellow-800 border border-yellow-200 rounded-lg px-4 py-3 text-sm">
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+            </svg>
+            <div class="flex-1">Idea "${idea.title}" rejected!</div>
           </div>
         </div>
         <script>
-          setTimeout(() => document.querySelector('.fixed').remove(), 5000);
-          htmx.trigger('#ideasTableContainer', 'ideaUpdated');
+          htmx.ajax('GET', window.location.pathname + window.location.search, {target: '#ideasTableContainer'});
+          htmx.ajax('GET', window.location.pathname + '/filter-nav' + window.location.search, {target: '#filter-links'});
         </script>
       `);
     } else {
@@ -520,15 +548,16 @@ const generatePaginationHtml = (page, limit, total, query) => {
   const type = query.type || '';
   const params = `limit=${limit}&search=${encodeURIComponent(search)}&status=${status}&type=${type}`;
 
-  let html = `<div class="flex items-center justify-between mt-4 pt-4 border-t">`;
+  let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
+
+  // Previous button
   if (page > 1) {
-    html += `<button hx-get="/api/ideas?page=${page-1}&${params}" hx-target="#ideasTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3">Previous</button>`;
-  } else {
-    html += `<span></span>`;
+    html += `<button hx-get="/api/ideas?page=${page-1}&${params}" hx-target="#ideasTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Previous page">`;
+    html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>`;
+    html += `</button>`;
   }
 
   // Page number buttons
-  html += `<div class="flex items-center space-x-2">`;
   const maxVisiblePages = 5;
   let startPage = Math.max(1, page - Math.floor(maxVisiblePages / 2));
   let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
@@ -539,18 +568,19 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   for (let i = startPage; i <= endPage; i++) {
     if (i === page) {
-      html += `<span class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground h-9 w-9">${i}</span>`;
+      html += `<span class="inline-flex items-center justify-center w-10 h-10 rounded-md bg-primary text-primary-foreground shadow-sm font-medium">${i}</span>`;
     } else {
-      html += `<button hx-get="/api/ideas?page=${i}&${params}" hx-target="#ideasTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 w-9">${i}</button>`;
+      html += `<button hx-get="/api/ideas?page=${i}&${params}" hx-target="#ideasTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">${i}</button>`;
     }
   }
-  html += `</div>`;
 
+  // Next button
   if (page < totalPages) {
-    html += `<button hx-get="/api/ideas?page=${page+1}&${params}" hx-target="#ideasTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3">Next</button>`;
-  } else {
-    html += `<span></span>`;
+    html += `<button hx-get="/api/ideas?page=${page+1}&${params}" hx-target="#ideasTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Next page">`;
+    html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
+    html += `</button>`;
   }
+
   html += `</div>`;
   return html;
 };
@@ -560,7 +590,7 @@ export default function ideasRoutes(app) {
   app.get('/api/ideas', getIdeas);
   app.get('/api/ideas/:id', getIdea);
   app.post('/api/ideas', ...createIdea);
-  app.put('/api/ideas/:id', ...updateIdea);
+   app.post('/api/ideas/update', ...updateIdea);
   app.put('/api/ideas/:id/approve', approveIdea);
   app.put('/api/ideas/:id/reject', rejectIdea);
   app.put('/api/ideas/:id/vote', voteIdea);

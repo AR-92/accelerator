@@ -20,7 +20,7 @@ import { getHelp } from './overview/get-help.js';
 import { getFinancial } from './overview/get-financial.js';
 
 import { getUsers } from './tables/get-users.js';
-import { getIdeas } from './tables/get-ideas.js';
+import { getIdeas, getIdea, getIdeasFilterNav } from './tables/get-ideas.js';
 import { getVotes } from './tables/get-votes.js';
 import { getCollaborations } from './tables/get-collaborations.js';
 import { getContent } from './tables/get-content.js';
@@ -68,7 +68,7 @@ export { getProjects };
 export { getHelp };
 export { getFinancial };
 export { getUsers };
-export { getIdeas };
+export { getIdeas, getIdeasFilterNav };
 export { getVotes };
 export { getCollaborations };
 export { getContent };
@@ -123,6 +123,8 @@ export default function adminRoutes(app) {
    // Table pages
   app.get('/admin/table-pages/users', getUsers);
   app.get('/admin/table-pages/ideas', getIdeas);
+  app.get('/admin/table-pages/ideas/filter-nav', getIdeasFilterNav);
+  app.get('/admin/table-pages/ideas/:id', getIdea);
   app.get('/admin/table-pages/votes', getVotes);
   app.get('/admin/table-pages/collaborations', getCollaborations);
   app.get('/admin/table-pages/content', getContent);

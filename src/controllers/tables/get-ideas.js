@@ -1,10 +1,118 @@
  import logger from '../../utils/logger.js';
- import { databaseService } from '../../services/index.js';
- import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
- import { getTableConfig } from '../../config/tableFilters.js';
- import { isHtmxRequest } from '../../helpers/http/index.js';
+  import { databaseService } from '../../services/index.js';
+  import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
+  import { getTableConfig } from '../../config/tableFilters.js';
+  import { isHtmxRequest } from '../../helpers/http/index.js';
 
 // Ideas Management
+export const getIdeasFilterNav = async (req, res) => {
+  try {
+    const statusCounts = await getStatusCounts('ideas', databaseService);
+    const filterCounts = getFilterCounts('ideas', statusCounts);
+    const tableConfig = getTableConfig('ideas');
+
+    res.locals.tableConfig = tableConfig;
+    res.locals.filterCounts = filterCounts;
+    res.locals.currentPage = 'ideas';
+    res.locals.query = req.query;
+
+    res.render('partials/filter-nav', (err, html) => {
+      if (err) {
+        logger.error('Error rendering filter-nav:', err);
+        res.status(500).send('');
+      } else {
+        // Extract the filter-links div to avoid replacing the entire nav
+        const startIndex = html.indexOf('<div id="filter-links"');
+        if (startIndex === -1) {
+          res.status(500).send('');
+          return;
+        }
+        // Find the matching closing </div> by counting div tags
+        let count = 0;
+        let pos = startIndex;
+        let endIndex = -1;
+        while (pos < html.length) {
+          if (html.substr(pos, 5) === '<div ') {
+            count++;
+          } else if (html.substr(pos, 6) === '</div>') {
+            count--;
+            if (count === 0) {
+              endIndex = pos + 6;
+              break;
+            }
+          }
+          pos++;
+        }
+        if (endIndex === -1) {
+          res.status(500).send('');
+          return;
+        }
+        const filterLinksHtml = html.substring(startIndex, endIndex);
+        res.send(filterLinksHtml);
+      }
+    });
+  } catch (error) {
+    logger.error('Error loading filter nav:', error);
+    res.status(500).send('');
+  }
+};
+
+export const getIdea = async (req, res) => {
+  try {
+    const { id } = req.params;
+    logger.info(`Admin idea detail page accessed for ID: ${id}`);
+
+    const { data: idea, error } = await databaseService.supabase
+      .from('ideas')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error || !idea) {
+      logger.error('Error fetching idea:', error);
+      return res.status(404).render('admin/table-pages/ideas', {
+        title: 'Ideas Management',
+        currentPage: 'ideas',
+        currentSection: 'main',
+        data: [],
+        pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
+        query: { search: '', status: '' },
+        error: 'Idea not found'
+      });
+    }
+
+    // Get status counts for navigation
+    const statusCounts = await getStatusCounts('ideas', databaseService);
+    const filterCounts = getFilterCounts('ideas', statusCounts);
+    const tableConfig = getTableConfig('ideas');
+
+    // Make variables available to layout for filter-nav
+    res.locals.tableConfig = tableConfig;
+    res.locals.filterCounts = filterCounts;
+    res.locals.currentPage = 'ideas';
+    res.locals.query = { search: '', status: '' };
+
+    res.render('admin/table-pages/idea-detail', {
+      title: `Idea: ${idea.title}`,
+      currentPage: 'ideas',
+      currentSection: 'main',
+      idea,
+      filterCounts,
+      tableConfig
+    });
+  } catch (error) {
+    logger.error('Error loading idea detail:', error);
+    res.status(500).render('admin/table-pages/ideas', {
+      title: 'Ideas Management',
+      currentPage: 'ideas',
+      currentSection: 'main',
+      data: [],
+      pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
+      query: { search: '', status: '' },
+      error: 'Error loading idea'
+    });
+  }
+};
 export const getIdeas = async (req, res) => {
   try {
     logger.info('Admin ideas page accessed');
@@ -68,32 +176,38 @@ export const getIdeas = async (req, res) => {
       { key: 'created_at', label: 'Created', type: 'date', hidden: true, responsive: 'lg:table-cell' }
     ];
 
-    const actions = [
+     const actions = [
       {
         type: 'link',
         url: '/admin/table-pages/ideas',
         label: 'View Details',
         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
       },
-      {
-        type: 'button',
-        onclick: 'approveIdea',
-        label: 'Approve',
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"></polyline></svg>'
-      },
-      {
-        type: 'button',
-        onclick: 'rejectIdea',
-        label: 'Reject',
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
-      },
-      {
-        type: 'delete',
-        onclick: 'deleteIdea',
-        label: 'Delete',
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>'
-      }
-    ];
+       {
+         type: 'button',
+         onclick: 'editIdea',
+         label: 'Edit',
+         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>'
+       },
+       {
+         type: 'button',
+         onclick: 'approveIdea',
+         label: 'Approve',
+         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"></polyline></svg>'
+       },
+       {
+         type: 'button',
+         onclick: 'rejectIdea',
+         label: 'Reject',
+         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
+       },
+       {
+         type: 'delete',
+         onclick: 'deleteIdea',
+         label: 'Delete',
+         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>'
+       }
+     ];
 
     const bulkActions = [
       { onclick: 'bulkApproveIdeas', buttonId: 'bulkApproveBtn', label: 'Approve Selected' },

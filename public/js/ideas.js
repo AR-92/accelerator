@@ -1,4 +1,5 @@
 // Ideas table functionality
+console.log('ideas.js loaded');
 function openCreateIdeaModal() {
   const modal = document.getElementById('createIdeaModal');
   modal.classList.remove('hidden');
@@ -15,7 +16,13 @@ function closeCreateIdeaModal() {
   modal.classList.add('hidden');
   modal.style.display = '';
   modal.setAttribute('aria-hidden', 'true');
+
+  // Reset form
+  const form = modal.querySelector('form');
+  if (form) form.reset();
 }
+
+
 
 function openEditIdeaModal(id) {
   // Fetch idea data and populate edit modal
@@ -30,6 +37,8 @@ function openEditIdeaModal(id) {
         document.getElementById('editIdeaUserId').value = idea.user_id || '';
         document.getElementById('editIdeaType').value = idea.type || '';
         document.getElementById('editIdeaStatus').value = idea.status || 'active';
+
+
 
         const modal = document.getElementById('editIdeaModal');
         modal.classList.remove('hidden');
@@ -48,112 +57,252 @@ function closeEditIdeaModal() {
   modal.classList.add('hidden');
   modal.style.display = '';
   modal.setAttribute('aria-hidden', 'true');
+
+  // Reset form
+  const form = modal.querySelector('form');
+  if (form) form.reset();
 }
 
-function toggleActionMenu(entity, id) {
-  const menu = document.getElementById(`actionMenu-${entity}-${id}`);
-  const allMenus = document.querySelectorAll('[id^="actionMenu-"]');
+let deleteIdeaId = null;
+let deleteIdeaTitle = null;
+let approveIdeaId = null;
+let rejectIdeaId = null;
+let bulkActionType = null;
+let bulkActionIds = [];
 
-  // Close all other menus
-  allMenus.forEach(m => {
-    if (m.id !== `actionMenu-${entity}-${id}`) {
-      m.classList.add('hidden');
-    }
-  });
+function openDeleteIdeaModal(id, title) {
+  deleteIdeaId = id;
+  deleteIdeaTitle = title;
+  const message = title ? `Are you sure you want to delete "${title}"?` : 'Are you sure you want to delete this idea?';
+  document.getElementById('deleteIdeaMessage').textContent = message;
 
-  // Toggle current menu
-  menu.classList.toggle('hidden');
+  const modal = document.getElementById('deleteIdeaModal');
+  modal.classList.remove('hidden');
+  modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden', 'false');
 }
 
-// Close menus when clicking outside
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('[id^="actionMenu-"]') && !e.target.closest('button[onclick*="toggleActionMenu"]')) {
-    const allMenus = document.querySelectorAll('[id^="actionMenu-"]');
-    allMenus.forEach(menu => menu.classList.add('hidden'));
-  }
-});
-
-// Idea actions
-function approveIdea(id) {
-  if (confirm('Are you sure you want to approve this idea?')) {
-    fetch(`/api/ideas/${id}/approve`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-    .then(response => response.text())
-    .then(html => {
-      // Show success message
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = html;
-      document.body.appendChild(tempDiv);
-
-      // Refresh table after delay
-      setTimeout(() => {
-        location.reload();
-      }, 2000);
-    })
-    .catch(error => {
-      console.error('Error approving idea:', error);
-      showToast('Error approving idea', 'error');
-    });
-  }
+function closeDeleteIdeaModal() {
+  const modal = document.getElementById('deleteIdeaModal');
+  modal.classList.add('hidden');
+  modal.style.display = '';
+  modal.setAttribute('aria-hidden', 'true');
+  deleteIdeaId = null;
+  deleteIdeaTitle = null;
 }
 
-function rejectIdea(id) {
-  if (confirm('Are you sure you want to reject this idea?')) {
-    fetch(`/api/ideas/${id}/reject`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-    .then(response => response.text())
-    .then(html => {
-      // Show success message
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = html;
-      document.body.appendChild(tempDiv);
-
-      // Refresh table after delay
-      setTimeout(() => {
-        location.reload();
-      }, 2000);
-    })
-    .catch(error => {
-      console.error('Error rejecting idea:', error);
-      showToast('Error rejecting idea', 'error');
-    });
-  }
-}
-
-function deleteIdea(id, title) {
-  const confirmMessage = title ? `Are you sure you want to delete "${title}"?` : 'Are you sure you want to delete this idea?';
-  if (confirm(confirmMessage)) {
-    fetch(`/api/ideas/${id}`, {
+function confirmDeleteIdea() {
+  if (deleteIdeaId) {
+    fetch(`/api/ideas/${deleteIdeaId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        'HX-Request': 'true'
       }
     })
     .then(response => response.text())
-    .then(html => {
-      // Show success message
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = html;
-      document.body.appendChild(tempDiv);
-
-      // Refresh table after delay
-      setTimeout(() => {
-        location.reload();
-      }, 2000);
+    .then(message => {
+      // Remove the row immediately
+      const row = document.getElementById(`idea-row-${deleteIdeaId}`);
+      if (row) {
+        row.remove();
+      }
+      // Show success toast
+      showToast(message, 'success');
+      closeDeleteIdeaModal();
     })
     .catch(error => {
       console.error('Error deleting idea:', error);
       showToast('Error deleting idea', 'error');
+      closeDeleteIdeaModal();
     });
   }
+}
+
+function cancelDeleteIdea() {
+  closeDeleteIdeaModal();
+}
+
+
+
+// Idea actions
+function approveIdea(id) {
+  console.log('approveIdea called with', id);
+  approveIdeaId = id;
+  openApproveIdeaModal();
+}
+
+function openApproveIdeaModal() {
+  const modal = document.getElementById('approveIdeaModal');
+  modal.classList.remove('hidden');
+  modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeApproveIdeaModal() {
+  const modal = document.getElementById('approveIdeaModal');
+  modal.classList.add('hidden');
+  modal.style.display = '';
+  modal.setAttribute('aria-hidden', 'true');
+  approveIdeaId = null;
+}
+
+function confirmApproveIdea() {
+  if (approveIdeaId) {
+    fetch(`/api/ideas/${approveIdeaId}/approve`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'HX-Request': 'true'
+      }
+    })
+    .then(response => response.text())
+    .then(html => {
+      // Show success message
+      document.body.insertAdjacentHTML('beforeend', html);
+      closeApproveIdeaModal();
+    })
+    .catch(error => {
+      console.error('Error approving idea:', error);
+      showToast('Error approving idea', 'error');
+      closeApproveIdeaModal();
+    });
+  }
+}
+
+function cancelApproveIdea() {
+  closeApproveIdeaModal();
+}
+
+function rejectIdea(id) {
+  console.log('rejectIdea called with', id);
+  rejectIdeaId = id;
+  openRejectIdeaModal();
+}
+
+function openRejectIdeaModal() {
+  const modal = document.getElementById('rejectIdeaModal');
+  modal.classList.remove('hidden');
+  modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeRejectIdeaModal() {
+  const modal = document.getElementById('rejectIdeaModal');
+  modal.classList.add('hidden');
+  modal.style.display = '';
+  modal.setAttribute('aria-hidden', 'true');
+  rejectIdeaId = null;
+}
+
+function confirmRejectIdea() {
+  if (rejectIdeaId) {
+    fetch(`/api/ideas/${rejectIdeaId}/reject`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'HX-Request': 'true'
+      }
+    })
+    .then(response => response.text())
+    .then(html => {
+      // Show success message
+      document.body.insertAdjacentHTML('beforeend', html);
+      closeRejectIdeaModal();
+    })
+    .catch(error => {
+      console.error('Error rejecting idea:', error);
+      showToast('Error rejecting idea', 'error');
+      closeRejectIdeaModal();
+    });
+  }
+}
+
+function cancelRejectIdea() {
+  closeRejectIdeaModal();
+}
+
+function openBulkActionModal(type, ids) {
+  bulkActionType = type;
+  bulkActionIds = ids;
+  const titles = { approve: 'Approve Ideas', reject: 'Reject Ideas', delete: 'Delete Ideas' };
+  const messages = {
+    approve: `Are you sure you want to approve ${ids.length} idea(s)?`,
+    reject: `Are you sure you want to reject ${ids.length} idea(s)?`,
+    delete: `Are you sure you want to delete ${ids.length} idea(s)?`
+  };
+  document.getElementById('bulkActionTitle').textContent = titles[type];
+  document.getElementById('bulkActionMessage').textContent = messages[type];
+  const btn = document.getElementById('bulkActionConfirmBtn');
+  btn.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+  if (type === 'delete') {
+    btn.className = 'px-4 py-2 text-sm font-medium bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-md';
+  } else {
+    btn.className = 'px-4 py-2 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-md';
+  }
+
+  const modal = document.getElementById('bulkActionModal');
+  modal.classList.remove('hidden');
+  modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeBulkActionModal() {
+  const modal = document.getElementById('bulkActionModal');
+  modal.classList.add('hidden');
+  modal.style.display = '';
+  modal.setAttribute('aria-hidden', 'true');
+  bulkActionType = null;
+  bulkActionIds = [];
+}
+
+function confirmBulkAction() {
+  if (bulkActionType && bulkActionIds.length > 0) {
+    let promises;
+    if (bulkActionType === 'approve') {
+      promises = bulkActionIds.map(id =>
+        fetch(`/api/ideas/${id}/approve`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' }
+        })
+      );
+    } else if (bulkActionType === 'reject') {
+      promises = bulkActionIds.map(id =>
+        fetch(`/api/ideas/${id}/reject`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' }
+        })
+      );
+    } else if (bulkActionType === 'delete') {
+      promises = bulkActionIds.map(id =>
+        fetch(`/api/ideas/${id}`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' }
+        })
+      );
+    }
+
+    Promise.all(promises)
+    .then(() => {
+      showToast(`${bulkActionIds.length} idea(s) ${bulkActionType}d successfully`, 'success');
+      htmx.trigger('#ideasTableContainer', 'ideaUpdated');
+      closeBulkActionModal();
+    })
+    .catch(error => {
+      console.error(`Error bulk ${bulkActionType}ing ideas:`, error);
+      showToast(`Error ${bulkActionType}ing ideas`, 'error');
+      closeBulkActionModal();
+    });
+  }
+}
+
+function cancelBulkAction() {
+  closeBulkActionModal();
+}
+
+function deleteIdea(id, title) {
+  console.log('deleteIdea called with', id, title);
+  openDeleteIdeaModal(id, title);
 }
 
 function editIdea(id) {
@@ -165,22 +314,14 @@ function voteIdea(id, voteType) {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      'HX-Request': 'true'
     },
     body: JSON.stringify({ voteType })
   })
   .then(response => response.text())
   .then(html => {
     // Show success message
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = html;
-    document.body.appendChild(tempDiv);
-
-    // Remove after timeout
-    setTimeout(() => {
-      if (tempDiv.parentNode) {
-        tempDiv.parentNode.removeChild(tempDiv);
-      }
-    }, 3000);
+    document.body.insertAdjacentHTML('beforeend', html);
   })
   .catch(error => {
     console.error('Error voting on idea:', error);
@@ -190,28 +331,14 @@ function voteIdea(id, voteType) {
 
 // Bulk actions
 function bulkApproveIdeas() {
+  console.log('bulkApproveIdeas called');
   const selectedIds = getSelectedIdeaIds();
   if (selectedIds.length === 0) {
     showToast('No ideas selected', 'warning');
     return;
   }
 
-  if (confirm(`Are you sure you want to approve ${selectedIds.length} idea(s)?`)) {
-    Promise.all(selectedIds.map(id =>
-      fetch(`/api/ideas/${id}/approve`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' }
-      })
-    ))
-    .then(() => {
-      showToast(`${selectedIds.length} idea(s) approved successfully`, 'success');
-      setTimeout(() => location.reload(), 2000);
-    })
-    .catch(error => {
-      console.error('Error bulk approving ideas:', error);
-      showToast('Error approving ideas', 'error');
-    });
-  }
+  openBulkActionModal('approve', selectedIds);
 }
 
 function bulkRejectIdeas() {
@@ -221,22 +348,7 @@ function bulkRejectIdeas() {
     return;
   }
 
-  if (confirm(`Are you sure you want to reject ${selectedIds.length} idea(s)?`)) {
-    Promise.all(selectedIds.map(id =>
-      fetch(`/api/ideas/${id}/reject`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' }
-      })
-    ))
-    .then(() => {
-      showToast(`${selectedIds.length} idea(s) rejected successfully`, 'success');
-      setTimeout(() => location.reload(), 2000);
-    })
-    .catch(error => {
-      console.error('Error bulk rejecting ideas:', error);
-      showToast('Error rejecting ideas', 'error');
-    });
-  }
+  openBulkActionModal('reject', selectedIds);
 }
 
 function bulkDeleteIdeas() {
@@ -246,22 +358,7 @@ function bulkDeleteIdeas() {
     return;
   }
 
-  if (confirm(`Are you sure you want to delete ${selectedIds.length} idea(s)?`)) {
-    Promise.all(selectedIds.map(id =>
-      fetch(`/api/ideas/${id}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' }
-      })
-    ))
-    .then(() => {
-      showToast(`${selectedIds.length} idea(s) deleted successfully`, 'success');
-      setTimeout(() => location.reload(), 2000);
-    })
-    .catch(error => {
-      console.error('Error bulk deleting ideas:', error);
-      showToast('Error deleting ideas', 'error');
-    });
-  }
+  openBulkActionModal('delete', selectedIds);
 }
 
 function getSelectedIdeaIds() {
@@ -294,22 +391,71 @@ function showToast(message, type = 'info') {
   `;
 
   document.body.appendChild(toast);
-
-  setTimeout(() => {
-    if (toast.parentNode) {
-      toast.parentNode.removeChild(toast);
-    }
-  }, 5000);
 }
 
-// Helper function for edit form URL
-function getEditUrl() {
-  const id = document.getElementById('editIdeaId').value;
-  return `/api/ideas/${id}`;
-}
+
+
+// Auto-remove toasts after 2 seconds
+const toastObserver = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    mutation.addedNodes.forEach((node) => {
+      if (node.nodeType === 1 && node.classList.contains('fixed')) {
+        setTimeout(() => {
+          if (node.parentNode) node.parentNode.removeChild(node);
+        }, 2000);
+      }
+    });
+  });
+});
+toastObserver.observe(document.body, { childList: true });
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+  // Handle modal close buttons
+  document.querySelectorAll('[data-modal-close]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const modal = this.closest('[data-modal-backdrop]');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = '';
+        modal.setAttribute('aria-hidden', 'true');
+        // Reset modals
+        if (modal.id === 'deleteIdeaModal') {
+          deleteIdeaId = null;
+          deleteIdeaTitle = null;
+        } else if (modal.id === 'approveIdeaModal') {
+          approveIdeaId = null;
+        } else if (modal.id === 'rejectIdeaModal') {
+          rejectIdeaId = null;
+        } else if (modal.id === 'bulkActionModal') {
+          bulkActionType = null;
+          bulkActionIds = [];
+        }
+      }
+    });
+  });
+
+  // Handle table refresh after idea creation, update, or deletion
+  const ideasTableContainer = document.getElementById('ideasTableContainer');
+  if (ideasTableContainer) {
+    ideasTableContainer.addEventListener('ideaCreated', function() {
+      const url = new URL(window.location);
+      htmx.ajax('GET', url.pathname + url.search, {target: '#ideasTableContainer'});
+      htmx.ajax('GET', url.pathname + '/filter-nav' + url.search, {target: '#filter-links'});
+    });
+    ideasTableContainer.addEventListener('ideaUpdated', function() {
+      const url = new URL(window.location);
+      htmx.ajax('GET', url.pathname + url.search, {target: '#ideasTableContainer'});
+      htmx.ajax('GET', url.pathname + '/filter-nav' + url.search, {target: '#filter-links'});
+    });
+    ideasTableContainer.addEventListener('ideaDeleted', function() {
+      const url = new URL(window.location);
+      htmx.ajax('GET', url.pathname + url.search, {target: '#ideasTableContainer'});
+    });
+  }
+
+
+
   // Handle checkbox selection for bulk actions
   const selectAllCheckbox = document.getElementById('selectAll-ideas');
   const itemCheckboxes = document.querySelectorAll('.ideaCheckbox');

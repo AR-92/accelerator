@@ -303,15 +303,16 @@ const generatePaginationHtml = (page, limit, total, query) => {
   const status = query.status || '';
   const params = `limit=${limit}&search=${encodeURIComponent(search)}&status=${status}`;
 
-  let html = `<div class="flex items-center justify-between mt-4 pt-4 border-t">`;
+  let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
+
+  // Previous button
   if (page > 1) {
-    html += `<button hx-get="/api/billing?page=${page-1}&${params}" hx-target="#billingTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3">Previous</button>`;
-  } else {
-    html += `<span></span>`;
+    html += `<button hx-get="/api/billing?page=${page-1}&${params}" hx-target="#billingTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Previous page">`;
+    html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>`;
+    html += `</button>`;
   }
 
   // Page number buttons
-  html += `<div class="flex items-center space-x-2">`;
   const maxVisiblePages = 5;
   let startPage = Math.max(1, page - Math.floor(maxVisiblePages / 2));
   let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
@@ -322,18 +323,19 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   for (let i = startPage; i <= endPage; i++) {
     if (i === page) {
-      html += `<span class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground h-9 w-9">${i}</span>`;
+      html += `<span class="inline-flex items-center justify-center w-10 h-10 rounded-md bg-primary text-primary-foreground shadow-sm font-medium">${i}</span>`;
     } else {
-      html += `<button hx-get="/api/billing?page=${i}&${params}" hx-target="#billingTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 w-9">${i}</button>`;
+      html += `<button hx-get="/api/billing?page=${i}&${params}" hx-target="#billingTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">${i}</button>`;
     }
   }
-  html += `</div>`;
 
+  // Next button
   if (page < totalPages) {
-    html += `<button hx-get="/api/billing?page=${page+1}&${params}" hx-target="#billingTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3">Next</button>`;
-  } else {
-    html += `<span></span>`;
+    html += `<button hx-get="/api/billing?page=${page+1}&${params}" hx-target="#billingTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Next page">`;
+    html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
+    html += `</button>`;
   }
+
   html += `</div>`;
   return html;
 };

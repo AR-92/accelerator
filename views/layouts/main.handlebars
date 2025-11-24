@@ -57,21 +57,77 @@
 
     <!-- JavaScript Section -->
     <script>
-        // Toggle action menu dropdown
-        function toggleActionMenu(entityName, id) {
-            const menu = document.getElementById(`actionMenu-${entityName}-${id}`);
-            const isHidden = menu.classList.contains('hidden');
+        // Toggle action menu dropdown - supports both old and new signatures
+        function toggleActionMenu(entityNameOrButton, id) {
+            let entity, button;
 
-            // Hide all other menus
-            document.querySelectorAll('.dropdown-menu').forEach(m => {
-                if (m !== menu) m.classList.add('hidden');
+            if (typeof entityNameOrButton === 'string') {
+                // Old signature: toggleActionMenu('entity', id)
+                entity = entityNameOrButton;
+                button = document.querySelector(`button[onclick="toggleActionMenu('${entity}', ${id})"]`);
+            } else {
+                // New signature: toggleActionMenu(button)
+                button = entityNameOrButton;
+                entity = button.getAttribute('data-entity');
+                id = button.getAttribute('data-id');
+            }
+
+            if (!entity || !id || !button) {
+                console.error('Invalid parameters for toggleActionMenu');
+                return;
+            }
+
+            const menu = document.getElementById(`actionMenu-${entity}-${id}`);
+            if (!menu) {
+                console.error(`Dropdown not found: actionMenu-${entity}-${id}`);
+                return;
+            }
+
+            const allMenus = document.querySelectorAll('[id^="actionMenu-"]');
+
+            // Close all other menus
+            allMenus.forEach(m => {
+                if (m !== menu) {
+                    m.style.display = 'none';
+                }
             });
 
             // Toggle current menu
-            if (isHidden) {
-                menu.classList.remove('hidden');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                // Show menu to get dimensions
+                menu.style.display = 'block';
+                menu.style.position = 'fixed';
+                menu.style.zIndex = '9999';
+                menu.style.visibility = 'hidden';
+
+                // Force reflow to get accurate dimensions
+                menu.offsetWidth;
+
+                // Position the menu next to the button
+                const rect = button.getBoundingClientRect();
+                const menuWidth = menu.offsetWidth;
+                const menuHeight = menu.offsetHeight;
+
+                // Position below the button, aligned to the right
+                let top = rect.bottom + window.scrollY + 5;
+                let left = rect.right + window.scrollX - menuWidth;
+
+                // If it would go off-screen to the left, position to the right of button
+                if (left < 0) {
+                    left = rect.right + window.scrollX;
+                }
+
+                // If it would go off-screen to the bottom, position above button
+                if (top + menuHeight > window.scrollY + window.innerHeight) {
+                    top = rect.top + window.scrollY - menuHeight - 5;
+                }
+
+                // Apply final position
+                menu.style.top = `${top}px`;
+                menu.style.left = `${left}px`;
+                menu.style.visibility = 'visible';
             } else {
-                menu.classList.add('hidden');
+                menu.style.display = 'none';
             }
         }
 
@@ -90,9 +146,16 @@
 
         // Close dropdowns when clicking outside
         document.addEventListener('click', function (event) {
-            if (!event.target.closest('.relative') && !event.target.closest('#admin-user-menu')) {
+            if (!event.target.closest('.relative') && !event.target.closest('#admin-user-menu') && !event.target.closest('[id^="actionMenu-"]') && !event.target.closest('button[onclick*="toggleActionMenu"]')) {
+                // Close action menus
+                document.querySelectorAll('[id^="actionMenu-"]').forEach(menu => {
+                    menu.style.display = 'none';
+                });
+                // Close other dropdowns
                 document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                    menu.classList.add('hidden');
+                    if (!menu.id.startsWith('actionMenu-')) {
+                        menu.classList.add('hidden');
+                    }
                 });
                 const userMenu = document.getElementById('admin-user-dropdown');
                 userMenu.classList.add('opacity-0', 'invisible');
@@ -251,14 +314,6 @@
              });
          }
 
-         function deleteIdea(id, title) {
-             if (confirm(`Are you sure you want to delete "${title}"?`)) {
-                 htmx.ajax('DELETE', `/api/ideas/${id}`, {
-                     target: `#idea-row-${id}`,
-                     swap: 'outerHTML'
-                 });
-             }
-         }
 
         // Create todo modal (placeholder)
         function openCreateTodoModal() {

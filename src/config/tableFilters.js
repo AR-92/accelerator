@@ -80,15 +80,15 @@ const tableFilters = {
     statusOptions: []
   },
 
-  'learning-assessments': {
-    searchableFields: ['title', 'description'],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'active', label: 'Active' },
-      { value: 'inactive', label: 'Inactive' }
-    ]
-  },
+   'learning-assessments': {
+     searchableFields: ['title', 'assessment_type', 'difficulty_level'],
+     statusField: 'status',
+     statusOptions: [
+       { value: 'draft', label: 'Draft' },
+       { value: 'active', label: 'Active' },
+       { value: 'inactive', label: 'Inactive' }
+     ]
+   },
 
   packages: {
     searchableFields: ['name', 'description', 'price', 'features'],
@@ -162,7 +162,7 @@ const tableFilters = {
   },
 
   valuation: {
-    searchableFields: ['company_name', 'description'],
+    searchableFields: ['valuation_method', 'enterprise_value', 'equity_value'],
     statusField: 'status',
     statusOptions: [
       { value: 'draft', label: 'Draft' },
@@ -234,7 +234,7 @@ const tableFilters = {
   },
 
   messages: {
-    searchableFields: ['subject', 'content'],
+    searchableFields: ['sender_id', 'receiver_id', 'subject'],
     statusField: 'status',
     statusOptions: [
       { value: 'sent', label: 'Sent' },
@@ -243,35 +243,35 @@ const tableFilters = {
     ]
   },
 
-  'project-collaborators': {
-    searchableFields: ['name', 'role'],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'active', label: 'Active' },
-      { value: 'inactive', label: 'Inactive' },
-      { value: 'removed', label: 'Removed' }
-    ]
-  },
+   'project-collaborators': {
+     searchableFields: ['project_id', 'user_id', 'role'],
+     statusField: 'status',
+     statusOptions: [
+       { value: 'active', label: 'Active' },
+       { value: 'inactive', label: 'Inactive' },
+       { value: 'removed', label: 'Removed' }
+     ]
+   },
 
-  calendar: {
-    searchableFields: ['title', 'description'],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'scheduled', label: 'Scheduled' },
-      { value: 'completed', label: 'Completed' },
-      { value: 'cancelled', label: 'Cancelled' }
-    ]
-  },
+   calendar: {
+     searchableFields: ['title', 'event_type'],
+     statusField: 'status',
+     statusOptions: [
+       { value: 'scheduled', label: 'Scheduled' },
+       { value: 'completed', label: 'Completed' },
+       { value: 'cancelled', label: 'Cancelled' }
+     ]
+   },
 
-  'help-center': {
-    searchableFields: ['title', 'content'],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'published', label: 'Published' },
-      { value: 'archived', label: 'Archived' }
-    ]
-  },
+   'help-center': {
+     searchableFields: ['title', 'category'],
+     statusField: 'status',
+     statusOptions: [
+       { value: 'draft', label: 'Draft' },
+       { value: 'published', label: 'Published' },
+       { value: 'archived', label: 'Archived' }
+     ]
+   },
 
    'landing-pages': {
      searchableFields: ['title', 'description'],
