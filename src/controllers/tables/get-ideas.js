@@ -243,8 +243,8 @@ export const getIdeas = async (req, res) => {
     if (isHtmxRequest(req)) {
       // Generate table HTML for HTMX requests
       let tableHtml = `
-        <table class="min-w-full table-auto bg-card">
-          <thead class="bg-card border-b border-border">
+        <table class="min-w-full table-auto bg-card rounded-md">
+          <thead class="bg-card border-b border-border rounded-t-xl">
             <tr>
               <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">
                 <input type="checkbox" id="selectAll-ideas" class="rounded border-input text-primary">
@@ -299,14 +299,14 @@ export const getIdeas = async (req, res) => {
           if (actions.length > 0) {
             tableHtml += `<td class="px-6 py-4">
               <div class="relative">
-                <button onclick="toggleActionMenu('idea', ${idea.id})" class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors">
+                 <button onclick="toggleActionMenu(this)" class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors" aria-label="Actions menu for idea ${idea.id}" data-entity="idea" data-id="${idea.id}">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="1"></circle>
                     <circle cx="12" cy="5" r="1"></circle>
                     <circle cx="12" cy="19" r="1"></circle>
                   </svg>
                 </button>
-                <div id="actionMenu-idea-${idea.id}" class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-popover rounded-md shadow-lg z-10 border border-border">
+                <div id="actionMenu-idea-${idea.id}" class="dropdown-menu fixed w-48 bg-popover rounded-md shadow-lg border border-border" style="display: none;">
                   <div class="py-1">`;
 
             actions.forEach(action => {
@@ -345,7 +345,7 @@ export const getIdeas = async (req, res) => {
               <svg class="w-16 h-16 text-muted-foreground/50 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
               </svg>
-              <p class="text-lg font-medium text-muted-foreground mb-2">No ideas found</p>
+              <p class="text-lg font-medium text-muted-foreground mb-2">No idea found</p>
               <p class="text-sm text-muted-foreground/70">Get started by creating your first idea.</p>
             </div>
           </td>
@@ -356,66 +356,63 @@ export const getIdeas = async (req, res) => {
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="${colspan}" class="bg-card border-t border-border p-4">
-                <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div class="text-sm text-muted-foreground">
-                    Showing ${start}-${end} of ${total} ideas
-                  </div>
+               <td colspan="${colspan}" class="bg-card border-t border-border px-4 py-3">
+                 <div class="max-w-7xl mx-auto flex items-center justify-between">
+                   <div class="text-xs text-muted-foreground">
+                     ${start}-${end} of ${total}
+                   </div>
 
-                  <div class="flex items-center gap-3">
-                    <span class="text-sm text-muted-foreground font-medium">Rows per page:</span>
-                      <select id="rowsPerPage-ideas" name="limit" class="border border-input rounded-lg px-3 py-2 text-sm bg-background shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                   <div class="flex items-center gap-3">
+                       <select id="rowsPerPage-ideas" name="limit" class="border border-input rounded px-2 py-1 text-xs bg-background focus:outline-none focus:border-ring transition-colors"
                         hx-get="/admin/table-pages/ideas" hx-target="#ideasTableContainer" hx-vals="js:{limit: document.getElementById('rowsPerPage-ideas').value}">
                       <option value="10" ${limitNum === 10 ? 'selected' : ''}>10</option>
                       <option value="20" ${limitNum === 20 ? 'selected' : ''}>20</option>
                       <option value="50" ${limitNum === 50 ? 'selected' : ''}>50</option>
                       <option value="100" ${limitNum === 100 ? 'selected' : ''}>100</option>
-                    </select>
-                  </div>
+                     </select>
 
-                  <div class="flex items-center gap-2">
-                    <nav class="flex items-center gap-1 text-sm">`;
+                     <nav class="flex items-center gap-1">`;
 
-       // Add pagination buttons
-       if (hasPrev) {
-          tableHtml += `<button hx-get="/admin/table-pages/ideas?page=${prevPage}" hx-target="#ideasTableContainer"
-            class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200 font-medium">
-           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-           </svg>
-         </button>`;
-       }
+        // Add pagination buttons
+        if (hasPrev) {
+           tableHtml += `<button hx-get="/admin/table-pages/ideas?page=${prevPage}" hx-target="#ideasTableContainer"
+             class="inline-flex items-center justify-center w-8 h-8 rounded border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>`;
+        }
 
-       pages.forEach(page => {
-         const isActive = page === pageNum;
-          tableHtml += `<button hx-get="/admin/table-pages/ideas?page=${page}" hx-target="#ideasTableContainer"
-            class="inline-flex items-center justify-center w-10 h-10 rounded-lg ${isActive ? 'bg-primary text-primary-foreground scale-105' : 'border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground'} transition-all duration-200 font-medium">${page}</button>`;
-       });
+        pages.forEach(page => {
+          const isActive = page === pageNum;
+           tableHtml += `<button hx-get="/admin/table-pages/ideas?page=${page}" hx-target="#ideasTableContainer"
+             class="inline-flex items-center justify-center px-2 py-1 rounded${isActive ? ' bg-muted text-foreground' : ' text-muted-foreground hover:text-foreground'} transition-colors text-xs font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">${page}</button>`;
+        });
 
-       if (hasNext) {
-          tableHtml += `<button hx-get="/admin/table-pages/ideas?page=${nextPage}" hx-target="#ideasTableContainer"
-            class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200">
-           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-           </svg>
-         </button>`;
-       }
+        if (hasNext) {
+           tableHtml += `<button hx-get="/admin/table-pages/ideas?page=${nextPage}" hx-target="#ideasTableContainer"
+             class="inline-flex items-center justify-center w-8 h-8 rounded border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>`;
+        }
 
-      tableHtml += `
-                    </nav>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tfoot>
-        </table>`;
+       tableHtml += `
+                     </nav>
+                   </div>
+                 </div>
+               </td>
+             </tr>
+           </tfoot>
+         </table>`;
 
       // Add bulk actions if enabled
       if (true && bulkActions.length > 0) {
         tableHtml += `
         <div id="bulkActions-ideas" class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-6 py-3 rounded-full z-30" style="display: none;">
           <div class="flex items-center gap-4">
-            <span id="selectedCount-ideas">0 ideas selected</span>
+            <span id="selectedCount-ideas">0 idea selected</span>
             <div class="flex gap-2">`;
 
         bulkActions.forEach(action => {
