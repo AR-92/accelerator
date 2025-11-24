@@ -1,27 +1,7 @@
 <div class="max-w-7xl mx-auto rounded-xl overflow-hidden flex flex-col mx-4 my-4">
 
-    <!-- Page Header -->
-    <header class="sticky top-0 z-20 text-card-foreground p-5">
-     <!-- Page Title and Description -->
-     <div class="mb-6 flex justify-between">
-
-       <div class="text-left">
-         <h1 class="text-3xl font-bold text-card-foreground mb-2">Idea Details</h1>
-         <p class="text-muted-foreground">Detailed view of the selected idea</p>
-       </div>
-
-       <div class="flex items-center gap-3">
-         <a href="/admin/table-pages/ideas" class="inline-flex items-center px-4 py-2 border border-input rounded-md text-sm font-medium text-card-foreground bg-background hover:bg-accent hover:text-accent-foreground transition-colors">
-           <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-           </svg>
-           Back to Ideas
-         </a>
-       </div>
-
-      </div>
-
-      </header>
+     <!-- Page Header -->
+     {{> page-header title="Idea Details" description="Detailed view of the selected idea" backLink="/admin/table-pages/ideas" backText="Back to Ideas"}}
 
       <!-- Idea Details -->
       <div class="p-6">
