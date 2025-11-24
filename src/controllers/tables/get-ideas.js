@@ -1,8 +1,12 @@
- import logger from '../../utils/logger.js';
-  import { databaseService } from '../../services/index.js';
-  import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
-  import { getTableConfig } from '../../config/tableFilters.js';
-  import { isHtmxRequest } from '../../helpers/http/index.js';
+import logger from '../../utils/logger.js';
+import { databaseService } from '../../services/index.js';
+import {
+  applyTableFilters,
+  getStatusCounts,
+  getFilterCounts,
+} from '../../helpers/tableFilters.js';
+import { getTableConfig } from '../../config/tableFilters.js';
+import { isHtmxRequest } from '../../helpers/http/index.js';
 
 // Ideas Management
 export const getIdeasFilterNav = async (req, res) => {
@@ -75,9 +79,20 @@ export const getIdea = async (req, res) => {
         currentPage: 'ideas',
         currentSection: 'main',
         data: [],
-        pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
+        pagination: {
+          currentPage: 1,
+          limit: 10,
+          total: 0,
+          start: 0,
+          end: 0,
+          hasPrev: false,
+          hasNext: false,
+          prevPage: 0,
+          nextPage: 2,
+          pages: [],
+        },
         query: { search: '', status: '' },
-        error: 'Idea not found'
+        error: 'Idea not found',
       });
     }
 
@@ -98,7 +113,7 @@ export const getIdea = async (req, res) => {
       currentSection: 'main',
       idea,
       filterCounts,
-      tableConfig
+      tableConfig,
     });
   } catch (error) {
     logger.error('Error loading idea detail:', error);
@@ -107,9 +122,20 @@ export const getIdea = async (req, res) => {
       currentPage: 'ideas',
       currentSection: 'main',
       data: [],
-      pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
+      pagination: {
+        currentPage: 1,
+        limit: 10,
+        total: 0,
+        start: 0,
+        end: 0,
+        hasPrev: false,
+        hasNext: false,
+        prevPage: 0,
+        nextPage: 2,
+        pages: [],
+      },
       query: { search: '', status: '' },
-      error: 'Error loading idea'
+      error: 'Error loading idea',
     });
   }
 };
@@ -118,7 +144,9 @@ export const getIdeas = async (req, res) => {
     logger.info('Admin ideas page accessed');
 
     const { search = '', status = '', page = 1, limit = 10 } = req.query;
-    logger.info(`Query params: search="${search}", status="${status}", page=${page}, limit=${limit}`);
+    logger.info(
+      `Query params: search="${search}", status="${status}", page=${page}, limit=${limit}`
+    );
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
     const offset = (pageNum - 1) * limitNum;
@@ -143,7 +171,9 @@ export const getIdeas = async (req, res) => {
       throw error;
     }
 
-    logger.info(`Fetched ${ideas ? ideas.length : 0} ideas, total count: ${count}`);
+    logger.info(
+      `Fetched ${ideas ? ideas.length : 0} ideas, total count: ${count}`
+    );
 
     const total = count || 0;
 
@@ -158,7 +188,11 @@ export const getIdeas = async (req, res) => {
     const prevPage = hasPrev ? pageNum - 1 : null;
     const nextPage = hasNext ? pageNum + 1 : null;
     const pages = [];
-    for (let i = Math.max(1, pageNum - 2); i <= Math.min(totalPages, pageNum + 2); i++) {
+    for (
+      let i = Math.max(1, pageNum - 2);
+      i <= Math.min(totalPages, pageNum + 2);
+      i++
+    ) {
       pages.push(i);
     }
 
@@ -166,53 +200,84 @@ export const getIdeas = async (req, res) => {
     if (search) filters.push(`search: "${search}"`);
     if (status) filters.push(`status: ${status}`);
     if (pageNum > 1) filters.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${ideas.length} of ${total} ideas${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${ideas.length} of ${total} ideas${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`
+    );
 
     const columns = [
-      { key: 'title', label: 'Title', type: 'title', descriptionKey: 'description' },
+      {
+        key: 'title',
+        label: 'Title',
+        type: 'title',
+        descriptionKey: 'description',
+      },
       { key: 'user_id', label: 'User ID', type: 'text' },
       { key: 'status', label: 'Status', type: 'status' },
-      { key: 'upvotes', label: 'Upvotes', type: 'text', hidden: true, responsive: 'md:table-cell' },
-      { key: 'created_at', label: 'Created', type: 'date', hidden: true, responsive: 'lg:table-cell' }
+      {
+        key: 'upvotes',
+        label: 'Upvotes',
+        type: 'text',
+        hidden: true,
+        responsive: 'md:table-cell',
+      },
+      {
+        key: 'created_at',
+        label: 'Created',
+        type: 'date',
+        hidden: true,
+        responsive: 'lg:table-cell',
+      },
     ];
 
-     const actions = [
+    const actions = [
       {
         type: 'link',
         url: '/admin/table-pages/ideas',
         label: 'View Details',
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
+        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>',
       },
-       {
-         type: 'button',
-         onclick: 'editIdea',
-         label: 'Edit',
-         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>'
-       },
-       {
-         type: 'button',
-         onclick: 'approveIdea',
-         label: 'Approve',
-         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"></polyline></svg>'
-       },
-       {
-         type: 'button',
-         onclick: 'rejectIdea',
-         label: 'Reject',
-         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
-       },
-       {
-         type: 'delete',
-         onclick: 'deleteIdea',
-         label: 'Delete',
-         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>'
-       }
-     ];
+      {
+        type: 'button',
+        onclick: 'editIdea',
+        label: 'Edit',
+        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>',
+      },
+      {
+        type: 'button',
+        onclick: 'approveIdea',
+        label: 'Approve',
+        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"></polyline></svg>',
+      },
+      {
+        type: 'button',
+        onclick: 'rejectIdea',
+        label: 'Reject',
+        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
+      },
+      {
+        type: 'delete',
+        onclick: 'deleteIdea',
+        label: 'Delete',
+        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>',
+      },
+    ];
 
     const bulkActions = [
-      { onclick: 'bulkApproveIdeas', buttonId: 'bulkApproveBtn', label: 'Approve Selected' },
-      { onclick: 'bulkRejectIdeas', buttonId: 'bulkRejectBtn', label: 'Reject Selected' },
-      { onclick: 'bulkDeleteIdeas', buttonId: 'bulkDeleteBtn', label: 'Delete Selected' }
+      {
+        onclick: 'bulkApproveIdeas',
+        buttonId: 'bulkApproveBtn',
+        label: 'Approve Selected',
+      },
+      {
+        onclick: 'bulkRejectIdeas',
+        buttonId: 'bulkRejectBtn',
+        label: 'Reject Selected',
+      },
+      {
+        onclick: 'bulkDeleteIdeas',
+        buttonId: 'bulkDeleteBtn',
+        label: 'Delete Selected',
+      },
     ];
 
     const pagination = {
@@ -225,10 +290,11 @@ export const getIdeas = async (req, res) => {
       hasNext,
       prevPage,
       nextPage,
-      pages
-};
+      pages,
+    };
 
-    const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
+    const colspan =
+      columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     // Prepare filter counts for template
     const filterCounts = getFilterCounts('ideas', statusCounts);
@@ -251,8 +317,10 @@ export const getIdeas = async (req, res) => {
               </th>`;
 
       // Add column headers
-      columns.forEach(column => {
-        const responsiveClass = column.hidden ? ` hidden ${column.responsive}` : '';
+      columns.forEach((column) => {
+        const responsiveClass = column.hidden
+          ? ` hidden ${column.responsive}`
+          : '';
         tableHtml += `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider${responsiveClass} bg-muted">${column.label}</th>`;
       });
 
@@ -268,15 +336,17 @@ export const getIdeas = async (req, res) => {
 
       // Add table rows
       if (ideas.length > 0) {
-        ideas.forEach(idea => {
+        ideas.forEach((idea) => {
           tableHtml += `<tr id="idea-row-${idea.id}" class="h-16 border-b border-border hover:bg-muted/50 even:bg-muted/30 transition-colors duration-150">
             <td class="px-6 py-4">
               <input type="checkbox" class="ideaCheckbox rounded border-input text-primary value="${idea.id}" data-idea-id="${idea.id}">
             </td>`;
 
           // Add data cells
-          columns.forEach(column => {
-            const responsiveClass = column.hidden ? ` hidden ${column.responsive}` : '';
+          columns.forEach((column) => {
+            const responsiveClass = column.hidden
+              ? ` hidden ${column.responsive}`
+              : '';
             let cellContent = '';
 
             if (column.type === 'status') {
@@ -309,7 +379,7 @@ export const getIdeas = async (req, res) => {
                 <div id="actionMenu-idea-${idea.id}" class="dropdown-menu fixed w-48 bg-popover rounded-md shadow-lg border border-border" style="display: none;">
                   <div class="py-1">`;
 
-            actions.forEach(action => {
+            actions.forEach((action) => {
               if (action.type === 'link') {
                 tableHtml += `<a href="${action.url}/${idea.id}" class="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
                   ${action.icon}
@@ -373,32 +443,32 @@ export const getIdeas = async (req, res) => {
 
                      <nav class="flex items-center gap-1">`;
 
-        // Add pagination buttons
-        if (hasPrev) {
-           tableHtml += `<button hx-get="/admin/table-pages/ideas?page=${prevPage}" hx-target="#ideasTableContainer"
+      // Add pagination buttons
+      if (hasPrev) {
+        tableHtml += `<button hx-get="/admin/table-pages/ideas?page=${prevPage}" hx-target="#ideasTableContainer"
              class="inline-flex items-center justify-center w-8 h-8 rounded border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
           </button>`;
-        }
+      }
 
-        pages.forEach(page => {
-          const isActive = page === pageNum;
-           tableHtml += `<button hx-get="/admin/table-pages/ideas?page=${page}" hx-target="#ideasTableContainer"
+      pages.forEach((page) => {
+        const isActive = page === pageNum;
+        tableHtml += `<button hx-get="/admin/table-pages/ideas?page=${page}" hx-target="#ideasTableContainer"
              class="inline-flex items-center justify-center px-2 py-1 rounded${isActive ? ' bg-muted text-foreground' : ' text-muted-foreground hover:text-foreground'} transition-colors text-xs font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">${page}</button>`;
-        });
+      });
 
-        if (hasNext) {
-           tableHtml += `<button hx-get="/admin/table-pages/ideas?page=${nextPage}" hx-target="#ideasTableContainer"
+      if (hasNext) {
+        tableHtml += `<button hx-get="/admin/table-pages/ideas?page=${nextPage}" hx-target="#ideasTableContainer"
              class="inline-flex items-center justify-center w-8 h-8 rounded border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
           </button>`;
-        }
+      }
 
-       tableHtml += `
+      tableHtml += `
                      </nav>
                    </div>
                  </div>
@@ -415,7 +485,7 @@ export const getIdeas = async (req, res) => {
             <span id="selectedCount-ideas">0 idea selected</span>
             <div class="flex gap-2">`;
 
-        bulkActions.forEach(action => {
+        bulkActions.forEach((action) => {
           tableHtml += `<button onclick="${action.onclick}" id="${action.buttonId}-ideas" class="bg-primary-foreground/20 hover:bg-primary-foreground/30 text-primary-foreground px-3 py-1 rounded text-sm" disabled="">
             ${action.label}
           </button>`;
@@ -446,20 +516,38 @@ export const getIdeas = async (req, res) => {
         query: { search: search || '', status: status || '' },
         currentUrl: '/admin/table-pages/ideas',
         colspan,
-         filterCounts,
-         tableConfig
+        filterCounts,
+        tableConfig,
       });
     }
-    } catch (error) {
-      logger.error('Error loading ideas:', error);
-      res.render('admin/table-pages/ideas', {
-        title: 'Ideas Management',
-        currentPage: 'ideas',
-        currentSection: 'main',
-        data: [],
-        pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
-        query: { search: '', status: '' },
-        filterCounts: { all: 0, pending: 0, approved: 0, rejected: 0, active: 0, draft: 0 }
-      });
-    }
+  } catch (error) {
+    logger.error('Error loading ideas:', error);
+    res.render('admin/table-pages/ideas', {
+      title: 'Ideas Management',
+      currentPage: 'ideas',
+      currentSection: 'main',
+      data: [],
+      pagination: {
+        currentPage: 1,
+        limit: 10,
+        total: 0,
+        start: 0,
+        end: 0,
+        hasPrev: false,
+        hasNext: false,
+        prevPage: 0,
+        nextPage: 2,
+        pages: [],
+      },
+      query: { search: '', status: '' },
+      filterCounts: {
+        all: 0,
+        pending: 0,
+        approved: 0,
+        rejected: 0,
+        active: 0,
+        draft: 0,
+      },
+    });
+  }
 };

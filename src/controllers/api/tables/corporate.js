@@ -1,9 +1,18 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
-import { validateCorporateCreation, validateCorporateUpdate, validateCorporateDeletion, validateEnterpriseCreation, validateEnterpriseUpdate, validateEnterpriseDeletion, validateStartupCreation, validateStartupUpdate, validateStartupDeletion } from '../../../middleware/validation/index.js';
+import {
+  validateCorporateCreation,
+  validateCorporateUpdate,
+  validateCorporateDeletion,
+  validateEnterpriseCreation,
+  validateEnterpriseUpdate,
+  validateEnterpriseDeletion,
+  validateStartupCreation,
+  validateStartupUpdate,
+  validateStartupDeletion,
+} from '../../../middleware/validation/index.js';
 import { formatDate, formatCurrency } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
-
 
 // Corporate API
 export const getCorporates = async (req, res) => {
@@ -12,7 +21,9 @@ export const getCorporates = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    let query = databaseService.supabase.from('corporate').select('*', { count: 'exact' });
+    let query = databaseService.supabase
+      .from('corporate')
+      .select('*', { count: 'exact' });
 
     if (search) {
       query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
@@ -26,7 +37,11 @@ export const getCorporates = async (req, res) => {
       query = query.eq('status', status);
     }
 
-    const { data: corporates, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+    const {
+      data: corporates,
+      error,
+      count,
+    } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
 
     if (error) throw error;
 
@@ -50,7 +65,9 @@ export const getCorporates = async (req, res) => {
             </tr>
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
-            ${corporates.map(corporate => `
+            ${corporates
+              .map(
+                (corporate) => `
               <tr>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="flex items-center">
@@ -68,9 +85,11 @@ export const getCorporates = async (req, res) => {
                 <td class="px-6 py-4 text-sm text-gray-900">${corporate.industry}</td>
                 <td class="px-6 py-4">
                   <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                    corporate.status === 'active' ? 'bg-green-100 text-green-800' :
-                    corporate.status === 'inactive' ? 'bg-red-100 text-red-800' :
-                    'bg-yellow-100 text-yellow-800'
+                    corporate.status === 'active'
+                      ? 'bg-green-100 text-green-800'
+                      : corporate.status === 'inactive'
+                        ? 'bg-red-100 text-red-800'
+                        : 'bg-yellow-100 text-yellow-800'
                   }">${corporate.status}</span>
                 </td>
                 <td class="px-6 py-4 text-sm text-gray-900">${corporate.employee_count || 'N/A'}</td>
@@ -93,7 +112,9 @@ export const getCorporates = async (req, res) => {
                   </div>
                 </td>
               </tr>
-            `).join('')}
+            `
+              )
+              .join('')}
           </tbody>
         </table>
       `;
@@ -108,7 +129,7 @@ export const getCorporates = async (req, res) => {
       limit: limitNum,
       totalPages,
       totalCount: count,
-      html
+      html,
     });
   } catch (error) {
     console.error('Error in getCorporates:', error);
@@ -120,31 +141,43 @@ export const getCorporates = async (req, res) => {
 export const updateCorporate = [
   validateCorporateUpdate,
   async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { name, description, industry, founded_date, website, status, revenue, location, headquarters, employee_count, sector } = req.body;
-
-    const { data: corporate, error } = await databaseService.supabase
-      .from('corporate')
-      .update({
+    try {
+      const { id } = req.params;
+      const {
         name,
         description,
-      industry,
-      founded_date,
-      website,
-      status,
-      revenue,
-      location,
-      headquarters,
-      employee_count,
-      sector,
-      updated_at: new Date().toISOString()
-    });
+        industry,
+        founded_date,
+        website,
+        status,
+        revenue,
+        location,
+        headquarters,
+        employee_count,
+        sector,
+      } = req.body;
 
-    logger.info(`Updated corporate with ID: ${id}`);
+      const { data: corporate, error } = await databaseService.supabase
+        .from('corporate')
+        .update({
+          name,
+          description,
+          industry,
+          founded_date,
+          website,
+          status,
+          revenue,
+          location,
+          headquarters,
+          employee_count,
+          sector,
+          updated_at: new Date().toISOString(),
+        });
 
-    if (isHtmxRequest(req)) {
-      const corporateHtml = `
+      logger.info(`Updated corporate with ID: ${id}`);
+
+      if (isHtmxRequest(req)) {
+        const corporateHtml = `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -162,9 +195,11 @@ export const updateCorporate = [
           <td class="px-6 py-4 text-sm text-gray-900">${corporate.industry}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              corporate.status === 'active' ? 'bg-green-100 text-green-800' :
-              corporate.status === 'inactive' ? 'bg-red-100 text-red-800' :
-              'bg-yellow-100 text-yellow-800'
+              corporate.status === 'active'
+                ? 'bg-green-100 text-green-800'
+                : corporate.status === 'inactive'
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-yellow-100 text-yellow-800'
             }">${corporate.status}</span>
           </td>
            <td class="px-6 py-4 text-sm text-gray-900">${corporate.employee_count || 'N/A'}</td>
@@ -221,7 +256,7 @@ export const updateCorporate = [
         </tr>
       `;
 
-      const alertHtml = `
+        const alertHtml = `
         <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
           <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-green-50 text-green-800 border-green-200">
             <div class="flex items-start gap-3">
@@ -237,14 +272,14 @@ export const updateCorporate = [
         </script>
       `;
 
-      res.send(alertHtml + corporateHtml);
-    } else {
-      res.json({ success: true, data: corporate });
-    }
-  } catch (error) {
-    logger.error('Error updating corporate:', error);
-    if (isHtmxRequest(req)) {
-      res.status(500).send(`
+        res.send(alertHtml + corporateHtml);
+      } else {
+        res.json({ success: true, data: corporate });
+      }
+    } catch (error) {
+      logger.error('Error updating corporate:', error);
+      if (isHtmxRequest(req)) {
+        res.status(500).send(`
         <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
           <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-red-50 text-red-800 border-red-200">
             <div class="flex items-start gap-3">
@@ -256,11 +291,11 @@ export const updateCorporate = [
           </div>
         </div>
       `);
-    } else {
-      res.status(500).json({ success: false, error: error.message });
+      } else {
+        res.status(500).json({ success: false, error: error.message });
+      }
     }
-  }
-}
+  },
 ];
 
 // Delete Corporate
@@ -269,15 +304,18 @@ export const deleteCorporate = async (req, res) => {
     const { id } = req.params;
 
     // Check if corporate exists and get name for message
-    const { data: existingCorporate, error: fetchError } = await databaseService.supabase
-      .from('corporate')
-      .select('*')
-      .eq('id', id)
-      .single();
+    const { data: existingCorporate, error: fetchError } =
+      await databaseService.supabase
+        .from('corporate')
+        .select('*')
+        .eq('id', id)
+        .single();
 
     if (fetchError) throw fetchError;
     if (!existingCorporate) {
-      return res.status(404).json({ success: false, error: 'Corporate not found' });
+      return res
+        .status(404)
+        .json({ success: false, error: 'Corporate not found' });
     }
 
     const { error } = await databaseService.supabase
@@ -335,21 +373,33 @@ export const deleteCorporate = async (req, res) => {
 // Create Enterprise
 export const createEnterprise = async (req, res) => {
   try {
-    const { user_id, name, description, industry, founded_date, website, status, revenue, location } = req.body;
+    const {
+      user_id,
+      name,
+      description,
+      industry,
+      founded_date,
+      website,
+      status,
+      revenue,
+      location,
+    } = req.body;
 
     const { data: enterprise, error } = await databaseService.supabase
       .from('enterprises')
-      .insert([{
-        user_id: user_id || req.user?.id || 1,
-        name,
-        description,
-        industry,
-        founded_date,
-        website,
-        status: status || 'active',
-        revenue,
-        location
-      }])
+      .insert([
+        {
+          user_id: user_id || req.user?.id || 1,
+          name,
+          description,
+          industry,
+          founded_date,
+          website,
+          status: status || 'active',
+          revenue,
+          location,
+        },
+      ])
       .select()
       .single();
 
@@ -376,9 +426,11 @@ export const createEnterprise = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${enterprise.industry}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              enterprise.status === 'active' ? 'bg-green-100 text-green-800' :
-              enterprise.status === 'inactive' ? 'bg-red-100 text-red-800' :
-              'bg-yellow-100 text-yellow-800'
+              enterprise.status === 'active'
+                ? 'bg-green-100 text-green-800'
+                : enterprise.status === 'inactive'
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-yellow-100 text-yellow-800'
             }">${enterprise.status}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatCurrency(enterprise.revenue)}</td>
@@ -480,7 +532,16 @@ export const createEnterprise = async (req, res) => {
 export const updateEnterprise = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, industry, founded_date, website, status, revenue, location } = req.body;
+    const {
+      name,
+      description,
+      industry,
+      founded_date,
+      website,
+      status,
+      revenue,
+      location,
+    } = req.body;
 
     const { data: enterprise, error } = await databaseService.supabase
       .from('enterprises')
@@ -493,7 +554,7 @@ export const updateEnterprise = async (req, res) => {
         status,
         revenue,
         location,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', id)
       .select()
@@ -522,9 +583,11 @@ export const updateEnterprise = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${enterprise.industry}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              enterprise.status === 'active' ? 'bg-green-100 text-green-800' :
-              enterprise.status === 'inactive' ? 'bg-red-100 text-red-800' :
-              'bg-yellow-100 text-yellow-800'
+              enterprise.status === 'active'
+                ? 'bg-green-100 text-green-800'
+                : enterprise.status === 'inactive'
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-yellow-100 text-yellow-800'
             }">${enterprise.status}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatCurrency(enterprise.revenue)}</td>
@@ -627,15 +690,18 @@ export const deleteEnterprise = async (req, res) => {
     const { id } = req.params;
 
     // Check if enterprise exists and get name for message
-    const { data: existingEnterprise, error: fetchError } = await databaseService.supabase
-      .from('enterprises')
-      .select('*')
-      .eq('id', id)
-      .single();
+    const { data: existingEnterprise, error: fetchError } =
+      await databaseService.supabase
+        .from('enterprises')
+        .select('*')
+        .eq('id', id)
+        .single();
 
     if (fetchError) throw fetchError;
     if (!existingEnterprise) {
-      return res.status(404).json({ success: false, error: 'Enterprise not found' });
+      return res
+        .status(404)
+        .json({ success: false, error: 'Enterprise not found' });
     }
 
     const { error } = await databaseService.supabase
@@ -693,19 +759,29 @@ export const deleteEnterprise = async (req, res) => {
 // Create Startup
 export const createStartup = async (req, res) => {
   try {
-    const { user_id, name, description, industry, founded_date, website, status } = req.body;
+    const {
+      user_id,
+      name,
+      description,
+      industry,
+      founded_date,
+      website,
+      status,
+    } = req.body;
 
     const { data: startup, error } = await databaseService.supabase
       .from('startups')
-      .insert([{
-        user_id: user_id || req.user?.id || 1,
-        name,
-        description,
-        industry,
-        founded_date,
-        website,
-        status: status || 'active'
-      }])
+      .insert([
+        {
+          user_id: user_id || req.user?.id || 1,
+          name,
+          description,
+          industry,
+          founded_date,
+          website,
+          status: status || 'active',
+        },
+      ])
       .select()
       .single();
 
@@ -732,9 +808,11 @@ export const createStartup = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${startup.industry}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              startup.status === 'active' ? 'bg-green-100 text-green-800' :
-              startup.status === 'inactive' ? 'bg-red-100 text-red-800' :
-              'bg-yellow-100 text-yellow-800'
+              startup.status === 'active'
+                ? 'bg-green-100 text-green-800'
+                : startup.status === 'inactive'
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-yellow-100 text-yellow-800'
             }">${startup.status}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(startup.founded_date)}</td>
@@ -836,7 +914,8 @@ export const createStartup = async (req, res) => {
 export const updateStartup = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, industry, founded_date, website, status } = req.body;
+    const { name, description, industry, founded_date, website, status } =
+      req.body;
 
     const { data: startup, error } = await databaseService.supabase
       .from('startups')
@@ -847,7 +926,7 @@ export const updateStartup = async (req, res) => {
         founded_date,
         website,
         status,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', id)
       .select()
@@ -876,9 +955,11 @@ export const updateStartup = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${startup.industry}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              startup.status === 'active' ? 'bg-green-100 text-green-800' :
-              startup.status === 'inactive' ? 'bg-red-100 text-red-800' :
-              'bg-yellow-100 text-yellow-800'
+              startup.status === 'active'
+                ? 'bg-green-100 text-green-800'
+                : startup.status === 'inactive'
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-yellow-100 text-yellow-800'
             }">${startup.status}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(startup.founded_date)}</td>
@@ -981,15 +1062,18 @@ export const deleteStartup = async (req, res) => {
     const { id } = req.params;
 
     // Check if startup exists and get name for message
-    const { data: existingStartup, error: fetchError } = await databaseService.supabase
-      .from('startups')
-      .select('*')
-      .eq('id', id)
-      .single();
+    const { data: existingStartup, error: fetchError } =
+      await databaseService.supabase
+        .from('startups')
+        .select('*')
+        .eq('id', id)
+        .single();
 
     if (fetchError) throw fetchError;
     if (!existingStartup) {
-      return res.status(404).json({ success: false, error: 'Startup not found' });
+      return res
+        .status(404)
+        .json({ success: false, error: 'Startup not found' });
     }
 
     const { error } = await databaseService.supabase

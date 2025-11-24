@@ -45,9 +45,7 @@ export const validateLearningContentCreation = [
 ];
 
 export const validateLearningContentUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid learning content ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid learning content ID'),
 
   body('title')
     .optional()
@@ -90,9 +88,7 @@ export const validateLearningContentUpdate = [
 ];
 
 export const validateLearningContentDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid learning content ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid learning content ID'),
 
   handleValidationErrors,
 ];

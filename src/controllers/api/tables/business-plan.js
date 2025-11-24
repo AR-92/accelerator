@@ -1,7 +1,6 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
 
-
 // Business Plan API
 export const getBusinessPlan = async (req, res) => {
   try {
@@ -33,30 +32,53 @@ export const getBusinessPlan = async (req, res) => {
     logger.info(`Fetched ${plans.length} of ${total} business plans`);
 
     if (isHtmxRequest(req)) {
-      const planHtml = plans.map(plan => `
+      const planHtml = plans
+        .map(
+          (plan) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">${plan.name}</td>
           <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">${plan.description || 'N/A'}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              plan.status === 'active' ? 'bg-green-100 text-green-800' :
-              plan.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
-              'bg-red-100 text-red-800'
+              plan.status === 'active'
+                ? 'bg-green-100 text-green-800'
+                : plan.status === 'draft'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-red-100 text-red-800'
             }">${plan.status}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">${formatDate(plan.created_at)}</td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'business-plan');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'business-plan'
+      );
       res.send(planHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: plans, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: plans,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching business plans:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading business plans</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading business plans</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -74,7 +96,7 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/${entity}?page=${page-1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/${entity}?page=${page - 1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -107,7 +129,7 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
   </div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/${entity}?page=${page+1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/${entity}?page=${page + 1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

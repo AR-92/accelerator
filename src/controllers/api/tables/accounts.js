@@ -1,15 +1,24 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
 import { serviceFactory } from '../../../services/serviceFactory.js';
-import { validateAccountCreation, validateAccountUpdate, validateAccountDeletion } from '../../../middleware/validation/index.js';
+import {
+  validateAccountCreation,
+  validateAccountUpdate,
+  validateAccountDeletion,
+} from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
-
 
 // Get all accounts with pagination and filtering
 export const getAccounts = async (req, res) => {
   try {
-    const { search, account_type, is_verified, page = 1, limit = 10 } = req.query;
+    const {
+      search,
+      account_type,
+      is_verified,
+      page = 1,
+      limit = 10,
+    } = req.query;
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
@@ -19,10 +28,18 @@ export const getAccounts = async (req, res) => {
       .select('*', { count: 'exact' });
 
     if (account_type) query = query.eq('account_type', account_type);
-    if (is_verified !== undefined) query = query.eq('is_verified', is_verified === 'true');
-    if (search) query = query.or(`display_name.ilike.%${search}%,username.ilike.%${search}%,bio.ilike.%${search}%`);
+    if (is_verified !== undefined)
+      query = query.eq('is_verified', is_verified === 'true');
+    if (search)
+      query = query.or(
+        `display_name.ilike.%${search}%,username.ilike.%${search}%,bio.ilike.%${search}%`
+      );
 
-    const { data: accounts, error, count } = await query
+    const {
+      data: accounts,
+      error,
+      count,
+    } = await query
       .order('created_at', { ascending: false })
       .range(offset, offset + limitNum - 1);
 
@@ -34,11 +51,15 @@ export const getAccounts = async (req, res) => {
     if (account_type) filters.push(`type: ${account_type}`);
     if (is_verified !== undefined) filters.push(`verified: ${is_verified}`);
     if (pageNum > 1) filters.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${accounts.length} of ${total} accounts${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${accounts.length} of ${total} accounts${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`
+    );
 
     if (isHtmxRequest(req)) {
       // Return HTML for HTMX requests
-      const accountHtml = accounts.map(account => `
+      const accountHtml = accounts
+        .map(
+          (account) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -55,12 +76,16 @@ export const getAccounts = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              account.account_type === 'business' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+              account.account_type === 'business'
+                ? 'bg-blue-100 text-blue-800'
+                : 'bg-green-100 text-green-800'
             }">${account.account_type}</span>
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              account.is_verified ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+              account.is_verified
+                ? 'bg-green-100 text-green-800'
+                : 'bg-yellow-100 text-yellow-800'
             }">${account.is_verified ? 'Verified' : 'Pending'}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${account.location || 'N/A'}</td>
@@ -112,17 +137,35 @@ export const getAccounts = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query);
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query
+      );
       res.send(accountHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: accounts, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: accounts,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching accounts:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading accounts</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading accounts</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -137,7 +180,9 @@ export const getAccount = async (req, res) => {
     const account = await accountService.getAccountById(id);
 
     if (!account) {
-      return res.status(404).json({ success: false, error: 'Account not found' });
+      return res
+        .status(404)
+        .json({ success: false, error: 'Account not found' });
     }
 
     res.json({ success: true, data: account });
@@ -197,7 +242,7 @@ export const createAccount = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Update account
@@ -212,7 +257,9 @@ export const updateAccount = [
       const account = await accountService.updateAccount(id, updates);
 
       if (!account) {
-        return res.status(404).json({ success: false, error: 'Account not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Account not found' });
       }
 
       logger.info(`Updated account with ID: ${id}`);
@@ -256,7 +303,7 @@ export const updateAccount = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Delete account
@@ -270,7 +317,9 @@ export const deleteAccount = [
       // Check if account exists and get name for message
       const existingAccount = await accountService.getAccountById(id);
       if (!existingAccount) {
-        return res.status(404).json({ success: false, error: 'Account not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Account not found' });
       }
 
       await accountService.deleteAccount(id);
@@ -316,7 +365,7 @@ export const deleteAccount = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Toggle account verification
@@ -329,7 +378,9 @@ export const toggleVerification = async (req, res) => {
     const account = await accountService.toggleVerification(id, verified);
 
     if (!account) {
-      return res.status(404).json({ success: false, error: 'Account not found' });
+      return res
+        .status(404)
+        .json({ success: false, error: 'Account not found' });
     }
 
     logger.info(`Toggled verification for account ID: ${id} to ${verified}`);
@@ -387,7 +438,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/accounts?page=${page-1}&${params}" hx-target="#accountsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/accounts?page=${page - 1}&${params}" hx-target="#accountsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -411,7 +462,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
   html += `</div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/accounts?page=${page+1}&${params}" hx-target="#accountsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/accounts?page=${page + 1}&${params}" hx-target="#accountsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

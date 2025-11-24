@@ -118,9 +118,9 @@ export default function adminRoutes(app) {
   app.get('/admin/learning', getLearning);
   app.get('/admin/projects', getProjects);
   app.get('/admin/help', getHelp);
-   app.get('/admin/financial', getFinancial);
+  app.get('/admin/financial', getFinancial);
 
-   // Table pages
+  // Table pages
   app.get('/admin/table-pages/users', getUsers);
   app.get('/admin/table-pages/ideas', getIdeas);
   app.get('/admin/table-pages/ideas/filter-nav', getIdeasFilterNav);

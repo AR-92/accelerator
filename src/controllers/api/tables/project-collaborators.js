@@ -1,9 +1,12 @@
- import logger from '../../../utils/logger.js';
- import { databaseService } from '../../../services/index.js';
- import { validateProjectCollaboratorCreation, validateProjectCollaboratorUpdate, validateProjectCollaboratorDeletion } from '../../../middleware/validation/index.js';
- import { formatDate } from '../../../helpers/format/index.js';
- import { isHtmxRequest } from '../../../helpers/http/index.js';
-
+import logger from '../../../utils/logger.js';
+import { databaseService } from '../../../services/index.js';
+import {
+  validateProjectCollaboratorCreation,
+  validateProjectCollaboratorUpdate,
+  validateProjectCollaboratorDeletion,
+} from '../../../middleware/validation/index.js';
+import { formatDate } from '../../../helpers/format/index.js';
+import { isHtmxRequest } from '../../../helpers/http/index.js';
 
 // Get all project collaborators with pagination and filtering
 export const getProjectCollaborators = async (req, res) => {
@@ -12,7 +15,9 @@ export const getProjectCollaborators = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    let query = databaseService.supabase.from('project_collaborators').select('*', { count: 'exact' });
+    let query = databaseService.supabase
+      .from('project_collaborators')
+      .select('*', { count: 'exact' });
 
     if (project_id) {
       query = query.eq('project_id', project_id);
@@ -22,7 +27,11 @@ export const getProjectCollaborators = async (req, res) => {
       query = query.eq('role', role);
     }
 
-    const { data: collaborators, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+    const {
+      data: collaborators,
+      error,
+      count,
+    } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
 
     if (error) throw error;
 
@@ -31,10 +40,14 @@ export const getProjectCollaborators = async (req, res) => {
     if (project_id) filters.push(`project_id: ${project_id}`);
     if (role) filters.push(`role: ${role}`);
     if (pageNum > 1) filters.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${collaborators.length} of ${total} project collaborators${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${collaborators.length} of ${total} project collaborators${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`
+    );
 
     if (isHtmxRequest(req)) {
-      const collaboratorHtml = collaborators.map(collaborator => `
+      const collaboratorHtml = collaborators
+        .map(
+          (collaborator) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -51,10 +64,13 @@ export const getProjectCollaborators = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              collaborator.role === 'owner' ? 'bg-red-100 text-red-800' :
-              collaborator.role === 'admin' ? 'bg-yellow-100 text-yellow-800' :
-              collaborator.role === 'editor' ? 'bg-blue-100 text-blue-800' :
-              'bg-green-100 text-green-800'
+              collaborator.role === 'owner'
+                ? 'bg-red-100 text-red-800'
+                : collaborator.role === 'admin'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : collaborator.role === 'editor'
+                    ? 'bg-blue-100 text-blue-800'
+                    : 'bg-green-100 text-green-800'
             }">${collaborator.role}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(collaborator.joined_at)}</td>
@@ -96,17 +112,37 @@ export const getProjectCollaborators = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query);
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query
+      );
       res.send(collaboratorHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: collaborators, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: collaborators,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching project collaborators:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading project collaborators</p>');
+      res
+        .status(500)
+        .send(
+          '<p class="text-red-500">Error loading project collaborators</p>'
+        );
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -126,7 +162,9 @@ export const getProjectCollaborator = async (req, res) => {
 
     if (error) throw error;
     if (!collaborator) {
-      return res.status(404).json({ success: false, error: 'Project collaborator not found' });
+      return res
+        .status(404)
+        .json({ success: false, error: 'Project collaborator not found' });
     }
 
     res.json({ success: true, data: collaborator });
@@ -192,7 +230,7 @@ export const createProjectCollaborator = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Update project collaborator
@@ -212,7 +250,9 @@ export const updateProjectCollaborator = [
 
       if (error) throw error;
       if (!collaborator) {
-        return res.status(404).json({ success: false, error: 'Project collaborator not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Project collaborator not found' });
       }
 
       logger.info(`Updated project collaborator with ID: ${id}`);
@@ -256,7 +296,7 @@ export const updateProjectCollaborator = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Delete project collaborator
@@ -267,15 +307,18 @@ export const deleteProjectCollaborator = [
       const { id } = req.params;
 
       // Check if collaborator exists
-      const { data: existingCollaborator, error: fetchError } = await databaseService.supabase
-        .from('project_collaborators')
-        .select('*')
-        .eq('id', id)
-        .single();
+      const { data: existingCollaborator, error: fetchError } =
+        await databaseService.supabase
+          .from('project_collaborators')
+          .select('*')
+          .eq('id', id)
+          .single();
 
       if (fetchError) throw fetchError;
       if (!existingCollaborator) {
-        return res.status(404).json({ success: false, error: 'Project collaborator not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Project collaborator not found' });
       }
 
       const { error } = await databaseService.supabase
@@ -305,7 +348,10 @@ export const deleteProjectCollaborator = [
           </script>
         `);
       } else {
-        res.json({ success: true, message: 'Project collaborator removed successfully' });
+        res.json({
+          success: true,
+          message: 'Project collaborator removed successfully',
+        });
       }
     } catch (error) {
       logger.error('Error deleting project collaborator:', error);
@@ -325,7 +371,7 @@ export const deleteProjectCollaborator = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Helper function to generate pagination HTML
@@ -339,7 +385,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/project-collaborators?page=${page-1}&${params}" hx-target="#projectCollaboratorsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/project-collaborators?page=${page - 1}&${params}" hx-target="#projectCollaboratorsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -363,7 +409,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
   html += `</div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/project-collaborators?page=${page+1}&${params}" hx-target="#projectCollaboratorsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/project-collaborators?page=${page + 1}&${params}" hx-target="#projectCollaboratorsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

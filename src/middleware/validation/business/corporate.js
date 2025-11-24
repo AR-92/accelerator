@@ -27,10 +27,7 @@ export const validateCorporateCreation = [
     .isISO8601()
     .withMessage('Founded date must be a valid date'),
 
-  body('website')
-    .optional()
-    .isURL()
-    .withMessage('Website must be a valid URL'),
+  body('website').optional().isURL().withMessage('Website must be a valid URL'),
 
   body('status')
     .optional()
@@ -74,9 +71,7 @@ export const validateCorporateCreation = [
 ];
 
 export const validateCorporateUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid corporate ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid corporate ID'),
 
   body('name')
     .optional()
@@ -101,10 +96,7 @@ export const validateCorporateUpdate = [
     .isISO8601()
     .withMessage('Founded date must be a valid date'),
 
-  body('website')
-    .optional()
-    .isURL()
-    .withMessage('Website must be a valid URL'),
+  body('website').optional().isURL().withMessage('Website must be a valid URL'),
 
   body('status')
     .optional()
@@ -143,9 +135,7 @@ export const validateCorporateUpdate = [
 ];
 
 export const validateCorporateDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid corporate ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid corporate ID'),
 
   handleValidationErrors,
 ];

@@ -7,9 +7,7 @@ export const validateLearningAssessmentCreation = [
     .isInt({ min: 1 })
     .withMessage('Valid content ID is required'),
 
-  body('user_id')
-    .isInt({ min: 1 })
-    .withMessage('Valid user ID is required'),
+  body('user_id').isInt({ min: 1 }).withMessage('Valid user ID is required'),
 
   body('score')
     .isFloat({ min: 0, max: 100 })
@@ -19,10 +17,7 @@ export const validateLearningAssessmentCreation = [
     .isFloat({ min: 1 })
     .withMessage('Max score must be at least 1'),
 
-  body('passed')
-    .optional()
-    .isBoolean()
-    .withMessage('Passed must be a boolean'),
+  body('passed').optional().isBoolean().withMessage('Passed must be a boolean'),
 
   body('time_spent_minutes')
     .optional()
@@ -33,9 +28,7 @@ export const validateLearningAssessmentCreation = [
 ];
 
 export const validateLearningAssessmentUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid learning assessment ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid learning assessment ID'),
 
   body('score')
     .optional()
@@ -47,10 +40,7 @@ export const validateLearningAssessmentUpdate = [
     .isFloat({ min: 1 })
     .withMessage('Max score must be at least 1'),
 
-  body('passed')
-    .optional()
-    .isBoolean()
-    .withMessage('Passed must be a boolean'),
+  body('passed').optional().isBoolean().withMessage('Passed must be a boolean'),
 
   body('time_spent_minutes')
     .optional()
@@ -61,9 +51,7 @@ export const validateLearningAssessmentUpdate = [
 ];
 
 export const validateLearningAssessmentDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid learning assessment ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid learning assessment ID'),
 
   handleValidationErrors,
 ];

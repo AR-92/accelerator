@@ -23,15 +23,15 @@ export const getProfile = async (req, res) => {
         usersManaged: 156,
         healthChecks: 42,
         settingsUpdated: 23,
-        reportsGenerated: 18
-      }
+        reportsGenerated: 18,
+      },
     };
 
     res.render('admin/other-pages/profile', {
       title: 'Profile',
       currentPage: 'profile',
       currentSection: 'main',
-      profile
+      profile,
     });
   } catch (error) {
     logger.error('Error loading profile:', error);
@@ -39,7 +39,7 @@ export const getProfile = async (req, res) => {
       title: 'Profile',
       currentPage: 'profile',
       currentSection: 'main',
-      profile: {}
+      profile: {},
     });
   }
 };

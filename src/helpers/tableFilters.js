@@ -17,15 +17,17 @@ const applyTableFilters = (query, tableName, reqQuery) => {
   // Apply search filter
   if (search && search.trim() && config.searchableFields?.length) {
     const searchTerm = search.trim();
-    const searchConditions = config.searchableFields.map(field =>
-      `${field}.ilike.%${searchTerm}%`
+    const searchConditions = config.searchableFields.map(
+      (field) => `${field}.ilike.%${searchTerm}%`
     );
     query = query.or(searchConditions.join(','));
   }
 
   // Apply status filter
   if (status && config.statusOptions) {
-    const statusOption = config.statusOptions.find(opt => opt.value === status);
+    const statusOption = config.statusOptions.find(
+      (opt) => opt.value === status
+    );
     if (statusOption?.filter) {
       // Custom filter logic for complex status mappings
       query = applyCustomFilter(query, statusOption.filter);
@@ -45,7 +47,8 @@ const applyTableFilters = (query, tableName, reqQuery) => {
  * @returns {Object} Object with filteredData and statusCounts
  */
 const applyTableFiltersToArray = (data, reqQuery, tableConfig) => {
-  if (!data || !Array.isArray(data)) return { filteredData: [], statusCounts: {} };
+  if (!data || !Array.isArray(data))
+    return { filteredData: [], statusCounts: {} };
 
   const { search, status } = reqQuery;
   let filteredData = [...data];
@@ -53,8 +56,8 @@ const applyTableFiltersToArray = (data, reqQuery, tableConfig) => {
   // Apply search filter
   if (search && search.trim() && tableConfig.searchableFields?.length) {
     const searchTerm = search.toLowerCase().trim();
-    filteredData = filteredData.filter(item => {
-      return tableConfig.searchableFields.some(field => {
+    filteredData = filteredData.filter((item) => {
+      return tableConfig.searchableFields.some((field) => {
         const value = item[field];
         return value && value.toString().toLowerCase().includes(searchTerm);
       });
@@ -63,19 +66,27 @@ const applyTableFiltersToArray = (data, reqQuery, tableConfig) => {
 
   // Apply status filter
   if (status && tableConfig.statusField) {
-    const statusOption = tableConfig.statusOptions?.find(opt => opt.value === status);
+    const statusOption = tableConfig.statusOptions?.find(
+      (opt) => opt.value === status
+    );
     if (statusOption?.filter) {
       // Custom filter logic for complex status mappings
-      filteredData = applyCustomFilterToArray(filteredData, statusOption.filter, tableConfig.statusField);
+      filteredData = applyCustomFilterToArray(
+        filteredData,
+        statusOption.filter,
+        tableConfig.statusField
+      );
     } else {
-      filteredData = filteredData.filter(item => item[tableConfig.statusField] === status);
+      filteredData = filteredData.filter(
+        (item) => item[tableConfig.statusField] === status
+      );
     }
   }
 
   // Calculate status counts from original data
   const statusCounts = {};
   if (tableConfig.statusField && tableConfig.statusOptions) {
-    data.forEach(item => {
+    data.forEach((item) => {
       const statusValue = item[tableConfig.statusField];
       if (statusValue !== null && statusValue !== undefined) {
         statusCounts[statusValue] = (statusCounts[statusValue] || 0) + 1;
@@ -98,13 +109,14 @@ const applyCustomFilterToArray = (data, filterString, statusField) => {
   const parts = filterString.split('.');
   if (parts.length === 3) {
     const [field, operator, value] = parts;
-    const targetValue = value === 'true' ? true : value === 'false' ? false : value;
+    const targetValue =
+      value === 'true' ? true : value === 'false' ? false : value;
 
     switch (operator) {
       case 'eq':
-        return data.filter(item => item[field] === targetValue);
+        return data.filter((item) => item[field] === targetValue);
       case 'neq':
-        return data.filter(item => item[field] !== targetValue);
+        return data.filter((item) => item[field] !== targetValue);
       default:
         return data;
     }
@@ -125,9 +137,15 @@ const applyCustomFilter = (query, filterString) => {
     const [field, operator, value] = parts;
     switch (operator) {
       case 'eq':
-        return query.eq(field, value === 'true' ? true : value === 'false' ? false : value);
+        return query.eq(
+          field,
+          value === 'true' ? true : value === 'false' ? false : value
+        );
       case 'neq':
-        return query.neq(field, value === 'true' ? true : value === 'false' ? false : value);
+        return query.neq(
+          field,
+          value === 'true' ? true : value === 'false' ? false : value
+        );
       case 'gt':
         return query.gt(field, value);
       case 'gte':
@@ -161,7 +179,9 @@ const getStatusCounts = async (tableName, databaseService) => {
     }
 
     // Check if any status options have custom filters
-    const hasCustomFilters = config.statusOptions.some(option => option.filter);
+    const hasCustomFilters = config.statusOptions.some(
+      (option) => option.filter
+    );
 
     if (hasCustomFilters) {
       // For tables with custom filters, count each status separately
@@ -179,10 +199,16 @@ const getStatusCounts = async (tableName, databaseService) => {
             // Apply the filter condition
             switch (operator) {
               case 'eq':
-                query = query.eq(field, value === 'true' ? true : value === 'false' ? false : value);
+                query = query.eq(
+                  field,
+                  value === 'true' ? true : value === 'false' ? false : value
+                );
                 break;
               case 'neq':
-                query = query.neq(field, value === 'true' ? true : value === 'false' ? false : value);
+                query = query.neq(
+                  field,
+                  value === 'true' ? true : value === 'false' ? false : value
+                );
                 break;
               // Add other operators as needed
             }
@@ -208,7 +234,7 @@ const getStatusCounts = async (tableName, databaseService) => {
 
       // Count occurrences of each status
       const counts = {};
-      data.forEach(item => {
+      data.forEach((item) => {
         const statusValue = item[config.statusField];
         if (statusValue !== null && statusValue !== undefined) {
           counts[statusValue] = (counts[statusValue] || 0) + 1;
@@ -233,11 +259,13 @@ const getFilterCounts = (tableName, statusCounts = {}) => {
   const config = getTableConfig(tableName);
   if (!config) return {};
 
-  const counts = { all: Object.values(statusCounts).reduce((sum, count) => sum + count, 0) };
+  const counts = {
+    all: Object.values(statusCounts).reduce((sum, count) => sum + count, 0),
+  };
 
   // Add individual status counts
   if (config.statusOptions) {
-    config.statusOptions.forEach(option => {
+    config.statusOptions.forEach((option) => {
       counts[option.value] = statusCounts[option.value] || 0;
     });
   }
@@ -250,5 +278,5 @@ export {
   applyTableFiltersToArray,
   applyCustomFilter,
   getStatusCounts,
-  getFilterCounts
+  getFilterCounts,
 };

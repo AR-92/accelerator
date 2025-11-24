@@ -17,8 +17,17 @@ export const validateBusinessModelCreation = [
     .withMessage('Description must not exceed 2000 characters'),
 
   body('model_type')
-    .isIn(['subscription', 'freemium', 'advertising', 'transactional', 'marketplace', 'other'])
-    .withMessage('Model type must be subscription, freemium, advertising, transactional, marketplace, or other'),
+    .isIn([
+      'subscription',
+      'freemium',
+      'advertising',
+      'transactional',
+      'marketplace',
+      'other',
+    ])
+    .withMessage(
+      'Model type must be subscription, freemium, advertising, transactional, marketplace, or other'
+    ),
 
   body('revenue_streams')
     .optional()
@@ -85,9 +94,7 @@ export const validateBusinessModelCreation = [
 ];
 
 export const validateBusinessModelUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid business model ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid business model ID'),
 
   body('name')
     .optional()
@@ -103,8 +110,17 @@ export const validateBusinessModelUpdate = [
 
   body('model_type')
     .optional()
-    .isIn(['subscription', 'freemium', 'advertising', 'transactional', 'marketplace', 'other'])
-    .withMessage('Model type must be subscription, freemium, advertising, transactional, marketplace, or other'),
+    .isIn([
+      'subscription',
+      'freemium',
+      'advertising',
+      'transactional',
+      'marketplace',
+      'other',
+    ])
+    .withMessage(
+      'Model type must be subscription, freemium, advertising, transactional, marketplace, or other'
+    ),
 
   body('revenue_streams')
     .optional()
@@ -166,9 +182,7 @@ export const validateBusinessModelUpdate = [
 ];
 
 export const validateBusinessModelDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid business model ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid business model ID'),
 
   handleValidationErrors,
 ];

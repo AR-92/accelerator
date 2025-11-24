@@ -14,7 +14,7 @@ export const formatDate = (date, format = 'short') => {
       return d.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
-        day: 'numeric'
+        day: 'numeric',
       });
     case 'datetime':
       return d.toLocaleString('en-US', {
@@ -22,14 +22,14 @@ export const formatDate = (date, format = 'short') => {
         month: 'short',
         day: 'numeric',
         hour: '2-digit',
-        minute: '2-digit'
+        minute: '2-digit',
       });
     case 'short':
     default:
       return d.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
-        day: 'numeric'
+        day: 'numeric',
       });
   }
 };
@@ -67,7 +67,7 @@ export const formatCurrency = (amount, currency = 'USD') => {
     style: 'currency',
     currency: currency,
     minimumFractionDigits: 0,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 2,
   }).format(amount);
 };
 

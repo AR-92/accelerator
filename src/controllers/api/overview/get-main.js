@@ -1,7 +1,6 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
 
-
 // Main API
 export const getMain = async (req, res) => {
   try {
@@ -10,19 +9,27 @@ export const getMain = async (req, res) => {
       { count: totalUsers },
       { count: totalProjects },
       { count: totalIdeas },
-      { count: activeCollaborations }
+      { count: activeCollaborations },
     ] = await Promise.all([
-      databaseService.supabase.from('users').select('*', { count: 'exact', head: true }),
-      databaseService.supabase.from('projects').select('*', { count: 'exact', head: true }),
-      databaseService.supabase.from('ideas').select('*', { count: 'exact', head: true }),
-      databaseService.supabase.from('collaborations').select('*', { count: 'exact', head: true })
+      databaseService.supabase
+        .from('users')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('projects')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('ideas')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('collaborations')
+        .select('*', { count: 'exact', head: true }),
     ]);
 
     const data = {
       totalUsers: totalUsers || 0,
       totalProjects: totalProjects || 0,
       totalIdeas: totalIdeas || 0,
-      activeCollaborations: activeCollaborations || 0
+      activeCollaborations: activeCollaborations || 0,
     };
 
     logger.info('Fetched main overview data');
@@ -91,7 +98,9 @@ export const getMain = async (req, res) => {
   } catch (error) {
     logger.error('Error fetching main data:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading main data</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading main data</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }

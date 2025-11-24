@@ -1,9 +1,12 @@
- import logger from '../../../utils/logger.js';
- import { databaseService } from '../../../services/index.js';
- import { validateUserCreation, validateUserUpdate, validateUserDeletion } from '../../../middleware/validation/index.js';
- import { formatDate } from '../../../helpers/format/index.js';
- import { isHtmxRequest } from '../../../helpers/http/index.js';
-
+import logger from '../../../utils/logger.js';
+import { databaseService } from '../../../services/index.js';
+import {
+  validateUserCreation,
+  validateUserUpdate,
+  validateUserDeletion,
+} from '../../../middleware/validation/index.js';
+import { formatDate } from '../../../helpers/format/index.js';
+import { isHtmxRequest } from '../../../helpers/http/index.js';
 
 // Users API
 export const getUsers = async (req, res) => {
@@ -19,9 +22,16 @@ export const getUsers = async (req, res) => {
 
     if (status) query = query.eq('status', status);
     if (role) query = query.eq('role', role);
-    if (search) query = query.or(`first_name.ilike.%${search}%,last_name.ilike.%${search}%,email.ilike.%${search}%`);
+    if (search)
+      query = query.or(
+        `first_name.ilike.%${search}%,last_name.ilike.%${search}%,email.ilike.%${search}%`
+      );
 
-    const { data: users, error, count } = await query
+    const {
+      data: users,
+      error,
+      count,
+    } = await query
       .order('created_at', { ascending: false })
       .range(offset, offset + limitNum - 1);
 
@@ -31,7 +41,9 @@ export const getUsers = async (req, res) => {
     logger.info(`Fetched ${users.length} of ${total} users`);
 
     if (isHtmxRequest(req)) {
-      const userHtml = users.map(user => `
+      const userHtml = users
+        .map(
+          (user) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -49,16 +61,20 @@ export const getUsers = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${user.username || 'N/A'}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              user.role === 'admin' ? 'bg-red-100 text-red-800' :
-              user.role === 'moderator' ? 'bg-yellow-100 text-yellow-800' :
-              'bg-blue-100 text-blue-800'
+              user.role === 'admin'
+                ? 'bg-red-100 text-red-800'
+                : user.role === 'moderator'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-blue-100 text-blue-800'
             }">${user.role}</span>
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              user.status === 'active' ? 'bg-green-100 text-green-800' :
-              user.status === 'inactive' ? 'bg-red-100 text-red-800' :
-              'bg-yellow-100 text-yellow-800'
+              user.status === 'active'
+                ? 'bg-green-100 text-green-800'
+                : user.status === 'inactive'
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-yellow-100 text-yellow-800'
             }">${user.status}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(user.created_at)}</td>
@@ -102,12 +118,29 @@ export const getUsers = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'users');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'users'
+      );
       res.send(userHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: users, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: users,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching users:', error);
@@ -123,20 +156,23 @@ export const createUser = [
   validateUserCreation,
   async (req, res) => {
     try {
-      const { first_name, last_name, email, username, password, role, status } = req.body;
+      const { first_name, last_name, email, username, password, role, status } =
+        req.body;
 
       const { data: user, error } = await databaseService.supabase
         .from('Accounts')
-        .insert([{
-          first_name,
-          last_name,
-          email,
-          username,
-          password, // In production, this should be hashed
-          role: role || 'user',
-          status: status || 'active',
-          created_at: new Date().toISOString()
-        }])
+        .insert([
+          {
+            first_name,
+            last_name,
+            email,
+            username,
+            password, // In production, this should be hashed
+            role: role || 'user',
+            status: status || 'active',
+            created_at: new Date().toISOString(),
+          },
+        ])
         .select()
         .single();
       if (error) throw error;
@@ -162,14 +198,18 @@ export const createUser = [
             <td class="px-6 py-4 text-sm text-gray-900">${user.username || 'N/A'}</td>
             <td class="px-6 py-4">
               <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                user.role === 'admin' ? 'bg-red-100 text-red-800' :
-                user.role === 'moderator' ? 'bg-yellow-100 text-yellow-800' :
-                'bg-blue-100 text-blue-800'
+                user.role === 'admin'
+                  ? 'bg-red-100 text-red-800'
+                  : user.role === 'moderator'
+                    ? 'bg-yellow-100 text-yellow-800'
+                    : 'bg-blue-100 text-blue-800'
               }">${user.role}</span>
             </td>
             <td class="px-6 py-4">
               <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                user.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                user.status === 'active'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-red-100 text-red-800'
               }">${user.status}</span>
             </td>
             <td class="px-6 py-4 text-sm text-gray-900">${formatDate(user.created_at)}</td>
@@ -255,7 +295,7 @@ export const createUser = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 export const updateUser = [
@@ -274,7 +314,7 @@ export const updateUser = [
           username,
           role,
           status,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
         .eq('id', id)
         .select()
@@ -302,14 +342,18 @@ export const updateUser = [
             <td class="px-6 py-4 text-sm text-gray-900">${user.username || 'N/A'}</td>
             <td class="px-6 py-4">
               <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                user.role === 'admin' ? 'bg-red-100 text-red-800' :
-                user.role === 'moderator' ? 'bg-yellow-100 text-yellow-800' :
-                'bg-blue-100 text-blue-800'
+                user.role === 'admin'
+                  ? 'bg-red-100 text-red-800'
+                  : user.role === 'moderator'
+                    ? 'bg-yellow-100 text-yellow-800'
+                    : 'bg-blue-100 text-blue-800'
               }">${user.role}</span>
             </td>
             <td class="px-6 py-4">
               <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                user.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                user.status === 'active'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-red-100 text-red-800'
               }">${user.status}</span>
             </td>
             <td class="px-6 py-4 text-sm text-gray-900">${formatDate(user.created_at)}</td>
@@ -394,7 +438,7 @@ export const updateUser = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 export const deleteUser = [
@@ -404,13 +448,16 @@ export const deleteUser = [
       const { id } = req.params;
 
       // First check if user exists
-      const { data: existingUser, error: findError } = await databaseService.supabase
-        .from('Accounts')
-        .select('*')
-        .eq('id', id)
-        .single();
+      const { data: existingUser, error: findError } =
+        await databaseService.supabase
+          .from('Accounts')
+          .select('*')
+          .eq('id', id)
+          .single();
       if (findError || !existingUser) {
-        return res.status(404).json({ success: false, error: 'User not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'User not found' });
       }
 
       const { error: deleteError } = await databaseService.supabase
@@ -460,7 +507,7 @@ export const deleteUser = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Helper function to generate pagination HTML
@@ -477,7 +524,7 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
 
   // Previous button
   if (page > 1) {
-    html += `<button hx-get="/api/${entity}?page=${page-1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Previous page">`;
+    html += `<button hx-get="/api/${entity}?page=${page - 1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Previous page">`;
     html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>`;
     html += `</button>`;
   }
@@ -511,7 +558,7 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
 
   // Next button
   if (page < totalPages) {
-    html += `<button hx-get="/api/${entity}?page=${page+1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Next page">`;
+    html += `<button hx-get="/api/${entity}?page=${page + 1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Next page">`;
     html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
     html += `</button>`;
   }

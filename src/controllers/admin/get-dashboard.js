@@ -6,6 +6,6 @@ export const getDashboard = (req, res) => {
   res.render('admin/other-pages/dashboard', {
     title: 'Admin Dashboard',
     currentPage: 'dashboard',
-    currentSection: 'main'
+    currentSection: 'main',
   });
 };

@@ -11,8 +11,8 @@ const tableFilters = {
       { value: 'approved', label: 'Approved' },
       { value: 'rejected', label: 'Rejected' },
       { value: 'active', label: 'Active' },
-      { value: 'draft', label: 'Draft' }
-    ]
+      { value: 'draft', label: 'Draft' },
+    ],
   },
 
   users: {
@@ -20,8 +20,8 @@ const tableFilters = {
     statusField: 'is_verified',
     statusOptions: [
       { value: 'active', label: 'Active', filter: 'is_verified.eq.true' },
-      { value: 'inactive', label: 'Inactive', filter: 'is_verified.eq.false' }
-    ]
+      { value: 'inactive', label: 'Inactive', filter: 'is_verified.eq.false' },
+    ],
   },
 
   todos: {
@@ -29,8 +29,8 @@ const tableFilters = {
     statusField: 'completed',
     statusOptions: [
       { value: 'pending', label: 'Pending', filter: 'completed.eq.false' },
-      { value: 'completed', label: 'Completed', filter: 'completed.eq.true' }
-    ]
+      { value: 'completed', label: 'Completed', filter: 'completed.eq.true' },
+    ],
   },
 
   content: {
@@ -39,18 +39,18 @@ const tableFilters = {
     statusOptions: [
       { value: 'draft', label: 'Draft' },
       { value: 'published', label: 'Published' },
-      { value: 'archived', label: 'Archived' }
-    ]
+      { value: 'archived', label: 'Archived' },
+    ],
   },
 
-   votes: {
-     searchableFields: ['entity_title', 'entity_type'],
-     statusField: 'vote_type',
-     statusOptions: [
-       { value: 'upvote', label: 'Upvotes' },
-       { value: 'downvote', label: 'Downvotes' }
-     ]
-   },
+  votes: {
+    searchableFields: ['entity_title', 'entity_type'],
+    statusField: 'vote_type',
+    statusOptions: [
+      { value: 'upvote', label: 'Upvotes' },
+      { value: 'downvote', label: 'Downvotes' },
+    ],
+  },
 
   collaborations: {
     searchableFields: ['name', 'description', 'members_count'],
@@ -59,8 +59,8 @@ const tableFilters = {
       { value: 'pending', label: 'Pending' },
       { value: 'active', label: 'Active' },
       { value: 'completed', label: 'Completed' },
-      { value: 'cancelled', label: 'Cancelled' }
-    ]
+      { value: 'cancelled', label: 'Cancelled' },
+    ],
   },
 
   'learning-content': {
@@ -69,26 +69,26 @@ const tableFilters = {
     statusOptions: [
       { value: 'draft', label: 'Draft' },
       { value: 'published', label: 'Published' },
-      { value: 'archived', label: 'Archived' }
-    ]
+      { value: 'archived', label: 'Archived' },
+    ],
   },
 
   'learning-categories': {
     searchableFields: ['name', 'description'],
     // Categories typically don't have status filtering
     enabled: true,
-    statusOptions: []
+    statusOptions: [],
   },
 
-   'learning-assessments': {
-     searchableFields: ['title', 'assessment_type', 'difficulty_level'],
-     statusField: 'status',
-     statusOptions: [
-       { value: 'draft', label: 'Draft' },
-       { value: 'active', label: 'Active' },
-       { value: 'inactive', label: 'Inactive' }
-     ]
-   },
+  'learning-assessments': {
+    searchableFields: ['title', 'assessment_type', 'difficulty_level'],
+    statusField: 'status',
+    statusOptions: [
+      { value: 'draft', label: 'Draft' },
+      { value: 'active', label: 'Active' },
+      { value: 'inactive', label: 'Inactive' },
+    ],
+  },
 
   packages: {
     searchableFields: ['name', 'description', 'price', 'features'],
@@ -96,8 +96,8 @@ const tableFilters = {
     statusOptions: [
       { value: 'active', label: 'Active' },
       { value: 'inactive', label: 'Inactive' },
-      { value: 'deprecated', label: 'Deprecated' }
-    ]
+      { value: 'deprecated', label: 'Deprecated' },
+    ],
   },
 
   billing: {
@@ -107,8 +107,8 @@ const tableFilters = {
       { value: 'pending', label: 'Pending' },
       { value: 'paid', label: 'Paid' },
       { value: 'failed', label: 'Failed' },
-      { value: 'refunded', label: 'Refunded' }
-    ]
+      { value: 'refunded', label: 'Refunded' },
+    ],
   },
 
   rewards: {
@@ -117,8 +117,8 @@ const tableFilters = {
     statusOptions: [
       { value: 'active', label: 'Active' },
       { value: 'inactive', label: 'Inactive' },
-      { value: 'expired', label: 'Expired' }
-    ]
+      { value: 'expired', label: 'Expired' },
+    ],
   },
 
   'business-model': {
@@ -127,8 +127,8 @@ const tableFilters = {
     statusOptions: [
       { value: 'draft', label: 'Draft' },
       { value: 'review', label: 'Review' },
-      { value: 'approved', label: 'Approved' }
-    ]
+      { value: 'approved', label: 'Approved' },
+    ],
   },
 
   'business-plan': {
@@ -137,18 +137,23 @@ const tableFilters = {
     statusOptions: [
       { value: 'draft', label: 'Draft' },
       { value: 'review', label: 'Review' },
-      { value: 'approved', label: 'Approved' }
-    ]
+      { value: 'approved', label: 'Approved' },
+    ],
   },
 
   'financial-model': {
-    searchableFields: ['model_name', 'model_status', 'progress_percentage', 'monthly_revenue'],
+    searchableFields: [
+      'model_name',
+      'model_status',
+      'progress_percentage',
+      'monthly_revenue',
+    ],
     statusField: 'status',
     statusOptions: [
       { value: 'draft', label: 'Draft' },
       { value: 'final', label: 'Final' },
-      { value: 'archived', label: 'Archived' }
-    ]
+      { value: 'archived', label: 'Archived' },
+    ],
   },
 
   pitchdeck: {
@@ -157,8 +162,8 @@ const tableFilters = {
     statusOptions: [
       { value: 'draft', label: 'Draft' },
       { value: 'review', label: 'Review' },
-      { value: 'final', label: 'Final' }
-    ]
+      { value: 'final', label: 'Final' },
+    ],
   },
 
   valuation: {
@@ -167,28 +172,38 @@ const tableFilters = {
     statusOptions: [
       { value: 'draft', label: 'Draft' },
       { value: 'completed', label: 'Completed' },
-      { value: 'archived', label: 'Archived' }
-    ]
+      { value: 'archived', label: 'Archived' },
+    ],
   },
 
   funding: {
-    searchableFields: ['total_funding_required', 'funding_type', 'funding_stage', 'burn_rate'],
+    searchableFields: [
+      'total_funding_required',
+      'funding_type',
+      'funding_stage',
+      'burn_rate',
+    ],
     statusField: 'status',
     statusOptions: [
       { value: 'seeking', label: 'Seeking' },
       { value: 'funded', label: 'Funded' },
-      { value: 'closed', label: 'Closed' }
-    ]
+      { value: 'closed', label: 'Closed' },
+    ],
   },
 
   team: {
-    searchableFields: ['founders_count', 'employees_count', 'work_mode', 'readiness_score'],
+    searchableFields: [
+      'founders_count',
+      'employees_count',
+      'work_mode',
+      'readiness_score',
+    ],
     statusField: 'status',
     statusOptions: [
       { value: 'active', label: 'Active' },
       { value: 'inactive', label: 'Inactive' },
-      { value: 'alumni', label: 'Alumni' }
-    ]
+      { value: 'alumni', label: 'Alumni' },
+    ],
   },
 
   legal: {
@@ -198,19 +213,24 @@ const tableFilters = {
       { value: 'draft', label: 'Draft' },
       { value: 'review', label: 'Review' },
       { value: 'approved', label: 'Approved' },
-      { value: 'executed', label: 'Executed' }
-    ]
+      { value: 'executed', label: 'Executed' },
+    ],
   },
 
   marketing: {
-    searchableFields: ['unique_value_proposition', 'marketing_channels', 'marketing_budget', 'target_audience'],
+    searchableFields: [
+      'unique_value_proposition',
+      'marketing_channels',
+      'marketing_budget',
+      'target_audience',
+    ],
     statusField: 'status',
     statusOptions: [
       { value: 'draft', label: 'Draft' },
       { value: 'active', label: 'Active' },
       { value: 'completed', label: 'Completed' },
-      { value: 'archived', label: 'Archived' }
-    ]
+      { value: 'archived', label: 'Archived' },
+    ],
   },
 
   corporate: {
@@ -219,8 +239,8 @@ const tableFilters = {
     statusOptions: [
       { value: 'active', label: 'Active' },
       { value: 'inactive', label: 'Inactive' },
-      { value: 'dissolved', label: 'Dissolved' }
-    ]
+      { value: 'dissolved', label: 'Dissolved' },
+    ],
   },
 
   enterprises: {
@@ -229,8 +249,8 @@ const tableFilters = {
     statusOptions: [
       { value: 'active', label: 'Active' },
       { value: 'inactive', label: 'Inactive' },
-      { value: 'acquired', label: 'Acquired' }
-    ]
+      { value: 'acquired', label: 'Acquired' },
+    ],
   },
 
   messages: {
@@ -239,55 +259,60 @@ const tableFilters = {
     statusOptions: [
       { value: 'sent', label: 'Sent' },
       { value: 'draft', label: 'Draft' },
-      { value: 'archived', label: 'Archived' }
-    ]
+      { value: 'archived', label: 'Archived' },
+    ],
   },
 
-   'project-collaborators': {
-     searchableFields: ['project_id', 'user_id', 'role'],
-     statusField: 'status',
-     statusOptions: [
-       { value: 'active', label: 'Active' },
-       { value: 'inactive', label: 'Inactive' },
-       { value: 'removed', label: 'Removed' }
-     ]
-   },
+  'project-collaborators': {
+    searchableFields: ['project_id', 'user_id', 'role'],
+    statusField: 'status',
+    statusOptions: [
+      { value: 'active', label: 'Active' },
+      { value: 'inactive', label: 'Inactive' },
+      { value: 'removed', label: 'Removed' },
+    ],
+  },
 
-   calendar: {
-     searchableFields: ['title', 'event_type'],
-     statusField: 'status',
-     statusOptions: [
-       { value: 'scheduled', label: 'Scheduled' },
-       { value: 'completed', label: 'Completed' },
-       { value: 'cancelled', label: 'Cancelled' }
-     ]
-   },
+  calendar: {
+    searchableFields: ['title', 'event_type'],
+    statusField: 'status',
+    statusOptions: [
+      { value: 'scheduled', label: 'Scheduled' },
+      { value: 'completed', label: 'Completed' },
+      { value: 'cancelled', label: 'Cancelled' },
+    ],
+  },
 
-   'help-center': {
-     searchableFields: ['title', 'category'],
-     statusField: 'status',
-     statusOptions: [
-       { value: 'draft', label: 'Draft' },
-       { value: 'published', label: 'Published' },
-       { value: 'archived', label: 'Archived' }
-     ]
-   },
+  'help-center': {
+    searchableFields: ['title', 'category'],
+    statusField: 'status',
+    statusOptions: [
+      { value: 'draft', label: 'Draft' },
+      { value: 'published', label: 'Published' },
+      { value: 'archived', label: 'Archived' },
+    ],
+  },
 
-   'landing-pages': {
-     searchableFields: ['title', 'description'],
-     statusField: 'is_active',
-     statusOptions: [
-       { value: true, label: 'Active', filter: 'is_active.eq.true' },
-       { value: false, label: 'Inactive', filter: 'is_active.eq.false' }
-     ]
-   },
+  'landing-pages': {
+    searchableFields: ['title', 'description'],
+    statusField: 'is_active',
+    statusOptions: [
+      { value: true, label: 'Active', filter: 'is_active.eq.true' },
+      { value: false, label: 'Inactive', filter: 'is_active.eq.false' },
+    ],
+  },
 
   'learning-analytics': {
-    searchableFields: ['user_id', 'content_id', 'event_type', 'duration_seconds'],
+    searchableFields: [
+      'user_id',
+      'content_id',
+      'event_type',
+      'duration_seconds',
+    ],
     // Analytics data typically doesn't have status filtering
     enabled: true,
-    statusOptions: []
-  }
+    statusOptions: [],
+  },
 };
 
 // Helper function to get table configuration
@@ -301,8 +326,4 @@ const isTableFilterable = (tableName) => {
   return config && config.enabled !== false;
 };
 
-export {
-  tableFilters,
-  getTableConfig,
-  isTableFilterable
-};
+export { tableFilters, getTableConfig, isTableFilterable };

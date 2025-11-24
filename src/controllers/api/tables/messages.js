@@ -1,9 +1,12 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
-import { validateMessageCreation, validateMessageUpdate, validateMessageDeletion } from '../../../middleware/validation/index.js';
+import {
+  validateMessageCreation,
+  validateMessageUpdate,
+  validateMessageDeletion,
+} from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
-
 
 // Get all messages with pagination and filtering
 export const getMessages = async (req, res) => {
@@ -12,7 +15,9 @@ export const getMessages = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    let query = databaseService.supabase.from('messages').select('*', { count: 'exact' });
+    let query = databaseService.supabase
+      .from('messages')
+      .select('*', { count: 'exact' });
 
     if (search) {
       query = query.or(`content.ilike.%${search}%,subject.ilike.%${search}%`);
@@ -26,7 +31,11 @@ export const getMessages = async (req, res) => {
       query = query.eq('user_id', user_id);
     }
 
-    const { data: messages, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+    const {
+      data: messages,
+      error,
+      count,
+    } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
 
     if (error) throw error;
 
@@ -36,10 +45,14 @@ export const getMessages = async (req, res) => {
     if (project_id) filterStrings.push(`project_id: ${project_id}`);
     if (user_id) filterStrings.push(`user_id: ${user_id}`);
     if (pageNum > 1) filterStrings.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${messages.length} of ${total} messages${filterStrings.length ? ` (filtered by ${filterStrings.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${messages.length} of ${total} messages${filterStrings.length ? ` (filtered by ${filterStrings.join(', ')})` : ''}`
+    );
 
     if (isHtmxRequest(req)) {
-      const messageHtml = messages.map(msg => `
+      const messageHtml = messages
+        .map(
+          (msg) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -96,17 +109,35 @@ export const getMessages = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query);
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query
+      );
       res.send(messageHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: messages, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: messages,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching messages:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading messages</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading messages</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -126,7 +157,9 @@ export const getMessage = async (req, res) => {
 
     if (error) throw error;
     if (!message) {
-      return res.status(404).json({ success: false, error: 'Message not found' });
+      return res
+        .status(404)
+        .json({ success: false, error: 'Message not found' });
     }
 
     res.json({ success: true, data: message });
@@ -192,7 +225,7 @@ export const createMessage = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Update message
@@ -212,7 +245,9 @@ export const updateMessage = [
 
       if (error) throw error;
       if (!message) {
-        return res.status(404).json({ success: false, error: 'Message not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Message not found' });
       }
 
       logger.info(`Updated message with ID: ${id}`);
@@ -256,7 +291,7 @@ export const updateMessage = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Delete message
@@ -267,15 +302,18 @@ export const deleteMessage = [
       const { id } = req.params;
 
       // Check if message exists
-      const { data: existingMessage, error: fetchError } = await databaseService.supabase
-        .from('messages')
-        .select('*')
-        .eq('id', id)
-        .single();
+      const { data: existingMessage, error: fetchError } =
+        await databaseService.supabase
+          .from('messages')
+          .select('*')
+          .eq('id', id)
+          .single();
 
       if (fetchError) throw fetchError;
       if (!existingMessage) {
-        return res.status(404).json({ success: false, error: 'Message not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Message not found' });
       }
 
       const { error } = await databaseService.supabase
@@ -325,7 +363,7 @@ export const deleteMessage = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Helper function to generate pagination HTML
@@ -340,7 +378,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/messages?page=${page-1}&${params}" hx-target="#messagesTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/messages?page=${page - 1}&${params}" hx-target="#messagesTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -364,7 +402,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
   html += `</div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/messages?page=${page+1}&${params}" hx-target="#messagesTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/messages?page=${page + 1}&${params}" hx-target="#messagesTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

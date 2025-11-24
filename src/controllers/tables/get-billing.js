@@ -1,8 +1,12 @@
 import logger from '../../utils/logger.js';
- import { databaseService } from '../../services/index.js';
- import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
- import { getTableConfig } from '../../config/tableFilters.js';
- import { isHtmxRequest } from '../../helpers/http/index.js';
+import { databaseService } from '../../services/index.js';
+import {
+  applyTableFilters,
+  getStatusCounts,
+  getFilterCounts,
+} from '../../helpers/tableFilters.js';
+import { getTableConfig } from '../../config/tableFilters.js';
+import { isHtmxRequest } from '../../helpers/http/index.js';
 
 // Billing Management
 export const getBilling = async (req, res) => {
@@ -10,7 +14,9 @@ export const getBilling = async (req, res) => {
     logger.info('Admin billing page accessed');
 
     const { search = '', status = '', page = 1, limit = 10 } = req.query;
-    logger.info(`Query params: search="${search}", status="${status}", page=${page}, limit=${limit}`);
+    logger.info(
+      `Query params: search="${search}", status="${status}", page=${page}, limit=${limit}`
+    );
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
     const offset = (pageNum - 1) * limitNum;
@@ -35,16 +41,18 @@ export const getBilling = async (req, res) => {
       throw error;
     }
 
-    logger.info(`Fetched ${transactions ? transactions.length : 0} billing records, total count: ${count}`);
+    logger.info(
+      `Fetched ${transactions ? transactions.length : 0} billing records, total count: ${count}`
+    );
 
     // Map to expected format
-    const mappedTransactions = transactions.map(tx => ({
+    const mappedTransactions = transactions.map((tx) => ({
       id: tx.id,
       user: tx.user_id ? `User ${tx.user_id}` : 'Unknown', // Could join with Accounts table for name
       amount: `$${(tx.amount_cents / 100).toFixed(2)}`,
       status: tx.status,
       date: tx.created_at,
-      package: tx.plan_name || 'N/A'
+      package: tx.plan_name || 'N/A',
     }));
 
     const total = count || 0;
@@ -56,7 +64,11 @@ export const getBilling = async (req, res) => {
     const prevPage = hasPrev ? pageNum - 1 : null;
     const nextPage = hasNext ? pageNum + 1 : null;
     const pages = [];
-    for (let i = Math.max(1, pageNum - 2); i <= Math.min(totalPages, pageNum + 2); i++) {
+    for (
+      let i = Math.max(1, pageNum - 2);
+      i <= Math.min(totalPages, pageNum + 2);
+      i++
+    ) {
       pages.push(i);
     }
 
@@ -69,7 +81,7 @@ export const getBilling = async (req, res) => {
       { key: 'amount', label: 'Amount', type: 'text' },
       { key: 'status', label: 'Status', type: 'status' },
       { key: 'date', label: 'Date', type: 'date' },
-      { key: 'package', label: 'Package', type: 'text' }
+      { key: 'package', label: 'Package', type: 'text' },
     ];
 
     const actions = [
@@ -77,12 +89,16 @@ export const getBilling = async (req, res) => {
         type: 'link',
         url: '/admin/table-pages/billing',
         label: 'View Details',
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
-      }
+        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>',
+      },
     ];
 
     const bulkActions = [
-      { onclick: 'bulkRefundTransactions', buttonId: 'bulkRefundBtn', label: 'Refund Selected' }
+      {
+        onclick: 'bulkRefundTransactions',
+        buttonId: 'bulkRefundBtn',
+        label: 'Refund Selected',
+      },
     ];
 
     const pagination = {
@@ -95,10 +111,11 @@ export const getBilling = async (req, res) => {
       hasNext,
       prevPage,
       nextPage,
-      pages
+      pages,
     };
 
-    const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
+    const colspan =
+      columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     // Prepare filter counts for template
     const filterCounts = getFilterCounts('billing', statusCounts);
@@ -121,7 +138,7 @@ export const getBilling = async (req, res) => {
               </th>`;
 
       // Add column headers
-      columns.forEach(column => {
+      columns.forEach((column) => {
         tableHtml += `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">${column.label}</th>`;
       });
 
@@ -137,14 +154,14 @@ export const getBilling = async (req, res) => {
 
       // Add table rows
       if (mappedTransactions.length > 0) {
-        mappedTransactions.forEach(transaction => {
+        mappedTransactions.forEach((transaction) => {
           tableHtml += `<tr id="billing-row-${transaction.id}" class="h-16 border-b border-border hover:bg-muted/50 even:bg-muted/30 transition-colors duration-150">
             <td class="px-6 py-4">
               <input type="checkbox" class="billingCheckbox rounded border-input text-primary value="${transaction.id}" data-billing-id="${transaction.id}">
             </td>`;
 
           // Add data cells
-          columns.forEach(column => {
+          columns.forEach((column) => {
             let cellContent = '';
 
             if (column.type === 'status') {
@@ -172,7 +189,7 @@ export const getBilling = async (req, res) => {
                 <div id="actionMenu-billing-${transaction.id}" class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-popover rounded-md shadow-lg z-10 border border-border">
                   <div class="py-1">`;
 
-            actions.forEach(action => {
+            actions.forEach((action) => {
               if (action.type === 'link') {
                 tableHtml += `<a href="${action.url}/${transaction.id}" class="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
                   ${action.icon}
@@ -239,7 +256,7 @@ export const getBilling = async (req, res) => {
         </button>`;
       }
 
-      pages.forEach(page => {
+      pages.forEach((page) => {
         const isActive = page === pageNum;
         tableHtml += `<button hx-get="/admin/table-pages/billing?page=${page}" hx-target="#billingTableContainer"
           class="inline-flex items-center justify-center w-10 h-10 rounded-lg ${isActive ? 'bg-primary text-primary-foreground scale-105' : 'border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground'} transition-all duration-200 font-medium">${page}</button>`;
@@ -271,7 +288,7 @@ export const getBilling = async (req, res) => {
             <span id="selectedCount-billing">0 transactions selected</span>
             <div class="flex gap-2">`;
 
-        bulkActions.forEach(action => {
+        bulkActions.forEach((action) => {
           tableHtml += `<button onclick="${action.onclick}" id="${action.buttonId}-billing" class="bg-primary-foreground/20 hover:bg-primary-foreground/30 text-primary-foreground px-3 py-1 rounded text-sm" disabled="">
             ${action.label}
           </button>`;
@@ -303,7 +320,7 @@ export const getBilling = async (req, res) => {
         currentUrl: '/admin/table-pages/billing',
         colspan,
         filterCounts,
-        tableConfig
+        tableConfig,
       });
     }
   } catch (error) {
@@ -314,10 +331,21 @@ export const getBilling = async (req, res) => {
       currentSection: 'financial',
       isTablePage: true,
       data: [],
-      pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
+      pagination: {
+        currentPage: 1,
+        limit: 10,
+        total: 0,
+        start: 0,
+        end: 0,
+        hasPrev: false,
+        hasNext: false,
+        prevPage: 0,
+        nextPage: 2,
+        pages: [],
+      },
       query: { search: '', status: '' },
       filterCounts: { all: 0, pending: 0, paid: 0, failed: 0, refunded: 0 },
-      tableConfig: getTableConfig('billing')
+      tableConfig: getTableConfig('billing'),
     });
   }
-}
+};

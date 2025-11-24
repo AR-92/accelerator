@@ -48,9 +48,7 @@ export const validateUserCreation = [
 ];
 
 export const validateUserUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid user ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid user ID'),
 
   body('first_name')
     .optional()
@@ -92,18 +90,14 @@ export const validateUserUpdate = [
 ];
 
 export const validateUserDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid user ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid user ID'),
 
   handleValidationErrors,
 ];
 
 // Account validation rules
 export const validateAccountCreation = [
-  body('user_id')
-    .isInt({ min: 1 })
-    .withMessage('Valid user ID is required'),
+  body('user_id').isInt({ min: 1 }).withMessage('Valid user ID is required'),
 
   body('account_type')
     .isIn(['personal', 'business'])
@@ -133,10 +127,7 @@ export const validateAccountCreation = [
     .isLength({ max: 100 })
     .withMessage('Location must not exceed 100 characters'),
 
-  body('website')
-    .optional()
-    .isURL()
-    .withMessage('Website must be a valid URL'),
+  body('website').optional().isURL().withMessage('Website must be a valid URL'),
 
   body('linkedin_url')
     .optional()
@@ -157,9 +148,7 @@ export const validateAccountCreation = [
 ];
 
 export const validateAccountUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid account ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid account ID'),
 
   body('account_type')
     .optional()
@@ -190,10 +179,7 @@ export const validateAccountUpdate = [
     .isLength({ max: 100 })
     .withMessage('Location must not exceed 100 characters'),
 
-  body('website')
-    .optional()
-    .isURL()
-    .withMessage('Website must be a valid URL'),
+  body('website').optional().isURL().withMessage('Website must be a valid URL'),
 
   body('linkedin_url')
     .optional()
@@ -219,18 +205,14 @@ export const validateAccountUpdate = [
 ];
 
 export const validateAccountDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid account ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid account ID'),
 
   handleValidationErrors,
 ];
 
 // Notification validation rules
 export const validateNotificationCreation = [
-  body('user_id')
-    .isInt({ min: 1 })
-    .withMessage('Valid user ID is required'),
+  body('user_id').isInt({ min: 1 }).withMessage('Valid user ID is required'),
 
   body('title')
     .trim()
@@ -259,9 +241,7 @@ export const validateNotificationCreation = [
 ];
 
 export const validateNotificationUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid notification ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid notification ID'),
 
   body('title')
     .optional()
@@ -289,9 +269,7 @@ export const validateNotificationUpdate = [
 ];
 
 export const validateNotificationDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid notification ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid notification ID'),
 
   handleValidationErrors,
 ];

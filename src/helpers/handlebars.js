@@ -1,22 +1,45 @@
 import icons from 'lucide-static';
-import { formatDate, statusClass, formatCurrency, formatNumber } from './format/index.js';
+import {
+  formatDate,
+  statusClass,
+  formatCurrency,
+  formatNumber,
+} from './format/index.js';
 
 export const handlebarsHelpers = {
-  eq: function(a, b) { return a === b; },
-  ne: function(a, b) { return a !== b; },
-  gt: function(a, b) { return a > b; },
-  gte: function(a, b) { return a >= b; },
-  lt: function(a, b) { return a < b; },
-  lte: function(a, b) { return a <= b; },
-  len: function(arr) { return arr ? arr.length : 0; },
-  add: function(...args) { return args.slice(0, -1).reduce((a, b) => a + b, 0); },
+  eq: function (a, b) {
+    return a === b;
+  },
+  ne: function (a, b) {
+    return a !== b;
+  },
+  gt: function (a, b) {
+    return a > b;
+  },
+  gte: function (a, b) {
+    return a >= b;
+  },
+  lt: function (a, b) {
+    return a < b;
+  },
+  lte: function (a, b) {
+    return a <= b;
+  },
+  len: function (arr) {
+    return arr ? arr.length : 0;
+  },
+  add: function (...args) {
+    return args.slice(0, -1).reduce((a, b) => a + b, 0);
+  },
   statusClass: statusClass,
   formatDate: formatDate,
   formatCurrency: formatCurrency,
   formatNumber: formatNumber,
-  icon: function(name, options) {
+  icon: function (name, options) {
     if (!name || typeof name !== 'string') return '';
-    const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1).replace(/-./g, match => match[1].toUpperCase());
+    const capitalizedName =
+      name.charAt(0).toUpperCase() +
+      name.slice(1).replace(/-./g, (match) => match[1].toUpperCase());
     let svg = icons[capitalizedName];
     if (!svg) {
       console.log(`Icon not found: ${capitalizedName} (original: ${name})`);
@@ -38,5 +61,4 @@ export const handlebarsHelpers = {
     }
     return svg;
   },
-
 };

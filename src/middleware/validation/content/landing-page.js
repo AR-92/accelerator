@@ -17,7 +17,9 @@ export const validateLandingPageCreation = [
     .notEmpty()
     .withMessage('Slug is required')
     .matches(/^[a-z0-9-]+$/)
-    .withMessage('Slug can only contain lowercase letters, numbers, and hyphens'),
+    .withMessage(
+      'Slug can only contain lowercase letters, numbers, and hyphens'
+    ),
 
   body('content')
     .optional()
@@ -45,9 +47,7 @@ export const validateLandingPageCreation = [
 ];
 
 export const validateLandingPageUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid landing page ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid landing page ID'),
 
   body('title')
     .optional()
@@ -61,7 +61,9 @@ export const validateLandingPageUpdate = [
     .isLength({ min: 1, max: 100 })
     .withMessage('Slug must be between 1 and 100 characters')
     .matches(/^[a-z0-9-]+$/)
-    .withMessage('Slug can only contain lowercase letters, numbers, and hyphens'),
+    .withMessage(
+      'Slug can only contain lowercase letters, numbers, and hyphens'
+    ),
 
   body('content')
     .optional()
@@ -89,9 +91,7 @@ export const validateLandingPageUpdate = [
 ];
 
 export const validateLandingPageDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid landing page ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid landing page ID'),
 
   handleValidationErrors,
 ];

@@ -27,10 +27,7 @@ export const validateStartupCreation = [
     .isISO8601()
     .withMessage('Founded date must be a valid date'),
 
-  body('website')
-    .optional()
-    .isURL()
-    .withMessage('Website must be a valid URL'),
+  body('website').optional().isURL().withMessage('Website must be a valid URL'),
 
   body('status')
     .optional()
@@ -40,7 +37,9 @@ export const validateStartupCreation = [
   body('funding_stage')
     .optional()
     .isIn(['idea', 'mvp', 'seed', 'series_a', 'series_b', 'growth', 'ipo'])
-    .withMessage('Funding stage must be idea, mvp, seed, series_a, series_b, growth, or ipo'),
+    .withMessage(
+      'Funding stage must be idea, mvp, seed, series_a, series_b, growth, or ipo'
+    ),
 
   body('team_size')
     .optional()
@@ -62,9 +61,7 @@ export const validateStartupCreation = [
 ];
 
 export const validateStartupUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid startup ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid startup ID'),
 
   body('name')
     .optional()
@@ -89,10 +86,7 @@ export const validateStartupUpdate = [
     .isISO8601()
     .withMessage('Founded date must be a valid date'),
 
-  body('website')
-    .optional()
-    .isURL()
-    .withMessage('Website must be a valid URL'),
+  body('website').optional().isURL().withMessage('Website must be a valid URL'),
 
   body('status')
     .optional()
@@ -102,7 +96,9 @@ export const validateStartupUpdate = [
   body('funding_stage')
     .optional()
     .isIn(['idea', 'mvp', 'seed', 'series_a', 'series_b', 'growth', 'ipo'])
-    .withMessage('Funding stage must be idea, mvp, seed, series_a, series_b, growth, or ipo'),
+    .withMessage(
+      'Funding stage must be idea, mvp, seed, series_a, series_b, growth, or ipo'
+    ),
 
   body('team_size')
     .optional()
@@ -119,9 +115,7 @@ export const validateStartupUpdate = [
 ];
 
 export const validateStartupDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid startup ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid startup ID'),
 
   handleValidationErrors,
 ];

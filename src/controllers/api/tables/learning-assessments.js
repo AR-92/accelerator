@@ -1,19 +1,31 @@
- import logger from '../../../utils/logger.js';
- import { databaseService } from '../../../services/index.js';
- import { serviceFactory } from '../../../services/serviceFactory.js';
- import { validateLearningAssessmentCreation, validateLearningAssessmentUpdate, validateLearningAssessmentDeletion } from '../../../middleware/validation/index.js';
- import { formatDate } from '../../../helpers/format/index.js';
- import { isHtmxRequest } from '../../../helpers/http/index.js';
-
+import logger from '../../../utils/logger.js';
+import { databaseService } from '../../../services/index.js';
+import { serviceFactory } from '../../../services/serviceFactory.js';
+import {
+  validateLearningAssessmentCreation,
+  validateLearningAssessmentUpdate,
+  validateLearningAssessmentDeletion,
+} from '../../../middleware/validation/index.js';
+import { formatDate } from '../../../helpers/format/index.js';
+import { isHtmxRequest } from '../../../helpers/http/index.js';
 
 // Get all learning assessments with pagination and filtering
 export const getLearningAssessments = async (req, res) => {
   try {
-    const { search, assessment_type, difficulty_level, is_active, page = 1, limit = 10 } = req.query;
+    const {
+      search,
+      assessment_type,
+      difficulty_level,
+      is_active,
+      page = 1,
+      limit = 10,
+    } = req.query;
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    let query = databaseService.supabase.from('learning_assessments').select('*', { count: 'exact' });
+    let query = databaseService.supabase
+      .from('learning_assessments')
+      .select('*', { count: 'exact' });
 
     if (search) {
       query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
@@ -31,7 +43,11 @@ export const getLearningAssessments = async (req, res) => {
       query = query.eq('is_active', is_active === 'true');
     }
 
-    const { data: assessments, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+    const {
+      data: assessments,
+      error,
+      count,
+    } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
 
     if (error) throw error;
 
@@ -42,10 +58,14 @@ export const getLearningAssessments = async (req, res) => {
     if (difficulty_level) filters.push(`difficulty_level: ${difficulty_level}`);
     if (is_active !== undefined) filters.push(`is_active: ${is_active}`);
     if (pageNum > 1) filters.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${assessments.length} of ${total} learning assessments${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${assessments.length} of ${total} learning assessments${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`
+    );
 
     if (isHtmxRequest(req)) {
-      const assessmentHtml = assessments.map(assessment => `
+      const assessmentHtml = assessments
+        .map(
+          (assessment) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -62,23 +82,29 @@ export const getLearningAssessments = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              assessment.assessment_type === 'quiz' ? 'bg-blue-100 text-blue-800' :
-              assessment.assessment_type === 'exam' ? 'bg-red-100 text-red-800' :
-              'bg-purple-100 text-purple-800'
+              assessment.assessment_type === 'quiz'
+                ? 'bg-blue-100 text-blue-800'
+                : assessment.assessment_type === 'exam'
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-purple-100 text-purple-800'
             }">${assessment.assessment_type}</span>
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              assessment.difficulty_level === 'beginner' ? 'bg-green-100 text-green-800' :
-              assessment.difficulty_level === 'intermediate' ? 'bg-yellow-100 text-yellow-800' :
-              'bg-red-100 text-red-800'
+              assessment.difficulty_level === 'beginner'
+                ? 'bg-green-100 text-green-800'
+                : assessment.difficulty_level === 'intermediate'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-red-100 text-red-800'
             }">${assessment.difficulty_level}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${assessment.passing_score}%</td>
           <td class="px-6 py-4 text-sm text-gray-900">${assessment.time_limit_minutes || 0} min</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              assessment.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+              assessment.is_active
+                ? 'bg-green-100 text-green-800'
+                : 'bg-red-100 text-red-800'
             }">${assessment.is_active ? 'Active' : 'Inactive'}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(assessment.created_at)}</td>
@@ -122,17 +148,35 @@ export const getLearningAssessments = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query);
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query
+      );
       res.send(assessmentHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: assessments, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: assessments,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching learning assessments:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading learning assessments</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading learning assessments</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -144,10 +188,13 @@ export const getLearningAssessment = async (req, res) => {
   try {
     const { id } = req.params;
     const learningService = serviceFactory.getLearningService();
-    const assessment = await learningService.assessment.getLearningAssessmentById(id);
+    const assessment =
+      await learningService.assessment.getLearningAssessmentById(id);
 
     if (!assessment) {
-      return res.status(404).json({ success: false, error: 'Learning assessment not found' });
+      return res
+        .status(404)
+        .json({ success: false, error: 'Learning assessment not found' });
     }
 
     res.json({ success: true, data: assessment });
@@ -213,7 +260,7 @@ export const createLearningAssessment = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Update learning assessment
@@ -233,7 +280,9 @@ export const updateLearningAssessment = [
 
       if (error) throw error;
       if (!assessment) {
-        return res.status(404).json({ success: false, error: 'Learning assessment not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Learning assessment not found' });
       }
 
       logger.info(`Updated learning assessment with ID: ${id}`);
@@ -277,7 +326,7 @@ export const updateLearningAssessment = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Delete learning assessment
@@ -288,15 +337,18 @@ export const deleteLearningAssessment = [
       const { id } = req.params;
 
       // Check if assessment exists and get title for message
-      const { data: existingAssessment, error: fetchError } = await databaseService.supabase
-        .from('learning_assessments')
-        .select('*')
-        .eq('id', id)
-        .single();
+      const { data: existingAssessment, error: fetchError } =
+        await databaseService.supabase
+          .from('learning_assessments')
+          .select('*')
+          .eq('id', id)
+          .single();
 
       if (fetchError) throw fetchError;
       if (!existingAssessment) {
-        return res.status(404).json({ success: false, error: 'Learning assessment not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Learning assessment not found' });
       }
 
       const { error } = await databaseService.supabase
@@ -326,7 +378,10 @@ export const deleteLearningAssessment = [
           </script>
         `);
       } else {
-        res.json({ success: true, message: 'Learning assessment deleted successfully' });
+        res.json({
+          success: true,
+          message: 'Learning assessment deleted successfully',
+        });
       }
     } catch (error) {
       logger.error('Error deleting learning assessment:', error);
@@ -346,7 +401,7 @@ export const deleteLearningAssessment = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Helper function to generate pagination HTML
@@ -362,7 +417,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/learning-assessments?page=${page-1}&${params}" hx-target="#learningAssessmentsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/learning-assessments?page=${page - 1}&${params}" hx-target="#learningAssessmentsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -386,7 +441,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
   html += `</div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/learning-assessments?page=${page+1}&${params}" hx-target="#learningAssessmentsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/learning-assessments?page=${page + 1}&${params}" hx-target="#learningAssessmentsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

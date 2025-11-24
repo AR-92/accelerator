@@ -1,9 +1,12 @@
- import logger from '../../../utils/logger.js';
- import { databaseService } from '../../../services/index.js';
- import { validateContentCreation, validateContentUpdate, validateContentDeletion } from '../../../middleware/validation/index.js';
- import { formatDate } from '../../../helpers/format/index.js';
- import { isHtmxRequest } from '../../../helpers/http/index.js';
-
+import logger from '../../../utils/logger.js';
+import { databaseService } from '../../../services/index.js';
+import {
+  validateContentCreation,
+  validateContentUpdate,
+  validateContentDeletion,
+} from '../../../middleware/validation/index.js';
+import { formatDate } from '../../../helpers/format/index.js';
+import { isHtmxRequest } from '../../../helpers/http/index.js';
 
 // Content API
 export const getContent = async (req, res) => {
@@ -12,7 +15,9 @@ export const getContent = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    let query = databaseService.supabase.from('content').select('*', { count: 'exact' });
+    let query = databaseService.supabase
+      .from('content')
+      .select('*', { count: 'exact' });
 
     if (search) {
       query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
@@ -26,7 +31,11 @@ export const getContent = async (req, res) => {
       query = query.eq('status', status);
     }
 
-    const { data: contents, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+    const {
+      data: contents,
+      error,
+      count,
+    } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
 
     if (error) throw error;
 
@@ -34,7 +43,9 @@ export const getContent = async (req, res) => {
     logger.info(`Fetched ${contents.length} of ${total} content items`);
 
     if (isHtmxRequest(req)) {
-      const contentHtml = contents.map(content => `
+      const contentHtml = contents
+        .map(
+          (content) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -52,9 +63,11 @@ export const getContent = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${content.content_type}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              content.status === 'published' ? 'bg-green-100 text-green-800' :
-              content.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
-              'bg-red-100 text-red-800'
+              content.status === 'published'
+                ? 'bg-green-100 text-green-800'
+                : content.status === 'draft'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-red-100 text-red-800'
             }">${content.status}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${content.author_id}</td>
@@ -99,12 +112,29 @@ export const getContent = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'content');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'content'
+      );
       res.send(contentHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: contents, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: contents,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching content:', error);
@@ -120,20 +150,31 @@ export const createContent = [
   validateContentCreation,
   async (req, res) => {
     try {
-      const { title, description, content, content_type, status, author_id, tags, metadata } = req.body;
+      const {
+        title,
+        description,
+        content,
+        content_type,
+        status,
+        author_id,
+        tags,
+        metadata,
+      } = req.body;
 
       const { data: contentItem, error } = await databaseService.supabase
         .from('content')
-        .insert([{
-          title,
-          description,
-          content,
-          content_type,
-          status: status || 'draft',
-          author_id,
-          tags,
-          metadata
-        }])
+        .insert([
+          {
+            title,
+            description,
+            content,
+            content_type,
+            status: status || 'draft',
+            author_id,
+            tags,
+            metadata,
+          },
+        ])
         .select()
         .single();
 
@@ -160,7 +201,9 @@ export const createContent = [
             <td class="px-6 py-4 text-sm text-gray-900">${contentItem.content_type}</td>
             <td class="px-6 py-4">
               <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                contentItem.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                contentItem.status === 'published'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-yellow-100 text-yellow-800'
               }">${contentItem.status}</span>
             </td>
             <td class="px-6 py-4 text-sm text-gray-900">${contentItem.author_id}</td>
@@ -247,7 +290,7 @@ export const createContent = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 export const updateContent = [
@@ -255,7 +298,16 @@ export const updateContent = [
   async (req, res) => {
     try {
       const { id } = req.params;
-      const { title, description, content, content_type, status, author_id, tags, metadata } = req.body;
+      const {
+        title,
+        description,
+        content,
+        content_type,
+        status,
+        author_id,
+        tags,
+        metadata,
+      } = req.body;
 
       const { data: contentItem, error } = await databaseService.supabase
         .from('content')
@@ -268,7 +320,7 @@ export const updateContent = [
           author_id,
           tags,
           metadata,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
         .eq('id', id)
         .select()
@@ -297,7 +349,9 @@ export const updateContent = [
             <td class="px-6 py-4 text-sm text-gray-900">${contentItem.content_type}</td>
             <td class="px-6 py-4">
               <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                contentItem.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                contentItem.status === 'published'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-yellow-100 text-yellow-800'
               }">${contentItem.status}</span>
             </td>
             <td class="px-6 py-4 text-sm text-gray-900">${contentItem.author_id}</td>
@@ -383,7 +437,7 @@ export const updateContent = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 export const deleteContent = [
@@ -393,15 +447,18 @@ export const deleteContent = [
       const { id } = req.params;
 
       // First check if content exists
-      const { data: existingContent, error: fetchError } = await databaseService.supabase
-        .from('content')
-        .select('*')
-        .eq('id', id)
-        .single();
+      const { data: existingContent, error: fetchError } =
+        await databaseService.supabase
+          .from('content')
+          .select('*')
+          .eq('id', id)
+          .single();
 
       if (fetchError) throw fetchError;
       if (!existingContent) {
-        return res.status(404).json({ success: false, error: 'Content not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Content not found' });
       }
 
       const { error } = await databaseService.supabase
@@ -452,7 +509,7 @@ export const deleteContent = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Helper function to generate pagination HTML
@@ -467,7 +524,7 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/${entity}?page=${page-1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/${entity}?page=${page - 1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -501,7 +558,7 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
   </div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/${entity}?page=${page+1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/${entity}?page=${page + 1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

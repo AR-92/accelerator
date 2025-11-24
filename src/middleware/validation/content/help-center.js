@@ -19,25 +19,22 @@ export const validateHelpCenterCreation = [
 
   body('category')
     .isIn(['getting-started', 'account', 'billing', 'technical', 'other'])
-    .withMessage('Category must be getting-started, account, billing, technical, or other'),
+    .withMessage(
+      'Category must be getting-started, account, billing, technical, or other'
+    ),
 
   body('is_published')
     .optional()
     .isBoolean()
     .withMessage('Is published must be a boolean'),
 
-  body('tags')
-    .optional()
-    .isArray()
-    .withMessage('Tags must be an array'),
+  body('tags').optional().isArray().withMessage('Tags must be an array'),
 
   handleValidationErrors,
 ];
 
 export const validateHelpCenterUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid help center ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid help center ID'),
 
   body('title')
     .optional()
@@ -54,25 +51,22 @@ export const validateHelpCenterUpdate = [
   body('category')
     .optional()
     .isIn(['getting-started', 'account', 'billing', 'technical', 'other'])
-    .withMessage('Category must be getting-started, account, billing, technical, or other'),
+    .withMessage(
+      'Category must be getting-started, account, billing, technical, or other'
+    ),
 
   body('is_published')
     .optional()
     .isBoolean()
     .withMessage('Is published must be a boolean'),
 
-  body('tags')
-    .optional()
-    .isArray()
-    .withMessage('Tags must be an array'),
+  body('tags').optional().isArray().withMessage('Tags must be an array'),
 
   handleValidationErrors,
 ];
 
 export const validateHelpCenterDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid help center ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid help center ID'),
 
   handleValidationErrors,
 ];

@@ -1,9 +1,12 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
-import { validateLandingPageCreation, validateLandingPageUpdate, validateLandingPageDeletion } from '../../../middleware/validation/index.js';
+import {
+  validateLandingPageCreation,
+  validateLandingPageUpdate,
+  validateLandingPageDeletion,
+} from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
-
 
 // Get all landing page sections with pagination and filtering
 export const getLandingPages = async (req, res) => {
@@ -18,7 +21,9 @@ export const getLandingPages = async (req, res) => {
       .select('*', { count: 'exact' });
 
     if (search) {
-      query = query.or(`title.ilike.%${search}%,subtitle.ilike.%${search}%,content.ilike.%${search}%`);
+      query = query.or(
+        `title.ilike.%${search}%,subtitle.ilike.%${search}%,content.ilike.%${search}%`
+      );
     }
     if (section_type) {
       query = query.eq('section_type', section_type);
@@ -42,10 +47,14 @@ export const getLandingPages = async (req, res) => {
     if (section_type) filters.push(`section_type: ${section_type}`);
     if (is_active !== undefined) filters.push(`is_active: ${is_active}`);
     if (pageNum > 1) filters.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${landingPages.length} of ${total} landing page sections${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${landingPages.length} of ${total} landing page sections${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`
+    );
 
     if (isHtmxRequest(req)) {
-      const landingPageHtml = landingPages.map(lp => `
+      const landingPageHtml = landingPages
+        .map(
+          (lp) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -62,16 +71,21 @@ export const getLandingPages = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              lp.section_type === 'hero' ? 'bg-blue-100 text-blue-800' :
-              lp.section_type === 'features' ? 'bg-green-100 text-green-800' :
-              lp.section_type === 'testimonials' ? 'bg-purple-100 text-purple-800' :
-              'bg-gray-100 text-gray-800'
+              lp.section_type === 'hero'
+                ? 'bg-blue-100 text-blue-800'
+                : lp.section_type === 'features'
+                  ? 'bg-green-100 text-green-800'
+                  : lp.section_type === 'testimonials'
+                    ? 'bg-purple-100 text-purple-800'
+                    : 'bg-gray-100 text-gray-800'
             }">${lp.section_type}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${lp.sort_order}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              lp.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+              lp.is_active
+                ? 'bg-green-100 text-green-800'
+                : 'bg-red-100 text-red-800'
             }">${lp.is_active ? 'Active' : 'Inactive'}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(lp.created_at)}</td>
@@ -115,17 +129,37 @@ export const getLandingPages = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query);
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query
+      );
       res.send(landingPageHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: landingPages, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: landingPages,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching landing pages:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading landing page sections</p>');
+      res
+        .status(500)
+        .send(
+          '<p class="text-red-500">Error loading landing page sections</p>'
+        );
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -144,7 +178,9 @@ export const getLandingPage = async (req, res) => {
 
     if (error) throw error;
     if (!landingPage) {
-      return res.status(404).json({ success: false, error: 'Landing page section not found' });
+      return res
+        .status(404)
+        .json({ success: false, error: 'Landing page section not found' });
     }
 
     res.json({ success: true, data: landingPage });
@@ -209,7 +245,7 @@ export const createLandingPage = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Update landing page section
@@ -229,7 +265,9 @@ export const updateLandingPage = [
 
       if (error) throw error;
       if (!landingPage) {
-        return res.status(404).json({ success: false, error: 'Landing page section not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Landing page section not found' });
       }
 
       logger.info(`Updated landing page section with ID: ${id}`);
@@ -273,7 +311,7 @@ export const updateLandingPage = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Delete landing page section
@@ -284,14 +322,17 @@ export const deleteLandingPage = [
       const { id } = req.params;
 
       // Check if landing page section exists
-      const { data: existingLandingPage, error: fetchError } = await databaseService.supabase
-        .from('landing_pages')
-        .select('title')
-        .eq('id', id)
-        .single();
+      const { data: existingLandingPage, error: fetchError } =
+        await databaseService.supabase
+          .from('landing_pages')
+          .select('title')
+          .eq('id', id)
+          .single();
 
       if (fetchError || !existingLandingPage) {
-        return res.status(404).json({ success: false, error: 'Landing page section not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Landing page section not found' });
       }
 
       const { error } = await databaseService.supabase
@@ -321,7 +362,10 @@ export const deleteLandingPage = [
           </script>
         `);
       } else {
-        res.json({ success: true, message: 'Landing page section deleted successfully' });
+        res.json({
+          success: true,
+          message: 'Landing page section deleted successfully',
+        });
       }
     } catch (error) {
       logger.error('Error deleting landing page section:', error);
@@ -341,7 +385,7 @@ export const deleteLandingPage = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Helper function to generate pagination HTML
@@ -356,7 +400,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/landing-page?page=${page-1}&${params}" hx-target="#landingPageTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/landing-page?page=${page - 1}&${params}" hx-target="#landingPageTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -380,7 +424,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
   html += `</div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/landing-page?page=${page+1}&${params}" hx-target="#landingPageTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/landing-page?page=${page + 1}&${params}" hx-target="#landingPageTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

@@ -3,9 +3,7 @@ import { handleValidationErrors } from '../common.js';
 
 // Learning analytics validation rules
 export const validateLearningAnalyticsCreation = [
-  body('user_id')
-    .isInt({ min: 1 })
-    .withMessage('Valid user ID is required'),
+  body('user_id').isInt({ min: 1 }).withMessage('Valid user ID is required'),
 
   body('content_id')
     .optional()
@@ -14,7 +12,9 @@ export const validateLearningAnalyticsCreation = [
 
   body('event_type')
     .isIn(['view', 'start', 'complete', 'pause', 'resume', 'bookmark'])
-    .withMessage('Event type must be view, start, complete, pause, resume, or bookmark'),
+    .withMessage(
+      'Event type must be view, start, complete, pause, resume, or bookmark'
+    ),
 
   body('duration_seconds')
     .optional()
@@ -30,14 +30,14 @@ export const validateLearningAnalyticsCreation = [
 ];
 
 export const validateLearningAnalyticsUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid learning analytics ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid learning analytics ID'),
 
   body('event_type')
     .optional()
     .isIn(['view', 'start', 'complete', 'pause', 'resume', 'bookmark'])
-    .withMessage('Event type must be view, start, complete, pause, resume, or bookmark'),
+    .withMessage(
+      'Event type must be view, start, complete, pause, resume, or bookmark'
+    ),
 
   body('duration_seconds')
     .optional()
@@ -53,9 +53,7 @@ export const validateLearningAnalyticsUpdate = [
 ];
 
 export const validateLearningAnalyticsDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid learning analytics ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid learning analytics ID'),
 
   handleValidationErrors,
 ];

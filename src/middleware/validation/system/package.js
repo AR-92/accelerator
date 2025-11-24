@@ -64,9 +64,7 @@ export const validatePackageCreation = [
 ];
 
 export const validatePackageUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid package ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid package ID'),
 
   body('name')
     .optional()
@@ -129,9 +127,7 @@ export const validatePackageUpdate = [
 ];
 
 export const validatePackageDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid package ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid package ID'),
 
   handleValidationErrors,
 ];

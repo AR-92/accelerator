@@ -3,9 +3,7 @@ import { handleValidationErrors } from '../common.js';
 
 // Collaboration validation rules
 export const validateCollaborationCreation = [
-  body('user_id')
-    .isInt({ min: 1 })
-    .withMessage('Valid user ID is required'),
+  body('user_id').isInt({ min: 1 }).withMessage('Valid user ID is required'),
 
   body('project_id')
     .isInt({ min: 1 })
@@ -31,9 +29,7 @@ export const validateCollaborationCreation = [
 ];
 
 export const validateCollaborationUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid collaboration ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid collaboration ID'),
 
   body('user_id')
     .optional()
@@ -66,9 +62,7 @@ export const validateCollaborationUpdate = [
 ];
 
 export const validateCollaborationDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid collaboration ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid collaboration ID'),
 
   handleValidationErrors,
 ];

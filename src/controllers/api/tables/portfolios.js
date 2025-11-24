@@ -1,14 +1,24 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
-import { validatePortfolioCreation, validatePortfolioUpdate, validatePortfolioDeletion } from '../../../middleware/validation/index.js';
+import {
+  validatePortfolioCreation,
+  validatePortfolioUpdate,
+  validatePortfolioDeletion,
+} from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
-
 
 // Portfolios API
 export const getPortfolios = async (req, res) => {
   try {
-    const { search, category, is_public, user_id, page = 1, limit = 10 } = req.query;
+    const {
+      search,
+      category,
+      is_public,
+      user_id,
+      page = 1,
+      limit = 10,
+    } = req.query;
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
     const offset = (pageNum - 1) * limitNum;
@@ -42,7 +52,9 @@ export const getPortfolios = async (req, res) => {
     logger.info(`Fetched ${portfolios.length} of ${total} portfolios`);
 
     if (isHtmxRequest(req)) {
-      const portfolioHtml = portfolios.map(portfolio => `
+      const portfolioHtml = portfolios
+        .map(
+          (portfolio) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -60,7 +72,9 @@ export const getPortfolios = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${portfolio.category}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              portfolio.is_public ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+              portfolio.is_public
+                ? 'bg-green-100 text-green-800'
+                : 'bg-red-100 text-red-800'
             }">${portfolio.is_public ? 'Public' : 'Private'}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${portfolio.votes || 0}</td>
@@ -119,17 +133,36 @@ export const getPortfolios = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'portfolios');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'portfolios'
+      );
       res.send(portfolioHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: portfolios, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: portfolios,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching portfolios:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading portfolios</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading portfolios</p>');
     } else {
       res.json({ success: true, message: 'Portfolio deleted successfully' });
     }

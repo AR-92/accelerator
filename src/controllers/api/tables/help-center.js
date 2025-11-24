@@ -1,19 +1,31 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
 import { serviceFactory } from '../../../services/serviceFactory.js';
-import { validateHelpCenterCreation, validateHelpCenterUpdate, validateHelpCenterDeletion } from '../../../middleware/validation/index.js';
+import {
+  validateHelpCenterCreation,
+  validateHelpCenterUpdate,
+  validateHelpCenterDeletion,
+} from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
-
 
 // Get all help center articles with pagination and filtering
 export const getHelpCenter = async (req, res) => {
   try {
-    const { search, content_type, category_name, is_published, page = 1, limit = 10 } = req.query;
+    const {
+      search,
+      content_type,
+      category_name,
+      is_published,
+      page = 1,
+      limit = 10,
+    } = req.query;
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    let query = databaseService.supabase.from('help_center').select('*', { count: 'exact' });
+    let query = databaseService.supabase
+      .from('help_center')
+      .select('*', { count: 'exact' });
 
     if (search) {
       query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`);
@@ -31,7 +43,11 @@ export const getHelpCenter = async (req, res) => {
       query = query.eq('is_published', is_published === 'true');
     }
 
-    const { data: articles, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+    const {
+      data: articles,
+      error,
+      count,
+    } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
 
     if (error) throw error;
 
@@ -40,12 +56,17 @@ export const getHelpCenter = async (req, res) => {
     if (search) filterStrings.push(`search: "${search}"`);
     if (content_type) filterStrings.push(`content_type: ${content_type}`);
     if (category_name) filterStrings.push(`category_name: ${category_name}`);
-    if (is_published !== undefined) filterStrings.push(`is_published: ${is_published}`);
+    if (is_published !== undefined)
+      filterStrings.push(`is_published: ${is_published}`);
     if (pageNum > 1) filterStrings.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${articles.length} of ${total} help center articles${filterStrings.length ? ` (filtered by ${filterStrings.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${articles.length} of ${total} help center articles${filterStrings.length ? ` (filtered by ${filterStrings.join(', ')})` : ''}`
+    );
 
     if (isHtmxRequest(req)) {
-      const articleHtml = articles.map(article => `
+      const articleHtml = articles
+        .map(
+          (article) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -62,16 +83,20 @@ export const getHelpCenter = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              article.content_type === 'article' ? 'bg-blue-100 text-blue-800' :
-              article.content_type === 'guide' ? 'bg-green-100 text-green-800' :
-              'bg-purple-100 text-purple-800'
+              article.content_type === 'article'
+                ? 'bg-blue-100 text-blue-800'
+                : article.content_type === 'guide'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-purple-100 text-purple-800'
             }">${article.content_type}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${article.category_name}</td>
           <td class="px-6 py-4 text-sm text-gray-900">${article.view_count || 0} views</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              article.is_published ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+              article.is_published
+                ? 'bg-green-100 text-green-800'
+                : 'bg-red-100 text-red-800'
             }">${article.is_published ? 'Published' : 'Draft'}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(article.created_at)}</td>
@@ -115,17 +140,35 @@ export const getHelpCenter = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query);
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query
+      );
       res.send(articleHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: articles, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: articles,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching help center articles:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading help center articles</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading help center articles</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -140,7 +183,9 @@ export const getHelpCenterArticle = async (req, res) => {
     const article = await helpCenterService.getHelpCenterArticleById(id);
 
     if (!article) {
-      return res.status(404).json({ success: false, error: 'Help center article not found' });
+      return res
+        .status(404)
+        .json({ success: false, error: 'Help center article not found' });
     }
 
     res.json({ success: true, data: article });
@@ -206,7 +251,7 @@ export const createHelpCenterArticle = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Update help center article
@@ -226,7 +271,9 @@ export const updateHelpCenterArticle = [
 
       if (error) throw error;
       if (!article) {
-        return res.status(404).json({ success: false, error: 'Help center article not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Help center article not found' });
       }
 
       logger.info(`Updated help center article with ID: ${id}`);
@@ -270,7 +317,7 @@ export const updateHelpCenterArticle = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Delete help center article
@@ -281,15 +328,18 @@ export const deleteHelpCenterArticle = [
       const { id } = req.params;
 
       // Check if article exists
-      const { data: existingArticle, error: fetchError } = await databaseService.supabase
-        .from('help_center')
-        .select('*')
-        .eq('id', id)
-        .single();
+      const { data: existingArticle, error: fetchError } =
+        await databaseService.supabase
+          .from('help_center')
+          .select('*')
+          .eq('id', id)
+          .single();
 
       if (fetchError) throw fetchError;
       if (!existingArticle) {
-        return res.status(404).json({ success: false, error: 'Help center article not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Help center article not found' });
       }
 
       const { error } = await databaseService.supabase
@@ -319,7 +369,10 @@ export const deleteHelpCenterArticle = [
           </script>
         `);
       } else {
-        res.json({ success: true, message: 'Help center article deleted successfully' });
+        res.json({
+          success: true,
+          message: 'Help center article deleted successfully',
+        });
       }
     } catch (error) {
       logger.error('Error deleting help center article:', error);
@@ -339,7 +392,7 @@ export const deleteHelpCenterArticle = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Helper function to generate pagination HTML
@@ -355,7 +408,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/help-center?page=${page-1}&${params}" hx-target="#helpCenterTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/help-center?page=${page - 1}&${params}" hx-target="#helpCenterTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -379,7 +432,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
   html += `</div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/help-center?page=${page+1}&${params}" hx-target="#helpCenterTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/help-center?page=${page + 1}&${params}" hx-target="#helpCenterTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

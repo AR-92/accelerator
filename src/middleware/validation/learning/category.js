@@ -30,9 +30,7 @@ export const validateLearningCategoryCreation = [
 ];
 
 export const validateLearningCategoryUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid learning category ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid learning category ID'),
 
   body('name')
     .optional()
@@ -60,9 +58,7 @@ export const validateLearningCategoryUpdate = [
 ];
 
 export const validateLearningCategoryDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid learning category ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid learning category ID'),
 
   handleValidationErrors,
 ];

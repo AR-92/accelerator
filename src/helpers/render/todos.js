@@ -63,7 +63,7 @@ export const renderPagination = (page, limit, total, query) => {
 
   // Previous button
   if (page > 1) {
-    html += `<button hx-get="/api/todos?page=${page-1}&${params}" hx-target="#todosList" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Previous page">`;
+    html += `<button hx-get="/api/todos?page=${page - 1}&${params}" hx-target="#todosList" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Previous page">`;
     html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>`;
     html += `</button>`;
   }
@@ -96,7 +96,7 @@ export const renderPagination = (page, limit, total, query) => {
 
   // Next button
   if (page < totalPages) {
-    html += `<button hx-get="/api/todos?page=${page+1}&${params}" hx-target="#todosList" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Next page">`;
+    html += `<button hx-get="/api/todos?page=${page + 1}&${params}" hx-target="#todosList" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Next page">`;
     html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
     html += `</button>`;
   }
@@ -113,11 +113,13 @@ export const renderPagination = (page, limit, total, query) => {
  * @returns {string} - HTML string for the alert
  */
 export const renderAlertHtml = (type, message, iconName) => {
-  const iconHtml = handlebarsHelpers.icon(iconName, { hash: { size: 16, class: 'lucide lucide-' + iconName } });
+  const iconHtml = handlebarsHelpers.icon(iconName, {
+    hash: { size: 16, class: 'lucide lucide-' + iconName },
+  });
 
   const styles = {
     success: 'bg-card text-card-foreground',
-    error: 'text-destructive bg-card [&>svg]:text-current'
+    error: 'text-destructive bg-card [&>svg]:text-current',
   };
 
   return `

@@ -1,7 +1,6 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
 
-
 // Profile API
 export const getProfile = async (req, res) => {
   try {
@@ -19,7 +18,8 @@ export const getProfile = async (req, res) => {
     logger.info(`Fetched profile for user ${userId}`);
 
     if (isHtmxRequest(req)) {
-      const profileHtml = profile ? `
+      const profileHtml = profile
+        ? `
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Profile Information</h3>
           <div class="space-y-4">
@@ -41,7 +41,8 @@ export const getProfile = async (req, res) => {
             </div>
           </div>
         </div>
-      ` : '<p class="text-gray-500">Profile not found</p>';
+      `
+        : '<p class="text-gray-500">Profile not found</p>';
       res.send(profileHtml);
     } else {
       res.json({ success: true, data: profile });

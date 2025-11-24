@@ -1,14 +1,24 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
-import { validateBusinessModelCreation, validateBusinessModelUpdate, validateBusinessModelDeletion } from '../../../middleware/validation/index.js';
+import {
+  validateBusinessModelCreation,
+  validateBusinessModelUpdate,
+  validateBusinessModelDeletion,
+} from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
-
 
 // Get all business models with pagination and filtering
 export const getBusinessModels = async (req, res) => {
   try {
-    const { search, status, business_type, industry, page = 1, limit = 10 } = req.query;
+    const {
+      search,
+      status,
+      business_type,
+      industry,
+      page = 1,
+      limit = 10,
+    } = req.query;
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
     const offset = (pageNum - 1) * limitNum;
@@ -45,10 +55,14 @@ export const getBusinessModels = async (req, res) => {
     if (business_type) filters.push(`business_type: ${business_type}`);
     if (industry) filters.push(`industry: ${industry}`);
     if (pageNum > 1) filters.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${businessModels.length} of ${total} business models${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${businessModels.length} of ${total} business models${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`
+    );
 
     if (isHtmxRequest(req)) {
-      const modelHtml = businessModels.map(model => `
+      const modelHtml = businessModels
+        .map(
+          (model) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -65,17 +79,21 @@ export const getBusinessModels = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              model.business_type === 'SaaS' ? 'bg-blue-100 text-blue-800' :
-              model.business_type === 'e-commerce' ? 'bg-green-100 text-green-800' :
-              'bg-purple-100 text-purple-800'
+              model.business_type === 'SaaS'
+                ? 'bg-blue-100 text-blue-800'
+                : model.business_type === 'e-commerce'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-purple-100 text-purple-800'
             }">${model.business_type}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${model.industry}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              model.status === 'draft' ? 'bg-gray-100 text-gray-800' :
-              model.status === 'in_progress' ? 'bg-yellow-100 text-yellow-800' :
-              'bg-green-100 text-green-800'
+              model.status === 'draft'
+                ? 'bg-gray-100 text-gray-800'
+                : model.status === 'in_progress'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-green-100 text-green-800'
             }">${model.status}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${model.overall_progress || 0}%</td>
@@ -120,17 +138,35 @@ export const getBusinessModels = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query);
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query
+      );
       res.send(modelHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: businessModels, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: businessModels,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching business models:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading business models</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading business models</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -149,7 +185,9 @@ export const getBusinessModel = async (req, res) => {
 
     if (error) throw error;
     if (!businessModel) {
-      return res.status(404).json({ success: false, error: 'Business model not found' });
+      return res
+        .status(404)
+        .json({ success: false, error: 'Business model not found' });
     }
 
     res.json({ success: true, data: businessModel });
@@ -214,7 +252,7 @@ export const createBusinessModel = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Update business model
@@ -234,7 +272,9 @@ export const updateBusinessModel = [
 
       if (error) throw error;
       if (!businessModel) {
-        return res.status(404).json({ success: false, error: 'Business model not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Business model not found' });
       }
 
       logger.info(`Updated business model with ID: ${id}`);
@@ -278,7 +318,7 @@ export const updateBusinessModel = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Delete business model
@@ -289,14 +329,17 @@ export const deleteBusinessModel = [
       const { id } = req.params;
 
       // Check if model exists
-      const { data: existingModel, error: fetchError } = await databaseService.supabase
-        .from('Business Model')
-        .select('name')
-        .eq('id', id)
-        .single();
+      const { data: existingModel, error: fetchError } =
+        await databaseService.supabase
+          .from('Business Model')
+          .select('name')
+          .eq('id', id)
+          .single();
 
       if (fetchError || !existingModel) {
-        return res.status(404).json({ success: false, error: 'Business model not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Business model not found' });
       }
 
       const { error } = await databaseService.supabase
@@ -326,7 +369,10 @@ export const deleteBusinessModel = [
           </script>
         `);
       } else {
-        res.json({ success: true, message: 'Business model deleted successfully' });
+        res.json({
+          success: true,
+          message: 'Business model deleted successfully',
+        });
       }
     } catch (error) {
       logger.error('Error deleting business model:', error);
@@ -346,7 +392,7 @@ export const deleteBusinessModel = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Helper function to generate pagination HTML
@@ -362,7 +408,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/business-model?page=${page-1}&${params}" hx-target="#businessModelTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/business-model?page=${page - 1}&${params}" hx-target="#businessModelTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -386,7 +432,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
   html += `</div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/business-model?page=${page+1}&${params}" hx-target="#businessModelTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/business-model?page=${page + 1}&${params}" hx-target="#businessModelTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

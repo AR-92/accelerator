@@ -1,7 +1,6 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
 
-
 // System API
 export const getSystem = async (req, res) => {
   try {
@@ -15,7 +14,8 @@ export const getSystem = async (req, res) => {
     logger.info('Fetched system data');
 
     if (isHtmxRequest(req)) {
-      const systemHtml = systemData ? `
+      const systemHtml = systemData
+        ? `
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">System Information</h3>
           <div class="space-y-4">
@@ -29,7 +29,8 @@ export const getSystem = async (req, res) => {
             </div>
           </div>
         </div>
-      ` : '<p class="text-gray-500">System data not found</p>';
+      `
+        : '<p class="text-gray-500">System data not found</p>';
       res.send(systemHtml);
     } else {
       res.json({ success: true, data: systemData });
@@ -37,7 +38,9 @@ export const getSystem = async (req, res) => {
   } catch (error) {
     logger.error('Error fetching system data:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading system data</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading system data</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }

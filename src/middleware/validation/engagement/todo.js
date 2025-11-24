@@ -20,9 +20,7 @@ export const validateTodoCreation = [
 ];
 
 export const validateTodoUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid todo ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid todo ID'),
 
   body('title')
     .optional()
@@ -50,9 +48,7 @@ export const validateTodoUpdate = [
 ];
 
 export const validateTodoDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid todo ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid todo ID'),
 
   handleValidationErrors,
 ];

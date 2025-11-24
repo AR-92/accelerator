@@ -22,10 +22,7 @@ export const validatePortfolioCreation = [
     .isLength({ max: 100 })
     .withMessage('Category must not exceed 100 characters'),
 
-  body('tags')
-    .optional()
-    .isArray()
-    .withMessage('Tags must be an array'),
+  body('tags').optional().isArray().withMessage('Tags must be an array'),
 
   body('technologies')
     .optional()
@@ -37,10 +34,7 @@ export const validatePortfolioCreation = [
     .isBoolean()
     .withMessage('Is public must be a boolean'),
 
-  body('image')
-    .optional()
-    .isURL()
-    .withMessage('Image must be a valid URL'),
+  body('image').optional().isURL().withMessage('Image must be a valid URL'),
 
   body('demo_url')
     .optional()
@@ -82,9 +76,7 @@ export const validatePortfolioCreation = [
 ];
 
 export const validatePortfolioUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid portfolio ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid portfolio ID'),
 
   body('title')
     .optional()
@@ -104,10 +96,7 @@ export const validatePortfolioUpdate = [
     .isLength({ max: 100 })
     .withMessage('Category must not exceed 100 characters'),
 
-  body('tags')
-    .optional()
-    .isArray()
-    .withMessage('Tags must be an array'),
+  body('tags').optional().isArray().withMessage('Tags must be an array'),
 
   body('technologies')
     .optional()
@@ -119,10 +108,7 @@ export const validatePortfolioUpdate = [
     .isBoolean()
     .withMessage('Is public must be a boolean'),
 
-  body('image')
-    .optional()
-    .isURL()
-    .withMessage('Image must be a valid URL'),
+  body('image').optional().isURL().withMessage('Image must be a valid URL'),
 
   body('demo_url')
     .optional()
@@ -159,9 +145,7 @@ export const validatePortfolioUpdate = [
 ];
 
 export const validatePortfolioDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid portfolio ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid portfolio ID'),
 
   handleValidationErrors,
 ];

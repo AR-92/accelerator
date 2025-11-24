@@ -31,12 +31,14 @@ const mockDatabaseService = {
       order: jest.fn().mockReturnThis(),
       range: jest.fn().mockReturnThis(),
       single: jest.fn().mockResolvedValue({ data: {}, error: null }),
-      rpc: jest.fn().mockResolvedValue({ data: [], error: null })
+      rpc: jest.fn().mockResolvedValue({ data: [], error: null }),
     })),
     auth: {
-      getSession: jest.fn().mockResolvedValue({ data: { session: null }, error: null })
-    }
-  }
+      getSession: jest
+        .fn()
+        .mockResolvedValue({ data: { session: null }, error: null }),
+    },
+  },
 };
 
 // Domain Service Mocks
@@ -52,7 +54,7 @@ const mockUserService = {
   getUserProfile: jest.fn(),
   updateUserProfile: jest.fn(),
   createUserAccount: jest.fn(),
-  getUserAccounts: jest.fn()
+  getUserAccounts: jest.fn(),
 };
 
 const mockContentService = {
@@ -66,7 +68,7 @@ const mockContentService = {
   searchContent: jest.fn(),
   getContentByCategory: jest.fn(),
   getContentByAuthor: jest.fn(),
-  getContentStats: jest.fn()
+  getContentStats: jest.fn(),
 };
 
 const mockBusinessService = {
@@ -75,24 +77,24 @@ const mockBusinessService = {
     getCorporateById: jest.fn(),
     getAllCorporates: jest.fn(),
     updateCorporate: jest.fn(),
-    deleteCorporate: jest.fn()
+    deleteCorporate: jest.fn(),
   },
   enterprise: {
     createEnterprise: jest.fn(),
     getEnterpriseById: jest.fn(),
     getAllEnterprises: jest.fn(),
     updateEnterprise: jest.fn(),
-    deleteEnterprise: jest.fn()
+    deleteEnterprise: jest.fn(),
   },
   startup: {
     createStartup: jest.fn(),
     getStartupById: jest.fn(),
     getAllStartups: jest.fn(),
     updateStartup: jest.fn(),
-    deleteStartup: jest.fn()
+    deleteStartup: jest.fn(),
   },
   searchBusinesses: jest.fn(),
-  getBusinessStats: jest.fn()
+  getBusinessStats: jest.fn(),
 };
 
 const mockLearningService = {
@@ -102,7 +104,7 @@ const mockLearningService = {
     getAllLearningContent: jest.fn(),
     updateLearningContent: jest.fn(),
     deleteLearningContent: jest.fn(),
-    publishLearningContent: jest.fn()
+    publishLearningContent: jest.fn(),
   },
   category: {
     createLearningCategory: jest.fn(),
@@ -110,7 +112,7 @@ const mockLearningService = {
     getAllLearningCategories: jest.fn(),
     updateLearningCategory: jest.fn(),
     deleteLearningCategory: jest.fn(),
-    getCategoryHierarchy: jest.fn()
+    getCategoryHierarchy: jest.fn(),
   },
   assessment: {
     createLearningAssessment: jest.fn(),
@@ -119,17 +121,17 @@ const mockLearningService = {
     getAssessmentsByContent: jest.fn(),
     updateLearningAssessment: jest.fn(),
     deleteLearningAssessment: jest.fn(),
-    getAssessmentStats: jest.fn()
+    getAssessmentStats: jest.fn(),
   },
   analytics: {
     createLearningAnalytics: jest.fn(),
     getAnalyticsByUser: jest.fn(),
     getAnalyticsByContent: jest.fn(),
     getUserProgress: jest.fn(),
-    getContentAnalytics: jest.fn()
+    getContentAnalytics: jest.fn(),
   },
   searchLearningContent: jest.fn(),
-  getLearningStats: jest.fn()
+  getLearningStats: jest.fn(),
 };
 
 const mockProjectService = {
@@ -139,7 +141,7 @@ const mockProjectService = {
     getAllProjects: jest.fn(),
     updateProject: jest.fn(),
     deleteProject: jest.fn(),
-    getProjectWithCollaborators: jest.fn()
+    getProjectWithCollaborators: jest.fn(),
   },
   task: {
     createTask: jest.fn(),
@@ -149,7 +151,7 @@ const mockProjectService = {
     updateTask: jest.fn(),
     deleteTask: jest.fn(),
     updateTaskStatus: jest.fn(),
-    assignTask: jest.fn()
+    assignTask: jest.fn(),
   },
   collaboration: {
     createCollaboration: jest.fn(),
@@ -159,7 +161,7 @@ const mockProjectService = {
     updateCollaboration: jest.fn(),
     deleteCollaboration: jest.fn(),
     acceptCollaboration: jest.fn(),
-    rejectCollaboration: jest.fn()
+    rejectCollaboration: jest.fn(),
   },
   collaborator: {
     addCollaborator: jest.fn(),
@@ -168,11 +170,11 @@ const mockProjectService = {
     getUserCollaborations: jest.fn(),
     updateCollaborator: jest.fn(),
     removeCollaborator: jest.fn(),
-    updateCollaboratorRole: jest.fn()
+    updateCollaboratorRole: jest.fn(),
   },
   searchProjects: jest.fn(),
   getProjectStats: jest.fn(),
-  getUserProjectsWithDetails: jest.fn()
+  getUserProjectsWithDetails: jest.fn(),
 };
 
 const mockFinancialService = {
@@ -183,7 +185,7 @@ const mockFinancialService = {
     updateBilling: jest.fn(),
     deleteBilling: jest.fn(),
     markAsPaid: jest.fn(),
-    getBillingStats: jest.fn()
+    getBillingStats: jest.fn(),
   },
   package: {
     createPackage: jest.fn(),
@@ -193,7 +195,7 @@ const mockFinancialService = {
     deletePackage: jest.fn(),
     activatePackage: jest.fn(),
     deactivatePackage: jest.fn(),
-    getActivePackages: jest.fn()
+    getActivePackages: jest.fn(),
   },
   reward: {
     createReward: jest.fn(),
@@ -203,10 +205,10 @@ const mockFinancialService = {
     deleteReward: jest.fn(),
     getAvailableRewards: jest.fn(),
     redeemReward: jest.fn(),
-    getRewardStats: jest.fn()
+    getRewardStats: jest.fn(),
   },
   getFinancialStats: jest.fn(),
-  getRevenueStats: jest.fn()
+  getRevenueStats: jest.fn(),
 };
 
 const mockNotificationService = {
@@ -222,7 +224,7 @@ const mockNotificationService = {
   createProjectInvitationNotification: jest.fn(),
   createTaskAssignedNotification: jest.fn(),
   getNotificationStats: jest.fn(),
-  cleanupOldNotifications: jest.fn()
+  cleanupOldNotifications: jest.fn(),
 };
 
 const mockActivityService = {
@@ -238,7 +240,7 @@ const mockActivityService = {
   logUserRegistered: jest.fn(),
   getActivityStats: jest.fn(),
   getUserActivitySummary: jest.fn(),
-  cleanupOldActivities: jest.fn()
+  cleanupOldActivities: jest.fn(),
 };
 
 // Mock Service Factory
@@ -259,8 +261,8 @@ const mockServiceFactory = {
     project: mockProjectService,
     financial: mockFinancialService,
     notification: mockNotificationService,
-    activity: mockActivityService
-  }))
+    activity: mockActivityService,
+  })),
 };
 
 export default mockServiceFactory;
@@ -276,5 +278,5 @@ export {
   mockFinancialService,
   mockNotificationService,
   mockActivityService,
-  mockServiceFactory
+  mockServiceFactory,
 };

@@ -6,5 +6,9 @@
  * @returns {boolean} - True if the request is from HTMX
  */
 export const isHtmxRequest = (req) => {
-  return req.headers['hx-request'] || req.headers['HX-Request'] || req.get('HX-Request');
+  return (
+    req.headers['hx-request'] ||
+    req.headers['HX-Request'] ||
+    req.get('HX-Request')
+  );
 };

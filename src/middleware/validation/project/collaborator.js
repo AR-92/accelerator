@@ -7,9 +7,7 @@ export const validateProjectCollaboratorCreation = [
     .isInt({ min: 1 })
     .withMessage('Valid project ID is required'),
 
-  body('user_id')
-    .isInt({ min: 1 })
-    .withMessage('Valid user ID is required'),
+  body('user_id').isInt({ min: 1 }).withMessage('Valid user ID is required'),
 
   body('role')
     .trim()
@@ -31,9 +29,7 @@ export const validateProjectCollaboratorCreation = [
 ];
 
 export const validateProjectCollaboratorUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid project collaborator ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid project collaborator ID'),
 
   body('role')
     .optional()
@@ -56,9 +52,7 @@ export const validateProjectCollaboratorUpdate = [
 ];
 
 export const validateProjectCollaboratorDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid project collaborator ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid project collaborator ID'),
 
   handleValidationErrors,
 ];

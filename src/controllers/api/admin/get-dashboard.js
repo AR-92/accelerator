@@ -1,7 +1,6 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
 
-
 // Dashboard API
 export const getDashboard = async (req, res) => {
   try {
@@ -10,12 +9,20 @@ export const getDashboard = async (req, res) => {
       { count: usersCount, error: usersError },
       { count: ideasCount, error: ideasError },
       { count: projectsCount, error: projectsError },
-      { count: todosCount, error: todosError }
+      { count: todosCount, error: todosError },
     ] = await Promise.all([
-      databaseService.supabase.from('users').select('*', { count: 'exact', head: true }),
-      databaseService.supabase.from('ideas').select('*', { count: 'exact', head: true }),
-      databaseService.supabase.from('projects').select('*', { count: 'exact', head: true }),
-      databaseService.supabase.from('todos').select('*', { count: 'exact', head: true })
+      databaseService.supabase
+        .from('users')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('ideas')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('projects')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('todos')
+        .select('*', { count: 'exact', head: true }),
     ]);
 
     if (usersError) throw usersError;
@@ -27,7 +34,7 @@ export const getDashboard = async (req, res) => {
       users: usersCount || 0,
       ideas: ideasCount || 0,
       projects: projectsCount || 0,
-      todos: todosCount || 0
+      todos: todosCount || 0,
     };
 
     logger.info('Fetched dashboard stats');
@@ -97,7 +104,9 @@ export const getDashboard = async (req, res) => {
   } catch (error) {
     logger.error('Error fetching dashboard:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading dashboard</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading dashboard</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }

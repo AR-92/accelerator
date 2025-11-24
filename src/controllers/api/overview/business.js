@@ -2,7 +2,6 @@ import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
 import { formatCurrency } from '../../../helpers/format/index.js';
 
-
 // Business Model API
 export const getBusinessModels = async (req, res) => {
   try {
@@ -16,7 +15,9 @@ export const getBusinessModels = async (req, res) => {
       .select('*', { count: 'exact' });
 
     if (search) {
-      query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%,core_function.ilike.%${search}%`);
+      query = query.or(
+        `name.ilike.%${search}%,description.ilike.%${search}%,core_function.ilike.%${search}%`
+      );
     }
     if (status) {
       query = query.eq('status', status);
@@ -37,7 +38,9 @@ export const getBusinessModels = async (req, res) => {
     logger.info(`Fetched ${models.length} of ${total} business models`);
 
     if (isHtmxRequest(req)) {
-      const modelHtml = models.map(model => `
+      const modelHtml = models
+        .map(
+          (model) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -54,10 +57,13 @@ export const getBusinessModels = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              model.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
-              model.status === 'review' ? 'bg-blue-100 text-blue-800' :
-              model.status === 'completed' ? 'bg-green-100 text-green-800' :
-              'bg-red-100 text-red-800'
+              model.status === 'draft'
+                ? 'bg-yellow-100 text-yellow-800'
+                : model.status === 'review'
+                  ? 'bg-blue-100 text-blue-800'
+                  : model.status === 'completed'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
             }">${model.status}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${model.current_section || 1}/9</td>
@@ -111,17 +117,36 @@ export const getBusinessModels = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'business-models');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'business-models'
+      );
       res.send(modelHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: models, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: models,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching business models:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading business models</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading business models</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -141,7 +166,9 @@ export const getBusinessPlans = async (req, res) => {
       .select('*', { count: 'exact' });
 
     if (search) {
-      query = query.or(`company_name.ilike.%${search}%,company_description.ilike.%${search}%,executive_summary.ilike.%${search}%`);
+      query = query.or(
+        `company_name.ilike.%${search}%,company_description.ilike.%${search}%,executive_summary.ilike.%${search}%`
+      );
     }
     if (status) {
       query = query.eq('status', status);
@@ -162,7 +189,9 @@ export const getBusinessPlans = async (req, res) => {
     logger.info(`Fetched ${plans.length} of ${total} business plans`);
 
     if (isHtmxRequest(req)) {
-      const planHtml = plans.map(plan => `
+      const planHtml = plans
+        .map(
+          (plan) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -179,10 +208,13 @@ export const getBusinessPlans = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              plan.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
-              plan.status === 'review' ? 'bg-blue-100 text-blue-800' :
-              plan.status === 'completed' ? 'bg-green-100 text-green-800' :
-              'bg-red-100 text-red-800'
+              plan.status === 'draft'
+                ? 'bg-yellow-100 text-yellow-800'
+                : plan.status === 'review'
+                  ? 'bg-blue-100 text-blue-800'
+                  : plan.status === 'completed'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
             }">${plan.status}</span>
           </td>
            <td class="px-6 py-4 text-sm text-gray-900">${plan.industry || 'N/A'}</td>
@@ -237,17 +269,36 @@ export const getBusinessPlans = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'business-plans');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'business-plans'
+      );
       res.send(planHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: plans, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: plans,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching business plans:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading business plans</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading business plans</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -267,7 +318,9 @@ export const getFinancialModels = async (req, res) => {
       .select('*', { count: 'exact' });
 
     if (search) {
-      query = query.or(`model_name.ilike.%${search}%,model_description.ilike.%${search}%`);
+      query = query.or(
+        `model_name.ilike.%${search}%,model_description.ilike.%${search}%`
+      );
     }
     if (model_status) {
       query = query.eq('model_status', model_status);
@@ -285,7 +338,9 @@ export const getFinancialModels = async (req, res) => {
     logger.info(`Fetched ${models.length} of ${total} financial models`);
 
     if (isHtmxRequest(req)) {
-      const modelHtml = models.map(model => `
+      const modelHtml = models
+        .map(
+          (model) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -302,10 +357,13 @@ export const getFinancialModels = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              model.model_status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
-              model.model_status === 'review' ? 'bg-blue-100 text-blue-800' :
-              model.model_status === 'completed' ? 'bg-green-100 text-green-800' :
-              'bg-red-100 text-red-800'
+              model.model_status === 'draft'
+                ? 'bg-yellow-100 text-yellow-800'
+                : model.model_status === 'review'
+                  ? 'bg-blue-100 text-blue-800'
+                  : model.model_status === 'completed'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
             }">${model.model_status}</span>
           </td>
            <td class="px-6 py-4 text-sm text-gray-900">${model.current_section || 1}/12</td>
@@ -313,7 +371,9 @@ export const getFinancialModels = async (req, res) => {
            <td class="px-6 py-4 text-sm text-gray-900">${formatCurrency(model.monthly_revenue)}</td>
            <td class="px-6 py-4">
              <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-               model.model_completed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+               model.model_completed
+                 ? 'bg-green-100 text-green-800'
+                 : 'bg-red-100 text-red-800'
              }">${model.model_completed ? 'Completed' : 'In Progress'}</span>
            </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(model.created_at)}</td>
@@ -364,17 +424,36 @@ export const getFinancialModels = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'financial-models');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'financial-models'
+      );
       res.send(modelHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: models, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: models,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching financial models:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading financial models</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading financial models</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -412,7 +491,9 @@ export const getFunding = async (req, res) => {
     logger.info(`Fetched ${funding.length} of ${total} funding records`);
 
     if (isHtmxRequest(req)) {
-      const fundingHtml = funding.map(record => `
+      const fundingHtml = funding
+        .map(
+          (record) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -473,17 +554,36 @@ export const getFunding = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'funding');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'funding'
+      );
       res.send(fundingHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: funding, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: funding,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching funding:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading funding records</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading funding records</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -496,13 +596,13 @@ const generatePaginationHtml = (page, limit, total, query, endpoint) => {
   if (totalPages <= 1) return '';
 
   const params = Object.keys(query)
-    .filter(key => key !== 'page')
-    .map(key => `${key}=${encodeURIComponent(query[key])}`)
+    .filter((key) => key !== 'page')
+    .map((key) => `${key}=${encodeURIComponent(query[key])}`)
     .join('&');
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/business/${endpoint}?page=${page-1}&${params}" hx-target="#${endpoint.replace('-', '')}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/business/${endpoint}?page=${page - 1}&${params}" hx-target="#${endpoint.replace('-', '')}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -526,7 +626,7 @@ const generatePaginationHtml = (page, limit, total, query, endpoint) => {
   html += `</div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/business/${endpoint}?page=${page+1}&${params}" hx-target="#${endpoint.replace('-', '')}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/business/${endpoint}?page=${page + 1}&${params}" hx-target="#${endpoint.replace('-', '')}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

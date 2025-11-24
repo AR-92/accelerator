@@ -3,9 +3,7 @@ import { handleValidationErrors } from '../common.js';
 
 // Billing validation rules
 export const validateBillingCreation = [
-  body('user_id')
-    .isInt({ min: 1 })
-    .withMessage('Valid user ID is required'),
+  body('user_id').isInt({ min: 1 }).withMessage('Valid user ID is required'),
 
   body('amount')
     .isFloat({ min: 0 })
@@ -18,7 +16,9 @@ export const validateBillingCreation = [
 
   body('billing_type')
     .isIn(['subscription', 'one-time', 'usage', 'refund'])
-    .withMessage('Billing type must be subscription, one-time, usage, or refund'),
+    .withMessage(
+      'Billing type must be subscription, one-time, usage, or refund'
+    ),
 
   body('description')
     .optional()
@@ -29,12 +29,16 @@ export const validateBillingCreation = [
   body('status')
     .optional()
     .isIn(['pending', 'paid', 'failed', 'refunded', 'cancelled'])
-    .withMessage('Status must be pending, paid, failed, refunded, or cancelled'),
+    .withMessage(
+      'Status must be pending, paid, failed, refunded, or cancelled'
+    ),
 
   body('payment_method')
     .optional()
     .isIn(['credit_card', 'debit_card', 'paypal', 'bank_transfer', 'crypto'])
-    .withMessage('Payment method must be credit_card, debit_card, paypal, bank_transfer, or crypto'),
+    .withMessage(
+      'Payment method must be credit_card, debit_card, paypal, bank_transfer, or crypto'
+    ),
 
   body('invoice_number')
     .optional()
@@ -56,9 +60,7 @@ export const validateBillingCreation = [
 ];
 
 export const validateBillingUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid billing ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid billing ID'),
 
   body('amount')
     .optional()
@@ -73,7 +75,9 @@ export const validateBillingUpdate = [
   body('billing_type')
     .optional()
     .isIn(['subscription', 'one-time', 'usage', 'refund'])
-    .withMessage('Billing type must be subscription, one-time, usage, or refund'),
+    .withMessage(
+      'Billing type must be subscription, one-time, usage, or refund'
+    ),
 
   body('description')
     .optional()
@@ -84,12 +88,16 @@ export const validateBillingUpdate = [
   body('status')
     .optional()
     .isIn(['pending', 'paid', 'failed', 'refunded', 'cancelled'])
-    .withMessage('Status must be pending, paid, failed, refunded, or cancelled'),
+    .withMessage(
+      'Status must be pending, paid, failed, refunded, or cancelled'
+    ),
 
   body('payment_method')
     .optional()
     .isIn(['credit_card', 'debit_card', 'paypal', 'bank_transfer', 'crypto'])
-    .withMessage('Payment method must be credit_card, debit_card, paypal, bank_transfer, or crypto'),
+    .withMessage(
+      'Payment method must be credit_card, debit_card, paypal, bank_transfer, or crypto'
+    ),
 
   body('invoice_number')
     .optional()
@@ -111,9 +119,7 @@ export const validateBillingUpdate = [
 ];
 
 export const validateBillingDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid billing ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid billing ID'),
 
   handleValidationErrors,
 ];

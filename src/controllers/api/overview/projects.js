@@ -1,14 +1,26 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
-import { validateProjectCreation, validateProjectUpdate, validateProjectDeletion, validateTaskCreation, validateTaskUpdate, validateTaskDeletion } from '../../../middleware/validation/index.js';
+import {
+  validateProjectCreation,
+  validateProjectUpdate,
+  validateProjectDeletion,
+  validateTaskCreation,
+  validateTaskUpdate,
+  validateTaskDeletion,
+} from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
-
 
 // Projects API
 export const getProjects = async (req, res) => {
   try {
-    const { search, visibility, owner_user_id, page = 1, limit = 10 } = req.query;
+    const {
+      search,
+      visibility,
+      owner_user_id,
+      page = 1,
+      limit = 10,
+    } = req.query;
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
     const offset = (pageNum - 1) * limitNum;
@@ -39,7 +51,9 @@ export const getProjects = async (req, res) => {
     logger.info(`Fetched ${projects.length} of ${total} projects`);
 
     if (isHtmxRequest(req)) {
-      const projectHtml = projects.map(project => `
+      const projectHtml = projects
+        .map(
+          (project) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -56,9 +70,11 @@ export const getProjects = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              project.visibility === 'public' ? 'bg-green-100 text-green-800' :
-              project.visibility === 'private' ? 'bg-red-100 text-red-800' :
-              'bg-yellow-100 text-yellow-800'
+              project.visibility === 'public'
+                ? 'bg-green-100 text-green-800'
+                : project.visibility === 'private'
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-yellow-100 text-yellow-800'
             }">${project.visibility}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${project.owner_user_id}</td>
@@ -110,17 +126,36 @@ export const getProjects = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'projects');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'projects'
+      );
       res.send(projectHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: projects, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: projects,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching projects:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading projects</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading projects</p>');
     } else {
       res.json({ success: true, message: 'Task deleted successfully' });
     }

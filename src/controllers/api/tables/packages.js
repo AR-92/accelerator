@@ -1,9 +1,12 @@
- import logger from '../../../utils/logger.js';
- import { databaseService } from '../../../services/index.js';
- import { validatePackageCreation, validatePackageUpdate, validatePackageDeletion } from '../../../middleware/validation/index.js';
- import { formatDate } from '../../../helpers/format/index.js';
- import { isHtmxRequest } from '../../../helpers/http/index.js';
-
+import logger from '../../../utils/logger.js';
+import { databaseService } from '../../../services/index.js';
+import {
+  validatePackageCreation,
+  validatePackageUpdate,
+  validatePackageDeletion,
+} from '../../../middleware/validation/index.js';
+import { formatDate } from '../../../helpers/format/index.js';
+import { isHtmxRequest } from '../../../helpers/http/index.js';
 
 // Packages API
 export const getPackages = async (req, res) => {
@@ -12,7 +15,9 @@ export const getPackages = async (req, res) => {
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    let query = databaseService.supabase.from('packages').select('*', { count: 'exact' });
+    let query = databaseService.supabase
+      .from('packages')
+      .select('*', { count: 'exact' });
 
     if (search) {
       query = query.or(`name.ilike.%${search}%,description.ilike.%${search}%`);
@@ -26,7 +31,11 @@ export const getPackages = async (req, res) => {
       query = query.eq('status', status);
     }
 
-    const { data: packages, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+    const {
+      data: packages,
+      error,
+      count,
+    } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
 
     if (error) throw error;
 
@@ -34,7 +43,9 @@ export const getPackages = async (req, res) => {
     logger.info(`Fetched ${packages.length} of ${total} packages`);
 
     if (isHtmxRequest(req)) {
-      const packageHtml = packages.map(pkg => `
+      const packageHtml = packages
+        .map(
+          (pkg) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -52,9 +63,11 @@ export const getPackages = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${pkg.package_type}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              pkg.status === 'active' ? 'bg-green-100 text-green-800' :
-              pkg.status === 'inactive' ? 'bg-red-100 text-red-800' :
-              'bg-yellow-100 text-yellow-800'
+              pkg.status === 'active'
+                ? 'bg-green-100 text-green-800'
+                : pkg.status === 'inactive'
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-yellow-100 text-yellow-800'
             }">${pkg.status}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">$${pkg.price || 'N/A'}</td>
@@ -99,17 +112,36 @@ export const getPackages = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'packages');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'packages'
+      );
       res.send(packageHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: packages, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: packages,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching packages:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading packages</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading packages</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -120,18 +152,21 @@ export const createPackage = [
   validatePackageCreation,
   async (req, res) => {
     try {
-      const { name, description, package_type, price, features, status } = req.body;
+      const { name, description, package_type, price, features, status } =
+        req.body;
 
       const { data: pkg, error } = await databaseService.supabase
         .from('packages')
-        .insert([{
-          name,
-          description,
-          package_type,
-          price,
-          features,
-          status: status || 'active'
-        }])
+        .insert([
+          {
+            name,
+            description,
+            package_type,
+            price,
+            features,
+            status: status || 'active',
+          },
+        ])
         .select()
         .single();
 
@@ -158,7 +193,9 @@ export const createPackage = [
             <td class="px-6 py-4 text-sm text-gray-900">${pkg.package_type}</td>
             <td class="px-6 py-4">
               <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                pkg.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                pkg.status === 'active'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-red-100 text-red-800'
               }">${pkg.status}</span>
             </td>
             <td class="px-6 py-4 text-sm text-gray-900">$${pkg.price || 'N/A'}</td>
@@ -245,7 +282,7 @@ export const createPackage = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 export const updatePackage = [
@@ -253,7 +290,8 @@ export const updatePackage = [
   async (req, res) => {
     try {
       const { id } = req.params;
-      const { name, description, package_type, price, features, status } = req.body;
+      const { name, description, package_type, price, features, status } =
+        req.body;
 
       const { data: pkg, error } = await databaseService.supabase
         .from('packages')
@@ -264,7 +302,7 @@ export const updatePackage = [
           price,
           features,
           status,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
         .eq('id', id)
         .select()
@@ -293,7 +331,9 @@ export const updatePackage = [
             <td class="px-6 py-4 text-sm text-gray-900">${pkg.package_type}</td>
             <td class="px-6 py-4">
               <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                pkg.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                pkg.status === 'active'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-red-100 text-red-800'
               }">${pkg.status}</span>
             </td>
             <td class="px-6 py-4 text-sm text-gray-900">$${pkg.price || 'N/A'}</td>
@@ -379,7 +419,7 @@ export const updatePackage = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 export const deletePackage = [
@@ -389,15 +429,18 @@ export const deletePackage = [
       const { id } = req.params;
 
       // First check if package exists
-      const { data: existingPackage, error: fetchError } = await databaseService.supabase
-        .from('packages')
-        .select('*')
-        .eq('id', id)
-        .single();
+      const { data: existingPackage, error: fetchError } =
+        await databaseService.supabase
+          .from('packages')
+          .select('*')
+          .eq('id', id)
+          .single();
 
       if (fetchError) throw fetchError;
       if (!existingPackage) {
-        return res.status(404).json({ success: false, error: 'Package not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Package not found' });
       }
 
       const { error } = await databaseService.supabase
@@ -448,7 +491,7 @@ export const deletePackage = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Helper function to generate pagination HTML
@@ -463,7 +506,7 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/${entity}?page=${page-1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/${entity}?page=${page - 1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -497,7 +540,7 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
   </div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/${entity}?page=${page+1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/${entity}?page=${page + 1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

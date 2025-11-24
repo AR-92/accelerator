@@ -7,7 +7,9 @@
     root.style.display = 'flex';
     root.setAttribute('aria-hidden', 'false');
     // move focus to first focusable element inside modal
-    const focusable = root.querySelector('button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])');
+    const focusable = root.querySelector(
+      'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])'
+    );
     if (focusable) focusable.focus();
   }
 
@@ -46,7 +48,9 @@
   // ESC key closes topmost modal
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
-      const openModalEl = document.querySelector('[role="dialog"][aria-hidden="false"]');
+      const openModalEl = document.querySelector(
+        '[role="dialog"][aria-hidden="false"]'
+      );
       if (openModalEl) closeModal(openModalEl);
     }
   });

@@ -8,7 +8,9 @@ class DatabaseService {
     const supabaseKey = process.env.SUPABASE_KEY;
 
     if (!supabaseUrl || !supabaseKey) {
-      throw new Error('SUPABASE_URL and SUPABASE_KEY are required. Please set them in your .env file.');
+      throw new Error(
+        'SUPABASE_URL and SUPABASE_KEY are required. Please set them in your .env file.'
+      );
     }
 
     // Use Supabase
@@ -33,18 +35,20 @@ class DatabaseService {
           code: error.code,
           message: error.message,
           details: error.details,
-          data
+          data,
         });
         throw error;
       }
-      logger.debug(`✅ Created record in Supabase table ${table} with ID: ${result?.id}`);
+      logger.debug(
+        `✅ Created record in Supabase table ${table} with ID: ${result?.id}`
+      );
       return result;
     } catch (error) {
       logger.error(`Error creating record in ${table}:`, {
         message: error.message,
         stack: error.stack,
         table,
-        data
+        data,
       });
       throw error;
     }
@@ -59,7 +63,7 @@ class DatabaseService {
       }
 
       // Apply additional filters
-      Object.keys(filters).forEach(key => {
+      Object.keys(filters).forEach((key) => {
         query = query.eq(key, filters[key]);
       });
 
@@ -91,10 +95,7 @@ class DatabaseService {
 
   async delete(table, id) {
     try {
-      const { error } = await this.supabase
-        .from(table)
-        .delete()
-        .eq('id', id);
+      const { error } = await this.supabase.from(table).delete().eq('id', id);
 
       if (error) throw error;
       return true;
@@ -117,7 +118,7 @@ class DatabaseService {
         logger.error('Failed to fetch todos from Supabase:', {
           code: error.code,
           message: error.message,
-          details: error.details
+          details: error.details,
         });
         throw error;
       }
@@ -126,7 +127,7 @@ class DatabaseService {
     } catch (error) {
       logger.error('Error fetching todos:', {
         message: error.message,
-        stack: error.stack
+        stack: error.stack,
       });
       throw error;
     }
@@ -139,12 +140,12 @@ class DatabaseService {
       const { page = 1, limit = 10 } = pagination;
       const offset = (page - 1) * limit;
 
-      let query = this.supabase
-        .from('todos')
-        .select('*', { count: 'exact' });
+      let query = this.supabase.from('todos').select('*', { count: 'exact' });
 
       if (search) {
-        query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+        query = query.or(
+          `title.ilike.%${search}%,description.ilike.%${search}%`
+        );
       }
       if (status === 'pending') {
         query = query.eq('completed', false);
@@ -180,7 +181,7 @@ class DatabaseService {
           message: error.message,
           details: error.details,
           title,
-          description
+          description,
         });
         throw error;
       }
@@ -191,7 +192,7 @@ class DatabaseService {
         message: error.message,
         stack: error.stack,
         title,
-        description
+        description,
       });
       throw error;
     }
@@ -213,7 +214,7 @@ class DatabaseService {
           message: error.message,
           details: error.details,
           id,
-          updates
+          updates,
         });
         throw error;
       }
@@ -224,7 +225,7 @@ class DatabaseService {
         message: error.message,
         stack: error.stack,
         id,
-        updates
+        updates,
       });
       throw error;
     }
@@ -233,17 +234,14 @@ class DatabaseService {
   async deleteTodo(id) {
     try {
       logger.debug(`Deleting todo ${id} from Supabase`);
-      const { error } = await this.supabase
-        .from('todos')
-        .delete()
-        .eq('id', id);
+      const { error } = await this.supabase.from('todos').delete().eq('id', id);
 
       if (error) {
         logger.error('Failed to delete todo from Supabase:', {
           code: error.code,
           message: error.message,
           details: error.details,
-          id
+          id,
         });
         throw error;
       }
@@ -253,7 +251,7 @@ class DatabaseService {
       logger.error('Error deleting todo:', {
         message: error.message,
         stack: error.stack,
-        id
+        id,
       });
       throw error;
     }
@@ -268,8 +266,10 @@ class DatabaseService {
       const { data, error } = await this.supabase.rpc('get_table_list');
 
       if (!error && data) {
-        const tables = data.map(row => row.name || row).sort();
-        logger.debug(`Successfully fetched ${tables.length} tables from Supabase via RPC: ${tables.join(', ')}`);
+        const tables = data.map((row) => row.name || row).sort();
+        logger.debug(
+          `Successfully fetched ${tables.length} tables from Supabase via RPC: ${tables.join(', ')}`
+        );
         return tables;
       }
 
@@ -282,8 +282,13 @@ class DatabaseService {
           .eq('schemaname', 'public');
 
         if (!altError && altData) {
-          const tables = altData.map(row => row.tablename).filter(name => !name.startsWith('_')).sort();
-          logger.debug(`Successfully fetched ${tables.length} tables from Supabase via pg_catalog: ${tables.join(', ')}`);
+          const tables = altData
+            .map((row) => row.tablename)
+            .filter((name) => !name.startsWith('_'))
+            .sort();
+          logger.debug(
+            `Successfully fetched ${tables.length} tables from Supabase via pg_catalog: ${tables.join(', ')}`
+          );
           return tables;
         }
       } catch (altError) {
@@ -291,7 +296,9 @@ class DatabaseService {
       }
 
       // Final fallback: return known tables
-      logger.warn('Using fallback table list. To get full list, create RPC function in Supabase SQL Editor:');
+      logger.warn(
+        'Using fallback table list. To get full list, create RPC function in Supabase SQL Editor:'
+      );
       logger.warn(`
 CREATE OR REPLACE FUNCTION get_table_list()
 RETURNS TABLE(name text)
@@ -311,7 +318,7 @@ $$;
     } catch (error) {
       logger.error('Error fetching tables:', {
         message: error.message,
-        stack: error.stack
+        stack: error.stack,
       });
       return ['todos'];
     }
@@ -330,12 +337,13 @@ $$;
       }
 
       logger.debug('Testing Supabase authentication...');
-      const { data: authData, error: authError } = await this.supabase.auth.getSession();
+      const { data: authData, error: authError } =
+        await this.supabase.auth.getSession();
       if (authError) {
         logger.error('❌ Supabase authentication failed:', {
           message: authError.message,
           status: authError.status,
-          fullError: authError
+          fullError: authError,
         });
         return false;
       }
@@ -348,19 +356,27 @@ $$;
         .limit(1);
 
       if (error) {
-        console.log('🔍 Full Supabase table access error:', JSON.stringify(error, null, 2));
+        console.log(
+          '🔍 Full Supabase table access error:',
+          JSON.stringify(error, null, 2)
+        );
         logger.error('❌ Supabase table access failed:', {
           code: error.code,
           message: error.message || 'Empty error message',
           details: error.details,
           hint: error.hint,
           status: error.status,
-          fullError: JSON.stringify(error)
+          fullError: JSON.stringify(error),
         });
 
         // If table doesn't exist, provide clear instructions
-        if (error.code === 'PGRST116' || error.message?.includes('relation "public.todos" does not exist')) {
-          logger.error('❌ SOLUTION: Create the todos table in Supabase SQL Editor');
+        if (
+          error.code === 'PGRST116' ||
+          error.message?.includes('relation "public.todos" does not exist')
+        ) {
+          logger.error(
+            '❌ SOLUTION: Create the todos table in Supabase SQL Editor'
+          );
           logger.error('📋 SQL to run in Supabase Dashboard → SQL Editor:');
           logger.error(`
 CREATE TABLE IF NOT EXISTS todos (
@@ -390,7 +406,7 @@ INSERT INTO todos (title, description, completed) VALUES
       logger.error('❌ Database connection test failed:', {
         message: error.message,
         stack: error.stack,
-        code: error.code
+        code: error.code,
       });
       return false;
     }

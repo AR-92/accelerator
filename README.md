@@ -26,30 +26,34 @@ A production-ready, scalable boilerplate for building modern web applications wi
 ## Quick Start
 
 1. **Clone the repository:**
-    ```bash
-    git clone <repository-url>
-    cd accelerator
-    ```
+
+   ```bash
+   git clone <repository-url>
+   cd accelerator
+   ```
 
 2. **Install dependencies:**
-    ```bash
-    npm install
-    ```
+
+   ```bash
+   npm install
+   ```
 
 3. **Set up environment variables:**
-    ```bash
-    cp .env.example .env
-    # Edit .env with your database credentials
-    ```
+
+   ```bash
+   cp .env.example .env
+   # Edit .env with your database credentials
+   ```
 
 4. **Set up the database:**
-    - Create a PostgreSQL database
-    - Run the SQL schema from `db/init.sql`
+   - Create a PostgreSQL database
+   - Run the SQL schema from `db/init.sql`
 
 5. **Start development:**
-    ```bash
-    npm run dev
-    ```
+
+   ```bash
+   npm run dev
+   ```
 
 6. **Open [http://localhost:3000](http://localhost:3000)**
 
@@ -83,19 +87,23 @@ accelerator/
 ## Available Scripts
 
 ### Development
+
 - `npm run dev` - Start development mode (CSS watching + server)
 - `npm run build-css` - Build Tailwind CSS with file watching
 - `npm start` - Start the production server
 
 ### Testing
+
 - `npm test` - Run all tests
 - `npm run test:watch` - Run tests in watch mode
 - `npm run test:coverage` - Run tests with coverage report
 
 ### Building
+
 - `npm run build` - Build CSS for production
 
 ### Code Quality
+
 - `npm run lint` - Run ESLint (when configured)
 - `npm run format` - Run Prettier (when configured)
 
@@ -106,9 +114,11 @@ accelerator/
 All endpoints support both JSON responses and HTMX HTML fragments based on the request type.
 
 #### GET /api/todos
+
 Fetch all todos.
 
 **Response (JSON):**
+
 ```json
 {
   "success": true,
@@ -126,9 +136,11 @@ Fetch all todos.
 ```
 
 #### POST /api/todos
+
 Create a new todo.
 
 **Request Body:**
+
 ```json
 {
   "title": "New Todo",
@@ -137,9 +149,11 @@ Create a new todo.
 ```
 
 #### PUT /api/todos/:id
+
 Update a todo.
 
 **Request Body:**
+
 ```json
 {
   "title": "Updated Title",
@@ -149,14 +163,17 @@ Update a todo.
 ```
 
 #### DELETE /api/todos/:id
+
 Delete a todo.
 
 ### Health Check
 
 #### GET /health
+
 Application health check endpoint.
 
 **Response:**
+
 ```json
 {
   "status": "OK",
@@ -249,24 +266,31 @@ npm run test:watch
 ## Architecture Overview
 
 ### Controllers
+
 Route handlers that process requests and return responses. Located in `src/controllers/`. Controllers now use domain services for business logic separation.
 
 ### Domain Services
+
 Specialized services that encapsulate business logic and database operations. Each service handles a specific domain (User, Activity, Business, etc.). Located in `src/services/domains/`.
 
 ### Models
+
 Data models that represent database entities and handle business logic. Located in `src/models/`.
 
 ### Services
+
 External service integrations (database, APIs, etc.). Located in `src/services/`. Includes a ServiceFactory for easy instantiation of domain services.
 
 ### Middleware
+
 Custom middleware for authentication, validation, security, etc. Located in `src/middleware/`.
 
 ### Configuration
+
 Centralized configuration management. Located in `src/config/`.
 
 ### Utils
+
 Utility functions and helpers. Located in `src/utils/`.
 
 ## Security Features

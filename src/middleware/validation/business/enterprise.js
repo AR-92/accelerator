@@ -27,10 +27,7 @@ export const validateEnterpriseCreation = [
     .isISO8601()
     .withMessage('Founded date must be a valid date'),
 
-  body('website')
-    .optional()
-    .isURL()
-    .withMessage('Website must be a valid URL'),
+  body('website').optional().isURL().withMessage('Website must be a valid URL'),
 
   body('status')
     .optional()
@@ -57,9 +54,7 @@ export const validateEnterpriseCreation = [
 ];
 
 export const validateEnterpriseUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid enterprise ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid enterprise ID'),
 
   body('name')
     .optional()
@@ -84,10 +79,7 @@ export const validateEnterpriseUpdate = [
     .isISO8601()
     .withMessage('Founded date must be a valid date'),
 
-  body('website')
-    .optional()
-    .isURL()
-    .withMessage('Website must be a valid URL'),
+  body('website').optional().isURL().withMessage('Website must be a valid URL'),
 
   body('status')
     .optional()
@@ -109,9 +101,7 @@ export const validateEnterpriseUpdate = [
 ];
 
 export const validateEnterpriseDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid enterprise ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid enterprise ID'),
 
   handleValidationErrors,
 ];

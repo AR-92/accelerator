@@ -17,7 +17,7 @@ function toggleActionMenu(button) {
   const allMenus = document.querySelectorAll('[id^="actionMenu-"]');
 
   // Close all other menus
-  allMenus.forEach(m => {
+  allMenus.forEach((m) => {
     if (m !== menu) {
       m.style.display = 'none';
     }
@@ -63,10 +63,7 @@ function toggleActionMenu(button) {
     menu.style.top = `${top}px`;
     menu.style.left = `${left}px`;
     menu.style.visibility = 'visible';
-
-
   } else {
     menu.style.display = 'none';
   }
 }
-

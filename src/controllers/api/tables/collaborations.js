@@ -1,18 +1,30 @@
- import logger from '../../../utils/logger.js';
- import { databaseService } from '../../../services/index.js';
- import { validateCollaborationCreation, validateCollaborationUpdate, validateCollaborationDeletion } from '../../../middleware/validation/index.js';
- import { formatDate } from '../../../helpers/format/index.js';
- import { isHtmxRequest } from '../../../helpers/http/index.js';
-
+import logger from '../../../utils/logger.js';
+import { databaseService } from '../../../services/index.js';
+import {
+  validateCollaborationCreation,
+  validateCollaborationUpdate,
+  validateCollaborationDeletion,
+} from '../../../middleware/validation/index.js';
+import { formatDate } from '../../../helpers/format/index.js';
+import { isHtmxRequest } from '../../../helpers/http/index.js';
 
 // Collaborations API
 export const getCollaborations = async (req, res) => {
   try {
-    const { search, user_id, project_id, status, page = 1, limit = 10 } = req.query;
+    const {
+      search,
+      user_id,
+      project_id,
+      status,
+      page = 1,
+      limit = 10,
+    } = req.query;
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
 
-    let query = databaseService.supabase.from('collaborations').select('*', { count: 'exact' });
+    let query = databaseService.supabase
+      .from('collaborations')
+      .select('*', { count: 'exact' });
 
     if (search) {
       query = query.or(`message.ilike.%${search}%`);
@@ -30,7 +42,11 @@ export const getCollaborations = async (req, res) => {
       query = query.eq('status', status);
     }
 
-    const { data: collaborations, error, count } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
+    const {
+      data: collaborations,
+      error,
+      count,
+    } = await query.range((pageNum - 1) * limitNum, pageNum * limitNum - 1);
 
     if (error) throw error;
 
@@ -38,7 +54,9 @@ export const getCollaborations = async (req, res) => {
     logger.info(`Fetched ${collaborations.length} of ${total} collaborations`);
 
     if (isHtmxRequest(req)) {
-      const collaborationHtml = collaborations.map(collaboration => `
+      const collaborationHtml = collaborations
+        .map(
+          (collaboration) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -57,9 +75,11 @@ export const getCollaborations = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${collaboration.project_id}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              collaboration.status === 'active' ? 'bg-green-100 text-green-800' :
-              collaboration.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-              'bg-red-100 text-red-800'
+              collaboration.status === 'active'
+                ? 'bg-green-100 text-green-800'
+                : collaboration.status === 'pending'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-red-100 text-red-800'
             }">${collaboration.status}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(collaboration.created_at)}</td>
@@ -103,17 +123,36 @@ export const getCollaborations = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'collaborations');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'collaborations'
+      );
       res.send(collaborationHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: collaborations, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: collaborations,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching collaborations:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading collaborations</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading collaborations</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -128,13 +167,15 @@ export const createCollaboration = [
 
       const { data: collaboration, error } = await databaseService.supabase
         .from('collaborations')
-        .insert([{
-          user_id,
-          project_id,
-          role,
-          permissions,
-          status: status || 'pending'
-        }])
+        .insert([
+          {
+            user_id,
+            project_id,
+            role,
+            permissions,
+            status: status || 'pending',
+          },
+        ])
         .select()
         .single();
 
@@ -162,9 +203,11 @@ export const createCollaboration = [
             <td class="px-6 py-4 text-sm text-gray-900">${collaboration.project_id}</td>
             <td class="px-6 py-4">
               <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                collaboration.status === 'active' ? 'bg-green-100 text-green-800' :
-                collaboration.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                'bg-red-100 text-red-800'
+                collaboration.status === 'active'
+                  ? 'bg-green-100 text-green-800'
+                  : collaboration.status === 'pending'
+                    ? 'bg-yellow-100 text-yellow-800'
+                    : 'bg-red-100 text-red-800'
               }">${collaboration.status}</span>
             </td>
             <td class="px-6 py-4 text-sm text-gray-900">${formatDate(collaboration.created_at)}</td>
@@ -250,7 +293,7 @@ export const createCollaboration = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 export const updateCollaboration = [
@@ -268,7 +311,7 @@ export const updateCollaboration = [
           role,
           permissions,
           status,
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
         .eq('id', id)
         .select()
@@ -298,9 +341,11 @@ export const updateCollaboration = [
             <td class="px-6 py-4 text-sm text-gray-900">${collaboration.project_id}</td>
             <td class="px-6 py-4">
               <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                collaboration.status === 'active' ? 'bg-green-100 text-green-800' :
-                collaboration.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                'bg-red-100 text-red-800'
+                collaboration.status === 'active'
+                  ? 'bg-green-100 text-green-800'
+                  : collaboration.status === 'pending'
+                    ? 'bg-yellow-100 text-yellow-800'
+                    : 'bg-red-100 text-red-800'
               }">${collaboration.status}</span>
             </td>
             <td class="px-6 py-4 text-sm text-gray-900">${formatDate(collaboration.created_at)}</td>
@@ -385,7 +430,7 @@ export const updateCollaboration = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 export const deleteCollaboration = [
@@ -395,15 +440,18 @@ export const deleteCollaboration = [
       const { id } = req.params;
 
       // First check if collaboration exists
-      const { data: existingCollaboration, error: fetchError } = await databaseService.supabase
-        .from('collaborations')
-        .select('*')
-        .eq('id', id)
-        .single();
+      const { data: existingCollaboration, error: fetchError } =
+        await databaseService.supabase
+          .from('collaborations')
+          .select('*')
+          .eq('id', id)
+          .single();
 
       if (fetchError) throw fetchError;
       if (!existingCollaboration) {
-        return res.status(404).json({ success: false, error: 'Collaboration not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Collaboration not found' });
       }
 
       const { error } = await databaseService.supabase
@@ -432,7 +480,10 @@ export const deleteCollaboration = [
           </script>
         `);
       } else {
-        res.json({ success: true, message: 'Collaboration deleted successfully' });
+        res.json({
+          success: true,
+          message: 'Collaboration deleted successfully',
+        });
       }
     } catch (error) {
       logger.error('Error deleting collaboration:', error);
@@ -453,7 +504,7 @@ export const deleteCollaboration = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Helper function to generate pagination HTML
@@ -469,7 +520,7 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/${entity}?page=${page-1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/${entity}?page=${page - 1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -504,7 +555,7 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
   </div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/${entity}?page=${page+1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/${entity}?page=${page + 1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

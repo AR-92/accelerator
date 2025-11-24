@@ -20,7 +20,7 @@ export const getHome = async (req, res) => {
         .select('*');
       if (error) throw error;
       totalTodos = allTodos.length;
-      completedTodos = allTodos.filter(todo => todo.completed).length;
+      completedTodos = allTodos.filter((todo) => todo.completed).length;
       pendingTodos = totalTodos - completedTodos;
 
       // Get recent todos (last 5)
@@ -35,7 +35,7 @@ export const getHome = async (req, res) => {
       completedTodos,
       pendingTodos,
       recentTodos,
-      supabaseConnected: isConnected
+      supabaseConnected: isConnected,
     });
   } catch (error) {
     logger.error('Error loading dashboard:', error);
@@ -46,7 +46,7 @@ export const getHome = async (req, res) => {
       pendingTodos: 0,
       recentTodos: [],
       supabaseConnected: false,
-      error: error.message
+      error: error.message,
     });
   }
 };
@@ -71,15 +71,17 @@ export const getTodosTable = async (req, res) => {
       filteredTodos = [...allTodos];
 
       if (search) {
-        filteredTodos = filteredTodos.filter(todo =>
-          todo.title.toLowerCase().includes(search.toLowerCase()) ||
-          (todo.description && todo.description.toLowerCase().includes(search.toLowerCase()))
+        filteredTodos = filteredTodos.filter(
+          (todo) =>
+            todo.title.toLowerCase().includes(search.toLowerCase()) ||
+            (todo.description &&
+              todo.description.toLowerCase().includes(search.toLowerCase()))
         );
       }
       if (status === 'pending') {
-        filteredTodos = filteredTodos.filter(todo => !todo.completed);
+        filteredTodos = filteredTodos.filter((todo) => !todo.completed);
       } else if (status === 'completed') {
-        filteredTodos = filteredTodos.filter(todo => todo.completed);
+        filteredTodos = filteredTodos.filter((todo) => todo.completed);
       }
 
       total = filteredTodos.length;
@@ -112,7 +114,9 @@ export const getTodosTable = async (req, res) => {
       pages.push(i);
     }
 
-    logger.info(`Todos table accessed - page: ${pageNum}, limit: ${limitNum}, total: ${total}, connected: ${isConnected}`);
+    logger.info(
+      `Todos table accessed - page: ${pageNum}, limit: ${limitNum}, total: ${total}, connected: ${isConnected}`
+    );
 
     if (isHtmxRequest(req)) {
       // For HTMX requests, return just the table content
@@ -167,17 +171,25 @@ export const getTodosTable = async (req, res) => {
 
                   <div class="flex items-center gap-2">
                     <nav class="flex items-center gap-1 text-sm">
-        ${hasPrev ? `<a href="?page=${prevPage}&limit=${limitNum}&search=${encodeURIComponent(search || '')}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md font-medium">
+        ${
+          hasPrev
+            ? `<a href="?page=${prevPage}&limit=${limitNum}&search=${encodeURIComponent(search || '')}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md font-medium">
         <svg class="w-4 h-4 lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m15 18-6-6 6-6"></path>
         </svg>
-        </a>` : ''}
-        ${pages.map(page => page === pageNum ? `<span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary text-primary-foreground shadow-lg scale-105 transition-all duration-200 shadow-sm hover:shadow-md font-medium">${page}</span>` : `<a href="?page=${page}&limit=${limitNum}&search=${encodeURIComponent(search || '')}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md font-medium">${page}</a>`).join('')}
-        ${hasNext ? `<a href="?page=${nextPage}&limit=${limitNum}&search=${encodeURIComponent(search || '')}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md" title="Next page">
+        </a>`
+            : ''
+        }
+        ${pages.map((page) => (page === pageNum ? `<span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-primary text-primary-foreground shadow-lg scale-105 transition-all duration-200 shadow-sm hover:shadow-md font-medium">${page}</span>` : `<a href="?page=${page}&limit=${limitNum}&search=${encodeURIComponent(search || '')}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md font-medium">${page}</a>`)).join('')}
+        ${
+          hasNext
+            ? `<a href="?page=${nextPage}&limit=${limitNum}&search=${encodeURIComponent(search || '')}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm hover:shadow-md" title="Next page">
         <svg class="w-4 h-4 lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m9 18 6-6-6-6"></path>
         </svg>
-        </a>` : ''}
+        </a>`
+            : ''
+        }
                     </nav>
                   </div>
                 </div>
@@ -190,11 +202,34 @@ export const getTodosTable = async (req, res) => {
     } else {
       // Full page render
       const columns = [
-        { key: 'title', label: 'Todo', type: 'title', descriptionKey: 'description' },
+        {
+          key: 'title',
+          label: 'Todo',
+          type: 'title',
+          descriptionKey: 'description',
+        },
         { key: 'completed', label: 'Status', type: 'status' },
-        { key: 'priority', label: 'Priority', type: 'text', hidden: true, responsive: 'md:table-cell' },
-        { key: 'created_at', label: 'Created', type: 'date', hidden: true, responsive: 'lg:table-cell' },
-        { key: 'updated_at', label: 'Updated', type: 'date', hidden: true, responsive: 'lg:table-cell' }
+        {
+          key: 'priority',
+          label: 'Priority',
+          type: 'text',
+          hidden: true,
+          responsive: 'md:table-cell',
+        },
+        {
+          key: 'created_at',
+          label: 'Created',
+          type: 'date',
+          hidden: true,
+          responsive: 'lg:table-cell',
+        },
+        {
+          key: 'updated_at',
+          label: 'Updated',
+          type: 'date',
+          hidden: true,
+          responsive: 'lg:table-cell',
+        },
       ];
 
       const actions = [
@@ -202,32 +237,44 @@ export const getTodosTable = async (req, res) => {
           type: 'link',
           url: '/todos',
           label: 'View Details',
-          icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
+          icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>',
         },
         {
           type: 'button',
           onclick: 'editTodo',
           label: 'Edit Todo',
-          icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>'
+          icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>',
         },
         {
           type: 'button',
           onclick: 'toggleStatus',
           label: 'Mark Complete',
-          icon: '<svg class="w-4 h-4 mr-3 lucide lucide-circle-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>'
+          icon: '<svg class="w-4 h-4 mr-3 lucide lucide-circle-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>',
         },
         {
           type: 'delete',
           onclick: 'deleteTodo',
           label: 'Delete',
-          icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>'
-        }
+          icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>',
+        },
       ];
 
       const bulkActions = [
-        { onclick: 'bulkMarkComplete', buttonId: 'bulkCompleteBtn', label: 'Mark Complete' },
-        { onclick: 'bulkMarkPending', buttonId: 'bulkPendingBtn', label: 'Mark Pending' },
-        { onclick: 'bulkDelete', buttonId: 'bulkDeleteBtn', label: 'Delete Selected' }
+        {
+          onclick: 'bulkMarkComplete',
+          buttonId: 'bulkCompleteBtn',
+          label: 'Mark Complete',
+        },
+        {
+          onclick: 'bulkMarkPending',
+          buttonId: 'bulkPendingBtn',
+          label: 'Mark Pending',
+        },
+        {
+          onclick: 'bulkDelete',
+          buttonId: 'bulkDeleteBtn',
+          label: 'Delete Selected',
+        },
       ];
 
       const pagination = {
@@ -241,30 +288,30 @@ export const getTodosTable = async (req, res) => {
         hasNext,
         prevPage,
         nextPage,
-        pages
+        pages,
       };
 
       const colspan = columns.length + 1 + 1; // checkbox + actions
 
-       res.render('todos', {
-         title: 'Todos',
-         tableId: 'todos',
-         entityName: 'todo',
-         showCheckbox: true,
-         showBulkActions: true,
-         columns,
-         data: todos,
-         actions,
-         bulkActions,
-         pagination,
-         query: {
-           search: search || '',
-           status: status || ''
-         },
-         currentUrl: '/todos',
-         colspan,
-         supabaseConnected: isConnected
-       });
+      res.render('todos', {
+        title: 'Todos',
+        tableId: 'todos',
+        entityName: 'todo',
+        showCheckbox: true,
+        showBulkActions: true,
+        columns,
+        data: todos,
+        actions,
+        bulkActions,
+        pagination,
+        query: {
+          search: search || '',
+          status: status || '',
+        },
+        currentUrl: '/todos',
+        colspan,
+        supabaseConnected: isConnected,
+      });
     }
   } catch (error) {
     logger.error('Error loading todos table:', error);
@@ -282,14 +329,14 @@ export const getTodosTable = async (req, res) => {
         hasNext: false,
         prevPage: 0,
         nextPage: 2,
-        pages: []
+        pages: [],
       },
       query: {
         search: '',
-        status: ''
+        status: '',
       },
       supabaseConnected: false,
-      error: error.message
+      error: error.message,
     });
   }
 };

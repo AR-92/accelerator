@@ -13,7 +13,7 @@ export const getSystemHealth = async (req, res) => {
       title: 'System Health',
       currentPage: 'system-health',
       currentSection: 'system',
-      systemMetrics
+      systemMetrics,
     });
   } catch (error) {
     logger.error('Error loading system health:', error);
@@ -31,8 +31,8 @@ export const getSystemHealth = async (req, res) => {
         totalRecords: 0,
         queriesPerMin: 0,
         responseTime: 0,
-        activeConnections: 0
-      }
+        activeConnections: 0,
+      },
     });
   }
 };

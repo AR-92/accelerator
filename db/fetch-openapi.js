@@ -41,10 +41,10 @@ async function fetchOpenAPISpec() {
     const response = await fetch(OPENAPI_ENDPOINT, {
       method: 'GET',
       headers: {
-        'apikey': SUPABASE_KEY,
+        apikey: SUPABASE_KEY,
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
+        Accept: 'application/json',
+      },
     });
 
     if (!response.ok) {
@@ -59,8 +59,9 @@ async function fetchOpenAPISpec() {
 
     console.log('✅ OpenAPI specification saved to openapi.json');
     console.log(`📄 File location: ${outputPath}`);
-    console.log(`📊 API endpoints found: ${Object.keys(data.paths || {}).length}`);
-
+    console.log(
+      `📊 API endpoints found: ${Object.keys(data.paths || {}).length}`
+    );
   } catch (error) {
     console.error('❌ Error fetching OpenAPI specification:', error.message);
     process.exit(1);

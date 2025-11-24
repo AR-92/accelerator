@@ -30,9 +30,7 @@ export const validateProjectCreation = [
 ];
 
 export const validateProjectUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid project ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid project ID'),
 
   body('title')
     .optional()
@@ -55,9 +53,7 @@ export const validateProjectUpdate = [
 ];
 
 export const validateProjectDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid project ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid project ID'),
 
   handleValidationErrors,
 ];

@@ -1,8 +1,12 @@
- import logger from '../../utils/logger.js';
- import { databaseService } from '../../services/index.js';
- import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
- import { getTableConfig } from '../../config/tableFilters.js';
- import { isHtmxRequest } from '../../helpers/http/index.js';
+import logger from '../../utils/logger.js';
+import { databaseService } from '../../services/index.js';
+import {
+  applyTableFilters,
+  getStatusCounts,
+  getFilterCounts,
+} from '../../helpers/tableFilters.js';
+import { getTableConfig } from '../../config/tableFilters.js';
+import { isHtmxRequest } from '../../helpers/http/index.js';
 
 // Learning Content Management
 export const getLearningContent = async (req, res) => {
@@ -10,7 +14,9 @@ export const getLearningContent = async (req, res) => {
     logger.info('Admin learning content page accessed');
 
     const { search = '', status = '', page = 1, limit = 10 } = req.query;
-    logger.info(`Query params: search="${search}", status="${status}", page=${page}, limit=${limit}`);
+    logger.info(
+      `Query params: search="${search}", status="${status}", page=${page}, limit=${limit}`
+    );
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
     const offset = (pageNum - 1) * limitNum;
@@ -35,12 +41,17 @@ export const getLearningContent = async (req, res) => {
       throw error;
     }
 
-    logger.info(`Fetched ${learningContents ? learningContents.length : 0} learning contents, total count: ${count}`);
+    logger.info(
+      `Fetched ${learningContents ? learningContents.length : 0} learning contents, total count: ${count}`
+    );
 
     const total = count || 0;
 
     // Get status counts using the dynamic helper
-    const statusCounts = await getStatusCounts('learning-content', databaseService);
+    const statusCounts = await getStatusCounts(
+      'learning-content',
+      databaseService
+    );
     logger.info(`Status counts: ${JSON.stringify(statusCounts)}`);
     const totalPages = Math.ceil(total / limitNum);
     const start = offset + 1;
@@ -50,7 +61,11 @@ export const getLearningContent = async (req, res) => {
     const prevPage = hasPrev ? pageNum - 1 : null;
     const nextPage = hasNext ? pageNum + 1 : null;
     const pages = [];
-    for (let i = Math.max(1, pageNum - 2); i <= Math.min(totalPages, pageNum + 2); i++) {
+    for (
+      let i = Math.max(1, pageNum - 2);
+      i <= Math.min(totalPages, pageNum + 2);
+      i++
+    ) {
       pages.push(i);
     }
 
@@ -58,24 +73,51 @@ export const getLearningContent = async (req, res) => {
     if (search) filters.push(`search: "${search}"`);
     if (status) filters.push(`status: ${status}`);
     if (pageNum > 1) filters.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${learningContents.length} of ${total} learning contents${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${learningContents.length} of ${total} learning contents${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`
+    );
 
     const columns = [
       { key: 'title', label: 'Title', type: 'text' },
       { key: 'content_type', label: 'Type', type: 'text' },
       { key: 'difficulty_level', label: 'Difficulty', type: 'text' },
       { key: 'status', label: 'Status', type: 'status' },
-      { key: 'created_at', label: 'Created', type: 'date', hidden: true, responsive: 'lg:table-cell' }
+      {
+        key: 'created_at',
+        label: 'Created',
+        type: 'date',
+        hidden: true,
+        responsive: 'lg:table-cell',
+      },
     ];
 
     const actions = [
-      { type: 'link', url: '/admin/other-pages/learning-content', label: 'View Details', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>' },
-      { type: 'button', onclick: 'editLearningContent', label: 'Edit', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>' },
-      { type: 'delete', onclick: 'deleteLearningContent', label: 'Delete', icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>' }
+      {
+        type: 'link',
+        url: '/admin/other-pages/learning-content',
+        label: 'View Details',
+        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>',
+      },
+      {
+        type: 'button',
+        onclick: 'editLearningContent',
+        label: 'Edit',
+        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>',
+      },
+      {
+        type: 'delete',
+        onclick: 'deleteLearningContent',
+        label: 'Delete',
+        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>',
+      },
     ];
 
     const bulkActions = [
-      { onclick: 'bulkDeleteLearningContents', buttonId: 'bulkDeleteBtn', label: 'Delete Selected' }
+      {
+        onclick: 'bulkDeleteLearningContents',
+        buttonId: 'bulkDeleteBtn',
+        label: 'Delete Selected',
+      },
     ];
 
     const pagination = {
@@ -88,10 +130,11 @@ export const getLearningContent = async (req, res) => {
       hasNext,
       prevPage,
       nextPage,
-      pages
+      pages,
     };
 
-    const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
+    const colspan =
+      columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     // Prepare filter counts for template
     const filterCounts = getFilterCounts('learning-content', statusCounts);
@@ -114,8 +157,10 @@ export const getLearningContent = async (req, res) => {
               </th>`;
 
       // Add column headers
-      columns.forEach(column => {
-        const responsiveClass = column.hidden ? ` hidden ${column.responsive}` : '';
+      columns.forEach((column) => {
+        const responsiveClass = column.hidden
+          ? ` hidden ${column.responsive}`
+          : '';
         tableHtml += `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider${responsiveClass} bg-muted">${column.label}</th>`;
       });
 
@@ -131,15 +176,17 @@ export const getLearningContent = async (req, res) => {
 
       // Add table rows
       if (learningContents.length > 0) {
-        learningContents.forEach(content => {
+        learningContents.forEach((content) => {
           tableHtml += `<tr id="learning-content-row-${content.id}" class="h-16 border-b border-border hover:bg-muted/50 even:bg-muted/30 transition-colors duration-150">
             <td class="px-6 py-4">
               <input type="checkbox" class="learningContentCheckbox rounded border-input text-primary value="${content.id}" data-learning-content-id="${content.id}">
             </td>`;
 
           // Add data cells
-          columns.forEach(column => {
-            const responsiveClass = column.hidden ? ` hidden ${column.responsive}` : '';
+          columns.forEach((column) => {
+            const responsiveClass = column.hidden
+              ? ` hidden ${column.responsive}`
+              : '';
             let cellContent = '';
 
             if (column.type === 'status') {
@@ -167,7 +214,7 @@ export const getLearningContent = async (req, res) => {
                 <div id="actionMenu-learning-content-${content.id}" class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-popover rounded-md shadow-lg z-10 border border-border">
                   <div class="py-1">`;
 
-            actions.forEach(action => {
+            actions.forEach((action) => {
               if (action.type === 'link') {
                 tableHtml += `<a href="${action.url}/${content.id}" class="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
                   ${action.icon}
@@ -234,30 +281,30 @@ export const getLearningContent = async (req, res) => {
                   <div class="flex items-center gap-2">
                     <nav class="flex items-center gap-1 text-sm">`;
 
-        // Add pagination buttons
-        if (hasPrev) {
-           tableHtml += `<button hx-get="/admin/table-pages/learning-content?page=${prevPage}" hx-target="#learningContentTableContainer"
+      // Add pagination buttons
+      if (hasPrev) {
+        tableHtml += `<button hx-get="/admin/table-pages/learning-content?page=${prevPage}" hx-target="#learningContentTableContainer"
             class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200 font-medium">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
           </button>`;
-        }
+      }
 
-        pages.forEach(page => {
-          const isActive = page === pageNum;
-           tableHtml += `<button hx-get="/admin/table-pages/learning-content?page=${page}" hx-target="#learningContentTableContainer"
+      pages.forEach((page) => {
+        const isActive = page === pageNum;
+        tableHtml += `<button hx-get="/admin/table-pages/learning-content?page=${page}" hx-target="#learningContentTableContainer"
             class="inline-flex items-center justify-center w-10 h-10 rounded-lg ${isActive ? 'bg-primary text-primary-foreground scale-105' : 'border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground'} transition-all duration-200 font-medium">${page}</button>`;
-        });
+      });
 
-        if (hasNext) {
-           tableHtml += `<button hx-get="/admin/table-pages/learning-content?page=${nextPage}" hx-target="#learningContentTableContainer"
+      if (hasNext) {
+        tableHtml += `<button hx-get="/admin/table-pages/learning-content?page=${nextPage}" hx-target="#learningContentTableContainer"
             class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
           </button>`;
-        }
+      }
 
       tableHtml += `
                     </nav>
@@ -276,7 +323,7 @@ export const getLearningContent = async (req, res) => {
             <span id="selectedCount-learning-content">0 learning contents selected</span>
             <div class="flex gap-2">`;
 
-        bulkActions.forEach(action => {
+        bulkActions.forEach((action) => {
           tableHtml += `<button onclick="${action.onclick}" id="${action.buttonId}-learning-content" class="bg-primary-foreground/20 hover:bg-primary-foreground/30 text-primary-foreground px-3 py-1 rounded text-sm" disabled="">
             ${action.label}
           </button>`;
@@ -308,7 +355,7 @@ export const getLearningContent = async (req, res) => {
         currentUrl: '/admin/table-pages/learning-content',
         colspan,
         filterCounts,
-        tableConfig
+        tableConfig,
       });
     }
   } catch (error) {
@@ -318,9 +365,20 @@ export const getLearningContent = async (req, res) => {
       currentPage: 'learning-content',
       currentSection: 'learning',
       data: [],
-      pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
+      pagination: {
+        currentPage: 1,
+        limit: 10,
+        total: 0,
+        start: 0,
+        end: 0,
+        hasPrev: false,
+        hasNext: false,
+        prevPage: 0,
+        nextPage: 2,
+        pages: [],
+      },
       query: { search: '', status: '' },
-      filterCounts: { all: 0, draft: 0, published: 0, archived: 0 }
+      filterCounts: { all: 0, draft: 0, published: 0, archived: 0 },
     });
   }
 };

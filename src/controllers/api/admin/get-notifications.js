@@ -1,10 +1,13 @@
- import logger from '../../../utils/logger.js';
- import { databaseService } from '../../../services/index.js';
- import { serviceFactory } from '../../../services/serviceFactory.js';
- import { validateNotificationCreation, validateNotificationUpdate, validateNotificationDeletion } from '../../../middleware/validation/index.js';
- import { formatDate } from '../../../helpers/format/index.js';
- import { isHtmxRequest } from '../../../helpers/http/index.js';
-
+import logger from '../../../utils/logger.js';
+import { databaseService } from '../../../services/index.js';
+import { serviceFactory } from '../../../services/serviceFactory.js';
+import {
+  validateNotificationCreation,
+  validateNotificationUpdate,
+  validateNotificationDeletion,
+} from '../../../middleware/validation/index.js';
+import { formatDate } from '../../../helpers/format/index.js';
+import { isHtmxRequest } from '../../../helpers/http/index.js';
 
 // Get all notifications with pagination and filtering
 export const getNotifications = async (req, res) => {
@@ -20,7 +23,11 @@ export const getNotifications = async (req, res) => {
     if (is_read !== undefined) filters.is_read = is_read === 'true';
     if (priority) filters.priority = priority;
 
-    const { data: notifications, count } = await notificationService.getAllNotifications(filters, { page: pageNum, limit: limitNum });
+    const { data: notifications, count } =
+      await notificationService.getAllNotifications(filters, {
+        page: pageNum,
+        limit: limitNum,
+      });
 
     const total = count || 0;
     const filterDescriptions = [];
@@ -29,10 +36,14 @@ export const getNotifications = async (req, res) => {
     if (is_read !== undefined) filterDescriptions.push(`is_read: ${is_read}`);
     if (priority) filterDescriptions.push(`priority: ${priority}`);
     if (pageNum > 1) filterDescriptions.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${notifications.length} of ${total} notifications${filterDescriptions.length ? ` (filtered by ${filterDescriptions.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${notifications.length} of ${total} notifications${filterDescriptions.length ? ` (filtered by ${filterDescriptions.join(', ')})` : ''}`
+    );
 
     if (isHtmxRequest(req)) {
-      const notificationHtml = notifications.map(notif => `
+      const notificationHtml = notifications
+        .map(
+          (notif) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -49,22 +60,29 @@ export const getNotifications = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              notif.type === 'info' ? 'bg-blue-100 text-blue-800' :
-              notif.type === 'warning' ? 'bg-yellow-100 text-yellow-800' :
-              notif.type === 'error' ? 'bg-red-100 text-red-800' :
-              'bg-gray-100 text-gray-800'
+              notif.type === 'info'
+                ? 'bg-blue-100 text-blue-800'
+                : notif.type === 'warning'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : notif.type === 'error'
+                    ? 'bg-red-100 text-red-800'
+                    : 'bg-gray-100 text-gray-800'
             }">${notif.type}</span>
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              notif.priority === 'high' ? 'bg-red-100 text-red-800' :
-              notif.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-              'bg-green-100 text-green-800'
+              notif.priority === 'high'
+                ? 'bg-red-100 text-red-800'
+                : notif.priority === 'medium'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-green-100 text-green-800'
             }">${notif.priority}</span>
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              notif.is_read ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+              notif.is_read
+                ? 'bg-green-100 text-green-800'
+                : 'bg-gray-100 text-gray-800'
             }">${notif.is_read ? 'Read' : 'Unread'}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(notif.created_at)}</td>
@@ -114,17 +132,35 @@ export const getNotifications = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query);
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query
+      );
       res.send(notificationHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: notifications, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: notifications,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching notifications:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading notifications</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading notifications</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -139,7 +175,9 @@ export const getNotification = async (req, res) => {
     const notification = await notificationService.getNotificationById(id);
 
     if (!notification) {
-      return res.status(404).json({ success: false, error: 'Notification not found' });
+      return res
+        .status(404)
+        .json({ success: false, error: 'Notification not found' });
     }
 
     res.json({ success: true, data: notification });
@@ -156,7 +194,8 @@ export const createNotification = [
     try {
       const notificationData = req.body;
       const notificationService = serviceFactory.getNotificationService();
-      const notification = await notificationService.createNotification(notificationData);
+      const notification =
+        await notificationService.createNotification(notificationData);
 
       logger.info(`Created notification with ID: ${notification.id}`);
 
@@ -199,7 +238,7 @@ export const createNotification = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Update notification
@@ -211,10 +250,15 @@ export const updateNotification = [
       const updates = req.body;
 
       const notificationService = serviceFactory.getNotificationService();
-      const notification = await notificationService.updateNotification(id, updates);
+      const notification = await notificationService.updateNotification(
+        id,
+        updates
+      );
 
       if (!notification) {
-        return res.status(404).json({ success: false, error: 'Notification not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Notification not found' });
       }
 
       logger.info(`Updated notification with ID: ${id}`);
@@ -257,7 +301,7 @@ export const updateNotification = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Delete notification
@@ -268,10 +312,13 @@ export const deleteNotification = [
       const { id } = req.params;
 
       const notificationService = serviceFactory.getNotificationService();
-      const existingNotification = await notificationService.getNotificationById(id);
+      const existingNotification =
+        await notificationService.getNotificationById(id);
 
       if (!existingNotification) {
-        return res.status(404).json({ success: false, error: 'Notification not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Notification not found' });
       }
 
       await notificationService.deleteNotification(id);
@@ -296,7 +343,10 @@ export const deleteNotification = [
           </script>
         `);
       } else {
-        res.json({ success: true, message: 'Notification deleted successfully' });
+        res.json({
+          success: true,
+          message: 'Notification deleted successfully',
+        });
       }
     } catch (error) {
       logger.error('Error deleting notification:', error);
@@ -316,7 +366,7 @@ export const deleteNotification = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Helper function to generate pagination HTML
@@ -332,7 +382,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/notifications?page=${page-1}&${params}" hx-target="#notificationsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/notifications?page=${page - 1}&${params}" hx-target="#notificationsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -356,7 +406,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
   html += `</div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/notifications?page=${page+1}&${params}" hx-target="#notificationsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/notifications?page=${page + 1}&${params}" hx-target="#notificationsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

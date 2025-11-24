@@ -1,10 +1,13 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
 import { serviceFactory } from '../../../services/serviceFactory.js';
-import { validateIdeaCreation, validateIdeaUpdate, validateIdeaDeletion } from '../../../middleware/validation/index.js';
+import {
+  validateIdeaCreation,
+  validateIdeaUpdate,
+  validateIdeaDeletion,
+} from '../../../middleware/validation/index.js';
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
-
 
 // Get all ideas with pagination and filtering
 export const getIdeas = async (req, res) => {
@@ -25,9 +28,14 @@ export const getIdeas = async (req, res) => {
 
     if (status) query = query.eq('status', status);
     if (type) query = query.eq('type', type);
-    if (search) query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
+    if (search)
+      query = query.or(`title.ilike.%${search}%,description.ilike.%${search}%`);
 
-    const { data: ideas, error, count } = await query
+    const {
+      data: ideas,
+      error,
+      count,
+    } = await query
       .order('created_at', { ascending: false })
       .range(offset, offset + limitNum - 1);
 
@@ -39,10 +47,14 @@ export const getIdeas = async (req, res) => {
     if (status) filterStrings.push(`status: ${status}`);
     if (type) filterStrings.push(`type: ${type}`);
     if (pageNum > 1) filterStrings.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${ideas.length} of ${total} ideas${filterStrings.length ? ` (filtered by ${filterStrings.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${ideas.length} of ${total} ideas${filterStrings.length ? ` (filtered by ${filterStrings.join(', ')})` : ''}`
+    );
 
     if (isHtmxRequest(req)) {
-      const ideaHtml = ideas.map(idea => `
+      const ideaHtml = ideas
+        .map(
+          (idea) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -62,9 +74,11 @@ export const getIdeas = async (req, res) => {
            </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              idea.status === 'active' ? 'bg-green-100 text-green-800' :
-              idea.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-              'bg-red-100 text-red-800'
+              idea.status === 'active'
+                ? 'bg-green-100 text-green-800'
+                : idea.status === 'pending'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-red-100 text-red-800'
             }">${idea.status}</span>
           </td>
           <td class="px-6 py-4">
@@ -137,12 +151,28 @@ export const getIdeas = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query);
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query
+      );
       res.send(ideaHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: ideas, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: ideas,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching ideas:', error);
@@ -200,7 +230,7 @@ export const createIdea = [
         app: '📱',
         platform: '🌐',
         tool: '🔧',
-        other: '💡'
+        other: '💡',
       };
       ideaData.type_icon = typeIcons[ideaData.type] || '💡';
 
@@ -251,7 +281,7 @@ export const createIdea = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Update idea
@@ -279,7 +309,7 @@ export const updateIdea = [
           app: '📱',
           platform: '🌐',
           tool: '🔧',
-          other: '💡'
+          other: '💡',
         };
         updates.type_icon = typeIcons[updates.type] || '💡';
       }
@@ -288,7 +318,9 @@ export const updateIdea = [
       const idea = await ideaService.updateIdea(id, updates);
 
       if (!idea) {
-        return res.status(404).json({ success: false, error: 'Idea not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Idea not found' });
       }
 
       logger.info(`Updated idea with ID: ${id}`);
@@ -330,7 +362,7 @@ export const updateIdea = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Delete idea
@@ -345,7 +377,9 @@ export const deleteIdea = [
       // Check if idea exists
       const existingIdea = await ideaService.getIdeaById(id);
       if (!existingIdea) {
-        return res.status(404).json({ success: false, error: 'Idea not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Idea not found' });
       }
 
       await ideaService.deleteIdea(id);
@@ -353,7 +387,9 @@ export const deleteIdea = [
       logger.info(`Deleted idea with ID: ${id}`);
 
       if (isHtmxRequest(req)) {
-        res.send(`<div class="success">Idea "${existingIdea.title}" has been deleted!</div>`);
+        res.send(
+          `<div class="success">Idea "${existingIdea.title}" has been deleted!</div>`
+        );
       } else {
         res.json({ success: true, message: 'Idea deleted successfully' });
       }
@@ -375,7 +411,7 @@ export const deleteIdea = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Vote on idea (upvote/downvote)
@@ -385,7 +421,10 @@ export const voteIdea = async (req, res) => {
     const { voteType } = req.body; // 'up' or 'down'
 
     if (!['up', 'down'].includes(voteType)) {
-      return res.status(400).json({ success: false, error: 'Invalid vote type. Must be "up" or "down"' });
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid vote type. Must be "up" or "down"',
+      });
     }
 
     const ideaService = serviceFactory.getIdeaService();
@@ -552,7 +591,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   // Previous button
   if (page > 1) {
-    html += `<button hx-get="/api/ideas?page=${page-1}&${params}" hx-target="#ideasTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Previous page">`;
+    html += `<button hx-get="/api/ideas?page=${page - 1}&${params}" hx-target="#ideasTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Previous page">`;
     html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>`;
     html += `</button>`;
   }
@@ -576,7 +615,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   // Next button
   if (page < totalPages) {
-    html += `<button hx-get="/api/ideas?page=${page+1}&${params}" hx-target="#ideasTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Next page">`;
+    html += `<button hx-get="/api/ideas?page=${page + 1}&${params}" hx-target="#ideasTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Next page">`;
     html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
     html += `</button>`;
   }
@@ -590,7 +629,7 @@ export default function ideasRoutes(app) {
   app.get('/api/ideas', getIdeas);
   app.get('/api/ideas/:id', getIdea);
   app.post('/api/ideas', ...createIdea);
-   app.post('/api/ideas/update', ...updateIdea);
+  app.post('/api/ideas/update', ...updateIdea);
   app.put('/api/ideas/:id/approve', approveIdea);
   app.put('/api/ideas/:id/reject', rejectIdea);
   app.put('/api/ideas/:id/vote', voteIdea);

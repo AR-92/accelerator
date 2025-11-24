@@ -1,7 +1,6 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
 
-
 // Profile Settings API
 export const getProfileSettings = async (req, res) => {
   try {
@@ -19,7 +18,8 @@ export const getProfileSettings = async (req, res) => {
     logger.info(`Fetched profile settings for user ${userId}`);
 
     if (isHtmxRequest(req)) {
-      const settingsHtml = settings ? `
+      const settingsHtml = settings
+        ? `
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Profile Settings</h3>
           <div class="space-y-4">
@@ -37,7 +37,8 @@ export const getProfileSettings = async (req, res) => {
             </div>
           </div>
         </div>
-      ` : '<p class="text-gray-500">Settings not found</p>';
+      `
+        : '<p class="text-gray-500">Settings not found</p>';
       res.send(settingsHtml);
     } else {
       res.json({ success: true, data: settings });
@@ -45,7 +46,9 @@ export const getProfileSettings = async (req, res) => {
   } catch (error) {
     logger.error('Error fetching profile settings:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading profile settings</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading profile settings</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }

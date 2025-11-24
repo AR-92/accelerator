@@ -97,14 +97,17 @@ export const serviceFactory = {
         .single();
       if (error) throw error;
       return data;
-    }
+    },
   }),
   getActivityService: () => ({
     getActivityLogsForAdmin: async (limit) => {
-      const { data, error } = await databaseService.supabase.from('activity_logs').select('*').limit(limit);
+      const { data, error } = await databaseService.supabase
+        .from('activity_logs')
+        .select('*')
+        .limit(limit);
       if (error) throw error;
       return { activities: data, stats: {} };
-    }
+    },
   }),
   getNotificationService: () => ({
     // Add methods as needed
@@ -124,18 +127,20 @@ export const serviceFactory = {
   getLearningService: () => ({
     assessment: {
       getAllLearningAssessments: async (filter, options) => {
-        let query = databaseService.supabase.from('learning_assessments').select('*');
+        let query = databaseService.supabase
+          .from('learning_assessments')
+          .select('*');
         if (options.limit) query = query.limit(options.limit);
         const { data, error } = await query;
         if (error) throw error;
         return { data };
-      }
-    }
+      },
+    },
   }),
   getAccountService: () => ({
     // Add methods as needed
   }),
   getDatabaseTableService: () => ({
     // Add methods as needed
-  })
+  }),
 };

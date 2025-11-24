@@ -4,7 +4,12 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import config from './config/index.js';
 import logger from './utils/logger.js';
-import { corsMiddleware, securityHeaders, rateLimiter, sanitizeInput } from './middleware/security/index.js';
+import {
+  corsMiddleware,
+  securityHeaders,
+  rateLimiter,
+  sanitizeInput,
+} from './middleware/security/index.js';
 import { errorHandler } from './middleware/error/index.js';
 import { handlebarsHelpers } from './helpers/handlebars.js';
 
@@ -35,12 +40,15 @@ app.use((req, res, next) => {
 });
 
 // Configure Handlebars
-app.engine('handlebars', exphbs.engine({
-  defaultLayout: 'main',
-  layoutsDir: __dirname + '/../views/layouts',
-  partialsDir: __dirname + '/../views/partials',
-  helpers: handlebarsHelpers
-}));
+app.engine(
+  'handlebars',
+  exphbs.engine({
+    defaultLayout: 'main',
+    layoutsDir: __dirname + '/../views/layouts',
+    partialsDir: __dirname + '/../views/partials',
+    helpers: handlebarsHelpers,
+  })
+);
 app.set('view engine', 'handlebars');
 app.set('views', __dirname + '/../views');
 
@@ -63,7 +71,7 @@ app.get('/health', (req, res) => {
     status: 'OK',
     timestamp: new Date().toISOString(),
     environment: config.nodeEnv,
-    version: '1.0.0'
+    version: '1.0.0',
   });
 });
 

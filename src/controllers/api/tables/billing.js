@@ -1,10 +1,13 @@
- import logger from '../../../utils/logger.js';
- import { databaseService } from '../../../services/index.js';
- import { serviceFactory } from '../../../services/serviceFactory.js';
- import { validateBillingCreation, validateBillingUpdate, validateBillingDeletion } from '../../../middleware/validation/index.js';
- import { formatDate } from '../../../helpers/format/index.js';
- import { isHtmxRequest } from '../../../helpers/http/index.js';
-
+import logger from '../../../utils/logger.js';
+import { databaseService } from '../../../services/index.js';
+import { serviceFactory } from '../../../services/serviceFactory.js';
+import {
+  validateBillingCreation,
+  validateBillingUpdate,
+  validateBillingDeletion,
+} from '../../../middleware/validation/index.js';
+import { formatDate } from '../../../helpers/format/index.js';
+import { isHtmxRequest } from '../../../helpers/http/index.js';
 
 // Get all billing transactions with pagination and filtering
 export const getBilling = async (req, res) => {
@@ -14,20 +17,25 @@ export const getBilling = async (req, res) => {
     const limitNum = parseInt(limit, 10);
 
     const financialService = serviceFactory.getFinancialService();
-    const { data: transactions, count } = await financialService.billing.getAllBilling(
-      { search, status },
-      { page: pageNum, limit: limitNum }
-    );
+    const { data: transactions, count } =
+      await financialService.billing.getAllBilling(
+        { search, status },
+        { page: pageNum, limit: limitNum }
+      );
 
     const total = count || 0;
     const filters = [];
     if (search) filters.push(`search: "${search}"`);
     if (status) filters.push(`status: ${status}`);
     if (pageNum > 1) filters.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${transactions.length} of ${total} billing transactions${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${transactions.length} of ${total} billing transactions${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`
+    );
 
     if (isHtmxRequest(req)) {
-      const transactionHtml = transactions.map(tx => `
+      const transactionHtml = transactions
+        .map(
+          (tx) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -45,10 +53,13 @@ export const getBilling = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">$${(tx.amount_cents / 100).toFixed(2)}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              tx.status === 'paid' ? 'bg-green-100 text-green-800' :
-              tx.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-              tx.status === 'failed' ? 'bg-red-100 text-red-800' :
-              'bg-gray-100 text-gray-800'
+              tx.status === 'paid'
+                ? 'bg-green-100 text-green-800'
+                : tx.status === 'pending'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : tx.status === 'failed'
+                    ? 'bg-red-100 text-red-800'
+                    : 'bg-gray-100 text-gray-800'
             }">${tx.status}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(tx.created_at)}</td>
@@ -82,17 +93,35 @@ export const getBilling = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query);
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query
+      );
       res.send(transactionHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: transactions, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: transactions,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching billing:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading billing transactions</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading billing transactions</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -111,7 +140,9 @@ export const getBillingTransaction = async (req, res) => {
 
     if (error) throw error;
     if (!transaction) {
-      return res.status(404).json({ success: false, error: 'Billing transaction not found' });
+      return res
+        .status(404)
+        .json({ success: false, error: 'Billing transaction not found' });
     }
 
     res.json({ success: true, data: transaction });
@@ -129,7 +160,8 @@ export const createBilling = [
       const transactionData = req.body;
 
       const financialService = serviceFactory.getFinancialService();
-      const transaction = await financialService.billing.createBilling(transactionData);
+      const transaction =
+        await financialService.billing.createBilling(transactionData);
 
       logger.info(`Created billing transaction with ID: ${transaction.id}`);
 
@@ -172,7 +204,7 @@ export const createBilling = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Update billing transaction
@@ -184,10 +216,15 @@ export const updateBilling = [
       const updates = req.body;
 
       const financialService = serviceFactory.getFinancialService();
-      const transaction = await financialService.billing.updateBilling(id, updates);
+      const transaction = await financialService.billing.updateBilling(
+        id,
+        updates
+      );
 
       if (!transaction) {
-        return res.status(404).json({ success: false, error: 'Billing transaction not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Billing transaction not found' });
       }
 
       logger.info(`Updated billing transaction with ID: ${id}`);
@@ -231,7 +268,7 @@ export const updateBilling = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Delete billing transaction
@@ -244,9 +281,12 @@ export const deleteBilling = [
       const financialService = serviceFactory.getFinancialService();
 
       // Check if transaction exists
-      const existingTransaction = await financialService.billing.getBillingById(id);
+      const existingTransaction =
+        await financialService.billing.getBillingById(id);
       if (!existingTransaction) {
-        return res.status(404).json({ success: false, error: 'Billing transaction not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Billing transaction not found' });
       }
 
       await financialService.billing.deleteBilling(id);
@@ -271,7 +311,10 @@ export const deleteBilling = [
           </script>
         `);
       } else {
-        res.json({ success: true, message: 'Billing transaction deleted successfully' });
+        res.json({
+          success: true,
+          message: 'Billing transaction deleted successfully',
+        });
       }
     } catch (error) {
       logger.error('Error deleting billing transaction:', error);
@@ -291,7 +334,7 @@ export const deleteBilling = [
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // Helper function to generate pagination HTML
@@ -307,7 +350,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   // Previous button
   if (page > 1) {
-    html += `<button hx-get="/api/billing?page=${page-1}&${params}" hx-target="#billingTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Previous page">`;
+    html += `<button hx-get="/api/billing?page=${page - 1}&${params}" hx-target="#billingTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Previous page">`;
     html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>`;
     html += `</button>`;
   }
@@ -331,7 +374,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   // Next button
   if (page < totalPages) {
-    html += `<button hx-get="/api/billing?page=${page+1}&${params}" hx-target="#billingTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Next page">`;
+    html += `<button hx-get="/api/billing?page=${page + 1}&${params}" hx-target="#billingTableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Next page">`;
     html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
     html += `</button>`;
   }

@@ -82,8 +82,11 @@ export const renderTableRowsHtml = (todos) => {
   `);
 
   // Register helpers
-  Object.keys(require('../handlebars.js').handlebarsHelpers).forEach(key => {
-    Handlebars.registerHelper(key, require('../handlebars.js').handlebarsHelpers[key]);
+  Object.keys(require('../handlebars.js').handlebarsHelpers).forEach((key) => {
+    Handlebars.registerHelper(
+      key,
+      require('../handlebars.js').handlebarsHelpers[key]
+    );
   });
 
   return template({ todos });

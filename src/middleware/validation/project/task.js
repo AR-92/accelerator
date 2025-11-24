@@ -34,9 +34,7 @@ export const validateTaskCreation = [
 ];
 
 export const validateTaskUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid task ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid task ID'),
 
   body('title')
     .optional()
@@ -64,9 +62,7 @@ export const validateTaskUpdate = [
 ];
 
 export const validateTaskDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid task ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid task ID'),
 
   handleValidationErrors,
 ];

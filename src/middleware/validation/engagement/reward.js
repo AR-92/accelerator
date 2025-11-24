@@ -33,9 +33,7 @@ export const validateRewardCreation = [
 ];
 
 export const validateRewardUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid reward ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid reward ID'),
 
   body('title')
     .optional()
@@ -68,9 +66,7 @@ export const validateRewardUpdate = [
 ];
 
 export const validateRewardDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid reward ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid reward ID'),
 
   handleValidationErrors,
 ];

@@ -1,8 +1,16 @@
 import { databaseService } from '../../../services/index.js';
 import logger from '../../../utils/logger.js';
-import { validateTodoCreation, validateTodoUpdate, validateTodoDeletion } from '../../../middleware/validation/index.js';
+import {
+  validateTodoCreation,
+  validateTodoUpdate,
+  validateTodoDeletion,
+} from '../../../middleware/validation/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
-import { renderTodoHtml, renderPagination, renderAlertHtml } from '../../../helpers/render/index.js';
+import {
+  renderTodoHtml,
+  renderPagination,
+  renderAlertHtml,
+} from '../../../helpers/render/index.js';
 import { createUser, updateUser, deleteUser } from './users.js';
 
 // Controller functions
@@ -41,20 +49,41 @@ export const getTodos = async (req, res) => {
     if (search) filters.push(`search: "${search}"`);
     if (status) filters.push(`status: ${status}`);
     if (pageNum > 1) filters.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${todos.length} of ${total} todos${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${todos.length} of ${total} todos${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`
+    );
 
     if (isHtmxRequest(req)) {
-      const todoHtml = todos.map(renderTodoHtml).join('') ||
+      const todoHtml =
+        todos.map(renderTodoHtml).join('') ||
         '<div class="flex items-center justify-center py-8"><div class="text-sm text-muted-foreground">No todos yet. Create your first todo above!</div></div>';
-      const paginationHtml = renderPagination(pageNum, limitNum, total, req.query);
+      const paginationHtml = renderPagination(
+        pageNum,
+        limitNum,
+        total,
+        req.query
+      );
       res.send(todoHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: todos, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: todos,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching todos:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500 animate__animated animate__shake">Error loading todos</p>');
+      res
+        .status(500)
+        .send(
+          '<p class="text-red-500 animate__animated animate__shake">Error loading todos</p>'
+        );
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -75,19 +104,29 @@ export const createTodo = [
       logger.info(`Created todo with ID: ${todo.id}`);
 
       if (isHtmxRequest(req)) {
-        res.send(renderAlertHtml('success', `Todo "${todo.title}" created successfully!`, 'plus-circle'));
+        res.send(
+          renderAlertHtml(
+            'success',
+            `Todo "${todo.title}" created successfully!`,
+            'plus-circle'
+          )
+        );
       } else {
         res.status(201).json({ success: true, data: todo });
       }
     } catch (error) {
       logger.error('Error creating todo:', error);
       if (isHtmxRequest(req)) {
-        res.status(500).send(renderAlertHtml('error', `Failed to create todo: ${error.message}`));
+        res
+          .status(500)
+          .send(
+            renderAlertHtml('error', `Failed to create todo: ${error.message}`)
+          );
       } else {
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 export const updateTodo = [
@@ -98,13 +137,16 @@ export const updateTodo = [
       const todoId = parseInt(id, 10);
 
       // Check if todo exists
-      const { data: existingTodo, error: findError } = await databaseService.supabase
-        .from('todos')
-        .select('*')
-        .eq('id', todoId)
-        .single();
+      const { data: existingTodo, error: findError } =
+        await databaseService.supabase
+          .from('todos')
+          .select('*')
+          .eq('id', todoId)
+          .single();
       if (findError || !existingTodo) {
-        return res.status(404).json({ success: false, error: 'Todo not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Todo not found' });
       }
 
       const { title, description } = req.body || {};
@@ -120,18 +162,23 @@ export const updateTodo = [
       if (description !== undefined) updates.description = description;
       if (completed !== undefined) updates.completed = completed;
 
-      const { data: updatedTodo, error: updateError } = await databaseService.supabase
-        .from('todos')
-        .update(updates)
-        .eq('id', todoId)
-        .select()
-        .single();
+      const { data: updatedTodo, error: updateError } =
+        await databaseService.supabase
+          .from('todos')
+          .update(updates)
+          .eq('id', todoId)
+          .select()
+          .single();
       if (updateError) throw updateError;
       logger.info(`Updated todo with ID: ${todoId}`);
 
       if (isHtmxRequest(req)) {
         const todoHtml = renderTodoHtml(updatedTodo);
-        const alertHtml = renderAlertHtml('success', `Todo "${updatedTodo.title}" updated successfully!`, 'edit');
+        const alertHtml = renderAlertHtml(
+          'success',
+          `Todo "${updatedTodo.title}" updated successfully!`,
+          'edit'
+        );
         res.send(alertHtml + todoHtml);
       } else {
         res.json({ success: true, data: updatedTodo });
@@ -139,12 +186,16 @@ export const updateTodo = [
     } catch (error) {
       logger.error('Error updating todo:', error);
       if (isHtmxRequest(req)) {
-        res.status(500).send(renderAlertHtml('error', `Failed to update todo: ${error.message}`));
+        res
+          .status(500)
+          .send(
+            renderAlertHtml('error', `Failed to update todo: ${error.message}`)
+          );
       } else {
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 export const getEditTodo = async (req, res) => {
@@ -212,13 +263,16 @@ export const deleteTodo = [
       const todoId = parseInt(id);
 
       // Check if todo exists
-      const { data: existingTodo, error: findError } = await databaseService.supabase
-        .from('todos')
-        .select('title')
-        .eq('id', todoId)
-        .single();
+      const { data: existingTodo, error: findError } =
+        await databaseService.supabase
+          .from('todos')
+          .select('title')
+          .eq('id', todoId)
+          .single();
       if (findError || !existingTodo) {
-        return res.status(404).json({ success: false, error: 'Todo not found' });
+        return res
+          .status(404)
+          .json({ success: false, error: 'Todo not found' });
       }
 
       const title = existingTodo.title;
@@ -230,19 +284,29 @@ export const deleteTodo = [
       logger.info(`Deleted todo with ID: ${todoId}`);
 
       if (isHtmxRequest(req)) {
-        res.send(renderAlertHtml('error', `Todo "${title}" has been deleted!`, 'trash'));
+        res.send(
+          renderAlertHtml('error', `Todo "${title}" has been deleted!`, 'trash')
+        );
       } else {
         res.json({ success: true, message: 'Todo deleted successfully' });
       }
     } catch (error) {
       logger.error('Error deleting todo:', error);
       if (isHtmxRequest(req)) {
-        res.status(500).send(renderAlertHtml('error', `Failed to delete todo: ${error.message}`, 'circle-alert'));
+        res
+          .status(500)
+          .send(
+            renderAlertHtml(
+              'error',
+              `Failed to delete todo: ${error.message}`,
+              'circle-alert'
+            )
+          );
       } else {
         res.status(500).json({ success: false, error: error.message });
       }
     }
-  }
+  },
 ];
 
 // User CRUD
@@ -278,7 +342,10 @@ export const createIdea = async (req, res) => {
     logger.info(`Created idea with ID: ${data.id}`);
 
     // Return new row HTML
-    const rowHtml = '<tr id="idea-row-' + data.id + '"><td colspan="7">Idea created</td></tr>';
+    const rowHtml =
+      '<tr id="idea-row-' +
+      data.id +
+      '"><td colspan="7">Idea created</td></tr>';
     res.send(rowHtml);
   } catch (error) {
     logger.error('Error creating idea:', error);
@@ -306,7 +373,10 @@ export const updateIdea = async (req, res) => {
     logger.info(`Updated idea with ID: ${id}`);
 
     // Return updated row HTML
-    const rowHtml = '<tr id="idea-row-' + idea.id + '"><td colspan="7">Idea updated</td></tr>';
+    const rowHtml =
+      '<tr id="idea-row-' +
+      idea.id +
+      '"><td colspan="7">Idea updated</td></tr>';
     res.send(rowHtml);
   } catch (error) {
     logger.error('Error updating idea:', error);
@@ -340,14 +410,14 @@ export default function apiRoutes(app) {
   app.put('/api/todos/:id', ...updateTodo);
   app.delete('/api/todos/:id', ...deleteTodo);
 
-   // User routes
-   app.get('/api/users/:id', getUser);
-   app.post('/api/users', createUser);
-   app.put('/api/users/:id', updateUser);
-   app.delete('/api/users/:id', deleteUser);
+  // User routes
+  app.get('/api/users/:id', getUser);
+  app.post('/api/users', createUser);
+  app.put('/api/users/:id', updateUser);
+  app.delete('/api/users/:id', deleteUser);
 
-   // Idea routes
-   app.post('/api/ideas', createIdea);
-   app.put('/api/ideas/:id', updateIdea);
-   app.delete('/api/ideas/:id', deleteIdea);
+  // Idea routes
+  app.post('/api/ideas', createIdea);
+  app.put('/api/ideas/:id', updateIdea);
+  app.delete('/api/ideas/:id', deleteIdea);
 }

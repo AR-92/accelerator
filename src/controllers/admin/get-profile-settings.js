@@ -12,32 +12,32 @@ export const getProfileSettings = async (req, res) => {
         email: 'admin@accelerator.com',
         phone: '+1 (555) 123-4567',
         location: 'New York, NY',
-        bio: 'System administrator with expertise in project management and team coordination.'
+        bio: 'System administrator with expertise in project management and team coordination.',
       },
       privacy: {
         profileVisibility: true,
         activityStatus: true,
-        dataAnalytics: false
+        dataAnalytics: false,
       },
       notifications: {
         emailNotifications: true,
         systemAlerts: true,
         userActivity: true,
         marketingUpdates: false,
-        frequency: 'immediate'
+        frequency: 'immediate',
       },
       appearance: {
         theme: 'light',
         language: 'en',
-        dateFormat: 'mdy'
-      }
+        dateFormat: 'mdy',
+      },
     };
 
     res.render('admin/other-pages/profile-settings', {
       title: 'Profile Settings',
       currentPage: 'profile-settings',
       currentSection: 'main',
-      profileSettings
+      profileSettings,
     });
   } catch (error) {
     logger.error('Error loading profile settings:', error);
@@ -45,7 +45,7 @@ export const getProfileSettings = async (req, res) => {
       title: 'Profile Settings',
       currentPage: 'profile-settings',
       currentSection: 'main',
-      profileSettings: {}
+      profileSettings: {},
     });
   }
 };

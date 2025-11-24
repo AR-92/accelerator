@@ -18,7 +18,9 @@ export const validateContentCreation = [
 
   body('content_type')
     .isIn(['article', 'blog', 'page', 'tutorial', 'documentation'])
-    .withMessage('Content type must be article, blog, page, tutorial, or documentation'),
+    .withMessage(
+      'Content type must be article, blog, page, tutorial, or documentation'
+    ),
 
   body('status')
     .optional()
@@ -39,9 +41,7 @@ export const validateContentCreation = [
 ];
 
 export const validateContentUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid content ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid content ID'),
 
   body('title')
     .optional()
@@ -58,7 +58,9 @@ export const validateContentUpdate = [
   body('content_type')
     .optional()
     .isIn(['article', 'blog', 'page', 'tutorial', 'documentation'])
-    .withMessage('Content type must be article, blog, page, tutorial, or documentation'),
+    .withMessage(
+      'Content type must be article, blog, page, tutorial, or documentation'
+    ),
 
   body('status')
     .optional()
@@ -80,9 +82,7 @@ export const validateContentUpdate = [
 ];
 
 export const validateContentDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid content ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid content ID'),
 
   handleValidationErrors,
 ];

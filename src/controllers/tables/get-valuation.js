@@ -1,8 +1,12 @@
 import logger from '../../utils/logger.js';
- import { databaseService } from '../../services/index.js';
- import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
- import { getTableConfig } from '../../config/tableFilters.js';
- import { isHtmxRequest } from '../../helpers/http/index.js';
+import { databaseService } from '../../services/index.js';
+import {
+  applyTableFilters,
+  getStatusCounts,
+  getFilterCounts,
+} from '../../helpers/tableFilters.js';
+import { getTableConfig } from '../../config/tableFilters.js';
+import { isHtmxRequest } from '../../helpers/http/index.js';
 
 // Valuation Management
 export const getValuation = async (req, res) => {
@@ -34,7 +38,9 @@ export const getValuation = async (req, res) => {
       throw error;
     }
 
-    logger.info(`Fetched ${valuations ? valuations.length : 0} valuations, total count: ${count}`);
+    logger.info(
+      `Fetched ${valuations ? valuations.length : 0} valuations, total count: ${count}`
+    );
 
     const total = count || 0;
     const totalPages = Math.ceil(total / limitNum);
@@ -45,7 +51,11 @@ export const getValuation = async (req, res) => {
     const prevPage = hasPrev ? pageNum - 1 : null;
     const nextPage = hasNext ? pageNum + 1 : null;
     const pages = [];
-    for (let i = Math.max(1, pageNum - 2); i <= Math.min(totalPages, pageNum + 2); i++) {
+    for (
+      let i = Math.max(1, pageNum - 2);
+      i <= Math.min(totalPages, pageNum + 2);
+      i++
+    ) {
       pages.push(i);
     }
 
@@ -53,14 +63,22 @@ export const getValuation = async (req, res) => {
     if (search) filters.push(`search: "${search}"`);
     if (status) filters.push(`status: ${status}`);
     if (pageNum > 1) filters.push(`page: ${pageNum}`);
-    logger.info(`Fetched ${valuations.length} of ${total} valuations${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`);
+    logger.info(
+      `Fetched ${valuations.length} of ${total} valuations${filters.length ? ` (filtered by ${filters.join(', ')})` : ''}`
+    );
 
     const columns = [
       { key: 'valuation_date', label: 'Date', type: 'date' },
       { key: 'valuation_method', label: 'Method', type: 'text' },
       { key: 'enterprise_value', label: 'Enterprise Value', type: 'text' },
       { key: 'equity_value', label: 'Equity Value', type: 'text' },
-      { key: 'created_at', label: 'Created', type: 'date', hidden: true, responsive: 'lg:table-cell' }
+      {
+        key: 'created_at',
+        label: 'Created',
+        type: 'date',
+        hidden: true,
+        responsive: 'lg:table-cell',
+      },
     ];
 
     const actions = [
@@ -68,26 +86,38 @@ export const getValuation = async (req, res) => {
         type: 'link',
         url: '/admin/table-pages/valuation',
         label: 'View Details',
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>'
+        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>',
       },
       {
         type: 'button',
         onclick: 'editValuation',
         label: 'Edit Valuation',
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>'
+        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path></svg>',
       },
       {
         type: 'delete',
         onclick: 'deleteValuation',
         label: 'Delete',
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>'
-      }
+        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path><path d="M3 6h18"></path><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>',
+      },
     ];
 
     const bulkActions = [
-      { onclick: 'bulkCompleteValuations', buttonId: 'bulkCompleteBtn', label: 'Mark as Completed' },
-      { onclick: 'bulkArchiveValuations', buttonId: 'bulkArchiveBtn', label: 'Archive Selected' },
-      { onclick: 'bulkDeleteValuations', buttonId: 'bulkDeleteBtn', label: 'Delete Selected' }
+      {
+        onclick: 'bulkCompleteValuations',
+        buttonId: 'bulkCompleteBtn',
+        label: 'Mark as Completed',
+      },
+      {
+        onclick: 'bulkArchiveValuations',
+        buttonId: 'bulkArchiveBtn',
+        label: 'Archive Selected',
+      },
+      {
+        onclick: 'bulkDeleteValuations',
+        buttonId: 'bulkDeleteBtn',
+        label: 'Delete Selected',
+      },
     ];
 
     const pagination = {
@@ -100,10 +130,11 @@ export const getValuation = async (req, res) => {
       hasNext,
       prevPage,
       nextPage,
-      pages
+      pages,
     };
 
-    const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
+    const colspan =
+      columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
     // Get status counts for filter buttons
     const statusCounts = await getStatusCounts('valuation', databaseService);
@@ -126,13 +157,17 @@ export const getValuation = async (req, res) => {
               <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">
                 <input type="checkbox" id="selectAll-valuation" class="rounded border-input text-primary" aria-label="Select all valuations">
               </th>
-              ${columns.map(col => `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider${col.hidden ? ' hidden ' + col.responsive : ''} bg-muted">${col.label}</th>`).join('')}
+              ${columns.map((col) => `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider${col.hidden ? ' hidden ' + col.responsive : ''} bg-muted">${col.label}</th>`).join('')}
               <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">Actions</th>
             </tr>
           </thead>
           <!-- Table Body -->
           <tbody class="text-sm text-card-foreground">
-            ${valuations.length > 0 ? valuations.map(valuation => `
+            ${
+              valuations.length > 0
+                ? valuations
+                    .map(
+                      (valuation) => `
               <tr id="valuation-row-${valuation.id}" class="h-16 border-b border-border hover:bg-muted/50 even:bg-muted/30 transition-colors duration-150">
                 <td class="px-6 py-4">
                   <input type="checkbox" class="valuationCheckbox rounded border-input text-primary value="${valuation.id}" data-valuation-id="${valuation.id}" aria-label="Select valuation ${valuation.id}">
@@ -176,7 +211,10 @@ export const getValuation = async (req, res) => {
                   </div>
                 </td>
               </tr>
-            `).join('') : `
+            `
+                    )
+                    .join('')
+                : `
               <tr class="h-16">
                 <td colspan="${colspan}" class="px-6 py-8 text-center text-muted-foreground">
                   <div class="flex flex-col items-center justify-center py-12">
@@ -186,7 +224,8 @@ export const getValuation = async (req, res) => {
                   </div>
                 </td>
               </tr>
-            `}
+            `
+            }
           </tbody>
           <!-- Table Footer -->
           <tfoot>
@@ -207,13 +246,21 @@ export const getValuation = async (req, res) => {
                   </div>
                   <div class="flex items-center gap-2">
                     <nav class="flex items-center gap-1 text-sm">
-                      ${hasPrev ? `<a href="?page=${prevPage}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200 font-medium" hx-get="/admin/table-pages/valuation?page=${prevPage}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" hx-target="#valuationTableContainer">
+                      ${
+                        hasPrev
+                          ? `<a href="?page=${prevPage}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200 font-medium" hx-get="/admin/table-pages/valuation?page=${prevPage}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" hx-target="#valuationTableContainer">
                         <svg class="w-4 h-4 lucide lucide-chevron-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                      </a>` : ''}
-                      ${pages.map(p => `<a href="?page=${p}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg${p === pageNum ? ' bg-primary text-primary-foreground scale-105' : ' border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground'} transition-all duration-200 font-medium" hx-get="/admin/table-pages/valuation?page=${p}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" hx-target="#valuationTableContainer">${p}</a>`).join('')}
-                      ${hasNext ? `<a href="?page=${nextPage}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200" hx-get="/admin/table-pages/valuation?page=${nextPage}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" hx-target="#valuationTableContainer" title="Next page">
+                      </a>`
+                          : ''
+                      }
+                      ${pages.map((p) => `<a href="?page=${p}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg${p === pageNum ? ' bg-primary text-primary-foreground scale-105' : ' border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground'} transition-all duration-200 font-medium" hx-get="/admin/table-pages/valuation?page=${p}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" hx-target="#valuationTableContainer">${p}</a>`).join('')}
+                      ${
+                        hasNext
+                          ? `<a href="?page=${nextPage}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200" hx-get="/admin/table-pages/valuation?page=${nextPage}&limit=${limitNum}&search=${search || ''}&status=${status || ''}" hx-target="#valuationTableContainer" title="Next page">
                         <svg class="w-4 h-4 lucide lucide-chevron-right" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                      </a>` : ''}
+                      </a>`
+                          : ''
+                      }
                     </nav>
                   </div>
                 </div>
@@ -244,7 +291,7 @@ export const getValuation = async (req, res) => {
         currentUrl: '/admin/table-pages/valuation',
         colspan,
         filterCounts,
-        tableConfig
+        tableConfig,
       });
     }
   } catch (error) {
@@ -254,8 +301,19 @@ export const getValuation = async (req, res) => {
       currentPage: 'valuation',
       currentSection: 'business',
       data: [],
-      pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
-      query: { search: '', status: '' }
+      pagination: {
+        currentPage: 1,
+        limit: 10,
+        total: 0,
+        start: 0,
+        end: 0,
+        hasPrev: false,
+        hasNext: false,
+        prevPage: 0,
+        nextPage: 2,
+        pages: [],
+      },
+      query: { search: '', status: '' },
     });
   }
 };

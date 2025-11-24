@@ -16,9 +16,7 @@ export const validateCalendarCreation = [
     .isLength({ max: 1000 })
     .withMessage('Description must not exceed 1000 characters'),
 
-  body('event_date')
-    .isISO8601()
-    .withMessage('Event date must be a valid date'),
+  body('event_date').isISO8601().withMessage('Event date must be a valid date'),
 
   body('start_time')
     .optional()
@@ -39,7 +37,9 @@ export const validateCalendarCreation = [
   body('event_type')
     .optional()
     .isIn(['meeting', 'deadline', 'reminder', 'appointment', 'other'])
-    .withMessage('Event type must be meeting, deadline, reminder, appointment, or other'),
+    .withMessage(
+      'Event type must be meeting, deadline, reminder, appointment, or other'
+    ),
 
   body('is_recurring')
     .optional()
@@ -49,7 +49,9 @@ export const validateCalendarCreation = [
   body('recurrence_pattern')
     .optional()
     .isIn(['daily', 'weekly', 'monthly', 'yearly'])
-    .withMessage('Recurrence pattern must be daily, weekly, monthly, or yearly'),
+    .withMessage(
+      'Recurrence pattern must be daily, weekly, monthly, or yearly'
+    ),
 
   body('user_id')
     .optional()
@@ -60,9 +62,7 @@ export const validateCalendarCreation = [
 ];
 
 export const validateCalendarUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid calendar ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid calendar ID'),
 
   body('title')
     .optional()
@@ -100,7 +100,9 @@ export const validateCalendarUpdate = [
   body('event_type')
     .optional()
     .isIn(['meeting', 'deadline', 'reminder', 'appointment', 'other'])
-    .withMessage('Event type must be meeting, deadline, reminder, appointment, or other'),
+    .withMessage(
+      'Event type must be meeting, deadline, reminder, appointment, or other'
+    ),
 
   body('is_recurring')
     .optional()
@@ -110,15 +112,15 @@ export const validateCalendarUpdate = [
   body('recurrence_pattern')
     .optional()
     .isIn(['daily', 'weekly', 'monthly', 'yearly'])
-    .withMessage('Recurrence pattern must be daily, weekly, monthly, or yearly'),
+    .withMessage(
+      'Recurrence pattern must be daily, weekly, monthly, or yearly'
+    ),
 
   handleValidationErrors,
 ];
 
 export const validateCalendarDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid calendar ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid calendar ID'),
 
   handleValidationErrors,
 ];

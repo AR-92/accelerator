@@ -7,26 +7,28 @@ export const getBusiness = async (req, res) => {
     logger.info('Admin business section overview accessed');
 
     // Get business stats
-    const { count: totalModels, error: modelError } = await databaseService.supabase
-      .from('business_model')
-      .select('*', { count: 'exact', head: true });
+    const { count: totalModels, error: modelError } =
+      await databaseService.supabase
+        .from('business_model')
+        .select('*', { count: 'exact', head: true });
     if (modelError) throw modelError;
 
-    const { count: totalPlans, error: planError } = await databaseService.supabase
-      .from('business_plan')
-      .select('*', { count: 'exact', head: true });
+    const { count: totalPlans, error: planError } =
+      await databaseService.supabase
+        .from('business_plan')
+        .select('*', { count: 'exact', head: true });
     if (planError) throw planError;
 
     const stats = {
       totalModels: totalModels || 0,
-      totalPlans: totalPlans || 0
+      totalPlans: totalPlans || 0,
     };
 
     res.render('admin/other-pages/business', {
       title: 'Business Overview',
       currentPage: 'business',
       currentSection: 'business',
-      stats
+      stats,
     });
   } catch (error) {
     logger.error('Error loading business overview:', error);
@@ -34,7 +36,7 @@ export const getBusiness = async (req, res) => {
       title: 'Business Overview',
       currentPage: 'business',
       currentSection: 'business',
-      stats: {}
+      stats: {},
     });
   }
 };

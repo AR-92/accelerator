@@ -10,7 +10,7 @@
     "dev": "concurrently \"npm run build-css\" \"npm run start\"",
     "fetch-openapi": "node db/fetch-openapi.js",
     "lint": "echo \"Linting not configured yet\" && exit 0",
-    "format": "echo \"Formatting not configured yet\" && exit 0"
+    "format": "prettier --write ."
   },
   "repository": {
     "type": "git",
@@ -48,6 +48,7 @@
     "nodemon": "^3.1.11",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
+    "prettier": "^3.6.2",
     "tailwindcss": "^4.1.17"
   }
 }

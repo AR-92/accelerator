@@ -1,11 +1,13 @@
 // Filter functionality for table pages
 function updateFilterActiveState(tableName, activeStatus) {
-  console.log(`Updating filter active state for ${tableName}: ${activeStatus || 'all'}`);
+  console.log(
+    `Updating filter active state for ${tableName}: ${activeStatus || 'all'}`
+  );
 
   // Reset all filter links to inactive state
   const allLinks = document.querySelectorAll('[id^="filter-link-"]');
   console.log(`Found ${allLinks.length} filter links to reset`);
-  allLinks.forEach(link => {
+  allLinks.forEach((link) => {
     console.log(`Resetting ${link.id}`);
     link.classList.remove('text-foreground', 'font-medium');
     link.classList.add('text-muted-foreground');
@@ -19,7 +21,9 @@ function updateFilterActiveState(tableName, activeStatus) {
   });
 
   // Set active state for the current filter
-  const activeId = activeStatus ? `filter-link-${activeStatus}` : 'filter-link-all';
+  const activeId = activeStatus
+    ? `filter-link-${activeStatus}`
+    : 'filter-link-all';
   console.log(`Setting active: ${activeId}`);
   const activeLink = document.getElementById(activeId);
   if (activeLink) {
@@ -47,15 +51,24 @@ function initializeFilterState() {
   const filterButton = document.querySelector('[id^="filter-link-"]');
   if (filterButton) {
     const tableName = filterButton.dataset.table;
-    console.log('Initializing filter state - table:', tableName, 'status:', status || 'all');
+    console.log(
+      'Initializing filter state - table:',
+      tableName,
+      'status:',
+      status || 'all'
+    );
     updateFilterActiveState(tableName, status || '');
   }
 }
 
 // Listen for clicks on filter buttons and update state immediately and after HTMX completes
-document.addEventListener('click', function(evt) {
+document.addEventListener('click', function (evt) {
   const target = evt.target;
-  if (target.id && target.id.startsWith('filter-link-') && target.hasAttribute('hx-get')) {
+  if (
+    target.id &&
+    target.id.startsWith('filter-link-') &&
+    target.hasAttribute('hx-get')
+  ) {
     console.log('Filter button clicked:', target.id);
     const tableName = target.dataset.table;
     const hxGet = target.getAttribute('hx-get');
@@ -65,7 +78,12 @@ document.addEventListener('click', function(evt) {
       try {
         const url = new URL(hxGet, window.location.origin);
         const status = url.searchParams.get('status');
-        console.log('Updating filter state immediately - table:', tableName, 'status:', status || 'all');
+        console.log(
+          'Updating filter state immediately - table:',
+          tableName,
+          'status:',
+          status || 'all'
+        );
         updateFilterActiveState(tableName, status || '');
       } catch (e) {
         console.error('Error parsing hx-get URL:', e);
@@ -83,7 +101,12 @@ document.addEventListener('click', function(evt) {
         try {
           const url = new URL(hxGet, window.location.origin);
           const status = url.searchParams.get('status');
-          console.log('Backup update - table:', tableName, 'status:', status || 'all');
+          console.log(
+            'Backup update - table:',
+            tableName,
+            'status:',
+            status || 'all'
+          );
           updateFilterActiveState(tableName, status || '');
         } catch (e) {
           const buttonStatus = target.id.replace('filter-link-', '');
@@ -96,7 +119,7 @@ document.addEventListener('click', function(evt) {
 });
 
 // Initialize filter functionality when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   console.log('Filters.js loaded');
   initializeFilterState();
 });

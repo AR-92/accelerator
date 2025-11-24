@@ -11,155 +11,155 @@ export {
   validateAccountDeletion,
   validateNotificationCreation,
   validateNotificationUpdate,
-  validateNotificationDeletion
+  validateNotificationDeletion,
 } from './user/user.js';
 
 // Import from engagement domain
 export {
   validateTodoCreation,
   validateTodoUpdate,
-  validateTodoDeletion
+  validateTodoDeletion,
 } from './engagement/todo.js';
 
 export {
   validateVoteCreation,
   validateVoteUpdate,
-  validateVoteDeletion
+  validateVoteDeletion,
 } from './engagement/vote.js';
 
 export {
   validateIdeaCreation,
   validateIdeaUpdate,
-  validateIdeaDeletion
+  validateIdeaDeletion,
 } from './engagement/idea.js';
 
 export {
   validateRewardCreation,
   validateRewardUpdate,
-  validateRewardDeletion
+  validateRewardDeletion,
 } from './engagement/reward.js';
 
 // Import from business domain
 export {
   validateCorporateCreation,
   validateCorporateUpdate,
-  validateCorporateDeletion
+  validateCorporateDeletion,
 } from './business/corporate.js';
 
 export {
   validateEnterpriseCreation,
   validateEnterpriseUpdate,
-  validateEnterpriseDeletion
+  validateEnterpriseDeletion,
 } from './business/enterprise.js';
 
 export {
   validateStartupCreation,
   validateStartupUpdate,
-  validateStartupDeletion
+  validateStartupDeletion,
 } from './business/startup.js';
 
 // Import from content domain
 export {
   validateContentCreation,
   validateContentUpdate,
-  validateContentDeletion
+  validateContentDeletion,
 } from './content/content.js';
 
 export {
   validateLandingPageCreation,
   validateLandingPageUpdate,
-  validateLandingPageDeletion
+  validateLandingPageDeletion,
 } from './content/landing-page.js';
 
 export {
   validateHelpCenterCreation,
   validateHelpCenterUpdate,
-  validateHelpCenterDeletion
+  validateHelpCenterDeletion,
 } from './content/help-center.js';
 
 export {
   validateMessageCreation,
   validateMessageUpdate,
-  validateMessageDeletion
+  validateMessageDeletion,
 } from './content/message.js';
 
 // Import from project domain
 export {
   validateProjectCreation,
   validateProjectUpdate,
-  validateProjectDeletion
+  validateProjectDeletion,
 } from './project/project.js';
 
 export {
   validateTaskCreation,
   validateTaskUpdate,
-  validateTaskDeletion
+  validateTaskDeletion,
 } from './project/task.js';
 
 export {
   validateProjectCollaboratorCreation,
   validateProjectCollaboratorUpdate,
-  validateProjectCollaboratorDeletion
+  validateProjectCollaboratorDeletion,
 } from './project/collaborator.js';
 
 export {
   validateCollaborationCreation,
   validateCollaborationUpdate,
-  validateCollaborationDeletion
+  validateCollaborationDeletion,
 } from './project/collaboration.js';
 
 // Import from learning domain
 export {
   validateLearningContentCreation,
   validateLearningContentUpdate,
-  validateLearningContentDeletion
+  validateLearningContentDeletion,
 } from './learning/content.js';
 
 export {
   validateLearningCategoryCreation,
   validateLearningCategoryUpdate,
-  validateLearningCategoryDeletion
+  validateLearningCategoryDeletion,
 } from './learning/category.js';
 
 export {
   validateLearningAssessmentCreation,
   validateLearningAssessmentUpdate,
-  validateLearningAssessmentDeletion
+  validateLearningAssessmentDeletion,
 } from './learning/assessment.js';
 
 export {
   validateLearningAnalyticsCreation,
   validateLearningAnalyticsUpdate,
-  validateLearningAnalyticsDeletion
+  validateLearningAnalyticsDeletion,
 } from './learning/analytics.js';
 
 // Import from system domain
 export {
   validateCalendarCreation,
   validateCalendarUpdate,
-  validateCalendarDeletion
+  validateCalendarDeletion,
 } from './system/calendar.js';
 
 export {
   validateBusinessModelCreation,
   validateBusinessModelUpdate,
-  validateBusinessModelDeletion
+  validateBusinessModelDeletion,
 } from './system/business-model.js';
 
 export {
   validateBillingCreation,
   validateBillingUpdate,
-  validateBillingDeletion
+  validateBillingDeletion,
 } from './system/billing.js';
 
 export {
   validatePackageCreation,
   validatePackageUpdate,
-  validatePackageDeletion
+  validatePackageDeletion,
 } from './system/package.js';
 
 export {
   validatePortfolioCreation,
   validatePortfolioUpdate,
-  validatePortfolioDeletion
+  validatePortfolioDeletion,
 } from './system/portfolio.js';

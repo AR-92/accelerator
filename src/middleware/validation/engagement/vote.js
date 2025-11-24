@@ -3,13 +3,9 @@ import { handleValidationErrors } from '../common.js';
 
 // Vote validation rules
 export const validateVoteCreation = [
-  body('user_id')
-    .isInt({ min: 1 })
-    .withMessage('Valid user ID is required'),
+  body('user_id').isInt({ min: 1 }).withMessage('Valid user ID is required'),
 
-  body('idea_id')
-    .isInt({ min: 1 })
-    .withMessage('Valid idea ID is required'),
+  body('idea_id').isInt({ min: 1 }).withMessage('Valid idea ID is required'),
 
   body('vote_type')
     .isIn(['up', 'down'])
@@ -19,9 +15,7 @@ export const validateVoteCreation = [
 ];
 
 export const validateVoteUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid vote ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid vote ID'),
 
   body('user_id')
     .optional()
@@ -42,9 +36,7 @@ export const validateVoteUpdate = [
 ];
 
 export const validateVoteDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid vote ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid vote ID'),
 
   handleValidationErrors,
 ];

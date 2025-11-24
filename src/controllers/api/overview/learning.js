@@ -1,11 +1,16 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
 
-
 // Learning Categories API
 export const getLearningCategories = async (req, res) => {
   try {
-    const { search, category_type, is_featured, page = 1, limit = 10 } = req.query;
+    const {
+      search,
+      category_type,
+      is_featured,
+      page = 1,
+      limit = 10,
+    } = req.query;
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
     const offset = (pageNum - 1) * limitNum;
@@ -37,7 +42,9 @@ export const getLearningCategories = async (req, res) => {
     logger.info(`Fetched ${categories.length} of ${total} learning categories`);
 
     if (isHtmxRequest(req)) {
-      const categoryHtml = categories.map(category => `
+      const categoryHtml = categories
+        .map(
+          (category) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -54,14 +61,18 @@ export const getLearningCategories = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              category.category_type === 'general' ? 'bg-blue-100 text-blue-800' :
-              category.category_type === 'specialized' ? 'bg-green-100 text-green-800' :
-              'bg-purple-100 text-purple-800'
+              category.category_type === 'general'
+                ? 'bg-blue-100 text-blue-800'
+                : category.category_type === 'specialized'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-purple-100 text-purple-800'
             }">${category.category_type}</span>
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              category.is_featured ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'
+              category.is_featured
+                ? 'bg-yellow-100 text-yellow-800'
+                : 'bg-gray-100 text-gray-800'
             }">${category.is_featured ? 'Featured' : 'Regular'}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${category.content_count || 0}</td>
@@ -105,17 +116,36 @@ export const getLearningCategories = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'learning-categories');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'learning-categories'
+      );
       res.send(categoryHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: categories, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: categories,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching learning categories:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading learning categories</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading learning categories</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -125,7 +155,15 @@ export const getLearningCategories = async (req, res) => {
 // Learning Content API
 export const getLearningContent = async (req, res) => {
   try {
-    const { search, content_type, difficulty_level, status, category_id, page = 1, limit = 10 } = req.query;
+    const {
+      search,
+      content_type,
+      difficulty_level,
+      status,
+      category_id,
+      page = 1,
+      limit = 10,
+    } = req.query;
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
     const offset = (pageNum - 1) * limitNum;
@@ -135,7 +173,9 @@ export const getLearningContent = async (req, res) => {
       .select('*', { count: 'exact' });
 
     if (search) {
-      query = query.or(`title.ilike.%${search}%,excerpt.ilike.%${search}%,content.ilike.%${search}%`);
+      query = query.or(
+        `title.ilike.%${search}%,excerpt.ilike.%${search}%,content.ilike.%${search}%`
+      );
     }
     if (content_type) {
       query = query.eq('content_type', content_type);
@@ -162,7 +202,9 @@ export const getLearningContent = async (req, res) => {
     logger.info(`Fetched ${content.length} of ${total} learning content items`);
 
     if (isHtmxRequest(req)) {
-      const contentHtml = content.map(item => `
+      const contentHtml = content
+        .map(
+          (item) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -179,25 +221,33 @@ export const getLearningContent = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              item.content_type === 'article' ? 'bg-blue-100 text-blue-800' :
-              item.content_type === 'video' ? 'bg-red-100 text-red-800' :
-              item.content_type === 'interactive' ? 'bg-green-100 text-green-800' :
-              'bg-purple-100 text-purple-800'
+              item.content_type === 'article'
+                ? 'bg-blue-100 text-blue-800'
+                : item.content_type === 'video'
+                  ? 'bg-red-100 text-red-800'
+                  : item.content_type === 'interactive'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-purple-100 text-purple-800'
             }">${item.content_type}</span>
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              item.difficulty_level === 'beginner' ? 'bg-green-100 text-green-800' :
-              item.difficulty_level === 'intermediate' ? 'bg-yellow-100 text-yellow-800' :
-              item.difficulty_level === 'advanced' ? 'bg-red-100 text-red-800' :
-              'bg-gray-100 text-gray-800'
+              item.difficulty_level === 'beginner'
+                ? 'bg-green-100 text-green-800'
+                : item.difficulty_level === 'intermediate'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : item.difficulty_level === 'advanced'
+                    ? 'bg-red-100 text-red-800'
+                    : 'bg-gray-100 text-gray-800'
             }">${item.difficulty_level}</span>
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              item.status === 'published' ? 'bg-green-100 text-green-800' :
-              item.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
-              'bg-red-100 text-red-800'
+              item.status === 'published'
+                ? 'bg-green-100 text-green-800'
+                : item.status === 'draft'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : 'bg-red-100 text-red-800'
             }">${item.status}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${item.view_count || 0}</td>
@@ -249,17 +299,36 @@ export const getLearningContent = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'learning-content');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'learning-content'
+      );
       res.send(contentHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: content, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: content,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching learning content:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading learning content</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading learning content</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -269,7 +338,14 @@ export const getLearningContent = async (req, res) => {
 // Learning Assessments API
 export const getLearningAssessments = async (req, res) => {
   try {
-    const { search, assessment_type, difficulty_level, is_active, page = 1, limit = 10 } = req.query;
+    const {
+      search,
+      assessment_type,
+      difficulty_level,
+      is_active,
+      page = 1,
+      limit = 10,
+    } = req.query;
     const pageNum = parseInt(page, 10);
     const limitNum = parseInt(limit, 10);
     const offset = (pageNum - 1) * limitNum;
@@ -300,10 +376,14 @@ export const getLearningAssessments = async (req, res) => {
     if (error) throw error;
 
     const total = count || 0;
-    logger.info(`Fetched ${assessments.length} of ${total} learning assessments`);
+    logger.info(
+      `Fetched ${assessments.length} of ${total} learning assessments`
+    );
 
     if (isHtmxRequest(req)) {
-      const assessmentHtml = assessments.map(assessment => `
+      const assessmentHtml = assessments
+        .map(
+          (assessment) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4">
             <div class="flex items-center">
@@ -320,24 +400,31 @@ export const getLearningAssessments = async (req, res) => {
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              assessment.assessment_type === 'quiz' ? 'bg-blue-100 text-blue-800' :
-              assessment.assessment_type === 'exam' ? 'bg-red-100 text-red-800' :
-              'bg-purple-100 text-purple-800'
+              assessment.assessment_type === 'quiz'
+                ? 'bg-blue-100 text-blue-800'
+                : assessment.assessment_type === 'exam'
+                  ? 'bg-red-100 text-red-800'
+                  : 'bg-purple-100 text-purple-800'
             }">${assessment.assessment_type}</span>
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              assessment.difficulty_level === 'beginner' ? 'bg-green-100 text-green-800' :
-              assessment.difficulty_level === 'intermediate' ? 'bg-yellow-100 text-yellow-800' :
-              assessment.difficulty_level === 'advanced' ? 'bg-red-100 text-red-800' :
-              'bg-gray-100 text-gray-800'
+              assessment.difficulty_level === 'beginner'
+                ? 'bg-green-100 text-green-800'
+                : assessment.difficulty_level === 'intermediate'
+                  ? 'bg-yellow-100 text-yellow-800'
+                  : assessment.difficulty_level === 'advanced'
+                    ? 'bg-red-100 text-red-800'
+                    : 'bg-gray-100 text-gray-800'
             }">${assessment.difficulty_level}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${assessment.passing_score}%</td>
           <td class="px-6 py-4 text-sm text-gray-900">${assessment.max_attempts || 'Unlimited'}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              assessment.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+              assessment.is_active
+                ? 'bg-green-100 text-green-800'
+                : 'bg-red-100 text-red-800'
             }">${assessment.is_active ? 'Active' : 'Inactive'}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(assessment.created_at)}</td>
@@ -381,17 +468,36 @@ export const getLearningAssessments = async (req, res) => {
             </div>
           </td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'learning-assessments');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'learning-assessments'
+      );
       res.send(assessmentHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: assessments, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: assessments,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching learning assessments:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading learning assessments</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading learning assessments</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -429,19 +535,26 @@ export const getLearningAnalytics = async (req, res) => {
     if (error) throw error;
 
     const total = count || 0;
-    logger.info(`Fetched ${analytics.length} of ${total} learning analytics records`);
+    logger.info(
+      `Fetched ${analytics.length} of ${total} learning analytics records`
+    );
 
     if (isHtmxRequest(req)) {
-      const analyticsHtml = analytics.map(record => `
+      const analyticsHtml = analytics
+        .map(
+          (record) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4 text-sm text-gray-900">${record.user_id}</td>
           <td class="px-6 py-4 text-sm text-gray-900">${record.content_id}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              record.event_type === 'view' ? 'bg-blue-100 text-blue-800' :
-              record.event_type === 'complete' ? 'bg-green-100 text-green-800' :
-              record.event_type === 'start' ? 'bg-yellow-100 text-yellow-800' :
-              'bg-purple-100 text-purple-800'
+              record.event_type === 'view'
+                ? 'bg-blue-100 text-blue-800'
+                : record.event_type === 'complete'
+                  ? 'bg-green-100 text-green-800'
+                  : record.event_type === 'start'
+                    ? 'bg-yellow-100 text-yellow-800'
+                    : 'bg-purple-100 text-purple-800'
             }">${record.event_type}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${record.session_duration_seconds || 0}s</td>
@@ -449,17 +562,36 @@ export const getLearningAnalytics = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${record.country || 'N/A'}</td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(record.created_at)}</td>
         </tr>
-      `).join('');
+      `
+        )
+        .join('');
 
-      const paginationHtml = generatePaginationHtml(pageNum, limitNum, total, req.query, 'learning-analytics');
+      const paginationHtml = generatePaginationHtml(
+        pageNum,
+        limitNum,
+        total,
+        req.query,
+        'learning-analytics'
+      );
       res.send(analyticsHtml + paginationHtml);
     } else {
-      res.json({ success: true, data: analytics, pagination: { page: pageNum, limit: limitNum, total, totalPages: Math.ceil(total / limitNum) } });
+      res.json({
+        success: true,
+        data: analytics,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          total,
+          totalPages: Math.ceil(total / limitNum),
+        },
+      });
     }
   } catch (error) {
     logger.error('Error fetching learning analytics:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading learning analytics</p>');
+      res
+        .status(500)
+        .send('<p class="text-red-500">Error loading learning analytics</p>');
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -472,13 +604,13 @@ const generatePaginationHtml = (page, limit, total, query, endpoint) => {
   if (totalPages <= 1) return '';
 
   const params = Object.keys(query)
-    .filter(key => key !== 'page')
-    .map(key => `${key}=${encodeURIComponent(query[key])}`)
+    .filter((key) => key !== 'page')
+    .map((key) => `${key}=${encodeURIComponent(query[key])}`)
     .join('&');
 
   let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
   if (page > 1) {
-    html += `<button hx-get="/api/${endpoint}?page=${page-1}&${params}" hx-target="#${endpoint.replace('-', '')}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
+    html += `<button hx-get="/api/${endpoint}?page=${page - 1}&${params}" hx-target="#${endpoint.replace('-', '')}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {
   }
 
@@ -502,7 +634,7 @@ const generatePaginationHtml = (page, limit, total, query, endpoint) => {
   html += `</div>`;
 
   if (page < totalPages) {
-    html += `<button hx-get="/api/${endpoint}?page=${page+1}&${params}" hx-target="#${endpoint.replace('-', '')}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
+    html += `<button hx-get="/api/${endpoint}?page=${page + 1}&${params}" hx-target="#${endpoint.replace('-', '')}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>/button>`;
   } else {
   }
   html += `</div>`;

@@ -34,9 +34,7 @@ export const validateMessageCreation = [
 ];
 
 export const validateMessageUpdate = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid message ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid message ID'),
 
   body('subject')
     .optional()
@@ -59,9 +57,7 @@ export const validateMessageUpdate = [
 ];
 
 export const validateMessageDeletion = [
-  param('id')
-    .isInt({ min: 1 })
-    .withMessage('Invalid message ID'),
+  param('id').isInt({ min: 1 }).withMessage('Invalid message ID'),
 
   handleValidationErrors,
 ];
