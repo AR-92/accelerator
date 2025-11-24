@@ -1,6 +1,8 @@
-import logger from '../../utils/logger.js';
-import databaseService from '../../services/supabase.js';
-import { isHtmxRequest } from '../../helpers/http/index.js';
+ import logger from '../../utils/logger.js';
+ import databaseService from '../../services/supabase.js';
+ import { isHtmxRequest } from '../../helpers/http/index.js';
+ import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
+ import { getTableConfig } from '../../config/tableFilters.js';
 
 // Users Management
 export const getUsers = async (req, res) => {
@@ -17,14 +19,8 @@ export const getUsers = async (req, res) => {
       .from('Accounts')
       .select('*', { count: 'exact' });
 
-    if (search) {
-      query = query.or(`display_name.ilike.%${search}%,username.ilike.%${search}%`);
-    }
-    if (status === 'active') {
-      query = query.eq('is_verified', true);
-    } else if (status === 'inactive') {
-      query = query.eq('is_verified', false);
-    }
+    // Apply dynamic filters
+    query = applyTableFilters(query, 'users', req.query);
 
     // Apply pagination
     query = query
@@ -124,6 +120,17 @@ export const getUsers = async (req, res) => {
     };
 
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
+
+    // Get status counts for filter buttons
+    const statusCounts = await getStatusCounts('users', databaseService);
+    const filterCounts = getFilterCounts('users', statusCounts);
+    const tableConfig = getTableConfig('users');
+
+    // Make variables available to layout for filter-nav
+    res.locals.tableConfig = tableConfig;
+    res.locals.filterCounts = filterCounts;
+    res.locals.currentPage = 'users';
+    res.locals.query = { search: search || '', status: status || '' };
 
     if (isHtmxRequest(req)) {
       // For HTMX requests, render just the table HTML
@@ -237,6 +244,8 @@ export const getUsers = async (req, res) => {
             </tr>
           </tfoot>
         </table>
+
+
       `;
       res.send(tableHtml);
     } else {
@@ -256,7 +265,9 @@ export const getUsers = async (req, res) => {
         pagination,
         query: { search: search || '', status: status || '' },
         currentUrl: '/admin/table-pages/users',
-        colspan
+        colspan,
+        filterCounts,
+        tableConfig
       });
     }
   } catch (error) {

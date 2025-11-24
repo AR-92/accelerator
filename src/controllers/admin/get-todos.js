@@ -1,5 +1,7 @@
-import logger from '../../utils/logger.js';
-import { databaseService } from '../../services/index.js';
+ import logger from '../../utils/logger.js';
+ import { databaseService } from '../../services/index.js';
+ import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
+ import { getTableConfig } from '../../config/tableFilters.js';
 
 // Todos Management
 export const getTodos = async (req, res) => {
@@ -16,16 +18,8 @@ export const getTodos = async (req, res) => {
       .from('todos')
       .select('*', { count: 'exact' });
 
-    if (search && search.trim()) {
-      query = query.or(`title.ilike.%${search.trim()}%,description.ilike.%${search.trim()}%`);
-    }
-    if (status && status.trim()) {
-      if (status === 'completed') {
-        query = query.eq('completed', true);
-      } else if (status === 'pending') {
-        query = query.eq('completed', false);
-      }
-    }
+    // Apply dynamic filters
+    query = applyTableFilters(query, 'todos', req.query);
 
     // Apply pagination
     query = query
@@ -111,6 +105,17 @@ export const getTodos = async (req, res) => {
 
     const colspan = columns.length + 1 + 1; // checkbox + actions
 
+    // Get status counts for filter buttons
+    const statusCounts = await getStatusCounts('todos', databaseService);
+    const filterCounts = getFilterCounts('todos', statusCounts);
+    const tableConfig = getTableConfig('todos');
+
+    // Make variables available to layout for filter-nav
+    res.locals.tableConfig = tableConfig;
+    res.locals.filterCounts = filterCounts;
+    res.locals.currentPage = 'todos';
+    res.locals.query = { search: search || '', status: status || '' };
+
     res.render('admin/table-pages/todos', {
       title: 'Todos Management',
       currentPage: 'todos',
@@ -123,12 +128,14 @@ export const getTodos = async (req, res) => {
       columns,
       data: todos,
       actions,
-       bulkActions,
-       pagination,
-       query: { search: search || '', status: status || '' },
-       currentUrl: '/admin/table-pages/todos',
-      colspan,
-      supabaseConnected: isConnected
+        bulkActions,
+        pagination,
+        query: { search: search || '', status: status || '' },
+        currentUrl: '/admin/table-pages/todos',
+       colspan,
+       supabaseConnected: isConnected,
+       filterCounts,
+       tableConfig
     });
   } catch (error) {
     logger.error('Error loading todos:', error);

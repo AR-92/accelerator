@@ -1,33 +1,58 @@
 import logger from '../../utils/logger.js';
-import { databaseService } from '../../services/index.js';
+ import { databaseService } from '../../services/index.js';
+ import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
+ import { getTableConfig } from '../../config/tableFilters.js';
+ import { isHtmxRequest } from '../../helpers/http/index.js';
 
 // Collaborations Management
 export const getCollaborations = async (req, res) => {
   try {
     logger.info('Admin collaborations page accessed');
 
-    // Fetch real data from Supabase collaborations table
-    const { data: collaborations, error } = await databaseService.supabase
+    const { search = '', status = '', page = 1, limit = 10 } = req.query;
+    logger.info(`Query params: search="${search}", status="${status}", page=${page}, limit=${limit}`);
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+    const offset = (pageNum - 1) * limitNum;
+
+    // Build Supabase query with filters
+    let query = databaseService.supabase
       .from('collaborations')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .select('*', { count: 'exact' });
+
+    // Apply dynamic filters
+    query = applyTableFilters(query, 'collaborations', req.query);
+
+    // Apply pagination
+    query = query
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limitNum - 1);
+
+    const { data: collaborations, error, count } = await query;
 
     if (error) {
       logger.error('Error fetching collaborations:', error);
       throw error;
     }
 
-    let filteredCollaborations = collaborations;
+    logger.info(`Fetched ${collaborations ? collaborations.length : 0} collaborations, total count: ${count}`);
 
-    if (req.query.search) {
-      const search = req.query.search.toLowerCase();
-      filteredCollaborations = collaborations.filter(collab => {
-        return (collab.name && collab.name.toLowerCase().includes(search)) ||
-               (collab.description && collab.description.toLowerCase().includes(search)) ||
-               (collab.members_count && collab.members_count.toString().toLowerCase().includes(search)) ||
-               (collab.status && collab.status.toLowerCase().includes(search));
-      });
+    const total = count || 0;
+    const totalPages = Math.ceil(total / limitNum);
+    const start = offset + 1;
+    const end = Math.min(offset + limitNum, total);
+    const hasPrev = pageNum > 1;
+    const hasNext = pageNum < totalPages;
+    const prevPage = hasPrev ? pageNum - 1 : null;
+    const nextPage = hasNext ? pageNum + 1 : null;
+    const pages = [];
+    for (let i = Math.max(1, pageNum - 2); i <= Math.min(totalPages, pageNum + 2); i++) {
+      pages.push(i);
     }
+
+    // Get status counts using the dynamic helper
+    const statusCounts = await getStatusCounts('collaborations', databaseService);
+    logger.info(`Status counts: ${JSON.stringify(statusCounts)}`);
 
     const columns = [
       { key: 'name', label: 'Name', type: 'text' },
@@ -70,38 +95,232 @@ export const getCollaborations = async (req, res) => {
     ];
 
     const pagination = {
-      currentPage: 1,
-      limit: 10,
-      total: filteredCollaborations.length,
-      start: 1,
-      end: filteredCollaborations.length,
-      hasPrev: false,
-      hasNext: false,
-      prevPage: 0,
-      nextPage: 2,
-      pages: [1]
+      currentPage: pageNum,
+      limit: limitNum,
+      total,
+      start,
+      end,
+      hasPrev,
+      hasNext,
+      prevPage,
+      nextPage,
+      pages
     };
 
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/table-pages/collaborations', {
-      title: 'Collaborations Management',
-      currentPage: 'collaborations',
-      currentSection: 'main',
-      isTablePage: true,
-      tableId: 'collaborations',
-      entityName: 'collaboration',
-      showCheckbox: true,
-      showBulkActions: true,
-      columns,
-      data: filteredCollaborations,
-      actions,
-      bulkActions,
-      pagination,
-      query: { search: req.query.search || '', status: '' },
-      currentUrl: '/admin/table-pages/collaborations',
-      colspan
-    });
+    // Prepare filter counts for template
+    const filterCounts = getFilterCounts('collaborations', statusCounts);
+    const tableConfig = getTableConfig('collaborations');
+
+    // Make variables available to layout for filter-nav
+    res.locals.tableConfig = tableConfig;
+    res.locals.filterCounts = filterCounts;
+    res.locals.currentPage = 'collaborations';
+    res.locals.query = { search: search || '', status: status || '' };
+
+    if (isHtmxRequest(req)) {
+      // Generate table HTML for HTMX requests
+      let tableHtml = `
+        <table class="min-w-full table-auto bg-card">
+          <thead class="bg-card border-b border-border">
+            <tr>
+              <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">
+                <input type="checkbox" id="selectAll-collaborations" class="rounded border-input text-primary">
+              </th>`;
+
+      // Add column headers
+      columns.forEach(column => {
+        tableHtml += `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">${column.label}</th>`;
+      });
+
+      // Add actions header
+      if (actions.length > 0) {
+        tableHtml += `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">Actions</th>`;
+      }
+
+      tableHtml += `
+            </tr>
+          </thead>
+          <tbody class="text-sm text-card-foreground">`;
+
+      // Add table rows
+      if (collaborations.length > 0) {
+        collaborations.forEach(collaboration => {
+          tableHtml += `<tr id="collaborations-row-${collaboration.id}" class="h-16 border-b border-border hover:bg-muted/50 even:bg-muted/30 transition-colors duration-150">
+            <td class="px-6 py-4">
+              <input type="checkbox" class="collaborationsCheckbox rounded border-input text-primary value="${collaboration.id}" data-collaboration-id="${collaboration.id}">
+            </td>`;
+
+          // Add data cells
+          columns.forEach(column => {
+            let cellContent = '';
+
+            if (column.type === 'status') {
+              cellContent = `<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${collaboration.status === 'active' ? 'bg-green-100 text-green-800' : collaboration.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : collaboration.status === 'completed' ? 'bg-blue-100 text-blue-800' : collaboration.status === 'cancelled' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}">${collaboration[column.key]}</span>`;
+            } else if (column.type === 'date') {
+              cellContent = `<div class="text-sm text-card-foreground">${new Date(collaboration[column.key]).toLocaleDateString()}</div>`;
+            } else {
+              cellContent = `<div class="text-sm text-card-foreground truncate max-w-xs" title="${collaboration[column.key]}">${collaboration[column.key]}</div>`;
+            }
+
+            tableHtml += `<td class="px-6 py-4">${cellContent}</td>`;
+          });
+
+          // Add actions cell
+          if (actions.length > 0) {
+            tableHtml += `<td class="px-6 py-4">
+              <div class="relative">
+                <button onclick="toggleActionMenu('collaborations', ${collaboration.id})" class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="12" cy="5" r="1"></circle>
+                    <circle cx="12" cy="19" r="1"></circle>
+                  </svg>
+                </button>
+                <div id="actionMenu-collaborations-${collaboration.id}" class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-popover rounded-md shadow-lg z-10 border border-border">
+                  <div class="py-1">`;
+
+            actions.forEach(action => {
+              if (action.type === 'link') {
+                tableHtml += `<a href="${action.url}/${collaboration.id}" class="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                  ${action.icon}
+                  ${action.label}
+                </a>`;
+              } else if (action.type === 'button') {
+                tableHtml += `<button onclick="${action.onclick}(${collaboration.id})" class="flex items-center w-full px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                  ${action.icon}
+                  ${action.label}
+                </button>`;
+              }
+            });
+
+            tableHtml += `
+                  </div>
+                </div>
+              </div>
+            </td>`;
+          }
+
+          tableHtml += `</tr>`;
+        });
+      } else {
+        // Empty state
+        tableHtml += `<tr class="h-16">
+          <td colspan="${colspan}" class="px-6 py-8 text-center text-muted-foreground">
+            <div class="flex flex-col items-center justify-center py-12">
+              <svg class="w-16 h-16 text-muted-foreground/50 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+              <p class="text-lg font-medium text-muted-foreground mb-2">No collaborations found</p>
+              <p class="text-sm text-muted-foreground/70">Collaborations will appear here.</p>
+            </div>
+          </td>
+        </tr>`;
+      }
+
+      tableHtml += `
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="${colspan}" class="bg-card border-t border-border p-4">
+                <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div class="text-sm text-muted-foreground">
+                    Showing ${start}-${end} of ${total} collaborations
+                  </div>
+
+                  <div class="flex items-center gap-3">
+                    <span class="text-sm text-muted-foreground font-medium">Rows per page:</span>
+                      <select id="rowsPerPage-collaborations" name="limit" class="border border-input rounded-lg px-3 py-2 text-sm bg-background shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                        hx-get="/admin/table-pages/collaborations" hx-target="#collaborationsTableContainer" hx-vals="js:{limit: document.getElementById('rowsPerPage-collaborations').value}">
+                      <option value="10" ${limitNum === 10 ? 'selected' : ''}>10</option>
+                      <option value="20" ${limitNum === 20 ? 'selected' : ''}>20</option>
+                      <option value="50" ${limitNum === 50 ? 'selected' : ''}>50</option>
+                      <option value="100" ${limitNum === 100 ? 'selected' : ''}>100</option>
+                    </select>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <nav class="flex items-center gap-1 text-sm">`;
+
+      // Add pagination buttons
+      if (hasPrev) {
+        tableHtml += `<button hx-get="/admin/table-pages/collaborations?page=${prevPage}" hx-target="#collaborationsTableContainer"
+          class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200 font-medium">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>`;
+      }
+
+      pages.forEach(page => {
+        const isActive = page === pageNum;
+        tableHtml += `<button hx-get="/admin/table-pages/collaborations?page=${page}" hx-target="#collaborationsTableContainer"
+          class="inline-flex items-center justify-center w-10 h-10 rounded-lg ${isActive ? 'bg-primary text-primary-foreground scale-105' : 'border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground'} transition-all duration-200 font-medium">${page}</button>`;
+      });
+
+      if (hasNext) {
+        tableHtml += `<button hx-get="/admin/table-pages/collaborations?page=${nextPage}" hx-target="#collaborationsTableContainer"
+          class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>`;
+      }
+
+      tableHtml += `
+                    </nav>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>`;
+
+      // Add bulk actions if enabled
+      if (true && bulkActions.length > 0) {
+        tableHtml += `
+        <div id="bulkActions-collaborations" class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-6 py-3 rounded-full z-30" style="display: none;">
+          <div class="flex items-center gap-4">
+            <span id="selectedCount-collaborations">0 collaborations selected</span>
+            <div class="flex gap-2">`;
+
+        bulkActions.forEach(action => {
+          tableHtml += `<button onclick="${action.onclick}" id="${action.buttonId}-collaborations" class="bg-primary-foreground/20 hover:bg-primary-foreground/30 text-primary-foreground px-3 py-1 rounded text-sm" disabled="">
+            ${action.label}
+          </button>`;
+        });
+
+        tableHtml += `
+            </div>
+          </div>
+        </div>`;
+      }
+
+      res.send(tableHtml);
+    } else {
+      res.render('admin/table-pages/collaborations', {
+        title: 'Collaborations Management',
+        currentPage: 'collaborations',
+        currentSection: 'main',
+        isTablePage: true,
+        tableId: 'collaborations',
+        entityName: 'collaboration',
+        showCheckbox: true,
+        showBulkActions: true,
+        columns,
+        data: collaborations,
+        actions,
+        bulkActions,
+        pagination,
+        query: { search: search || '', status: status || '' },
+        statusCounts,
+        currentUrl: '/admin/table-pages/collaborations',
+        colspan,
+        filterCounts,
+        tableConfig
+      });
+    }
   } catch (error) {
     logger.error('Error loading collaborations:', error);
     res.render('admin/table-pages/collaborations', {
@@ -111,7 +330,8 @@ export const getCollaborations = async (req, res) => {
       isTablePage: true,
       data: [],
       pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
-      query: { search: '', status: '' }
+      query: { search: '', status: '' },
+      statusCounts: {}
     });
   }
 };

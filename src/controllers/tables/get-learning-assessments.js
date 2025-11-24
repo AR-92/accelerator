@@ -1,5 +1,8 @@
  import logger from '../../utils/logger.js';
  import { databaseService } from '../../services/index.js';
+ import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
+ import { getTableConfig } from '../../config/tableFilters.js';
+ import { isHtmxRequest } from '../../helpers/http/index.js';
 
 // Learning Assessments Management
 export const getLearningAssessments = async (req, res) => {
@@ -37,6 +40,17 @@ export const getLearningAssessments = async (req, res) => {
 
     const pagination = { currentPage: 1, limit: 10, total: filteredLearningAssessments.length, start: 1, end: filteredLearningAssessments.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
+
+
+    // Prepare filter counts for template
+    const filterCounts = getFilterCounts('learning-assessments', statusCounts);
+    const tableConfig = getTableConfig('learning-assessments');
+
+    // Make variables available to layout for filter-nav
+    res.locals.tableConfig = tableConfig;
+    res.locals.filterCounts = filterCounts;
+    res.locals.currentPage = 'learning-assessments';
+    res.locals.query = { search: search || '', status: status || '' };
 
     res.render('admin/other-pages/learning-assessments', {
       title: 'Learning Assessments Management', currentPage: 'learning-assessments', currentSection: 'learning', isTablePage: true, tableId: 'learning-assessments', entityName: 'learning assessment', showCheckbox: true, showBulkActions: true, columns, data: filteredLearningAssessments, actions, bulkActions: [], pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/other-pages/learning-assessments', colspan

@@ -1,14 +1,19 @@
 import logger from '../../utils/logger.js';
 import { databaseService } from '../../services/index.js';
+import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
+import { getTableConfig } from '../../config/tableFilters.js';
+import { isHtmxRequest } from '../../helpers/http/index.js';
 
 // Landing Page Management
 export const getLandingPage = async (req, res) => {
   try {
     logger.info('Admin landing page accessed');
 
+    const { search = '', status = '' } = req.query;
+
     // Fetch real data from Supabase landing_pages table
     const { data: sections, error } = await databaseService.supabase
-      .from('landing_page_management')
+      .from('landing_pages')
       .select('*')
       .order('created_at', { ascending: false });
 
@@ -21,23 +26,23 @@ export const getLandingPage = async (req, res) => {
     const mappedSections = sections.map(section => ({
       id: section.id,
       name: section.title || section.name || `Section ${section.id}`,
-      status: section.status || 'active',
+      is_active: section.is_active,
       last_updated: section.updated_at || section.created_at
     }));
 
     let filteredSections = mappedSections;
 
-    if (req.query.search) {
-      const search = req.query.search.toLowerCase();
-      filteredSections = mappedSections.filter(section => {
-        return (section.name && section.name.toLowerCase().includes(search)) ||
-               (section.status && section.status.toLowerCase().includes(search));
+    if (search) {
+      const searchTerm = search.toLowerCase();
+      filteredSections = sections.filter(section => {
+        return (section.name && section.name.toLowerCase().includes(searchTerm)) ||
+                (section.is_active !== undefined && section.is_active.toString().toLowerCase().includes(searchTerm));
       });
     }
 
     const columns = [
       { key: 'name', label: 'Section Name', type: 'text' },
-      { key: 'status', label: 'Status', type: 'status' },
+      { key: 'is_active', label: 'Status', type: 'status' },
       { key: 'last_updated', label: 'Last Updated', type: 'date' }
     ];
 
@@ -49,11 +54,26 @@ export const getLandingPage = async (req, res) => {
     const pagination = { currentPage: 1, limit: 10, total: filteredSections.length, start: 1, end: filteredSections.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (false ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
+
+    // Get status counts using the dynamic helper
+    const statusCounts = await getStatusCounts('landing-pages', databaseService);
+    logger.info(`Status counts: ${JSON.stringify(statusCounts)}`);
+
+    // Prepare filter counts for template
+    const filterCounts = getFilterCounts('landing-pages', statusCounts);
+    const tableConfig = getTableConfig('landing-pages');
+
+    // Make variables available to layout for filter-nav
+    res.locals.tableConfig = tableConfig;
+    res.locals.filterCounts = filterCounts;
+    res.locals.currentPage = 'landing-pages';
+    res.locals.query = { search: search || '', status: status || '' };
+
     res.render('admin/table-pages/landing-page', {
-      title: 'Landing Page Management', currentPage: 'landing-page', currentSection: 'content-management', isTablePage: true, tableId: 'landing-page', entityName: 'section', showCheckbox: false, showBulkActions: false, columns, data: filteredSections, actions, bulkActions: [], pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/landing-page', colspan
+      title: 'Landing Page Management', currentPage: 'landing-pages', currentSection: 'content-management', isTablePage: true, tableId: 'landing-pages', entityName: 'section', showCheckbox: false, showBulkActions: false, columns, data: filteredSections, actions, bulkActions: [], pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/landing-page', colspan
     });
   } catch (error) {
     logger.error('Error loading landing page:', error);
-    res.render('admin/table-pages/landing-page', { title: 'Landing Page Management', currentPage: 'landing-page', currentSection: 'content-management', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
+    res.render('admin/table-pages/landing-page', { title: 'Landing Page Management', currentPage: 'landing-pages', currentSection: 'content-management', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: '', status: '' } });
   }
 };

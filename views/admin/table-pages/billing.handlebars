@@ -18,18 +18,3 @@
 
    {{> table}}
  </div>
-{{!-- these are the filter links for the table --}}
-<div id="billing-filter-links" class="hidden" _="on load set #filter-links.innerHTML to #billing-filter-links.innerHTML">
-  <div class="flex flex-col items-center justify-center group">
-    <div class="border-t-4 border-primary w-6 rounded-full opacity-100 group-hover:opacity-100"></div>
-    <a id="all-billing-btn" href="/admin/table-pages/billing" hx-get="/admin/table-pages/billing" hx-target="#billingTableContainer" class="text-foreground font-medium text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">All Billing</a>
-  </div>
-  <div class="flex flex-col items-center justify-center group">
-    <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
-    <a id="active-billing-btn" href="/admin/table-pages/billing?status=active" hx-get="/admin/table-pages/billing?status=active" hx-target="#billingTableContainer" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Active</a>
-  </div>
-  <div class="flex flex-col items-center justify-center group">
-    <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
-    <a id="inactive-billing-btn" href="/admin/table-pages/billing?status=inactive" hx-get="/admin/table-pages/billing?status=inactive" hx-target="#billingTableContainer" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Inactive</a>
-  </div>
-</div>

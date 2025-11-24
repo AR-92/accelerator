@@ -6,211 +6,197 @@
         <button id="sidebar-toggle" class="w-6 h-6 ml-1 mr-6 flex items-center justify-center hover:bg-accent rounded-md transition-colors" onclick="toggleSidebar()" title="Toggle Sidebar">
          {{{icon 'panel-right' size='16' class='text-muted-foreground w-4 h-4'}}}
        </button>
-         <!-- Filter Links -->
-         <div id="filter-links" class="flex gap-4">
-           {{#if (eq currentPage 'ideas')}}
-             <!-- Status Filter Buttons -->
-             <div class="flex items-center gap-1">
-               <div class="flex flex-col items-center justify-center group">
-                 <div class="border-t-4 border-primary w-6 rounded-full {{#unless query.status}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/unless}}"></div>
-                 <button id="filter-link-all" type="button" hx-get="/admin/table-pages/ideas" hx-target="#ideasTableContainer" class="{{#unless query.status}}text-foreground font-medium{{else}}text-muted-foreground{{/unless}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">All ({{filterCounts.all}})</button>
+          <!-- Filter Links -->
+          <div id="filter-links" class="flex gap-4">
+             {{#if @root.tableConfig}}
+               {{#if @root.tableConfig.statusOptions}}
+               {{#if @root.tableConfig.statusOptions.length}}
+              <!-- Status Filter Buttons -->
+              <div class="flex items-center gap-4">
+                 <div class="flex flex-col items-center justify-center group">
+                    <div class="border-t-4 border-primary w-6 rounded-full {{#unless @root.query.status}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/unless}}"></div>
+                     <button id="filter-link-all" type="button" hx-get="/admin/table-pages/{{@root.currentPage}}" hx-target="#{{@root.currentPage}}TableContainer" data-table="{{@root.currentPage}}" class="{{#unless @root.query.status}}text-foreground font-medium{{else}}text-muted-foreground{{/unless}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">All ({{@root.filterCounts.all}})</button>
+                 </div>
+                 {{#each @root.tableConfig.statusOptions}}
+                  <div class="flex flex-col items-center justify-center group">
+                    <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq ../query.status value)}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
+                     <button id="filter-link-{{value}}" type="button" hx-get="/admin/table-pages/{{../currentPage}}?status={{value}}" hx-target="#{{../currentPage}}TableContainer" data-table="{{../currentPage}}" class="{{#if (eq ../query.status value)}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">{{label}} ({{lookup ../filterCounts value}})</button>
+                  </div>
+                 {{/each}}
                </div>
-               <div class="flex flex-col items-center justify-center group">
-                 <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq query.status 'pending')}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
-                 <button id="filter-link-pending" type="button" hx-get="/admin/table-pages/ideas?status=pending" hx-target="#ideasTableContainer" class="{{#if (eq query.status 'pending')}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Pending ({{filterCounts.pending}})</button>
-               </div>
-               <div class="flex flex-col items-center justify-center group">
-                 <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq query.status 'approved')}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
-                 <button id="filter-link-approved" type="button" hx-get="/admin/table-pages/ideas?status=approved" hx-target="#ideasTableContainer" class="{{#if (eq query.status 'approved')}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Approved ({{filterCounts.approved}})</button>
-               </div>
-               <div class="flex flex-col items-center justify-center group">
-                 <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq query.status 'rejected')}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
-                 <button id="filter-link-rejected" type="button" hx-get="/admin/table-pages/ideas?status=rejected" hx-target="#ideasTableContainer" class="{{#if (eq query.status 'rejected')}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Rejected ({{filterCounts.rejected}})</button>
-               </div>
-               <div class="flex flex-col items-center justify-center group">
-                 <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq query.status 'active')}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
-                 <button id="filter-link-active" type="button" hx-get="/admin/table-pages/ideas?status=active" hx-target="#ideasTableContainer" class="{{#if (eq query.status 'active')}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Active ({{filterCounts.active}})</button>
-               </div>
-               <div class="flex flex-col items-center justify-center group">
-                 <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq query.status 'draft')}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
-                 <button id="filter-link-draft" type="button" hx-get="/admin/table-pages/ideas?status=draft" hx-target="#ideasTableContainer" class="{{#if (eq query.status 'draft')}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">Draft ({{filterCounts.draft}})</button>
-               </div>
-             </div>
-           {{/if}}
-         </div>
+               {{/if}}
+               {{/if}}
+             {{/if}}
+          </div>
    </div>
     <!-- Right Section: Create Button -->
     <div>
-      {{#if (eq currentPage 'todos')}}
-        <button id="filter-btn" onclick="openCreateTodoModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Todo</span>
-       </button>
-      {{else if (eq currentPage 'users')}}
-        <button id="filter-btn" onclick="openCreateUserModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create User</span>
-       </button>
-      {{else if (eq currentPage 'ideas')}}
-        <button id="filter-btn" onclick="openCreateIdeaModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Idea</span>
-       </button>
-      {{else if (eq currentPage 'votes')}}
-        <button id="filter-btn" onclick="openCreateVoteModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Vote</span>
-       </button>
-      {{else if (eq currentPage 'collaborations')}}
-        <button id="filter-btn" onclick="openCreateCollaborationModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Collaboration</span>
-       </button>
-      {{else if (eq currentPage 'content')}}
-        <button id="filter-btn" onclick="openCreateContentModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Content</span>
-       </button>
-      {{else if (eq currentPage 'landing-page')}}
-        <button id="filter-btn" onclick="openCreateLandingPageModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Landing Page</span>
-       </button>
-      {{else if (eq currentPage 'learning-content')}}
-        <button id="filter-btn" onclick="openCreateLearningContentModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Learning Content</span>
-       </button>
-      {{else if (eq currentPage 'learning-categories')}}
-        <button id="filter-btn" onclick="openCreateLearningCategoryModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Category</span>
-       </button>
-      {{else if (eq currentPage 'learning-assessments')}}
-        <button id="filter-btn" onclick="openCreateAssessmentModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Assessment</span>
-       </button>
-      {{else if (eq currentPage 'learning-analytics')}}
-        <!-- No create for analytics -->
-      {{else if (eq currentPage 'packages')}}
-        <button id="filter-btn" onclick="openCreatePackageModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Package</span>
-       </button>
-      {{else if (eq currentPage 'billing')}}
-        <button id="filter-btn" onclick="openCreateBillingModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Billing</span>
-       </button>
-      {{else if (eq currentPage 'rewards')}}
-        <button id="filter-btn" onclick="openCreateRewardModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Reward</span>
-       </button>
-      {{else if (eq currentPage 'business-model')}}
-        <button id="filter-btn" onclick="openCreateBusinessModelModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Business Model</span>
-       </button>
-      {{else if (eq currentPage 'business-plan')}}
-        <button id="filter-btn" onclick="openCreateBusinessPlanModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Business Plan</span>
-       </button>
-      {{else if (eq currentPage 'financial-model')}}
-        <button id="filter-btn" onclick="openCreateFinancialModelModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Financial Model</span>
-       </button>
-      {{else if (eq currentPage 'pitchdeck')}}
-        <button id="filter-btn" onclick="openCreatePitchdeckModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Pitchdeck</span>
-       </button>
-      {{else if (eq currentPage 'valuation')}}
-        <button id="filter-btn" onclick="openCreateValuationModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Valuation</span>
-       </button>
-      {{else if (eq currentPage 'funding')}}
-        <button id="filter-btn" onclick="openCreateFundingModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Funding</span>
-       </button>
-      {{else if (eq currentPage 'team')}}
-        <button id="filter-btn" onclick="openCreateTeamModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Team</span>
-       </button>
-      {{else if (eq currentPage 'legal')}}
-        <button id="filter-btn" onclick="openCreateLegalModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Legal</span>
-       </button>
-      {{else if (eq currentPage 'marketing')}}
-        <button id="filter-btn" onclick="openCreateMarketingModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Marketing</span>
-       </button>
-      {{else if (eq currentPage 'corporate')}}
-        <button id="filter-btn" onclick="openCreateCorporateModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Corporate</span>
-       </button>
-      {{else if (eq currentPage 'enterprises')}}
-        <button id="filter-btn" onclick="openCreateEnterpriseModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Enterprise</span>
-       </button>
-      {{else if (eq currentPage 'messages')}}
-        <button id="filter-btn" onclick="openCreateMessageModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Message</span>
-       </button>
-      {{else if (eq currentPage 'project-collaborators')}}
-        <button id="filter-btn" onclick="openCreateProjectCollaboratorModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Collaborator</span>
-       </button>
-      {{else if (eq currentPage 'calendar')}}
-        <button id="filter-btn" onclick="openCreateCalendarModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Event</span>
-       </button>
-      {{else if (eq currentPage 'help-center')}}
-        <button id="filter-btn" onclick="openCreateHelpCenterModal()"
-          class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-          {{{icon 'plus' size='16' class='w-4 h-4'}}}
-         <span class="text-xs">Create Article</span>
-       </button>
-      {{/if}}
-    </div>
- </nav>
+      {{#if (eq @root.currentPage 'todos')}}
+         <button id="filter-btn" onclick="openCreateTodoModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Todo</span>
+        </button>
+       {{else if (eq @root.currentPage 'users')}}
+         <button id="filter-btn" onclick="openCreateUserModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create User</span>
+        </button>
+       {{else if (eq @root.currentPage 'ideas')}}
+         <button id="filter-btn" onclick="openCreateIdeaModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Idea</span>
+        </button>
+         {{else if (eq @root.currentPage 'votes')}}
+           <!-- No create button for votes -->
+        {{else if (eq @root.currentPage 'collaborations')}}
+         <button id="filter-btn" onclick="openCreateCollaborationModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Collaboration</span>
+        </button>
+       {{else if (eq @root.currentPage 'content')}}
+         <button id="filter-btn" onclick="openCreateContentModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Content</span>
+        </button>
+       {{else if (eq @root.currentPage 'landing-page')}}
+         <button id="filter-btn" onclick="openCreateLandingPageModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Landing Page</span>
+        </button>
+       {{else if (eq @root.currentPage 'learning-content')}}
+         <button id="filter-btn" onclick="openCreateLearningContentModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Learning Content</span>
+        </button>
+       {{else if (eq @root.currentPage 'learning-categories')}}
+         <button id="filter-btn" onclick="openCreateLearningCategoryModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Category</span>
+        </button>
+       {{else if (eq @root.currentPage 'learning-assessments')}}
+         <button id="filter-btn" onclick="openCreateAssessmentModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Assessment</span>
+        </button>
+       {{else if (eq @root.currentPage 'learning-analytics')}}
+         <!-- No create for analytics -->
+       {{else if (eq @root.currentPage 'packages')}}
+         <button id="filter-btn" onclick="openCreatePackageModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Package</span>
+        </button>
+       {{else if (eq @root.currentPage 'billing')}}
+         <button id="filter-btn" onclick="openCreateBillingModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Billing</span>
+        </button>
+       {{else if (eq @root.currentPage 'rewards')}}
+         <button id="filter-btn" onclick="openCreateRewardModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Reward</span>
+        </button>
+       {{else if (eq @root.currentPage 'business-model')}}
+         <button id="filter-btn" onclick="openCreateBusinessModelModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Business Model</span>
+        </button>
+       {{else if (eq @root.currentPage 'business-plan')}}
+         <button id="filter-btn" onclick="openCreateBusinessPlanModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Business Plan</span>
+        </button>
+       {{else if (eq @root.currentPage 'financial-model')}}
+         <button id="filter-btn" onclick="openCreateFinancialModelModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Financial Model</span>
+        </button>
+       {{else if (eq @root.currentPage 'pitchdeck')}}
+         <button id="filter-btn" onclick="openCreatePitchdeckModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Pitchdeck</span>
+        </button>
+       {{else if (eq @root.currentPage 'valuation')}}
+         <button id="filter-btn" onclick="openCreateValuationModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Valuation</span>
+        </button>
+       {{else if (eq @root.currentPage 'funding')}}
+         <button id="filter-btn" onclick="openCreateFundingModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Funding</span>
+        </button>
+       {{else if (eq @root.currentPage 'team')}}
+         <button id="filter-btn" onclick="openCreateTeamModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Team</span>
+        </button>
+       {{else if (eq @root.currentPage 'legal')}}
+         <button id="filter-btn" onclick="openCreateLegalModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Legal</span>
+        </button>
+       {{else if (eq @root.currentPage 'marketing')}}
+         <button id="filter-btn" onclick="openCreateMarketingModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Marketing</span>
+        </button>
+       {{else if (eq @root.currentPage 'corporate')}}
+         <button id="filter-btn" onclick="openCreateCorporateModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Corporate</span>
+        </button>
+       {{else if (eq @root.currentPage 'enterprises')}}
+         <button id="filter-btn" onclick="openCreateEnterpriseModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Enterprise</span>
+        </button>
+       {{else if (eq @root.currentPage 'messages')}}
+         <button id="filter-btn" onclick="openCreateMessageModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Message</span>
+        </button>
+       {{else if (eq @root.currentPage 'project-collaborators')}}
+         <button id="filter-btn" onclick="openCreateProjectCollaboratorModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Collaborator</span>
+        </button>
+       {{else if (eq @root.currentPage 'calendar')}}
+         <button id="filter-btn" onclick="openCreateCalendarModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Event</span>
+        </button>
+       {{else if (eq @root.currentPage 'help-center')}}
+         <button id="filter-btn" onclick="openCreateHelpCenterModal()"
+           class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
+           {{{icon 'plus' size='16' class='w-4 h-4'}}}
+          <span class="text-xs">Create Article</span>
+        </button>
+       {{/if}}
+     </div>
+  </nav>

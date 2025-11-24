@@ -1,5 +1,8 @@
 import logger from '../../utils/logger.js';
-import { databaseService } from '../../services/index.js';
+ import { databaseService } from '../../services/index.js';
+ import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
+ import { getTableConfig } from '../../config/tableFilters.js';
+ import { isHtmxRequest } from '../../helpers/http/index.js';
 
 // Valuation Management
 export const getValuation = async (req, res) => {
@@ -43,6 +46,17 @@ export const getValuation = async (req, res) => {
 
     const pagination = { currentPage: 1, limit: 10, total: filteredValuations.length, start: 1, end: filteredValuations.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
+
+
+    // Prepare filter counts for template
+    const filterCounts = getFilterCounts('valuation', statusCounts);
+    const tableConfig = getTableConfig('valuation');
+
+    // Make variables available to layout for filter-nav
+    res.locals.tableConfig = tableConfig;
+    res.locals.filterCounts = filterCounts;
+    res.locals.currentPage = 'valuation';
+    res.locals.query = { search: search || '', status: status || '' };
 
     res.render('admin/table-pages/valuation', {
       title: 'Valuation Management', currentPage: 'valuation', currentSection: 'business', isTablePage: true, tableId: 'valuation', entityName: 'valuation', showCheckbox: true, showBulkActions: true, columns, data: filteredValuations, actions, bulkActions: [], pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/valuation', colspan

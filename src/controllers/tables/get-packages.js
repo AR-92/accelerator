@@ -1,23 +1,43 @@
 import logger from '../../utils/logger.js';
-import { databaseService } from '../../services/index.js';
+ import { databaseService } from '../../services/index.js';
+ import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
+ import { getTableConfig } from '../../config/tableFilters.js';
+ import { isHtmxRequest } from '../../helpers/http/index.js';
 
 // Packages Management
 export const getPackages = async (req, res) => {
   try {
     logger.info('Admin packages page accessed');
 
-    // Fetch packages from packages table
-    const { data: packagesData, error: packagesError } = await databaseService.supabase
+    const { search = '', status = '', page = 1, limit = 10 } = req.query;
+    logger.info(`Query params: search="${search}", status="${status}", page=${page}, limit=${limit}`);
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+    const offset = (pageNum - 1) * limitNum;
+
+    // Build Supabase query with filters for packages
+    let query = databaseService.supabase
       .from('packages')
-      .select('*')
-      .order('created_at', { ascending: false });
+      .select('*', { count: 'exact' });
+
+    // Apply dynamic filters
+    query = applyTableFilters(query, 'packages', req.query);
+
+    // Apply pagination
+    query = query
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limitNum - 1);
+
+    const { data: packagesData, error: packagesError, count } = await query;
 
     if (packagesError) {
       logger.error('Error fetching packages:', packagesError);
       throw packagesError;
     }
 
-    // Fetch billing data to compute statistics
+    logger.info(`Fetched ${packagesData ? packagesData.length : 0} packages, total count: ${count}`);
+
+    // Fetch billing data to compute statistics (we need all billing data for stats)
     const { data: billingData, error: billingError } = await databaseService.supabase
       .from('Billing')
       .select('plan_name, amount_cents, currency, status');
@@ -73,18 +93,24 @@ export const getPackages = async (req, res) => {
       };
     });
 
-    let filteredPackages = packages;
-
-    if (req.query.search) {
-      const search = req.query.search.toLowerCase();
-      filteredPackages = packages.filter(pkg => {
-        return (pkg.name && pkg.name.toLowerCase().includes(search)) ||
-               (pkg.description && pkg.description.toLowerCase().includes(search)) ||
-               (pkg.price && pkg.price.toLowerCase().includes(search)) ||
-               (pkg.status && pkg.status.toLowerCase().includes(search)) ||
-               (pkg.features && pkg.features.toLowerCase().includes(search));
-      });
+    const total = count || 0;
+    const totalPages = Math.ceil(total / limitNum);
+    const start = offset + 1;
+    const end = Math.min(offset + limitNum, total);
+    const hasPrev = pageNum > 1;
+    const hasNext = pageNum < totalPages;
+    const prevPage = hasPrev ? pageNum - 1 : null;
+    const nextPage = hasNext ? pageNum + 1 : null;
+    const pages = [];
+    for (let i = Math.max(1, pageNum - 2); i <= Math.min(totalPages, pageNum + 2); i++) {
+      pages.push(i);
     }
+
+    // Get status counts using the dynamic helper
+    const statusCounts = await getStatusCounts('packages', databaseService);
+    logger.info(`Status counts: ${JSON.stringify(statusCounts)}`);
+
+    const tableConfig = getTableConfig('packages');
 
     const columns = [
       { key: 'name', label: 'Package Name', type: 'text' },
@@ -110,14 +136,245 @@ export const getPackages = async (req, res) => {
       { onclick: 'bulkDeletePackages', buttonId: 'bulkDeleteBtn', label: 'Delete Selected' }
     ];
 
-    const pagination = { currentPage: 1, limit: 10, total: filteredPackages.length, start: 1, end: filteredPackages.length, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [1] };
+    const pagination = {
+      currentPage: pageNum,
+      limit: limitNum,
+      total,
+      start,
+      end,
+      hasPrev,
+      hasNext,
+      prevPage,
+      nextPage,
+      pages
+    };
+
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    res.render('admin/table-pages/packages', {
-      title: 'Packages Management', currentPage: 'packages', currentSection: 'financial', isTablePage: true, tableId: 'packages', entityName: 'package', showCheckbox: true, showBulkActions: true, columns, data: filteredPackages, actions, bulkActions, pagination, query: { search: req.query.search || '', status: '' }, currentUrl: '/admin/table-pages/packages', colspan
-    });
+    // Prepare filter counts for template
+    const filterCounts = getFilterCounts('packages', statusCounts);
+
+    // Make variables available to layout for filter-nav
+    res.locals.tableConfig = tableConfig;
+    res.locals.filterCounts = filterCounts;
+    res.locals.currentPage = 'packages';
+    res.locals.query = { search: search || '', status: status || '' };
+
+    if (isHtmxRequest(req)) {
+      // Generate table HTML for HTMX requests
+      let tableHtml = `
+        <table class="min-w-full table-auto bg-card">
+          <thead class="bg-card border-b border-border">
+            <tr>
+              <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">
+                <input type="checkbox" id="selectAll-packages" class="rounded border-input text-primary">
+              </th>`;
+
+      // Add column headers
+      columns.forEach(column => {
+        tableHtml += `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">${column.label}</th>`;
+      });
+
+      // Add actions header
+      if (actions.length > 0) {
+        tableHtml += `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">Actions</th>`;
+      }
+
+      tableHtml += `
+            </tr>
+          </thead>
+          <tbody class="text-sm text-card-foreground">`;
+
+      // Add table rows
+      if (packages.length > 0) {
+        packages.forEach(pkg => {
+          tableHtml += `<tr id="packages-row-${pkg.id}" class="h-16 border-b border-border hover:bg-muted/50 even:bg-muted/30 transition-colors duration-150">
+            <td class="px-6 py-4">
+              <input type="checkbox" class="packagesCheckbox rounded border-input text-primary value="${pkg.id}" data-package-id="${pkg.id}">
+            </td>`;
+
+          // Add data cells
+          columns.forEach(column => {
+            let cellContent = '';
+
+            if (column.type === 'status') {
+              cellContent = `<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${pkg.status === 'active' ? 'bg-green-100 text-green-800' : pkg.status === 'inactive' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}">${pkg[column.key]}</span>`;
+            } else if (column.type === 'date') {
+              cellContent = `<div class="text-sm text-card-foreground">${new Date(pkg[column.key]).toLocaleDateString()}</div>`;
+            } else {
+              cellContent = `<div class="text-sm text-card-foreground truncate max-w-xs" title="${pkg[column.key]}">${pkg[column.key]}</div>`;
+            }
+
+            tableHtml += `<td class="px-6 py-4">${cellContent}</td>`;
+          });
+
+          // Add actions cell
+          if (actions.length > 0) {
+            tableHtml += `<td class="px-6 py-4">
+              <div class="relative">
+                <button onclick="toggleActionMenu('packages', ${pkg.id})" class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="1"></circle>
+                    <circle cx="12" cy="5" r="1"></circle>
+                    <circle cx="12" cy="19" r="1"></circle>
+                  </svg>
+                </button>
+                <div id="actionMenu-packages-${pkg.id}" class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-popover rounded-md shadow-lg z-10 border border-border">
+                  <div class="py-1">`;
+
+            actions.forEach(action => {
+              if (action.type === 'button') {
+                tableHtml += `<button onclick="${action.onclick}(${pkg.id})" class="flex items-center w-full px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                  ${action.icon}
+                  ${action.label}
+                </button>`;
+              } else if (action.type === 'delete') {
+                tableHtml += `<button onclick="${action.onclick}(${pkg.id})" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors">
+                  ${action.icon}
+                  ${action.label}
+                </button>`;
+              }
+            });
+
+            tableHtml += `
+                  </div>
+                </div>
+              </div>
+            </td>`;
+          }
+
+          tableHtml += `</tr>`;
+        });
+      } else {
+        // Empty state
+        tableHtml += `<tr class="h-16">
+          <td colspan="${colspan}" class="px-6 py-8 text-center text-muted-foreground">
+            <div class="flex flex-col items-center justify-center py-12">
+              <svg class="w-16 h-16 text-muted-foreground/50 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+              </svg>
+              <p class="text-lg font-medium text-muted-foreground mb-2">No packages found</p>
+              <p class="text-sm text-muted-foreground/70">Packages will appear here.</p>
+            </div>
+          </td>
+        </tr>`;
+      }
+
+      tableHtml += `
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="${colspan}" class="bg-card border-t border-border p-4">
+                <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div class="text-sm text-muted-foreground">
+                    Showing ${start}-${end} of ${total} packages
+                  </div>
+
+                  <div class="flex items-center gap-3">
+                    <span class="text-sm text-muted-foreground font-medium">Rows per page:</span>
+                      <select id="rowsPerPage-packages" name="limit" class="border border-input rounded-lg px-3 py-2 text-sm bg-background shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                        hx-get="/admin/table-pages/packages" hx-target="#packagesTableContainer" hx-vals="js:{limit: document.getElementById('rowsPerPage-packages').value}">
+                      <option value="10" ${limitNum === 10 ? 'selected' : ''}>10</option>
+                      <option value="20" ${limitNum === 20 ? 'selected' : ''}>20</option>
+                      <option value="50" ${limitNum === 50 ? 'selected' : ''}>50</option>
+                      <option value="100" ${limitNum === 100 ? 'selected' : ''}>100</option>
+                    </select>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <nav class="flex items-center gap-1 text-sm">`;
+
+      // Add pagination buttons
+      if (hasPrev) {
+        tableHtml += `<button hx-get="/admin/table-pages/packages?page=${prevPage}" hx-target="#packagesTableContainer"
+          class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200 font-medium">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>`;
+      }
+
+      pages.forEach(page => {
+        const isActive = page === pageNum;
+        tableHtml += `<button hx-get="/admin/table-pages/packages?page=${page}" hx-target="#packagesTableContainer"
+          class="inline-flex items-center justify-center w-10 h-10 rounded-lg ${isActive ? 'bg-primary text-primary-foreground scale-105' : 'border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground'} transition-all duration-200 font-medium">${page}</button>`;
+      });
+
+      if (hasNext) {
+        tableHtml += `<button hx-get="/admin/table-pages/packages?page=${nextPage}" hx-target="#packagesTableContainer"
+          class="inline-flex items-center justify-center w-10 h-10 rounded-lg border border-input text-muted-foreground hover:bg-accent hover:border-accent-foreground transition-all duration-200">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>`;
+      }
+
+      tableHtml += `
+                    </nav>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tfoot>
+        </table>`;
+
+      // Add bulk actions if enabled
+      if (true && bulkActions.length > 0) {
+        tableHtml += `
+        <div id="bulkActions-packages" class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-6 py-3 rounded-full z-30" style="display: none;">
+          <div class="flex items-center gap-4">
+            <span id="selectedCount-packages">0 packages selected</span>
+            <div class="flex gap-2">`;
+
+        bulkActions.forEach(action => {
+          tableHtml += `<button onclick="${action.onclick}" id="${action.buttonId}-packages" class="bg-primary-foreground/20 hover:bg-primary-foreground/30 text-primary-foreground px-3 py-1 rounded text-sm" disabled="">
+            ${action.label}
+          </button>`;
+        });
+
+        tableHtml += `
+            </div>
+          </div>
+        </div>`;
+      }
+
+      res.send(tableHtml);
+    } else {
+      res.render('admin/table-pages/packages', {
+        title: 'Packages Management',
+        currentPage: 'packages',
+        currentSection: 'financial',
+        isTablePage: true,
+        tableId: 'packages',
+        entityName: 'package',
+        showCheckbox: true,
+        showBulkActions: true,
+        columns,
+        data: packages,
+        actions,
+        bulkActions,
+        pagination,
+        query: { search: search || '', status: status || '' },
+        statusCounts,
+        currentUrl: '/admin/table-pages/packages',
+        colspan,
+        filterCounts,
+        tableConfig
+      });
+    }
   } catch (error) {
     logger.error('Error loading packages:', error);
-    res.render('admin/table-pages/packages', { title: 'Packages Management', currentPage: 'packages', currentSection: 'financial', isTablePage: true, data: [], pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] }, query: { search: ', status: ' } });
+    res.render('admin/table-pages/packages', {
+      title: 'Packages Management',
+      currentPage: 'packages',
+      currentSection: 'financial',
+      isTablePage: true,
+      data: [],
+      pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
+      query: { search: '', status: '' },
+      statusCounts: {},
+      filterCounts: { all: 0, active: 0, inactive: 0 },
+      tableConfig: getTableConfig('packages')
+    });
   }
 };

@@ -19,9 +19,6 @@
    {{> table}}
  </div>
 {{!-- these are the filter links for the table --}}
-<div id="enterprises-filter-links" class="hidden" _="on load set #filter-links.innerHTML to #enterprises-filter-links.innerHTML">
-  <div class="flex flex-col items-center justify-center group">
-    <div class="border-t-4 border-primary w-6 rounded-full opacity-100 group-hover:opacity-100"></div>
     <a id="all-enterprises-btn" href="/admin/table-pages/enterprises" hx-get="/admin/table-pages/enterprises" hx-target="#enterprisesTableContainer" class="text-foreground font-medium text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">All Enterprises</a>
   </div>
   <div class="flex flex-col items-center justify-center group">

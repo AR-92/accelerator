@@ -1,6 +1,8 @@
-import logger from '../../utils/logger.js';
-import { databaseService } from '../../services/index.js';
-import { isHtmxRequest } from '../../helpers/http/index.js';
+ import logger from '../../utils/logger.js';
+ import { databaseService } from '../../services/index.js';
+ import { applyTableFilters, getStatusCounts, getFilterCounts } from '../../helpers/tableFilters.js';
+ import { getTableConfig } from '../../config/tableFilters.js';
+ import { isHtmxRequest } from '../../helpers/http/index.js';
 
 // Ideas Management
 export const getIdeas = async (req, res) => {
@@ -18,16 +20,8 @@ export const getIdeas = async (req, res) => {
       .from('ideas')
       .select('*', { count: 'exact' });
 
-    if (search && search.trim()) {
-      const searchTerm = search.trim();
-      // Use more efficient search with proper escaping
-      query = query.or(`title.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%`);
-      logger.info(`Applying search filter: ${searchTerm}`);
-    }
-    if (status && status.trim()) {
-      query = query.ilike('status', status.trim());
-      logger.info(`Applying status filter: ${status.trim()}`);
-    }
+    // Apply dynamic filters
+    query = applyTableFilters(query, 'ideas', req.query);
 
     // Apply pagination
     query = query
@@ -45,19 +39,8 @@ export const getIdeas = async (req, res) => {
 
     const total = count || 0;
 
-    // Get status counts with a single optimized query
-    const { data: statusData, error: statusError } = await databaseService.supabase
-      .from('ideas')
-      .select('status');
-
-    const statusCounts = {};
-    if (!statusError && statusData) {
-      statusData.forEach(item => {
-        const statusKey = item.status ? item.status.toLowerCase() : 'unknown';
-        statusCounts[statusKey] = (statusCounts[statusKey] || 0) + 1;
-      });
-    }
-
+    // Get status counts using the dynamic helper
+    const statusCounts = await getStatusCounts('ideas', databaseService);
     logger.info(`Status counts: ${JSON.stringify(statusCounts)}`);
     const totalPages = Math.ceil(total / limitNum);
     const start = offset + 1;
@@ -133,9 +116,15 @@ export const getIdeas = async (req, res) => {
 
     const colspan = columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
 
-    // Prepare status counts for filter links
-    const filterCounts = statusCounts || {};
-    const allCount = Object.values(filterCounts).reduce((sum, count) => sum + count, 0);
+    // Prepare filter counts for template
+    const filterCounts = getFilterCounts('ideas', statusCounts);
+    const tableConfig = getTableConfig('ideas');
+
+    // Make variables available to layout for filter-nav
+    res.locals.tableConfig = tableConfig;
+    res.locals.filterCounts = filterCounts;
+    res.locals.currentPage = 'ideas';
+    res.locals.query = { search: search || '', status: status || '' };
 
     if (isHtmxRequest(req)) {
       // Generate table HTML for HTMX requests
@@ -327,70 +316,6 @@ export const getIdeas = async (req, res) => {
         </div>`;
       }
 
-        // Add script to update filter states
-        tableHtml += `
-        <script>
-          (function() {
-            console.log('HTMX response: updating with status="${status || ''}", search="${search || ''}"');
-            // Update filter link counts
-            var filterCounts = ${JSON.stringify({
-              all: allCount,
-              pending: statusCounts.pending || 0,
-              approved: statusCounts.approved || 0,
-              rejected: statusCounts.rejected || 0,
-              active: statusCounts.active || 0,
-              draft: statusCounts.draft || 0
-            })};
-            var currentStatus = '${status || ''}';
-            var currentSearch = '${search || ''}';
-
-            // Update counts and active states
-            try {
-              document.getElementById('filter-link-all').textContent = 'All (' + filterCounts.all + ')';
-              document.getElementById('filter-link-pending').textContent = 'Pending (' + filterCounts.pending + ')';
-              document.getElementById('filter-link-approved').textContent = 'Approved (' + filterCounts.approved + ')';
-              document.getElementById('filter-link-rejected').textContent = 'Rejected (' + filterCounts.rejected + ')';
-              document.getElementById('filter-link-active').textContent = 'Active (' + filterCounts.active + ')';
-              document.getElementById('filter-link-draft').textContent = 'Draft (' + filterCounts.draft + ')';
-
-              // Update active states
-              document.querySelectorAll('[id^="filter-link-"]').forEach(function(link) {
-                link.classList.remove('text-foreground', 'font-medium');
-                link.classList.add('text-muted-foreground');
-                var indicator = link.previousElementSibling;
-                if (indicator) {
-                  indicator.classList.remove('opacity-100');
-                  indicator.classList.add('opacity-0', 'group-hover:opacity-100');
-                }
-              });
-
-              var activeLinkId;
-              if (currentSearch) {
-                // If there's a search, no filter link is active
-              } else if (currentStatus) {
-                activeLinkId = 'filter-link-' + currentStatus;
-              } else {
-                activeLinkId = 'filter-link-all';
-              }
-
-              if (activeLinkId) {
-                var activeLink = document.getElementById(activeLinkId);
-                if (activeLink) {
-                  activeLink.classList.remove('text-muted-foreground');
-                  activeLink.classList.add('text-foreground', 'font-medium');
-                  var indicator = activeLink.previousElementSibling;
-                  if (indicator) {
-                    indicator.classList.remove('opacity-0', 'group-hover:opacity-100');
-                    indicator.classList.add('opacity-100');
-                  }
-                }
-              }
-            } catch (e) {
-              console.log('Filter links not found, skipping update');
-            }
-          })();
-        </script>`;
-
       res.send(tableHtml);
     } else {
       res.render('admin/table-pages/ideas', {
@@ -410,115 +335,20 @@ export const getIdeas = async (req, res) => {
         query: { search: search || '', status: status || '' },
         currentUrl: '/admin/table-pages/ideas',
         colspan,
-        filterCounts: {
-          all: allCount,
-          pending: filterCounts.pending || 0,
-          approved: filterCounts.approved || 0,
-          rejected: filterCounts.rejected || 0,
-          active: filterCounts.active || 0,
-          draft: filterCounts.draft || 0
-        }
+         filterCounts,
+         tableConfig
       });
     }
-   } catch (error) {
-     logger.error('Error loading ideas:', error);
-     if (isHtmxRequest(req)) {
-       // Return error table HTML for HTMX
-       const errorTableHtml = `
-         <table class="min-w-full table-auto bg-card">
-           <thead class="bg-card border-b border-border">
-             <tr>
-               <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">
-                 <input type="checkbox" id="selectAll-ideas" class="rounded border-input text-primary">
-               </th>
-               <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">Title</th>
-               <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">User ID</th>
-               <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">Status</th>
-               <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">Actions</th>
-             </tr>
-           </thead>
-           <tbody class="text-sm text-card-foreground">
-             <tr class="h-16">
-               <td colspan="5" class="px-6 py-8 text-center text-muted-foreground">
-                 <div class="flex flex-col items-center justify-center py-12">
-                   <svg class="w-16 h-16 text-muted-foreground/50 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                   </svg>
-                   <p class="text-lg font-medium text-muted-foreground mb-2">Error loading ideas</p>
-                   <p class="text-sm text-muted-foreground/70">Please try again later.</p>
-                 </div>
-               </td>
-             </tr>
-           </tbody>
-           <tfoot>
-             <tr>
-               <td colspan="5" class="bg-card border-t border-border p-4">
-                 <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-                   <div class="text-sm text-muted-foreground">Showing 0-0 of 0 ideas</div>
-                   <div class="flex items-center gap-3">
-                     <span class="text-sm text-muted-foreground font-medium">Rows per page:</span>
-                     <select id="rowsPerPage-ideas" name="limit" class="border border-input rounded-lg px-3 py-2 text-sm bg-background shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                       <option value="10">10</option>
-                       <option value="20">20</option>
-                       <option value="50">50</option>
-                       <option value="100">100</option>
-                     </select>
-                   </div>
-                   <div class="flex items-center gap-2">
-                     <nav class="flex items-center gap-1 text-sm"></nav>
-                   </div>
-                 </div>
-               </td>
-             </tr>
-           </tfoot>
-         </table>
-         <script>
-           // Update filter link counts and states on error
-           const filterCounts = { all: 0, pending: 0, approved: 0, rejected: 0, active: 0, draft: 0 };
-           const currentStatus = '';
-           const currentSearch = '';
-            // Update filter link counts on error
-            try {
-              document.getElementById('filter-link-all').textContent = 'All (0)';
-              document.getElementById('filter-link-pending').textContent = 'Pending (0)';
-              document.getElementById('filter-link-approved').textContent = 'Approved (0)';
-              document.getElementById('filter-link-rejected').textContent = 'Rejected (0)';
-              document.getElementById('filter-link-active').textContent = 'Active (0)';
-              document.getElementById('filter-link-draft').textContent = 'Draft (0)';
-            } catch (e) {
-              console.log('Filter links not found, skipping update');
-            }
-           document.querySelectorAll('[id^="filter-link-"]').forEach(link => {
-             link.classList.remove('text-foreground', 'font-medium');
-             link.classList.add('text-muted-foreground');
-             const indicator = link.previousElementSibling;
-             if (indicator) {
-               indicator.classList.remove('opacity-100');
-               indicator.classList.add('opacity-0', 'group-hover:opacity-100');
-             }
-           });
-           const activeLink = document.getElementById('filter-link-all');
-           if (activeLink) {
-             activeLink.classList.remove('text-muted-foreground');
-             activeLink.classList.add('text-foreground', 'font-medium');
-             const indicator = activeLink.previousElementSibling;
-             if (indicator) {
-               indicator.classList.remove('opacity-0', 'group-hover:opacity-100');
-               indicator.classList.add('opacity-100');
-             }
-           }
-         </script>`;
-       res.send(errorTableHtml);
-     } else {
-       res.render('admin/table-pages/ideas', {
-         title: 'Ideas Management',
-         currentPage: 'ideas',
-         currentSection: 'main',
-         data: [],
-         pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
-         query: { search: '', status: '' },
-         filterCounts: { all: 0, pending: 0, approved: 0, rejected: 0, active: 0, draft: 0 }
-       });
-     }
-   }
+    } catch (error) {
+      logger.error('Error loading ideas:', error);
+      res.render('admin/table-pages/ideas', {
+        title: 'Ideas Management',
+        currentPage: 'ideas',
+        currentSection: 'main',
+        data: [],
+        pagination: { currentPage: 1, limit: 10, total: 0, start: 0, end: 0, hasPrev: false, hasNext: false, prevPage: 0, nextPage: 2, pages: [] },
+        query: { search: '', status: '' },
+        filterCounts: { all: 0, pending: 0, approved: 0, rejected: 0, active: 0, draft: 0 }
+      });
+    }
 };
