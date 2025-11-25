@@ -37,13 +37,13 @@
        <button onclick="toggleUserMenu()"
          class="flex items-center gap-3 h-10 px-3 rounded-xl transition-all duration-200 hover:text-primary cursor-pointer"
          id="admin-user-menu-button">
-        <div class="hidden md:flex flex-col items-start min-w-0">
-          <span class="text-sm font-bold text-foreground leading-tight truncate max-w-32"> </span>
-          <span class="text-xs text-muted-foreground leading-tight flex items-center gap-1.5">
-            <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-            Administrator
-          </span>
-        </div>
+         <div class="hidden md:flex flex-col items-start min-w-0">
+           <span class="text-sm font-bold text-foreground leading-tight truncate max-w-32" id="user-name">Loading...</span>
+           <span class="text-xs text-muted-foreground leading-tight flex items-center gap-1.5">
+             <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+             Administrator
+           </span>
+         </div>
         <div
           class="flex items-center justify-center w-5 h-5 rounded-md hover:bg-muted/50 transition-colors duration-200"
           id="admin-user-menu-arrow">
@@ -66,16 +66,14 @@
 {{#> dropdown-item href="/admin/other-pages/activity" text="Activity Log"}}{{{icon 'activity' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
            <div class="border-t border-border/50 my-2"></div>
 {{#> dropdown-item href="/" text="Back to Site"}}{{{icon 'globe' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
-           <div class="border-t border-border/50 my-2"></div>
-          <form action="/admin/logout" method="POST">
-             <button type="submit"
-               class="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
+            <div class="border-t border-border/50 my-2"></div>
+              <button onclick="handleLogout()"
+                class="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
 
-               {{{icon 'log-out' size='16' class='w-4 h-4'}}}
+                {{{icon 'log-out' size='16' class='w-4 h-4'}}}
 
-               <span>Logout</span>
-             </button>
-          </form>
+                <span>Logout</span>
+              </button>
          </div>
        </div>
      </div>

@@ -7,7 +7,8 @@ const config = {
   nodeEnv: process.env.NODE_ENV || 'development',
   supabase: {
     url: process.env.SUPABASE_URL,
-    key: process.env.SUPABASE_KEY,
+    key: process.env.SUPABASE_KEY, // Server-side key (secret)
+    publicKey: process.env.SUPABASE_PUBLIC_KEY, // Client-side key (anon/public)
   },
   jwt: {
     secret: process.env.JWT_SECRET,

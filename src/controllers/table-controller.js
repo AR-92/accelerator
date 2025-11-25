@@ -37,6 +37,37 @@ export const getGenericTable = async (req, res) => {
       }
     }
 
+    // Ensure standard actions are present
+    const standardActions = [
+      {
+        type: 'link',
+        url: `/admin/table-pages/${tableName}/view`,
+        label: 'View',
+        icon: 'test',
+      },
+      {
+        type: 'link',
+        url: `/admin/table-pages/${tableName}/edit`,
+        label: 'Edit',
+        icon: 'test2',
+      },
+      {
+        type: 'delete',
+        hxDelete: `/api/${tableName}`,
+        hxConfirm: `Are you sure you want to delete this ${config.entityName}?`,
+        label: 'Delete',
+        icon: 'test3',
+      },
+    ];
+
+    // Filter out existing standard actions to avoid duplicates
+    const existingLabels = standardActions.map((a) => a.label);
+    const additionalActions = config.actions.filter(
+      (a) => !existingLabels.includes(a.label)
+    );
+
+    config.actions = [...standardActions, ...additionalActions];
+
     const { search = '', status = '', page = 1, limit = 10 } = req.query;
     logger.info(
       `Generic table access: ${tableName}, query params: search="${search}", status="${status}", page=${page}, limit=${limit}`
@@ -641,23 +672,20 @@ export const getRowDetail = async (req, res) => {
     const actions = [
       {
         link: `/admin/table-pages/${tableName}`,
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-arrow-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="M12 19l-7-7 7-7"></path></svg>',
+        icon: 'arrow-left',
         text: 'Go Back',
       },
       {
         link: `/admin/table-pages/${tableName}/edit/${id}`,
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>',
+        icon: 'edit',
         text: 'Edit',
       },
       {
         link: `/admin/table-pages/${tableName}/view/${id}`,
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>',
+        icon: 'eye',
         text: 'View',
       },
     ];
-
-    res.locals.isRowPage = true;
-    res.locals.rowActions = actions;
 
     res.render('admin/row-detail', {
       title: `View ${config.entityName}`,
@@ -667,6 +695,8 @@ export const getRowDetail = async (req, res) => {
       row: mappedData,
       columns: config.columns,
       actions,
+      isRowPage: true,
+      rowActions: actions,
     });
   } catch (error) {
     logger.error('Error loading row detail:', error);
@@ -704,17 +734,17 @@ export const getRowEdit = async (req, res) => {
     const actions = [
       {
         link: `/admin/table-pages/${tableName}`,
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-arrow-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="M12 19l-7-7 7-7"></path></svg>',
+        icon: 'arrow-left',
         text: 'Go Back',
       },
       {
         link: `/admin/table-pages/${tableName}/edit/${id}`,
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>',
+        icon: 'edit',
         text: 'Edit',
       },
       {
         link: `/admin/table-pages/${tableName}/create`,
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>',
+        icon: 'plus',
         text: 'Create',
       },
     ];
@@ -727,6 +757,8 @@ export const getRowEdit = async (req, res) => {
       row: mappedData,
       columns: config.columns,
       actions,
+      isRowPage: true,
+      rowActions: actions,
     });
   } catch (error) {
     logger.error('Error loading row edit:', error);
@@ -751,12 +783,12 @@ export const getRowCreate = async (req, res) => {
     const actions = [
       {
         link: `/admin/table-pages/${tableName}`,
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-arrow-left" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="M12 19l-7-7 7-7"></path></svg>',
+        icon: 'arrow-left',
         text: 'Go Back',
       },
       {
         link: `/admin/table-pages/${tableName}/create`,
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>',
+        icon: 'plus',
         text: 'Create',
       },
     ];
@@ -769,6 +801,8 @@ export const getRowCreate = async (req, res) => {
       row: {}, // Empty row for new creation
       columns: config.columns,
       actions,
+      isRowPage: true,
+      rowActions: actions,
     });
   } catch (error) {
     logger.error('Error loading row create:', error);

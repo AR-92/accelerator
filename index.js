@@ -4,10 +4,12 @@ import config from './src/config/index.js';
 import logger from './src/utils/logger.js';
 import apiRoutes from './src/controllers/api/index.js';
 import adminRoutes from './src/controllers/index.js';
+import authRoutes from './src/controllers/auth/index.js';
 
 // Register routes
 apiRoutes(app);
 adminRoutes(app);
+authRoutes(app);
 
 // Start server
 const server = app.listen(config.port, () => {

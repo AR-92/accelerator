@@ -132,18 +132,18 @@
        </ul>
        {{/if}}
 
-       {{#if isRowPage}}
-       <ul class="space-y-1 mt-4">
-         {{#each rowActions}}
-         <li>
-           <a href="{{link}}" class="flex items-center px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
-             {{{icon}}}
-             {{text}}
-           </a>
-         </li>
-         {{/each}}
-       </ul>
-       {{/if}}
+        {{#if isRowPage}}
+        <ul class="space-y-1 mt-4">
+          {{#each rowActions}}
+          <li>
+            <a href="{{link}}" class="flex items-center px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+              {{{icon icon size='16' class='w-4 h-4 mr-3'}}}
+              {{text}}
+            </a>
+          </li>
+          {{/each}}
+        </ul>
+        {{/if}}
      </nav>
    </div>
  </div>

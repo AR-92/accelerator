@@ -1,7 +1,7 @@
 import rateLimit from 'express-rate-limit';
 import config from '../../config/index.js';
 
-// Rate limiting
+// General rate limiting
 export const rateLimiter = rateLimit({
   windowMs: config.rateLimit.windowMs,
   max: config.rateLimit.max,
@@ -11,4 +11,18 @@ export const rateLimiter = rateLimit({
   },
   standardHeaders: true,
   legacyHeaders: false,
+});
+
+// Stricter rate limiting for authentication endpoints
+export const authRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 attempts per 15 minutes for auth endpoints
+  message: {
+    success: false,
+    error:
+      'Too many authentication attempts from this IP. Please try again in 15 minutes.',
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+  skipSuccessfulRequests: true, // Don't count successful requests
 });

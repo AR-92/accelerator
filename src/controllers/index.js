@@ -24,6 +24,8 @@ import {
   getRowCreate,
 } from './table-controller.js';
 
+import { requireAuth } from '../middleware/auth/index.js';
+
 // Re-export for backward compatibility
 export { getProfile };
 export { getProfileSettings };
@@ -48,12 +50,12 @@ export { getRowCreate };
 
 // Admin routes setup
 export default function adminRoutes(app) {
-  // Root route - redirect to main overview
+  // Root route - redirect to main overview (no auth required for redirect)
   app.get('/', (req, res) => {
     res.redirect('/admin/main');
   });
 
-  // Main pages
+  // Main pages (client-side auth protection via main layout)
   app.get('/admin/profile', getProfile);
   app.get('/admin/profile-settings', getProfileSettings);
   app.get('/admin/settings', getSettings);
@@ -63,7 +65,7 @@ export default function adminRoutes(app) {
   app.get('/admin/activity', getActivity);
   app.post('/admin/logout', postLogout);
 
-  // Overview pages
+  // Overview pages (client-side auth protection via main layout)
   app.get('/admin/main', getMain);
   app.get('/admin/content-management', getContentManagement);
   app.get('/admin/system', getSystem);
@@ -73,14 +75,14 @@ export default function adminRoutes(app) {
   app.get('/admin/help', getHelp);
   app.get('/admin/financial', getFinancial);
 
-  // Generic table pages - handles all table operations
+  // Generic table pages - handles all table operations (client-side auth protection)
   // Specific routes must come before generic ones
   app.get('/admin/table-pages/:tableName/view/:id', getRowDetail);
   app.get('/admin/table-pages/:tableName/edit/:id', getRowEdit);
   app.get('/admin/table-pages/:tableName/create', getRowCreate);
   app.get('/admin/table-pages/:tableName', getGenericTable);
 
-  // Other pages
+  // Other pages (client-side auth protection)
   app.get('/admin/other-pages/profile', getProfile);
   app.get('/admin/other-pages/profile-settings', getProfileSettings);
   app.get('/admin/other-pages/settings', getSettings);

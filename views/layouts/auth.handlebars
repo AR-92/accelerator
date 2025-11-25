@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="icon" type="image/svg+xml" href="/images/favcon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/output.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- Hyperscript -->
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+     <script type="text/hyperscript">
+         def updateThemeIcon()
+           set isDark to document.documentElement.classList.contains('dark')
+           set moonSvg to '{{{icon 'moon' size='16' class='h-4 w-4'}}}'
+           set sunSvg to '{{{icon 'sun' size='16' class='h-4 w-4'}}}'
+           set iconElement to document.querySelector('#theme-toggle-icon')
+           if iconElement
+             if isDark
+               set iconElement.innerHTML to moonSvg
+             else
+               set iconElement.innerHTML to sunSvg
+             end
+           end
+         end
+
+            -- Load theme from localStorage on load and update icon
+            on load from document
+              initializeTheme()
+            end
+     </script>
+</head>
+<body>
+    {{{body}}}
+
+    <!-- JavaScript Section -->
+    <script>
+        // Theme toggle functionality for auth pages
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            const themeIcon = document.getElementById('theme-icon');
+
+            if (isDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                // Change to sun icon
+                if (themeIcon) {
+                    themeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M12 4h.01"/>
+                        <path d="M20 12h.01"/>
+                        <path d="M12 20h.01"/>
+                        <path d="M4 12h.01"/>
+                        <path d="M17.657 6.343h.01"/>
+                        <path d="M17.657 17.657h.01"/>
+                        <path d="M6.343 17.657h.01"/>
+                        <path d="M6.343 6.343h.01"/>
+                    </svg>`;
+                }
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                // Change to moon icon
+                if (themeIcon) {
+                    themeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                        <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>
+                    </svg>`;
+                }
+            }
+        }
+
+        // Initialize theme on load
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('theme-icon');
+
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                // Set moon icon
+                if (themeIcon) {
+                    themeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                        <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>
+                    </svg>`;
+                }
+            } else {
+                // Set sun icon (default)
+                if (themeIcon) {
+                    themeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M12 4h.01"/>
+                        <path d="M20 12h.01"/>
+                        <path d="M12 20h.01"/>
+                        <path d="M4 12h.01"/>
+                        <path d="M17.657 6.343h.01"/>
+                        <path d="M17.657 17.657h.01"/>
+                        <path d="M6.343 17.657h.01"/>
+                        <path d="M6.343 6.343h.01"/>
+                    </svg>`;
+                }
+            }
+        }
+
+        // Initialize theme when page loads
+        document.addEventListener('DOMContentLoaded', initializeTheme);
+    </script>
+
+    <!-- Filter functionality -->
+    <script src="/js/filters.js"></script>
+
+    <!-- Toast notifications -->
+    {{> toast}}
+</body>
+</html>

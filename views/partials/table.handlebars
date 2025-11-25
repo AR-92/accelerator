@@ -131,11 +131,11 @@
      <div class="py-1">
        {{#each ../actions}}
         {{#if (eq type 'link')}}
-        <a href="{{url}}/{{../id}}"
-          class="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
-          {{{icon}}}
-          {{label}}
-        </a>
+         <a href="{{url}}/{{../id}}"
+           class="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+           icon: {{{icon}}}
+           {{label}}
+         </a>
         {{else if (eq type 'button')}}
         <button {{#if hxGet}}hx-get="{{hxGet}}/{{../id}}"{{/if}} {{#if hxTarget}}hx-target="{{hxTarget}}"{{/if}} {{#if hxSwap}}hx-swap="{{hxSwap}}"{{/if}} {{#if onclick}}onclick="{{onclick}}({{../id}})"{{/if}}
           class="flex items-center w-full px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">

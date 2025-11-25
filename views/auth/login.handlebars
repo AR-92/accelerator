@@ -1,0 +1,266 @@
+<!-- Main Content -->
+<div class="flex-1 flex overflow-auto">
+    <section id='examples'>
+  <div class='themes-wrapper bg-background h-screen w-full mx-auto p-0'>
+    <div class='w-full h-full lg:grid lg:grid-cols-2 lg:gap-8'>
+      <div class='flex items-center'>
+        <div
+          class='flex flex-col items-center justify-center h-full gap-6 w-[350px] mx-auto'
+        >
+          <div class='grid gap-2 text-center'>
+            <h1 class='text-3xl font-bold'>Login</h1>
+            <p class='text-balance text-muted-foreground'>
+              Enter your email below to login to your account
+            </p>
+          </div>
+
+           <form
+              onsubmit='handleLogin(event)'
+              class='grid gap-4'
+            >
+             <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+            <div class='grid gap-2'>
+              <label
+                class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                for='email'
+              >
+                Email
+              </label>
+              <input
+                type='email'
+                name='email'
+                class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                id='email'
+                placeholder='m@example.com'
+                required=''
+              />
+            </div>
+
+             <div class='grid gap-2'>
+               <div class='flex items-center gap-6'>
+                 <label
+                   class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                   for='password'
+                 >
+                   Password
+                 </label>
+                 <a
+                   class='ml-auto inline-block text-sm underline text-muted-foreground hover:text-foreground'
+                   href='/forgot-password'
+                 >
+                   Forgot your password?
+                 </a>
+               </div>
+               <input
+                 type='password'
+                 name='password'
+                 class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                 id='password'
+                 placeholder='Enter your password'
+                 required=''
+               />
+             </div>
+
+             <div class='flex items-center space-x-2'>
+               <input
+                 type='checkbox'
+                 name='remember'
+                 id='remember'
+                 class='h-4 w-4 rounded border border-input'
+               />
+               <label
+                 class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                 for='remember'
+               >
+                 Remember me for 30 days
+               </label>
+             </div>
+
+            <div class='w-full'>
+              <button
+                type='submit'
+                id='login-button'
+                class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-center transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full'
+              >
+                <span id='login-text'>Login</span>
+                <div id='login-spinner' class='hidden ml-2 animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground'></div>
+              </button>
+            </div>
+
+          </form>
+
+          <div class='mt-4 text-center text-sm'>
+            Don't have an account?
+            <a
+              class='underline text-muted-foreground hover:text-foreground'
+              href='/auth/signup'
+            >Sign up</a>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class='flex items-center justify-center h-[calc(100vh-100px)] bg-muted p-4 rounded-md overflow-hidden place-self-center'
+      >
+        <img
+          alt='Image'
+          loading='lazy'
+          width='1920'
+          height='1080'
+          decoding='async'
+          data-nimg='1'
+          class='w-full h-full'
+          style='color: transparent'
+          src='/images/accelerator_logo.svg'
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+  <script>
+    let supabase = null;
+
+    function initSupabase() {
+      if (window.supabase && !supabase) {
+        const supabaseUrl = '{{supabaseUrl}}';
+        const supabaseKey = '{{supabaseKey}}';
+        supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+      }
+    }
+
+    // Initialize Supabase when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      initSupabase();
+      // Check if user is already logged in with retry logic
+      let authCheckAttempts = 0;
+      const maxAuthCheckAttempts = 5;
+
+      const checkAuthStatus = () => {
+        authCheckAttempts++;
+        console.log(`Auth check attempt ${authCheckAttempts}/${maxAuthCheckAttempts}`);
+        if (supabase) {
+          supabase.auth.getSession().then(({ data: { session } }) => {
+            console.log('Session check result:', session ? 'session exists' : 'no session', session?.user ? 'with user' : 'no user');
+            if (session && session.user) {
+              // User is already logged in, redirect to admin
+              console.log('User is logged in, redirecting to admin');
+              showToast('You are already logged in. Redirecting...', 'success');
+              setTimeout(() => window.location.href = '/admin/main', 1000);
+            } else if (authCheckAttempts < maxAuthCheckAttempts) {
+              // Try again after a short delay
+              setTimeout(checkAuthStatus, 200);
+            } else {
+              console.log('Auth check completed, no session found');
+            }
+          }).catch(error => {
+            console.error('Auth check error:', error);
+            if (authCheckAttempts < maxAuthCheckAttempts) {
+              setTimeout(checkAuthStatus, 200);
+            }
+          });
+        } else if (authCheckAttempts < maxAuthCheckAttempts) {
+          console.log('Supabase not ready, retrying...');
+          setTimeout(checkAuthStatus, 200);
+        } else {
+          console.log('Supabase not available after max attempts');
+        }
+      };
+
+      setTimeout(checkAuthStatus, 300); // Initial delay for Supabase to initialize
+    });
+
+    function handleLogin(event) {
+      event.preventDefault();
+
+      if (!supabase) {
+        initSupabase();
+      }
+
+      if (!supabase) {
+        showToast('Authentication service is not available. Please refresh the page.', 'error');
+        return;
+      }
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const remember = document.getElementById('remember').checked;
+
+      // Show loading state
+      const loginButton = document.getElementById('login-button');
+      const loginText = document.getElementById('login-text');
+      const loginSpinner = document.getElementById('login-spinner');
+
+      loginButton.disabled = true;
+      loginText.textContent = 'Logging in...';
+      loginSpinner.classList.remove('hidden');
+
+      const signInOptions = { email, password };
+      if (remember) {
+        // For remember me, we can set a longer session or use persistent storage
+        // Supabase handles this automatically, but we can ensure localStorage is used
+        localStorage.setItem('supabase.auth.remember', 'true');
+      }
+
+      supabase.auth.signInWithPassword(signInOptions).then(({ data, error }) => {
+        if (error) {
+          // Check for network-related errors
+          if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch') || !navigator.onLine) {
+            showToast('Network connection issue. Please check your internet connection and try again.', 'error');
+          } else {
+            showToast(error.message, 'error');
+          }
+          // Reset loading state
+          loginButton.disabled = false;
+          loginText.textContent = 'Login';
+          loginSpinner.classList.add('hidden');
+        } else {
+          showToast('Login successful! Redirecting...', 'success');
+          // Wait for session to be established, then redirect
+          let attempts = 0;
+          const maxAttempts = 10;
+          const checkSession = () => {
+            attempts++;
+            supabase.auth.getSession().then(({ data: { session } }) => {
+              if (session) {
+                window.location.href = '/admin/main';
+              } else if (attempts < maxAttempts) {
+                setTimeout(checkSession, 300);
+              } else {
+                showToast('Login successful but session not established. Please refresh and try again.', 'warning');
+                // Reset loading state
+                loginButton.disabled = false;
+                loginText.textContent = 'Login';
+                loginSpinner.classList.add('hidden');
+              }
+            }).catch(sessionError => {
+              console.error('Session check error:', sessionError);
+              if (sessionError.message.includes('fetch') || sessionError.message.includes('network') || !navigator.onLine) {
+                showToast('Network connection issue during session check. Please try logging in again.', 'error');
+              } else {
+                showToast('Session check failed. Please refresh and try again.', 'error');
+              }
+              // Reset loading state
+              loginButton.disabled = false;
+              loginText.textContent = 'Login';
+              loginSpinner.classList.add('hidden');
+            });
+          };
+          setTimeout(checkSession, 500);
+        }
+      }).catch(error => {
+        console.error('Login error:', error);
+        // Check for network errors
+        if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch') || !navigator.onLine) {
+          showToast('Network connection issue. Please check your internet connection and try again.', 'error');
+        } else {
+          showToast('An unexpected error occurred. Please try again.', 'error');
+        }
+        // Reset loading state
+        loginButton.disabled = false;
+        loginText.textContent = 'Login';
+        loginSpinner.classList.add('hidden');
+      });
+    }
+  </script>
+</div>

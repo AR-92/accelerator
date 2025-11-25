@@ -1,0 +1,286 @@
+<!-- Main Content -->
+<div class="flex-1 flex overflow-auto">
+    <section id='examples'>
+  <div class='themes-wrapper bg-background h-screen w-full mx-auto p-0'>
+    <div class='w-full h-full lg:grid lg:grid-cols-2 lg:gap-8'>
+      <div class='flex items-center'>
+        <div
+          class='flex flex-col items-center justify-center h-full gap-6 w-[350px] mx-auto'
+        >
+          <div class='grid gap-2 text-center'>
+            <h1 class='text-3xl font-bold'>Sign Up</h1>
+            <p class='text-balance text-muted-foreground'>
+              Enter your information to create an account
+            </p>
+          </div>
+
+           <form
+             onsubmit='handleSignup(event)'
+             class='grid gap-4'
+           >
+            <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+            <div class='grid grid-cols-2 gap-8'>
+              <div class='grid gap-2'>
+                <label
+                  class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                  for='first-name'
+                >
+                  First name
+                </label>
+                <input
+                  name='firstName'
+                  class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                  id='first-name'
+                  placeholder='Max'
+                  required=''
+                />
+              </div>
+
+              <div class='grid gap-2'>
+                <label
+                  class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                  for='last-name'
+                >
+                  Last name
+                </label>
+                <input
+                  name='lastName'
+                  class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                  id='last-name'
+                  placeholder='Robinson'
+                  required=''
+                />
+              </div>
+            </div>
+
+            <div class='grid gap-2'>
+              <label
+                class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                for='email'
+              >
+                Email
+              </label>
+              <input
+                type='email'
+                name='email'
+                class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                id='email'
+                placeholder='m@example.com'
+                required=''
+              />
+            </div>
+
+            <div class='grid gap-2'>
+              <label
+                class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                for='password'
+              >
+                Password
+              </label>
+              <input
+                type='password'
+                name='password'
+                class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                id='password'
+                placeholder='Enter your password'
+                required=''
+              />
+            </div>
+
+            <div class='grid gap-2'>
+              <label
+                class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                for='confirm-password'
+              >
+                Confirm Password
+              </label>
+              <input
+                type='password'
+                name='confirmPassword'
+                class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                id='confirm-password'
+                placeholder='Confirm your password'
+                required=''
+              />
+            </div>
+
+            <div class='flex items-center space-x-2'>
+              <input
+                type='checkbox'
+                name='terms'
+                id='terms'
+                class='h-4 w-4 rounded border border-input'
+                required=''
+              />
+              <label
+                class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                for='terms'
+              >
+                I agree to the
+                <a href='/pages/terms' class='underline'>Terms and Conditions</a>
+              </label>
+            </div>
+
+            <button
+              id='signup-button'
+              class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-center transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full'
+              type='submit'
+            >
+              <span id='signup-text'>Create an account</span>
+              <div id='signup-spinner' class='hidden ml-2 animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground'></div>
+            </button>
+
+          </form>
+
+          <div class='mt-4 text-center text-sm'>
+            Already have an account?
+            <a
+              class='underline text-muted-foreground hover:text-foreground'
+              href='/auth'
+            >Sign in</a>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class='flex items-center justify-center h-[calc(100vh-100px)] bg-muted p-4 rounded-md overflow-hidden place-self-center'
+      >
+        <img
+          alt='Image'
+          loading='lazy'
+          width='1920'
+          height='1080'
+          decoding='async'
+          data-nimg='1'
+          class='w-full h-full'
+          style='color: transparent'
+          src='/images/accelerator_logo.svg'
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+  <script>
+    let supabase = null;
+
+    function initSupabase() {
+      if (window.supabase && !supabase) {
+        const supabaseUrl = '{{supabaseUrl}}';
+        const supabaseKey = '{{supabaseKey}}';
+        supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+      }
+    }
+
+    // Initialize Supabase when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      initSupabase();
+      // Check if user is already logged in with retry logic
+      let authCheckAttempts = 0;
+      const maxAuthCheckAttempts = 5;
+
+      const checkAuthStatus = () => {
+        authCheckAttempts++;
+        if (supabase) {
+          supabase.auth.getSession().then(({ data: { session } }) => {
+            if (session && session.user) {
+              // User is already logged in, redirect to admin
+              showToast('You are already logged in. Redirecting...', 'success');
+              setTimeout(() => window.location.href = '/admin/main', 1000);
+            } else if (authCheckAttempts < maxAuthCheckAttempts) {
+              // Try again after a short delay
+              setTimeout(checkAuthStatus, 200);
+            }
+          }).catch(error => {
+            console.error('Auth check error:', error);
+            if (authCheckAttempts < maxAuthCheckAttempts) {
+              setTimeout(checkAuthStatus, 200);
+            }
+          });
+        } else if (authCheckAttempts < maxAuthCheckAttempts) {
+          setTimeout(checkAuthStatus, 200);
+        }
+      };
+
+      setTimeout(checkAuthStatus, 300); // Initial delay for Supabase to initialize
+    });
+
+    function handleSignup(event) {
+      event.preventDefault();
+
+      if (!supabase) {
+        initSupabase();
+      }
+
+      if (!supabase) {
+        showToast('Authentication service is not available. Please refresh the page.', 'error');
+        return;
+      }
+
+      const firstName = document.getElementById('first-name').value;
+      const lastName = document.getElementById('last-name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+      const terms = document.getElementById('terms').checked;
+
+      if (password !== confirmPassword) {
+        showToast('Passwords do not match', 'error');
+        return;
+      }
+      if (!terms) {
+        showToast('You must agree to the terms and conditions', 'error');
+        return;
+      }
+
+      // Show loading state
+      const signupButton = document.getElementById('signup-button');
+      const signupText = document.getElementById('signup-text');
+      const signupSpinner = document.getElementById('signup-spinner');
+
+      signupButton.disabled = true;
+      signupText.textContent = 'Creating account...';
+      signupSpinner.classList.remove('hidden');
+
+      supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { firstName, lastName }
+        }
+      }).then(({ data, error }) => {
+        if (error) {
+          // Check for network-related errors
+          if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch') || !navigator.onLine) {
+            showToast('Network connection issue. Please check your internet connection and try again.', 'error');
+          } else {
+            showToast(error.message, 'error');
+          }
+          // Reset loading state
+          signupButton.disabled = false;
+          signupText.textContent = 'Create an account';
+          signupSpinner.classList.add('hidden');
+        } else {
+          showToast('Account created successfully! Please check your email to confirm your account.', 'success');
+          // Reset loading state but keep success message
+          signupButton.disabled = false;
+          signupText.textContent = 'Create an account';
+          signupSpinner.classList.add('hidden');
+          // Stay on signup page to show confirmation message
+        }
+      }).catch(error => {
+        console.error('Signup error:', error);
+        // Check for network errors
+        if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch') || !navigator.onLine) {
+          showToast('Network connection issue. Please check your internet connection and try again.', 'error');
+        } else {
+          showToast('An unexpected error occurred. Please try again.', 'error');
+        }
+        // Reset loading state
+        signupButton.disabled = false;
+        signupText.textContent = 'Create an account';
+        signupSpinner.classList.add('hidden');
+      });
+    }
+  </script>
+</div>

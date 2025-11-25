@@ -15,6 +15,8 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <!-- Hyperscript -->
     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    <!-- Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
      <script type="text/hyperscript">
          def updateThemeIcon()
            set isDark to document.documentElement.classList.contains('dark')
@@ -44,7 +46,17 @@
      </script>
 </head>
 <body>
-    <div class="min-h-screen">
+     <!-- Auth loading screen -->
+     <div id="auth-loading" class="fixed inset-0 bg-background z-50 flex items-center justify-center">
+         <div class="text-center">
+             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+             <p class="text-muted-foreground">Checking authentication...</p>
+             <p class="text-sm text-muted-foreground mt-2">If this takes too long, <button onclick="forceLogout()" class="underline hover:text-foreground">click here to logout</button></p>
+         </div>
+     </div>
+
+    <!-- Main content (hidden initially) -->
+    <div id="main-content" class="min-h-screen hidden">
         {{> nav}}
         {{> filter-nav}}
         <div class="flex">
@@ -464,11 +476,276 @@
             });
         }
 
+        // Force logout function for stuck authentication (global scope)
+        async function forceLogout() {
+            console.log('Force logout triggered');
+            try {
+                // Properly sign out from Supabase
+                if (supabase) {
+                    await supabase.auth.signOut();
+                    console.log('Successfully signed out from Supabase');
+                }
+            } catch (error) {
+                console.error('Error during force logout:', error);
+            }
+
+            // Clear any cached data as fallback
+            if (typeof localStorage !== 'undefined') {
+                localStorage.clear();
+            }
+            if (typeof sessionStorage !== 'undefined') {
+                sessionStorage.clear();
+            }
+
+            // Redirect to login
+            window.location.href = '/auth';
+        }
 
     </script>
 
     <!-- Filter functionality -->
     <script src="/js/filters.js"></script>
+
+    <!-- Supabase Auth -->
+    <script>
+        let supabase = null;
+
+        function initSupabase() {
+            if (window.supabase && !supabase) {
+                try {
+                    // Initialize Supabase client
+                    const supabaseUrl = 'https://wgmuxgylmvrsttdxwarw.supabase.co';
+                    const supabaseKey = 'sb_publishable_OvwrqcwJptCiC-Dz-_eSVg_hAVtpZJI';
+                    supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+                    console.log('Supabase client initialized successfully');
+                } catch (error) {
+                    console.error('Failed to initialize Supabase client:', error);
+                }
+            } else if (!window.supabase) {
+                console.log('Supabase script not loaded yet');
+            }
+        }
+
+        // Initialize Supabase when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initSupabase();
+            // Also try to initialize after a short delay in case the script loads later
+            setTimeout(initSupabase, 1000);
+        });
+
+        // Function to update user info in nav
+        function updateUserInfo(user) {
+            const userNameElement = document.getElementById('user-name');
+            if (userNameElement) {
+                if (user) {
+                    const displayName = user.user_metadata?.firstName
+                        ? `${user.user_metadata.firstName} ${user.user_metadata.lastName || ''}`.trim()
+                        : user.email || 'User';
+                    userNameElement.textContent = displayName;
+                } else {
+                    userNameElement.textContent = 'Not logged in';
+                }
+            }
+        }
+
+        // Check auth state on page load
+        function setupAuthListeners() {
+            if (!supabase) {
+                initSupabase();
+            }
+
+            if (supabase) {
+                supabase.auth.onAuthStateChange((event, session) => {
+                    console.log('Auth state changed:', event, session ? 'session exists' : 'no session', session?.user ? 'with user' : 'no user');
+                    updateUserInfo(session?.user);
+                    if (event === 'SIGNED_OUT') {
+                        console.log('User signed out, redirecting to login');
+                        showToast('You have been logged out', 'info');
+                        window.location.href = '/auth';
+                    } else if (!session || !session.user) {
+                        // User is not authenticated
+                        if (window.location.pathname.startsWith('/admin')) {
+                            console.log('No session found, redirecting to login');
+                            window.location.href = '/auth';
+                        }
+                    }
+                });
+
+                // Check current session immediately
+                supabase.auth.getSession().then(({ data: { session } }) => {
+                    console.log('Initial session check:', session ? 'session exists' : 'no session', session?.user ? 'with user' : 'no user');
+                    updateUserInfo(session?.user);
+                    if (!session || !session.user) {
+                        if (window.location.pathname.startsWith('/admin')) {
+                            console.log('No session found, redirecting to login');
+                            setTimeout(() => window.location.href = '/auth', 100);
+                        }
+                    }
+                }).catch(error => {
+                    console.error('Session check error:', error);
+                    if (window.location.pathname.startsWith('/admin')) {
+                        setTimeout(() => window.location.href = '/auth', 100);
+                    }
+                });
+            }
+        }
+
+        // Logout function
+        async function handleLogout() {
+            try {
+                showToast('Logging out...', 'info');
+
+                if (supabase) {
+                    // Sign out from Supabase
+                    let { error } = await supabase.auth.signOut();
+                    if (error) {
+                        console.error('Logout error:', error);
+                        showToast('Logout error: ' + error.message, 'error');
+                    } else {
+                        console.log('Successfully signed out from Supabase');
+                        showToast('Logged out successfully', 'success');
+                    }
+                }
+
+                // Clear any cached data
+                if (typeof localStorage !== 'undefined') {
+                    localStorage.clear();
+                }
+                if (typeof sessionStorage !== 'undefined') {
+                    sessionStorage.clear();
+                }
+
+                // Redirect to login page immediately
+                window.location.href = '/auth';
+            } catch (error) {
+                console.error('Logout error:', error);
+                showToast('Logout failed', 'error');
+                // Still redirect even if there's an error
+                window.location.href = '/auth';
+            }
+        }
+
+        // Check auth and show content with retry logic
+        async function checkAuthAndShowContent(retryCount = 0) {
+            const authLoading = document.getElementById('auth-loading');
+            const mainContent = document.getElementById('main-content');
+            const maxRetries = 10;
+
+            if (window.location.pathname.startsWith('/admin')) {
+                // For admin pages, check authentication
+                if (supabase) {
+                    try {
+                        console.log('Checking authentication session...');
+                        const { data: { session }, error } = await supabase.auth.getSession();
+
+                        if (error) {
+                            console.error('Auth check error:', error);
+                            // Check if it's a network error
+                            if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch') || !navigator.onLine) {
+                                showToast('Network connection issue. Please check your internet connection and try again.', 'error');
+                                // Show retry option
+                                setTimeout(() => {
+                                    if (confirm('Network error detected. Would you like to retry?')) {
+                                        window.location.reload();
+                                    } else {
+                                        window.location.href = '/auth';
+                                    }
+                                }, 2000);
+                            } else {
+                                console.log('Auth error, redirecting to login');
+                                window.location.href = '/auth';
+                            }
+                            return;
+                        }
+
+                        if (!session || !session.user) {
+                            console.log('No session found, redirecting to login');
+                            window.location.href = '/auth';
+                            return;
+                        }
+
+                        // User is authenticated, show content
+                        console.log('User authenticated, showing admin content');
+                        authLoading.classList.add('hidden');
+                        mainContent.classList.remove('hidden');
+
+                        // Setup auth listeners for ongoing monitoring
+                        setupAuthListeners();
+                    } catch (error) {
+                        console.error('Auth check failed:', error);
+                        // Check if it's a network error
+                        if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch') || !navigator.onLine) {
+                            showToast('Network connection issue. Please check your internet connection and try again.', 'error');
+                            // Show retry option
+                            setTimeout(() => {
+                                if (confirm('Network error detected. Would you like to retry?')) {
+                                    window.location.reload();
+                                } else {
+                                    window.location.href = '/auth';
+                                }
+                            }, 2000);
+                        } else {
+                            console.log('Auth check exception, redirecting to login');
+                            window.location.href = '/auth';
+                        }
+                    }
+                } else {
+                    // Supabase not loaded yet, retry
+                    if (retryCount < maxRetries) {
+                        console.log(`Supabase not ready, retrying... (${retryCount + 1}/${maxRetries})`);
+                        setTimeout(() => checkAuthAndShowContent(retryCount + 1), 500);
+                    } else {
+                        console.log('Supabase failed to load after max retries, redirecting');
+                        showToast('Authentication service failed to load. Please refresh the page.', 'error');
+                        setTimeout(() => window.location.href = '/auth', 2000);
+                    }
+                }
+            } else {
+                // For non-admin pages, show content immediately
+                authLoading.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+                setupAuthListeners();
+            }
+        }
+
+        // Session timeout configuration
+        const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes in milliseconds
+        let lastActivity = Date.now();
+
+        // Function to update last activity
+        function updateActivity() {
+            lastActivity = Date.now();
+        }
+
+        // Function to check for session timeout
+        function checkSessionTimeout() {
+            const now = Date.now();
+            if (now - lastActivity > SESSION_TIMEOUT) {
+                console.log('Session timeout reached, logging out');
+                showToast('Your session has expired due to inactivity. Please log in again.', 'info');
+                handleLogout();
+            }
+        }
+
+        // Set up activity listeners
+        function setupActivityListeners() {
+            // List of events that indicate user activity
+            const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
+
+            events.forEach(event => {
+                document.addEventListener(event, updateActivity, true);
+            });
+
+            // Check for timeout every minute
+            setInterval(checkSessionTimeout, 60 * 1000);
+        }
+
+        // Check auth on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(checkAuthAndShowContent, 100); // Small delay for Supabase to load
+            setupActivityListeners(); // Set up activity tracking
+        });
+    </script>
 
     <!-- Toast notifications -->
     {{> toast}}

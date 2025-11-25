@@ -5,6 +5,12 @@ export const securityHeaders = helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
+      connectSrc: [
+        "'self'",
+        'https://wgmuxgylmvrsttdxwarw.supabase.co',
+        'https://fonts.googleapis.com',
+        'https://fonts.gstatic.com',
+      ],
       styleSrc: [
         "'self'",
         "'unsafe-inline'",
