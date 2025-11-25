@@ -401,6 +401,60 @@ export const deleteIdea = async (req, res) => {
   }
 };
 
+// Bulk action for ideas
+export const bulkActionIdeas = async (req, res) => {
+  try {
+    const { action, ids, status } = req.body;
+
+    if (!action || !ids || !Array.isArray(ids)) {
+      return res
+        .status(400)
+        .json({ success: false, error: 'Invalid request data' });
+    }
+
+    switch (action) {
+      case 'delete':
+        const { error: deleteError } = await databaseService.supabase
+          .from('ideas')
+          .delete()
+          .in('id', ids);
+
+        if (deleteError) throw deleteError;
+
+        logger.info(`Bulk deleted ${ids.length} ideas`);
+        break;
+
+      case 'update_status':
+        if (!status) {
+          return res.status(400).json({
+            success: false,
+            error: 'Status is required for update_status action',
+          });
+        }
+
+        const { error: updateError } = await databaseService.supabase
+          .from('ideas')
+          .update({ status })
+          .in('id', ids);
+
+        if (updateError) throw updateError;
+
+        logger.info(`Bulk updated status to ${status} for ${ids.length} ideas`);
+        break;
+
+      default:
+        return res
+          .status(400)
+          .json({ success: false, error: 'Invalid action' });
+    }
+
+    res.json({ success: true, message: 'Bulk action completed successfully' });
+  } catch (error) {
+    logger.error('Error performing bulk action on ideas:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
 // Route setup function
 export default function apiRoutes(app) {
   app.get('/api/todos', getTodos);
@@ -420,4 +474,5 @@ export default function apiRoutes(app) {
   app.post('/api/ideas', createIdea);
   app.put('/api/ideas/:id', updateIdea);
   app.delete('/api/ideas/:id', deleteIdea);
+  app.post('/api/ideas/bulk-action', bulkActionIdeas);
 }

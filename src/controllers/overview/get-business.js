@@ -6,37 +6,485 @@ export const getBusiness = async (req, res) => {
   try {
     logger.info('Admin business section overview accessed');
 
-    // Get business stats
-    const { count: totalModels, error: modelError } =
-      await databaseService.supabase
-        .from('business_model')
-        .select('*', { count: 'exact', head: true });
-    if (modelError) throw modelError;
+    // Fetch all stats in parallel
+    const [
+      { count: totalModels },
+      { count: activeModels },
+      { count: inactiveModels },
+      { count: totalPlans },
+      { count: completedPlans },
+      { count: draftPlans },
+      { count: totalFinancialModels },
+      { count: activeFinancialModels },
+      { count: inactiveFinancialModels },
+      { count: totalPitchdecks },
+      { count: approvedPitchdecks },
+      { count: pendingPitchdecks },
+      { count: totalValuations },
+      { count: completedValuations },
+      { count: pendingValuations },
+      { count: totalFunding },
+      { count: securedFunding },
+      { count: seekingFunding },
+      { count: totalTeams },
+      { count: completeTeams },
+      { count: incompleteTeams },
+      { count: totalLegal },
+      { count: compliantLegal },
+      { count: pendingLegal },
+      { count: totalMarketing },
+      { count: activeMarketing },
+      { count: inactiveMarketing },
+      { count: totalCorporate },
+      { count: activeCorporate },
+      { count: inactiveCorporate },
+      { count: totalEnterprises },
+      { count: activeEnterprises },
+      { count: inactiveEnterprises },
+    ] = await Promise.all([
+      databaseService.supabase
+        .from('business_models')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('business_models')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'active'),
+      databaseService.supabase
+        .from('business_models')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'inactive'),
+      databaseService.supabase
+        .from('business_plans')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('business_plans')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'completed'),
+      databaseService.supabase
+        .from('business_plans')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'draft'),
+      databaseService.supabase
+        .from('financial_models')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('financial_models')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'active'),
+      databaseService.supabase
+        .from('financial_models')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'inactive'),
+      databaseService.supabase
+        .from('pitch_deck')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('pitch_deck')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'approved'),
+      databaseService.supabase
+        .from('pitch_deck')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'pending'),
+      databaseService.supabase
+        .from('valuation')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('valuation')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'completed'),
+      databaseService.supabase
+        .from('valuation')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'pending'),
+      databaseService.supabase
+        .from('fundings')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('fundings')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'secured'),
+      databaseService.supabase
+        .from('fundings')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'seeking'),
+      databaseService.supabase
+        .from('team')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('team')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'complete'),
+      databaseService.supabase
+        .from('team')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'incomplete'),
+      databaseService.supabase
+        .from('legal')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('legal')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'compliant'),
+      databaseService.supabase
+        .from('legal')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'pending'),
+      databaseService.supabase
+        .from('marketing')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('marketing')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'active'),
+      databaseService.supabase
+        .from('marketing')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'inactive'),
+      databaseService.supabase
+        .from('corporates')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('corporates')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'active'),
+      databaseService.supabase
+        .from('corporates')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'inactive'),
+      databaseService.supabase
+        .from('enterprises')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('enterprises')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'active'),
+      databaseService.supabase
+        .from('enterprises')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'inactive'),
+    ]);
 
-    const { count: totalPlans, error: planError } =
-      await databaseService.supabase
-        .from('business_plan')
-        .select('*', { count: 'exact', head: true });
-    if (planError) throw planError;
+    logger.info(
+      `Fetched business stats: ${totalModels} models, ${totalPlans} plans, etc.`
+    );
 
-    const stats = {
-      totalModels: totalModels || 0,
-      totalPlans: totalPlans || 0,
-    };
+    const statsGrid = [
+      {
+        icon: 'table',
+        title: 'Business Models',
+        link: '/admin/table-pages/business-model',
+        items: [
+          { label: 'Total', value: totalModels || 0 },
+          {
+            label: 'Active',
+            value: activeModels || 0,
+            color: 'text-green-600',
+          },
+          {
+            label: 'Inactive',
+            value: inactiveModels || 0,
+            color: 'text-gray-600',
+          },
+        ],
+      },
+      {
+        icon: 'file-text',
+        title: 'Business Plans',
+        link: '/admin/table-pages/business-plan',
+        items: [
+          { label: 'Total', value: totalPlans || 0 },
+          {
+            label: 'Completed',
+            value: completedPlans || 0,
+            color: 'text-green-600',
+          },
+          { label: 'Draft', value: draftPlans || 0, color: 'text-orange-600' },
+        ],
+      },
+      {
+        icon: 'credit-card',
+        title: 'Financial Models',
+        link: '/admin/table-pages/financial-model',
+        items: [
+          { label: 'Total', value: totalFinancialModels || 0 },
+          {
+            label: 'Active',
+            value: activeFinancialModels || 0,
+            color: 'text-green-600',
+          },
+          {
+            label: 'Inactive',
+            value: inactiveFinancialModels || 0,
+            color: 'text-gray-600',
+          },
+        ],
+      },
+      {
+        icon: 'file-text',
+        title: 'Pitch Decks',
+        link: '/admin/table-pages/pitchdeck',
+        items: [
+          { label: 'Total', value: totalPitchdecks || 0 },
+          {
+            label: 'Approved',
+            value: approvedPitchdecks || 0,
+            color: 'text-green-600',
+          },
+          {
+            label: 'Pending',
+            value: pendingPitchdecks || 0,
+            color: 'text-orange-600',
+          },
+        ],
+      },
+      {
+        icon: 'dollar-sign',
+        title: 'Valuations',
+        link: '/admin/table-pages/valuation',
+        items: [
+          { label: 'Total', value: totalValuations || 0 },
+          {
+            label: 'Completed',
+            value: completedValuations || 0,
+            color: 'text-green-600',
+          },
+          {
+            label: 'Pending',
+            value: pendingValuations || 0,
+            color: 'text-orange-600',
+          },
+        ],
+      },
+      {
+        icon: 'wallet',
+        title: 'Fundings',
+        link: '/admin/table-pages/funding',
+        items: [
+          { label: 'Total', value: totalFunding || 0 },
+          {
+            label: 'Secured',
+            value: securedFunding || 0,
+            color: 'text-green-600',
+          },
+          {
+            label: 'Seeking',
+            value: seekingFunding || 0,
+            color: 'text-orange-600',
+          },
+        ],
+      },
+      {
+        icon: 'users',
+        title: 'Teams',
+        link: '/admin/table-pages/team',
+        items: [
+          { label: 'Total', value: totalTeams || 0 },
+          {
+            label: 'Complete',
+            value: completeTeams || 0,
+            color: 'text-green-600',
+          },
+          {
+            label: 'Incomplete',
+            value: incompleteTeams || 0,
+            color: 'text-orange-600',
+          },
+        ],
+      },
+      {
+        icon: 'shield-check',
+        title: 'Legal',
+        link: '/admin/table-pages/legal',
+        items: [
+          { label: 'Total', value: totalLegal || 0 },
+          {
+            label: 'Compliant',
+            value: compliantLegal || 0,
+            color: 'text-green-600',
+          },
+          {
+            label: 'Pending',
+            value: pendingLegal || 0,
+            color: 'text-orange-600',
+          },
+        ],
+      },
+      {
+        icon: 'globe',
+        title: 'Marketing',
+        link: '/admin/table-pages/marketing',
+        items: [
+          { label: 'Total', value: totalMarketing || 0 },
+          {
+            label: 'Active',
+            value: activeMarketing || 0,
+            color: 'text-green-600',
+          },
+          {
+            label: 'Inactive',
+            value: inactiveMarketing || 0,
+            color: 'text-gray-600',
+          },
+        ],
+      },
+      {
+        icon: 'building-2',
+        title: 'Corporates',
+        link: '/admin/table-pages/corporate',
+        items: [
+          { label: 'Total', value: totalCorporate || 0 },
+          {
+            label: 'Active',
+            value: activeCorporate || 0,
+            color: 'text-green-600',
+          },
+          {
+            label: 'Inactive',
+            value: inactiveCorporate || 0,
+            color: 'text-gray-600',
+          },
+        ],
+      },
+      {
+        icon: 'building-2',
+        title: 'Enterprises',
+        link: '/admin/table-pages/enterprises',
+        items: [
+          { label: 'Total', value: totalEnterprises || 0 },
+          {
+            label: 'Active',
+            value: activeEnterprises || 0,
+            color: 'text-green-600',
+          },
+          {
+            label: 'Inactive',
+            value: inactiveEnterprises || 0,
+            color: 'text-gray-600',
+          },
+        ],
+      },
+    ];
 
-    res.render('admin/other-pages/business', {
+    const quickActions = [
+      {
+        link: '/admin/table-pages/business-model',
+        icon: 'table',
+        text: 'Business Models',
+      },
+      {
+        link: '/admin/table-pages/business-plan',
+        icon: 'file-text',
+        text: 'Business Plans',
+      },
+      {
+        link: '/admin/table-pages/financial-model',
+        icon: 'credit-card',
+        text: 'Financial Models',
+      },
+      {
+        link: '/admin/table-pages/pitchdeck',
+        icon: 'file-text',
+        text: 'Pitch Decks',
+      },
+      {
+        link: '/admin/table-pages/valuation',
+        icon: 'dollar-sign',
+        text: 'Valuations',
+      },
+      { link: '/admin/table-pages/funding', icon: 'wallet', text: 'Fundings' },
+      { link: '/admin/table-pages/team', icon: 'users', text: 'Teams' },
+      { link: '/admin/table-pages/legal', icon: 'shield-check', text: 'Legal' },
+      {
+        link: '/admin/table-pages/marketing',
+        icon: 'globe',
+        text: 'Marketing',
+      },
+      {
+        link: '/admin/table-pages/corporate',
+        icon: 'building-2',
+        text: 'Corporates',
+      },
+      {
+        link: '/admin/table-pages/enterprises',
+        icon: 'building-2',
+        text: 'Enterprises',
+      },
+    ];
+
+    const filterLinks = [
+      {
+        id: 'business-models-btn',
+        href: '/admin/table-pages/business-model',
+        text: 'Business Models',
+      },
+      {
+        id: 'business-plans-btn',
+        href: '/admin/table-pages/business-plan',
+        text: 'Business Plans',
+      },
+      {
+        id: 'financial-models-btn',
+        href: '/admin/table-pages/financial-model',
+        text: 'Financial Models',
+      },
+      {
+        id: 'pitchdecks-btn',
+        href: '/admin/table-pages/pitchdeck',
+        text: 'Pitch Decks',
+      },
+      {
+        id: 'valuations-btn',
+        href: '/admin/table-pages/valuation',
+        text: 'Valuations',
+      },
+      {
+        id: 'funding-btn',
+        href: '/admin/table-pages/funding',
+        text: 'Fundings',
+      },
+      { id: 'teams-btn', href: '/admin/table-pages/team', text: 'Teams' },
+      { id: 'legal-btn', href: '/admin/table-pages/legal', text: 'Legal' },
+      {
+        id: 'marketing-btn',
+        href: '/admin/table-pages/marketing',
+        text: 'Marketing',
+      },
+      {
+        id: 'corporate-btn',
+        href: '/admin/table-pages/corporate',
+        text: 'Corporates',
+      },
+      {
+        id: 'enterprises-btn',
+        href: '/admin/table-pages/enterprises',
+        text: 'Enterprises',
+      },
+    ];
+
+    res.render('admin/overview-page', {
       title: 'Business Overview',
-      currentPage: 'business',
+      description:
+        'Overview of business models, plans, financials, and operations',
+      section: 'business',
       currentSection: 'business',
-      stats,
+      currentPage: 'business',
+      statsGrid,
+      quickActions,
+      filterLinks,
     });
   } catch (error) {
     logger.error('Error loading business overview:', error);
-    res.render('admin/other-pages/business', {
+    res.render('admin/overview-page', {
       title: 'Business Overview',
-      currentPage: 'business',
+      description:
+        'Overview of business models, plans, financials, and operations',
+      section: 'business',
       currentSection: 'business',
-      stats: {},
+      currentPage: 'business',
+      statsGrid: [],
+      quickActions: [],
+      filterLinks: [],
     });
   }
 };

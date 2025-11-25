@@ -11,7 +11,7 @@ export const getBusinessModels = async (req, res) => {
     const offset = (pageNum - 1) * limitNum;
 
     let query = databaseService.supabase
-      .from('Business Model')
+      .from('business_models')
       .select('*', { count: 'exact' });
 
     if (search) {
@@ -162,7 +162,7 @@ export const getBusinessPlans = async (req, res) => {
     const offset = (pageNum - 1) * limitNum;
 
     let query = databaseService.supabase
-      .from('Business Plan')
+      .from('business_plans')
       .select('*', { count: 'exact' });
 
     if (search) {
@@ -314,7 +314,7 @@ export const getFinancialModels = async (req, res) => {
     const offset = (pageNum - 1) * limitNum;
 
     let query = databaseService.supabase
-      .from('Financial Model')
+      .from('financial_models')
       .select('*', { count: 'exact' });
 
     if (search) {
@@ -469,7 +469,7 @@ export const getFunding = async (req, res) => {
     const offset = (pageNum - 1) * limitNum;
 
     let query = databaseService.supabase
-      .from('Funding')
+      .from('fundings')
       .select('*', { count: 'exact' });
 
     if (funding_type) {

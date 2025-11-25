@@ -202,6 +202,117 @@ export const getIdea = async (req, res) => {
   }
 };
 
+// Get create form
+export const getCreateForm = async (req, res) => {
+  const modalHtml = `
+    <div data-modal-backdrop class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" role="dialog" aria-hidden="true">
+      <div class="bg-card p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
+        <h3 class="text-lg font-semibold mb-4 text-card-foreground">Create New Idea</h3>
+        <form hx-post="/api/ideas" hx-target="#ideasTableContainer" hx-swap="beforebegin" hx-on:htmx:after-request="this.closest('[data-modal-backdrop]').classList.add('hidden'); htmx.trigger('#ideasTableContainer', 'ideaCreated')">
+          <div class="mb-4">
+            <label for="ideaTitle" class="block text-sm font-medium text-card-foreground mb-2">Title</label>
+            <input type="text" id="ideaTitle" name="title" placeholder="Enter idea title" required class="w-full px-3 py-2 border border-input rounded-md bg-background text-card-foreground focus:ring-2 focus:ring-primary focus:border-transparent">
+          </div>
+          <div class="mb-4">
+            <label for="ideaDescription" class="block text-sm font-medium text-card-foreground mb-2">Description</label>
+            <textarea id="ideaDescription" name="description" rows="3" placeholder="Describe your idea" class="w-full px-3 py-2 border border-input rounded-md bg-background text-card-foreground focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+          </div>
+          <div class="mb-4">
+            <label for="ideaUserId" class="block text-sm font-medium text-card-foreground mb-2">User ID</label>
+            <input type="number" id="ideaUserId" name="user_id" placeholder="Enter user ID" required class="w-full px-3 py-2 border border-input rounded-md bg-background text-card-foreground focus:ring-2 focus:ring-primary focus:border-transparent">
+          </div>
+          <div class="mb-4">
+            <label for="ideaType" class="block text-sm font-medium text-card-foreground mb-2">Type</label>
+            <select id="ideaType" name="type" class="w-full px-3 py-2 border border-input rounded-md bg-background text-card-foreground focus:ring-2 focus:ring-primary focus:border-transparent">
+              <option value="">Select type</option>
+              <option value="product">Product</option>
+              <option value="service">Service</option>
+              <option value="app">App</option>
+              <option value="platform">Platform</option>
+              <option value="tool">Tool</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="flex justify-end gap-2">
+            <button type="button" data-modal-close class="px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-accent rounded-md">Cancel</button>
+            <button type="submit" class="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-md">Create Idea</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
+
+  res.send(modalHtml);
+};
+
+// Get edit form for idea
+export const getEditForm = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const ideaService = serviceFactory.getIdeaService();
+    const idea = await ideaService.getIdeaById(id);
+
+    if (!idea) {
+      return res.status(404).send('<p class="text-red-500">Idea not found</p>');
+    }
+
+    const modalHtml = `
+      <div data-modal-backdrop class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" role="dialog" aria-hidden="false">
+        <div class="bg-card p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
+          <h3 class="text-lg font-semibold mb-4 text-card-foreground">Edit Idea</h3>
+          <form hx-post="/api/ideas/update" hx-target="#ideasTableContainer" hx-swap="beforebegin" hx-on:htmx:after-request="this.closest('[data-modal-backdrop]').classList.add('hidden'); htmx.trigger('#ideasTableContainer', 'ideaUpdated')">
+            <input type="hidden" name="id" value="${idea.id}">
+            <div class="mb-4">
+              <label for="editIdeaTitle" class="block text-sm font-medium text-card-foreground mb-2">Title</label>
+              <input type="text" id="editIdeaTitle" name="title" value="${idea.title || ''}" required class="w-full px-3 py-2 border border-input rounded-md bg-background text-card-foreground focus:ring-2 focus:ring-primary focus:border-transparent">
+            </div>
+            <div class="mb-4">
+              <label for="editIdeaDescription" class="block text-sm font-medium text-card-foreground mb-2">Description</label>
+              <textarea id="editIdeaDescription" name="description" rows="3" class="w-full px-3 py-2 border border-input rounded-md bg-background text-card-foreground focus:ring-2 focus:ring-primary focus:border-transparent">${idea.description || ''}</textarea>
+            </div>
+            <div class="mb-4">
+              <label for="editIdeaUserId" class="block text-sm font-medium text-card-foreground mb-2">User ID</label>
+              <input type="number" id="editIdeaUserId" name="user_id" value="${idea.user_id || ''}" class="w-full px-3 py-2 border border-input rounded-md bg-background text-card-foreground focus:ring-2 focus:ring-primary focus:border-transparent">
+            </div>
+            <div class="mb-4">
+              <label for="editIdeaType" class="block text-sm font-medium text-card-foreground mb-2">Type</label>
+              <select id="editIdeaType" name="type" class="w-full px-3 py-2 border border-input rounded-md bg-background text-card-foreground focus:ring-2 focus:ring-primary focus:border-transparent">
+                <option value="">Select type</option>
+                <option value="product" ${idea.type === 'product' ? 'selected' : ''}>Product</option>
+                <option value="service" ${idea.type === 'service' ? 'selected' : ''}>Service</option>
+                <option value="app" ${idea.type === 'app' ? 'selected' : ''}>App</option>
+                <option value="platform" ${idea.type === 'platform' ? 'selected' : ''}>Platform</option>
+                <option value="tool" ${idea.type === 'tool' ? 'selected' : ''}>Tool</option>
+                <option value="other" ${idea.type === 'other' ? 'selected' : ''}>Other</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label for="editIdeaStatus" class="block text-sm font-medium text-card-foreground mb-2">Status</label>
+              <select id="editIdeaStatus" name="status" class="w-full px-3 py-2 border border-input rounded-md bg-background text-card-foreground focus:ring-2 focus:ring-primary focus:border-transparent">
+                <option value="draft" ${idea.status === 'draft' ? 'selected' : ''}>Draft</option>
+                <option value="pending" ${idea.status === 'pending' ? 'selected' : ''}>Pending</option>
+                <option value="active" ${idea.status === 'active' ? 'selected' : ''}>Active</option>
+                <option value="approved" ${idea.status === 'approved' ? 'selected' : ''}>Approved</option>
+                <option value="rejected" ${idea.status === 'rejected' ? 'selected' : ''}>Rejected</option>
+                <option value="archived" ${idea.status === 'archived' ? 'selected' : ''}>Archived</option>
+              </select>
+            </div>
+            <div class="flex justify-end gap-2">
+              <button type="button" data-modal-close class="px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-accent rounded-md">Cancel</button>
+              <button type="submit" class="px-4 py-2 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-md">Update Idea</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    `;
+
+    res.send(modalHtml);
+  } catch (error) {
+    logger.error('Error fetching edit form:', error);
+    res.status(500).send('<p class="text-red-500">Error loading edit form</p>');
+  }
+};
+
 // Create new idea
 export const createIdea = [
   validateIdeaCreation,
@@ -624,12 +735,105 @@ const generatePaginationHtml = (page, limit, total, query) => {
   return html;
 };
 
+// Bulk action handler
+export const bulkAction = async (req, res) => {
+  try {
+    const { action, ids } = req.body;
+
+    if (!action || !ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Action and ids array are required',
+      });
+    }
+
+    const ideaService = serviceFactory.getIdeaService();
+    const results = [];
+    const errors = [];
+
+    for (const id of ids) {
+      try {
+        let result;
+        switch (action) {
+          case 'approve':
+            result = await ideaService.approveIdea(id);
+            break;
+          case 'reject':
+            result = await ideaService.rejectIdea(id);
+            break;
+          case 'delete':
+            await ideaService.deleteIdea(id);
+            result = { id, deleted: true };
+            break;
+          default:
+            throw new Error(`Unknown action: ${action}`);
+        }
+        results.push(result);
+      } catch (error) {
+        errors.push({ id, error: error.message });
+      }
+    }
+
+    logger.info(
+      `Bulk ${action} completed for ${results.length} ideas, ${errors.length} errors`
+    );
+
+    if (isHtmxRequest(req)) {
+      const successCount = results.length;
+      const errorCount = errors.length;
+      res.send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full bg-green-50 text-green-800 border border-green-200 rounded-lg px-4 py-3 text-sm">
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">
+              Bulk ${action} completed: ${successCount} successful${errorCount > 0 ? `, ${errorCount} errors` : ''}!
+            </div>
+          </div>
+        </div>
+        <script>
+          htmx.ajax('GET', window.location.pathname + window.location.search, {target: '#ideasTableContainer'});
+          htmx.ajax('GET', window.location.pathname + '/filter-nav' + window.location.search, {target: '#filter-links'});
+        </script>
+      `);
+    } else {
+      res.json({
+        success: true,
+        data: { results, errors },
+        message: `Bulk ${action} completed for ${results.length} ideas`,
+      });
+    }
+  } catch (error) {
+    logger.error('Error in bulk action:', error);
+    if (isHtmxRequest(req)) {
+      res.status(500).send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-red-50 text-red-800 border-red-200">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="flex-1">Bulk action failed: ${error.message}</div>
+            </div>
+          </div>
+        </div>
+      `);
+    } else {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+};
+
 // Route setup function
 export default function ideasRoutes(app) {
   app.get('/api/ideas', getIdeas);
   app.get('/api/ideas/:id', getIdea);
+  app.get('/api/ideas/new', getCreateForm);
+  app.get('/api/ideas/edit-form/:id', getEditForm);
   app.post('/api/ideas', ...createIdea);
   app.post('/api/ideas/update', ...updateIdea);
+  app.post('/api/ideas/bulk-action', bulkAction);
   app.put('/api/ideas/:id/approve', approveIdea);
   app.put('/api/ideas/:id/reject', rejectIdea);
   app.put('/api/ideas/:id/vote', voteIdea);

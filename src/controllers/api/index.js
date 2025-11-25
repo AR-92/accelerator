@@ -1,15 +1,14 @@
 // Import API route setup functions from organized folders
-import todosRoutes from './pages/todos.js';
+
 import todoApiRoutes from './tables/api.js';
 import accountsRoutes from './tables/accounts.js';
 
 // Admin API routes
-import dashboardRoutes from './admin/get-dashboard.js';
 import profileRoutes from './admin/get-profile.js';
 import profileSettingsRoutes from './admin/get-profile-settings.js';
 import settingsRoutes from './admin/get-settings.js';
 import systemHealthRoutes from './admin/get-system-health.js';
-import tablesRoutes from './admin/get-tables.js';
+
 import activityRoutes from './admin/get-activity.js';
 import notificationsRoutes from './admin/get-notifications.js';
 
@@ -59,14 +58,12 @@ import portfoliosRoutes from './tables/portfolios.js';
 // API routes setup
 export default function apiRoutes(app) {
   // Admin API routes
-  dashboardRoutes(app);
   profileRoutes(app);
   profileSettingsRoutes(app);
   settingsRoutes(app);
   systemHealthRoutes(app);
   notificationsRoutes(app);
-  tablesRoutes(app);
-  todosRoutes(app);
+
   activityRoutes(app);
 
   // Overview API routes

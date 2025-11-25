@@ -6,40 +6,125 @@ export const getContentManagement = async (req, res) => {
   try {
     logger.info('Admin content management section overview accessed');
 
-    // Get content management stats
-    const { count: totalContent, error: contError } =
-      await databaseService.supabase
-        .from('content')
-        .select('*', { count: 'exact', head: true });
-    if (contError) throw contError;
+    // Fetch all stats in parallel
+    const [
+      { count: totalContent },
+      { count: publishedContent },
+      { count: draftContent },
+      { count: totalLandingPages },
+      { count: activeLandingPages },
+      { count: inactiveLandingPages },
+    ] = await Promise.all([
+      databaseService.supabase
+        .from('learning_content')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('learning_content')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'published'),
+      databaseService.supabase
+        .from('learning_content')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'draft'),
+      databaseService.supabase
+        .from('landing_page_managements')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('landing_page_managements')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'active'),
+      databaseService.supabase
+        .from('landing_page_managements')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'inactive'),
+    ]);
 
-    const { count: totalPages, error: pageError } =
-      await databaseService.supabase
-        .from('landing_pages')
-        .select('*', { count: 'exact', head: true });
-    if (pageError) throw pageError;
+    const statsGrid = [
+      {
+        icon: 'file-text',
+        title: 'Learning Content',
+        link: '/admin/table-pages/content',
+        items: [
+          { label: 'Total', value: totalContent || 0 },
+          {
+            label: 'Published',
+            value: publishedContent || 0,
+            color: 'text-green-600',
+          },
+          {
+            label: 'Draft',
+            value: draftContent || 0,
+            color: 'text-orange-600',
+          },
+        ],
+      },
+      {
+        icon: 'globe',
+        title: 'Landing Page Managements',
+        link: '/admin/table-pages/landing-page',
+        items: [
+          { label: 'Total', value: totalLandingPages || 0 },
+          {
+            label: 'Active',
+            value: activeLandingPages || 0,
+            color: 'text-green-600',
+          },
+          {
+            label: 'Inactive',
+            value: inactiveLandingPages || 0,
+            color: 'text-gray-600',
+          },
+        ],
+      },
+    ];
 
-    const stats = {
-      totalContent: totalContent || 0,
-      totalPages: totalPages || 0,
-    };
+    const quickActions = [
+      {
+        link: '/admin/table-pages/content',
+        icon: 'file-text',
+        text: 'Manage Learning Content',
+      },
+      {
+        link: '/admin/table-pages/landing-page',
+        icon: 'globe',
+        text: 'Manage Landing Page Managements',
+      },
+    ];
 
-    res.render('admin/other-pages/content-management', {
+    const filterLinks = [
+      {
+        id: 'manage-content-btn',
+        href: '/admin/table-pages/content',
+        text: 'Manage Learning Content',
+      },
+      {
+        id: 'manage-landing-pages-btn',
+        href: '/admin/table-pages/landing-page',
+        text: 'Manage Landing Page Managements',
+      },
+    ];
+
+    res.render('admin/overview-page', {
       title: 'Content Management Overview',
-      currentPage: 'content-management',
+      description: 'Overview of content creation and landing page management',
+      section: 'content-management',
       currentSection: 'content-management',
-      stats,
+      currentPage: 'content-management',
+      statsGrid,
+      quickActions,
+      filterLinks,
     });
   } catch (error) {
     logger.error('Error loading content management overview:', error);
-    res.render('admin/other-pages/content-management', {
+    res.render('admin/overview-page', {
       title: 'Content Management Overview',
-      currentPage: 'content-management',
+      description: 'Overview of content creation and landing page management',
+      section: 'content-management',
       currentSection: 'content-management',
-      stats: {
-        content: { total: 0, published: 0, draft: 0 },
-        landingPages: { total: 0, active: 0, inactive: 0 },
-      },
+      currentPage: 'content-management',
+      statsGrid: [],
+      quickActions: [],
+      filterLinks: [],
     });
   }
 };

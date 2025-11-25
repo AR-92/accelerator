@@ -295,10 +295,20 @@
              });
          }
 
-         // Idea actions
-         function openCreateIdeaModal() {
-             document.getElementById('createIdeaModal').classList.remove('hidden');
-         }
+          // Idea actions
+          function openCreateIdeaModal() {
+              fetch('/api/ideas/new')
+                  .then(response => response.text())
+                  .then(html => {
+                      document.body.insertAdjacentHTML('beforeend', html);
+                      const modal = document.querySelector('[data-modal-backdrop]');
+                      if (modal) {
+                          modal.classList.remove('hidden');
+                          modal.setAttribute('aria-hidden', 'false');
+                      }
+                  })
+                  .catch(error => console.error('Error loading create idea modal:', error));
+          }
 
          function approveIdea(id) {
              htmx.ajax('PUT', `/api/ideas/${id}?status=approved`, {
@@ -459,5 +469,8 @@
 
     <!-- Filter functionality -->
     <script src="/js/filters.js"></script>
+
+    <!-- Toast notifications -->
+    {{> toast}}
 </body>
 </html>

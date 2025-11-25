@@ -24,12 +24,8 @@ export const getProfile = async (req, res) => {
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Profile Information</h3>
           <div class="space-y-4">
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">First Name</label>
-              <p class="mt-1 text-sm text-gray-900 dark:text-white">${profile.first_name || 'N/A'}</p>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Last Name</label>
-              <p class="mt-1 text-sm text-gray-900 dark:text-white">${profile.last_name || 'N/A'}</p>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Display Name</label>
+              <p class="mt-1 text-sm text-gray-900 dark:text-white">${profile.display_name || 'N/A'}</p>
             </div>
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>

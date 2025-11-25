@@ -24,7 +24,7 @@ export const getHelpCenter = async (req, res) => {
     const limitNum = parseInt(limit, 10);
 
     let query = databaseService.supabase
-      .from('help_center')
+      .from('help_centers')
       .select('*', { count: 'exact' });
 
     if (search) {
@@ -203,7 +203,7 @@ export const createHelpCenterArticle = [
       const articleData = req.body;
 
       const { data: article, error } = await databaseService.supabase
-        .from('help_center')
+        .from('help_centers')
         .insert([articleData])
         .select()
         .single();
@@ -263,7 +263,7 @@ export const updateHelpCenterArticle = [
       const updates = req.body;
 
       const { data: article, error } = await databaseService.supabase
-        .from('help_center')
+        .from('help_centers')
         .update(updates)
         .eq('id', id)
         .select()
@@ -330,7 +330,7 @@ export const deleteHelpCenterArticle = [
       // Check if article exists
       const { data: existingArticle, error: fetchError } =
         await databaseService.supabase
-          .from('help_center')
+          .from('help_centers')
           .select('*')
           .eq('id', id)
           .single();
@@ -343,7 +343,7 @@ export const deleteHelpCenterArticle = [
       }
 
       const { error } = await databaseService.supabase
-        .from('help_center')
+        .from('help_centers')
         .delete()
         .eq('id', id);
 
@@ -439,11 +439,100 @@ const generatePaginationHtml = (page, limit, total, query) => {
   return html;
 };
 
+// Bulk action handler
+export const bulkAction = async (req, res) => {
+  try {
+    const { action, ids } = req.body;
+
+    if (!action || !ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Action and ids array are required',
+      });
+    }
+
+    const helpCenterService = serviceFactory.getHelpCenterService();
+    const results = [];
+    const errors = [];
+
+    for (const id of ids) {
+      try {
+        let result;
+        switch (action) {
+          case 'publish':
+            result = await helpCenterService.publishHelpCenter(id);
+            break;
+          case 'archive':
+            result = await helpCenterService.archiveHelpCenter(id);
+            break;
+          case 'delete':
+            await helpCenterService.deleteHelpCenter(id);
+            result = { id, deleted: true };
+            break;
+          default:
+            throw new Error(`Unknown action: ${action}`);
+        }
+        results.push(result);
+      } catch (error) {
+        errors.push({ id, error: error.message });
+      }
+    }
+
+    logger.info(
+      `Bulk ${action} completed for ${results.length} help center articles, ${errors.length} errors`
+    );
+
+    if (isHtmxRequest(req)) {
+      const successCount = results.length;
+      const errorCount = errors.length;
+      res.send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full bg-green-50 text-green-800 border border-green-200 rounded-lg px-4 py-3 text-sm">
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">
+              Bulk ${action} completed: ${successCount} successful${errorCount > 0 ? `, ${errorCount} errors` : ''}!
+            </div>
+          </div>
+        </div>
+        <script>
+          htmx.ajax('GET', window.location.pathname + window.location.search, {target: '#help-centerTableContainer'});
+          htmx.ajax('GET', window.location.pathname + '/filter-nav' + window.location.search, {target: '#filter-links'});
+        </script>
+      `);
+    } else {
+      res.json({
+        success: true,
+        data: { results, errors },
+        message: `Bulk ${action} completed for ${results.length} help center articles`,
+      });
+    }
+  } catch (error) {
+    logger.error('Error in bulk action:', error);
+    if (isHtmxRequest(req)) {
+      res.status(500).send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-red-50 text-red-800 border-red-200">
+            <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">Bulk action failed: ${error.message}</div>
+          </div>
+        </div>
+      `);
+    } else {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+};
+
 // Route setup function
 export default function helpCenterRoutes(app) {
   app.get('/api/help-center', getHelpCenter);
   app.get('/api/help-center/:id', getHelpCenterArticle);
   app.post('/api/help-center', ...createHelpCenterArticle);
   app.put('/api/help-center/:id', ...updateHelpCenterArticle);
+  app.post('/api/help-center/bulk-action', bulkAction);
   app.delete('/api/help-center/:id', ...deleteHelpCenterArticle);
 }

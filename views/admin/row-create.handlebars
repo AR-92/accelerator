@@ -1,0 +1,39 @@
+<!-- Generic Row Create Page Template -->
+<div class="min-h-screen bg-background">
+   <div id="{{table}}-row-create" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+     {{> page-header title=title description=description simple=true}}
+
+     <!-- Create Form Card -->
+     <div class="bg-card rounded-lg border border-border p-6 mb-8">
+       <h3 class="text-lg font-semibold text-card-foreground mb-4">Create New {{entity}}</h3>
+       <form hx-post="/api/{{table}}" hx-target="body" hx-swap="beforeend" class="space-y-4">
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+{{#each columns}}
+{{#unless (eq key 'id')}}
+           <div>
+             <label for="{{key}}" class="text-sm font-medium text-muted-foreground">{{label}}</label>
+{{#if (eq type 'status')}}
+             <select id="{{key}}" name="{{key}}" class="mt-1 block w-full border border-input rounded-md px-3 py-2 bg-background focus:outline-none focus:ring-2 focus:ring-ring">
+               <option value="active">Active</option>
+               <option value="inactive">Inactive</option>
+               <option value="pending">Pending</option>
+               <option value="approved">Approved</option>
+               <option value="rejected">Rejected</option>
+             </select>
+{{else if (eq type 'date')}}
+             <input type="date" id="{{key}}" name="{{key}}" class="mt-1 block w-full border border-input rounded-md px-3 py-2 bg-background focus:outline-none focus:ring-2 focus:ring-ring">
+{{else}}
+             <input type="text" id="{{key}}" name="{{key}}" placeholder="Enter {{label}}" class="mt-1 block w-full border border-input rounded-md px-3 py-2 bg-background focus:outline-none focus:ring-2 focus:ring-ring">
+{{/if}}
+           </div>
+{{/unless}}
+{{/each}}
+         </div>
+         <div class="flex justify-end space-x-4">
+           <button type="button" onclick="history.back()" class="px-4 py-2 border border-input rounded-md text-muted-foreground hover:bg-accent">Cancel</button>
+           <button type="submit" class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">Create {{entity}}</button>
+         </div>
+       </form>
+      </div>
+ </div>
+</content>

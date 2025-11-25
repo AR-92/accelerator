@@ -175,7 +175,31 @@ const getStatusCounts = async (tableName, databaseService) => {
     // Handle special table name mappings
     let actualTableName = tableName.replace('-', '_'); // Convert kebab-case to snake_case
     if (tableName === 'users') {
-      actualTableName = 'Accounts';
+      actualTableName = 'accounts';
+    } else if (tableName === 'votes') {
+      actualTableName = 'votes_management';
+    } else if (tableName === 'financial-model') {
+      actualTableName = 'financial_models';
+    } else if (tableName === 'business-plan') {
+      actualTableName = 'business_plans';
+    } else if (tableName === 'funding') {
+      actualTableName = 'fundings';
+    } else if (tableName === 'pitchdeck') {
+      actualTableName = 'pitch_deck';
+    } else if (tableName === 'landing-page') {
+      actualTableName = 'landing_page_managements';
+    } else if (tableName === 'calendar') {
+      actualTableName = 'calendars';
+    } else if (tableName === 'business-model') {
+      actualTableName = 'business_models';
+    } else if (tableName === 'business-plan') {
+      actualTableName = 'business_plans';
+    } else if (tableName === 'funding') {
+      actualTableName = 'fundings';
+    } else if (tableName === 'help-center') {
+      actualTableName = 'help_centers';
+    } else if (tableName === 'pitch-deck') {
+      actualTableName = 'pitch_deck';
     }
 
     // Check if any status options have custom filters

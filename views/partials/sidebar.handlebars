@@ -4,11 +4,9 @@
     <nav class="px-3 py-3 text-sm">
       {{#if (eq currentSection 'main')}}
       <ul class="space-y-1">
-        {{#> sidebar-item href="/admin/other-pages/main" title="Overview" page="main" text="Overview" spanClass="font-medium
-        sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/other-pages/dashboard" title="Dashboard" page="dashboard" text="Dashboard"
-        spanClass="font-medium sidebar-text"}}{{{icon 'columns' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/users" title="Users" page="users" text="Users" spanClass="font-medium
+         {{#> sidebar-item href="/admin/other-pages/main" title="Overview" page="main" text="Overview" spanClass="font-medium
+         sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
+         {{#> sidebar-item href="/admin/table-pages/users" title="Users" page="users" text="Users" spanClass="font-medium
         sidebar-text"}}{{{icon 'users' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
         {{#> sidebar-item href="/admin/table-pages/ideas" title="Ideas" page="ideas" text="Ideas" spanClass="font-medium
         sidebar-text"}}{{{icon 'lightbulb' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
@@ -41,8 +39,7 @@
         spanClass="font-medium sidebar-text"}}{{{icon 'bell' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
         {{#> sidebar-item href="/admin/other-pages/activity" title="Activity Log" page="activity" text="Activity Log"
         spanClass="font-medium sidebar-text"}}{{{icon 'activity' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/tables" title="Tables" page="tables" text="Tables" spanClass="font-medium
-        sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
+
         {{#> sidebar-item href="/admin/table-pages/todos" title="Todos" page="todos" text="Todos" spanClass="font-medium
         sidebar-text"}}{{{icon 'lock' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
         {{#> sidebar-item href="/admin/other-pages/settings" title="Settings" page="settings" text="Settings" spanClass="font-medium
@@ -88,6 +85,9 @@
         {{#> sidebar-item href="/admin/table-pages/learning-categories" title="Learning Categories" page="learning-categories"
         text="Learning Categories" spanClass="sidebar-text"}}{{{icon 'folder' size='16' class='w-4 h-4
         mr-3'}}}{{/sidebar-item}}
+        {{#> sidebar-item href="/admin/table-pages/learning-assessments" title="Learning Assessments" page="learning-assessments"
+        text="Learning Assessments" spanClass="sidebar-text"}}{{{icon 'clipboard-check' size='16' class='w-4 h-4
+        mr-3'}}}{{/sidebar-item}}
         {{#> sidebar-item href="/admin/table-pages/todos" title="Todos" page="todos" text="Todos" spanClass="font-medium
         sidebar-text"}}{{{icon 'lock' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
         {{#> sidebar-item href="/admin/table-pages/learning-analytics" title="Learning Analytics" page="learning-analytics"
@@ -129,8 +129,21 @@
         spanClass="sidebar-text"}}{{{icon 'credit-card' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
         {{#> sidebar-item href="/admin/table-pages/rewards" title="Rewards" page="rewards" text="Rewards"
         spanClass="sidebar-text"}}{{{icon 'gift' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-      </ul>
-      {{/if}}
-    </nav>
-  </div>
-</div>
+       </ul>
+       {{/if}}
+
+       {{#if isRowPage}}
+       <ul class="space-y-1 mt-4">
+         {{#each rowActions}}
+         <li>
+           <a href="{{link}}" class="flex items-center px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+             {{{icon}}}
+             {{text}}
+           </a>
+         </li>
+         {{/each}}
+       </ul>
+       {{/if}}
+     </nav>
+   </div>
+ </div>

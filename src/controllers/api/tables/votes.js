@@ -24,7 +24,7 @@ export const getVotes = async (req, res) => {
     const offset = (pageNum - 1) * limitNum;
 
     let query = databaseService.supabase
-      .from('Votes Management')
+      .from('votes_management')
       .select('*', { count: 'exact' });
 
     if (search) {
@@ -162,7 +162,7 @@ export const createVote = [
       const { user_id, idea_id, vote_type } = req.body;
 
       const { data: vote, error } = await databaseService.supabase
-        .from('Votes Management')
+        .from('votes_management')
         .insert({
           user_id,
           idea_id,
@@ -294,7 +294,7 @@ export const updateVote = [
       const { user_id, idea_id, vote_type } = req.body;
 
       const { data: vote, error } = await databaseService.supabase
-        .from('Votes Management')
+        .from('votes_management')
         .update({
           user_id,
           idea_id,
@@ -428,7 +428,7 @@ export const deleteVote = [
       // First check if vote exists
       const { data: existingVote, error: fetchError } =
         await databaseService.supabase
-          .from('Votes Management')
+          .from('votes_management')
           .select('id')
           .eq('id', id)
           .single();
@@ -440,7 +440,7 @@ export const deleteVote = [
       }
 
       const { error } = await databaseService.supabase
-        .from('Votes Management')
+        .from('votes_management')
         .delete()
         .eq('id', id);
 
@@ -544,10 +544,93 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
   return html;
 };
 
+export const bulkAction = async (req, res) => {
+  try {
+    const { action, ids } = req.body;
+
+    if (!action || !ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Action and ids array are required',
+      });
+    }
+
+    const voteService = serviceFactory.getVoteService();
+    const results = [];
+    const errors = [];
+
+    for (const id of ids) {
+      try {
+        let result;
+        switch (action) {
+          case 'delete':
+            await voteService.deleteVote(id);
+            result = { id, deleted: true };
+            break;
+          default:
+            throw new Error(`Unknown action: ${action}`);
+        }
+        results.push(result);
+      } catch (error) {
+        errors.push({ id, error: error.message });
+      }
+    }
+
+    logger.info(
+      `Bulk ${action} completed for ${results.length} votes, ${errors.length} errors`
+    );
+
+    if (isHtmxRequest(req)) {
+      const successCount = results.length;
+      const errorCount = errors.length;
+      res.send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full bg-green-50 text-green-800 border border-green-200 rounded-lg px-4 py-3 text-sm">
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">
+              Bulk ${action} completed: ${successCount} successful${errorCount > 0 ? `, ${errorCount} errors` : ''}!
+            </div>
+          </div>
+        </div>
+        <script>
+          setTimeout(() => document.querySelector('.fixed').remove(), 3000);
+          htmx.trigger('#votesTableContainer', 'bulkActionCompleted');
+        </script>
+      `);
+    } else {
+      res.json({
+        success: true,
+        message: `Bulk ${action} completed successfully`,
+        results,
+        errors,
+      });
+    }
+  } catch (error) {
+    logger.error('Error performing bulk action:', error);
+    if (isHtmxRequest(req)) {
+      res.status(500).send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full bg-red-50 text-red-800 border border-red-200 rounded-lg px-4 py-3 text-sm">
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">Failed to perform bulk action: ${error.message}</div>
+          </div>
+        </div>
+      `);
+    } else {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+};
+
 // Route setup function
 export default function votesRoutes(app) {
   app.get('/api/votes', getVotes);
   app.post('/api/votes', ...createVote);
   app.put('/api/votes/:id', ...updateVote);
   app.delete('/api/votes/:id', ...deleteVote);
+  app.post('/api/votes/bulk-action', bulkAction);
 }

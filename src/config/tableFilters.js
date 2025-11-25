@@ -53,7 +53,7 @@ const tableFilters = {
   },
 
   collaborations: {
-    searchableFields: ['name', 'description', 'members_count'],
+    searchableFields: ['message'],
     statusField: 'status',
     statusOptions: [
       { value: 'pending', label: 'Pending' },
@@ -81,17 +81,11 @@ const tableFilters = {
   },
 
   'learning-assessments': {
-    searchableFields: ['title', 'assessment_type', 'difficulty_level'],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'active', label: 'Active' },
-      { value: 'inactive', label: 'Inactive' },
-    ],
+    searchableFields: ['title', 'description'],
   },
 
   packages: {
-    searchableFields: ['name', 'description', 'price', 'features'],
+    searchableFields: ['name', 'description'],
     statusField: 'status',
     statusOptions: [
       { value: 'active', label: 'Active' },
@@ -101,7 +95,7 @@ const tableFilters = {
   },
 
   billing: {
-    searchableFields: ['user', 'package', 'amount'],
+    searchableFields: ['invoice_number', 'plan_name', 'amount_cents'],
     statusField: 'status',
     statusOptions: [
       { value: 'pending', label: 'Pending' },
@@ -112,7 +106,7 @@ const tableFilters = {
   },
 
   rewards: {
-    searchableFields: ['title', 'type', 'author'],
+    searchableFields: ['title', 'description'],
     statusField: 'status',
     statusOptions: [
       { value: 'active', label: 'Active' },
@@ -122,42 +116,19 @@ const tableFilters = {
   },
 
   'business-model': {
-    searchableFields: ['name', 'business_type', 'industry'],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'review', label: 'Review' },
-      { value: 'approved', label: 'Approved' },
-    ],
+    searchableFields: ['name', 'description'],
   },
 
   'business-plan': {
-    searchableFields: ['company_name', 'industry', 'current_stage'],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'review', label: 'Review' },
-      { value: 'approved', label: 'Approved' },
-    ],
+    searchableFields: ['name', 'description'],
   },
 
   'financial-model': {
-    searchableFields: [
-      'model_name',
-      'model_status',
-      'progress_percentage',
-      'monthly_revenue',
-    ],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'final', label: 'Final' },
-      { value: 'archived', label: 'Archived' },
-    ],
+    searchableFields: ['name', 'description'],
   },
 
   pitchdeck: {
-    searchableFields: ['title_slide', 'problem_statement', 'solution_overview'],
+    searchableFields: ['title', 'description'],
     statusField: 'status',
     statusOptions: [
       { value: 'draft', label: 'Draft' },
@@ -167,74 +138,27 @@ const tableFilters = {
   },
 
   valuation: {
-    searchableFields: ['valuation_method', 'enterprise_value', 'equity_value'],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'completed', label: 'Completed' },
-      { value: 'archived', label: 'Archived' },
-    ],
+    searchableFields: ['method', 'enterprise_value', 'equity_value'],
   },
 
   funding: {
-    searchableFields: [
-      'total_funding_required',
-      'funding_type',
-      'funding_stage',
-      'burn_rate',
-    ],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'seeking', label: 'Seeking' },
-      { value: 'funded', label: 'Funded' },
-      { value: 'closed', label: 'Closed' },
-    ],
+    searchableFields: ['funding_required', 'funding_type', 'funding_stage'],
   },
 
   team: {
-    searchableFields: [
-      'founders_count',
-      'employees_count',
-      'work_mode',
-      'readiness_score',
-    ],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'active', label: 'Active' },
-      { value: 'inactive', label: 'Inactive' },
-      { value: 'alumni', label: 'Alumni' },
-    ],
+    searchableFields: ['founders_count', 'employees_count', 'work_mode'],
   },
 
   legal: {
-    searchableFields: ['company_name', 'company_type', 'compliance_status'],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'review', label: 'Review' },
-      { value: 'approved', label: 'Approved' },
-      { value: 'executed', label: 'Executed' },
-    ],
+    searchableFields: ['name', 'description'],
   },
 
   marketing: {
-    searchableFields: [
-      'unique_value_proposition',
-      'marketing_channels',
-      'marketing_budget',
-      'target_audience',
-    ],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'active', label: 'Active' },
-      { value: 'completed', label: 'Completed' },
-      { value: 'archived', label: 'Archived' },
-    ],
+    searchableFields: ['name', 'description'],
   },
 
   corporate: {
-    searchableFields: ['name', 'industry', 'company_size', 'status'],
+    searchableFields: ['name', 'description'],
     statusField: 'status',
     statusOptions: [
       { value: 'active', label: 'Active' },
@@ -254,7 +178,7 @@ const tableFilters = {
   },
 
   messages: {
-    searchableFields: ['sender_id', 'receiver_id', 'subject'],
+    searchableFields: ['content', 'subject'],
     statusField: 'status',
     statusOptions: [
       { value: 'sent', label: 'Sent' },
@@ -264,17 +188,11 @@ const tableFilters = {
   },
 
   'project-collaborators': {
-    searchableFields: ['project_id', 'user_id', 'role'],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'active', label: 'Active' },
-      { value: 'inactive', label: 'Inactive' },
-      { value: 'removed', label: 'Removed' },
-    ],
+    searchableFields: ['role'],
   },
 
   calendar: {
-    searchableFields: ['title', 'event_type'],
+    searchableFields: ['title', 'description', 'location'],
     statusField: 'status',
     statusOptions: [
       { value: 'scheduled', label: 'Scheduled' },
@@ -284,17 +202,11 @@ const tableFilters = {
   },
 
   'help-center': {
-    searchableFields: ['title', 'category'],
-    statusField: 'status',
-    statusOptions: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'published', label: 'Published' },
-      { value: 'archived', label: 'Archived' },
-    ],
+    searchableFields: ['title', 'content'],
   },
 
-  'landing-pages': {
-    searchableFields: ['title', 'description'],
+  'landing-page': {
+    searchableFields: ['title'],
     statusField: 'is_active',
     statusOptions: [
       { value: true, label: 'Active', filter: 'is_active.eq.true' },
@@ -303,12 +215,7 @@ const tableFilters = {
   },
 
   'learning-analytics': {
-    searchableFields: [
-      'user_id',
-      'content_id',
-      'event_type',
-      'duration_seconds',
-    ],
+    searchableFields: ['user_id', 'content_id', 'event_type'],
     // Analytics data typically doesn't have status filtering
     enabled: true,
     statusOptions: [],

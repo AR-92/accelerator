@@ -12,7 +12,7 @@ export const getMain = async (req, res) => {
       { count: activeCollaborations },
     ] = await Promise.all([
       databaseService.supabase
-        .from('users')
+        .from('accounts')
         .select('*', { count: 'exact', head: true }),
       databaseService.supabase
         .from('projects')
@@ -22,7 +22,8 @@ export const getMain = async (req, res) => {
         .select('*', { count: 'exact', head: true }),
       databaseService.supabase
         .from('collaborations')
-        .select('*', { count: 'exact', head: true }),
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'active'),
     ]);
 
     const data = {

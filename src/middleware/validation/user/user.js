@@ -3,24 +3,12 @@ import { handleValidationErrors } from '../common.js';
 
 // User validation rules
 export const validateUserCreation = [
-  body('first_name')
+  body('display_name')
     .trim()
-    .isLength({ min: 1, max: 50 })
-    .withMessage('First name must be between 1 and 50 characters')
+    .isLength({ min: 1, max: 100 })
+    .withMessage('Display name must be between 1 and 100 characters')
     .notEmpty()
-    .withMessage('First name is required'),
-
-  body('last_name')
-    .trim()
-    .isLength({ min: 1, max: 50 })
-    .withMessage('Last name must be between 1 and 50 characters')
-    .notEmpty()
-    .withMessage('Last name is required'),
-
-  body('email')
-    .isEmail()
-    .normalizeEmail()
-    .withMessage('Valid email is required'),
+    .withMessage('Display name is required'),
 
   body('username')
     .optional()
@@ -50,23 +38,11 @@ export const validateUserCreation = [
 export const validateUserUpdate = [
   param('id').isInt({ min: 1 }).withMessage('Invalid user ID'),
 
-  body('first_name')
+  body('display_name')
     .optional()
     .trim()
-    .isLength({ min: 1, max: 50 })
-    .withMessage('First name must be between 1 and 50 characters'),
-
-  body('last_name')
-    .optional()
-    .trim()
-    .isLength({ min: 1, max: 50 })
-    .withMessage('Last name must be between 1 and 50 characters'),
-
-  body('email')
-    .optional()
-    .isEmail()
-    .normalizeEmail()
-    .withMessage('Valid email is required'),
+    .isLength({ min: 1, max: 100 })
+    .withMessage('Display name must be between 1 and 100 characters'),
 
   body('username')
     .optional()

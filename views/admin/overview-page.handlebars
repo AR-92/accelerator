@@ -1,0 +1,70 @@
+<!-- Generic Overview Page Template -->
+<div class="min-h-screen bg-background">
+   <div id="{{section}}-main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+     {{> page-header title=title description=description simple=true}}
+
+     <!-- Stats Grid -->
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+{{#each statsGrid}}
+ {{#> stats-card icon=icon title=title link=link}}
+{{#each items}}
+ {{> stats-item label=label value=value color=color}}
+{{/each}}
+ {{/stats-card}}
+{{/each}}
+     </div>
+
+{{#if (eq section 'system')}}
+      <!-- System Health Card -->
+      <div class="bg-card rounded-lg border border-border p-6 mb-8">
+        <div class="flex items-center justify-between mb-4">
+           <div class="flex items-center">
+             {{{icon 'activity' size='32' class='text-primary mr-3'}}}
+             <h3 class="text-lg font-semibold text-card-foreground">System Health</h3>
+           </div>
+          <a href="/admin/other-pages/system-health" class="text-primary hover:text-primary/80 text-sm font-medium">View Details</a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="text-center">
+            <div class="text-2xl font-bold {{#if dbConnection}}text-green-600{{else}}text-red-600{{/if}}">●</div>
+            <div class="text-sm text-muted-foreground">Database</div>
+            <div class="text-xs {{#if dbConnection}}text-green-600{{else}}text-red-600{{/if}}">{{#if dbConnection}}Connected{{else}}Disconnected{{/if}}</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-blue-600">{{memoryMB}}MB</div>
+            <div class="text-sm text-muted-foreground">Memory</div>
+            <div class="text-xs text-blue-600">Usage</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-purple-600">{{totalTables}}</div>
+            <div class="text-sm text-muted-foreground">Tables</div>
+            <div class="text-xs text-purple-600">Active</div>
+          </div>
+          <div class="text-center">
+            <div class="text-2xl font-bold text-orange-600">{{totalRecords}}</div>
+            <div class="text-sm text-muted-foreground">Records</div>
+            <div class="text-xs text-orange-600">Total</div>
+          </div>
+        </div>
+      </div>
+{{/if}}
+
+     <!-- Quick Actions -->
+     <div class="bg-card rounded-lg border border-border p-6">
+       <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
+       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+{{#each quickActions}}
+ {{> quick-action link=link icon=icon text=text}}
+{{/each}}
+      </div>
+   </div>
+ </div>
+{{!-- these are the quick links in this page that should be shown on the filter nav as links using htmx on load on this id : id="filter-links" --}}
+<div id="{{section}}-filter-links" class="hidden" _="on load set #filter-links.innerHTML to #{{section}}-filter-links.innerHTML">
+{{#each filterLinks}}
+ <div class="flex flex-col items-center justify-center group">
+   <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
+    <a id="{{id}}" href="{{href}}" hx-get="{{href}}" hx-target="#{{section}}-main-content" class="text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">{{text}}</a>
+ </div>
+{{/each}}
+</div>

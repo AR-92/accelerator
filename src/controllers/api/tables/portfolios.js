@@ -169,9 +169,103 @@ export const getPortfolios = async (req, res) => {
   }
 };
 
+// Bulk action for portfolios
+export const bulkAction = async (req, res) => {
+  try {
+    const { action, ids, is_public } = req.body;
+
+    if (!action || !ids || !Array.isArray(ids)) {
+      return res
+        .status(400)
+        .json({ success: false, error: 'Invalid request data' });
+    }
+
+    switch (action) {
+      case 'delete':
+        const { error: deleteError } = await databaseService.supabase
+          .from('portfolios')
+          .delete()
+          .in('id', ids);
+
+        if (deleteError) throw deleteError;
+
+        logger.info(`Bulk deleted ${ids.length} portfolios`);
+        break;
+
+      case 'toggle_public':
+        if (is_public === undefined) {
+          return res.status(400).json({
+            success: false,
+            error: 'is_public is required for toggle_public action',
+          });
+        }
+
+        const { error: updateError } = await databaseService.supabase
+          .from('portfolios')
+          .update({ is_public })
+          .in('id', ids);
+
+        if (updateError) throw updateError;
+
+        logger.info(
+          `Bulk updated is_public to ${is_public} for ${ids.length} portfolios`
+        );
+        break;
+
+      default:
+        return res
+          .status(400)
+          .json({ success: false, error: 'Invalid action' });
+    }
+
+    if (isHtmxRequest(req)) {
+      res.send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-green-50 text-green-800 border-green-200">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="flex-1">Bulk action completed successfully!</div>
+            </div>
+          </div>
+        </div>
+        <script>
+          setTimeout(() => document.querySelector('.fixed').remove(), 5000);
+          htmx.trigger('#portfoliosTableContainer', 'portfoliosBulkAction');
+        </script>
+      `);
+    } else {
+      res.json({
+        success: true,
+        message: 'Bulk action completed successfully',
+      });
+    }
+  } catch (error) {
+    logger.error('Error performing bulk action on portfolios:', error);
+    if (isHtmxRequest(req)) {
+      res.status(500).send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-red-50 text-red-800 border-red-200">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="flex-1">Failed to perform bulk action: ${error.message}</div>
+            </div>
+          </div>
+        </div>
+      `);
+    } else {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+};
+
 // Route setup function
 export default function portfoliosRoutes(app) {
   app.get('/api/portfolios', getPortfolios);
+  app.post('/api/portfolios/bulk-action', bulkAction);
   // TODO: Implement remaining CRUD operations
   // app.post('/api/portfolios', createPortfolio);
   // app.put('/api/portfolios/:id', updatePortfolio);

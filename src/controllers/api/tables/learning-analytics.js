@@ -401,6 +401,99 @@ export const deleteLearningAnalyticsEvent = [
   },
 ];
 
+// Bulk action for learning analytics
+export const bulkAction = async (req, res) => {
+  try {
+    const { action, ids, is_processed } = req.body;
+
+    if (!action || !ids || !Array.isArray(ids)) {
+      return res
+        .status(400)
+        .json({ success: false, error: 'Invalid request data' });
+    }
+
+    switch (action) {
+      case 'delete':
+        const { error: deleteError } = await databaseService.supabase
+          .from('learning_analytics')
+          .delete()
+          .in('id', ids);
+
+        if (deleteError) throw deleteError;
+
+        logger.info(`Bulk deleted ${ids.length} learning analytics events`);
+        break;
+
+      case 'toggle_processed':
+        if (is_processed === undefined) {
+          return res.status(400).json({
+            success: false,
+            error: 'is_processed is required for toggle_processed action',
+          });
+        }
+
+        const { error: updateError } = await databaseService.supabase
+          .from('learning_analytics')
+          .update({ is_processed })
+          .in('id', ids);
+
+        if (updateError) throw updateError;
+
+        logger.info(
+          `Bulk updated is_processed to ${is_processed} for ${ids.length} learning analytics events`
+        );
+        break;
+
+      default:
+        return res
+          .status(400)
+          .json({ success: false, error: 'Invalid action' });
+    }
+
+    if (isHtmxRequest(req)) {
+      res.send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-green-50 text-green-800 border-green-200">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="flex-1">Bulk action completed successfully!</div>
+            </div>
+          </div>
+        </div>
+        <script>
+          setTimeout(() => document.querySelector('.fixed').remove(), 5000);
+          htmx.trigger('#learningAnalyticsTableContainer', 'learningAnalyticsBulkAction');
+        </script>
+      `);
+    } else {
+      res.json({
+        success: true,
+        message: 'Bulk action completed successfully',
+      });
+    }
+  } catch (error) {
+    logger.error('Error performing bulk action on learning analytics:', error);
+    if (isHtmxRequest(req)) {
+      res.status(500).send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-red-50 text-red-800 border-red-200">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="flex-1">Failed to perform bulk action: ${error.message}</div>
+            </div>
+          </div>
+        </div>
+      `);
+    } else {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+};
+
 // Helper function to generate pagination HTML
 const generatePaginationHtml = (page, limit, total, query) => {
   const totalPages = Math.ceil(total / limit);
@@ -451,4 +544,5 @@ export default function learningAnalyticsRoutes(app) {
   app.post('/api/learning-analytics', ...createLearningAnalyticsEvent);
   app.put('/api/learning-analytics/:id', ...updateLearningAnalyticsEvent);
   app.delete('/api/learning-analytics/:id', ...deleteLearningAnalyticsEvent);
+  app.post('/api/learning-analytics/bulk-action', bulkAction);
 }

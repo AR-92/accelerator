@@ -1,0 +1,34 @@
+<!-- Generic Row Detail Page Template -->
+<div class="min-h-screen bg-background">
+   <div id="{{table}}-row-detail" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+     {{> page-header title=title description=description simple=true}}
+
+     <!-- Row Data Card -->
+     <div class="bg-card rounded-lg border border-border p-6 mb-8">
+       <h3 class="text-lg font-semibold text-card-foreground mb-4">{{entity}} Details</h3>
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+{{#each columns}}
+         <div>
+           <label class="text-sm font-medium text-muted-foreground">{{label}}</label>
+           <div class="text-card-foreground">
+{{#if (eq type 'status')}}
+             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium{{#if (lookup ../row key)}} bg-green-100 text-green-800{{else}} bg-gray-100 text-gray-800{{/if}}">{{lookup ../row key}}</span>
+{{else if (eq type 'date')}}
+             {{formatDate (lookup ../row key)}}
+{{else if (eq type 'title')}}
+             <div>
+               <div class="text-sm font-medium text-card-foreground">{{lookup ../row key}}</div>
+{{#if descriptionKey}}
+               <div class="text-sm text-muted-foreground">{{lookup ../row descriptionKey}}</div>
+{{/if}}
+             </div>
+{{else}}
+             {{lookup ../row key}}
+{{/if}}
+           </div>
+         </div>
+{{/each}}
+       </div>
+      </div>
+ </div>
+</content>

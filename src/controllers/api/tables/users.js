@@ -1,5 +1,6 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
+import { serviceFactory } from '../../../services/serviceFactory.js';
 import {
   validateUserCreation,
   validateUserUpdate,
@@ -17,14 +18,14 @@ export const getUsers = async (req, res) => {
 
     const offset = (pageNum - 1) * limitNum;
     let query = databaseService.supabase
-      .from('Accounts')
+      .from('accounts')
       .select('*', { count: 'exact' });
 
     if (status) query = query.eq('status', status);
     if (role) query = query.eq('role', role);
     if (search)
       query = query.or(
-        `first_name.ilike.%${search}%,last_name.ilike.%${search}%,email.ilike.%${search}%`
+        `display_name.ilike.%${search}%,username.ilike.%${search}%`
       );
 
     const {
@@ -41,7 +42,13 @@ export const getUsers = async (req, res) => {
     logger.info(`Fetched ${users.length} of ${total} users`);
 
     if (isHtmxRequest(req)) {
-      const userHtml = users
+      // Add computed display name to each user
+      const usersWithDisplayName = users.map((user) => ({
+        ...user,
+        displayName: user.display_name || user.username || 'User ' + user.id,
+      }));
+
+      const userHtml = usersWithDisplayName
         .map(
           (user) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
@@ -49,38 +56,44 @@ export const getUsers = async (req, res) => {
             <div class="flex items-center">
               <div class="flex-shrink-0 h-10 w-10">
                 <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span class="text-lg">${user.first_name?.charAt(0)}${user.last_name?.charAt(0)}</span>
+                  <span class="text-lg">${(
+                    user.displayName ||
+                    user.username ||
+                    'U'
+                  )
+                    .split(' ')
+                    .map((n) => n.charAt(0))
+                    .join('')
+                    .toUpperCase()}</span>
                 </div>
               </div>
               <div class="ml-4">
-                <div class="text-sm font-medium text-gray-900">${user.first_name} ${user.last_name}</div>
-                <div class="text-sm text-gray-500">${user.email}</div>
+                <div class="text-sm font-medium text-gray-900">${user.displayName || user.username || 'User ' + user.id}</div>
+                <div class="text-sm text-gray-500">${user.username ? user.username + '@example.com' : 'user' + user.id + '@example.com'}</div>
               </div>
             </div>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${user.username || 'N/A'}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              user.role === 'admin'
+              user.account_type === 'admin'
                 ? 'bg-red-100 text-red-800'
-                : user.role === 'moderator'
+                : user.account_type === 'moderator'
                   ? 'bg-yellow-100 text-yellow-800'
                   : 'bg-blue-100 text-blue-800'
-            }">${user.role}</span>
+            }">${user.account_type || 'user'}</span>
           </td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-              user.status === 'active'
+              user.is_verified
                 ? 'bg-green-100 text-green-800'
-                : user.status === 'inactive'
-                  ? 'bg-red-100 text-red-800'
-                  : 'bg-yellow-100 text-yellow-800'
-            }">${user.status}</span>
+                : 'bg-red-100 text-red-800'
+            }">${user.is_verified ? 'active' : 'inactive'}</span>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(user.created_at)}</td>
           <td class="px-6 py-4">
             <div class="relative">
-              <button onclick="toggleActionMenu('user', ${user.id})" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors">
+              <button onclick="${'toggleActionMenu(\"user\", ' + user.id + ')'}" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors">
                 <svg class="w-4 h-4 lucide lucide-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="1"></circle>
                   <circle cx="12" cy="5" r="1"></circle>
@@ -96,14 +109,14 @@ export const getUsers = async (req, res) => {
                     </svg>
                     View Details
                   </a>
-                  <button onclick="editUser(${user.id})" class="flex items-center w-full px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
+                  <button onclick='editUser(${user.id})' class="flex items-center w-full px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
                     <svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                       <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path>
                     </svg>
                     Edit User
                   </button>
-                  <button onclick="deleteUser(${user.id}, '${user.first_name} ${user.last_name}')" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                  <button onclick="deleteUser(${user.id}, ${JSON.stringify(user.displayName || user.username || 'User ' + user.id)})" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
                     <svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M10 11v6"></path>
                       <path d="M14 11v6"></path>
@@ -118,34 +131,35 @@ export const getUsers = async (req, res) => {
             </div>
           </td>
         </tr>
-      `
+        `
         )
         .join('');
 
-      const paginationHtml = generatePaginationHtml(
-        pageNum,
-        limitNum,
-        total,
-        req.query,
-        'users'
-      );
-      res.send(userHtml + paginationHtml);
+      res.send(userHtml);
     } else {
       res.json({
         success: true,
         data: users,
-        pagination: {
-          page: pageNum,
-          limit: limitNum,
-          total,
-          totalPages: Math.ceil(total / limitNum),
-        },
+        total,
+        page: pageNum,
+        limit: limitNum,
       });
     }
   } catch (error) {
-    logger.error('Error fetching users:', error);
+    logger.error('Error creating user:', error);
     if (isHtmxRequest(req)) {
-      res.status(500).send('<p class="text-red-500">Error loading users</p>');
+      res.status(500).send(`
+          <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+            <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-red-50 text-red-800 border-red-200">
+              <div class="flex items-start gap-3">
+                <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div class="flex-1">Failed to create user: ${error.message}</div>
+              </div>
+            </div>
+          </div>
+        `);
     } else {
       res.status(500).json({ success: false, error: error.message });
     }
@@ -156,23 +170,18 @@ export const createUser = [
   validateUserCreation,
   async (req, res) => {
     try {
-      const { first_name, last_name, email, username, password, role, status } =
-        req.body;
+      const { display_name, username, role, status } = req.body;
 
       const { data: user, error } = await databaseService.supabase
-        .from('Accounts')
-        .insert([
-          {
-            first_name,
-            last_name,
-            email,
-            username,
-            password, // In production, this should be hashed
-            role: role || 'user',
-            status: status || 'active',
-            created_at: new Date().toISOString(),
-          },
-        ])
+        .from('accounts')
+        .insert({
+          display_name,
+          username,
+          account_type: role,
+          is_verified: status === 'active',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        })
         .select()
         .single();
       if (error) throw error;
@@ -186,36 +195,44 @@ export const createUser = [
               <div class="flex items-center">
                 <div class="flex-shrink-0 h-10 w-10">
                   <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span class="text-lg">${user.first_name?.charAt(0)}${user.last_name?.charAt(0)}</span>
+                    <span class="text-lg">${(
+                      user.display_name ||
+                      user.username ||
+                      'U'
+                    )
+                      .split(' ')
+                      .map((n) => n.charAt(0))
+                      .join('')
+                      .toUpperCase()}</span>
                   </div>
                 </div>
                 <div class="ml-4">
-                  <div class="text-sm font-medium text-gray-900">${user.first_name} ${user.last_name}</div>
-                  <div class="text-sm text-gray-500">${user.email}</div>
+                  <div class="text-sm font-medium text-gray-900">${user.display_name || user.username || 'User ' + user.id}</div>
+                  <div class="text-sm text-gray-500">${user.username ? user.username + '@example.com' : 'user' + user.id + '@example.com'}</div>
                 </div>
               </div>
             </td>
             <td class="px-6 py-4 text-sm text-gray-900">${user.username || 'N/A'}</td>
             <td class="px-6 py-4">
               <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                user.role === 'admin'
+                user.account_type === 'admin'
                   ? 'bg-red-100 text-red-800'
-                  : user.role === 'moderator'
+                  : user.account_type === 'moderator'
                     ? 'bg-yellow-100 text-yellow-800'
                     : 'bg-blue-100 text-blue-800'
-              }">${user.role}</span>
+              }">${user.account_type}</span>
             </td>
             <td class="px-6 py-4">
               <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                user.status === 'active'
+                user.is_verified
                   ? 'bg-green-100 text-green-800'
                   : 'bg-red-100 text-red-800'
-              }">${user.status}</span>
+              }">${user.is_verified ? 'active' : 'inactive'}</span>
             </td>
             <td class="px-6 py-4 text-sm text-gray-900">${formatDate(user.created_at)}</td>
             <td class="px-6 py-4">
               <div class="relative">
-                <button onclick="toggleActionMenu('user', ${user.id})" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors">
+                <button onclick="${'toggleActionMenu(\"user\", ' + user.id + ')'}" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors">
                   <svg class="w-4 h-4 lucide lucide-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="1"></circle>
                     <circle cx="12" cy="5" r="1"></circle>
@@ -231,14 +248,14 @@ export const createUser = [
                       </svg>
                       View Details
                     </a>
-                    <button onclick="editUser(${user.id})" class="flex items-center w-full px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
+                    <button onclick='editUser(${user.id})' class="flex items-center w-full px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
                       <svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                         <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path>
                       </svg>
                       Edit User
                     </button>
-                    <button onclick="deleteUser(${user.id}, '${user.first_name} ${user.last_name}')" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                    <button onclick="deleteUser(${user.id}, ${JSON.stringify(user.display_name || user.username || 'User ' + user.id)})" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
                       <svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M10 11v6"></path>
                         <path d="M14 11v6"></path>
@@ -262,13 +279,12 @@ export const createUser = [
                 <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <div class="flex-1">User "${user.first_name} ${user.last_name}" created successfully!</div>
+                <div class="flex-1">User "${user.display_name || user.username || 'User ' + user.id}" created successfully!</div>
               </div>
             </div>
           </div>
           <script>
             setTimeout(() => document.querySelector('.fixed').remove(), 3000);
-            htmx.trigger('#usersTableContainer', 'userCreated');
           </script>
         `;
 
@@ -303,17 +319,15 @@ export const updateUser = [
   async (req, res) => {
     try {
       const { id } = req.params;
-      const { first_name, last_name, email, username, role, status } = req.body;
+      const { display_name, username, role, status } = req.body;
 
       const { data: user, error } = await databaseService.supabase
-        .from('Accounts')
+        .from('accounts')
         .update({
-          first_name,
-          last_name,
-          email,
+          display_name,
           username,
-          role,
-          status,
+          account_type: role,
+          is_verified: status === 'active',
           updated_at: new Date().toISOString(),
         })
         .eq('id', id)
@@ -330,12 +344,20 @@ export const updateUser = [
               <div class="flex items-center">
                 <div class="flex-shrink-0 h-10 w-10">
                   <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span class="text-lg">${user.first_name?.charAt(0)}${user.last_name?.charAt(0)}</span>
+                    <span class="text-lg">${(
+                      user.display_name ||
+                      user.username ||
+                      'U'
+                    )
+                      .split(' ')
+                      .map((n) => n.charAt(0))
+                      .join('')
+                      .toUpperCase()}</span>
                   </div>
                 </div>
                 <div class="ml-4">
-                  <div class="text-sm font-medium text-gray-900">${user.first_name} ${user.last_name}</div>
-                  <div class="text-sm text-gray-500">${user.email}</div>
+                <div class="text-sm font-medium text-gray-900">${user.display_name || user.username || 'User ' + user.id}</div>
+                  <div class="text-sm text-gray-500">${user.username ? user.username + '@example.com' : 'user' + user.id + '@example.com'}</div>
                 </div>
               </div>
             </td>
@@ -358,8 +380,8 @@ export const updateUser = [
             </td>
             <td class="px-6 py-4 text-sm text-gray-900">${formatDate(user.created_at)}</td>
             <td class="px-6 py-4">
-              <div class="relative">
-                <button onclick="toggleActionMenu('user', ${user.id})" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors">
+            <div class="relative">
+              <button onclick="${'toggleActionMenu(\"user\", ' + user.id + ')'}" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors">
                   <svg class="w-4 h-4 lucide lucide-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="1"></circle>
                     <circle cx="12" cy="5" r="1"></circle>
@@ -375,14 +397,14 @@ export const updateUser = [
                       </svg>
                       View Details
                     </a>
-                    <button onclick="editUser(${user.id})" class="flex items-center w-full px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
+                  <button onclick='editUser(${user.id})' class="flex items-center w-full px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
                       <svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                         <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path>
                       </svg>
                       Edit User
                     </button>
-                    <button onclick="deleteUser(${user.id}, '${user.first_name} ${user.last_name}')" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                    <button onclick="deleteUser(${user.id}, ${JSON.stringify(user.display_name || user.username || 'User ' + user.id)})" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
                       <svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M10 11v6"></path>
                         <path d="M14 11v6"></path>
@@ -406,7 +428,7 @@ export const updateUser = [
                 <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <div class="flex-1">User "${user.first_name} ${user.last_name}" updated successfully!</div>
+                <div class="flex-1">User "${user.display_name || user.username || 'User ' + user.id}" updated successfully!</div>
               </div>
             </div>
           </div>
@@ -420,7 +442,7 @@ export const updateUser = [
         res.json({ success: true, data: user });
       }
     } catch (error) {
-      logger.error('Error updating user:', error);
+      logger.error('Error creating user:', error);
       if (isHtmxRequest(req)) {
         res.status(500).send(`
           <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
@@ -429,7 +451,7 @@ export const updateUser = [
                 <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <div class="flex-1">Failed to update user: ${error.message}</div>
+                <div class="flex-1">Failed to create user: ${error.message}</div>
               </div>
             </div>
           </div>
@@ -450,7 +472,7 @@ export const deleteUser = [
       // First check if user exists
       const { data: existingUser, error: findError } =
         await databaseService.supabase
-          .from('Accounts')
+          .from('accounts')
           .select('*')
           .eq('id', id)
           .single();
@@ -461,12 +483,15 @@ export const deleteUser = [
       }
 
       const { error: deleteError } = await databaseService.supabase
-        .from('Accounts')
+        .from('accounts')
         .delete()
         .eq('id', id);
       if (deleteError) throw deleteError;
 
-      const fullName = `${existingUser.first_name} ${existingUser.last_name}`;
+      const fullName =
+        existingUser.display_name ||
+        existingUser.username ||
+        'User ' + existingUser.id;
       logger.info(`Deleted user with ID: ${id}`);
 
       if (isHtmxRequest(req)) {
@@ -489,7 +514,7 @@ export const deleteUser = [
         res.json({ success: true, message: 'User deleted successfully' });
       }
     } catch (error) {
-      logger.error('Error deleting user:', error);
+      logger.error('Error fetching users:', error);
       if (isHtmxRequest(req)) {
         res.status(500).send(`
           <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
@@ -498,7 +523,7 @@ export const deleteUser = [
                 <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <div class="flex-1">Failed to delete user: ${error.message}</div>
+                <div class="flex-1">Failed to fetch users: ${error.message}</div>
               </div>
             </div>
           </div>
@@ -510,61 +535,93 @@ export const deleteUser = [
   },
 ];
 
-// Helper function to generate pagination HTML
-const generatePaginationHtml = (page, limit, total, query, entity) => {
-  const totalPages = Math.ceil(total / limit);
-  if (totalPages <= 1) return '';
+export const bulkAction = async (req, res) => {
+  try {
+    const { action, ids } = req.body;
 
-  const search = query.search || '';
-  const role = query.role || '';
-  const status = query.status || '';
-  const params = `limit=${limit}&search=${encodeURIComponent(search)}&role=${role}&status=${status}`;
+    if (!action || !ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Action and ids array are required',
+      });
+    }
 
-  let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
+    const accountService = serviceFactory.getAccountService();
+    const results = [];
+    const errors = [];
 
-  // Previous button
-  if (page > 1) {
-    html += `<button hx-get="/api/${entity}?page=${page - 1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Previous page">`;
-    html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>`;
-    html += `</button>`;
-  }
+    for (const id of ids) {
+      try {
+        let result;
+        switch (action) {
+          case 'activate':
+            result = await accountService.activateAccount(id);
+            break;
+          case 'deactivate':
+            result = await accountService.deactivateAccount(id);
+            break;
+          case 'delete':
+            await accountService.deleteAccount(id);
+            result = { id, deleted: true };
+            break;
+          default:
+            throw new Error(`Unknown action: ${action}`);
+        }
+        results.push(result);
+      } catch (error) {
+        errors.push({ id, error: error.message });
+      }
+    }
 
-  // Page number buttons
-  const maxVisiblePages = 5;
-  let startPage = Math.max(1, page - Math.floor(maxVisiblePages / 2));
-  let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    logger.info(
+      `Bulk ${action} completed for ${results.length} accounts, ${errors.length} errors`
+    );
 
-  if (endPage - startPage + 1 < maxVisiblePages) {
-    startPage = Math.max(1, endPage - maxVisiblePages + 1);
-  }
-
-  for (let i = startPage; i <= endPage; i++) {
-    if (i === page) {
-      html += `<span class="inline-flex items-center justify-center w-10 h-10 rounded-md bg-primary text-primary-foreground shadow-sm font-medium">${i}</span>`;
+    if (isHtmxRequest(req)) {
+      const successCount = results.length;
+      const errorCount = errors.length;
+      res.send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full bg-green-50 text-green-800 border border-green-200 rounded-lg px-4 py-3 text-sm">
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">
+              Bulk ${action} completed: ${successCount} successful${errorCount > 0 ? `, ${errorCount} errors` : ''}!
+            </div>
+          </div>
+        </div>
+        <script>
+          htmx.ajax('GET', window.location.pathname + window.location.search, {target: '#usersTableContainer'});
+          htmx.ajax('GET', window.location.pathname + '/filter-nav' + window.location.search, {target: '#filter-links'});
+        </script>
+      `);
     } else {
-      html += `<button hx-get="/api/${entity}?page=${i}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">${i}</button>`;
+      res.json({
+        success: true,
+        data: { results, errors },
+        message: `Bulk ${action} completed for ${results.length} accounts`,
+      });
+    }
+  } catch (error) {
+    logger.error('Error in bulk action:', error);
+    if (isHtmxRequest(req)) {
+      res.status(500).send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-red-50 text-red-800 border-red-200">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="flex-1">Bulk action failed: ${error.message}</div>
+            </div>
+          </div>
+        </div>
+      `);
+    } else {
+      res.status(500).json({ success: false, error: error.message });
     }
   }
-
-  // Go to page form
-  html += `<form hx-get="/api/${entity}" hx-target="#${entity}TableContainer" class="flex items-center gap-1 ml-2">`;
-  html += `<input type="hidden" name="limit" value="${limit}">`;
-  html += `<input type="hidden" name="search" value="${search}">`;
-  html += `<input type="hidden" name="role" value="${role}">`;
-  html += `<input type="hidden" name="status" value="${status}">`;
-  html += `<input type="number" name="page" min="1" max="${totalPages}" value="${page}" placeholder="Page" class="w-16 h-8 text-xs text-center rounded-md border border-input bg-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">`;
-  html += `<button type="submit" class="inline-flex items-center justify-center rounded-md text-xs font-medium border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 h-8 px-2 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">Go</button>`;
-  html += `</form>`;
-
-  // Next button
-  if (page < totalPages) {
-    html += `<button hx-get="/api/${entity}?page=${page + 1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" title="Next page">`;
-    html += `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
-    html += `</button>`;
-  }
-
-  html += `</div>`;
-  return html;
 };
 
 // Route setup function
@@ -572,5 +629,6 @@ export default function usersRoutes(app) {
   app.get('/api/users', getUsers);
   app.post('/api/users', ...createUser);
   app.put('/api/users/:id', ...updateUser);
+  app.post('/api/users/bulk-action', bulkAction);
   app.delete('/api/users/:id', ...deleteUser);
 }

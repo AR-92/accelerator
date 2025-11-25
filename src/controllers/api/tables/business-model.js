@@ -24,7 +24,7 @@ export const getBusinessModels = async (req, res) => {
     const offset = (pageNum - 1) * limitNum;
 
     let query = databaseService.supabase
-      .from('Business Model')
+      .from('business_models')
       .select('*', { count: 'exact' });
 
     if (search) {
@@ -178,7 +178,7 @@ export const getBusinessModel = async (req, res) => {
   try {
     const { id } = req.params;
     const { data: businessModel, error } = await databaseService.supabase
-      .from('Business Model')
+      .from('business_models')
       .select('*')
       .eq('id', id)
       .single();
@@ -204,7 +204,7 @@ export const createBusinessModel = [
     try {
       const modelData = req.body;
       const { data: businessModel, error } = await databaseService.supabase
-        .from('Business Model')
+        .from('business_models')
         .insert([modelData])
         .select()
         .single();
@@ -264,7 +264,7 @@ export const updateBusinessModel = [
       const updates = req.body;
 
       const { data: businessModel, error } = await databaseService.supabase
-        .from('Business Model')
+        .from('business_models')
         .update(updates)
         .eq('id', id)
         .select()
@@ -331,7 +331,7 @@ export const deleteBusinessModel = [
       // Check if model exists
       const { data: existingModel, error: fetchError } =
         await databaseService.supabase
-          .from('Business Model')
+          .from('business_models')
           .select('name')
           .eq('id', id)
           .single();
@@ -343,7 +343,7 @@ export const deleteBusinessModel = [
       }
 
       const { error } = await databaseService.supabase
-        .from('Business Model')
+        .from('business_models')
         .delete()
         .eq('id', id);
 
@@ -384,7 +384,8 @@ export const deleteBusinessModel = [
                 <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
-              <div class="flex-1">Failed to delete business model: ${error.message}</div>
+                <div class="flex-1">Failed to delete business model: ${error.message}</div>
+              </div>
             </div>
           </div>
         `);
@@ -394,6 +395,99 @@ export const deleteBusinessModel = [
     }
   },
 ];
+
+// Bulk action for business models
+export const bulkAction = async (req, res) => {
+  try {
+    const { action, ids, status } = req.body;
+
+    if (!action || !ids || !Array.isArray(ids)) {
+      return res
+        .status(400)
+        .json({ success: false, error: 'Invalid request data' });
+    }
+
+    switch (action) {
+      case 'delete':
+        const { error: deleteError } = await databaseService.supabase
+          .from('business_models')
+          .delete()
+          .in('id', ids);
+
+        if (deleteError) throw deleteError;
+
+        logger.info(`Bulk deleted ${ids.length} business models`);
+        break;
+
+      case 'update_status':
+        if (!status) {
+          return res.status(400).json({
+            success: false,
+            error: 'Status is required for update_status action',
+          });
+        }
+
+        const { error: updateError } = await databaseService.supabase
+          .from('business_models')
+          .update({ status })
+          .in('id', ids);
+
+        if (updateError) throw updateError;
+
+        logger.info(
+          `Bulk updated status to ${status} for ${ids.length} business models`
+        );
+        break;
+
+      default:
+        return res
+          .status(400)
+          .json({ success: false, error: 'Invalid action' });
+    }
+
+    if (isHtmxRequest(req)) {
+      res.send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-green-50 text-green-800 border-green-200">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="flex-1">Bulk action completed successfully!</div>
+            </div>
+          </div>
+        </div>
+        <script>
+          setTimeout(() => document.querySelector('.fixed').remove(), 5000);
+          htmx.trigger('#businessModelTableContainer', 'businessModelBulkAction');
+        </script>
+      `);
+    } else {
+      res.json({
+        success: true,
+        message: 'Bulk action completed successfully',
+      });
+    }
+  } catch (error) {
+    logger.error('Error performing bulk action on business models:', error);
+    if (isHtmxRequest(req)) {
+      res.status(500).send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-red-50 text-red-800 border-red-200">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="flex-1">Failed to perform bulk action: ${error.message}</div>
+            </div>
+          </div>
+        </div>
+      `);
+    } else {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+};
 
 // Helper function to generate pagination HTML
 const generatePaginationHtml = (page, limit, total, query) => {
@@ -446,4 +540,5 @@ export default function businessModelRoutes(app) {
   app.post('/api/business-model', ...createBusinessModel);
   app.put('/api/business-model/:id', ...updateBusinessModel);
   app.delete('/api/business-model/:id', ...deleteBusinessModel);
+  app.post('/api/business-model/bulk-action', bulkAction);
 }

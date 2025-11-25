@@ -1,5 +1,7 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
+import { formatDate } from '../../../helpers/format/index.js';
+import { isHtmxRequest } from '../../../helpers/http/index.js';
 
 // Pitchdeck API
 export const getPitchDeck = async (req, res) => {
@@ -10,7 +12,7 @@ export const getPitchDeck = async (req, res) => {
     const offset = (pageNum - 1) * limitNum;
 
     let query = databaseService.supabase
-      .from('PitchDeck')
+      .from('pitch_deck')
       .select('*', { count: 'exact' });
 
     if (search) {
@@ -136,7 +138,101 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
   return html;
 };
 
+// Bulk action for pitchdecks
+export const bulkAction = async (req, res) => {
+  try {
+    const { action, ids, status } = req.body;
+
+    if (!action || !ids || !Array.isArray(ids)) {
+      return res
+        .status(400)
+        .json({ success: false, error: 'Invalid request data' });
+    }
+
+    switch (action) {
+      case 'delete':
+        const { error: deleteError } = await databaseService.supabase
+          .from('pitch_deck')
+          .delete()
+          .in('id', ids);
+
+        if (deleteError) throw deleteError;
+
+        logger.info(`Bulk deleted ${ids.length} pitchdecks`);
+        break;
+
+      case 'update_status':
+        if (!status) {
+          return res.status(400).json({
+            success: false,
+            error: 'Status is required for update_status action',
+          });
+        }
+
+        const { error: updateError } = await databaseService.supabase
+          .from('pitch_deck')
+          .update({ status })
+          .in('id', ids);
+
+        if (updateError) throw updateError;
+
+        logger.info(
+          `Bulk updated status to ${status} for ${ids.length} pitchdecks`
+        );
+        break;
+
+      default:
+        return res
+          .status(400)
+          .json({ success: false, error: 'Invalid action' });
+    }
+
+    if (isHtmxRequest(req)) {
+      res.send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-green-50 text-green-800 border-green-200">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="flex-1">Bulk action completed successfully!</div>
+            </div>
+          </div>
+        </div>
+        <script>
+          setTimeout(() => document.querySelector('.fixed').remove(), 5000);
+          htmx.trigger('#pitchdeckTableContainer', 'pitchdeckBulkAction');
+        </script>
+      `);
+    } else {
+      res.json({
+        success: true,
+        message: 'Bulk action completed successfully',
+      });
+    }
+  } catch (error) {
+    logger.error('Error performing bulk action on pitchdecks:', error);
+    if (isHtmxRequest(req)) {
+      res.status(500).send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-red-50 text-red-800 border-red-200">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="flex-1">Failed to perform bulk action: ${error.message}</div>
+            </div>
+          </div>
+        </div>
+      `);
+    } else {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+};
+
 // Route setup function
 export default function pitchdeckRoutes(app) {
   app.get('/api/pitchdeck', getPitchDeck);
+  app.post('/api/pitchdeck/bulk-action', bulkAction);
 }

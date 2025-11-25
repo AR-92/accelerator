@@ -31,6 +31,12 @@ export const handlebarsHelpers = {
   add: function (...args) {
     return args.slice(0, -1).reduce((a, b) => a + b, 0);
   },
+  concat: function (...args) {
+    return args.slice(0, -1).join('');
+  },
+  capitalize: function (str) {
+    return str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+  },
   statusClass: statusClass,
   formatDate: formatDate,
   formatCurrency: formatCurrency,

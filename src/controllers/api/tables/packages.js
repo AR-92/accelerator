@@ -1,5 +1,6 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
+import { serviceFactory } from '../../../services/serviceFactory.js';
 import {
   validatePackageCreation,
   validatePackageUpdate,
@@ -547,10 +548,99 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
   return html;
 };
 
+// Bulk action handler
+export const bulkAction = async (req, res) => {
+  try {
+    const { action, ids } = req.body;
+
+    if (!action || !ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Action and ids array are required',
+      });
+    }
+
+    const packageService = serviceFactory.getPackageService();
+    const results = [];
+    const errors = [];
+
+    for (const id of ids) {
+      try {
+        let result;
+        switch (action) {
+          case 'activate':
+            result = await packageService.activatePackage(id);
+            break;
+          case 'deactivate':
+            result = await packageService.deactivatePackage(id);
+            break;
+          case 'delete':
+            await packageService.deletePackage(id);
+            result = { id, deleted: true };
+            break;
+          default:
+            throw new Error(`Unknown action: ${action}`);
+        }
+        results.push(result);
+      } catch (error) {
+        errors.push({ id, error: error.message });
+      }
+    }
+
+    logger.info(
+      `Bulk ${action} completed for ${results.length} packages, ${errors.length} errors`
+    );
+
+    if (isHtmxRequest(req)) {
+      const successCount = results.length;
+      const errorCount = errors.length;
+      res.send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full bg-green-50 text-green-800 border border-green-200 rounded-lg px-4 py-3 text-sm">
+          <div class="flex items-start gap-3">
+            <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">
+              Bulk ${action} completed: ${successCount} successful${errorCount > 0 ? `, ${errorCount} errors` : ''}!
+            </div>
+          </div>
+        </div>
+        <script>
+          htmx.ajax('GET', window.location.pathname + window.location.search, {target: '#packagesTableContainer'});
+          htmx.ajax('GET', window.location.pathname + '/filter-nav' + window.location.search, {target: '#filter-links'});
+        </script>
+      `);
+    } else {
+      res.json({
+        success: true,
+        data: { results, errors },
+        message: `Bulk ${action} completed for ${results.length} packages`,
+      });
+    }
+  } catch (error) {
+    logger.error('Error in bulk action:', error);
+    if (isHtmxRequest(req)) {
+      res.status(500).send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-red-50 text-red-800 border-red-200">
+            <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="flex-1">Bulk action failed: ${error.message}</div>
+          </div>
+        </div>
+      `);
+    } else {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+};
+
 // Route setup function
 export default function packagesRoutes(app) {
   app.get('/api/packages', getPackages);
   app.post('/api/packages', ...createPackage);
   app.put('/api/packages/:id', ...updatePackage);
+  app.post('/api/packages/bulk-action', bulkAction);
   app.delete('/api/packages/:id', ...deletePackage);
 }
