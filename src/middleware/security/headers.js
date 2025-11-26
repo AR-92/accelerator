@@ -10,6 +10,7 @@ export const securityHeaders = helmet({
         'https://wgmuxgylmvrsttdxwarw.supabase.co',
         'https://fonts.googleapis.com',
         'https://fonts.gstatic.com',
+        'https://cdn.jsdelivr.net',
       ],
       styleSrc: [
         "'self'",

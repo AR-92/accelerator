@@ -3,6 +3,8 @@ import { getProfile } from './admin/get-profile.js';
 import { getProfileSettings } from './admin/get-profile-settings.js';
 import { getSettings } from './admin/get-settings.js';
 import { getSystemHealth } from './admin/get-system-health.js';
+import { getSystemConfig } from './admin/get-system-config.js';
+import { getSystemLogs } from './admin/get-system-logs.js';
 import { getNotifications } from './admin/get-notifications.js';
 
 import { getActivity } from './admin/get-activity.js';
@@ -31,6 +33,8 @@ export { getProfile };
 export { getProfileSettings };
 export { getSettings };
 export { getSystemHealth };
+export { getSystemConfig };
+export { getSystemLogs };
 export { getNotifications };
 
 export { getActivity };
@@ -60,6 +64,8 @@ export default function adminRoutes(app) {
   app.get('/admin/profile-settings', getProfileSettings);
   app.get('/admin/settings', getSettings);
   app.get('/admin/system-health', getSystemHealth);
+  app.get('/admin/system-config', getSystemConfig);
+  app.get('/admin/system-logs', getSystemLogs);
   app.get('/admin/notifications', getNotifications);
 
   app.get('/admin/activity', getActivity);
@@ -87,6 +93,8 @@ export default function adminRoutes(app) {
   app.get('/admin/other-pages/profile-settings', getProfileSettings);
   app.get('/admin/other-pages/settings', getSettings);
   app.get('/admin/other-pages/system-health', getSystemHealth);
+  app.get('/admin/other-pages/system-config', getSystemConfig);
+  app.get('/admin/other-pages/system-logs', getSystemLogs);
   app.get('/admin/other-pages/notifications', getNotifications);
   app.get('/admin/other-pages/activity', getActivity);
   app.get('/admin/other-pages/main', getMain);

@@ -41,6 +41,9 @@ export const handlebarsHelpers = {
   formatDate: formatDate,
   formatCurrency: formatCurrency,
   formatNumber: formatNumber,
+  json: function (context) {
+    return JSON.stringify(context);
+  },
   icon: function (name, options) {
     if (!name || typeof name !== 'string') return '';
     const capitalizedName =

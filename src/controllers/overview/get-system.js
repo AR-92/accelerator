@@ -93,6 +93,8 @@ export const getSystem = async (req, res) => {
 
     const quickActions = [
       { link: '/admin/system-health', icon: 'activity', text: 'System Health' },
+      { link: '/admin/system-config', icon: 'settings', text: 'System Config' },
+      { link: '/admin/system-logs', icon: 'file-text', text: 'System Logs' },
       {
         link: '/admin/table-pages/notifications',
         icon: 'bell',
@@ -110,6 +112,16 @@ export const getSystem = async (req, res) => {
         id: 'system-health-btn',
         href: '/admin/system-health',
         text: 'System Health',
+      },
+      {
+        id: 'system-config-btn',
+        href: '/admin/system-config',
+        text: 'System Config',
+      },
+      {
+        id: 'system-logs-btn',
+        href: '/admin/system-logs',
+        text: 'System Logs',
       },
       {
         id: 'notifications-btn',

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,7 +45,7 @@
            end
      </script>
 </head>
-<body>
+<body class="h-full">
      <!-- Auth loading screen -->
      <div id="auth-loading" class="fixed inset-0 bg-background z-50 flex items-center justify-center">
          <div class="text-center">
@@ -56,12 +56,12 @@
      </div>
 
     <!-- Main content (hidden initially) -->
-    <div id="main-content" class="min-h-screen hidden">
+    <div id="main-content" class="min-h-screen hidden flex flex-col">
         {{> nav}}
         {{> filter-nav}}
-        <div class="flex">
+        <div class="flex flex-1 min-h-0">
             {{> sidebar}}
-            <main class="flex-1 p-4">
+            <main class="flex-1 p-4 overflow-y-auto">
                 {{{body}}}
             </main>
         </div>

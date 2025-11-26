@@ -1,200 +1,816 @@
-<!-- System Health Management Content -->
+<!-- System Health Content -->
 <div class="max-w-7xl mx-auto rounded-xl overflow-hidden flex flex-col mx-4 my-4">
 
    <!-- Page Header -->
-   {{> page-header title="System Health Management" description="Manage and organize all system health efficiently" border=true}}
-   <div class="p-6 space-y-6">
-     <!-- System Status Overview -->
-     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Database Status -->
-        <div class="bg-card rounded-lg border border-border p-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-muted-foreground">Database</p>
-              <p class="text-2xl font-bold {{#if systemMetrics.dbConnected}}text-green-600 dark:text-green-400{{else}}text-red-600 dark:text-red-400{{/if}}" id="db-status">
-                {{#if systemMetrics.dbConnected}}Connected{{else}}Disconnected{{/if}}
-              </p>
-            </div>
-            <div class="w-12 h-12 {{#if systemMetrics.dbConnected}}bg-green-100 dark:bg-green-900{{else}}bg-red-100 dark:bg-red-900{{/if}} rounded-full flex items-center justify-center">
-              <svg class="w-6 h-6 {{#if systemMetrics.dbConnected}}text-green-600 dark:text-green-400{{else}}text-red-600 dark:text-red-400{{/if}}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {{#if systemMetrics.dbConnected}}
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                {{else}}
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                {{/if}}
-              </svg>
-            </div>
-          </div>
-        </div>
+   {{> page-header title="System Health Dashboard" description="Comprehensive real-time monitoring of system performance, resources, and health metrics" border=true}}
 
-        <!-- Server Status -->
-        <div class="bg-card rounded-lg border border-border p-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-muted-foreground">Server</p>
-              <p class="text-2xl font-bold text-green-600 dark:text-green-400">Online</p>
-            </div>
-             <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
-              {{{icon 'check-circle' size='24' class='text-green-600'}}}
+   <div class="p-6 space-y-8">
+      <!-- Critical Status Overview -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+         <!-- Database Connection -->
+         <div class="bg-card rounded-lg border border-border p-6">
+            <div class="flex items-center justify-between">
+               <div>
+                  <p class="text-sm font-medium text-muted-foreground">Database Status</p>
+                  <p class="text-2xl font-bold {{#if systemMetrics.database.connected}}text-green-600{{else}}text-red-600{{/if}}">
+                     {{#if systemMetrics.database.connected}}Online{{else}}Offline{{/if}}
+                  </p>
+                  <p class="text-xs text-muted-foreground">{{systemMetrics.database.connections}} connections</p>
+               </div>
+               <div class="w-12 h-12 {{#if systemMetrics.database.connected}}bg-green-100{{else}}bg-red-100{{/if}} rounded-full flex items-center justify-center">
+                  {{{icon 'database' size='24' class='{{#if systemMetrics.database.connected}}text-green-600{{else}}text-red-600{{/if}}'}}}
+               </div>
             </div>
          </div>
-       </div>
 
-        <!-- Memory Usage -->
-        <div class="bg-card rounded-lg border border-border p-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-muted-foreground">Memory</p>
-              <p class="text-2xl font-bold text-blue-600 dark:text-blue-400" id="memory-usage">{{systemMetrics.memoryUsagePercent}}%</p>
-            </div>
-             <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
-               {{{icon 'bar-chart-3' size='24' class='text-blue-600 dark:text-blue-400'}}}
-             </div>
-          </div>
-        </div>
-
-        <!-- Uptime -->
-        <div class="bg-card rounded-lg border border-border p-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="text-sm font-medium text-muted-foreground">Uptime</p>
-              <p class="text-2xl font-bold text-purple-600 dark:text-purple-400" id="uptime">{{systemMetrics.uptimeString}}</p>
-            </div>
-             <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
-              {{{icon 'clock' size='24' class='text-purple-600'}}}
+         <!-- Memory Usage -->
+         <div class="bg-card rounded-lg border border-border p-6">
+            <div class="flex items-center justify-between">
+               <div>
+                  <p class="text-sm font-medium text-muted-foreground">Memory Usage</p>
+                  <p class="text-2xl font-bold text-blue-600">{{systemMetrics.memory.usagePercent}}%</p>
+                  <p class="text-xs text-muted-foreground">{{systemMetrics.memory.usageGB.used}}GB / {{systemMetrics.memory.usageGB.total}}GB</p>
+               </div>
+               <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                  {{{icon 'cpu' size='24' class='text-blue-600'}}}
+               </div>
             </div>
          </div>
-       </div>
-     </div>
 
-     <!-- Detailed Metrics -->
-     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-       <!-- System Resources -->
-       <div class="bg-card rounded-lg border border-border">
+         <!-- CPU Usage -->
+         <div class="bg-card rounded-lg border border-border p-6">
+            <div class="flex items-center justify-between">
+               <div>
+                  <p class="text-sm font-medium text-muted-foreground">CPU Usage</p>
+                  <p class="text-2xl font-bold text-orange-600">{{systemMetrics.cpu.usage}}%</p>
+                  <p class="text-xs text-muted-foreground">{{systemMetrics.cpu.count}} cores @ {{systemMetrics.cpu.speed}}MHz</p>
+               </div>
+               <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                  {{{icon 'activity' size='24' class='text-orange-600'}}}
+               </div>
+            </div>
+         </div>
+
+         <!-- Disk Usage -->
+         <div class="bg-card rounded-lg border border-border p-6">
+            <div class="flex items-center justify-between">
+               <div>
+                  <p class="text-sm font-medium text-muted-foreground">Disk Usage</p>
+                  <p class="text-2xl font-bold text-purple-600">{{systemMetrics.disk.usage}}%</p>
+                  <p class="text-xs text-muted-foreground">{{systemMetrics.disk.info.used}}GB / {{systemMetrics.disk.info.total}}GB</p>
+               </div>
+               <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                  {{{icon 'hard-drive' size='24' class='text-purple-600'}}}
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- System Information & Performance -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+         <!-- System Details -->
+         <div class="bg-card rounded-lg border border-border">
+            <div class="p-6 border-b border-border">
+               <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                  {{{icon 'server' size='20' class='mr-2'}}}
+                  System Information
+               </h3>
+            </div>
+            <div class="p-6 space-y-3">
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Hostname</span>
+                  <span class="text-sm text-muted-foreground font-mono">{{systemMetrics.systemInfo.hostname}}</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Platform</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.systemInfo.platform}} {{systemMetrics.systemInfo.arch}}</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">OS</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.systemInfo.type}} {{systemMetrics.systemInfo.release}}</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">CPU</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.cpu.count}} × {{systemMetrics.cpu.model}}</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Uptime</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.uptime}}</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Load Average</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.loadAverage.1min}} (1m)</span>
+               </div>
+            </div>
+         </div>
+
+         <!-- Application Metrics -->
+         <div class="bg-card rounded-lg border border-border">
+            <div class="p-6 border-b border-border">
+               <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                  {{{icon 'code' size='20' class='mr-2'}}}
+                  Application Metrics
+               </h3>
+            </div>
+            <div class="p-6 space-y-3">
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Node.js</span>
+                  <span class="text-sm text-muted-foreground font-mono">{{systemMetrics.application.nodeVersion}}</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Environment</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.application.environment}}</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Process ID</span>
+                  <span class="text-sm text-muted-foreground font-mono">{{systemMetrics.process.pid}}</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Process Uptime</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.process.uptime}}s</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Heap Used</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.application.memoryUsage.heapUsed}}MB</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">RSS Memory</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.application.memoryUsage.rss}}MB</span>
+               </div>
+            </div>
+         </div>
+
+         <!-- Database Metrics -->
+         <div class="bg-card rounded-lg border border-border">
+            <div class="p-6 border-b border-border">
+               <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                  {{{icon 'database' size='20' class='mr-2'}}}
+                  Database Metrics
+               </h3>
+            </div>
+            <div class="p-6 space-y-3">
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Status</span>
+                  <div class="flex items-center">
+                     <div class="w-2 h-2 {{#if systemMetrics.database.connected}}bg-green-500{{else}}bg-red-500{{/if}} rounded-full animate-pulse mr-2"></div>
+                     <span class="text-sm {{#if systemMetrics.database.connected}}text-green-600{{else}}text-red-600{{/if}} font-medium">
+                        {{#if systemMetrics.database.connected}}Connected{{else}}Disconnected{{/if}}
+                     </span>
+                  </div>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Tables</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.database.totalTables}}</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Total Records</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.database.totalRecords}}</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Est. Size</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.database.size}}MB</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Active Connections</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.database.connections}}</span>
+               </div>
+               <div class="flex justify-between">
+                  <span class="text-sm font-medium text-card-foreground">Queries/min</span>
+                  <span class="text-sm text-muted-foreground">{{systemMetrics.performance.queriesPerMin}}</span>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Network & File System -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+         <!-- Network Interfaces -->
+         <div class="bg-card rounded-lg border border-border">
+            <div class="p-6 border-b border-border">
+               <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                  {{{icon 'network' size='20' class='mr-2'}}}
+                  Network Interfaces
+               </h3>
+            </div>
+            <div class="p-6">
+               {{#if systemMetrics.network.length}}
+               <div class="space-y-3">
+                  {{#each systemMetrics.network}}
+                  <div class="border border-border rounded-lg p-3">
+                     <div class="flex justify-between items-start">
+                        <div>
+                           <p class="text-sm font-medium text-card-foreground">{{this.name}}</p>
+                           <p class="text-xs text-muted-foreground font-mono">{{this.address}}</p>
+                           <p class="text-xs text-muted-foreground">Netmask: {{this.netmask}}</p>
+                        </div>
+                        <div class="text-right">
+                           <p class="text-xs text-muted-foreground">MAC</p>
+                           <p class="text-xs font-mono">{{this.mac}}</p>
+                        </div>
+                     </div>
+                  </div>
+                  {{/each}}
+               </div>
+               {{else}}
+               <div class="text-center py-8">
+                  <p class="text-muted-foreground">No network interfaces detected</p>
+               </div>
+               {{/if}}
+            </div>
+         </div>
+
+         <!-- File System -->
+         <div class="bg-card rounded-lg border border-border">
+            <div class="p-6 border-b border-border">
+               <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                  {{{icon 'folder' size='20' class='mr-2'}}}
+                  File System
+               </h3>
+            </div>
+            <div class="p-6">
+               {{#if systemMetrics.fileSystem.length}}
+               <div class="space-y-3">
+                  {{#each systemMetrics.fileSystem}}
+                  <div class="border border-border rounded-lg p-3">
+                     <div class="flex justify-between items-center">
+                        <div>
+                           <p class="text-sm font-medium text-card-foreground">{{this.mount}}</p>
+                           <p class="text-xs text-muted-foreground">Used: {{this.used}}GB / {{this.total}}GB</p>
+                        </div>
+                        <div class="text-right">
+                           <div class="w-16 bg-muted rounded-full h-2">
+                              <div class="bg-blue-600 h-2 rounded-full" style="width: {{this.usePercent}}%"></div>
+                           </div>
+                           <p class="text-xs text-muted-foreground mt-1">{{this.usePercent}}% used</p>
+                        </div>
+                     </div>
+                  </div>
+                  {{/each}}
+               </div>
+               {{else}}
+               <div class="text-center py-8">
+                  <p class="text-muted-foreground">File system information unavailable</p>
+               </div>
+               {{/if}}
+            </div>
+         </div>
+      </div>
+
+      <!-- Performance Trends -->
+      <div class="bg-card rounded-lg border border-border">
          <div class="p-6 border-b border-border">
-           <h3 class="text-lg font-semibold text-card-foreground">System Resources</h3>
+            <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+               {{{icon 'trending-up' size='20' class='mr-2'}}}
+               Performance Trends
+            </h3>
+            <p class="text-sm text-muted-foreground mt-1">Real-time system performance monitoring (Last 24 hours)</p>
          </div>
-         <div class="p-6 space-y-4">
-           <div>
-             <div class="flex justify-between text-sm mb-1">
-               <span>CPU Usage</span>
-               <span id="cpu-usage">{{systemMetrics.cpuUsage}}%</span>
-             </div>
-             <div class="w-full bg-muted rounded-full h-2">
-               <div class="bg-blue-600 h-2 rounded-full" style="width: {{systemMetrics.cpuUsage}}%"></div>
-             </div>
-           </div>
-           <div>
-             <div class="flex justify-between text-sm mb-1">
-               <span>Memory Usage</span>
-               <span id="memory-percent">{{systemMetrics.memoryUsagePercent}}%</span>
-             </div>
-             <div class="w-full bg-muted rounded-full h-2">
-               <div class="bg-green-600 h-2 rounded-full" style="width: {{systemMetrics.memoryUsagePercent}}%"></div>
-             </div>
-           </div>
-           <div>
-             <div class="flex justify-between text-sm mb-1">
-               <span>Disk Usage</span>
-               <span id="disk-usage">{{systemMetrics.diskUsage}}%</span>
-             </div>
-             <div class="w-full bg-muted rounded-full h-2">
-               <div class="bg-yellow-600 h-2 rounded-full" style="width: {{systemMetrics.diskUsage}}%"></div>
-             </div>
-           </div>
-         </div>
-       </div>
+         <div class="p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+               <!-- CPU Usage Trend -->
+               <div>
+                  <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
+                     {{{icon 'activity' size='16' class='mr-2 text-orange-600'}}}
+                     CPU Usage (%)
+                  </h4>
+                   <div class="h-48">
+                      <canvas id="cpuChart" width="400" height="200"></canvas>
+                   </div>
+                  <div class="mt-2 text-center">
+                     <span class="text-xs text-muted-foreground">Current: </span>
+                     <span class="text-xs font-medium text-orange-600">{{systemMetrics.cpu.usage}}%</span>
+                  </div>
+               </div>
 
-       <!-- Database Metrics -->
-       <div class="bg-card rounded-lg border border-border">
+               <!-- Memory Usage Trend -->
+               <div>
+                  <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
+                     {{{icon 'cpu' size='16' class='mr-2 text-blue-600'}}}
+                     Memory Usage (%)
+                  </h4>
+                   <div class="h-48">
+                      <canvas id="memoryChart" width="400" height="200"></canvas>
+                   </div>
+                  <div class="mt-2 text-center">
+                     <span class="text-xs text-muted-foreground">Current: </span>
+                     <span class="text-xs font-medium text-blue-600">{{systemMetrics.memory.usagePercent}}%</span>
+                  </div>
+               </div>
+
+               <!-- Response Time Trend -->
+               <div>
+                  <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
+                     {{{icon 'zap' size='16' class='mr-2 text-red-600'}}}
+                     Response Time (ms)
+                  </h4>
+                   <div class="h-48">
+                      <canvas id="responseTimeChart" width="400" height="200"></canvas>
+                   </div>
+                  <div class="mt-2 text-center">
+                     <span class="text-xs text-muted-foreground">Current: </span>
+                     <span class="text-xs font-medium text-red-600">{{systemMetrics.performance.responseTime}}ms</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Resource Usage Details -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+         <!-- Memory Details -->
+         <div class="bg-card rounded-lg border border-border">
+            <div class="p-6 border-b border-border">
+               <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                  {{{icon 'memory-stick' size='20' class='mr-2'}}}
+                  Memory Details
+               </h3>
+            </div>
+            <div class="p-6">
+               <div class="space-y-4">
+                  <div>
+                     <div class="flex justify-between text-sm mb-1">
+                        <span class="text-card-foreground">Used Memory</span>
+                        <span class="text-muted-foreground">{{systemMetrics.memory.usageGB.used}}GB / {{systemMetrics.memory.usageGB.total}}GB</span>
+                     </div>
+                     <div class="w-full bg-muted rounded-full h-3">
+                        <div class="bg-blue-600 h-3 rounded-full transition-all duration-300" style="width: {{systemMetrics.memory.usagePercent}}%"></div>
+                     </div>
+                  </div>
+                  <div class="grid grid-cols-2 gap-4 pt-4">
+                     <div class="text-center">
+                        <p class="text-2xl font-bold text-blue-600">{{systemMetrics.memory.usagePercent}}%</p>
+                        <p class="text-xs text-muted-foreground">Usage</p>
+                     </div>
+                     <div class="text-center">
+                        <p class="text-2xl font-bold text-green-600">{{systemMetrics.memory.usageGB.free}}GB</p>
+                        <p class="text-xs text-muted-foreground">Free</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- CPU Details -->
+         <div class="bg-card rounded-lg border border-border">
+            <div class="p-6 border-b border-border">
+               <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                  {{{icon 'cpu' size='20' class='mr-2'}}}
+                  CPU Details
+               </h3>
+            </div>
+            <div class="p-6">
+               <div class="space-y-4">
+                  <div>
+                     <div class="flex justify-between text-sm mb-1">
+                        <span class="text-card-foreground">CPU Usage</span>
+                        <span class="text-muted-foreground">{{systemMetrics.cpu.usage}}%</span>
+                     </div>
+                     <div class="w-full bg-muted rounded-full h-3">
+                        <div class="bg-orange-600 h-3 rounded-full transition-all duration-300" style="width: {{systemMetrics.cpu.usage}}%"></div>
+                     </div>
+                  </div>
+                  <div class="grid grid-cols-3 gap-4 pt-4">
+                     <div class="text-center">
+                        <p class="text-lg font-bold text-orange-600">{{systemMetrics.cpu.usage}}%</p>
+                        <p class="text-xs text-muted-foreground">Usage</p>
+                     </div>
+                     <div class="text-center">
+                        <p class="text-lg font-bold text-gray-600">{{systemMetrics.cpu.count}}</p>
+                        <p class="text-xs text-muted-foreground">Cores</p>
+                     </div>
+                     <div class="text-center">
+                        <p class="text-lg font-bold text-gray-600">{{systemMetrics.cpu.speed}}</p>
+                        <p class="text-xs text-muted-foreground">MHz</p>
+                     </div>
+                  </div>
+                  <div class="pt-2">
+                     <p class="text-xs text-muted-foreground">Load Average:</p>
+                     <div class="flex justify-between text-xs mt-1">
+                        <span>1min: {{systemMetrics.loadAverage.1min}}</span>
+                        <span>5min: {{systemMetrics.loadAverage.5min}}</span>
+                        <span>15min: {{systemMetrics.loadAverage.15min}}</span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- System Health Checks -->
+      <div class="bg-card rounded-lg border border-border">
          <div class="p-6 border-b border-border">
-           <h3 class="text-lg font-semibold text-card-foreground">Database Metrics</h3>
+            <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+               {{{icon 'shield-check' size='20' class='mr-2'}}}
+               System Health Checks
+            </h3>
+            <p class="text-sm text-muted-foreground mt-1">Automated health monitoring and status indicators</p>
          </div>
-         <div class="p-6 space-y-4">
-           <div class="grid grid-cols-2 gap-4">
-             <div class="text-center">
-               <p class="text-2xl font-bold text-blue-600" id="total-tables">{{systemMetrics.totalTables}}</p>
-               <p class="text-sm text-muted-foreground">Tables</p>
-             </div>
-             <div class="text-center">
-               <p class="text-2xl font-bold text-green-600" id="total-records">{{systemMetrics.totalRecords}}</p>
-               <p class="text-sm text-muted-foreground">Records</p>
-             </div>
-           </div>
-           <div class="border-t pt-4">
-             <h4 class="text-sm font-medium text-card-foreground mb-2">Recent Activity</h4>
-             <div class="space-y-2 text-sm">
-               <div class="flex justify-between">
-                 <span>Queries/min</span>
-                 <span id="queries-per-min">{{systemMetrics.queriesPerMin}}</span>
+         <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+               <!-- Database Health -->
+               <div class="flex items-center p-4 border border-border rounded-lg">
+                  <div class="w-10 h-10 {{#if systemMetrics.database.connected}}bg-green-100{{else}}bg-red-100{{/if}} rounded-full flex items-center justify-center mr-3">
+                     {{{icon 'database' size='20' class='{{#if systemMetrics.database.connected}}text-green-600{{else}}text-red-600{{/if}}'}}}
+                  </div>
+                  <div>
+                     <p class="text-sm font-medium text-card-foreground">Database</p>
+                     <p class="text-xs {{#if systemMetrics.database.connected}}text-green-600{{else}}text-red-600{{/if}} font-medium">
+                        {{#if systemMetrics.database.connected}}Healthy{{else}}Critical{{/if}}
+                     </p>
+                  </div>
                </div>
-               <div class="flex justify-between">
-                 <span>Active Connections</span>
-                 <span id="active-connections">{{systemMetrics.activeConnections}}</span>
-               </div>
-               <div class="flex justify-between">
-                 <span>Response Time</span>
-                 <span id="response-time">{{systemMetrics.responseTime}}ms</span>
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
 
-     <!-- Recent Logs -->
-     <div class="bg-card rounded-lg border border-border">
-       <div class="p-6 border-b border-border">
-         <h3 class="text-lg font-semibold text-card-foreground">Recent System Logs</h3>
-       </div>
-       <div class="p-6">
-         <div class="space-y-3" id="system-logs">
-           <div class="flex items-start space-x-3">
-             <div class="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-             <div class="flex-1">
-               <p class="text-sm text-card-foreground">Database connection established successfully</p>
-               <p class="text-xs text-muted-foreground">2 minutes ago</p>
-             </div>
-           </div>
-           <div class="flex items-start space-x-3">
-             <div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-             <div class="flex-1">
-               <p class="text-sm text-card-foreground">Server started on port 3000</p>
-               <p class="text-xs text-muted-foreground">5 minutes ago</p>
-             </div>
-           </div>
-           <div class="flex items-start space-x-3">
-             <div class="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
-             <div class="flex-1">
-               <p class="text-sm text-card-foreground">Memory usage above 60% threshold</p>
-               <p class="text-xs text-muted-foreground">10 minutes ago</p>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
+               <!-- Memory Health -->
+               <div class="flex items-center p-4 border border-border rounded-lg">
+                  <div class="w-10 h-10 {{#if (lt systemMetrics.memory.usagePercent 90)}}bg-green-100{{else}}bg-yellow-100{{/if}} rounded-full flex items-center justify-center mr-3">
+                     {{{icon 'cpu' size='20' class='{{#if (lt systemMetrics.memory.usagePercent 90)}}text-green-600{{else}}text-yellow-600{{/if}}'}}}
+                  </div>
+                  <div>
+                     <p class="text-sm font-medium text-card-foreground">Memory</p>
+                     <p class="text-xs {{#if (lt systemMetrics.memory.usagePercent 90)}}text-green-600{{else}}text-yellow-600{{/if}} font-medium">
+                        {{#if (lt systemMetrics.memory.usagePercent 90)}}Normal{{else}}High Usage{{/if}}
+                     </p>
+                  </div>
+               </div>
 
-     <!-- Quick Actions -->
-     <div class="bg-card rounded-lg border border-border">
-       <div class="p-6 border-b border-border">
-         <h3 class="text-lg font-semibold text-card-foreground">Quick Actions</h3>
-       </div>
-       <div class="p-6">
-         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <button class="flex items-center justify-center px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
-              {{{icon 'refresh-cw' size='16' class='mr-2'}}}
-              Refresh Metrics
-            </button>
-            <button class="flex items-center justify-center px-4 py-2 bg-success text-success-foreground rounded-lg hover:bg-success/90 transition-colors">
-              {{{icon 'download' size='16' class='mr-2'}}}
-              Export Report
-            </button>
-            <button class="flex items-center justify-center px-4 py-2 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-colors">
-              {{{icon 'settings' size='16' class='mr-2'}}}
-              System Settings
-            </button>
+               <!-- CPU Health -->
+               <div class="flex items-center p-4 border border-border rounded-lg">
+                  <div class="w-10 h-10 {{#if (lt systemMetrics.cpu.usage 80)}}bg-green-100{{else}}bg-yellow-100{{/if}} rounded-full flex items-center justify-center mr-3">
+                     {{{icon 'activity' size='20' class='{{#if (lt systemMetrics.cpu.usage 80)}}text-green-600{{else}}text-yellow-600{{/if}}'}}}
+                  </div>
+                  <div>
+                     <p class="text-sm font-medium text-card-foreground">CPU</p>
+                     <p class="text-xs {{#if (lt systemMetrics.cpu.usage 80)}}text-green-600{{else}}text-yellow-600{{/if}} font-medium">
+                        {{#if (lt systemMetrics.cpu.usage 80)}}Normal{{else}}High Load{{/if}}
+                     </p>
+                  </div>
+               </div>
+
+               <!-- Disk Health -->
+               <div class="flex items-center p-4 border border-border rounded-lg">
+                  <div class="w-10 h-10 {{#if (lt systemMetrics.disk.usage 85)}}bg-green-100{{else}}bg-yellow-100{{/if}} rounded-full flex items-center justify-center mr-3">
+                     {{{icon 'hard-drive' size='20' class='{{#if (lt systemMetrics.disk.usage 85)}}text-green-600{{else}}text-yellow-600{{/if}}'}}}
+                  </div>
+                  <div>
+                     <p class="text-sm font-medium text-card-foreground">Disk</p>
+                     <p class="text-xs {{#if (lt systemMetrics.disk.usage 85)}}text-green-600{{else}}text-yellow-600{{/if}} font-medium">
+                        {{#if (lt systemMetrics.disk.usage 85)}}Normal{{else}}Low Space{{/if}}
+                     </p>
+                  </div>
+               </div>
+            </div>
          </div>
-       </div>
-     </div>
+      </div>
+
+      <!-- Chart.js Script from npm -->
+      <script src="/js/chart.umd.js"></script>
+      <script>
+         document.addEventListener('DOMContentLoaded', function() {
+            console.log('System Health page loaded, initializing charts...');
+
+            // Check if Chart.js is loaded
+            if (typeof Chart === 'undefined') {
+               console.error('Chart.js not loaded, charts will not display');
+               showChartError('Chart.js library failed to load. Please check your internet connection or contact administrator.');
+               return;
+            }
+
+            const systemMetrics = {{{json systemMetrics}}};
+            console.log('System metrics loaded:', systemMetrics);
+
+            // Validate data structure
+            if (!systemMetrics || !systemMetrics.performanceTrends) {
+               console.error('System metrics or performance trends data is missing');
+               showChartError('System metrics data is not available. Please refresh the page.');
+               return;
+            }
+
+            // CPU Usage Chart
+            try {
+               const cpuCanvas = document.getElementById('cpuChart');
+               if (!cpuCanvas) {
+                  console.error('CPU chart canvas element not found');
+                  return;
+               }
+
+               const cpuCtx = cpuCanvas.getContext('2d');
+               if (!cpuCtx) {
+                  console.error('Could not get 2D context for CPU chart');
+                  return;
+               }
+
+               console.log('Creating CPU chart with data:', systemMetrics.performanceTrends.cpuHistory);
+               new Chart(cpuCtx, {
+               type: 'line',
+               data: {
+                  labels: systemMetrics.performanceTrends.cpuHistory.labels,
+                  datasets: [{
+                     label: 'CPU Usage (%)',
+                     data: systemMetrics.performanceTrends.cpuHistory.data,
+                      borderColor: 'rgb(249, 115, 22)',
+                      backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                      tension: 0.4,
+                      fill: true,
+                      pointBackgroundColor: 'rgb(249, 115, 22)',
+                      pointBorderColor: '#fff',
+                      pointBorderWidth: 2,
+                   }]
+                },
+                options: {
+                   responsive: true,
+                   maintainAspectRatio: false,
+                   aspectRatio: 2,
+                  plugins: {
+                     legend: {
+                        display: false
+                     }
+                  },
+                  scales: {
+                     y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                           color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                           callback: function(value) {
+                              return value + '%';
+                           }
+                        }
+                     },
+                     x: {
+                        grid: {
+                           display: false
+                        },
+                        ticks: {
+                           maxTicksLimit: 6
+                        }
+                     }
+                  },
+                  elements: {
+                     point: {
+                        radius: 3,
+                        hoverRadius: 5
+                     }
+                  },
+                  interaction: {
+                     intersect: false,
+                     mode: 'index'
+                  }
+               }
+               });
+               console.log('CPU chart created successfully');
+            } catch (error) {
+               console.error('Failed to create CPU chart:', error);
+               showChartError('Failed to create CPU usage chart: ' + error.message);
+            }
+
+            // Memory Usage Chart
+            try {
+               const memoryCanvas = document.getElementById('memoryChart');
+               if (!memoryCanvas) {
+                  console.error('Memory chart canvas element not found');
+                  return;
+               }
+
+               const memoryCtx = memoryCanvas.getContext('2d');
+               if (!memoryCtx) {
+                  console.error('Could not get 2D context for memory chart');
+                  return;
+               }
+
+               console.log('Creating memory chart with data:', systemMetrics.performanceTrends.memoryHistory);
+               new Chart(memoryCtx, {
+               type: 'line',
+               data: {
+                  labels: systemMetrics.performanceTrends.memoryHistory.labels,
+                  datasets: [{
+                     label: 'Memory Usage (%)',
+                     data: systemMetrics.performanceTrends.memoryHistory.data,
+                      borderColor: 'rgb(59, 130, 246)',
+                      backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                      tension: 0.4,
+                      fill: true,
+                      pointBackgroundColor: 'rgb(59, 130, 246)',
+                      pointBorderColor: '#fff',
+                      pointBorderWidth: 2,
+                   }]
+                },
+                options: {
+                   responsive: true,
+                   maintainAspectRatio: false,
+                   aspectRatio: 2,
+                  plugins: {
+                     legend: {
+                        display: false
+                     }
+                  },
+                  scales: {
+                     y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                           color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                           callback: function(value) {
+                              return value + '%';
+                           }
+                        }
+                     },
+                     x: {
+                        grid: {
+                           display: false
+                        },
+                        ticks: {
+                           maxTicksLimit: 6
+                        }
+                     }
+                  },
+                  elements: {
+                     point: {
+                        radius: 3,
+                        hoverRadius: 5
+                     }
+                  },
+                  interaction: {
+                     intersect: false,
+                     mode: 'index'
+                  }
+                }
+               });
+               console.log('Memory chart created successfully');
+            } catch (error) {
+               console.error('Failed to create memory chart:', error);
+               showChartError('Failed to create memory usage chart: ' + error.message);
+            }
+
+            // Response Time Chart
+            try {
+               const responseTimeCanvas = document.getElementById('responseTimeChart');
+               if (!responseTimeCanvas) {
+                  console.error('Response time chart canvas element not found');
+                  return;
+               }
+
+               const responseTimeCtx = responseTimeCanvas.getContext('2d');
+               if (!responseTimeCtx) {
+                  console.error('Could not get 2D context for response time chart');
+                  return;
+               }
+
+               console.log('Creating response time chart with data:', systemMetrics.performanceTrends.responseTimeHistory);
+               new Chart(responseTimeCtx, {
+               type: 'line',
+               data: {
+                  labels: systemMetrics.performanceTrends.responseTimeHistory.labels,
+                  datasets: [{
+                     label: 'Response Time (ms)',
+                     data: systemMetrics.performanceTrends.responseTimeHistory.data,
+                      borderColor: 'rgb(239, 68, 68)',
+                      backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                      tension: 0.4,
+                      fill: true,
+                      pointBackgroundColor: 'rgb(239, 68, 68)',
+                      pointBorderColor: '#fff',
+                      pointBorderWidth: 2,
+                   }]
+                },
+                options: {
+                   responsive: true,
+                   maintainAspectRatio: false,
+                   aspectRatio: 2,
+                  plugins: {
+                     legend: {
+                        display: false
+                     }
+                  },
+                  scales: {
+                     y: {
+                        beginAtZero: true,
+                        grid: {
+                           color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                           callback: function(value) {
+                              return value + 'ms';
+                           }
+                        }
+                     },
+                     x: {
+                        grid: {
+                           display: false
+                        },
+                        ticks: {
+                           maxTicksLimit: 6
+                        }
+                     }
+                  },
+                  elements: {
+                     point: {
+                        radius: 3,
+                        hoverRadius: 5
+                     }
+                  },
+                  interaction: {
+                     intersect: false,
+                     mode: 'index'
+                  }
+                }
+               });
+               console.log('Response time chart created successfully');
+            } catch (error) {
+               console.error('Failed to create response time chart:', error);
+               showChartError('Failed to create response time chart: ' + error.message);
+            }
+         });
+
+         // Function to show chart errors
+         function showChartError(message) {
+            console.error('Chart Error:', message);
+
+            // Find all chart containers and show error messages
+            const chartContainers = document.querySelectorAll('.h-48');
+            chartContainers.forEach(container => {
+               // Clear existing canvas content
+               container.innerHTML = '';
+
+               // Create error message
+               const errorDiv = document.createElement('div');
+               errorDiv.className = 'flex items-center justify-center h-full text-red-500 text-sm text-center p-4';
+               errorDiv.innerHTML = `
+                  <div>
+                     <svg class="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                     </svg>
+                     <p class="font-medium">Chart Error</p>
+                     <p class="text-xs mt-1">${message}</p>
+                  </div>
+               `;
+               container.appendChild(errorDiv);
+            });
+         }
+      </script>
+
+      <!-- System Actions & Maintenance -->
+      <div class="bg-card rounded-lg border border-border">
+         <div class="p-6 border-b border-border">
+            <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+               {{{icon 'wrench' size='20' class='mr-2'}}}
+               System Maintenance & Diagnostics
+            </h3>
+            <p class="text-sm text-muted-foreground mt-1">Tools for system maintenance, diagnostics, and performance optimization</p>
+         </div>
+         <div class="p-6">
+             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <button id="refresh-metrics-btn" class="flex items-center justify-center px-4 py-3 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors border border-blue-200">
+                   {{{icon 'refresh-cw' size='20' class='mr-2'}}}
+                   <span class="text-sm font-medium">Refresh Metrics</span>
+                </button>
+                <button id="export-report-btn" class="flex items-center justify-center px-4 py-3 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors border border-green-200">
+                   {{{icon 'download' size='20' class='mr-2'}}}
+                   <span class="text-sm font-medium">Export Report</span>
+                </button>
+                <button id="db-health-check-btn" class="flex items-center justify-center px-4 py-3 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors border border-purple-200">
+                   {{{icon 'database' size='20' class='mr-2'}}}
+                   <span class="text-sm font-medium">DB Health Check</span>
+                </button>
+                <button id="system-config-btn" class="flex items-center justify-center px-4 py-3 bg-orange-50 text-orange-700 rounded-lg hover:bg-orange-100 transition-colors border border-orange-200">
+                   {{{icon 'settings' size='20' class='mr-2'}}}
+                   <span class="text-sm font-medium">System Config</span>
+                </button>
+             </div>
+
+             <!-- Additional Tools -->
+             <div class="mt-6 pt-6 border-t border-border">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                   <div class="text-center">
+                      <button id="clear-cache-btn" class="w-full flex items-center justify-center px-4 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200">
+                         {{{icon 'trash-2' size='16' class='mr-2'}}}
+                         <span class="text-sm">Clear Cache</span>
+                      </button>
+                   </div>
+                   <div class="text-center">
+                      <button id="view-logs-btn" class="w-full flex items-center justify-center px-4 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200">
+                         {{{icon 'file-text' size='16' class='mr-2'}}}
+                         <span class="text-sm">View Logs</span>
+                      </button>
+                   </div>
+                   <div class="text-center">
+                      <button id="run-diagnostics-btn" class="w-full flex items-center justify-center px-4 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200">
+                         {{{icon 'alert-triangle' size='16' class='mr-2'}}}
+                         <span class="text-sm">Run Diagnostics</span>
+                      </button>
+                   </div>
+                </div>
+             </div>
+         </div>
+      </div>
+
+      <!-- Last Updated Info -->
+      <div class="text-center text-xs text-muted-foreground mt-6">
+         Last updated: <span id="lastUpdated">{{lastUpdated}}</span> |
+         Auto-refresh: <span class="text-green-600">Enabled</span> (30s interval)
+      </div>
    </div>
 </div>

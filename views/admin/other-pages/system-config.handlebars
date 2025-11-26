@@ -1,0 +1,188 @@
+<!-- System Config Content -->
+<div class="max-w-7xl mx-auto rounded-xl overflow-hidden flex flex-col mx-4 my-4">
+
+   <!-- Page Header -->
+   {{> page-header title="System Configuration" description="Manage system settings and configuration options" border=true}}
+
+   <div class="p-6 space-y-8">
+      {{#if error}}
+      <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+         <div class="flex">
+            <div class="flex-shrink-0">
+               {{{icon 'alert-triangle' size='20' class='text-red-400'}}}
+            </div>
+            <div class="ml-3">
+               <h3 class="text-sm font-medium text-red-800">Configuration Error</h3>
+               <div class="mt-2 text-sm text-red-700">
+                  <p>{{error}}</p>
+               </div>
+            </div>
+         </div>
+      </div>
+      {{/if}}
+
+      <!-- Environment Settings -->
+      <div class="bg-card rounded-lg border border-border">
+         <div class="p-6 border-b border-border">
+            <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+               {{{icon 'settings' size='20' class='mr-2'}}}
+               Environment Settings
+            </h3>
+         </div>
+         <div class="p-6 space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+               <div>
+                  <label class="block text-sm font-medium text-card-foreground mb-2">Environment</label>
+                  <input type="text" value="{{config.environment}}" readonly
+                         class="w-full px-3 py-2 border border-border rounded-md bg-muted">
+               </div>
+               <div>
+                  <label class="block text-sm font-medium text-card-foreground mb-2">Port</label>
+                  <input type="text" value="{{config.port}}" readonly
+                         class="w-full px-3 py-2 border border-border rounded-md bg-muted">
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Database Configuration -->
+      <div class="bg-card rounded-lg border border-border">
+         <div class="p-6 border-b border-border">
+            <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+               {{{icon 'database' size='20' class='mr-2'}}}
+               Database Configuration
+            </h3>
+         </div>
+         <div class="p-6 space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+               <div>
+                  <label class="block text-sm font-medium text-card-foreground mb-2">Database URL</label>
+                  <div class="flex items-center">
+                     <input type="text" value="{{config.database.url}}" readonly
+                            class="w-full px-3 py-2 border border-border rounded-md bg-muted">
+                     <span class="ml-2 {{#if (eq config.database.url 'Configured')}}text-green-600{{else}}text-red-600{{/if}}">
+                        {{#if (eq config.database.url 'Configured')}}
+                        {{{icon 'check-circle' size='16'}}}
+                        {{else}}
+                        {{{icon 'x-circle' size='16'}}}
+                        {{/if}}
+                     </span>
+                  </div>
+               </div>
+               <div>
+                  <label class="block text-sm font-medium text-card-foreground mb-2">API Key</label>
+                  <div class="flex items-center">
+                     <input type="password" value="{{config.database.key}}" readonly
+                            class="w-full px-3 py-2 border border-border rounded-md bg-muted">
+                     <span class="ml-2 {{#if (eq config.database.key 'Configured')}}text-green-600{{else}}text-red-600{{/if}}">
+                        {{#if (eq config.database.key 'Configured')}}
+                        {{{icon 'check-circle' size='16'}}}
+                        {{else}}
+                        {{{icon 'x-circle' size='16'}}}
+                        {{/if}}
+                     </span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Logging Configuration -->
+      <div class="bg-card rounded-lg border border-border">
+         <div class="p-6 border-b border-border">
+            <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+               {{{icon 'file-text' size='20' class='mr-2'}}}
+               Logging Configuration
+            </h3>
+         </div>
+         <div class="p-6 space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+               <div>
+                  <label class="block text-sm font-medium text-card-foreground mb-2">Log Level</label>
+                  <input type="text" value="{{config.logging.level}}" readonly
+                         class="w-full px-3 py-2 border border-border rounded-md bg-muted">
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Cache Configuration -->
+      <div class="bg-card rounded-lg border border-border">
+         <div class="p-6 border-b border-border">
+            <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+               {{{icon 'zap' size='20' class='mr-2'}}}
+               Cache Configuration
+            </h3>
+         </div>
+         <div class="p-6 space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+               <div>
+                  <label class="block text-sm font-medium text-card-foreground mb-2">Cache Enabled</label>
+                  <div class="flex items-center">
+                     <input type="text" value="{{#if config.cache.enabled}}Yes{{else}}No{{/if}}" readonly
+                            class="w-full px-3 py-2 border border-border rounded-md bg-muted">
+                     <span class="ml-2 {{#if config.cache.enabled}}text-green-600{{else}}text-gray-400{{/if}}">
+                        {{#if config.cache.enabled}}
+                        {{{icon 'check-circle' size='16'}}}
+                        {{else}}
+                        {{{icon 'minus' size='16'}}}
+                        {{/if}}
+                     </span>
+                  </div>
+               </div>
+               <div>
+                  <label class="block text-sm font-medium text-card-foreground mb-2">Cache TTL (seconds)</label>
+                  <input type="text" value="{{config.cache.ttl}}" readonly
+                         class="w-full px-3 py-2 border border-border rounded-md bg-muted">
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Security Configuration -->
+      <div class="bg-card rounded-lg border border-border">
+         <div class="p-6 border-b border-border">
+            <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+               {{{icon 'shield' size='20' class='mr-2'}}}
+               Security Configuration
+            </h3>
+         </div>
+         <div class="p-6 space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+               <div>
+                  <label class="block text-sm font-medium text-card-foreground mb-2">Session Timeout (ms)</label>
+                  <input type="text" value="{{config.security.sessionTimeout}}" readonly
+                         class="w-full px-3 py-2 border border-border rounded-md bg-muted">
+               </div>
+               <div>
+                  <label class="block text-sm font-medium text-card-foreground mb-2">Max Login Attempts</label>
+                  <input type="text" value="{{config.security.maxLoginAttempts}}" readonly
+                         class="w-full px-3 py-2 border border-border rounded-md bg-muted">
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="bg-card rounded-lg border border-border">
+         <div class="p-6">
+            <div class="flex items-center justify-between">
+               <div>
+                  <h3 class="text-lg font-semibold text-card-foreground">Configuration Actions</h3>
+                  <p class="text-sm text-muted-foreground mt-1">Manage system configuration settings</p>
+               </div>
+               <div class="flex space-x-3">
+                  <button class="px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors border border-blue-200">
+                     {{{icon 'download' size='16' class='mr-2'}}}
+                     Export Config
+                  </button>
+                  <button class="px-4 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200">
+                     {{{icon 'refresh-cw' size='16' class='mr-2'}}}
+                     Reload Config
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
