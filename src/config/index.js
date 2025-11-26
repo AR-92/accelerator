@@ -4,7 +4,7 @@ dotenv.config();
 
 const config = {
   // Server Configuration
-  port: process.env.PORT || 3000,
+  port: process.env.PORT || 4000,
   nodeEnv: process.env.NODE_ENV || 'development',
   clusterMode: process.env.CLUSTER_MODE === 'true',
   maxWorkers: parseInt(process.env.MAX_WORKERS) || 4,
