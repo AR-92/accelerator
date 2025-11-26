@@ -24,7 +24,7 @@
       <div class="self-center mr-2 sm:mr-4">
         <label class="relative block">
           <span class="sr-only">Search</span>
-                <input class="w-28 sm:w-40 pl-3 sm:pl-4 pr-3 sm:pr-4 py-1.5 rounded-md placeholder:text-xs sm:placeholder:text-sm text-foreground bg-transparent focus:outline-none"
+               <input class="w-40 sm:w-64 pl-3 sm:pl-4 pr-3 sm:pr-4 py-1.5 rounded-md placeholder:text-xs sm:placeholder:text-sm text-foreground bg-transparent focus:outline-none"
                 placeholder="Search {{#if isTablePage}}{{currentPage}}{{else}}here{{/if}} ..." aria-label="Search" id="navSearchInput" name="search" value="{{query.search}}"
                 {{#if isTablePage}}hx-get="/admin/table-pages/{{currentPage}}" hx-trigger="keyup changed delay:300ms" hx-target="#{{currentPage}}TableContainer"{{/if}} />
        </label>
