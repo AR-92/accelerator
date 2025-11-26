@@ -118,8 +118,188 @@ document.addEventListener('click', function (evt) {
   }
 });
 
+// Settings filter functionality
+function filterSettings(category) {
+  const settingsSections = document.querySelectorAll('.settings-section');
+
+  settingsSections.forEach((section) => {
+    const sectionCategories =
+      section.getAttribute('data-category')?.split(',') || [];
+
+    if (category === 'all' || sectionCategories.includes(category)) {
+      section.style.display = 'block';
+    } else {
+      section.style.display = 'none';
+    }
+  });
+
+  // Update URL without page reload
+  const url = new URL(window.location);
+  url.searchParams.set('category', category);
+  window.history.pushState({}, '', url);
+}
+
+// Handle settings filter button clicks
+document.addEventListener('click', function (evt) {
+  const target = evt.target;
+  if (target.classList.contains('settings-filter-btn')) {
+    const category = target.getAttribute('data-category');
+    filterSettings(category);
+  }
+});
+
+// Initialize settings filter state on page load
+function initializeSettingsFilterState() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialCategory = urlParams.get('category') || 'all';
+  filterSettings(initialCategory);
+}
+
+// Handle browser back/forward navigation for settings
+window.addEventListener('popstate', function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const category = urlParams.get('category') || 'all';
+  filterSettings(category);
+});
+
+// Filter navigation scrolling functionality
+function initializeFilterScrolling() {
+  // Initialize settings filter scrolling
+  initializeScrollingForType('settings');
+
+  // Initialize table filter scrolling
+  initializeScrollingForType('table');
+}
+
+function initializeScrollingForType(type) {
+  const scrollContainer = document.getElementById(
+    `${type}-filter-scroll-container`
+  );
+  const scrollLeftBtn = document.getElementById(`${type}-filter-scroll-left`);
+  const scrollRightBtn = document.getElementById(`${type}-filter-scroll-right`);
+
+  if (!scrollContainer || !scrollLeftBtn || !scrollRightBtn) return;
+
+  // Ensure scrollbars are hidden
+  scrollContainer.style.msOverflowStyle = 'none';
+  scrollContainer.style.scrollbarWidth = 'none';
+  scrollContainer.style.overflowX = 'auto';
+
+  // Scroll amount (width of one filter item + gap)
+  const scrollAmount = 120;
+
+  // Left scroll button
+  scrollLeftBtn.addEventListener('click', function () {
+    scrollContainer.scrollBy({
+      left: -scrollAmount,
+      behavior: 'smooth',
+    });
+  });
+
+  // Right scroll button
+  scrollRightBtn.addEventListener('click', function () {
+    scrollContainer.scrollBy({
+      left: scrollAmount,
+      behavior: 'smooth',
+    });
+  });
+
+  // Update arrow visibility based on scroll position
+  function updateArrowVisibility() {
+    const isAtStart = scrollContainer.scrollLeft <= 0;
+    const isAtEnd =
+      scrollContainer.scrollLeft >=
+      scrollContainer.scrollWidth - scrollContainer.clientWidth - 1;
+
+    scrollLeftBtn.style.opacity = isAtStart ? '0.3' : '1';
+    scrollRightBtn.style.opacity = isAtEnd ? '0.3' : '1';
+    scrollLeftBtn.disabled = isAtStart;
+    scrollRightBtn.disabled = isAtEnd;
+  }
+
+  // Update arrows on scroll
+  scrollContainer.addEventListener('scroll', updateArrowVisibility);
+
+  // Initial arrow state
+  updateArrowVisibility();
+
+  // Update on window resize
+  window.addEventListener('resize', updateArrowVisibility);
+}
+
+// Keyboard navigation for filter scrolling
+function initializeKeyboardNavigation() {
+  document.addEventListener('keydown', function (event) {
+    // Only handle arrow keys when not in an input field
+    if (
+      event.target.tagName === 'INPUT' ||
+      event.target.tagName === 'TEXTAREA' ||
+      event.target.tagName === 'SELECT'
+    ) {
+      return;
+    }
+
+    const activeElement = document.activeElement;
+    const isInFilterArea =
+      activeElement &&
+      (activeElement.closest('#settings-filter-scroll-container') ||
+        activeElement.closest('#table-filter-scroll-container') ||
+        activeElement.id.startsWith('settings-filter-scroll-') ||
+        activeElement.id.startsWith('table-filter-scroll-') ||
+        activeElement.classList.contains('settings-filter-btn') ||
+        activeElement.id.startsWith('filter-link-'));
+
+    if (!isInFilterArea) return;
+
+    let scrollContainer, scrollLeftBtn, scrollRightBtn;
+
+    if (
+      activeElement.closest('#settings-filter-scroll-container') ||
+      activeElement.id.startsWith('settings-filter-scroll-') ||
+      activeElement.classList.contains('settings-filter-btn')
+    ) {
+      scrollContainer = document.getElementById(
+        'settings-filter-scroll-container'
+      );
+      scrollLeftBtn = document.getElementById('settings-filter-scroll-left');
+      scrollRightBtn = document.getElementById('settings-filter-scroll-right');
+    } else if (
+      activeElement.closest('#table-filter-scroll-container') ||
+      activeElement.id.startsWith('table-filter-scroll-') ||
+      activeElement.id.startsWith('filter-link-')
+    ) {
+      scrollContainer = document.getElementById(
+        'table-filter-scroll-container'
+      );
+      scrollLeftBtn = document.getElementById('table-filter-scroll-left');
+      scrollRightBtn = document.getElementById('table-filter-scroll-right');
+    }
+
+    if (!scrollContainer || !scrollLeftBtn || !scrollRightBtn) return;
+
+    const scrollAmount = 120;
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      scrollContainer.scrollBy({
+        left: -scrollAmount,
+        behavior: 'smooth',
+      });
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      scrollContainer.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  });
+}
+
 // Initialize filter functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function () {
   console.log('Filters.js loaded');
   initializeFilterState();
+  initializeSettingsFilterState();
+  initializeFilterScrolling();
+  initializeKeyboardNavigation();
 });

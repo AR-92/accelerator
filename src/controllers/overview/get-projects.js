@@ -125,16 +125,19 @@ export const getProjects = async (req, res) => {
         id: 'messages-btn',
         href: '/admin/table-pages/messages',
         text: 'Messages',
+        icon: 'message-square',
       },
       {
         id: 'collaborators-btn',
         href: '/admin/table-pages/project-collaborators',
         text: 'Project Collaborators',
+        icon: 'users',
       },
       {
         id: 'calendar-btn',
         href: '/admin/table-pages/calendar',
         text: 'Calendars',
+        icon: 'calendar',
       },
     ];
 

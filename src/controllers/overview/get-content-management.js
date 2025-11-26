@@ -96,11 +96,13 @@ export const getContentManagement = async (req, res) => {
         id: 'manage-content-btn',
         href: '/admin/table-pages/content',
         text: 'Manage Learning Content',
+        icon: 'file-text',
       },
       {
         id: 'manage-landing-pages-btn',
         href: '/admin/table-pages/landing-page',
         text: 'Manage Landing Page Managements',
+        icon: 'layout',
       },
     ];
 

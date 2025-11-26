@@ -59,6 +59,7 @@ export const getHelp = async (req, res) => {
         id: 'manage-help-center-btn',
         href: '/admin/table-pages/help-center',
         text: 'Manage Help Centers',
+        icon: 'help-circle',
       },
     ];
 

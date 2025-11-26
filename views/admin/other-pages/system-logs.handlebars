@@ -1,10 +1,68 @@
 <!-- System Logs Content -->
 <div class="max-w-7xl mx-auto rounded-xl overflow-hidden flex flex-col mx-4 my-4">
 
-   <!-- Page Header -->
-   {{> page-header title="System Logs" description="View and search system application logs" border=true}}
+    <!-- Page Header -->
+    {{> page-header title="System Logs Analytics Dashboard" description="Comprehensive monitoring and analytics of system logs, error patterns, and performance insights" border=true}}
 
-   <div class="p-6 space-y-6">
+    <div class="p-6 space-y-8">
+       <!-- Critical Status Overview -->
+       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Total Logs -->
+          <div class="bg-card rounded-lg border border-border p-6">
+             <div class="flex items-center justify-between">
+                <div>
+                   <p class="text-sm font-medium text-muted-foreground">Total Logs</p>
+                   <p class="text-2xl font-bold text-blue-600">{{systemLogAnalytics.totalLogs}}</p>
+                   <p class="text-xs text-muted-foreground">{{systemLogAnalytics.avgLogsPerHour}}/hour avg</p>
+                </div>
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                   {{{icon 'file-text' size='24' class='text-blue-600'}}}
+                </div>
+             </div>
+          </div>
+
+          <!-- Error Rate -->
+          <div class="bg-card rounded-lg border border-border p-6">
+             <div class="flex items-center justify-between">
+                <div>
+                   <p class="text-sm font-medium text-muted-foreground">Error Rate</p>
+                   <p class="text-2xl font-bold text-red-600">{{systemLogAnalytics.errorRate}}%</p>
+                   <p class="text-xs text-muted-foreground">{{systemLogAnalytics.errorCount}} errors</p>
+                </div>
+                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                   {{{icon 'alert-triangle' size='24' class='text-red-600'}}}
+                </div>
+             </div>
+          </div>
+
+          <!-- System Health -->
+          <div class="bg-card rounded-lg border border-border p-6">
+             <div class="flex items-center justify-between">
+                <div>
+                   <p class="text-sm font-medium text-muted-foreground">System Health</p>
+                   <p class="text-2xl font-bold text-green-600">{{systemLogAnalytics.systemHealth}}</p>
+                   <p class="text-xs text-muted-foreground">Based on logs</p>
+                </div>
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                   {{{icon 'shield-check' size='24' class='text-green-600'}}}
+                </div>
+             </div>
+          </div>
+
+          <!-- Response Time -->
+          <div class="bg-card rounded-lg border border-border p-6">
+             <div class="flex items-center justify-between">
+                <div>
+                   <p class="text-sm font-medium text-muted-foreground">Avg Response</p>
+                   <p class="text-2xl font-bold text-purple-600">{{systemLogAnalytics.performanceInsights.responseTime}}</p>
+                   <p class="text-xs text-muted-foreground">System average</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                   {{{icon 'zap' size='24' class='text-purple-600'}}}
+                </div>
+             </div>
+          </div>
+       </div>
       {{#if error}}
       <div class="bg-red-50 border border-red-200 rounded-lg p-4">
          <div class="flex">
@@ -18,10 +76,147 @@
                </div>
             </div>
          </div>
-      </div>
-      {{/if}}
+       </div>
+       {{/if}}
 
-      <!-- Filters -->
+       <!-- Log Analytics & Performance -->
+       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Log Levels Overview -->
+          <div class="bg-card rounded-lg border border-border">
+             <div class="p-6 border-b border-border">
+                <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                   {{{icon 'bar-chart-3' size='20' class='mr-2'}}}
+                   Log Levels
+                </h3>
+             </div>
+             <div class="p-6 space-y-3">
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Errors</span>
+                   <span class="text-sm text-muted-foreground">{{systemLogAnalytics.errorCount}}</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Warnings</span>
+                   <span class="text-sm text-muted-foreground">{{systemLogAnalytics.warningCount}}</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Info</span>
+                   <span class="text-sm text-muted-foreground">{{systemLogAnalytics.infoCount}}</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Debug</span>
+                   <span class="text-sm text-muted-foreground">{{systemLogAnalytics.debugCount}}</span>
+                </div>
+             </div>
+          </div>
+
+          <!-- Performance Insights -->
+          <div class="bg-card rounded-lg border border-border">
+             <div class="p-6 border-b border-border">
+                <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                   {{{icon 'trending-up' size='20' class='mr-2'}}}
+                   Performance Insights
+                </h3>
+             </div>
+             <div class="p-6 space-y-3">
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Throughput</span>
+                   <span class="text-sm text-muted-foreground">{{systemLogAnalytics.performanceInsights.throughput}}</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Error Recovery</span>
+                   <span class="text-sm text-muted-foreground">{{systemLogAnalytics.performanceInsights.errorRecovery}}</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Most Active Hour</span>
+                   <span class="text-sm text-muted-foreground">{{systemLogAnalytics.mostActiveHour}}</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Health Status</span>
+                   <span class="text-sm text-muted-foreground">{{systemLogAnalytics.systemHealth}}</span>
+                </div>
+             </div>
+          </div>
+
+          <!-- Critical Patterns -->
+          <div class="bg-card rounded-lg border border-border">
+             <div class="p-6 border-b border-border">
+                <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                   {{{icon 'alert-triangle' size='20' class='mr-2'}}}
+                   Critical Patterns
+                </h3>
+             </div>
+             <div class="p-6 space-y-3">
+                {{#each systemLogAnalytics.criticalPatterns}}
+                <div class="flex items-center">
+                   <div class="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
+                   <span class="text-sm text-card-foreground">{{this}}</span>
+                </div>
+                {{/each}}
+             </div>
+          </div>
+       </div>
+
+       <!-- Log Trends -->
+       <div class="bg-card rounded-lg border border-border">
+          <div class="p-6 border-b border-border">
+             <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                {{{icon 'trending-up' size='20' class='mr-2'}}}
+                Log Trends & Analytics
+             </h3>
+             <p class="text-sm text-muted-foreground mt-1">Log volume and error patterns over the last 24 hours</p>
+          </div>
+          <div class="p-6">
+             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Log Volume Trend -->
+                <div>
+                   <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
+                      {{{icon 'file-text' size='16' class='mr-2 text-blue-600'}}}
+                      Log Volume (24h)
+                   </h4>
+                    <div class="h-48">
+                       <canvas id="logVolumeChart" width="400" height="200"></canvas>
+                    </div>
+                   <div class="mt-2 text-center">
+                      <span class="text-xs text-muted-foreground">Peak: </span>
+                      <span class="text-xs font-medium text-blue-600">{{math (max logAnalytics.volumeHistory.data) }}</span>
+                   </div>
+                </div>
+
+                <!-- Error Rate Trend -->
+                <div>
+                   <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
+                      {{{icon 'alert-triangle' size='16' class='mr-2 text-red-600'}}}
+                      Error Rate (%)
+                   </h4>
+                    <div class="h-48">
+                       <canvas id="logErrorChart" width="400" height="200"></canvas>
+                    </div>
+                   <div class="mt-2 text-center">
+                      <span class="text-xs text-muted-foreground">Current: </span>
+                      <span class="text-xs font-medium text-red-600">{{math (last logAnalytics.errorTrends.data) }}%</span>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+
+       <!-- Log Level Distribution -->
+       <div class="bg-card rounded-lg border border-border">
+          <div class="p-6 border-b border-border">
+             <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                {{{icon 'pie-chart' size='20' class='mr-2'}}}
+                Log Level Distribution
+             </h3>
+             <p class="text-sm text-muted-foreground mt-1">Breakdown of log entries by severity level</p>
+          </div>
+          <div class="p-6">
+             <div class="h-64">
+                <canvas id="logLevelChart" width="400" height="200"></canvas>
+             </div>
+          </div>
+       </div>
+
+       <!-- Filters -->
       <div class="bg-card rounded-lg border border-border p-6">
          <form method="GET" class="flex flex-wrap gap-4 items-end">
             <div class="flex-1 min-w-0">
@@ -150,9 +345,242 @@
       </div>
       {{/if}}
    </div>
-</div>
+ </div>
 
-<script>
+ <!-- Chart.js Script -->
+ <script src="/js/chart.umd.js"></script>
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+       console.log('System Logs Analytics page loaded, initializing charts...');
+
+       // Check if Chart.js is loaded
+       if (typeof Chart === 'undefined') {
+          console.error('Chart.js not loaded, charts will not display');
+          return;
+       }
+
+       const logAnalytics = {{{json logAnalytics}}};
+       console.log('Log analytics loaded:', logAnalytics);
+
+       // Log Volume Chart
+       try {
+          const volumeCanvas = document.getElementById('logVolumeChart');
+          if (!volumeCanvas) {
+             console.error('Log volume chart canvas element not found');
+             return;
+          }
+
+          const volumeCtx = volumeCanvas.getContext('2d');
+          if (!volumeCtx) {
+             console.error('Could not get 2D context for log volume chart');
+             return;
+          }
+
+          new Chart(volumeCtx, {
+          type: 'line',
+          data: {
+             labels: logAnalytics.volumeHistory.labels,
+             datasets: [{
+                label: 'Log Volume',
+                data: logAnalytics.volumeHistory.data,
+                 borderColor: 'rgb(59, 130, 246)',
+                 backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                 tension: 0.4,
+                 fill: true,
+                 pointBackgroundColor: 'rgb(59, 130, 246)',
+                 pointBorderColor: '#fff',
+                 pointBorderWidth: 2,
+              }]
+           },
+           options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              aspectRatio: 2,
+              plugins: {
+                legend: {
+                   display: false
+                }
+             },
+             scales: {
+                y: {
+                   beginAtZero: true,
+                   grid: {
+                      color: 'rgba(0, 0, 0, 0.1)'
+                   }
+                },
+                x: {
+                   grid: {
+                      display: false
+                   },
+                   ticks: {
+                      maxTicksLimit: 6
+                   }
+                }
+             },
+             elements: {
+                point: {
+                   radius: 3,
+                   hoverRadius: 5
+                }
+             },
+             interaction: {
+                intersect: false,
+                mode: 'index'
+             }
+          }
+          });
+          console.log('Log volume chart created successfully');
+       } catch (error) {
+          console.error('Failed to create log volume chart:', error);
+       }
+
+       // Error Rate Chart
+       try {
+          const errorCanvas = document.getElementById('logErrorChart');
+          if (!errorCanvas) {
+             console.error('Log error chart canvas element not found');
+             return;
+          }
+
+          const errorCtx = errorCanvas.getContext('2d');
+          if (!errorCtx) {
+             console.error('Could not get 2D context for log error chart');
+             return;
+          }
+
+          new Chart(errorCtx, {
+          type: 'line',
+          data: {
+             labels: logAnalytics.errorTrends.labels,
+             datasets: [{
+                label: 'Error Rate (%)',
+                data: logAnalytics.errorTrends.data,
+                 borderColor: 'rgb(239, 68, 68)',
+                 backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                 tension: 0.4,
+                 fill: true,
+                 pointBackgroundColor: 'rgb(239, 68, 68)',
+                 pointBorderColor: '#fff',
+                 pointBorderWidth: 2,
+              }]
+           },
+           options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              aspectRatio: 2,
+              plugins: {
+                legend: {
+                   display: false
+                }
+             },
+             scales: {
+                y: {
+                   beginAtZero: true,
+                   max: 15,
+                   grid: {
+                      color: 'rgba(0, 0, 0, 0.1)'
+                   },
+                   ticks: {
+                      callback: function(value) {
+                         return value + '%';
+                      }
+                   }
+                },
+                x: {
+                   grid: {
+                      display: false
+                   },
+                   ticks: {
+                      maxTicksLimit: 6
+                   }
+                }
+             },
+             elements: {
+                point: {
+                   radius: 3,
+                   hoverRadius: 5
+                }
+             },
+             interaction: {
+                intersect: false,
+                mode: 'index'
+             }
+          }
+          });
+          console.log('Log error chart created successfully');
+       } catch (error) {
+          console.error('Failed to create log error chart:', error);
+       }
+
+       // Log Level Distribution Chart
+       try {
+          const levelCanvas = document.getElementById('logLevelChart');
+          if (!levelCanvas) {
+             console.error('Log level chart canvas element not found');
+             return;
+          }
+
+          const levelCtx = levelCanvas.getContext('2d');
+          if (!levelCtx) {
+             console.error('Could not get 2D context for log level chart');
+             return;
+          }
+
+          const levelColors = {
+             'error': 'rgb(239, 68, 68)',
+             'warn': 'rgb(245, 158, 11)',
+             'info': 'rgb(59, 130, 246)',
+             'debug': 'rgb(107, 114, 128)'
+          };
+
+          const backgroundColors = logAnalytics.levelDistribution.labels.map(level =>
+             levelColors[level] || 'rgb(156, 163, 175)'
+          );
+
+          new Chart(levelCtx, {
+          type: 'doughnut',
+          data: {
+             labels: logAnalytics.levelDistribution.labels,
+             datasets: [{
+                data: logAnalytics.levelDistribution.data,
+                backgroundColor: backgroundColors,
+                borderWidth: 2,
+                borderColor: '#fff',
+             }]
+          },
+          options: {
+             responsive: true,
+             maintainAspectRatio: false,
+             plugins: {
+                legend: {
+                   position: 'bottom',
+                   labels: {
+                      padding: 20,
+                      usePointStyle: true,
+                   }
+                }
+             },
+             elements: {
+                arc: {
+                   borderWidth: 2,
+                }
+             }
+          }
+          });
+          console.log('Log level chart created successfully');
+       } catch (error) {
+          console.error('Failed to create log level chart:', error);
+    }
+ });
+ </script>
+
+ <!-- Last Updated Info -->
+ <div class="text-center text-xs text-muted-foreground mt-6">
+    Last updated: <span id="lastUpdated">{{lastUpdated}}</span> |
+    Auto-refresh: <span class="text-green-600">Enabled</span> (5min interval)
+ </div>
+
+ <script>
 document.addEventListener('DOMContentLoaded', function() {
    // Export logs functionality
    const exportBtn = document.getElementById('export-logs-btn');

@@ -110,7 +110,47 @@ export const serviceFactory = {
     },
   }),
   getNotificationService: () => ({
-    // Add methods as needed
+    getAllNotifications: async (filter, options) => {
+      let query = databaseService.supabase.from('notifications').select('*');
+      if (options.limit) query = query.limit(options.limit);
+      const { data, error } = await query;
+      if (error) throw error;
+      return { data };
+    },
+    getNotificationStats: async () => {
+      // Get basic stats from notifications table
+      const { data, error } = await databaseService.supabase
+        .from('notifications')
+        .select('is_read, type, priority');
+
+      if (error) {
+        // Return default stats if query fails
+        return {
+          total: 0,
+          unread: 0,
+          read: 0,
+          thisWeek: 0,
+        };
+      }
+
+      const total = data.length;
+      const unread = data.filter((n) => !n.is_read).length;
+      const read = data.filter((n) => n.is_read).length;
+
+      // Count notifications from this week
+      const oneWeekAgo = new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+      const thisWeek = data.filter(
+        (n) => new Date(n.created_at) > oneWeekAgo
+      ).length;
+
+      return {
+        total,
+        unread,
+        read,
+        thisWeek,
+      };
+    },
   }),
   getSystemHealthService: () => ({
     getSystemMetrics: async () => {

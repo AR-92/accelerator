@@ -67,6 +67,12 @@
   body {
     @apply bg-background text-foreground font-sans;
   }
+  button:focus,
+  button:active,
+  a:focus,
+  a:active {
+    @apply border-none;
+  }
 }
 
 .prose {
@@ -92,5 +98,33 @@
 @layer components {
   .btn {
     @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  }
+}
+
+/* Custom utilities */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Additional scrollbar hiding for filter navigation */
+  #settings-filter-scroll-container,
+  #table-filter-scroll-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  #settings-filter-scroll-container::-webkit-scrollbar,
+  #table-filter-scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Smooth scrolling for filter containers */
+  #settings-filter-scroll-container,
+  #table-filter-scroll-container {
+    scroll-behavior: smooth;
   }
 }

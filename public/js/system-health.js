@@ -246,7 +246,10 @@ async function runDatabaseHealthCheck() {
     const data = await response.json();
 
     // Show results in modal
-    showModal('Database Health Check Results', formatHealthCheckResults(data.results));
+    showModal(
+      'Database Health Check Results',
+      formatHealthCheckResults(data.results)
+    );
     showToast('Database health check completed', 'success');
   } catch (error) {
     console.error('Error running database health check:', error);
@@ -260,7 +263,11 @@ function openSystemConfig() {
 }
 
 async function clearCache() {
-  if (!confirm('Are you sure you want to clear the system cache? This may temporarily slow down the application.')) {
+  if (
+    !confirm(
+      'Are you sure you want to clear the system cache? This may temporarily slow down the application.'
+    )
+  ) {
     return;
   }
 
@@ -312,7 +319,10 @@ async function runDiagnostics() {
     const data = await response.json();
 
     // Show results in modal
-    showModal('System Diagnostics Results', formatDiagnosticsResults(data.results));
+    showModal(
+      'System Diagnostics Results',
+      formatDiagnosticsResults(data.results)
+    );
     showToast('System diagnostics completed', 'success');
   } catch (error) {
     console.error('Error running diagnostics:', error);
@@ -323,8 +333,9 @@ async function runDiagnostics() {
 function formatHealthCheckResults(results) {
   let html = '<div class="space-y-4">';
 
-  results.forEach(result => {
-    const statusClass = result.status === 'passed' ? 'text-green-600' : 'text-red-600';
+  results.forEach((result) => {
+    const statusClass =
+      result.status === 'passed' ? 'text-green-600' : 'text-red-600';
     const statusIcon = result.status === 'passed' ? '✓' : '✗';
 
     html += `
@@ -346,9 +357,19 @@ function formatHealthCheckResults(results) {
 function formatDiagnosticsResults(results) {
   let html = '<div class="space-y-4">';
 
-  results.forEach(result => {
-    const statusClass = result.status === 'passed' ? 'text-green-600' : result.status === 'warning' ? 'text-yellow-600' : 'text-red-600';
-    const statusIcon = result.status === 'passed' ? '✓' : result.status === 'warning' ? '⚠' : '✗';
+  results.forEach((result) => {
+    const statusClass =
+      result.status === 'passed'
+        ? 'text-green-600'
+        : result.status === 'warning'
+          ? 'text-yellow-600'
+          : 'text-red-600';
+    const statusIcon =
+      result.status === 'passed'
+        ? '✓'
+        : result.status === 'warning'
+          ? '⚠'
+          : '✗';
 
     html += `
       <div class="border border-border rounded-lg p-4">
@@ -403,33 +424,18 @@ function showModal(title, content) {
 }
 
 function showLoadingState() {
-    // Disable refresh button
-    const refreshBtn = document.getElementById('refresh-btn');
-    if (refreshBtn) {
-        refreshBtn.disabled = true;
-        refreshBtn.innerHTML = `
+  // Disable refresh button
+  const refreshBtn = document.getElementById('refresh-btn');
+  if (refreshBtn) {
+    refreshBtn.disabled = true;
+    refreshBtn.innerHTML = `
             <svg class="animate-spin -ml-1 mr-1 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
             Refresh
         `;
-    }
-}
-
-function hideLoadingState() {
-    // Reset refresh button
-    const refreshBtn = document.getElementById('refresh-btn');
-    if (refreshBtn) {
-        refreshBtn.disabled = false;
-        refreshBtn.innerHTML = `
-            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-            </svg>
-            Refresh
-        `;
-    }
-}
+  }
 }
 
 function hideLoadingState() {
@@ -449,22 +455,25 @@ function hideLoadingState() {
 }
 
 function showToast(message, type = 'info') {
-    // Create toast notification
-    const toast = document.createElement('div');
-    toast.className = `fixed top-4 right-4 px-3 py-1.5 rounded text-sm font-medium z-50 border ${
-        type === 'success' ? 'bg-green-50 text-green-800 border-green-200 dark:bg-green-950 dark:text-green-200 dark:border-green-800' :
-        type === 'error' ? 'bg-red-50 text-red-800 border-red-200 dark:bg-red-950 dark:text-red-200 dark:border-red-800' :
-        type === 'warning' ? 'bg-yellow-50 text-yellow-800 border-yellow-200 dark:bg-yellow-950 dark:text-yellow-200 dark:border-yellow-800' :
-        'bg-blue-50 text-blue-800 border-blue-200 dark:bg-blue-950 dark:text-blue-200 dark:border-blue-800'
-    }`;
-    toast.textContent = message;
+  // Create toast notification
+  const toast = document.createElement('div');
+  toast.className = `fixed top-4 right-4 px-3 py-1.5 rounded text-sm font-medium z-50 border ${
+    type === 'success'
+      ? 'bg-green-50 text-green-800 border-green-200 dark:bg-green-950 dark:text-green-200 dark:border-green-800'
+      : type === 'error'
+        ? 'bg-red-50 text-red-800 border-red-200 dark:bg-red-950 dark:text-red-200 dark:border-red-800'
+        : type === 'warning'
+          ? 'bg-yellow-50 text-yellow-800 border-yellow-200 dark:bg-yellow-950 dark:text-yellow-200 dark:border-yellow-800'
+          : 'bg-blue-50 text-blue-800 border-blue-200 dark:bg-blue-950 dark:text-blue-200 dark:border-blue-800'
+  }`;
+  toast.textContent = message;
 
-    document.body.appendChild(toast);
+  document.body.appendChild(toast);
 
-    // Remove after 2 seconds
-    setTimeout(() => {
-        document.body.removeChild(toast);
-    }, 2000);
+  // Remove after 2 seconds
+  setTimeout(() => {
+    document.body.removeChild(toast);
+  }, 2000);
 }
 
 // Chart initialization (if charts library is available)

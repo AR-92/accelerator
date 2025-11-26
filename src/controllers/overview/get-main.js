@@ -195,26 +195,31 @@ export const getMain = async (req, res) => {
         id: 'manage-todos-btn',
         href: '/admin/table-pages/todos',
         text: 'Manage Todos',
+        icon: 'check-square',
       },
       {
         id: 'manage-users-btn',
         href: '/admin/table-pages/users',
         text: 'Manage Accounts',
+        icon: 'users',
       },
       {
         id: 'manage-ideas-btn',
         href: '/admin/table-pages/ideas',
         text: 'Manage Ideas',
+        icon: 'lightbulb',
       },
       {
         id: 'manage-votes-btn',
         href: '/admin/table-pages/votes',
         text: 'Manage Votes Management',
+        icon: 'thumbs-up',
       },
       {
         id: 'manage-collaborations-btn',
         href: '/admin/table-pages/collaborations',
         text: 'Manage Collaborations',
+        icon: 'handshake',
       },
     ];
 

@@ -1,195 +1,645 @@
 <!-- Profile Settings Management Content -->
 <div class="max-w-7xl mx-auto rounded-xl overflow-hidden flex flex-col mx-4 my-4">
 
-   <!-- Page Header -->
-   {{> page-header title="Profile Settings Management" description="Manage and organize all system profile settings efficiently" border=true}}
-   <div class="p-6 space-y-6">
-      <!-- Account Settings -->
+    <!-- Page Header -->
+    {{> page-header title="Profile Settings Management" description="Manage and organize all system profile settings efficiently" border=true}}
+    <div class="p-6 space-y-6">
+       <!-- Account Settings -->
+       <div class="bg-card rounded-lg border border-border">
+         <div class="p-6 border-b border-border">
+           <h3 class="text-lg font-semibold text-card-foreground">Account Settings</h3>
+           <p class="text-sm text-muted-foreground mt-1">Manage your account information and preferences</p>
+         </div>
+        <div class="p-6 space-y-6">
+           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+             <div>
+               <label class="block text-sm font-medium text-foreground mb-2">Display Name</label>
+               <input type="text" name="displayName" value="{{profileSettings.account.displayName}}" class="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none   focus:border-ring">
+             </div>
+             <div>
+               <label class="block text-sm font-medium text-foreground mb-2">Email Address</label>
+               <input type="email" name="email" value="{{profileSettings.account.email}}" class="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none   focus:border-ring">
+             </div>
+           </div>
+           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+             <div>
+               <label class="block text-sm font-medium text-foreground mb-2">Phone Number</label>
+               <input type="tel" name="phone" value="{{profileSettings.account.phone}}" class="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none   focus:border-ring">
+             </div>
+             <div>
+               <label class="block text-sm font-medium text-foreground mb-2">Location</label>
+               <input type="text" name="location" value="{{profileSettings.account.location}}" class="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none   focus:border-ring">
+             </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-card-foreground mb-2">Bio</label>
+            <textarea rows="3" name="bio" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent" placeholder="Tell us about yourself...">{{profileSettings.account.bio}}</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Privacy Settings -->
       <div class="bg-card rounded-lg border border-border">
         <div class="p-6 border-b border-border">
-          <h3 class="text-lg font-semibold text-card-foreground">Account Settings</h3>
-          <p class="text-sm text-muted-foreground mt-1">Manage your account information and preferences</p>
+          <h3 class="text-lg font-semibold text-card-foreground">Privacy Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Control your privacy and data sharing preferences</p>
         </div>
-       <div class="p-6 space-y-6">
+        <div class="p-6 space-y-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">Profile Visibility</h4>
+              <p class="text-sm text-muted-foreground">Make your profile visible to other users</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="profileVisibility" class="sr-only peer" {{#if profileSettings.privacy.profileVisibility}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">Activity Status</h4>
+              <p class="text-sm text-muted-foreground">Show when you're online and active</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="activityStatus" class="sr-only peer" {{#if profileSettings.privacy.activityStatus}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">Data Analytics</h4>
+              <p class="text-sm text-muted-foreground">Allow collection of usage analytics</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="dataAnalytics" class="sr-only peer" {{#if profileSettings.privacy.dataAnalytics}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Settings -->
+      <div class="bg-card rounded-lg border border-border">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Security Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Manage your account security preferences</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">Two-Factor Authentication</h4>
+              <p class="text-sm text-muted-foreground">Enable 2FA for enhanced security</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="twoFactorEnabled" class="sr-only peer" {{#if profileSettings.security.twoFactorEnabled}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label class="block text-sm font-medium text-foreground mb-2">Display Name</label>
-              <input type="text" name="displayName" value="{{profileSettings.account.displayName}}" class="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none   focus:border-ring">
+              <label class="block text-sm font-medium text-card-foreground mb-2">Session Timeout (minutes)</label>
+              <input type="number" name="sessionTimeout" value="{{profileSettings.security.sessionTimeout}}" min="15" max="480" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
             </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Login Alerts</h4>
+                <p class="text-sm text-muted-foreground">Get notified of login attempts</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="loginAlerts" class="sr-only peer" {{#if profileSettings.security.loginAlerts}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
             <div>
-              <label class="block text-sm font-medium text-foreground mb-2">Email Address</label>
-              <input type="email" name="email" value="{{profileSettings.account.email}}" class="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none   focus:border-ring">
+              <h4 class="text-sm font-medium text-card-foreground">Password Change Alerts</h4>
+              <p class="text-sm text-muted-foreground">Get notified when password changes</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="passwordChangeAlerts" class="sr-only peer" {{#if profileSettings.security.passwordChangeAlerts}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">Device Tracking</h4>
+              <p class="text-sm text-muted-foreground">Track devices used to access your account</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="deviceTracking" class="sr-only peer" {{#if profileSettings.security.deviceTracking}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">Biometric Authentication</h4>
+              <p class="text-sm text-muted-foreground">Enable fingerprint/face recognition</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="biometricEnabled" class="sr-only peer" {{#if profileSettings.security.biometricEnabled}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notification Preferences -->
+      <div class="bg-card rounded-lg border border-border">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Notification Preferences</h3>
+          <p class="text-sm text-muted-foreground mt-1">Choose how you want to be notified</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Email Notifications</h4>
+                <p class="text-sm text-muted-foreground">Receive notifications via email</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="emailNotifications" class="sr-only peer" {{#if profileSettings.notifications.emailNotifications}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">System Alerts</h4>
+                <p class="text-sm text-muted-foreground">Important system notifications</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="systemAlerts" class="sr-only peer" {{#if profileSettings.notifications.systemAlerts}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">User Activity</h4>
+                <p class="text-sm text-muted-foreground">Notifications about user actions</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="userActivity" class="sr-only peer" {{#if profileSettings.notifications.userActivity}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Marketing Updates</h4>
+                <p class="text-sm text-muted-foreground">Product updates and promotions</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="marketingUpdates" class="sr-only peer" {{#if profileSettings.notifications.marketingUpdates}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+          </div>
+          <div class="border-t pt-4">
+            <h4 class="text-sm font-medium text-card-foreground mb-2">Notification Frequency</h4>
+            <select name="notificationFrequency" class="w-full max-w-xs px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
+              <option value="immediate" {{#eq profileSettings.notifications.frequency "immediate"}}selected{{/eq}}>Immediate</option>
+              <option value="daily" {{#eq profileSettings.notifications.frequency "daily"}}selected{{/eq}}>Daily Digest</option>
+              <option value="weekly" {{#eq profileSettings.notifications.frequency "weekly"}}selected{{/eq}}>Weekly Summary</option>
+              <option value="never" {{#eq profileSettings.notifications.frequency "never"}}selected{{/eq}}>Never</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme and Appearance -->
+      <div class="bg-card rounded-lg border border-border">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Theme & Appearance</h3>
+          <p class="text-sm text-muted-foreground mt-1">Customize the look and feel of your interface</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-card-foreground mb-3">Theme</label>
+            <div class="grid grid-cols-3 gap-4">
+              <div class="border-2 {{#eq profileSettings.appearance.theme "light"}}border-primary{{else}}border-border{{/eq}} rounded-lg p-4 cursor-pointer bg-card">
+                <div class="w-full h-16 bg-gray-100 rounded mb-2"></div>
+                <p class="text-sm font-medium text-center">Light</p>
+              </div>
+              <div class="border-2 {{#eq profileSettings.appearance.theme "dark"}}border-primary{{else}}border-border{{/eq}} rounded-lg p-4 cursor-pointer bg-gray-800">
+                <div class="w-full h-16 bg-gray-700 rounded mb-2"></div>
+                <p class="text-sm font-medium text-center text-white">Dark</p>
+              </div>
+              <div class="border-2 {{#eq profileSettings.appearance.theme "auto"}}border-primary{{else}}border-border{{/eq}} rounded-lg p-4 cursor-pointer bg-gradient-to-r from-blue-500 to-purple-600">
+                <div class="w-full h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded mb-2"></div>
+                <p class="text-sm font-medium text-center text-white">Auto</p>
+              </div>
             </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label class="block text-sm font-medium text-foreground mb-2">Phone Number</label>
-              <input type="tel" name="phone" value="{{profileSettings.account.phone}}" class="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none   focus:border-ring">
+              <label class="block text-sm font-medium text-card-foreground mb-2">Language</label>
+              <select name="language" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
+                <option value="en" {{#eq profileSettings.appearance.language "en"}}selected{{/eq}}>English</option>
+                <option value="es" {{#eq profileSettings.appearance.language "es"}}selected{{/eq}}>Spanish</option>
+                <option value="fr" {{#eq profileSettings.appearance.language "fr"}}selected{{/eq}}>French</option>
+                <option value="de" {{#eq profileSettings.appearance.language "de"}}selected{{/eq}}>German</option>
+              </select>
             </div>
             <div>
-              <label class="block text-sm font-medium text-foreground mb-2">Location</label>
-              <input type="text" name="location" value="{{profileSettings.account.location}}" class="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none   focus:border-ring">
+              <label class="block text-sm font-medium text-card-foreground mb-2">Date Format</label>
+              <select name="dateFormat" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
+                <option value="mdy" {{#eq profileSettings.appearance.dateFormat "mdy"}}selected{{/eq}}>MM/DD/YYYY</option>
+                <option value="dmy" {{#eq profileSettings.appearance.dateFormat "dmy"}}selected{{/eq}}>DD/MM/YYYY</option>
+                <option value="ymd" {{#eq profileSettings.appearance.dateFormat "ymd"}}selected{{/eq}}>YYYY-MM-DD</option>
+              </select>
             </div>
-         </div>
-         <div>
-           <label class="block text-sm font-medium text-card-foreground mb-2">Bio</label>
-           <textarea rows="3" name="bio" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent" placeholder="Tell us about yourself...">{{profileSettings.account.bio}}</textarea>
-         </div>
-       </div>
-     </div>
+          </div>
+        </div>
+      </div>
 
-     <!-- Privacy Settings -->
-     <div class="bg-card rounded-lg border border-border">
-       <div class="p-6 border-b border-border">
-         <h3 class="text-lg font-semibold text-card-foreground">Privacy Settings</h3>
-         <p class="text-sm text-muted-foreground mt-1">Control your privacy and data sharing preferences</p>
-       </div>
-       <div class="p-6 space-y-6">
-         <div class="flex items-center justify-between">
-           <div>
-             <h4 class="text-sm font-medium text-card-foreground">Profile Visibility</h4>
-             <p class="text-sm text-muted-foreground">Make your profile visible to other users</p>
-           </div>
-           <label class="relative inline-flex items-center cursor-pointer">
-             <input type="checkbox" name="profileVisibility" class="sr-only peer" {{#if profileSettings.privacy.profileVisibility}}checked{{/if}}>
-             <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-           </label>
-         </div>
-         <div class="flex items-center justify-between">
-           <div>
-             <h4 class="text-sm font-medium text-card-foreground">Activity Status</h4>
-             <p class="text-sm text-muted-foreground">Show when you're online and active</p>
-           </div>
-           <label class="relative inline-flex items-center cursor-pointer">
-             <input type="checkbox" name="activityStatus" class="sr-only peer" {{#if profileSettings.privacy.activityStatus}}checked{{/if}}>
-             <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-           </label>
-         </div>
-         <div class="flex items-center justify-between">
-           <div>
-             <h4 class="text-sm font-medium text-card-foreground">Data Analytics</h4>
-             <p class="text-sm text-muted-foreground">Allow collection of usage analytics</p>
-           </div>
-           <label class="relative inline-flex items-center cursor-pointer">
-             <input type="checkbox" name="dataAnalytics" class="sr-only peer" {{#if profileSettings.privacy.dataAnalytics}}checked{{/if}}>
-             <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-           </label>
-         </div>
-       </div>
-     </div>
+      <!-- Accessibility Settings -->
+      <div class="bg-card rounded-lg border border-border">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Accessibility Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure accessibility preferences</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">High Contrast Mode</h4>
+              <p class="text-sm text-muted-foreground">Increase contrast for better visibility</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="highContrastMode" class="sr-only peer" {{#if profileSettings.accessibility.highContrastMode}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Font Size</label>
+              <select name="fontSize" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="small" {{#eq profileSettings.accessibility.fontSize "small"}}selected{{/eq}}>Small</option>
+                <option value="medium" {{#eq profileSettings.accessibility.fontSize "medium"}}selected{{/eq}}>Medium</option>
+                <option value="large" {{#eq profileSettings.accessibility.fontSize "large"}}selected{{/eq}}>Large</option>
+                <option value="extra-large" {{#eq profileSettings.accessibility.fontSize "extra-large"}}selected{{/eq}}>Extra Large</option>
+              </select>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Screen Reader</h4>
+                <p class="text-sm text-muted-foreground">Optimize for screen readers</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="screenReaderEnabled" class="sr-only peer" {{#if profileSettings.accessibility.screenReaderEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">Keyboard Navigation</h4>
+              <p class="text-sm text-muted-foreground">Enable keyboard-only navigation</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="keyboardNavigation" class="sr-only peer" {{#if profileSettings.accessibility.keyboardNavigation}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">Reduced Motion</h4>
+              <p class="text-sm text-muted-foreground">Minimize animations and transitions</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="reducedMotion" class="sr-only peer" {{#if profileSettings.accessibility.reducedMotion}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+        </div>
+      </div>
 
-     <!-- Notification Preferences -->
-     <div class="bg-card rounded-lg border border-border">
-       <div class="p-6 border-b border-border">
-         <h3 class="text-lg font-semibold text-card-foreground">Notification Preferences</h3>
-         <p class="text-sm text-muted-foreground mt-1">Choose how you want to be notified</p>
-       </div>
-       <div class="p-6 space-y-6">
-         <div class="space-y-4">
-           <div class="flex items-center justify-between">
-             <div>
-               <h4 class="text-sm font-medium text-card-foreground">Email Notifications</h4>
-               <p class="text-sm text-muted-foreground">Receive notifications via email</p>
-             </div>
-             <label class="relative inline-flex items-center cursor-pointer">
-               <input type="checkbox" name="emailNotifications" class="sr-only peer" {{#if profileSettings.notifications.emailNotifications}}checked{{/if}}>
-               <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-             </label>
-           </div>
-           <div class="flex items-center justify-between">
-             <div>
-               <h4 class="text-sm font-medium text-card-foreground">System Alerts</h4>
-               <p class="text-sm text-muted-foreground">Important system notifications</p>
-             </div>
-             <label class="relative inline-flex items-center cursor-pointer">
-               <input type="checkbox" name="systemAlerts" class="sr-only peer" {{#if profileSettings.notifications.systemAlerts}}checked{{/if}}>
-               <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-             </label>
-           </div>
-           <div class="flex items-center justify-between">
-             <div>
-               <h4 class="text-sm font-medium text-card-foreground">User Activity</h4>
-               <p class="text-sm text-muted-foreground">Notifications about user actions</p>
-             </div>
-             <label class="relative inline-flex items-center cursor-pointer">
-               <input type="checkbox" name="userActivity" class="sr-only peer" {{#if profileSettings.notifications.userActivity}}checked{{/if}}>
-               <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-             </label>
-           </div>
-           <div class="flex items-center justify-between">
-             <div>
-               <h4 class="text-sm font-medium text-card-foreground">Marketing Updates</h4>
-               <p class="text-sm text-muted-foreground">Product updates and promotions</p>
-             </div>
-             <label class="relative inline-flex items-center cursor-pointer">
-               <input type="checkbox" name="marketingUpdates" class="sr-only peer" {{#if profileSettings.notifications.marketingUpdates}}checked{{/if}}>
-               <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-             </label>
-           </div>
-         </div>
-         <div class="border-t pt-4">
-           <h4 class="text-sm font-medium text-card-foreground mb-2">Notification Frequency</h4>
-           <select name="notificationFrequency" class="w-full max-w-xs px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
-             <option value="immediate" {{#eq profileSettings.notifications.frequency "immediate"}}selected{{/eq}}>Immediate</option>
-             <option value="daily" {{#eq profileSettings.notifications.frequency "daily"}}selected{{/eq}}>Daily Digest</option>
-             <option value="weekly" {{#eq profileSettings.notifications.frequency "weekly"}}selected{{/eq}}>Weekly Summary</option>
-             <option value="never" {{#eq profileSettings.notifications.frequency "never"}}selected{{/eq}}>Never</option>
-           </select>
-         </div>
-       </div>
-     </div>
+      <!-- Communication Settings -->
+      <div class="bg-card rounded-lg border border-border">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Communication Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure language and regional preferences</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Timezone</label>
+              <select name="timezone" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="UTC" {{#eq profileSettings.communication.timezone "UTC"}}selected{{/eq}}>UTC</option>
+                <option value="EST" {{#eq profileSettings.communication.timezone "EST"}}selected{{/eq}}>Eastern Time</option>
+                <option value="PST" {{#eq profileSettings.communication.timezone "PST"}}selected{{/eq}}>Pacific Time</option>
+                <option value="GMT" {{#eq profileSettings.communication.timezone "GMT"}}selected{{/eq}}>GMT</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Language</label>
+              <select name="communicationLanguage" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="en-US" {{#eq profileSettings.communication.language "en-US"}}selected{{/eq}}>English (US)</option>
+                <option value="en-GB" {{#eq profileSettings.communication.language "en-GB"}}selected{{/eq}}>English (UK)</option>
+                <option value="es" {{#eq profileSettings.communication.language "es"}}selected{{/eq}}>Spanish</option>
+                <option value="fr" {{#eq profileSettings.communication.language "fr"}}selected{{/eq}}>French</option>
+                <option value="de" {{#eq profileSettings.communication.language "de"}}selected{{/eq}}>German</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Date Format</label>
+              <select name="communicationDateFormat" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="mdy" {{#eq profileSettings.communication.dateFormat "mdy"}}selected{{/eq}}>MM/DD/YYYY</option>
+                <option value="dmy" {{#eq profileSettings.communication.dateFormat "dmy"}}selected{{/eq}}>DD/MM/YYYY</option>
+                <option value="ymd" {{#eq profileSettings.communication.dateFormat "ymd"}}selected{{/eq}}>YYYY-MM-DD</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Time Format</label>
+              <select name="timeFormat" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="12h" {{#eq profileSettings.communication.timeFormat "12h"}}selected{{/eq}}>12 Hour</option>
+                <option value="24h" {{#eq profileSettings.communication.timeFormat "24h"}}selected{{/eq}}>24 Hour</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Currency</label>
+              <select name="currency" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="$" {{#eq profileSettings.communication.currency "$"}}selected{{/eq}}>USD ($)</option>
+                <option value="€" {{#eq profileSettings.communication.currency "€"}}selected{{/eq}}>EUR (€)</option>
+                <option value="£" {{#eq profileSettings.communication.currency "£"}}selected{{/eq}}>GBP (£)</option>
+                <option value="¥" {{#eq profileSettings.communication.currency "¥"}}selected{{/eq}}>JPY (¥)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Units</label>
+              <select name="units" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="metric" {{#eq profileSettings.communication.units "metric"}}selected{{/eq}}>Metric</option>
+                <option value="imperial" {{#eq profileSettings.communication.units "imperial"}}selected{{/eq}}>Imperial</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
 
-     <!-- Theme and Appearance -->
-     <div class="bg-card rounded-lg border border-border">
-       <div class="p-6 border-b border-border">
-         <h3 class="text-lg font-semibold text-card-foreground">Theme & Appearance</h3>
-         <p class="text-sm text-muted-foreground mt-1">Customize the look and feel of your interface</p>
-       </div>
-       <div class="p-6 space-y-6">
-         <div>
-           <label class="block text-sm font-medium text-card-foreground mb-3">Theme</label>
-           <div class="grid grid-cols-3 gap-4">
-             <div class="border-2 {{#eq profileSettings.appearance.theme "light"}}border-primary{{else}}border-border{{/eq}} rounded-lg p-4 cursor-pointer bg-card">
-               <div class="w-full h-16 bg-gray-100 rounded mb-2"></div>
-               <p class="text-sm font-medium text-center">Light</p>
-             </div>
-             <div class="border-2 {{#eq profileSettings.appearance.theme "dark"}}border-primary{{else}}border-border{{/eq}} rounded-lg p-4 cursor-pointer bg-gray-800">
-               <div class="w-full h-16 bg-gray-700 rounded mb-2"></div>
-               <p class="text-sm font-medium text-center text-white">Dark</p>
-             </div>
-             <div class="border-2 {{#eq profileSettings.appearance.theme "auto"}}border-primary{{else}}border-border{{/eq}} rounded-lg p-4 cursor-pointer bg-gradient-to-r from-blue-500 to-purple-600">
-               <div class="w-full h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded mb-2"></div>
-               <p class="text-sm font-medium text-center text-white">Auto</p>
-             </div>
-           </div>
-         </div>
-         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-           <div>
-             <label class="block text-sm font-medium text-card-foreground mb-2">Language</label>
-             <select name="language" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
-               <option value="en" {{#eq profileSettings.appearance.language "en"}}selected{{/eq}}>English</option>
-               <option value="es" {{#eq profileSettings.appearance.language "es"}}selected{{/eq}}>Spanish</option>
-               <option value="fr" {{#eq profileSettings.appearance.language "fr"}}selected{{/eq}}>French</option>
-               <option value="de" {{#eq profileSettings.appearance.language "de"}}selected{{/eq}}>German</option>
-             </select>
-           </div>
-           <div>
-             <label class="block text-sm font-medium text-card-foreground mb-2">Date Format</label>
-             <select name="dateFormat" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
-               <option value="mdy" {{#eq profileSettings.appearance.dateFormat "mdy"}}selected{{/eq}}>MM/DD/YYYY</option>
-               <option value="dmy" {{#eq profileSettings.appearance.dateFormat "dmy"}}selected{{/eq}}>DD/MM/YYYY</option>
-               <option value="ymd" {{#eq profileSettings.appearance.dateFormat "ymd"}}selected{{/eq}}>YYYY-MM-DD</option>
-             </select>
-           </div>
-         </div>
-       </div>
-     </div>
+      <!-- AI Assistant Settings -->
+      <div class="bg-card rounded-lg border border-border">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">AI Assistant Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure your AI assistant preferences</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">AI Assistant Enabled</h4>
+              <p class="text-sm text-muted-foreground">Enable AI-powered assistance features</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="aiAssistantEnabled" class="sr-only peer" {{#if profileSettings.ai.aiAssistantEnabled}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Preferred AI Personality</label>
+              <select name="preferredAiPersonality" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="professional" {{#eq profileSettings.ai.preferredAiPersonality "professional"}}selected{{/eq}}>Professional</option>
+                <option value="friendly" {{#eq profileSettings.ai.preferredAiPersonality "friendly"}}selected{{/eq}}>Friendly</option>
+                <option value="technical" {{#eq profileSettings.ai.preferredAiPersonality "technical"}}selected{{/eq}}>Technical</option>
+                <option value="creative" {{#eq profileSettings.ai.preferredAiPersonality "creative"}}selected{{/eq}}>Creative</option>
+              </select>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">AI Notifications</h4>
+                <p class="text-sm text-muted-foreground">Receive notifications from AI assistant</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="aiNotificationsEnabled" class="sr-only peer" {{#if profileSettings.ai.aiNotificationsEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">AI Learning Enabled</h4>
+              <p class="text-sm text-muted-foreground">Allow AI to learn from your interactions</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="aiLearningEnabled" class="sr-only peer" {{#if profileSettings.ai.aiLearningEnabled}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">AI Data Sharing</h4>
+              <p class="text-sm text-muted-foreground">Share anonymized data to improve AI</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="aiDataSharing" class="sr-only peer" {{#if profileSettings.ai.aiDataSharing}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">AI Feedback Enabled</h4>
+              <p class="text-sm text-muted-foreground">Provide feedback on AI responses</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="aiFeedbackEnabled" class="sr-only peer" {{#if profileSettings.ai.aiFeedbackEnabled}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">AI Response Style</label>
+              <select name="aiResponseStyle" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="concise" {{#eq profileSettings.ai.aiResponseStyle "concise"}}selected{{/eq}}>Concise</option>
+                <option value="detailed" {{#eq profileSettings.ai.aiResponseStyle "detailed"}}selected{{/eq}}>Detailed</option>
+                <option value="balanced" {{#eq profileSettings.ai.aiResponseStyle "balanced"}}selected{{/eq}}>Balanced</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">AI Content Preferences</label>
+              <input type="text" name="aiContentPreferences" value="{{profileSettings.ai.aiContentPreferences}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent" placeholder="e.g., professional, helpful, innovative">
+            </div>
+          </div>
+        </div>
+      </div>
 
-     <!-- Save Button -->
-     <div class="flex justify-end">
-       <button class="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium">
-         Save Settings
-       </button>
-     </div>
-   </div>
-</div>
+      <!-- Integrations Settings -->
+      <div class="bg-card rounded-lg border border-border">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Integrations Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Manage third-party service connections</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Slack Connected</h4>
+                <p class="text-sm text-muted-foreground">Connect your Slack workspace</p>
+              </div>
+              <div class="flex items-center">
+                {{#if profileSettings.integrations.slackConnected}}
+                <span class="text-green-600 mr-2">✓</span>
+                <button class="px-3 py-1 text-sm bg-red-50 text-red-700 rounded hover:bg-red-100">Disconnect</button>
+                {{else}}
+                <button class="px-3 py-1 text-sm bg-blue-50 text-blue-700 rounded hover:bg-blue-100">Connect</button>
+                {{/if}}
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Discord Connected</h4>
+                <p class="text-sm text-muted-foreground">Connect your Discord server</p>
+              </div>
+              <div class="flex items-center">
+                {{#if profileSettings.integrations.discordConnected}}
+                <span class="text-green-600 mr-2">✓</span>
+                <button class="px-3 py-1 text-sm bg-red-50 text-red-700 rounded hover:bg-red-100">Disconnect</button>
+                {{else}}
+                <button class="px-3 py-1 text-sm bg-blue-50 text-blue-700 rounded hover:bg-blue-100">Connect</button>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Google Connected</h4>
+                <p class="text-sm text-muted-foreground">Connect Google services</p>
+              </div>
+              <div class="flex items-center">
+                {{#if profileSettings.integrations.googleConnected}}
+                <span class="text-green-600 mr-2">✓</span>
+                <button class="px-3 py-1 text-sm bg-red-50 text-red-700 rounded hover:bg-red-100">Disconnect</button>
+                {{else}}
+                <button class="px-3 py-1 text-sm bg-blue-50 text-blue-700 rounded hover:bg-blue-100">Connect</button>
+                {{/if}}
+              </div>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">GitHub Connected</h4>
+                <p class="text-sm text-muted-foreground">Connect your GitHub account</p>
+              </div>
+              <div class="flex items-center">
+                {{#if profileSettings.integrations.githubConnected}}
+                <span class="text-green-600 mr-2">✓</span>
+                <button class="px-3 py-1 text-sm bg-red-50 text-red-700 rounded hover:bg-red-100">Disconnect</button>
+                {{else}}
+                <button class="px-3 py-1 text-sm bg-blue-50 text-blue-700 rounded hover:bg-blue-100">Connect</button>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Calendar Sync</h4>
+                <p class="text-sm text-muted-foreground">Sync with external calendars</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="calendarSync" class="sr-only peer" {{#if profileSettings.integrations.calendarSync}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Contact Sync</h4>
+                <p class="text-sm text-muted-foreground">Sync contacts from external services</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="contactSync" class="sr-only peer" {{#if profileSettings.integrations.contactSync}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preferences Settings -->
+      <div class="bg-card rounded-lg border border-border">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Preferences Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Customize your application preferences</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Dashboard Layout</label>
+              <select name="dashboardLayout" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="grid" {{#eq profileSettings.preferences.dashboardLayout "grid"}}selected{{/eq}}>Grid</option>
+                <option value="list" {{#eq profileSettings.preferences.dashboardLayout "list"}}selected{{/eq}}>List</option>
+                <option value="compact" {{#eq profileSettings.preferences.dashboardLayout "compact"}}selected{{/eq}}>Compact</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Default View</label>
+              <select name="defaultView" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="overview" {{#eq profileSettings.preferences.defaultView "overview"}}selected{{/eq}}>Overview</option>
+                <option value="projects" {{#eq profileSettings.preferences.defaultView "projects"}}selected{{/eq}}>Projects</option>
+                <option value="tasks" {{#eq profileSettings.preferences.defaultView "tasks"}}selected{{/eq}}>Tasks</option>
+                <option value="analytics" {{#eq profileSettings.preferences.defaultView "analytics"}}selected{{/eq}}>Analytics</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Auto Save</h4>
+                <p class="text-sm text-muted-foreground">Automatically save changes</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="autoSave" class="sr-only peer" {{#if profileSettings.preferences.autoSave}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Keyboard Shortcuts</h4>
+                <p class="text-sm text-muted-foreground">Enable keyboard shortcuts</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="keyboardShortcuts" class="sr-only peer" {{#if profileSettings.preferences.keyboardShortcuts}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Dark Mode Schedule</label>
+              <select name="darkModeSchedule" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="manual" {{#eq profileSettings.preferences.darkModeSchedule "manual"}}selected{{/eq}}>Manual</option>
+                <option value="system" {{#eq profileSettings.preferences.darkModeSchedule "system"}}selected{{/eq}}>System</option>
+                <option value="sunset" {{#eq profileSettings.preferences.darkModeSchedule "sunset"}}selected{{/eq}}>Sunset to Sunrise</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Email Digest</label>
+              <select name="emailDigest" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="daily" {{#eq profileSettings.preferences.emailDigest "daily"}}selected{{/eq}}>Daily</option>
+                <option value="weekly" {{#eq profileSettings.preferences.emailDigest "weekly"}}selected{{/eq}}>Weekly</option>
+                <option value="monthly" {{#eq profileSettings.preferences.emailDigest "monthly"}}selected{{/eq}}>Monthly</option>
+                <option value="never" {{#eq profileSettings.preferences.emailDigest "never"}}selected{{/eq}}>Never</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">Notification Sound</h4>
+              <p class="text-sm text-muted-foreground">Play sound for notifications</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="notificationSound" class="sr-only peer" {{#if profileSettings.preferences.notificationSound}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <div class="flex justify-end">
+        <button class="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium">
+          Save Settings
+        </button>
+      </div>
+    </div>
+  </div>

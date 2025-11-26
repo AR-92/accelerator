@@ -1,5 +1,6 @@
 import logger from '../../utils/logger.js';
 import { databaseService } from '../../services/index.js';
+import { serviceFactory } from '../../services/serviceFactory.js';
 
 // Notifications
 export const getNotifications = async (req, res) => {
@@ -87,8 +88,95 @@ export const getNotifications = async (req, res) => {
     // Calculate notification stats using service
     const notificationStats = await notificationService.getNotificationStats();
 
+    // Generate chart data for notification trends
+    const now = new Date();
+    const notificationTrends = {
+      volumeHistory: {
+        labels: [],
+        data: [],
+      },
+      typeDistribution: {
+        labels: [],
+        data: [],
+      },
+      readRateHistory: {
+        labels: [],
+        data: [],
+      },
+    };
+
+    // Generate last 24 hours of notification volume data
+    for (let i = 23; i >= 0; i--) {
+      const date = new Date(now.getTime() - i * 60 * 60 * 1000);
+      const hourLabel = date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      notificationTrends.volumeHistory.labels.push(hourLabel);
+
+      // Simulate notification volume
+      const baseVolume = Math.floor(Math.random() * 30) + 5;
+      const hourOfDay = date.getHours();
+      const multiplier = hourOfDay >= 8 && hourOfDay <= 20 ? 1.3 : 0.6;
+      notificationTrends.volumeHistory.data.push(
+        Math.floor(baseVolume * multiplier)
+      );
+    }
+
+    // Notification type distribution
+    const typeCounts = {};
+    mappedNotifications.forEach((notification) => {
+      const type = notification.type || 'system';
+      typeCounts[type] = (typeCounts[type] || 0) + 1;
+    });
+
+    // Ensure we have at least some data for the chart
+    if (Object.keys(typeCounts).length === 0) {
+      typeCounts['system'] = 1; // Default data if no notifications exist
+    }
+
+    notificationTrends.typeDistribution.labels = Object.keys(typeCounts);
+    notificationTrends.typeDistribution.data = Object.values(typeCounts);
+
+    // Read rate history
+    for (let i = 23; i >= 0; i--) {
+      const date = new Date(now.getTime() - i * 60 * 60 * 1000);
+      const hourLabel = date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      notificationTrends.readRateHistory.labels.push(hourLabel);
+
+      // Simulate read rates
+      const baseReadRate = Math.random() * 40 + 60; // 60-100%
+      notificationTrends.readRateHistory.data.push(Math.round(baseReadRate));
+    }
+
+    // Notification analytics
+    const notificationAnalytics = {
+      totalNotifications: mappedNotifications.length,
+      readRate:
+        mappedNotifications.length > 0
+          ? (
+              (mappedNotifications.filter((n) => n.is_read).length /
+                mappedNotifications.length) *
+              100
+            ).toFixed(1)
+          : 0,
+      avgResponseTime: '2.3h', // Simulated
+      topSenders: ['System', 'Admin', 'User Service'], // Simulated
+      urgentCount: mappedNotifications.filter((n) => n.priority === 'high')
+        .length,
+      deliverySuccess: '99.8%', // Simulated
+      userEngagement: {
+        openRate: '78.5%',
+        actionRate: '45.2%',
+        unsubscribeRate: '2.1%',
+      },
+    };
+
     res.render('admin/other-pages/notifications', {
-      title: 'Notifications',
+      title: 'Notifications Management',
       currentPage: 'notifications',
       currentSection: 'system',
       tableId: 'notifications',
@@ -105,6 +193,9 @@ export const getNotifications = async (req, res) => {
       colspan,
       notifications: mappedNotifications,
       notificationStats,
+      notificationTrends,
+      notificationAnalytics,
+      lastUpdated: new Date().toLocaleString(),
     });
   } catch (error) {
     logger.error('Error loading notifications:', error);
@@ -126,6 +217,26 @@ export const getNotifications = async (req, res) => {
         pages: [],
       },
       query: { search: '', status: '' },
+      notifications: [],
+      notificationStats: { total: 0, unread: 0, read: 0, thisWeek: 0 },
+      notificationTrends: {
+        volumeHistory: { labels: [], data: [] },
+        typeDistribution: { labels: [], data: [] },
+        readRateHistory: { labels: [], data: [] },
+      },
+      notificationAnalytics: {
+        totalNotifications: 0,
+        readRate: '0',
+        avgResponseTime: 'N/A',
+        urgentCount: 0,
+        deliverySuccess: 'N/A',
+        userEngagement: {
+          openRate: 'N/A',
+          actionRate: 'N/A',
+          unsubscribeRate: 'N/A',
+        },
+      },
+      lastUpdated: new Date().toLocaleString(),
     });
   }
 };

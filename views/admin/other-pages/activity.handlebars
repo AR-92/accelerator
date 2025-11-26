@@ -1,30 +1,458 @@
 <!-- Activity Management Content -->
 <div class="max-w-7xl mx-auto rounded-xl overflow-hidden flex flex-col mx-4 my-4">
 
-   <!-- Page Header -->
-   {{> page-header title="Activity Management" description="Manage and organize all system activity efficiently" border=true}}
-   <div class="p-6 space-y-6">
-      <!-- Activity Stats -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-{{#> stats-card icon="bar-chart-3" title="Activities" link="#"}}
-{{> stats-item label="Total" value=activityStats.total}}
-{{> stats-item label="Today" value=activityStats.today color="text-green-600"}}
-{{/stats-card}}
+    <!-- Page Header -->
+    {{> page-header title="Activity Management Dashboard" description="Comprehensive monitoring and analytics of system activity, user engagement, and performance metrics" border=true}}
 
-{{#> stats-card icon="calendar" title="Today" link="#"}}
-{{> stats-item label="Activities" value=activityStats.today}}
-{{/stats-card}}
+    <div class="p-6 space-y-8">
+       <!-- Critical Status Overview -->
+       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Total Activities -->
+          <div class="bg-card rounded-lg border border-border p-6">
+             <div class="flex items-center justify-between">
+                <div>
+                   <p class="text-sm font-medium text-muted-foreground">Total Activities</p>
+                   <p class="text-2xl font-bold text-blue-600">{{activityAnalytics.totalActivities}}</p>
+                   <p class="text-xs text-muted-foreground">{{activityStats.today}} today</p>
+                </div>
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                   {{{icon 'bar-chart-3' size='24' class='text-blue-600'}}}
+                </div>
+             </div>
+          </div>
 
-{{#> stats-card icon="bar-chart-3" title="This Week" link="#"}}
-{{> stats-item label="Activities" value=activityStats.thisWeek}}
-{{/stats-card}}
+          <!-- Success Rate -->
+          <div class="bg-card rounded-lg border border-border p-6">
+             <div class="flex items-center justify-between">
+                <div>
+                   <p class="text-sm font-medium text-muted-foreground">Success Rate</p>
+                   <p class="text-2xl font-bold text-green-600">{{activityAnalytics.successRate}}%</p>
+                   <p class="text-xs text-muted-foreground">{{activityStats.failed}} failed</p>
+                </div>
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                   {{{icon 'check-circle' size='24' class='text-green-600'}}}
+                </div>
+             </div>
+          </div>
 
-{{#> stats-card icon="alert-triangle" title="Failed Actions" link="#"}}
-{{> stats-item label="Count" value=activityStats.failed}}
-{{/stats-card}}
+          <!-- Active Users -->
+          <div class="bg-card rounded-lg border border-border p-6">
+             <div class="flex items-center justify-between">
+                <div>
+                   <p class="text-sm font-medium text-muted-foreground">Active Users</p>
+                   <p class="text-2xl font-bold text-purple-600">{{activityAnalytics.uniqueUsers}}</p>
+                   <p class="text-xs text-muted-foreground">This session</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                   {{{icon 'users' size='24' class='text-purple-600'}}}
+                </div>
+             </div>
+          </div>
+
+          <!-- Response Time -->
+          <div class="bg-card rounded-lg border border-border p-6">
+             <div class="flex items-center justify-between">
+                <div>
+                   <p class="text-sm font-medium text-muted-foreground">Avg Response Time</p>
+                   <p class="text-2xl font-bold text-orange-600">{{activityAnalytics.avgResponseTime}}</p>
+                   <p class="text-xs text-muted-foreground">System average</p>
+                </div>
+                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                   {{{icon 'zap' size='24' class='text-orange-600'}}}
+                </div>
+             </div>
+          </div>
+       </div>
+
+       <!-- Activity Analytics & Performance -->
+       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Activity Types Overview -->
+          <div class="bg-card rounded-lg border border-border">
+             <div class="p-6 border-b border-border">
+                <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                   {{{icon 'pie-chart' size='20' class='mr-2'}}}
+                   Activity Types
+                </h3>
+             </div>
+             <div class="p-6 space-y-3">
+                {{#each activityAnalytics.topActivityTypes}}
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground capitalize">{{type}}</span>
+                   <span class="text-sm text-muted-foreground">{{count}}</span>
+                </div>
+                {{/each}}
+             </div>
+          </div>
+
+          <!-- Performance Metrics -->
+          <div class="bg-card rounded-lg border border-border">
+             <div class="p-6 border-b border-border">
+                <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                   {{{icon 'trending-up' size='20' class='mr-2'}}}
+                   Performance Metrics
+                </h3>
+             </div>
+             <div class="p-6 space-y-3">
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Success Rate</span>
+                   <span class="text-sm text-muted-foreground">{{activityAnalytics.successRate}}%</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Active Users</span>
+                   <span class="text-sm text-muted-foreground">{{activityAnalytics.uniqueUsers}}</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Avg Response</span>
+                   <span class="text-sm text-muted-foreground">{{activityAnalytics.avgResponseTime}}</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Peak Hours</span>
+                   <span class="text-sm text-muted-foreground">{{activityAnalytics.peakHours.length}} hours</span>
+                </div>
+             </div>
+          </div>
+
+          <!-- System Health -->
+          <div class="bg-card rounded-lg border border-border">
+             <div class="p-6 border-b border-border">
+                <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                   {{{icon 'shield-check' size='20' class='mr-2'}}}
+                   System Health
+                </h3>
+             </div>
+             <div class="p-6 space-y-3">
+                <div class="flex items-center justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Activity Status</span>
+                   <div class="flex items-center">
+                      <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
+                      <span class="text-sm text-green-600 font-medium">Healthy</span>
+                   </div>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Error Rate</span>
+                   <span class="text-sm text-muted-foreground">{{#if activityStats.failed}}{{math activityStats.failed '/' activityStats.total '*' 100}}{{else}}0{{/if}}%</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Load Status</span>
+                   <span class="text-sm text-muted-foreground">Normal</span>
+                </div>
+             </div>
+          </div>
+       </div>
+
+       <!-- Activity Trends -->
+       <div class="bg-card rounded-lg border border-border">
+          <div class="p-6 border-b border-border">
+             <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                {{{icon 'trending-up' size='20' class='mr-2'}}}
+                Activity Trends
+             </h3>
+             <p class="text-sm text-muted-foreground mt-1">Activity volume and error rates over the last 24 hours</p>
+          </div>
+          <div class="p-6">
+             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Activity Volume Trend -->
+                <div>
+                   <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
+                      {{{icon 'bar-chart-3' size='16' class='mr-2 text-blue-600'}}}
+                      Activity Volume (24h)
+                   </h4>
+                    <div class="h-48">
+                       <canvas id="activityVolumeChart" width="400" height="200"></canvas>
+                    </div>
+                   <div class="mt-2 text-center">
+                      <span class="text-xs text-muted-foreground">Peak: </span>
+                      <span class="text-xs font-medium text-blue-600">{{math (max activityTrends.volumeHistory.data) }}</span>
+                   </div>
+                </div>
+
+                <!-- Error Rate Trend -->
+                <div>
+                   <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
+                      {{{icon 'alert-triangle' size='16' class='mr-2 text-red-600'}}}
+                      Error Rate (%)
+                   </h4>
+                    <div class="h-48">
+                       <canvas id="errorRateChart" width="400" height="200"></canvas>
+                    </div>
+                   <div class="mt-2 text-center">
+                      <span class="text-xs text-muted-foreground">Current: </span>
+                      <span class="text-xs font-medium text-red-600">{{math (last activityTrends.errorRateHistory.data) }}%</span>
       </div>
 
-     <!-- Activity Filters and Search -->
+      <!-- Chart.js Script -->
+      <script src="/js/chart.umd.js"></script>
+      <script>
+         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Activity Management page loaded, initializing charts...');
+
+            // Check if Chart.js is loaded
+            if (typeof Chart === 'undefined') {
+               console.error('Chart.js not loaded, charts will not display');
+               return;
+            }
+
+            const activityTrends = {{{json activityTrends}}} || {};
+            console.log('Activity trends loaded:', activityTrends);
+            console.log('Activity trends keys:', Object.keys(activityTrends));
+
+            // Activity Volume Chart
+            try {
+               const volumeCanvas = document.getElementById('activityVolumeChart');
+               if (!volumeCanvas) {
+                  console.error('Activity volume chart canvas element not found');
+                  return;
+               }
+
+               const volumeCtx = volumeCanvas.getContext('2d');
+               if (!volumeCtx) {
+                  console.error('Could not get 2D context for activity volume chart');
+                  return;
+               }
+
+               new Chart(volumeCtx, {
+               type: 'line',
+               data: {
+                  labels: activityTrends.volumeHistory.labels,
+                  datasets: [{
+                     label: 'Activity Volume',
+                     data: activityTrends.volumeHistory.data,
+                      borderColor: 'rgb(59, 130, 246)',
+                      backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                      tension: 0.4,
+                      fill: true,
+                      pointBackgroundColor: 'rgb(59, 130, 246)',
+                      pointBorderColor: '#fff',
+                      pointBorderWidth: 2,
+                   }]
+                },
+                options: {
+                   responsive: true,
+                   maintainAspectRatio: false,
+                   aspectRatio: 2,
+                   plugins: {
+                     legend: {
+                        display: false
+                     }
+                  },
+                  scales: {
+                     y: {
+                        beginAtZero: true,
+                        grid: {
+                           color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                           callback: function(value) {
+                              return value;
+                           }
+                        }
+                     },
+                     x: {
+                        grid: {
+                           display: false
+                        },
+                        ticks: {
+                           maxTicksLimit: 6
+                        }
+                     }
+                  },
+                  elements: {
+                     point: {
+                        radius: 3,
+                        hoverRadius: 5
+                     }
+                  },
+                  interaction: {
+                     intersect: false,
+                     mode: 'index'
+                  }
+               }
+               });
+               console.log('Activity volume chart created successfully');
+            } catch (error) {
+               console.error('Failed to create activity volume chart:', error);
+            }
+
+            // Error Rate Chart
+            try {
+               const errorCanvas = document.getElementById('errorRateChart');
+               if (!errorCanvas) {
+                  console.error('Error rate chart canvas element not found');
+                  return;
+               }
+
+               const errorCtx = errorCanvas.getContext('2d');
+               if (!errorCtx) {
+                  console.error('Could not get 2D context for error rate chart');
+                  return;
+               }
+
+               new Chart(errorCtx, {
+               type: 'line',
+               data: {
+                  labels: activityTrends.errorRateHistory.labels,
+                  datasets: [{
+                     label: 'Error Rate (%)',
+                     data: activityTrends.errorRateHistory.data,
+                      borderColor: 'rgb(239, 68, 68)',
+                      backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                      tension: 0.4,
+                      fill: true,
+                      pointBackgroundColor: 'rgb(239, 68, 68)',
+                      pointBorderColor: '#fff',
+                      pointBorderWidth: 2,
+                   }]
+                },
+                options: {
+                   responsive: true,
+                   maintainAspectRatio: false,
+                   aspectRatio: 2,
+                   plugins: {
+                     legend: {
+                        display: false
+                     }
+                  },
+                  scales: {
+                     y: {
+                        beginAtZero: true,
+                        max: 10,
+                        grid: {
+                           color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                           callback: function(value) {
+                              return value + '%';
+                           }
+                        }
+                     },
+                     x: {
+                        grid: {
+                           display: false
+                        },
+                        ticks: {
+                           maxTicksLimit: 6
+                        }
+                     }
+                  },
+                  elements: {
+                     point: {
+                        radius: 3,
+                        hoverRadius: 5
+                     }
+                  },
+                  interaction: {
+                     intersect: false,
+                     mode: 'index'
+                  }
+               }
+               });
+               console.log('Error rate chart created successfully');
+            } catch (error) {
+               console.error('Failed to create error rate chart:', error);
+            }
+
+            // Activity Type Distribution Chart
+            try {
+               const typeCanvas = document.getElementById('activityTypeChart');
+               if (!typeCanvas) {
+                  console.error('Activity type chart canvas element not found');
+                  return;
+               }
+
+               const typeCtx = typeCanvas.getContext('2d');
+               if (!typeCtx) {
+                  console.error('Could not get 2D context for activity type chart');
+                  return;
+               }
+
+               // Ensure we have data, use fallback if empty
+               const labels = activityTrends.typeDistribution.labels.length > 0
+                  ? activityTrends.typeDistribution.labels
+                  : ['No Data'];
+               const data = activityTrends.typeDistribution.data.length > 0
+                  ? activityTrends.typeDistribution.data
+                  : [1];
+
+               const colors = [
+                  'rgb(59, 130, 246)',   // blue
+                  'rgb(16, 185, 129)',   // green
+                  'rgb(245, 158, 11)',   // amber
+                  'rgb(239, 68, 68)',    // red
+                  'rgb(139, 92, 246)',   // violet
+                  'rgb(236, 72, 153)',   // pink
+               ];
+
+               new Chart(typeCtx, {
+               type: 'doughnut',
+               data: {
+                  labels: labels,
+                  datasets: [{
+                     data: data,
+                     backgroundColor: colors.slice(0, labels.length),
+                     borderWidth: 2,
+                     borderColor: '#fff',
+                  }]
+               },
+               options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                     legend: {
+                        position: 'bottom',
+                        labels: {
+                           padding: 20,
+                           usePointStyle: true,
+                        }
+                     }
+                  },
+                  elements: {
+                     arc: {
+                        borderWidth: 2,
+                     }
+                  }
+               }
+               });
+               console.log('Activity type chart created successfully');
+            } catch (error) {
+               console.error('Failed to create activity type chart:', error);
+            }
+         });
+      </script>
+
+      <!-- Debug Info -->
+      <div style="display: none;">
+         Activity Trends: {{{json activityTrends}}}
+         Activity Analytics: {{{json activityAnalytics}}}
+         Test Math: {{math 2 '+' 2}}
+         Test Max: {{max (array 1 2 3 4 5)}}
+         Test Last: {{last (array 1 2 3 4 5)}}
+      </div>
+
+       <!-- Last Updated Info -->
+       <div class="text-center text-xs text-muted-foreground mt-6">
+          Last updated: <span id="lastUpdated">{{lastUpdated}}</span> |
+          Auto-refresh: <span class="text-green-600">Enabled</span> (5min interval)
+       </div>
+
+       <!-- Activity Type Distribution -->
+       <div class="bg-card rounded-lg border border-border">
+          <div class="p-6 border-b border-border">
+             <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                {{{icon 'pie-chart' size='20' class='mr-2'}}}
+                Activity Type Distribution
+             </h3>
+             <p class="text-sm text-muted-foreground mt-1">Breakdown of activity types in the current session</p>
+          </div>
+          <div class="p-6">
+             <div class="h-64">
+                <canvas id="activityTypeChart" width="400" height="200"></canvas>
+             </div>
+          </div>
+       </div>
+     </div>
+  </div>
+
+      <!-- Activity Filters and Search -->
      <div class="bg-card rounded-lg border border-border">
        <div class="p-6 border-b border-border">
          <div class="flex items-center justify-between">

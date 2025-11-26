@@ -125,16 +125,19 @@ export const getFinancial = async (req, res) => {
         id: 'packages-btn',
         href: '/admin/table-pages/packages',
         text: 'Packages',
+        icon: 'package',
       },
       {
         id: 'billing-btn',
         href: '/admin/table-pages/billing',
         text: 'Billings',
+        icon: 'credit-card',
       },
       {
         id: 'rewards-btn',
         href: '/admin/table-pages/rewards',
         text: 'Rewards',
+        icon: 'trophy',
       },
     ];
 

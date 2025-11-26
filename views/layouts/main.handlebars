@@ -32,17 +32,21 @@
            end
          end
 
-           -- Load theme from localStorage on load and update icon
-           on load from document
-             initializeTheme()
-             initializeSidebar()
-             highlightSidebarLink()
-           end
+            -- Load theme from localStorage on load and update icon
+            on load from document
+              initializeTheme()
+              initializeSidebar()
+              highlightSidebarLink()
+              initFilterNavScroll()
+              updateFilterNavActiveState()
+            end
 
-           -- Update sidebar highlight after HTMX swaps
-           on htmx:afterSwap from document
-             highlightSidebarLink()
-           end
+            -- Update sidebar highlight and filter nav after HTMX swaps
+            on htmx:afterSwap from document
+              highlightSidebarLink()
+              initFilterNavScroll()
+              updateFilterNavActiveState()
+            end
      </script>
 </head>
 <body class="h-full">
@@ -476,6 +480,110 @@
             });
         }
 
+        // Filter nav scroll functionality
+        function initFilterNavScroll() {
+            // Settings filter scroll
+            const settingsLeft = document.getElementById('settings-filter-scroll-left');
+            const settingsRight = document.getElementById('settings-filter-scroll-right');
+            const settingsContainer = document.getElementById('settings-filter-scroll-container');
+
+            if (settingsLeft && settingsRight && settingsContainer) {
+                settingsLeft.addEventListener('click', () => {
+                    settingsContainer.scrollBy({ left: -200, behavior: 'smooth' });
+                });
+                settingsRight.addEventListener('click', () => {
+                    settingsContainer.scrollBy({ left: 200, behavior: 'smooth' });
+                });
+            }
+
+            // Table filter scroll
+            const tableLeft = document.getElementById('table-filter-scroll-left');
+            const tableRight = document.getElementById('table-filter-scroll-right');
+            const tableContainer = document.getElementById('table-filter-scroll-container');
+
+            if (tableLeft && tableRight && tableContainer) {
+                tableLeft.addEventListener('click', () => {
+                    tableContainer.scrollBy({ left: -200, behavior: 'smooth' });
+                });
+                tableRight.addEventListener('click', () => {
+                    tableContainer.scrollBy({ left: 200, behavior: 'smooth' });
+                });
+            }
+
+            // Overview filter scroll
+            const overviewLeft = document.getElementById('overview-filter-scroll-left');
+            const overviewRight = document.getElementById('overview-filter-scroll-right');
+            const overviewContainer = document.getElementById('overview-filter-scroll-container');
+
+            if (overviewLeft && overviewRight && overviewContainer) {
+                overviewLeft.addEventListener('click', () => {
+                    overviewContainer.scrollBy({ left: -200, behavior: 'smooth' });
+                });
+                overviewRight.addEventListener('click', () => {
+                    overviewContainer.scrollBy({ left: 200, behavior: 'smooth' });
+                });
+            }
+        }
+
+        // Update filter nav active state
+        function updateFilterNavActiveState() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+
+            // Update table filter active state
+            const tableFilterButtons = document.querySelectorAll('#table-filter-scroll-container button');
+            tableFilterButtons.forEach(button => {
+                button.classList.remove('text-foreground', 'font-medium');
+                button.classList.add('text-muted-foreground');
+            });
+
+            if (!status) {
+                // "All" is active
+                const allButton = document.getElementById('filter-link-all');
+                if (allButton) {
+                    allButton.classList.remove('text-muted-foreground');
+                    allButton.classList.add('text-foreground', 'font-medium');
+                }
+            } else {
+                // Find the button with matching status
+                const activeButton = document.querySelector(`#table-filter-scroll-container button[id="filter-link-${status}"]`);
+                if (activeButton) {
+                    activeButton.classList.remove('text-muted-foreground');
+                    activeButton.classList.add('text-foreground', 'font-medium');
+                }
+            }
+
+            // Update border indicators
+            const tableFilterDivs = document.querySelectorAll('#table-filter-scroll-container > div');
+            tableFilterDivs.forEach(div => {
+                const borderDiv = div.querySelector('div:first-child');
+                if (borderDiv) {
+                    borderDiv.classList.remove('opacity-100');
+                    borderDiv.classList.add('opacity-0', 'group-hover:opacity-100');
+                }
+            });
+
+            if (!status) {
+                const allDiv = document.querySelector('#table-filter-scroll-container > div:first-child');
+                if (allDiv) {
+                    const borderDiv = allDiv.querySelector('div:first-child');
+                    if (borderDiv) {
+                        borderDiv.classList.remove('opacity-0', 'group-hover:opacity-100');
+                        borderDiv.classList.add('opacity-100');
+                    }
+                }
+            } else {
+                const activeDiv = document.querySelector(`#table-filter-scroll-container button[id="filter-link-${status}"]`)?.closest('div');
+                if (activeDiv) {
+                    const borderDiv = activeDiv.querySelector('div:first-child');
+                    if (borderDiv) {
+                        borderDiv.classList.remove('opacity-0', 'group-hover:opacity-100');
+                        borderDiv.classList.add('opacity-100');
+                    }
+                }
+            }
+        }
+
         // Force logout function for stuck authentication (global scope)
         async function forceLogout() {
             console.log('Force logout triggered');
@@ -744,6 +852,13 @@
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(checkAuthAndShowContent, 100); // Small delay for Supabase to load
             setupActivityListeners(); // Set up activity tracking
+            initFilterNavScroll(); // Initialize filter nav scroll
+            updateFilterNavActiveState(); // Update filter nav active state
+        });
+
+        // Handle browser back/forward navigation for table filters
+        window.addEventListener('popstate', function () {
+            updateFilterNavActiveState();
         });
     </script>
 

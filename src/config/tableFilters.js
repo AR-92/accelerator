@@ -7,11 +7,11 @@ const tableFilters = {
     searchableFields: ['title', 'description'],
     statusField: 'status',
     statusOptions: [
-      { value: 'pending', label: 'Pending' },
-      { value: 'approved', label: 'Approved' },
-      { value: 'rejected', label: 'Rejected' },
-      { value: 'active', label: 'Active' },
-      { value: 'draft', label: 'Draft' },
+      { value: 'pending', label: 'Pending', icon: 'clock' },
+      { value: 'approved', label: 'Approved', icon: 'check-circle' },
+      { value: 'rejected', label: 'Rejected', icon: 'x-circle' },
+      { value: 'active', label: 'Active', icon: 'check-circle' },
+      { value: 'draft', label: 'Draft', icon: 'file-text' },
     ],
   },
 
@@ -19,8 +19,18 @@ const tableFilters = {
     searchableFields: ['display_name', 'username'],
     statusField: 'is_verified',
     statusOptions: [
-      { value: 'active', label: 'Active', filter: 'is_verified.eq.true' },
-      { value: 'inactive', label: 'Inactive', filter: 'is_verified.eq.false' },
+      {
+        value: 'active',
+        label: 'Active',
+        filter: 'is_verified.eq.true',
+        icon: 'check-circle',
+      },
+      {
+        value: 'inactive',
+        label: 'Inactive',
+        filter: 'is_verified.eq.false',
+        icon: 'x-circle',
+      },
     ],
   },
 
@@ -28,8 +38,18 @@ const tableFilters = {
     searchableFields: ['title', 'description'],
     statusField: 'completed',
     statusOptions: [
-      { value: 'pending', label: 'Pending', filter: 'completed.eq.false' },
-      { value: 'completed', label: 'Completed', filter: 'completed.eq.true' },
+      {
+        value: 'pending',
+        label: 'Pending',
+        filter: 'completed.eq.false',
+        icon: 'clock',
+      },
+      {
+        value: 'completed',
+        label: 'Completed',
+        filter: 'completed.eq.true',
+        icon: 'check-circle',
+      },
     ],
   },
 
@@ -37,9 +57,9 @@ const tableFilters = {
     searchableFields: ['title', 'description'],
     statusField: 'status',
     statusOptions: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'published', label: 'Published' },
-      { value: 'archived', label: 'Archived' },
+      { value: 'draft', label: 'Draft', icon: 'file-text' },
+      { value: 'published', label: 'Published', icon: 'eye' },
+      { value: 'archived', label: 'Archived', icon: 'archive' },
     ],
   },
 
@@ -47,8 +67,8 @@ const tableFilters = {
     searchableFields: ['entity_title', 'entity_type'],
     statusField: 'vote_type',
     statusOptions: [
-      { value: 'upvote', label: 'Upvotes' },
-      { value: 'downvote', label: 'Downvotes' },
+      { value: 'upvote', label: 'Upvotes', icon: 'thumbs-up' },
+      { value: 'downvote', label: 'Downvotes', icon: 'thumbs-down' },
     ],
   },
 
@@ -56,10 +76,10 @@ const tableFilters = {
     searchableFields: ['message'],
     statusField: 'status',
     statusOptions: [
-      { value: 'pending', label: 'Pending' },
-      { value: 'active', label: 'Active' },
-      { value: 'completed', label: 'Completed' },
-      { value: 'cancelled', label: 'Cancelled' },
+      { value: 'pending', label: 'Pending', icon: 'clock' },
+      { value: 'active', label: 'Active', icon: 'check-circle' },
+      { value: 'completed', label: 'Completed', icon: 'check-circle' },
+      { value: 'cancelled', label: 'Cancelled', icon: 'x-circle' },
     ],
   },
 
@@ -67,9 +87,9 @@ const tableFilters = {
     searchableFields: ['title', 'description'],
     statusField: 'status',
     statusOptions: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'published', label: 'Published' },
-      { value: 'archived', label: 'Archived' },
+      { value: 'draft', label: 'Draft', icon: 'file-text' },
+      { value: 'published', label: 'Published', icon: 'eye' },
+      { value: 'archived', label: 'Archived', icon: 'archive' },
     ],
   },
 
@@ -88,9 +108,9 @@ const tableFilters = {
     searchableFields: ['name', 'description'],
     statusField: 'status',
     statusOptions: [
-      { value: 'active', label: 'Active' },
-      { value: 'inactive', label: 'Inactive' },
-      { value: 'deprecated', label: 'Deprecated' },
+      { value: 'active', label: 'Active', icon: 'check-circle' },
+      { value: 'inactive', label: 'Inactive', icon: 'x-circle' },
+      { value: 'deprecated', label: 'Deprecated', icon: 'alert-triangle' },
     ],
   },
 
@@ -98,10 +118,10 @@ const tableFilters = {
     searchableFields: ['invoice_number', 'plan_name', 'amount_cents'],
     statusField: 'status',
     statusOptions: [
-      { value: 'pending', label: 'Pending' },
-      { value: 'paid', label: 'Paid' },
-      { value: 'failed', label: 'Failed' },
-      { value: 'refunded', label: 'Refunded' },
+      { value: 'pending', label: 'Pending', icon: 'clock' },
+      { value: 'paid', label: 'Paid', icon: 'credit-card' },
+      { value: 'failed', label: 'Failed', icon: 'alert-triangle' },
+      { value: 'refunded', label: 'Refunded', icon: 'refresh-cw' },
     ],
   },
 
@@ -109,9 +129,9 @@ const tableFilters = {
     searchableFields: ['title', 'description'],
     statusField: 'status',
     statusOptions: [
-      { value: 'active', label: 'Active' },
-      { value: 'inactive', label: 'Inactive' },
-      { value: 'expired', label: 'Expired' },
+      { value: 'active', label: 'Active', icon: 'check-circle' },
+      { value: 'inactive', label: 'Inactive', icon: 'x-circle' },
+      { value: 'expired', label: 'Expired', icon: 'calendar-x' },
     ],
   },
 
@@ -131,9 +151,9 @@ const tableFilters = {
     searchableFields: ['title', 'description'],
     statusField: 'status',
     statusOptions: [
-      { value: 'draft', label: 'Draft' },
-      { value: 'review', label: 'Review' },
-      { value: 'final', label: 'Final' },
+      { value: 'draft', label: 'Draft', icon: 'file-text' },
+      { value: 'review', label: 'Review', icon: 'eye' },
+      { value: 'final', label: 'Final', icon: 'check-circle' },
     ],
   },
 
@@ -161,9 +181,9 @@ const tableFilters = {
     searchableFields: ['name', 'description'],
     statusField: 'status',
     statusOptions: [
-      { value: 'active', label: 'Active' },
-      { value: 'inactive', label: 'Inactive' },
-      { value: 'dissolved', label: 'Dissolved' },
+      { value: 'active', label: 'Active', icon: 'check-circle' },
+      { value: 'inactive', label: 'Inactive', icon: 'x-circle' },
+      { value: 'dissolved', label: 'Dissolved', icon: 'x-circle' },
     ],
   },
 
@@ -171,9 +191,9 @@ const tableFilters = {
     searchableFields: ['name', 'description'],
     statusField: 'status',
     statusOptions: [
-      { value: 'active', label: 'Active' },
-      { value: 'inactive', label: 'Inactive' },
-      { value: 'acquired', label: 'Acquired' },
+      { value: 'active', label: 'Active', icon: 'check-circle' },
+      { value: 'inactive', label: 'Inactive', icon: 'x-circle' },
+      { value: 'acquired', label: 'Acquired', icon: 'trophy' },
     ],
   },
 
@@ -181,9 +201,9 @@ const tableFilters = {
     searchableFields: ['content', 'subject'],
     statusField: 'status',
     statusOptions: [
-      { value: 'sent', label: 'Sent' },
-      { value: 'draft', label: 'Draft' },
-      { value: 'archived', label: 'Archived' },
+      { value: 'sent', label: 'Sent', icon: 'send' },
+      { value: 'draft', label: 'Draft', icon: 'file-text' },
+      { value: 'archived', label: 'Archived', icon: 'archive' },
     ],
   },
 
@@ -195,9 +215,9 @@ const tableFilters = {
     searchableFields: ['title', 'description', 'location'],
     statusField: 'status',
     statusOptions: [
-      { value: 'scheduled', label: 'Scheduled' },
-      { value: 'completed', label: 'Completed' },
-      { value: 'cancelled', label: 'Cancelled' },
+      { value: 'scheduled', label: 'Scheduled', icon: 'calendar' },
+      { value: 'completed', label: 'Completed', icon: 'check-circle' },
+      { value: 'cancelled', label: 'Cancelled', icon: 'x-circle' },
     ],
   },
 
@@ -209,8 +229,18 @@ const tableFilters = {
     searchableFields: ['title'],
     statusField: 'is_active',
     statusOptions: [
-      { value: true, label: 'Active', filter: 'is_active.eq.true' },
-      { value: false, label: 'Inactive', filter: 'is_active.eq.false' },
+      {
+        value: true,
+        label: 'Active',
+        filter: 'is_active.eq.true',
+        icon: 'check-circle',
+      },
+      {
+        value: false,
+        label: 'Inactive',
+        filter: 'is_active.eq.false',
+        icon: 'x-circle',
+      },
     ],
   },
 

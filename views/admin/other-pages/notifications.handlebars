@@ -1,30 +1,442 @@
 <!-- Notifications Management Content -->
 <div class="max-w-7xl mx-auto rounded-xl overflow-hidden flex flex-col mx-4 my-4">
 
-   <!-- Page Header -->
-   {{> page-header title="Notifications Management" description="Manage and organize all system notifications efficiently" border=true}}
-   <div class="p-6 space-y-6">
-      <!-- Notification Stats -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-{{#> stats-card icon="bell" title="Notifications" link="#"}}
-{{> stats-item label="Total" value=notificationStats.total}}
-{{> stats-item label="Unread" value=notificationStats.unread color="text-orange-600"}}
-{{/stats-card}}
+    <!-- Page Header -->
+    {{> page-header title="Notifications Management Dashboard" description="Comprehensive monitoring and analytics of system notifications, user engagement, and delivery metrics" border=true}}
 
-{{#> stats-card icon="alert-triangle" title="Unread" link="#"}}
-{{> stats-item label="Count" value=notificationStats.unread}}
-{{/stats-card}}
+    <div class="p-6 space-y-8">
+       <!-- Critical Status Overview -->
+       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Total Notifications -->
+          <div class="bg-card rounded-lg border border-border p-6">
+             <div class="flex items-center justify-between">
+                <div>
+                   <p class="text-sm font-medium text-muted-foreground">Total Notifications</p>
+                   <p class="text-2xl font-bold text-blue-600">{{notificationAnalytics.totalNotifications}}</p>
+                   <p class="text-xs text-muted-foreground">{{notificationStats.unread}} unread</p>
+                </div>
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                   {{{icon 'bell' size='24' class='text-blue-600'}}}
+                </div>
+             </div>
+          </div>
 
-{{#> stats-card icon="calendar" title="This Week" link="#"}}
-{{> stats-item label="Notifications" value=notificationStats.thisWeek}}
-{{/stats-card}}
+          <!-- Read Rate -->
+          <div class="bg-card rounded-lg border border-border p-6">
+             <div class="flex items-center justify-between">
+                <div>
+                   <p class="text-sm font-medium text-muted-foreground">Read Rate</p>
+                   <p class="text-2xl font-bold text-green-600">{{notificationAnalytics.readRate}}%</p>
+                   <p class="text-xs text-muted-foreground">{{notificationStats.thisWeek}} this week</p>
+                </div>
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                   {{{icon 'check-circle' size='24' class='text-green-600'}}}
+                </div>
+             </div>
+          </div>
 
-{{#> stats-card icon="alert-triangle" title="System Alerts" link="#"}}
-{{> stats-item label="Count" value=notificationStats.systemAlerts}}
-{{/stats-card}}
+          <!-- Urgent Notifications -->
+          <div class="bg-card rounded-lg border border-border p-6">
+             <div class="flex items-center justify-between">
+                <div>
+                   <p class="text-sm font-medium text-muted-foreground">Urgent Alerts</p>
+                   <p class="text-2xl font-bold text-red-600">{{notificationAnalytics.urgentCount}}</p>
+                   <p class="text-xs text-muted-foreground">High priority</p>
+                </div>
+                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                   {{{icon 'alert-triangle' size='24' class='text-red-600'}}}
+                </div>
+             </div>
+          </div>
+
+          <!-- Delivery Success -->
+          <div class="bg-card rounded-lg border border-border p-6">
+             <div class="flex items-center justify-between">
+                <div>
+                   <p class="text-sm font-medium text-muted-foreground">Delivery Success</p>
+                   <p class="text-2xl font-bold text-purple-600">{{notificationAnalytics.deliverySuccess}}</p>
+                   <p class="text-xs text-muted-foreground">System uptime</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                   {{{icon 'send' size='24' class='text-purple-600'}}}
+                </div>
+             </div>
+          </div>
+       </div>
+
+       <!-- Notification Analytics & Performance -->
+       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Notification Types Overview -->
+          <div class="bg-card rounded-lg border border-border">
+             <div class="p-6 border-b border-border">
+                <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                   {{{icon 'pie-chart' size='20' class='mr-2'}}}
+                   Notification Types
+                </h3>
+             </div>
+             <div class="p-6 space-y-3">
+                {{#each notificationTrends.typeDistribution.labels}}
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground capitalize">{{this}}</span>
+                   <span class="text-sm text-muted-foreground">{{lookup ../notificationTrends.typeDistribution.data @index}}</span>
+                </div>
+                {{/each}}
+             </div>
+          </div>
+
+          <!-- User Engagement Metrics -->
+          <div class="bg-card rounded-lg border border-border">
+             <div class="p-6 border-b border-border">
+                <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                   {{{icon 'users' size='20' class='mr-2'}}}
+                   User Engagement
+                </h3>
+             </div>
+             <div class="p-6 space-y-3">
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Open Rate</span>
+                   <span class="text-sm text-muted-foreground">{{notificationAnalytics.userEngagement.openRate}}</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Action Rate</span>
+                   <span class="text-sm text-muted-foreground">{{notificationAnalytics.userEngagement.actionRate}}</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Unsubscribe Rate</span>
+                   <span class="text-sm text-muted-foreground">{{notificationAnalytics.userEngagement.unsubscribeRate}}</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Avg Response</span>
+                   <span class="text-sm text-muted-foreground">{{notificationAnalytics.avgResponseTime}}</span>
+                </div>
+             </div>
+          </div>
+
+          <!-- Delivery Health -->
+          <div class="bg-card rounded-lg border border-border">
+             <div class="p-6 border-b border-border">
+                <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                   {{{icon 'shield-check' size='20' class='mr-2'}}}
+                   Delivery Health
+                </h3>
+             </div>
+             <div class="p-6 space-y-3">
+                <div class="flex items-center justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Delivery Status</span>
+                   <div class="flex items-center">
+                      <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
+                      <span class="text-sm text-green-600 font-medium">Healthy</span>
+                   </div>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Success Rate</span>
+                   <span class="text-sm text-muted-foreground">{{notificationAnalytics.deliverySuccess}}</span>
+                </div>
+                <div class="flex justify-between">
+                   <span class="text-sm font-medium text-card-foreground">Queue Status</span>
+                   <span class="text-sm text-muted-foreground">Normal</span>
+                </div>
+             </div>
+          </div>
+       </div>
+
+       <!-- Notification Trends -->
+       <div class="bg-card rounded-lg border border-border">
+          <div class="p-6 border-b border-border">
+             <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                {{{icon 'trending-up' size='20' class='mr-2'}}}
+                Notification Trends
+             </h3>
+             <p class="text-sm text-muted-foreground mt-1">Notification volume and engagement rates over the last 24 hours</p>
+          </div>
+          <div class="p-6">
+             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Notification Volume Trend -->
+                <div>
+                   <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
+                      {{{icon 'bell' size='16' class='mr-2 text-blue-600'}}}
+                      Notification Volume (24h)
+                   </h4>
+                    <div class="h-48">
+                       <canvas id="notificationVolumeChart" width="400" height="200"></canvas>
+                    </div>
+                   <div class="mt-2 text-center">
+                      <span class="text-xs text-muted-foreground">Peak: </span>
+                      <span class="text-xs font-medium text-blue-600">{{math (max notificationTrends.volumeHistory.data) }}</span>
+                   </div>
+                </div>
+
+                <!-- Read Rate Trend -->
+                <div>
+                   <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
+                      {{{icon 'check-circle' size='16' class='mr-2 text-green-600'}}}
+                      Read Rate (%)
+                   </h4>
+                    <div class="h-48">
+                       <canvas id="readRateChart" width="400" height="200"></canvas>
+                    </div>
+                   <div class="mt-2 text-center">
+                      <span class="text-xs text-muted-foreground">Current: </span>
+                      <span class="text-xs font-medium text-green-600">{{math (last notificationTrends.readRateHistory.data) }}%</span>
       </div>
 
-     <!-- Notification Filters -->
+      <!-- Chart.js Script -->
+      <script src="/js/chart.umd.js"></script>
+      <script>
+         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Notifications Management page loaded, initializing charts...');
+
+            // Check if Chart.js is loaded
+            if (typeof Chart === 'undefined') {
+               console.error('Chart.js not loaded, charts will not display');
+               return;
+            }
+
+            const notificationTrends = {{{json notificationTrends}}};
+            console.log('Notification trends loaded:', notificationTrends);
+
+            // Notification Volume Chart
+            try {
+               const volumeCanvas = document.getElementById('notificationVolumeChart');
+               if (!volumeCanvas) {
+                  console.error('Notification volume chart canvas element not found');
+                  return;
+               }
+
+               const volumeCtx = volumeCanvas.getContext('2d');
+               if (!volumeCtx) {
+                  console.error('Could not get 2D context for notification volume chart');
+                  return;
+               }
+
+               new Chart(volumeCtx, {
+               type: 'line',
+               data: {
+                  labels: notificationTrends.volumeHistory.labels,
+                  datasets: [{
+                     label: 'Notification Volume',
+                     data: notificationTrends.volumeHistory.data,
+                      borderColor: 'rgb(59, 130, 246)',
+                      backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                      tension: 0.4,
+                      fill: true,
+                      pointBackgroundColor: 'rgb(59, 130, 246)',
+                      pointBorderColor: '#fff',
+                      pointBorderWidth: 2,
+                   }]
+                },
+                options: {
+                   responsive: true,
+                   maintainAspectRatio: false,
+                   aspectRatio: 2,
+                   plugins: {
+                     legend: {
+                        display: false
+                     }
+                  },
+                  scales: {
+                     y: {
+                        beginAtZero: true,
+                        grid: {
+                           color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                     },
+                     x: {
+                        grid: {
+                           display: false
+                        },
+                        ticks: {
+                           maxTicksLimit: 6
+                        }
+                     }
+                  },
+                  elements: {
+                     point: {
+                        radius: 3,
+                        hoverRadius: 5
+                     }
+                  },
+                  interaction: {
+                     intersect: false,
+                     mode: 'index'
+                  }
+               }
+               });
+               console.log('Notification volume chart created successfully');
+            } catch (error) {
+               console.error('Failed to create notification volume chart:', error);
+            }
+
+            // Read Rate Chart
+            try {
+               const readCanvas = document.getElementById('readRateChart');
+               if (!readCanvas) {
+                  console.error('Read rate chart canvas element not found');
+                  return;
+               }
+
+               const readCtx = readCanvas.getContext('2d');
+               if (!readCtx) {
+                  console.error('Could not get 2D context for read rate chart');
+                  return;
+               }
+
+               new Chart(readCtx, {
+               type: 'line',
+               data: {
+                  labels: notificationTrends.readRateHistory.labels,
+                  datasets: [{
+                     label: 'Read Rate (%)',
+                     data: notificationTrends.readRateHistory.data,
+                      borderColor: 'rgb(16, 185, 129)',
+                      backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                      tension: 0.4,
+                      fill: true,
+                      pointBackgroundColor: 'rgb(16, 185, 129)',
+                      pointBorderColor: '#fff',
+                      pointBorderWidth: 2,
+                   }]
+                },
+                options: {
+                   responsive: true,
+                   maintainAspectRatio: false,
+                   aspectRatio: 2,
+                   plugins: {
+                     legend: {
+                        display: false
+                     }
+                  },
+                  scales: {
+                     y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                           color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                           callback: function(value) {
+                              return value + '%';
+                           }
+                        }
+                     },
+                     x: {
+                        grid: {
+                           display: false
+                        },
+                        ticks: {
+                           maxTicksLimit: 6
+                        }
+                     }
+                  },
+                  elements: {
+                     point: {
+                        radius: 3,
+                        hoverRadius: 5
+                     }
+                  },
+                  interaction: {
+                     intersect: false,
+                     mode: 'index'
+                  }
+               }
+               });
+               console.log('Read rate chart created successfully');
+            } catch (error) {
+               console.error('Failed to create read rate chart:', error);
+            }
+
+            // Notification Type Distribution Chart
+            try {
+               const typeCanvas = document.getElementById('notificationTypeChart');
+               if (!typeCanvas) {
+                  console.error('Notification type chart canvas element not found');
+                  return;
+               }
+
+               const typeCtx = typeCanvas.getContext('2d');
+               if (!typeCtx) {
+                  console.error('Could not get 2D context for notification type chart');
+                  return;
+               }
+
+               // Ensure we have data, use fallback if empty
+               const labels = notificationTrends.typeDistribution.labels.length > 0
+                  ? notificationTrends.typeDistribution.labels
+                  : ['No Data'];
+               const data = notificationTrends.typeDistribution.data.length > 0
+                  ? notificationTrends.typeDistribution.data
+                  : [1];
+
+               const colors = [
+                  'rgb(59, 130, 246)',   // blue
+                  'rgb(239, 68, 68)',    // red
+                  'rgb(245, 158, 11)',   // amber
+                  'rgb(16, 185, 129)',   // green
+                  'rgb(139, 92, 246)',   // violet
+               ];
+
+               new Chart(typeCtx, {
+               type: 'doughnut',
+               data: {
+                  labels: labels,
+                  datasets: [{
+                     data: data,
+                     backgroundColor: colors.slice(0, labels.length),
+                     borderWidth: 2,
+                     borderColor: '#fff',
+                  }]
+               },
+               options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                     legend: {
+                        position: 'bottom',
+                        labels: {
+                           padding: 20,
+                           usePointStyle: true,
+                        }
+                     }
+                  },
+                  elements: {
+                     arc: {
+                        borderWidth: 2,
+                     }
+                  }
+               }
+               });
+               console.log('Notification type chart created successfully');
+            } catch (error) {
+               console.error('Failed to create notification type chart:', error);
+            }
+         });
+      </script>
+
+       <!-- Last Updated Info -->
+       <div class="text-center text-xs text-muted-foreground mt-6">
+          Last updated: <span id="lastUpdated">{{lastUpdated}}</span> |
+          Auto-refresh: <span class="text-green-600">Enabled</span> (5min interval)
+       </div>
+
+       <!-- Notification Type Distribution -->
+       <div class="bg-card rounded-lg border border-border">
+          <div class="p-6 border-b border-border">
+             <h3 class="text-lg font-semibold text-card-foreground flex items-center">
+                {{{icon 'pie-chart' size='20' class='mr-2'}}}
+                Notification Type Distribution
+             </h3>
+             <p class="text-sm text-muted-foreground mt-1">Breakdown of notification types by category</p>
+          </div>
+          <div class="p-6">
+             <div class="h-64">
+                <canvas id="notificationTypeChart" width="400" height="200"></canvas>
+             </div>
+          </div>
+       </div>
+     </div>
+  </div>
+
+      <!-- Notification Filters -->
      <div class="bg-card rounded-lg border border-border">
        <div class="p-6 border-b border-border">
          <div class="flex items-center justify-between">

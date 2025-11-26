@@ -31,6 +31,45 @@ export const handlebarsHelpers = {
   add: function (...args) {
     return args.slice(0, -1).reduce((a, b) => a + b, 0);
   },
+  subtract: function (a, b) {
+    return a - b;
+  },
+  multiply: function (a, b) {
+    return a * b;
+  },
+  divide: function (a, b) {
+    return b !== 0 ? a / b : 0;
+  },
+  max: function (arr) {
+    if (!Array.isArray(arr) || arr.length === 0) return 0;
+    return Math.max(...arr);
+  },
+  min: function (arr) {
+    if (!Array.isArray(arr) || arr.length === 0) return 0;
+    return Math.min(...arr);
+  },
+  last: function (arr) {
+    if (!Array.isArray(arr) || arr.length === 0) return null;
+    return arr[arr.length - 1];
+  },
+  math: function (...args) {
+    // Simple math evaluator for basic expressions
+    const expression = args.slice(0, -1).join(' ');
+    try {
+      // Replace division and multiplication operators for safety
+      const safeExpression = expression
+        .replace(/\//g, ' / ')
+        .replace(/\*/g, ' * ')
+        .replace(/\+/g, ' + ')
+        .replace(/-/g, ' - ');
+
+      // Use Function constructor for safe evaluation
+      return new Function('return ' + safeExpression)();
+    } catch (e) {
+      console.error('Math helper error:', e);
+      return 0;
+    }
+  },
   concat: function (...args) {
     return args.slice(0, -1).join('');
   },
@@ -43,6 +82,9 @@ export const handlebarsHelpers = {
   formatNumber: formatNumber,
   json: function (context) {
     return JSON.stringify(context);
+  },
+  array: function (...args) {
+    return args.slice(0, -1);
   },
   icon: function (name, options) {
     if (!name || typeof name !== 'string') return '';

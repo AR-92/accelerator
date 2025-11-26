@@ -1,57 +1,190 @@
 <!-- Settings Management Content -->
 <div class="max-w-7xl mx-auto rounded-xl overflow-hidden flex flex-col mx-4 my-4">
 
-   <!-- Page Header -->
-   {{> page-header title="Settings Management" description="Manage and organize all system settings efficiently" border=true}}
-   <div class="p-6 space-y-6">
-      <!-- General Settings -->
-      <div class="bg-card rounded-lg border border-border">
-        <div class="p-6 border-b border-border">
-          <h3 class="text-lg font-semibold text-card-foreground">General Settings</h3>
-          <p class="text-sm text-muted-foreground mt-1">Basic system configuration and preferences</p>
-        </div>
-       <div class="p-6 space-y-6">
+    <!-- Page Header -->
+    {{> page-header title="Settings Management" description="Manage and organize all system settings efficiently" border=true}}
+
+
+
+    <div class="p-6 space-y-6">
+       <!-- General Settings -->
+       <div class="settings-section bg-card rounded-lg border border-border" data-category="general">
+         <div class="p-6 border-b border-border">
+           <h3 class="text-lg font-semibold text-card-foreground">General Settings</h3>
+           <p class="text-sm text-muted-foreground mt-1">Basic system configuration and preferences</p>
+         </div>
+        <div class="p-6 space-y-6">
+           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+             <div>
+               <label class="block text-sm font-medium text-foreground mb-2">Site Name</label>
+               <input type="text" name="siteName" value="{{settings.general.siteName}}" class="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none   focus:border-ring">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Site Description</label>
+              <input type="text" name="siteDescription" value="{{settings.general.siteDescription}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
+            </div>
+          </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label class="block text-sm font-medium text-foreground mb-2">Site Name</label>
-              <input type="text" name="siteName" value="{{settings.general.siteName}}" class="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none   focus:border-ring">
-           </div>
-           <div>
-             <label class="block text-sm font-medium text-card-foreground mb-2">Site Description</label>
-             <input type="text" name="siteDescription" value="{{settings.general.siteDescription}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
-           </div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Default Language</label>
+              <select name="defaultLanguage" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
+                <option value="en" {{#eq settings.general.defaultLanguage "en"}}selected{{/eq}}>English</option>
+                <option value="es" {{#eq settings.general.defaultLanguage "es"}}selected{{/eq}}>Spanish</option>
+                <option value="fr" {{#eq settings.general.defaultLanguage "fr"}}selected{{/eq}}>French</option>
+                <option value="de" {{#eq settings.general.defaultLanguage "de"}}selected{{/eq}}>German</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Timezone</label>
+              <select name="timezone" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
+                <option value="UTC" {{#eq settings.general.timezone "UTC"}}selected{{/eq}}>UTC</option>
+                <option value="EST" {{#eq settings.general.timezone "EST"}}selected{{/eq}}>Eastern Time</option>
+                <option value="PST" {{#eq settings.general.timezone "PST"}}selected{{/eq}}>Pacific Time</option>
+                <option value="GMT" {{#eq settings.general.timezone "GMT"}}selected{{/eq}}>GMT</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <!-- Server Settings -->
+       <div class="settings-section bg-card rounded-lg border border-border" data-category="server">
+         <div class="p-6 border-b border-border">
+           <h3 class="text-lg font-semibold text-card-foreground">Server Settings</h3>
+           <p class="text-sm text-muted-foreground mt-1">Server performance and deployment configuration</p>
          </div>
-         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-           <div>
-             <label class="block text-sm font-medium text-card-foreground mb-2">Default Language</label>
-             <select name="defaultLanguage" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
-               <option value="en" {{#eq settings.general.defaultLanguage "en"}}selected{{/eq}}>English</option>
-               <option value="es" {{#eq settings.general.defaultLanguage "es"}}selected{{/eq}}>Spanish</option>
-               <option value="fr" {{#eq settings.general.defaultLanguage "fr"}}selected{{/eq}}>French</option>
-               <option value="de" {{#eq settings.general.defaultLanguage "de"}}selected{{/eq}}>German</option>
-             </select>
-           </div>
-           <div>
-             <label class="block text-sm font-medium text-card-foreground mb-2">Timezone</label>
-             <select name="timezone" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
-               <option value="UTC" {{#eq settings.general.timezone "UTC"}}selected{{/eq}}>UTC</option>
-               <option value="EST" {{#eq settings.general.timezone "EST"}}selected{{/eq}}>Eastern Time</option>
-               <option value="PST" {{#eq settings.general.timezone "PST"}}selected{{/eq}}>Pacific Time</option>
-               <option value="GMT" {{#eq settings.general.timezone "GMT"}}selected{{/eq}}>GMT</option>
-             </select>
-           </div>
-         </div>
-       </div>
-     </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Cluster Mode</h4>
+                <p class="text-sm text-muted-foreground">Enable multi-core processing</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="clusterMode" {{#if settings.server.clusterMode}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Max Workers</label>
+              <input type="number" name="maxWorkers" value="{{settings.server.maxWorkers}}" min="1" max="16" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Health Check Interval (ms)</label>
+              <input type="number" name="healthCheckInterval" value="{{settings.server.healthCheckInterval}}" min="10000" step="5000" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Graceful Shutdown Timeout (ms)</label>
+              <input type="number" name="gracefulShutdownTimeout" value="{{settings.server.gracefulShutdownTimeout}}" min="10000" step="5000" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Request Timeout (ms)</label>
+              <input type="number" name="requestTimeoutGlobal" value="{{settings.server.requestTimeoutGlobal}}" min="5000" step="1000" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Compression Level</label>
+              <input type="number" name="compressionLevel" value="{{settings.server.compressionLevel}}" min="0" max="9" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Static Cache Max Age (ms)</label>
+              <input type="number" name="staticCacheMaxAge" value="{{settings.server.staticCacheMaxAge}}" min="0" step="3600000" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Trust Proxy</h4>
+                <p class="text-sm text-muted-foreground">Trust reverse proxy headers</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="trustProxy" {{#if settings.server.trustProxy}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Database Settings -->
+      <div class="settings-section bg-card rounded-lg border border-border" data-category="database">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Database Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure database connection and performance settings</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Connection Retry Attempts</label>
+              <input type="number" name="connectionRetryAttempts" value="{{settings.database.connectionRetryAttempts}}" min="0" max="10" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Connection Retry Delay (ms)</label>
+              <input type="number" name="connectionRetryDelay" value="{{settings.database.connectionRetryDelay}}" min="100" step="100" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">SSL Mode</label>
+              <select name="sslMode" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="require" {{#eq settings.database.sslMode "require"}}selected{{/eq}}>Require</option>
+                <option value="allow" {{#eq settings.database.sslMode "allow"}}selected{{/eq}}>Allow</option>
+                <option value="disable" {{#eq settings.database.sslMode "disable"}}selected{{/eq}}>Disable</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Schema Version</label>
+              <input type="text" name="schemaVersion" value="{{settings.database.schemaVersion}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Migration Path</label>
+              <input type="text" name="migrationPath" value="{{settings.database.migrationPath}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Backup Retention Days</label>
+              <input type="number" name="backupRetentionDays" value="{{settings.database.backupRetentionDays}}" min="1" max="365" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Backup Schedule (cron)</label>
+              <input type="text" name="backupSchedule" value="{{settings.database.backupSchedule}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Connection Pool Min</label>
+              <input type="number" name="connectionPoolMin" value="{{settings.database.connectionPoolMin}}" min="1" max="10" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Connection Pool Max</label>
+              <input type="number" name="connectionPoolMax" value="{{settings.database.connectionPoolMax}}" min="5" max="50" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Statement Timeout (ms)</label>
+              <input type="number" name="statementTimeout" value="{{settings.database.statementTimeout}}" min="5000" step="1000" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-card-foreground mb-2">Idle Timeout (ms)</label>
+            <input type="number" name="idleTimeout" value="{{settings.database.idleTimeout}}" min="10000" step="5000" class="w-48 px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+          </div>
+        </div>
+      </div>
 
       <!-- Security Settings -->
-      <div class="bg-card rounded-lg border border-border">
+      <div class="settings-section bg-card rounded-lg border border-border" data-category="security">
         <div class="p-6 border-b border-border">
           <h3 class="text-lg font-semibold text-card-foreground">Security Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Configure authentication and security policies</p>
         </div>
-       <div class="p-6 space-y-6">
-         <div class="flex items-center justify-between">
+        <div class="p-6 space-y-6">
+          <div class="flex items-center justify-between">
             <div>
               <h4 class="text-sm font-medium text-card-foreground">Two-Factor Authentication</h4>
               <p class="text-sm text-muted-foreground">Require 2FA for all admin accounts</p>
@@ -60,121 +193,1088 @@
               <input type="checkbox" name="twoFactorAuth" class="sr-only peer" {{#if settings.security.twoFactorAuth}}checked{{/if}}>
               <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
             </label>
-         </div>
-         <div class="flex items-center justify-between">
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 class="text-sm font-medium text-card-foreground">Session Timeout</h4>
-              <p class="text-sm text-muted-foreground">Automatically log out inactive users</p>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Session Timeout (minutes)</label>
+              <input type="number" name="sessionTimeout" value="{{settings.security.sessionTimeout}}" min="15" max="480" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
             </div>
-            <select name="sessionTimeout" class="px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent bg-background text-foreground">
-             <option value="30" {{#eq settings.security.sessionTimeout 30}}selected{{/eq}}>30 minutes</option>
-             <option value="60" {{#eq settings.security.sessionTimeout 60}}selected{{/eq}}>1 hour</option>
-             <option value="120" {{#eq settings.security.sessionTimeout 120}}selected{{/eq}}>2 hours</option>
-             <option value="240" {{#eq settings.security.sessionTimeout 240}}selected{{/eq}}>4 hours</option>
-           </select>
-         </div>
-         <div class="flex items-center justify-between">
-            <div>
-              <h4 class="text-sm font-medium text-card-foreground">Password Policy</h4>
-              <p class="text-sm text-muted-foreground">Enforce strong password requirements</p>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Password Policy</h4>
+                <p class="text-sm text-muted-foreground">Enforce strong password requirements</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="passwordPolicy" class="sr-only peer" {{#if settings.security.passwordPolicy}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
             </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" name="passwordPolicy" class="sr-only peer" {{#if settings.security.passwordPolicy}}checked{{/if}}>
-              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-            </label>
-         </div>
-         <div>
+          </div>
+          <div>
             <label class="block text-sm font-medium text-card-foreground mb-2">Minimum Password Length</label>
-            <input type="number" name="minPasswordLength" value="{{settings.security.minPasswordLength}}" min="6" max="20" class="w-24 px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent bg-background text-foreground">
-         </div>
-       </div>
-     </div>
+            <input type="number" name="minPasswordLength" value="{{settings.security.minPasswordLength}}" min="6" max="20" class="w-24 px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+          </div>
+        </div>
+      </div>
 
       <!-- Email Settings -->
-      <div class="bg-card rounded-lg border border-border">
+      <div class="settings-section bg-card rounded-lg border border-border" data-category="email">
         <div class="p-6 border-b border-border">
           <h3 class="text-lg font-semibold text-card-foreground">Email Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Configure email notifications and SMTP settings</p>
         </div>
-       <div class="p-6 space-y-6">
-         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Email Provider</label>
+              <select name="emailProvider" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="smtp" {{#eq settings.email.provider "smtp"}}selected{{/eq}}>SMTP</option>
+                <option value="sendgrid" {{#eq settings.email.provider "sendgrid"}}selected{{/eq}}>SendGrid</option>
+                <option value="ses" {{#eq settings.email.provider "ses"}}selected{{/eq}}>AWS SES</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">From Name</label>
+              <input type="text" name="emailFromName" value="{{settings.email.fromName}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">From Address</label>
+              <input type="email" name="emailFromAddress" value="{{settings.email.fromAddress}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
             <div>
               <label class="block text-sm font-medium text-card-foreground mb-2">SMTP Host</label>
-              <input type="text" name="smtpHost" value="{{settings.email.smtpHost}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent bg-background text-foreground">
+              <input type="text" name="smtpHost" value="{{settings.email.smtpHost}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
             </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label class="block text-sm font-medium text-card-foreground mb-2">SMTP Port</label>
-              <input type="number" name="smtpPort" value="{{settings.email.smtpPort}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent bg-background text-foreground">
+              <input type="number" name="smtpPort" value="{{settings.email.smtpPort}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
             </div>
-         </div>
-         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-           <div>
-             <label class="block text-sm font-medium text-card-foreground mb-2">SMTP Username</label>
-             <input type="email" name="smtpUsername" value="{{settings.email.smtpUsername}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
-           </div>
-           <div>
-             <label class="block text-sm font-medium text-card-foreground mb-2">SMTP Password</label>
-             <input type="password" name="smtpPassword" value="{{settings.email.smtpPassword}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
-           </div>
-         </div>
-         <div class="flex items-center justify-between">
-           <div>
-             <h4 class="text-sm font-medium text-card-foreground">Email Notifications</h4>
-             <p class="text-sm text-muted-foreground">Send email notifications for important events</p>
-           </div>
-           <label class="relative inline-flex items-center cursor-pointer">
-             <input type="checkbox" name="emailNotifications" class="sr-only peer" {{#if settings.email.emailNotifications}}checked{{/if}}>
-             <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-           </label>
-         </div>
-       </div>
-     </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">SMTP Username</label>
+              <input type="text" name="smtpUsername" value="{{settings.email.smtpUsername}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">SMTP Password</label>
+              <input type="password" name="smtpPassword" value="{{settings.email.smtpPassword}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Queue Size</label>
+              <input type="number" name="emailQueueSize" value="{{settings.email.queueSize}}" min="100" step="100" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-sm font-medium text-card-foreground">Email Notifications</h4>
+              <p class="text-sm text-muted-foreground">Send email notifications for important events</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" name="emailNotifications" class="sr-only peer" {{#if settings.email.emailNotifications}}checked{{/if}}>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+        </div>
+      </div>
 
-     <!-- Database Settings -->
-     <div class="bg-card rounded-lg border border-border">
-       <div class="p-6 border-b border-border">
-         <h3 class="text-lg font-semibold text-card-foreground">Database Settings</h3>
-         <p class="text-sm text-muted-foreground mt-1">Configure database connection and performance settings</p>
-       </div>
-       <div class="p-6 space-y-6">
-         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-           <div>
-             <label class="block text-sm font-medium text-card-foreground mb-2">Connection Pool Size</label>
-             <input type="number" name="connectionPoolSize" value="{{settings.database.connectionPoolSize}}" min="1" max="50" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
-           </div>
-           <div>
-             <label class="block text-sm font-medium text-card-foreground mb-2">Query Timeout (seconds)</label>
-             <input type="number" name="queryTimeout" value="{{settings.database.queryTimeout}}" min="5" max="300" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
-           </div>
-         </div>
-         <div class="flex items-center justify-between">
-           <div>
-             <h4 class="text-sm font-medium text-card-foreground">Database Logging</h4>
-             <p class="text-sm text-muted-foreground">Log all database queries for debugging</p>
-           </div>
-           <label class="relative inline-flex items-center cursor-pointer">
-             <input type="checkbox" name="databaseLogging" class="sr-only peer" {{#if settings.database.databaseLogging}}checked{{/if}}>
-             <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-           </label>
-         </div>
-         <div class="flex items-center justify-between">
-           <div>
-             <h4 class="text-sm font-medium text-card-foreground">Auto Backup</h4>
-             <p class="text-sm text-muted-foreground">Automatically backup database daily</p>
-           </div>
-           <label class="relative inline-flex items-center cursor-pointer">
-             <input type="checkbox" name="autoBackup" class="sr-only peer" {{#if settings.database.autoBackup}}checked{{/if}}>
-             <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-           </label>
-         </div>
-       </div>
-     </div>
+      <!-- UI & Appearance Settings -->
+      <div class="settings-section bg-card rounded-lg border border-border" data-category="ui">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">UI & Appearance Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Customize the look and feel of your interface</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Custom CSS URL</label>
+              <input type="url" name="customCssUrl" value="{{settings.ui.customCssUrl}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Logo URL</label>
+              <input type="url" name="logoUrl" value="{{settings.ui.logoUrl}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Primary Color</label>
+              <input type="color" name="primaryColor" value="{{settings.ui.primaryColor}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Accent Color</label>
+              <input type="color" name="accentColor" value="{{settings.ui.accentColor}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Font Family</label>
+              <input type="text" name="fontFamily" value="{{settings.ui.fontFamily}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Sidebar Collapsed Default</h4>
+                <p class="text-sm text-muted-foreground">Collapse sidebar by default</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="sidebarCollapsedDefault" {{#if settings.ui.sidebarCollapsedDefault}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Items Per Page Default</label>
+              <input type="number" name="itemsPerPageDefault" value="{{settings.ui.itemsPerPageDefault}}" min="5" max="100" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Timezone Display Format</label>
+              <select name="timezoneDisplayFormat" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="short" {{#eq settings.ui.timezoneDisplayFormat "short"}}selected{{/eq}}>Short</option>
+                <option value="long" {{#eq settings.ui.timezoneDisplayFormat "long"}}selected{{/eq}}>Long</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Number Format Locale</label>
+              <input type="text" name="numberFormatLocale" value="{{settings.ui.numberFormatLocale}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Currency Symbol</label>
+              <input type="text" name="currencySymbol" value="{{settings.ui.currencySymbol}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-card-foreground mb-2">Date Time Format Preferences</label>
+            <input type="text" name="dateTimeFormatPreferences" value="{{settings.ui.dateTimeFormatPreferences}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+          </div>
+        </div>
+      </div>
 
-     <!-- Save Button -->
-     <div class="flex justify-end">
-       <button class="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium">
-         Save Settings
-       </button>
+      <!-- Performance & Caching Settings -->
+      <div class="settings-section bg-card rounded-lg border border-border" data-category="performance">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Performance & Caching Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure caching and performance optimization</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Redis URL</label>
+              <input type="url" name="redisUrl" value="{{settings.performance.redisUrl}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Cache Strategy</label>
+              <select name="cacheStrategy" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="lru" {{#eq settings.performance.cacheStrategy "lru"}}selected{{/eq}}>LRU</option>
+                <option value="lfu" {{#eq settings.performance.cacheStrategy "lfu"}}selected{{/eq}}>LFU</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Cache Compression</h4>
+                <p class="text-sm text-muted-foreground">Enable response compression</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="cacheCompressionEnabled" {{#if settings.performance.cacheCompressionEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">CDN URL</label>
+              <input type="url" name="cdnUrl" value="{{settings.performance.cdnUrl}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Static Assets Version</label>
+              <input type="text" name="staticAssetsVersion" value="{{settings.performance.staticAssetsVersion}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">API Response Cache TTL (s)</label>
+              <input type="number" name="apiResponseCacheTtl" value="{{settings.performance.apiResponseCacheTtl}}" min="0" step="10" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Database Query Cache TTL (s)</label>
+              <input type="number" name="databaseQueryCacheTtl" value="{{settings.performance.databaseQueryCacheTtl}}" min="0" step="10" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Session Store Type</label>
+              <select name="sessionStoreType" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="memory" {{#eq settings.performance.sessionStoreType "memory"}}selected{{/eq}}>Memory</option>
+                <option value="redis" {{#eq settings.performance.sessionStoreType "redis"}}selected{{/eq}}>Redis</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Rate Limit Store Type</label>
+              <select name="rateLimitStoreType" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="memory" {{#eq settings.performance.rateLimitStoreType "memory"}}selected{{/eq}}>Memory</option>
+                <option value="redis" {{#eq settings.performance.rateLimitStoreType "redis"}}selected{{/eq}}>Redis</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">File Upload Max Size (bytes)</label>
+              <input type="number" name="fileUploadMaxSize" value="{{settings.performance.fileUploadMaxSize}}" min="1048576" step="1048576" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-card-foreground mb-2">Image Optimization Quality (%)</label>
+            <input type="number" name="imageOptimizationQuality" value="{{settings.performance.imageOptimizationQuality}}" min="10" max="100" class="w-24 px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+          </div>
+        </div>
+      </div>
+
+       <!-- Logging & Monitoring Settings -->
+       <div class="settings-section bg-card rounded-lg border border-border" data-category="logging">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Logging & Monitoring Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure logging and monitoring services</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Log Format</label>
+              <select name="logFormat" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="json" {{#eq settings.logging.format "json"}}selected{{/eq}}>JSON</option>
+                <option value="text" {{#eq settings.logging.format "text"}}selected{{/eq}}>Text</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Max Size (bytes)</label>
+              <input type="number" name="logMaxSize" value="{{settings.logging.maxSize}}" min="1048576" step="1048576" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Max Files</label>
+              <input type="number" name="logMaxFiles" value="{{settings.logging.maxFiles}}" min="1" max="10" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Transports</label>
+              <input type="text" name="logTransports" value="{{settings.logging.transports}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Sentry DSN</label>
+              <input type="url" name="sentryDsn" value="{{settings.logging.sentryDsn}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">New Relic License Key</label>
+              <input type="text" name="newRelicLicenseKey" value="{{settings.logging.newRelicLicenseKey}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Datadog API Key</label>
+              <input type="text" name="datadogApiKey" value="{{settings.logging.datadogApiKey}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Prometheus Metrics</h4>
+                <p class="text-sm text-muted-foreground">Enable Prometheus metrics collection</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="prometheusMetricsEnabled" {{#if settings.logging.prometheusMetricsEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Health Check Endpoints</label>
+              <input type="text" name="healthCheckEndpoints" value="{{settings.logging.healthCheckEndpoints}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Error Reporting Level</label>
+              <select name="errorReportingLevel" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="error" {{#eq settings.logging.errorReportingLevel "error"}}selected{{/eq}}>Error</option>
+                <option value="warn" {{#eq settings.logging.errorReportingLevel "warn"}}selected{{/eq}}>Warning</option>
+                <option value="info" {{#eq settings.logging.errorReportingLevel "info"}}selected{{/eq}}>Info</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-card-foreground mb-2">Audit Log Retention Days</label>
+            <input type="number" name="auditLogRetentionDays" value="{{settings.logging.auditLogRetentionDays}}" min="30" max="3650" class="w-32 px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+          </div>
+        </div>
+      </div>
+
+       <!-- API & Integration Settings -->
+       <div class="settings-section bg-card rounded-lg border border-border" data-category="api">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">API & Integration Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure API versioning and third-party integrations</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">API Versioning Strategy</label>
+              <select name="apiVersioningStrategy" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="header" {{#eq settings.api.versioningStrategy "header"}}selected{{/eq}}>Header</option>
+                <option value="url" {{#eq settings.api.versioningStrategy "url"}}selected{{/eq}}>URL</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Webhook Secret</label>
+              <input type="text" name="webhookSecret" value="{{settings.api.webhookSecret}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">API Documentation</h4>
+                <p class="text-sm text-muted-foreground">Enable API documentation</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="apiDocumentationEnabled" {{#if settings.api.documentationEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">GraphQL API</h4>
+                <p class="text-sm text-muted-foreground">Enable GraphQL API</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="graphqlEnabled" {{#if settings.api.graphqlEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">REST API</h4>
+                <p class="text-sm text-muted-foreground">Enable REST API</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="restApiEnabled" {{#if settings.api.restApiEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">WebSocket</h4>
+                <p class="text-sm text-muted-foreground">Enable WebSocket connections</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="websocketEnabled" {{#if settings.api.websocketEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">File Storage Provider</label>
+              <select name="fileStorageProvider" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="local" {{#eq settings.api.fileStorageProvider "local"}}selected{{/eq}}>Local</option>
+                <option value="s3" {{#eq settings.api.fileStorageProvider "s3"}}selected{{/eq}}>AWS S3</option>
+                <option value="cloudinary" {{#eq settings.api.fileStorageProvider "cloudinary"}}selected{{/eq}}>Cloudinary</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">SMS Provider</label>
+              <select name="smsProvider" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="" {{#eq settings.api.smsProvider ""}}selected{{/eq}}>None</option>
+                <option value="twilio" {{#eq settings.api.smsProvider "twilio"}}selected{{/eq}}>Twilio</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <!-- Business Logic Settings -->
+       <div class="settings-section bg-card rounded-lg border border-border" data-category="business">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Business Logic Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure accelerator-specific business rules</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Project Status Workflow</label>
+              <input type="text" name="projectStatusWorkflow" value="{{settings.business.projectStatusWorkflow}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Business Model Templates</label>
+              <input type="text" name="businessModelTemplates" value="{{settings.business.businessModelTemplates}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Financial Currency Default</label>
+              <input type="text" name="financialCurrencyDefault" value="{{settings.business.financialCurrencyDefault}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Learning Module Sequence</label>
+              <input type="text" name="learningModuleSequence" value="{{settings.business.learningModuleSequence}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Content Approval Workflow</label>
+              <input type="text" name="contentApprovalWorkflow" value="{{settings.business.contentApprovalWorkflow}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Collaboration Tools</h4>
+                <p class="text-sm text-muted-foreground">Enable collaboration features</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="collaborationToolsEnabled" {{#if settings.business.collaborationToolsEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Billing Cycle Default</label>
+              <select name="billingCycleDefault" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="monthly" {{#eq settings.business.billingCycleDefault "monthly"}}selected{{/eq}}>Monthly</option>
+                <option value="yearly" {{#eq settings.business.billingCycleDefault "yearly"}}selected{{/eq}}>Yearly</option>
+              </select>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Enterprise Features</h4>
+                <p class="text-sm text-muted-foreground">Enable enterprise features</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="enterpriseFeaturesEnabled" {{#if settings.business.enterpriseFeaturesEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-card-foreground mb-2">Report Generation Schedule</label>
+            <input type="text" name="reportGenerationSchedule" value="{{settings.business.reportGenerationSchedule}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+          </div>
+        </div>
+      </div>
+
+       <!-- User Management Settings -->
+       <div class="settings-section bg-card rounded-lg border border-border" data-category="userManagement">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">User Management Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure user roles and permissions</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">User Roles Definitions</label>
+              <input type="text" name="userRolesDefinitions" value="{{settings.userManagement.rolesDefinitions}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Onboarding Flow</label>
+              <input type="text" name="userOnboardingFlow" value="{{settings.userManagement.onboardingFlow}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Profile Completion Requirements</label>
+              <input type="text" name="profileCompletionRequirements" value="{{settings.userManagement.profileCompletionRequirements}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Team Hierarchy</h4>
+                <p class="text-sm text-muted-foreground">Enable team hierarchy features</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="teamHierarchyEnabled" {{#if settings.userManagement.teamHierarchyEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Invitation Expiry (ms)</label>
+              <input type="number" name="userInvitationExpiry" value="{{settings.userManagement.invitationExpiry}}" min="86400000" step="86400000" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Bulk Import</h4>
+                <p class="text-sm text-muted-foreground">Enable bulk user import</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="bulkImportEnabled" {{#if settings.userManagement.bulkImportEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Deactivation Policy</label>
+              <select name="userDeactivationPolicy" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="soft-delete" {{#eq settings.userManagement.deactivationPolicy "soft-delete"}}selected{{/eq}}>Soft Delete</option>
+                <option value="hard-delete" {{#eq settings.userManagement.deactivationPolicy "hard-delete"}}selected{{/eq}}>Hard Delete</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Profile Picture Max Size (bytes)</label>
+              <input type="number" name="profilePictureMaxSize" value="{{settings.userManagement.profilePictureMaxSize}}" min="1048576" step="1048576" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-card-foreground mb-2">Bio Character Limit</label>
+            <input type="number" name="bioCharacterLimit" value="{{settings.userManagement.bioCharacterLimit}}" min="50" max="1000" class="w-32 px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+          </div>
+        </div>
+      </div>
+
+       <!-- Backup & Maintenance Settings -->
+       <div class="settings-section bg-card rounded-lg border border-border" data-category="backup">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Backup & Maintenance Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure backup and maintenance operations</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Backup Storage Location</label>
+              <input type="text" name="backupStorageLocation" value="{{settings.backup.storageLocation}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Backup Encryption Key</label>
+              <input type="password" name="backupEncryptionKey" value="{{settings.backup.encryptionKey}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Maintenance Window Schedule (cron)</label>
+              <input type="text" name="maintenanceWindowSchedule" value="{{settings.backup.maintenanceWindowSchedule}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Auto Update</h4>
+                <p class="text-sm text-muted-foreground">Enable automatic updates</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="autoUpdateEnabled" {{#if settings.backup.autoUpdateEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Dependency Update Schedule</label>
+              <select name="dependencyUpdateSchedule" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="weekly" {{#eq settings.backup.dependencyUpdateSchedule "weekly"}}selected{{/eq}}>Weekly</option>
+                <option value="monthly" {{#eq settings.backup.dependencyUpdateSchedule "monthly"}}selected{{/eq}}>Monthly</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Log Rotation Policy</label>
+              <select name="logRotationPolicy" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="daily" {{#eq settings.backup.logRotationPolicy "daily"}}selected{{/eq}}>Daily</option>
+                <option value="weekly" {{#eq settings.backup.logRotationPolicy "weekly"}}selected{{/eq}}>Weekly</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Temp File Cleanup Interval (ms)</label>
+              <input type="number" name="tempFileCleanupInterval" value="{{settings.backup.tempFileCleanupInterval}}" min="3600000" step="3600000" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Cache Invalidation Schedule (cron)</label>
+              <input type="text" name="cacheInvalidationSchedule" value="{{settings.backup.cacheInvalidationSchedule}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <!-- Compliance & Legal Settings -->
+       <div class="settings-section bg-card rounded-lg border border-border" data-category="compliance">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">Compliance & Legal Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure compliance and legal requirements</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">GDPR Compliance</h4>
+                <p class="text-sm text-muted-foreground">Enable GDPR compliance features</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="gdprComplianceEnabled" {{#if settings.compliance.gdprComplianceEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Cookie Consent</h4>
+                <p class="text-sm text-muted-foreground">Require cookie consent</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="cookieConsentRequired" {{#if settings.compliance.cookieConsentRequired}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Privacy Policy URL</label>
+              <input type="url" name="privacyPolicyUrl" value="{{settings.compliance.privacyPolicyUrl}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Terms of Service URL</label>
+              <input type="url" name="termsOfServiceUrl" value="{{settings.compliance.termsOfServiceUrl}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Data Export</h4>
+                <p class="text-sm text-muted-foreground">Allow users to export their data</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="dataExportEnabled" {{#if settings.compliance.dataExportEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Right to Forget</h4>
+                <p class="text-sm text-muted-foreground">Implement right to forget functionality</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="rightToForgetImplemented" {{#if settings.compliance.rightToForgetImplemented}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Audit Trail</h4>
+                <p class="text-sm text-muted-foreground">Enable comprehensive audit logging</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="auditTrailEnabled" {{#if settings.compliance.auditTrailEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Legal Hold</h4>
+                <p class="text-sm text-muted-foreground">Enable legal hold functionality</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="legalHoldEnabled" {{#if settings.compliance.legalHoldEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-card-foreground mb-2">Compliance Reporting Schedule</label>
+            <select name="complianceReportingSchedule" class="w-full max-w-xs px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+              <option value="monthly" {{#eq settings.compliance.complianceReportingSchedule "monthly"}}selected{{/eq}}>Monthly</option>
+              <option value="quarterly" {{#eq settings.compliance.complianceReportingSchedule "quarterly"}}selected{{/eq}}>Quarterly</option>
+              <option value="yearly" {{#eq settings.compliance.complianceReportingSchedule "yearly"}}selected{{/eq}}>Yearly</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+       <!-- AI & LLM Settings -->
+       <div class="settings-section bg-card rounded-lg border border-border" data-category="ai">
+        <div class="p-6 border-b border-border">
+          <h3 class="text-lg font-semibold text-card-foreground">AI & LLM Settings</h3>
+          <p class="text-sm text-muted-foreground mt-1">Configure AI and language model integrations</p>
+        </div>
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">AI Provider</label>
+              <select name="aiProvider" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="openai" {{#eq settings.ai.provider "openai"}}selected{{/eq}}>OpenAI</option>
+                <option value="anthropic" {{#eq settings.ai.provider "anthropic"}}selected{{/eq}}>Anthropic</option>
+                <option value="google" {{#eq settings.ai.provider "google"}}selected{{/eq}}>Google</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Default Model</label>
+              <input type="text" name="aiModelDefault" value="{{settings.ai.modelDefault}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">API Key</label>
+              <input type="password" name="aiApiKey" value="{{settings.ai.apiKey}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">API Base URL</label>
+              <input type="url" name="aiApiBaseUrl" value="{{settings.ai.apiBaseUrl}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Temperature</label>
+              <input type="number" name="aiTemperature" value="{{settings.ai.temperature}}" min="0" max="2" step="0.1" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Max Tokens</label>
+              <input type="number" name="aiMaxTokens" value="{{settings.ai.maxTokens}}" min="1" max="4000" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Timeout (ms)</label>
+              <input type="number" name="aiTimeout" value="{{settings.ai.timeout}}" min="1000" step="1000" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Retry Attempts</label>
+              <input type="number" name="aiRetryAttempts" value="{{settings.ai.retryAttempts}}" min="0" max="5" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Rate Limit Requests</label>
+              <input type="number" name="aiRateLimitRequests" value="{{settings.ai.rateLimitRequests}}" min="1" max="1000" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Rate Limit Tokens</label>
+              <input type="number" name="aiRateLimitTokens" value="{{settings.ai.rateLimitTokens}}" min="1000" step="1000" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Agent Types Enabled</label>
+              <input type="text" name="agentTypesEnabled" value="{{settings.ai.agentTypesEnabled}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Agent Personality</label>
+              <select name="agentPersonality" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="professional" {{#eq settings.ai.agentPersonality "professional"}}selected{{/eq}}>Professional</option>
+                <option value="friendly" {{#eq settings.ai.agentPersonality "friendly"}}selected{{/eq}}>Friendly</option>
+                <option value="technical" {{#eq settings.ai.agentPersonality "technical"}}selected{{/eq}}>Technical</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Agent Language</label>
+              <input type="text" name="agentLanguage" value="{{settings.ai.agentLanguage}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Agent Memory Size</label>
+              <input type="number" name="agentMemorySize" value="{{settings.ai.agentMemorySize}}" min="1" max="50" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Agent Tools Enabled</label>
+              <input type="text" name="agentToolsEnabled" value="{{settings.ai.agentToolsEnabled}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Agent Autonomy Level</label>
+              <select name="agentAutonomyLevel" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="supervised" {{#eq settings.ai.agentAutonomyLevel "supervised"}}selected{{/eq}}>Supervised</option>
+                <option value="semi-autonomous" {{#eq settings.ai.agentAutonomyLevel "semi-autonomous"}}selected{{/eq}}>Semi-Autonomous</option>
+                <option value="autonomous" {{#eq settings.ai.agentAutonomyLevel "autonomous"}}selected{{/eq}}>Autonomous</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Agent Response Format</label>
+              <select name="agentResponseFormat" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="markdown" {{#eq settings.ai.agentResponseFormat "markdown"}}selected{{/eq}}>Markdown</option>
+                <option value="json" {{#eq settings.ai.agentResponseFormat "json"}}selected{{/eq}}>JSON</option>
+                <option value="html" {{#eq settings.ai.agentResponseFormat "html"}}selected{{/eq}}>HTML</option>
+              </select>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Content Generation</h4>
+                <p class="text-sm text-muted-foreground">Enable AI content generation</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="contentGenerationEnabled" {{#if settings.ai.contentGenerationEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Content Moderation Level</label>
+              <select name="contentModerationLevel" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="low" {{#eq settings.ai.contentModerationLevel "low"}}selected{{/eq}}>Low</option>
+                <option value="medium" {{#eq settings.ai.contentModerationLevel "medium"}}selected{{/eq}}>Medium</option>
+                <option value="high" {{#eq settings.ai.contentModerationLevel "high"}}selected{{/eq}}>High</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Content Safety Filters</label>
+              <input type="text" name="contentSafetyFilters" value="{{settings.ai.contentSafetyFilters}}" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">BI Analytics</h4>
+                <p class="text-sm text-muted-foreground">Enable AI business intelligence</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="biAnalyticsEnabled" {{#if settings.ai.biAnalyticsEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">BI Report Frequency</label>
+              <select name="biReportFrequency" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="daily" {{#eq settings.ai.biReportFrequency "daily"}}selected{{/eq}}>Daily</option>
+                <option value="weekly" {{#eq settings.ai.biReportFrequency "weekly"}}selected{{/eq}}>Weekly</option>
+                <option value="monthly" {{#eq settings.ai.biReportFrequency "monthly"}}selected{{/eq}}>Monthly</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">BI Insight Threshold</label>
+              <input type="number" name="biInsightThreshold" value="{{settings.ai.biInsightThreshold}}" min="0" max="1" step="0.1" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">BI Prediction Horizon</label>
+              <input type="number" name="biPredictionHorizon" value="{{settings.ai.biPredictionHorizon}}" min="1" max="24" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Learning Adaptation</h4>
+                <p class="text-sm text-muted-foreground">Enable AI learning from interactions</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="learningAdaptationEnabled" {{#if settings.ai.learningAdaptationEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">User Feedback Collection</h4>
+                <p class="text-sm text-muted-foreground">Collect user feedback for AI improvement</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="userFeedbackCollection" {{#if settings.ai.userFeedbackCollection}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Model Fine-tuning Schedule</label>
+              <select name="modelFineTuningSchedule" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="weekly" {{#eq settings.ai.modelFineTuningSchedule "weekly"}}selected{{/eq}}>Weekly</option>
+                <option value="monthly" {{#eq settings.ai.modelFineTuningSchedule "monthly"}}selected{{/eq}}>Monthly</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Personalization Level</label>
+              <select name="personalizationLevel" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="low" {{#eq settings.ai.personalizationLevel "low"}}selected{{/eq}}>Low</option>
+                <option value="medium" {{#eq settings.ai.personalizationLevel "medium"}}selected{{/eq}}>Medium</option>
+                <option value="high" {{#eq settings.ai.personalizationLevel "high"}}selected{{/eq}}>High</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Context Awareness</h4>
+                <p class="text-sm text-muted-foreground">Enable context-aware responses</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="contextAwareness" {{#if settings.ai.contextAwareness}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Multi-modal Support</h4>
+                <p class="text-sm text-muted-foreground">Support images/audio in AI interactions</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="multiModalEnabled" {{#if settings.ai.multiModalEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Data Retention (ms)</label>
+              <input type="number" name="aiDataRetention" value="{{settings.ai.dataRetention}}" min="86400000" step="86400000" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Data Anonymization</h4>
+                <p class="text-sm text-muted-foreground">Anonymize data before AI processing</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="aiDataAnonymization" {{#if settings.ai.dataAnonymization}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Usage Audit Log</h4>
+                <p class="text-sm text-muted-foreground">Enable detailed AI usage logging</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="aiUsageAuditLog" {{#if settings.ai.usageAuditLog}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Content Watermarking</h4>
+                <p class="text-sm text-muted-foreground">Add watermarks to AI-generated content</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="aiContentWatermarking" {{#if settings.ai.contentWatermarking}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Bias Monitoring</h4>
+                <p class="text-sm text-muted-foreground">Monitor AI outputs for bias</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="aiBiasMonitoring" {{#if settings.ai.biasMonitoring}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Compliance Mode</label>
+              <select name="aiComplianceMode" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="none" {{#eq settings.ai.complianceMode "none"}}selected{{/eq}}>None</option>
+                <option value="gdpr" {{#eq settings.ai.complianceMode "gdpr"}}selected{{/eq}}>GDPR</option>
+                <option value="hipaa" {{#eq settings.ai.complianceMode "hipaa"}}selected{{/eq}}>HIPAA</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Fallback Mode</label>
+              <select name="aiFallbackMode" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="disabled" {{#eq settings.ai.fallbackMode "disabled"}}selected{{/eq}}>Disabled</option>
+                <option value="basic" {{#eq settings.ai.fallbackMode "basic"}}selected{{/eq}}>Basic</option>
+                <option value="cached" {{#eq settings.ai.fallbackMode "cached"}}selected{{/eq}}>Cached</option>
+              </select>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Cost Tracking</h4>
+                <p class="text-sm text-muted-foreground">Track AI API usage costs</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="costTrackingEnabled" {{#if settings.ai.costTrackingEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Monthly Cost Budget</label>
+              <input type="number" name="costBudgetMonthly" value="{{settings.ai.costBudgetMonthly}}" min="1" step="1" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Performance Metrics</h4>
+                <p class="text-sm text-muted-foreground">Track AI performance metrics</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="performanceMetrics" {{#if settings.ai.performanceMetrics}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Cache AI Responses</h4>
+                <p class="text-sm text-muted-foreground">Cache AI responses for performance</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="cacheAiResponses" {{#if settings.ai.cacheAiResponses}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Load Balancing</h4>
+                <p class="text-sm text-muted-foreground">Distribute requests across providers</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="aiLoadBalancing" {{#if settings.ai.loadBalancing}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">Fallback Provider</label>
+              <select name="aiFallbackProvider" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+                <option value="" {{#eq settings.ai.fallbackProvider ""}}selected{{/eq}}>None</option>
+                <option value="anthropic" {{#eq settings.ai.fallbackProvider "anthropic"}}selected{{/eq}}>Anthropic</option>
+                <option value="google" {{#eq settings.ai.fallbackProvider "google"}}selected{{/eq}}>Google</option>
+              </select>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">Workflow Automation</h4>
+                <p class="text-sm text-muted-foreground">Enable AI-driven workflow automation</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="workflowAutomationEnabled" {{#if settings.ai.workflowAutomationEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-card-foreground mb-2">API Rate Limit (AI)</label>
+              <input type="number" name="apiRateLimitAi" value="{{settings.ai.apiRateLimitAi}}" min="10" max="1000" class="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent">
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-sm font-medium text-card-foreground">AI Scheduler</h4>
+                <p class="text-sm text-muted-foreground">Enable scheduled AI tasks</p>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" name="aiSchedulerEnabled" {{#if settings.ai.schedulerEnabled}}checked{{/if}}>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+           <div class="flex items-center justify-between">
+             <div>
+               <h4 class="text-sm font-medium text-card-foreground">AI Event Notifications</h4>
+               <p class="text-sm text-muted-foreground">Send notifications for AI-related events</p>
+             </div>
+             <label class="relative inline-flex items-center cursor-pointer">
+               <input type="checkbox" name="notificationAiEvents" {{#if settings.ai.notificationAiEvents}}checked{{/if}}>
+               <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+             </label>
+           </div>
+         </div>
+       </div>
      </div>
    </div>
-</div>

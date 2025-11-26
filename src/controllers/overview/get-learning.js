@@ -158,21 +158,25 @@ export const getLearning = async (req, res) => {
         id: 'learning-content-btn',
         href: '/admin/table-pages/learning-content',
         text: 'Learning Content',
+        icon: 'book-open',
       },
       {
         id: 'categories-btn',
         href: '/admin/table-pages/learning-categories',
         text: 'Learning Categories',
+        icon: 'folder',
       },
       {
         id: 'assessments-btn',
         href: '/admin/table-pages/learning-assessments',
         text: 'Learning Assessments',
+        icon: 'clipboard-list',
       },
       {
         id: 'analytics-btn',
         href: '/admin/table-pages/learning-analytics',
         text: 'Learning Analytics',
+        icon: 'bar-chart-3',
       },
     ];
 

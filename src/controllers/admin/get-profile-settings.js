@@ -1,11 +1,12 @@
 import logger from '../../utils/logger.js';
+import config from '../../config/index.js';
 
 // Profile Settings
 export const getProfileSettings = async (req, res) => {
   try {
     logger.info('Admin profile settings page accessed');
 
-    // In a real application, this would come from the authenticated user's settings
+    // Load profile settings from config with fallbacks
     const profileSettings = {
       account: {
         displayName: 'Administrator',
@@ -30,6 +31,56 @@ export const getProfileSettings = async (req, res) => {
         theme: 'light',
         language: 'en',
         dateFormat: 'mdy',
+      },
+      ai: {
+        aiAssistantEnabled: config.ai.schedulerEnabled,
+        preferredAiPersonality: config.ai.agentPersonality,
+        aiNotificationsEnabled: config.ai.notificationAiEvents,
+        aiLearningEnabled: config.ai.learningAdaptationEnabled,
+        aiDataSharing: config.ai.dataAnonymization,
+        aiContentPreferences: config.ai.contentBrandingVoice,
+        aiResponseStyle: config.ai.agentResponseFormat,
+        aiFeedbackEnabled: config.ai.userFeedbackCollection,
+      },
+      security: {
+        twoFactorEnabled: process.env.TWO_FACTOR_AUTH === 'true',
+        sessionTimeout: parseInt(process.env.SESSION_TIMEOUT) || 60,
+        loginAlerts: true,
+        passwordChangeAlerts: true,
+        deviceTracking: true,
+        biometricEnabled: false,
+      },
+      accessibility: {
+        highContrastMode: false,
+        fontSize: 'medium',
+        screenReaderEnabled: false,
+        keyboardNavigation: true,
+        reducedMotion: false,
+      },
+      communication: {
+        timezone: config.ui.timezoneDisplayFormat,
+        language: config.ui.numberFormatLocale,
+        dateFormat: config.ui.dateTimeFormatPreferences,
+        timeFormat: '12h',
+        currency: config.ui.currencySymbol,
+        units: 'metric',
+      },
+      integrations: {
+        slackConnected: config.email.slackWebhookUrl ? true : false,
+        discordConnected: config.email.discordWebhookUrl ? true : false,
+        googleConnected: false,
+        githubConnected: false,
+        calendarSync: false,
+        contactSync: false,
+      },
+      preferences: {
+        dashboardLayout: 'grid',
+        defaultView: 'overview',
+        autoSave: true,
+        keyboardShortcuts: true,
+        darkModeSchedule: 'manual',
+        emailDigest: 'daily',
+        notificationSound: true,
       },
     };
 
