@@ -206,6 +206,26 @@ function initializeScrollingForType(type) {
     });
   });
 
+  // Touch/swipe support for mobile
+  let startX = 0;
+  let scrollLeft = 0;
+
+  scrollContainer.addEventListener('touchstart', function (e) {
+    startX = e.touches[0].pageX - scrollContainer.offsetLeft;
+    scrollLeft = scrollContainer.scrollLeft;
+  });
+
+  scrollContainer.addEventListener('touchmove', function (e) {
+    if (!startX) return;
+    const x = e.touches[0].pageX - scrollContainer.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed multiplier
+    scrollContainer.scrollLeft = scrollLeft - walk;
+  });
+
+  scrollContainer.addEventListener('touchend', function () {
+    startX = 0;
+  });
+
   // Update arrow visibility based on scroll position
   function updateArrowVisibility() {
     const isAtStart = scrollContainer.scrollLeft <= 0;

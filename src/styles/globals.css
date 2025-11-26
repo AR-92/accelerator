@@ -127,4 +127,33 @@
   #table-filter-scroll-container {
     scroll-behavior: smooth;
   }
+
+  /* Mobile sidebar animations */
+  .sidebar-slide-in {
+    transform: translateX(0);
+  }
+
+  .sidebar-slide-out {
+    transform: translateX(-100%);
+  }
+
+  /* Touch-friendly button sizes */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Responsive text scaling */
+  .text-responsive-sm {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+  }
+
+  .text-responsive-xs {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+  }
+
+  /* Mobile-optimized spacing */
+  .space-responsive {
+    gap: clamp(0.5rem, 2vw, 1rem);
+  }
 }

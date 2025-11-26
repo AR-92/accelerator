@@ -1,13 +1,13 @@
 <!-- Filter Navigation Bar -->
-   <nav class="bg-card text-card-foreground px-4 border-b border-border flex items-center justify-between min-h-9">
+    <nav class="bg-card text-card-foreground px-2 sm:px-4 border-b border-border flex items-center justify-between min-h-9">
    <!-- Left Section: Icon and Filter Links -->
     <div class="flex items-center gap-4">
-      <!-- Sidebar Toggle Button -->
-        <button id="sidebar-toggle" class="w-6 h-6 ml-1 mr-6 flex items-center justify-center hover:bg-accent rounded-md transition-colors" onclick="toggleSidebar()" title="Toggle Sidebar">
+       <!-- Sidebar Toggle Button -->
+        <button id="sidebar-toggle" class="hidden md:flex w-6 h-6 ml-1 mr-6 flex items-center justify-center hover:bg-accent rounded-md transition-colors" onclick="toggleSidebar()" title="Toggle Sidebar">
          {{{icon 'panel-right' size='16' class='text-muted-foreground w-4 h-4'}}}
        </button>
-           <!-- Filter Links -->
-           <div id="filter-links" class="flex items-center justify-center flex-1">
+            <!-- Filter Links -->
+            <div id="filter-links" class="hidden md:flex items-center justify-center flex-1">
               {{#if settingsCategories}}
                 <!-- Settings Filter Navigation -->
                 <div class="flex items-center gap-2 max-w-4xl w-full">
@@ -24,14 +24,14 @@
                    {{#each settingsCategories}}
                     <div class="flex flex-col items-center justify-center group flex-shrink-0">
                       <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq ../activeCategory value)}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
-                      <button
-                        type="button"
-                        class="settings-filter-btn flex items-center {{#if (eq ../activeCategory value)}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap"
-                        data-category="{{value}}"
-                      >
-                        {{{icon icon size='14' class='mr-1'}}}
-                        {{label}}
-                      </button>
+                       <button
+                         type="button"
+                         class="settings-filter-btn flex items-center justify-center min-h-[44px] px-3 {{#if (eq ../activeCategory value)}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap"
+                         data-category="{{value}}"
+                       >
+                         {{{icon icon size='14' class='mr-1'}}}
+                         {{label}}
+                       </button>
                     </div>
                     {{/each}}
                   </div>
@@ -58,12 +58,12 @@
                     </style>
                      <div class="flex flex-col items-center justify-center group flex-shrink-0">
                         <div class="border-t-4 border-primary w-6 rounded-full {{#unless @root.query.status}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/unless}}"></div>
-                         <button id="filter-link-all" type="button" hx-get="/admin/table-pages/{{@root.currentPage}}" hx-push-url="/admin/table-pages/{{@root.currentPage}}" hx-target="#{{@root.currentPage}}TableContainer" data-table="{{@root.currentPage}}" class="settings-filter-btn flex items-center {{#unless @root.query.status}}text-foreground font-medium{{else}}text-muted-foreground{{/unless}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon 'list' size='14' class='mr-1'}}}All</button>
+                          <button id="filter-link-all" type="button" hx-get="/admin/table-pages/{{@root.currentPage}}" hx-push-url="/admin/table-pages/{{@root.currentPage}}" hx-target="#{{@root.currentPage}}TableContainer" data-table="{{@root.currentPage}}" class="settings-filter-btn flex items-center justify-center min-h-[44px] px-3 {{#unless @root.query.status}}text-foreground font-medium{{else}}text-muted-foreground{{/unless}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon 'list' size='14' class='mr-1'}}}All</button>
                      </div>
                      {{#each @root.tableConfig.statusOptions}}
                       <div class="flex flex-col items-center justify-center group flex-shrink-0">
                         <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq ../query.status value)}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
-                         <button id="filter-link-{{value}}" type="button" hx-get="/admin/table-pages/{{../currentPage}}?status={{value}}" hx-push-url="/admin/table-pages/{{../currentPage}}?status={{value}}" hx-target="#{{../currentPage}}TableContainer" data-table="{{../currentPage}}" class="settings-filter-btn flex items-center {{#if (eq ../query.status value)}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon icon size='14' class='mr-1'}}}{{label}}</button>
+                          <button id="filter-link-{{value}}" type="button" hx-get="/admin/table-pages/{{../currentPage}}?status={{value}}" hx-push-url="/admin/table-pages/{{../currentPage}}?status={{value}}" hx-target="#{{../currentPage}}TableContainer" data-table="{{../currentPage}}" class="settings-filter-btn flex items-center justify-center min-h-[44px] px-3 {{#if (eq ../query.status value)}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon icon size='14' class='mr-1'}}}{{label}}</button>
                       </div>
                       {{/each}}
                   </div>
@@ -91,7 +91,7 @@
                      {{#each @root.filterLinks}}
                      <div class="flex flex-col items-center justify-center group flex-shrink-0">
                        <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
-                       <a id="{{id}}" href="{{href}}" hx-get="{{href}}" hx-target="#{{@root.section}}-main-content" class="flex items-center text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon icon size='14' class='mr-1'}}}{{text}}</a>
+                        <a id="{{id}}" href="{{href}}" hx-get="{{href}}" hx-target="#{{@root.section}}-main-content" class="flex items-center justify-center min-h-[44px] px-3 text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon icon size='14' class='mr-1'}}}{{text}}</a>
                      </div>
                      {{/each}}
                    </div>

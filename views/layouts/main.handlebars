@@ -59,17 +59,20 @@
          </div>
      </div>
 
-    <!-- Main content (hidden initially) -->
-    <div id="main-content" class="min-h-screen hidden flex flex-col">
-        {{> nav}}
-        {{> filter-nav}}
-        <div class="flex flex-1 min-h-0">
-            {{> sidebar}}
-            <main class="flex-1 p-4 overflow-y-auto">
-                {{{body}}}
-            </main>
-        </div>
-    </div>
+     <!-- Main content (hidden initially) -->
+     <div id="main-content" class="min-h-screen hidden flex flex-col">
+         {{> nav}}
+         {{> filter-nav}}
+         <div class="flex flex-1 min-h-0">
+             {{> sidebar}}
+             <main class="flex-1 p-2 sm:p-4 overflow-y-auto">
+                 {{{body}}}
+             </main>
+         </div>
+     </div>
+
+     <!-- Mobile sidebar overlay -->
+     <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="closeMobileSidebar()"></div>
 
     <!-- JavaScript Section -->
     <script>
@@ -406,6 +409,51 @@
             } else {
                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'flex');
             }
+        }
+
+        // Mobile sidebar functions
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-sidebar-overlay');
+
+            if (!sidebar || !overlay) {
+                console.error('Sidebar or overlay elements not found');
+                return;
+            }
+
+            const isOpen = sidebar.classList.contains('translate-x-0') && sidebar.classList.contains('opacity-100');
+
+            if (isOpen) {
+                closeMobileSidebar();
+            } else {
+                sidebar.classList.remove('opacity-0');
+                sidebar.classList.add('opacity-100');
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+                sidebar.classList.remove('pointer-events-none');
+                sidebar.classList.add('pointer-events-auto');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent background scroll
+            }
+        }
+
+        function closeMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-sidebar-overlay');
+
+            if (!sidebar || !overlay) {
+                console.error('Sidebar or overlay elements not found');
+                return;
+            }
+
+            sidebar.classList.remove('opacity-100');
+            sidebar.classList.add('opacity-0');
+            sidebar.classList.remove('translate-x-0');
+            sidebar.classList.add('-translate-x-full');
+            sidebar.classList.remove('pointer-events-auto');
+            sidebar.classList.add('pointer-events-none');
+            overlay.classList.add('hidden');
+            document.body.style.overflow = ''; // Restore scroll
         }
 
         // Theme toggle functionality
