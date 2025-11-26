@@ -1,15 +1,6 @@
 <!-- Top Navigation Bar -->
 <nav class="bg-card text-card-foreground px-2 sm:px-4 border-b border-border flex items-center justify-between min-h-12">
     <div class="flex items-center gap-2 sm:gap-4">
-        <!-- Mobile hamburger menu -->
-        <button id="mobile-sidebar-toggle" class="md:hidden w-8 h-8 flex items-center justify-center hover:bg-accent rounded-md transition-colors" onclick="toggleMobileSidebar()" title="Toggle Sidebar">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-muted-foreground">
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-        </button>
-
         <div class="h-6 w-6 ml-1 mr-4 sm:mr-6 text-primary"><svg xmlns="http://www.w3.org/2000/svg" width="33" height="36" viewBox="0 0 33 36"
          fill="none" class="h-full w-full">
          <path
@@ -18,14 +9,14 @@
        </svg></div>
 
         <div class="hidden md:flex items-center gap-2 sm:gap-4">
-{{> nav-item section="main" text="Main"}}
-{{> nav-item section="content-management" text="Content"}}
-{{> nav-item section="system" text="System"}}
-{{> nav-item section="business" text="Business"}}
-{{> nav-item section="learning" text="Learning"}}
-{{> nav-item section="projects" text="Projects"}}
-{{> nav-item section="help" text="Help"}}
-{{> nav-item section="financial" text="Financial"}}
+{{> nav-item section="main" text="Main" icon="layout"}}
+{{> nav-item section="content-management" text="Content" icon="file-text"}}
+{{> nav-item section="system" text="System" icon="settings"}}
+{{> nav-item section="business" text="Business" icon="briefcase"}}
+{{> nav-item section="learning" text="Learning" icon="book-open"}}
+{{> nav-item section="projects" text="Projects" icon="folder"}}
+{{> nav-item section="help" text="Help" icon="help-circle"}}
+{{> nav-item section="financial" text="Financial" icon="dollar-sign"}}
         </div>
       </div>
   <div class="flex">

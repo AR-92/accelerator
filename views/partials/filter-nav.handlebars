@@ -2,10 +2,10 @@
     <nav class="bg-card text-card-foreground px-2 sm:px-4 border-b border-border flex items-center justify-between min-h-9">
    <!-- Left Section: Icon and Filter Links -->
     <div class="flex items-center gap-4">
-       <!-- Sidebar Toggle Button -->
-        <button id="sidebar-toggle" class="hidden md:flex w-6 h-6 ml-1 mr-6 flex items-center justify-center hover:bg-accent rounded-md transition-colors" onclick="toggleSidebar()" title="Toggle Sidebar">
-         {{{icon 'panel-right' size='16' class='text-muted-foreground w-4 h-4'}}}
-       </button>
+        <!-- Sidebar Toggle Button -->
+         <button id="sidebar-toggle" class="flex w-6 h-6 ml-1 mr-6 flex items-center justify-center hover:bg-accent rounded-md transition-colors" onclick="toggleSidebarOrMobile()" title="Toggle Sidebar">
+          {{{icon 'panel-right' size='16' class='text-muted-foreground w-4 h-4'}}}
+        </button>
             <!-- Filter Links -->
             <div id="filter-links" class="hidden md:flex items-center justify-center flex-1">
               {{#if settingsCategories}}

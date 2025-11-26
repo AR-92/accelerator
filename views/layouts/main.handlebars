@@ -357,11 +357,13 @@
         // Sidebar toggle functionality
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            const isCollapsed = sidebar.classList.contains('w-16');
+            console.log('Sidebar element:', sidebar);
+            if (!sidebar) return;
+            const isCollapsed = sidebar.style.width === '66px';
+            console.log('Toggling sidebar, isCollapsed:', isCollapsed);
 
             if (isCollapsed) {
-                sidebar.classList.remove('w-16');
-                sidebar.classList.add('w-56');
+                sidebar.style.width = '224px';
                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'flex');
                 // Restore normal padding and margins for expanded state
                 document.querySelectorAll('#sidebar a').forEach(link => {
@@ -372,8 +374,7 @@
                     icon.classList.add('mr-3');
                 });
             } else {
-                sidebar.classList.remove('w-56');
-                sidebar.classList.add('w-16');
+                sidebar.style.width = '66px';
                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'none');
                 // Adjust padding for collapsed state and remove margins
                 document.querySelectorAll('#sidebar a').forEach(link => {
@@ -393,10 +394,10 @@
         function initializeSidebar() {
             const sidebar = document.getElementById('sidebar');
             const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+            console.log('Initializing sidebar, isCollapsed:', isCollapsed);
 
             if (isCollapsed) {
-                sidebar.classList.remove('w-56');
-                sidebar.classList.add('w-16');
+                sidebar.style.width = '66px';
                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'none');
                 // Apply collapsed padding and remove margins
                 document.querySelectorAll('#sidebar a').forEach(link => {
@@ -407,7 +408,17 @@
                     icon.classList.remove('mr-3');
                 });
             } else {
+                sidebar.style.width = '224px';
                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'flex');
+            }
+        }
+
+        // Sidebar toggle for both desktop and mobile
+        function toggleSidebarOrMobile() {
+            if (window.innerWidth < 768) {
+                toggleMobileSidebar();
+            } else {
+                toggleSidebar();
             }
         }
 

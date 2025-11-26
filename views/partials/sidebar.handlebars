@@ -1,8 +1,19 @@
 <!-- Sidebar -->
-<div id="sidebar" class="w-56 md:w-56 transition-all duration-300 bg-card border border-border fixed md:relative inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto" style="height: -webkit-fill-available;">
-  <div class=" h-full overflow-y-auto">
-    <nav class="px-3 py-3 text-sm">
-      {{#if (eq currentSection 'main')}}
+  <div id="sidebar" class="w-56 transition-all duration-300 bg-card border border-border fixed md:relative inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto" style="height: -webkit-fill-available;">
+   <div class=" h-full overflow-y-auto">
+     <nav class="px-3 py-3 text-sm">
+       <!-- Top-level Sections -->
+       <ul class="space-y-1 border-b border-border pb-2 mb-2 md:hidden">
+         {{#> sidebar-item href="/admin/other-pages/main" title="Main" text="Main" spanClass="font-medium sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
+         {{#> sidebar-item href="/admin/other-pages/content-management" title="Content" text="Content" spanClass="font-medium sidebar-text"}}{{{icon 'file-text' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
+         {{#> sidebar-item href="/admin/other-pages/system" title="System" text="System" spanClass="font-medium sidebar-text"}}{{{icon 'settings' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
+         {{#> sidebar-item href="/admin/other-pages/business" title="Business" text="Business" spanClass="font-medium sidebar-text"}}{{{icon 'briefcase' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
+         {{#> sidebar-item href="/admin/other-pages/learning" title="Learning" text="Learning" spanClass="font-medium sidebar-text"}}{{{icon 'book-open' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
+         {{#> sidebar-item href="/admin/other-pages/projects" title="Projects" text="Projects" spanClass="font-medium sidebar-text"}}{{{icon 'folder' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
+         {{#> sidebar-item href="/admin/other-pages/help" title="Help" text="Help" spanClass="font-medium sidebar-text"}}{{{icon 'help-circle' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
+         {{#> sidebar-item href="/admin/other-pages/financial" title="Financial" text="Financial" spanClass="font-medium sidebar-text"}}{{{icon 'dollar-sign' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
+       </ul>
+       {{#if (eq currentSection 'main')}}
       <ul class="space-y-1">
          {{#> sidebar-item href="/admin/other-pages/main" title="Overview" page="main" text="Overview" spanClass="font-medium
          sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}

@@ -5,29 +5,29 @@
     <thead class="bg-card border-b border-border rounded-t-xl">
       <tr>
     {{#if showCheckbox}}
-     <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">
-      <input type="checkbox" id="selectAll-{{tableId}}" class="rounded border-input text-primary
-        aria-label="Select all {{entityName}}">
-    </th>
-    {{/if}}
+      <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted hidden md:table-cell">
+       <input type="checkbox" id="selectAll-{{tableId}}" class="rounded border-input text-primary
+         aria-label="Select all {{entityName}}">
+     </th>
+     {{/if}}
     {{#each columns}}
      <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider{{#if hidden}} hidden {{responsive}} {{/if}} bg-muted">{{label}}</th>
     {{/each}}
-    {{#if actions}}
-     <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">Actions</th>
-    {{/if}}
+     {{#if actions}}
+      <th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted hidden md:table-cell">Actions</th>
+     {{/if}}
       </tr>
     </thead>
     <!-- Table Body -->
     <tbody class="text-sm text-card-foreground">
       {{#each data}}
         <tr id="{{../entityName}}-row-{{id}}" class="h-16 border-b border-border hover:bg-muted/50 even:bg-muted/30 transition-colors duration-150">
-        {{#if ../showCheckbox}}
-        <td class="px-6 py-4">
-          <input type="checkbox" class="{{../entityName}}Checkbox rounded border-input text-primary 
-            value="{{id}}" data-{{../entityName}}-id="{{id}}" aria-label="Select {{../entityName}} {{title}}">
-        </td>
-        {{/if}}
+         {{#if ../showCheckbox}}
+         <td class="px-6 py-4 hidden md:table-cell">
+           <input type="checkbox" class="{{../entityName}}Checkbox rounded border-input text-primary 
+             value="{{id}}" data-{{../entityName}}-id="{{id}}" aria-label="Select {{../entityName}} {{title}}">
+         </td>
+         {{/if}}
         {{#each ../columns}}
         <td class="px-6 py-4{{#if hidden}} hidden {{responsive}} {{/if}}">
            {{#if (eq type 'status')}}
@@ -46,19 +46,19 @@
             {{/if}}
         </td>
         {{/each}}
-         {{#if ../actions}}
-         <td class="px-6 py-4">
-           <div class="relative">
-              <button onclick="toggleActionMenu(this)"
-                class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors"
-                aria-label="Actions menu for {{../entityName}} {{id}}"
-                data-entity="{{../entityName}}"
-                data-id="{{id}}">
-                {{{icon 'ellipsis-vertical' size='16' class='w-4 h-4'}}}
-              </button>
-           </div>
-         </td>
-         {{/if}}
+          {{#if ../actions}}
+          <td class="px-6 py-4 hidden md:table-cell">
+            <div class="relative">
+               <button onclick="toggleActionMenu(this)"
+                 class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors"
+                 aria-label="Actions menu for {{../entityName}} {{id}}"
+                 data-entity="{{../entityName}}"
+                 data-id="{{id}}">
+                 {{{icon 'ellipsis-vertical' size='16' class='w-4 h-4'}}}
+               </button>
+            </div>
+          </td>
+          {{/if}}
       </tr>
        {{else}}
         <tr class="h-16">
