@@ -2375,6 +2375,9 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+  :focus-visible {
+    outline: none;
+  }
 }
 @keyframes enter {
   from {
