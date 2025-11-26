@@ -907,6 +907,20 @@
             setInterval(checkSessionTimeout, 60 * 1000);
         }
 
+        // HTMX config to add auth header
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add Authorization header to HTMX requests
+            document.body.addEventListener('htmx:configRequest', function(evt) {
+                if (supabase) {
+                    supabase.auth.getSession().then(({ data: { session } }) => {
+                        if (session && session.access_token) {
+                            evt.detail.headers['Authorization'] = 'Bearer ' + session.access_token;
+                        }
+                    });
+                }
+            });
+        });
+
         // Check auth on page load
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(checkAuthAndShowContent, 100); // Small delay for Supabase to load

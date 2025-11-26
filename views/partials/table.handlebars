@@ -129,41 +129,41 @@
       class="dropdown-menu fixed w-48 bg-popover rounded-md shadow-lg border border-border"
       style="display: none;">
      <div class="py-1">
-       {{#each ../actions}}
-        {{#if (eq type 'link')}}
-         <a href="{{url}}/{{../id}}"
-           class="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
-           icon: {{{icon}}}
+        {{#each ../actions}}
+         {{#if (eq type 'link')}}
+          <a href="{{url}}/{{../id}}"
+            class="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+            {{{icon icon size='16' class='w-4 h-4 mr-2'}}}
+            {{label}}
+          </a>
+         {{else if (eq type 'button')}}
+         <button {{#if hxGet}}hx-get="{{hxGet}}/{{../id}}"{{/if}} {{#if hxTarget}}hx-target="{{hxTarget}}"{{/if}} {{#if hxSwap}}hx-swap="{{hxSwap}}"{{/if}} {{#if onclick}}onclick="{{onclick}}({{../id}})"{{/if}}
+           class="flex items-center w-full px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+           {{{icon icon size='16' class='w-4 h-4 mr-2'}}}
            {{label}}
-         </a>
-        {{else if (eq type 'button')}}
-        <button {{#if hxGet}}hx-get="{{hxGet}}/{{../id}}"{{/if}} {{#if hxTarget}}hx-target="{{hxTarget}}"{{/if}} {{#if hxSwap}}hx-swap="{{hxSwap}}"{{/if}} {{#if onclick}}onclick="{{onclick}}({{../id}})"{{/if}}
-          class="flex items-center w-full px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
-          {{{icon}}}
-          {{label}}
-        </button>
-        {{else if (eq type 'delete')}}
-        <button {{#if hxDelete}}hx-delete="{{hxDelete}}/{{../id}}"{{/if}} {{#if hxConfirm}}hx-confirm="{{hxConfirm}}"{{/if}} {{#if hxTarget}}hx-target="{{hxTarget}}"{{/if}} {{#if hxSwap}}hx-swap="{{hxSwap}}"{{/if}} {{#if onclick}}onclick="{{onclick}}({{../id}}, '{{../title}}')"{{/if}}
-          class="flex items-center w-full px-4 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors">
-          {{{icon}}}
-          {{label}}
-        </button>
-        {{else if (eq type 'approve')}}
-        <button {{#if hxPut}}hx-put="{{hxPut}}/{{../id}}/approve"{{/if}} {{#if hxTarget}}hx-target="{{hxTarget}}"{{/if}} {{#if hxSwap}}hx-swap="{{hxSwap}}"{{/if}}
-          class="flex items-center w-full px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition-colors">
-          {{{icon}}}
-          {{label}}
-        </button>
-        {{else if (eq type 'reject')}}
-        <button {{#if hxPut}}hx-put="{{hxPut}}/{{../id}}/reject"{{/if}} {{#if hxTarget}}hx-target="{{hxTarget}}"{{/if}} {{#if hxSwap}}hx-swap="{{hxSwap}}"{{/if}}
-          class="flex items-center w-full px-4 py-2 text-sm text-yellow-600 hover:bg-yellow-50 transition-colors">
-          {{{icon}}}
-          {{label}}
-        </button>
-        {{else}}
-       <div class="px-4 py-2 text-sm text-muted-foreground">No actions available</div>
-       {{/if}}
-       {{/each}}
+         </button>
+         {{else if (eq type 'delete')}}
+         <button {{#if hxDelete}}hx-delete="{{hxDelete}}/{{../id}}"{{/if}} {{#if hxConfirm}}hx-confirm="{{hxConfirm}}"{{/if}} {{#if hxTarget}}hx-target="{{hxTarget}}"{{/if}} {{#if hxSwap}}hx-swap="{{hxSwap}}"{{/if}} {{#if onclick}}onclick="{{onclick}}({{../id}}, '{{../title}}')"{{/if}}
+           class="flex items-center w-full px-4 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors">
+           {{{icon icon size='16' class='w-4 h-4 mr-2'}}}
+           {{label}}
+         </button>
+         {{else if (eq type 'approve')}}
+         <button {{#if hxPut}}hx-put="{{hxPut}}/{{../id}}/approve"{{/if}} {{#if hxTarget}}hx-target="{{hxTarget}}"{{/if}} {{#if hxSwap}}hx-swap="{{hxSwap}}"{{/if}}
+           class="flex items-center w-full px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition-colors">
+           {{{icon icon size='16' class='w-4 h-4 mr-2'}}}
+           {{label}}
+         </button>
+         {{else if (eq type 'reject')}}
+         <button {{#if hxPut}}hx-put="{{hxPut}}/{{../id}}/reject"{{/if}} {{#if hxTarget}}hx-target="{{hxTarget}}"{{/if}} {{#if hxSwap}}hx-swap="{{hxSwap}}"{{/if}}
+           class="flex items-center w-full px-4 py-2 text-sm text-yellow-600 hover:bg-yellow-50 transition-colors">
+           {{{icon icon size='16' class='w-4 h-4 mr-2'}}}
+           {{label}}
+         </button>
+         {{else}}
+        <div class="px-4 py-2 text-sm text-muted-foreground">No actions available</div>
+        {{/if}}
+        {{/each}}
        {{#unless ../actions}}
        <div class="px-4 py-2 text-sm text-muted-foreground">No actions configured</div>
        {{/unless}}

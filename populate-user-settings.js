@@ -2,7 +2,8 @@ import db from './src/services/supabase.js';
 import config from './src/config/index.js';
 import logger from './src/utils/logger.js';
 
-const userId = 'admin-user-id'; // Replace with actual user ID
+// Get user ID from command line or use default
+const userId = process.argv[2] || 'admin-user-id';
 
 const defaultUserSettings = {
   account: {

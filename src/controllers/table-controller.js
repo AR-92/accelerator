@@ -9,6 +9,20 @@ import { getTableConfig } from '../config/tableFilters.js';
 import { isHtmxRequest } from '../helpers/http/index.js';
 import { tableConfigs } from '../config/tableConfigs.js';
 
+// Simple icon SVG getter for HTMX generated HTML
+function getIconSvg(name, size = 16, className = 'w-4 h-4') {
+  const icons = {
+    eye: `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${className}"><path d="M2.99902 3L20.999 21M9.8433 9.91364C9.32066 10.4536 8.99902 11.1892 8.99902 12C8.99902 13.6569 10.3422 15 12 15C12.8215 15 13.5667 14.669 14.1086 14.133M6.49902 6.64715C4.59972 7.90034 3.15305 9.78394 2.45703 12C3.73128 16.0571 7.52159 19 12 19C13.9881 19 15.8414 18.4194 17.3988 17.4184M10.999 5.04939C11.328 5.01673 11.6617 5 11.999 5C16.4784 5 20.2687 7.94291 21.5429 12C21.2607 12.8089 20.9076 13.5684 20.5 14.263"/></svg>`,
+    pencil: `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${className}"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`,
+    trash: `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${className}"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>`,
+    check: `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${className}"><polyline points="20,6 9,17 4,12"></polyline></svg>`,
+    x: `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${className}"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`,
+    link: `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${className}"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`,
+    button: `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${className}"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>`,
+  };
+  return icons[name] || `<span>${name}</span>`;
+}
+
 /**
  * Generic table controller that handles all table operations
  * @param {Object} req - Express request object
@@ -43,20 +57,20 @@ export const getGenericTable = async (req, res) => {
         type: 'link',
         url: `/admin/table-pages/${tableName}/view`,
         label: 'View',
-        icon: 'test',
+        icon: 'eye',
       },
       {
         type: 'link',
         url: `/admin/table-pages/${tableName}/edit`,
         label: 'Edit',
-        icon: 'test2',
+        icon: 'pencil',
       },
       {
         type: 'delete',
         hxDelete: `/api/${tableName}`,
         hxConfirm: `Are you sure you want to delete this ${config.entityName}?`,
         label: 'Delete',
-        icon: 'test3',
+        icon: 'trash',
       },
     ];
 
@@ -603,31 +617,31 @@ function generateTableHtml(data, config, pagination, tableName) {
         if (action.type === 'link') {
           html += `<a href="${url}"
             class="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
-            ${action.icon || '<span>Link</span>'}
+            ${getIconSvg(action.icon || 'link', 16, 'w-4 h-4 mr-2')}
             ${action.label}
           </a>`;
         } else if (action.type === 'button') {
           html += `<button ${hxGet ? `hx-get="${hxGet}"` : ''} ${hxTarget ? `hx-target="${hxTarget}"` : ''} ${hxSwap ? `hx-swap="${hxSwap}"` : ''}
             class="flex items-center w-full px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
-            ${action.icon || '<span>Button</span>'}
+            ${getIconSvg(action.icon || 'button', 16, 'w-4 h-4 mr-2')}
             ${action.label}
           </button>`;
         } else if (action.type === 'delete') {
           html += `<button ${hxDelete ? `hx-delete="${hxDelete}"` : ''} ${hxConfirm ? `hx-confirm="${hxConfirm.replace('this idea', `"${item.title || item.name || 'this item'}"`)}"` : ''} ${hxTarget ? `hx-target="${hxTarget}"` : ''} ${hxSwap ? `hx-swap="${hxSwap}"` : ''}
             class="flex items-center w-full px-4 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors">
-            ${action.icon || '<span>Delete</span>'}
+            ${getIconSvg(action.icon || 'trash', 16, 'w-4 h-4 mr-2')}
             ${action.label}
           </button>`;
         } else if (action.type === 'approve') {
           html += `<button ${hxPut ? `hx-put="${hxPut}"` : ''} ${hxTarget ? `hx-target="${hxTarget}"` : ''} ${hxSwap ? `hx-swap="${hxSwap}"` : ''}
             class="flex items-center w-full px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition-colors">
-            ${action.icon || '<span>Approve</span>'}
+            ${getIconSvg(action.icon || 'check', 16, 'w-4 h-4 mr-2')}
             ${action.label}
           </button>`;
         } else if (action.type === 'reject') {
           html += `<button ${hxPut ? `hx-put="${hxPut}"` : ''} ${hxTarget ? `hx-target="${hxTarget}"` : ''} ${hxSwap ? `hx-swap="${hxSwap}"` : ''}
             class="flex items-center w-full px-4 py-2 text-sm text-yellow-600 hover:bg-yellow-50 transition-colors">
-            ${action.icon || '<span>Reject</span>'}
+            ${getIconSvg(action.icon || 'x', 16, 'w-4 h-4 mr-2')}
             ${action.label}
           </button>`;
         } else {

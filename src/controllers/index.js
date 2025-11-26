@@ -33,7 +33,7 @@ import {
   getRowCreate,
 } from './table-controller.js';
 
-import { requireAuth } from '../middleware/auth/index.js';
+import { requireAuth, checkAuth } from '../middleware/auth/index.js';
 
 // Re-export for backward compatibility
 
@@ -68,8 +68,8 @@ export default function adminRoutes(app) {
 
   // Main pages (client-side auth protection via main layout)
 
-  app.get('/admin/profile-settings', getProfileSettings);
-  app.get('/admin/settings', getSettings);
+  app.get('/admin/profile-settings', checkAuth, getProfileSettings);
+  app.get('/admin/settings', checkAuth, getSettings);
   app.get('/admin/system-health', getSystemHealth);
   app.get('/admin/system-config', getSystemConfig);
   app.get('/admin/system-logs', getSystemLogs);
@@ -97,8 +97,12 @@ export default function adminRoutes(app) {
 
   // Other pages (client-side auth protection)
 
-  app.get('/admin/other-pages/profile-settings', getProfileSettings);
-  app.post('/admin/other-pages/profile-settings', postProfileSettings);
+  app.get('/admin/other-pages/profile-settings', checkAuth, getProfileSettings);
+  app.post(
+    '/admin/other-pages/profile-settings',
+    checkAuth,
+    postProfileSettings
+  );
   app.get('/admin/other-pages/settings', getSettings);
   app.post('/admin/other-pages/settings', postSettings);
   app.get('/admin/other-pages/system-health', getSystemHealth);

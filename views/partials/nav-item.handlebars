@@ -1,7 +1,6 @@
 <div class="flex flex-col items-center justify-center group">
    <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq currentSection section)}}opacity-100{{else}}opacity-0{{/if}} group-hover:opacity-100"></div>
-   <a href="/admin/other-pages/{{section}}" class="flex items-center text-{{#if (eq currentSection section)}}foreground{{else}}muted-foreground{{/if}} font-medium text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">
-     {{{icon icon size='16' class='w-4 h-4 mr-2'}}}
+   <a href="/admin/other-pages/{{section}}" class="text-{{#if (eq currentSection section)}}foreground{{else}}muted-foreground{{/if}} font-medium text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">
      <span class="nav-text">{{text}}</span>
    </a>
 </div>

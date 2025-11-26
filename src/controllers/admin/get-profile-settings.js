@@ -7,8 +7,8 @@ export const getProfileSettings = async (req, res) => {
   try {
     logger.info('Admin profile settings page accessed');
 
-    // Assume user_id from auth, for now use a placeholder
-    const userId = req.user?.id || 'admin-user-id'; // Replace with actual user ID
+    // Get user_id from auth
+    const userId = req.user?.id || 'admin-user-id'; // Fallback for development
 
     // Load settings from DB first, fallback to config
     let dbSettings = {};
@@ -30,11 +30,14 @@ export const getProfileSettings = async (req, res) => {
       );
     }
 
-    // Default settings from config/env
+    // Default settings from config/env and user data
+    const user = req.user;
     const defaultSettings = {
       account: {
-        displayName: 'Administrator',
-        email: 'admin@accelerator.com',
+        displayName: user?.user_metadata?.firstName
+          ? `${user.user_metadata.firstName} ${user.user_metadata.lastName || ''}`.trim()
+          : user?.email?.split('@')[0] || 'Administrator',
+        email: user?.email || 'admin@accelerator.com',
         phone: '+1 (555) 123-4567',
         location: 'New York, NY',
         bio: 'System administrator with expertise in project management and team coordination.',
@@ -165,7 +168,7 @@ export const postProfileSettings = async (req, res) => {
   try {
     logger.info('Saving profile settings');
 
-    const userId = req.user?.id || 'admin-user-id'; // Replace with actual user ID
+    const userId = req.user?.id || 'admin-user-id'; // Fallback for development
     const updates = [];
     const categoryMappings = {
       displayName: { category: 'account', type: 'string' },

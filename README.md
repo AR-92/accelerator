@@ -1,315 +1,209 @@
-# Scalable Boilerplate: Node.js + Express + Handlebars + PostgreSQL
+# Accelerator
 
-A production-ready, scalable boilerplate for building modern web applications with Node.js, Express, Handlebars templating, PostgreSQL database, and comprehensive middleware stack.
+A comprehensive business accelerator platform built with Node.js, designed to streamline business development, project management, and growth tracking for startups and enterprises.
 
 ## Features
 
-- **Scalable Architecture**: Modular structure with controllers, models, middleware, and services
-- **Security First**: Helmet, CORS, rate limiting, input validation, and sanitization
-- **Database Abstraction**: Repository pattern with PostgreSQL support
-- **Comprehensive Logging**: Winston-based logging with multiple transports
-- **Testing Ready**: Jest setup with unit and integration tests
-- **Container Ready**: Docker and docker-compose configuration
-- **Environment Management**: Centralized configuration with environment variables
-- **Error Handling**: Global error handling with proper HTTP status codes
-- **Input Validation**: Express-validator for robust API validation
-- **HTMX Integration**: Seamless AJAX interactions without JavaScript complexity
-- **Modern UI**: Tailwind CSS v4 with shadcn/ui components
+### 🏢 Business Management
+
+- **Business Models**: Create and manage different business model templates (startup, enterprise, nonprofit)
+- **Business Plans**: Develop detailed business plans with financial projections
+- **Enterprises**: Track and manage enterprise-level ventures
+- **Financial Modeling**: Comprehensive financial planning and analysis tools
+
+### 📊 Dashboard & Analytics
+
+- **Admin Dashboard**: System health monitoring, performance metrics, and activity tracking
+- **Business Analytics**: Growth metrics, success rates, funding progress, and team expansion
+- **System Health**: Real-time monitoring of database connections, memory usage, and performance
+- **Interactive Charts**: Visual representation of trends and data using Chart.js
+
+### 🎯 Project Management
+
+- **Project Tracking**: Monitor project status from draft to completion
+- **Collaboration Tools**: Team collaboration features and project milestones
+- **Task Management**: Organize and track project tasks and deliverables
+
+### 📚 Learning Platform
+
+- **Learning Modules**: Structured learning paths (basics, intermediate, advanced)
+- **Content Management**: Create and manage educational content
+- **Assessments**: Learning progress tracking and evaluations
+
+### 👥 User Management
+
+- **Authentication**: Secure login/signup system
+- **Role-based Access**: Admin, user, and moderator roles
+- **Profile Management**: User profiles with customizable settings
+
+### 🔧 System Administration
+
+- **System Configuration**: Comprehensive settings management
+- **API Management**: RESTful API endpoints for integrations
+- **Security Features**: Rate limiting, CORS, CSRF protection, input sanitization
+- **Logging & Monitoring**: Winston-based logging with multiple transports
+
+## Tech Stack
+
+- **Backend**: Node.js, Express.js
+- **Database**: Supabase (PostgreSQL)
+- **Frontend**: Handlebars templating, TailwindCSS
+- **Charts**: Chart.js
+- **Authentication**: JWT, session management
+- **Security**: Helmet, rate limiting, input validation
+- **Deployment**: Docker support
 
 ## Prerequisites
 
-- Node.js (v18 or higher)
+- Node.js (v16 or higher)
 - npm or yarn
-- PostgreSQL database (Supabase, AWS RDS, or local PostgreSQL)
-- Docker (optional, for containerized deployment)
+- Supabase account (for database)
 
-## Quick Start
+## Installation
 
-1. **Clone the repository:**
+1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/AR-92/accelerator.git
    cd accelerator
    ```
 
-2. **Install dependencies:**
+2. **Install dependencies**
 
    ```bash
    npm install
    ```
 
-3. **Set up environment variables:**
+3. **Environment Setup**
 
    ```bash
    cp .env.example .env
-   # Edit .env with your database credentials
    ```
 
-4. **Set up the database:**
-   - Create a PostgreSQL database
-   - Run the SQL schema from `db/init.sql`
+   Configure your `.env` file with the required environment variables:
+   - Database connection (Supabase URL and keys)
+   - JWT secret
+   - Email configuration (optional)
+   - Other settings as needed
 
-5. **Start development:**
-
+4. **Build CSS**
    ```bash
-   npm run dev
+   npm run build-css
    ```
 
-6. **Open [http://localhost:3000](http://localhost:3000)**
-
-## Project Structure
-
-```
-accelerator/
-├── src/
-│   ├── config/           # Environment configuration
-│   ├── controllers/      # Route handlers
-│   ├── middleware/       # Custom middleware
-│   ├── models/          # Data models
-│   ├── services/        # External services (database, etc.)
-│   ├── utils/           # Utility functions
-│   ├── helpers/         # Handlebars helpers
-│   ├── styles/          # CSS files
-│   └── app.js           # Express app setup
-├── tests/               # Test files
-│   ├── unit/           # Unit tests
-│   └── integration/    # Integration tests
-├── views/              # Handlebars templates
-├── public/             # Static assets
-├── db/                 # Database files
-├── logs/               # Application logs
-├── Dockerfile          # Docker configuration
-├── docker-compose.yml  # Docker compose setup
-├── jest.config.js      # Jest testing configuration
-└── index.js            # Application entry point
-```
-
-## Available Scripts
+## Usage
 
 ### Development
 
-- `npm run dev` - Start development mode (CSS watching + server)
-- `npm run build-css` - Build Tailwind CSS with file watching
+```bash
+npm run dev
+```
+
+This starts the development server with hot reloading for both the Node.js server and CSS compilation.
+
+### Production
+
+```bash
+npm run build
+npm start
+```
+
+### Available Scripts
+
 - `npm start` - Start the production server
-
-### Testing
-
-- `npm test` - Run all tests
-- `npm run test:watch` - Run tests in watch mode
-- `npm run test:coverage` - Run tests with coverage report
-
-### Building
-
+- `npm run dev` - Start development server with auto-reload
+- `npm run build-css` - Build CSS from Tailwind sources
 - `npm run build` - Build CSS for production
-
-### Code Quality
-
-- `npm run lint` - Run ESLint (when configured)
-- `npm run format` - Run Prettier (when configured)
+- `npm run lint` - Run linting (currently configured to skip)
+- `npm run format` - Format code with Prettier
+- `npm run fetch-openapi` - Fetch OpenAPI specifications
 
 ## API Documentation
 
-### Todos API
+The application provides RESTful API endpoints for:
 
-All endpoints support both JSON responses and HTMX HTML fragments based on the request type.
+- Business data management
+- User authentication
+- System health monitoring
+- Content management
+- Learning module interactions
 
-#### GET /api/todos
+API endpoints are available under `/api/` routes with proper authentication and validation.
 
-Fetch all todos.
+## Database Schema
 
-**Response (JSON):**
+The application uses Supabase with tables for:
 
-```json
-{
-  "success": true,
-  "data": [
-    {
-      "id": 1,
-      "title": "Sample Todo",
-      "description": "Description",
-      "completed": false,
-      "created_at": "2024-01-01T00:00:00Z",
-      "updated_at": "2024-01-01T00:00:00Z"
-    }
-  ]
-}
-```
+- Users and authentication
+- Business models and plans
+- Projects and tasks
+- Financial data
+- Learning content
+- System logs and settings
 
-#### POST /api/todos
+## Docker Support
 
-Create a new todo.
-
-**Request Body:**
-
-```json
-{
-  "title": "New Todo",
-  "description": "Optional description"
-}
-```
-
-#### PUT /api/todos/:id
-
-Update a todo.
-
-**Request Body:**
-
-```json
-{
-  "title": "Updated Title",
-  "description": "Updated Description",
-  "completed": true
-}
-```
-
-#### DELETE /api/todos/:id
-
-Delete a todo.
-
-### Health Check
-
-#### GET /health
-
-Application health check endpoint.
-
-**Response:**
-
-```json
-{
-  "status": "OK",
-  "timestamp": "2024-01-01T00:00:00.000Z",
-  "environment": "development",
-  "version": "1.0.0"
-}
-```
-
-## Database Setup
-
-### Using Supabase
-
-1. Create a new Supabase project at [supabase.com](https://supabase.com)
-2. Go to Settings > Database to find your connection details
-3. Update your `.env` file with the credentials
-
-### Using Docker
+A `docker-compose.yml` file is provided for containerized deployment. Use:
 
 ```bash
 docker-compose up -d
 ```
 
-This will start PostgreSQL and the application in containers.
+## Configuration
 
-### Manual PostgreSQL Setup
+The application supports extensive configuration through environment variables. Key configuration areas include:
 
-1. Create a PostgreSQL database
-2. Run the schema from `db/init.sql`
-3. Update your `.env` file with database credentials
+- **Server Settings**: Port, environment, clustering
+- **Database**: Connection pooling, SSL, migrations
+- **Security**: Rate limiting, CORS, authentication
+- **UI/UX**: Theming, localization, performance
+- **AI Integration**: OpenAI API configuration for content generation
+- **Email & Notifications**: SMTP settings, webhooks
+- **Compliance**: GDPR, audit trails, data retention
 
-## Environment Variables
-
-Copy `.env.example` to `.env` and configure:
-
-```env
-# Server
-PORT=3000
-NODE_ENV=development
-
-# Database
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=accelerator
-DB_USER=postgres
-DB_PASSWORD=password
-
-# Supabase (alternative to direct DB)
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_ANON_KEY=your-anon-key
-
-# Security
-JWT_SECRET=your-jwt-secret
-CORS_ORIGIN=http://localhost:3000
-```
-
-## Deployment
-
-### Docker Deployment
-
-```bash
-# Build and run
-docker-compose -f docker-compose.yml up -d
-
-# Or for production
-docker build -t accelerator .
-docker run -p 3000:3000 accelerator
-```
-
-### Traditional Deployment
-
-1. Build assets: `npm run build`
-2. Set environment variables
-3. Start with: `npm start`
-4. Use a process manager like PM2 in production
-
-## Testing
-
-```bash
-# Run all tests
-npm test
-
-# Run with coverage
-npm run test:coverage
-
-# Run in watch mode
-npm run test:watch
-```
-
-## Architecture Overview
-
-### Controllers
-
-Route handlers that process requests and return responses. Located in `src/controllers/`. Controllers now use domain services for business logic separation.
-
-### Domain Services
-
-Specialized services that encapsulate business logic and database operations. Each service handles a specific domain (User, Activity, Business, etc.). Located in `src/services/domains/`.
-
-### Models
-
-Data models that represent database entities and handle business logic. Located in `src/models/`.
-
-### Services
-
-External service integrations (database, APIs, etc.). Located in `src/services/`. Includes a ServiceFactory for easy instantiation of domain services.
-
-### Middleware
-
-Custom middleware for authentication, validation, security, etc. Located in `src/middleware/`.
-
-### Configuration
-
-Centralized configuration management. Located in `src/config/`.
-
-### Utils
-
-Utility functions and helpers. Located in `src/utils/`.
+See `.env.example` for all available configuration options.
 
 ## Security Features
 
-- **Helmet**: Security headers
-- **CORS**: Cross-origin resource sharing control
-- **Rate Limiting**: API rate limiting
-- **Input Validation**: Request validation and sanitization
-- **Error Handling**: Secure error responses
+- **Authentication & Authorization**: JWT-based auth with role-based access control
+- **Input Validation**: Comprehensive validation using express-validator
+- **Security Headers**: Helmet.js for secure HTTP headers
+- **Rate Limiting**: Protection against abuse with configurable limits
+- **Data Sanitization**: Input cleaning and XSS prevention
+- **CSRF Protection**: Cross-site request forgery prevention
+- **Audit Logging**: Comprehensive logging for security events
 
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Make your changes
-4. Add tests for new functionality
-5. Ensure all tests pass: `npm test`
-6. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Code Quality
+
+- **Linting**: ESLint configuration (currently disabled)
+- **Formatting**: Prettier for consistent code style
+- **Testing**: Framework setup ready (tests to be implemented)
 
 ## License
 
-This project is licensed under the ISC License.
+ISC License - see the package.json for details.
+
+## Support
+
+For support and questions:
+
+- Create an issue on [GitHub](https://github.com/AR-92/accelerator/issues)
+- Check the documentation in the `/docs` folder (if available)
+
+## Roadmap
+
+Future enhancements may include:
+
+- Advanced AI-powered business insights
+- Mobile application
+- Multi-tenant architecture
+- Advanced reporting and analytics
+- Integration with third-party business tools
