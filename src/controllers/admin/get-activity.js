@@ -8,171 +8,91 @@ export const getActivity = async (req, res) => {
     console.log('getActivity controller called');
     logger.info('Admin activity page accessed');
 
+    // Parse query parameters
+    const {
+      category = 'all',
+      search = '',
+      status = 'all',
+      page = 1,
+      limit = 50,
+    } = req.query;
+
+    const filters = {
+      category,
+      search,
+      status,
+      page: parseInt(page, 10),
+      limit: parseInt(limit, 10),
+    };
+
     const activityService = serviceFactory.getActivityService();
-    const { activities, stats } =
-      await activityService.getActivityLogsForAdmin(100);
 
-    // Generate chart data for activity trends
-    const now = new Date();
-    console.log('Creating activityTrends object...');
-    const activityTrends = {
-      volumeHistory: {
-        labels: [],
-        data: [],
-      },
-      typeDistribution: {
-        labels: [],
-        data: [],
-      },
-      errorRateHistory: {
-        labels: [],
-        data: [],
-      },
-    };
+    // Get activities with filters
+    const { activities, stats, pagination } =
+      await activityService.getActivityLogsForAdmin(filters, { count: true });
 
-    // Generate last 24 hours of activity volume data
-    for (let i = 23; i >= 0; i--) {
-      const date = new Date(now.getTime() - i * 60 * 60 * 1000);
-      const hourLabel = date.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-      activityTrends.volumeHistory.labels.push(hourLabel);
+    // Get analytics data
+    const activityAnalytics =
+      await activityService.getActivityAnalytics(filters);
 
-      // Simulate activity volume (in real app, query database for actual counts)
-      const baseVolume = Math.floor(Math.random() * 50) + 10;
-      const hourOfDay = date.getHours();
-      // Add some realistic patterns (more activity during business hours)
-      const multiplier = hourOfDay >= 9 && hourOfDay <= 17 ? 1.5 : 0.7;
-      activityTrends.volumeHistory.data.push(
-        Math.floor(baseVolume * multiplier)
-      );
-    }
+    // Get trends data
+    const activityTrends = await activityService.getActivityTrends(filters);
 
-    // Activity type distribution
-    const typeCounts = {};
-    activities.forEach((activity) => {
-      const type = activity.activity_type || 'unknown';
-      typeCounts[type] = (typeCounts[type] || 0) + 1;
-    });
-
-    // Ensure we have at least some data for the chart
-    if (Object.keys(typeCounts).length === 0) {
-      typeCounts['login'] = 1; // Default data if no activities exist
-      typeCounts['user'] = 1;
-    }
-
-    activityTrends.typeDistribution.labels = Object.keys(typeCounts);
-    activityTrends.typeDistribution.data = Object.values(typeCounts);
-
-    // Error rate history (simulate based on failed activities)
-    for (let i = 23; i >= 0; i--) {
-      const date = new Date(now.getTime() - i * 60 * 60 * 1000);
-      const hourLabel = date.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-      activityTrends.errorRateHistory.labels.push(hourLabel);
-
-      // Simulate error rates (lower during normal hours)
-      const baseErrorRate = Math.random() * 5;
-      const hourOfDay = date.getHours();
-      const errorMultiplier = hourOfDay >= 9 && hourOfDay <= 17 ? 0.5 : 1.2;
-      activityTrends.errorRateHistory.data.push(
-        Math.max(0, Math.min(100, baseErrorRate * errorMultiplier))
-      );
-    }
-
-    // Activity analytics
-    const activityAnalytics = {
-      totalActivities: activities.length,
-      uniqueUsers: new Set(activities.map((a) => a.user_id).filter((id) => id))
-        .size,
-      successRate:
-        activities.length > 0
-          ? (
-              (activities.filter((a) => a.status === 'success').length /
-                activities.length) *
-              100
-            ).toFixed(1)
-          : 0,
-      topActivityTypes: Object.entries(typeCounts)
-        .sort(([, a], [, b]) => b - a)
-        .slice(0, 5)
-        .map(([type, count]) => ({ type, count })),
-      peakHours: [9, 10, 11, 14, 15, 16], // Business hours
-      avgResponseTime: '45ms', // Simulated
-    };
-
-    const columns = [
-      { key: 'activity_type', label: 'Type', type: 'text' },
-      { key: 'action', label: 'Action', type: 'text' },
-      { key: 'description', label: 'Description', type: 'text' },
-      { key: 'user_id', label: 'User ID', type: 'text' },
-      { key: 'ip_address', label: 'IP Address', type: 'text' },
-      { key: 'status', label: 'Status', type: 'status' },
-      {
-        key: 'created_at',
-        label: 'Created',
-        type: 'date',
-        hidden: true,
-        responsive: 'lg:table-cell',
-      },
-    ];
-
-    const actions = [
-      {
-        type: 'link',
-        url: '/admin/other-pages/activity',
-        label: 'View Details',
-        icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>',
-      },
-    ];
-
-    const bulkActions = [];
-
-    const pagination = {
-      currentPage: 1,
-      limit: 100,
-      total: activities.length,
-      start: 1,
-      end: activities.length,
-      hasPrev: false,
-      hasNext: false,
-      prevPage: 0,
-      nextPage: 2,
-      pages: [1],
-    };
-
-    const colspan =
-      columns.length + (true ? 1 : 0) + (actions.length > 0 ? 1 : 0);
-
-    console.log(
-      'Activity trends data:',
-      JSON.stringify(activityTrends, null, 2)
+    // Calculate pagination info
+    const totalPages = Math.ceil(pagination.total / pagination.limit);
+    const start = (pagination.currentPage - 1) * pagination.limit + 1;
+    const end = Math.min(
+      pagination.currentPage * pagination.limit,
+      pagination.total
     );
+    const hasPrev = pagination.currentPage > 1;
+    const hasNext = pagination.currentPage < totalPages;
+    const prevPage = hasPrev ? pagination.currentPage - 1 : null;
+    const nextPage = hasNext ? pagination.currentPage + 1 : null;
+
+    const pages = [];
+    const maxPages = 5;
+    const halfMax = Math.floor(maxPages / 2);
+    let startPage = Math.max(1, pagination.currentPage - halfMax);
+    let endPage = Math.min(totalPages, startPage + maxPages - 1);
+
+    if (endPage - startPage + 1 < maxPages) {
+      startPage = Math.max(1, endPage - maxPages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+
+    const paginationInfo = {
+      currentPage: pagination.currentPage,
+      limit: pagination.limit,
+      total: pagination.total,
+      start,
+      end,
+      hasPrev,
+      hasNext,
+      prevPage,
+      nextPage,
+      pages,
+    };
 
     try {
       res.render('admin/other-pages/activity', {
         title: 'Activity Management',
         currentPage: 'activity',
         currentSection: 'system',
-        tableId: 'activity',
-        entityName: 'activity',
-        showCheckbox: false,
-        showBulkActions: false,
-        columns,
-        data: activities,
-        actions,
-        bulkActions,
-        pagination,
-        query: { search: '', status: '' },
-        currentUrl: '/admin/other-pages/activity',
-        colspan,
         activities,
         activityStats: stats,
         activityTrends,
         activityAnalytics,
+        pagination: paginationInfo,
+        query: {
+          search: filters.search,
+          status: filters.status,
+          category: filters.category,
+        },
+        currentUrl: '/admin/other-pages/activity',
         lastUpdated: new Date().toLocaleString(),
       });
       console.log('Activity page rendered successfully');
@@ -186,20 +106,155 @@ export const getActivity = async (req, res) => {
       title: 'Activity Log',
       currentPage: 'activity',
       currentSection: 'system',
-      data: [],
+      activities: [],
+      activityStats: { today: 0, failed: 0, total: 0 },
+      activityTrends: {
+        volumeHistory: { labels: [], data: [] },
+        typeDistribution: { labels: [], data: [] },
+        errorRateHistory: { labels: [], data: [] },
+      },
+      activityAnalytics: {
+        totalActivities: 0,
+        uniqueUsers: 0,
+        successRate: '0.0',
+        topActivityTypes: [],
+        peakHours: [],
+        avgResponseTime: '0ms',
+      },
       pagination: {
         currentPage: 1,
-        limit: 10,
+        limit: 50,
         total: 0,
         start: 0,
         end: 0,
         hasPrev: false,
         hasNext: false,
-        prevPage: 0,
-        nextPage: 2,
+        prevPage: null,
+        nextPage: null,
         pages: [],
       },
-      query: { search: '', status: '' },
+      query: { search: '', status: 'all', category: 'all' },
+      lastUpdated: new Date().toLocaleString(),
     });
+  }
+};
+
+// Export Activity Logs as CSV
+export const exportActivityCSV = async (req, res) => {
+  try {
+    logger.info('Exporting activity logs as CSV');
+
+    // Parse query parameters (same as main page)
+    const { category = 'all', search = '', status = 'all' } = req.query;
+
+    const filters = {
+      category,
+      search,
+      status,
+      page: 1,
+      limit: 10000, // Large limit for export
+    };
+
+    const activityService = serviceFactory.getActivityService();
+    const { activities } = await activityService.getActivityLogsForAdmin(
+      filters,
+      { count: false }
+    );
+
+    // Transform data for CSV
+    const csvData = activities.map((activity) => ({
+      ID: activity.id,
+      'Created At': new Date(activity.created_at).toLocaleString(),
+      'User ID': activity.user_id || 'N/A',
+      'Session ID': activity.session_id || 'N/A',
+      'Activity Type': activity.activity_type || 'N/A',
+      Action: activity.action || 'N/A',
+      'Entity Type': activity.entity_type || 'N/A',
+      'Entity ID': activity.entity_id || 'N/A',
+      Description: activity.description || 'N/A',
+      'IP Address': activity.ip_address || 'N/A',
+      'User Agent': activity.user_agent || 'N/A',
+      Browser: activity.browser || 'N/A',
+      OS: activity.os || 'N/A',
+      Device: activity.device || 'N/A',
+      'Location Country': activity.location_country || 'N/A',
+      'Location City': activity.location_city || 'N/A',
+      Status: activity.status || 'N/A',
+      'Error Message': activity.error_message || 'N/A',
+      'Error Code': activity.error_code || 'N/A',
+      'Duration (ms)': activity.duration_ms || 'N/A',
+      'Request Method': activity.request_method || 'N/A',
+      'Request URL': activity.request_url || 'N/A',
+      'Response Status': activity.response_status || 'N/A',
+      Severity: activity.severity || 'N/A',
+      Tags: activity.tags || 'N/A',
+    }));
+
+    // Convert to CSV
+    if (csvData.length === 0) {
+      const csv = 'No data available';
+      res.header('Content-Type', 'text/csv');
+      res.header(
+        'Content-Disposition',
+        `attachment; filename=activity_logs_${new Date().toISOString().split('T')[0]}.csv`
+      );
+      return res.send(csv);
+    }
+
+    const headers = Object.keys(csvData[0]);
+    const csvRows = [
+      headers.join(','),
+      ...csvData.map((row) =>
+        headers.map((header) => `"${row[header]}"`).join(',')
+      ),
+    ];
+    const csv = csvRows.join('\n');
+
+    // Set headers for file download
+    res.header('Content-Type', 'text/csv');
+    res.header(
+      'Content-Disposition',
+      `attachment; filename=activity_logs_${new Date().toISOString().split('T')[0]}.csv`
+    );
+    res.send(csv);
+  } catch (error) {
+    logger.error('Error exporting activity logs as CSV:', error);
+    console.error('CSV Export Error:', error);
+    res.status(500).send('Error exporting data');
+  }
+};
+
+// Export Activity Logs as JSON
+export const exportActivityJSON = async (req, res) => {
+  try {
+    logger.info('Exporting activity logs as JSON');
+
+    // Parse query parameters (same as main page)
+    const { category = 'all', search = '', status = 'all' } = req.query;
+
+    const filters = {
+      category,
+      search,
+      status,
+      page: 1,
+      limit: 10000, // Large limit for export
+    };
+
+    const activityService = serviceFactory.getActivityService();
+    const { activities } = await activityService.getActivityLogsForAdmin(
+      filters,
+      { count: false }
+    );
+
+    // Set headers for file download
+    res.header('Content-Type', 'application/json');
+    res.header(
+      'Content-Disposition',
+      `attachment; filename=activity_logs_${new Date().toISOString().split('T')[0]}.json`
+    );
+    res.send(JSON.stringify(activities, null, 2));
+  } catch (error) {
+    logger.error('Error exporting activity logs as JSON:', error);
+    res.status(500).send('Error exporting data');
   }
 };

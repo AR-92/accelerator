@@ -1,5 +1,5 @@
 <!-- Activity Management Content -->
-<div class="max-w-7xl mx-auto rounded-xl overflow-hidden flex flex-col mx-4 my-4">
+<div id="activity-content" class="max-w-7xl mx-auto rounded-xl overflow-hidden flex flex-col mx-4 my-4">
 
     <!-- Page Header -->
     {{> page-header title="Activity Management Dashboard" description="Comprehensive monitoring and analytics of system activity, user engagement, and performance metrics" border=true}}
@@ -452,34 +452,53 @@
      </div>
   </div>
 
-      <!-- Activity Filters and Search -->
-     <div class="bg-card rounded-lg border border-border">
-       <div class="p-6 border-b border-border">
-         <div class="flex items-center justify-between">
-           <h3 class="text-lg font-semibold text-card-foreground">Activity Log</h3>
-           <div class="flex items-center space-x-4">
-             <div class="relative">
-               <input type="text" placeholder="Search activities..." class="w-64 pl-4 pr-4 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  {{{icon 'search' size='20' class='text-muted-foreground'}}}
-                </div>
-             </div>
-             <select class="px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
-               <option value="all">All Types</option>
-               <option value="login">Login</option>
-               <option value="user">User Management</option>
-               <option value="system">System</option>
-               <option value="security">Security</option>
-             </select>
-             <select class="px-3 py-2 border border-input rounded-md focus:outline-none   focus:border-transparent">
-               <option value="all">All Status</option>
-               <option value="success">Success</option>
-               <option value="failed">Failed</option>
-               <option value="warning">Warning</option>
-             </select>
-           </div>
-         </div>
-       </div>
+        <!-- Activity Filters and Search -->
+      <div class="bg-card rounded-lg border border-border">
+        <div class="p-6 border-b border-border">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-card-foreground">Activity Log</h3>
+            <div class="flex items-center space-x-4">
+              <div class="relative">
+                <input type="text"
+                       name="search"
+                       value="{{query.search}}"
+                       placeholder="Search activities..."
+                       class="w-64 pl-4 pr-4 py-2 border border-input rounded-md focus:outline-none focus:border-transparent"
+                       hx-get="/admin/other-pages/activity"
+                       hx-target="#activity-content"
+                       hx-trigger="input changed delay:300ms, keyup[key=='Enter']"
+                       hx-vals='{"category": "{{query.category}}", "status": "{{query.status}}"}'>
+                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                   {{{icon 'search' size='20' class='text-muted-foreground'}}}
+                 </div>
+              </div>
+              <select name="category"
+                      class="px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent"
+                      hx-get="/admin/other-pages/activity"
+                      hx-target="#activity-content"
+                      hx-vals='{"search": "{{query.search}}", "status": "{{query.status}}"}'>
+                <option value="all" {{#eq query.category "all"}}selected{{/eq}}>All Types</option>
+                <option value="login" {{#eq query.category "login"}}selected{{/eq}}>Login</option>
+                <option value="user" {{#eq query.category "user"}}selected{{/eq}}>User Management</option>
+                <option value="system" {{#eq query.category "system"}}selected{{/eq}}>System</option>
+                <option value="security" {{#eq query.category "security"}}selected{{/eq}}>Security</option>
+                <option value="api" {{#eq query.category "api"}}selected{{/eq}}>API</option>
+                <option value="database" {{#eq query.category "database"}}selected{{/eq}}>Database</option>
+              </select>
+              <select name="status"
+                      class="px-3 py-2 border border-input rounded-md focus:outline-none focus:border-transparent"
+                      hx-get="/admin/other-pages/activity"
+                      hx-target="#activity-content"
+                      hx-vals='{"search": "{{query.search}}", "category": "{{query.category}}"}'>
+                <option value="all" {{#eq query.status "all"}}selected{{/eq}}>All Status</option>
+                <option value="success" {{#eq query.status "success"}}selected{{/eq}}>Success</option>
+                <option value="failed" {{#eq query.status "failed"}}selected{{/eq}}>Failed</option>
+                <option value="warning" {{#eq query.status "warning"}}selected{{/eq}}>Warning</option>
+                <option value="error" {{#eq query.status "error"}}selected{{/eq}}>Error</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
        <!-- Activity Timeline -->
        <div class="p-6">
@@ -523,9 +542,10 @@
                        {{/if}}
                        {{#if browser}}
                        <span class="text-sm text-muted-foreground">{{browser}}</span>
-                       {{/if}}
-                     </div>
-                   </div>
+      {{/if}}
+    </div>
+ </div>
+</div>
                  </div>
                </div>
              </li>
@@ -543,33 +563,36 @@
          {{/if}}
        </div>
 
-       {{#if activities.length}}
-       <!-- Pagination -->
-       <div class="px-6 py-4 border-t border-border">
-         <div class="flex items-center justify-between">
-           <div class="text-sm text-card-foreground">
-             Showing {{pagination.start}} to {{pagination.end}} of {{pagination.total}} activities
-           </div>
-           <div class="flex items-center space-x-2">
-             {{#if pagination.hasPrev}}
-             <a href="?page={{pagination.prevPage}}" class="px-3 py-2 text-sm font-medium text-muted-foreground bg-card border border-input rounded-md hover:bg-accent">
-               Previous
-             </a>
-             {{/if}}
-             {{#each pagination.pages}}
-             <a href="?page={{this}}" class="px-3 py-2 text-sm font-medium {{#if (eq this ../pagination.currentPage)}}text-primary bg-accent border-primary{{else}}text-muted-foreground bg-card border-input{{/if}} border rounded-md hover:bg-accent">
-               {{this}}
-             </a>
-             {{/each}}
-             {{#if pagination.hasNext}}
-             <a href="?page={{pagination.nextPage}}" class="px-3 py-2 text-sm font-medium text-muted-foreground bg-card border border-input rounded-md hover:bg-accent">
-               Next
-             </a>
-             {{/if}}
-           </div>
-         </div>
-       </div>
-       {{/if}}
+        {{#if activities.length}}
+        <!-- Pagination -->
+        <div class="px-6 py-4 border-t border-border">
+          <div class="flex items-center justify-between">
+            <div class="text-sm text-card-foreground">
+              Showing {{pagination.start}} to {{pagination.end}} of {{pagination.total}} activities
+            </div>
+            <div class="flex items-center space-x-2">
+              {{#if pagination.hasPrev}}
+              <a href="?page={{pagination.prevPage}}&search={{query.search}}&category={{query.category}}&status={{query.status}}"
+                 class="px-3 py-2 text-sm font-medium text-muted-foreground bg-card border border-input rounded-md hover:bg-accent">
+                Previous
+              </a>
+              {{/if}}
+              {{#each pagination.pages}}
+              <a href="?page={{this}}&search={{query.search}}&category={{query.category}}&status={{query.status}}"
+                 class="px-3 py-2 text-sm font-medium {{#if (eq this ../pagination.currentPage)}}text-primary bg-accent border-primary{{else}}text-muted-foreground bg-card border-input{{/if}} border rounded-md hover:bg-accent">
+                {{this}}
+              </a>
+              {{/each}}
+              {{#if pagination.hasNext}}
+              <a href="?page={{pagination.nextPage}}&search={{query.search}}&category={{query.category}}&status={{query.status}}"
+                 class="px-3 py-2 text-sm font-medium text-muted-foreground bg-card border border-input rounded-md hover:bg-accent">
+                Next
+              </a>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        {{/if}}
      </div>
 
      <!-- Export Options -->
@@ -580,16 +603,18 @@
            <h3 class="text-lg font-semibold text-card-foreground">Export Activity Log</h3>
            <p class="text-sm text-muted-foreground">Download activity logs for auditing and compliance</p>
          </div>
-         <div class="flex items-center space-x-4">
-            <button class="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
-              {{{icon 'download' size='16' class='mr-2 inline'}}}
-              Export CSV
-            </button>
-            <button class="px-4 py-2 bg-success text-success-foreground rounded-lg hover:bg-success/90 transition-colors">
-              {{{icon 'file-text' size='16' class='mr-2 inline'}}}
-              Export PDF
-            </button>
-         </div>
+          <div class="flex items-center space-x-4">
+             <a href="/admin/other-pages/activity/export/csv?search={{query.search}}&category={{query.category}}&status={{query.status}}"
+                class="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors inline-flex items-center">
+               {{{icon 'download' size='16' class='mr-2'}}}
+               Export CSV
+             </a>
+             <a href="/admin/other-pages/activity/export/json?search={{query.search}}&category={{query.category}}&status={{query.status}}"
+                class="px-4 py-2 bg-success text-success-foreground rounded-lg hover:bg-success/90 transition-colors inline-flex items-center">
+               {{{icon 'file-text' size='16' class='mr-2'}}}
+               Export JSON
+             </a>
+          </div>
        </div>
      </div>
      {{/if}}

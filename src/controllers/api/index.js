@@ -4,7 +4,7 @@ import todoApiRoutes from './tables/api.js';
 import accountsRoutes from './tables/accounts.js';
 
 // Admin API routes
-import profileRoutes from './admin/get-profile.js';
+
 import profileSettingsRoutes from './admin/get-profile-settings.js';
 import settingsRoutes from './admin/get-settings.js';
 import systemHealthRoutes from './admin/get-system-health.js';
@@ -58,7 +58,7 @@ import portfoliosRoutes from './tables/portfolios.js';
 // API routes setup
 export default function apiRoutes(app) {
   // Admin API routes
-  profileRoutes(app);
+
   profileSettingsRoutes(app);
   settingsRoutes(app);
   systemHealthRoutes(app);

@@ -99,16 +99,289 @@ export const serviceFactory = {
       return data;
     },
   }),
-  getActivityService: () => ({
-    getActivityLogsForAdmin: async (limit) => {
-      const { data, error } = await databaseService.supabase
-        .from('activity_logs')
-        .select('*')
-        .limit(limit);
-      if (error) throw error;
-      return { activities: data, stats: {} };
-    },
-  }),
+  getActivityService: () => {
+    const getActivityStats = async (filters = {}) => {
+      const { category = 'all', search = '', status = 'all' } = filters;
+
+      let baseQuery = databaseService.supabase.from('activity_logs');
+
+      // Apply same filters as main query
+      if (category && category !== 'all') {
+        baseQuery = baseQuery.eq('activity_type', category);
+      }
+      if (status && status !== 'all') {
+        baseQuery = baseQuery.eq('status', status);
+      }
+      if (search && search.trim()) {
+        const searchTerm = search.trim();
+        baseQuery = baseQuery.or(
+          `action.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,entity_type.ilike.%${searchTerm}%,ip_address.ilike.%${searchTerm}%`
+        );
+      }
+
+      // Get today's activities
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const { count: todayCount } = await baseQuery
+        .gte('created_at', today.toISOString())
+        .select('*', { count: 'exact', head: true });
+
+      // Get failed activities
+      const { count: failedCount } = await baseQuery
+        .eq('status', 'failed')
+        .select('*', { count: 'exact', head: true });
+
+      // Get total count
+      const { count: totalCount } = await baseQuery.select('*', {
+        count: 'exact',
+        head: true,
+      });
+
+      return {
+        today: todayCount || 0,
+        failed: failedCount || 0,
+        total: totalCount || 0,
+      };
+    };
+
+    return {
+      getActivityLogsForAdmin: async (filters = {}, options = {}) => {
+        const {
+          category = 'all',
+          search = '',
+          status = 'all',
+          page = 1,
+          limit = 100,
+        } = filters;
+        const { count: includeCount = true } = options;
+
+        let query = databaseService.supabase
+          .from('activity_logs')
+          .select('*', { count: includeCount ? 'exact' : undefined });
+
+        // Apply category filter (maps to activity_type)
+        if (category && category !== 'all') {
+          query = query.eq('activity_type', category);
+        }
+
+        // Apply status filter
+        if (status && status !== 'all') {
+          query = query.eq('status', status);
+        }
+
+        // Apply search filter
+        if (search && search.trim()) {
+          const searchTerm = search.trim();
+          query = query.or(
+            `action.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,entity_type.ilike.%${searchTerm}%,ip_address.ilike.%${searchTerm}%`
+          );
+        }
+
+        // Apply ordering (newest first)
+        query = query.order('created_at', { ascending: false });
+
+        // Apply pagination
+        const offset = (page - 1) * limit;
+        query = query.range(offset, offset + limit - 1);
+
+        const { data, error, count } = await query;
+        if (error) throw error;
+
+        // Get stats for analytics
+        const stats = await getActivityStats(filters);
+
+        return {
+          activities: data || [],
+          stats,
+          pagination: {
+            currentPage: page,
+            limit,
+            total: count || 0,
+            hasMore: data && data.length === limit,
+          },
+        };
+      },
+
+      getActivityStats,
+
+      getActivityAnalytics: async (filters = {}) => {
+        const { category = 'all', search = '', status = 'all' } = filters;
+
+        let baseQuery = databaseService.supabase.from('activity_logs');
+
+        // Apply same filters
+        if (category && category !== 'all') {
+          baseQuery = baseQuery.eq('activity_type', category);
+        }
+        if (status && status !== 'all') {
+          baseQuery = baseQuery.eq('status', status);
+        }
+        if (search && search.trim()) {
+          const searchTerm = search.trim();
+          baseQuery = baseQuery.or(
+            `action.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,entity_type.ilike.%${searchTerm}%,ip_address.ilike.%${searchTerm}%`
+          );
+        }
+
+        // Get all activities for analytics (limit to recent ones for performance)
+        const { data: activities } = await baseQuery
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(1000);
+
+        if (!activities || activities.length === 0) {
+          return {
+            totalActivities: 0,
+            uniqueUsers: 0,
+            successRate: '0.0',
+            topActivityTypes: [],
+            peakHours: [],
+            avgResponseTime: '0ms',
+          };
+        }
+
+        // Calculate analytics
+        const totalActivities = activities.length;
+        const uniqueUsers = new Set(
+          activities.map((a) => a.user_id).filter((id) => id)
+        ).size;
+        const successActivities = activities.filter(
+          (a) => a.status === 'success'
+        ).length;
+        const successRate =
+          totalActivities > 0
+            ? ((successActivities / totalActivities) * 100).toFixed(1)
+            : '0.0';
+
+        // Top activity types
+        const typeCounts = {};
+        activities.forEach((activity) => {
+          const type = activity.activity_type || 'unknown';
+          typeCounts[type] = (typeCounts[type] || 0) + 1;
+        });
+
+        const topActivityTypes = Object.entries(typeCounts)
+          .sort(([, a], [, b]) => b - a)
+          .slice(0, 5)
+          .map(([type, count]) => ({ type, count }));
+
+        // Peak hours (simplified - just count by hour)
+        const hourCounts = {};
+        activities.forEach((activity) => {
+          const hour = new Date(activity.created_at).getHours();
+          hourCounts[hour] = (hourCounts[hour] || 0) + 1;
+        });
+
+        const peakHours = Object.entries(hourCounts)
+          .sort(([, a], [, b]) => b - a)
+          .slice(0, 3)
+          .map(([hour]) => parseInt(hour));
+
+        // Average response time
+        const responseTimes = activities
+          .map((a) => a.duration_ms)
+          .filter((ms) => ms !== null && ms !== undefined);
+
+        const avgResponseTime =
+          responseTimes.length > 0
+            ? Math.round(
+                responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length
+              ) + 'ms'
+            : '0ms';
+
+        return {
+          totalActivities,
+          uniqueUsers,
+          successRate,
+          topActivityTypes,
+          peakHours,
+          avgResponseTime,
+        };
+      },
+
+      getActivityTrends: async (filters = {}) => {
+        const { category = 'all', search = '', status = 'all' } = filters;
+
+        let baseQuery = databaseService.supabase.from('activity_logs');
+
+        // Apply same filters
+        if (category && category !== 'all') {
+          baseQuery = baseQuery.eq('activity_type', category);
+        }
+        if (status && status !== 'all') {
+          baseQuery = baseQuery.eq('status', status);
+        }
+        if (search && search.trim()) {
+          const searchTerm = search.trim();
+          baseQuery = baseQuery.or(
+            `action.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,entity_type.ilike.%${searchTerm}%,ip_address.ilike.%${searchTerm}%`
+          );
+        }
+
+        // Get last 24 hours data
+        const now = new Date();
+        const twentyFourHoursAgo = new Date(
+          now.getTime() - 24 * 60 * 60 * 1000
+        );
+
+        const { data: recentActivities } = await baseQuery
+          .select('created_at, status, activity_type')
+          .gte('created_at', twentyFourHoursAgo.toISOString())
+          .order('created_at', { ascending: true });
+
+        // Generate volume history (last 24 hours, hourly)
+        const volumeHistory = { labels: [], data: [] };
+        const errorRateHistory = { labels: [], data: [] };
+        const typeDistribution = { labels: [], data: [] };
+
+        for (let i = 23; i >= 0; i--) {
+          const hourStart = new Date(now.getTime() - i * 60 * 60 * 1000);
+          const hourEnd = new Date(hourStart.getTime() + 60 * 60 * 1000);
+
+          const hourLabel = hourStart.toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+          });
+
+          // Count activities in this hour
+          const hourActivities = recentActivities.filter((activity) => {
+            const activityTime = new Date(activity.created_at);
+            return activityTime >= hourStart && activityTime < hourEnd;
+          });
+
+          volumeHistory.labels.push(hourLabel);
+          volumeHistory.data.push(hourActivities.length);
+
+          // Error rate for this hour
+          const errorCount = hourActivities.filter(
+            (a) => a.status === 'failed'
+          ).length;
+          const errorRate =
+            hourActivities.length > 0
+              ? (errorCount / hourActivities.length) * 100
+              : 0;
+          errorRateHistory.labels.push(hourLabel);
+          errorRateHistory.data.push(Math.round(errorRate * 10) / 10); // Round to 1 decimal
+        }
+
+        // Type distribution
+        const typeCounts = {};
+        recentActivities.forEach((activity) => {
+          const type = activity.activity_type || 'unknown';
+          typeCounts[type] = (typeCounts[type] || 0) + 1;
+        });
+
+        typeDistribution.labels = Object.keys(typeCounts);
+        typeDistribution.data = Object.values(typeCounts);
+
+        return {
+          volumeHistory,
+          typeDistribution,
+          errorRateHistory,
+        };
+      },
+    };
+  },
   getNotificationService: () => ({
     getAllNotifications: async (filter, options) => {
       let query = databaseService.supabase.from('notifications').select('*');

@@ -58,15 +58,13 @@
          class="absolute right-0 mt-2 w-64 bg-popover backdrop-blur-sm border border-border rounded-xl shadow-xl z-30 transition-all duration-200 opacity-0 invisible hidden"
          id="admin-user-dropdown">
          <div class="p-2">
-{{#> dropdown-item href="/admin/other-pages/profile" text="Profile"}}{{{icon 'user' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
+
 {{#> dropdown-item href="/admin/other-pages/profile-settings" text="Profile Settings"}}{{{icon 'settings' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
 {{#> dropdown-item href="/admin/other-pages/settings" text="Admin Settings"}}{{{icon 'settings' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
 {{#> dropdown-item href="/admin/other-pages/system-health" text="System Health"}}{{{icon 'activity' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
 {{#> dropdown-item href="/admin/other-pages/notifications" text="Notifications"}}{{{icon 'bell' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
-{{#> dropdown-item href="/admin/other-pages/activity" text="Activity Log"}}{{{icon 'activity' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
-           <div class="border-t border-border/50 my-2"></div>
-{{#> dropdown-item href="/" text="Back to Site"}}{{{icon 'globe' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
-            <div class="border-t border-border/50 my-2"></div>
+ {{#> dropdown-item href="/admin/other-pages/activity" text="Activity Log"}}{{{icon 'activity' size='16' class='w-4 h-4'}}}{{/dropdown-item}}
+             <div class="border-t border-border/50 my-2"></div>
               <button onclick="handleLogout()"
                 class="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
 

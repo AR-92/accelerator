@@ -40,7 +40,7 @@ class DatabaseService {
         throw error;
       }
       logger.debug(
-        `✅ Created record in Supabase table ${table} with ID: ${result?.id}`
+        `Created record in Supabase table ${table} with ID: ${result?.id}`
       );
       return result;
     } catch (error) {
@@ -185,7 +185,7 @@ class DatabaseService {
         });
         throw error;
       }
-      logger.info(`✅ Created todo in Supabase with ID: ${data.id}`);
+      logger.info(`Created todo in Supabase with ID: ${data.id}`);
       return data;
     } catch (error) {
       logger.error('Error creating todo:', {
@@ -218,7 +218,7 @@ class DatabaseService {
         });
         throw error;
       }
-      logger.info(`✅ Updated todo ${id} in Supabase`);
+      logger.info(`Updated todo ${id} in Supabase`);
       return data;
     } catch (error) {
       logger.error('Error updating todo:', {
@@ -245,7 +245,7 @@ class DatabaseService {
         });
         throw error;
       }
-      logger.info(`✅ Deleted todo ${id} from Supabase`);
+      logger.info(`Deleted todo ${id} from Supabase`);
       return true;
     } catch (error) {
       logger.error('Error deleting todo:', {
@@ -400,7 +400,7 @@ INSERT INTO todos (title, description, completed) VALUES
         return false;
       }
 
-      logger.info('✅ Supabase connection successful - todos table accessible');
+      logger.info('Supabase connection successful - todos table accessible');
       return true;
     } catch (error) {
       logger.error('❌ Database connection test failed:', {
@@ -409,6 +409,124 @@ INSERT INTO todos (title, description, completed) VALUES
         code: error.code,
       });
       return false;
+    }
+  }
+
+  // Settings-specific methods
+  async getAllSettings(table = 'admin_settings') {
+    try {
+      logger.debug(
+        'Fetching all settings from Supabase table ' + table + '...'
+      );
+      const { data, error } = await this.supabase
+        .from(table)
+        .select('category, key, value, type, user_id')
+        .order('category', { ascending: true });
+
+      if (error) {
+        logger.error(
+          'Failed to fetch settings from Supabase table ' + table + ':',
+          error
+        );
+        throw error;
+      }
+
+      // Group by category into nested object
+      const settings = {};
+      data.forEach((row) => {
+        if (!settings[row.category]) settings[row.category] = {};
+        // Parse value based on type
+        let parsedValue = row.value;
+        if (row.type === 'boolean') parsedValue = Boolean(row.value);
+        else if (row.type === 'number') parsedValue = Number(row.value);
+        else if (row.type === 'array' || row.type === 'object')
+          parsedValue = JSON.parse(row.value);
+        settings[row.category][row.key] = parsedValue;
+      });
+
+      logger.debug(
+        'Successfully fetched settings from Supabase table ' + table
+      );
+      return settings;
+    } catch (error) {
+      logger.error('Error fetching settings:', error);
+      throw error;
+    }
+  }
+
+  async updateSetting(category, key, value, type, updatedBy = null) {
+    try {
+      logger.debug(`Updating setting ${category}.${key} in Supabase:`, value);
+      const data = {
+        category,
+        key,
+        value:
+          type === 'array' || type === 'object' ? JSON.stringify(value) : value,
+        type,
+        updated_at: new Date().toISOString(),
+      };
+      if (updatedBy) data.updated_by = updatedBy;
+
+      const { data: result, error } = await this.supabase
+        .from('admin_settings')
+        .upsert(data, { onConflict: 'category,key' })
+        .select()
+        .single();
+
+      if (error) {
+        logger.error('Failed to update setting in Supabase:', error);
+        throw error;
+      }
+      logger.info(`Updated setting ${category}.${key} in Supabase`);
+      return result;
+    } catch (error) {
+      logger.error('Error updating setting:', error);
+      throw error;
+    }
+  }
+
+  async bulkUpdateSettings(settingsArray, table = 'admin_settings') {
+    try {
+      logger.debug(`Bulk updating settings in Supabase table ${table}...`);
+      const updates = settingsArray.map(
+        ({ user_id, category, key, value, type, updatedBy }) => ({
+          ...(user_id && { user_id }),
+          category,
+          key,
+          value:
+            type === 'array' || type === 'object'
+              ? JSON.stringify(value)
+              : value,
+          type,
+          updated_at: new Date().toISOString(),
+          ...(updatedBy && { updated_by: updatedBy }),
+        })
+      );
+
+      const conflictColumns = user_id ? 'user_id,category,key' : 'category,key';
+
+      const { data, error } = await this.supabase
+        .from(table)
+        .upsert(updates, { onConflict: conflictColumns })
+        .select();
+
+      if (error) {
+        logger.error(
+          'Failed to bulk update settings in Supabase table ' + table + ':',
+          error
+        );
+        throw error;
+      }
+      logger.info(
+        'Bulk updated ' +
+          updates.length +
+          ' settings in Supabase table ' +
+          table
+      );
+      return data;
+    } catch (error) {
+      logger.error('Error bulk updating settings:', error);
+      throw error;
     }
   }
 

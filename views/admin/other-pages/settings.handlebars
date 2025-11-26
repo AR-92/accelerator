@@ -4,9 +4,20 @@
     <!-- Page Header -->
     {{> page-header title="Settings Management" description="Manage and organize all system settings efficiently" border=true}}
 
+    <!-- Success/Error Messages -->
+    {{#if successMessage}}
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        {{successMessage}}
+    </div>
+    {{/if}}
+    {{#if errorMessage}}
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        {{errorMessage}}
+    </div>
+    {{/if}}
 
-
-    <div class="p-6 space-y-6">
+    <form hx-post="/admin/other-pages/settings" hx-target="#settings-container" hx-swap="innerHTML" class="space-y-6">
+    <div id="settings-container" class="p-6 space-y-6">
        <!-- General Settings -->
        <div class="settings-section bg-card rounded-lg border border-border" data-category="general">
          <div class="p-6 border-b border-border">
@@ -1273,8 +1284,16 @@
                <input type="checkbox" name="notificationAiEvents" {{#if settings.ai.notificationAiEvents}}checked{{/if}}>
                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
              </label>
-           </div>
-         </div>
-       </div>
-     </div>
-   </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <div class="flex justify-end mt-8">
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">
+          Save Settings
+        </button>
+      </div>
+    </div>
+    </form>
+</div>

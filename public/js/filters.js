@@ -120,7 +120,9 @@ document.addEventListener('click', function (evt) {
 
 // Settings filter functionality
 function filterSettings(category) {
-  const settingsSections = document.querySelectorAll('.settings-section');
+  const settingsSections = document.querySelectorAll(
+    '.settings-section, .profile-settings-section'
+  );
 
   settingsSections.forEach((section) => {
     const sectionCategories =

@@ -393,7 +393,7 @@ export const getGenericTable = async (req, res) => {
  * Generate table HTML for HTMX requests
  */
 function generateTableHtml(data, config, pagination, tableName) {
-  const { columns, actions, bulkActions, showCheckbox } = config;
+  const { columns, actions, bulkActions, showCheckbox, entityName } = config;
   const {
     currentPage,
     limit,
@@ -407,42 +407,46 @@ function generateTableHtml(data, config, pagination, tableName) {
     pages,
   } = pagination;
 
-  let tableHtml = `
-    <table class="min-w-full table-auto bg-card rounded-md">
-      <thead class="bg-card border-b border-border rounded-t-xl">
-        <tr>
-          ${
-            showCheckbox
-              ? `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">
-            <input type="checkbox" id="selectAll-${tableName}" class="rounded border-input text-primary">
-          </th>`
-              : ''
-          }`;
+  const colspan =
+    columns.length + (showCheckbox ? 1 : 0) + (actions.length > 0 ? 1 : 0);
+
+  let html = `<table class="min-w-full table-auto bg-card rounded-md">
+    <thead class="bg-card border-b border-border rounded-t-xl">
+      <tr>
+        ${
+          showCheckbox
+            ? `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">
+          <input type="checkbox" id="selectAll-${tableName}" class="rounded border-input text-primary"
+            aria-label="Select all ${entityName}">
+        </th>`
+            : ''
+        }`;
 
   // Add column headers
   columns.forEach((column) => {
     const responsiveClass = column.hidden ? ` hidden ${column.responsive}` : '';
-    tableHtml += `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider${responsiveClass} bg-muted">${column.label}</th>`;
+    html += `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider${responsiveClass} bg-muted">${column.label}</th>`;
   });
 
   // Add actions header
   if (actions.length > 0) {
-    tableHtml += `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">Actions</th>`;
+    html += `<th class="px-6 py-4 text-left font-semibold text-card-foreground uppercase text-xs tracking-wider bg-muted">Actions</th>`;
   }
 
-  tableHtml += `
-        </tr>
-      </thead>
-      <tbody class="text-sm text-card-foreground">`;
+  html += `
+      </tr>
+    </thead>
+    <tbody class="text-sm text-card-foreground">`;
 
   // Add table rows
   if (data.length > 0) {
     data.forEach((item) => {
-      tableHtml += `<tr id="${tableName}-row-${item.id}" class="h-16 border-b border-border hover:bg-muted/50 even:bg-muted/30 transition-colors duration-150">
+      html += `<tr id="${entityName}-row-${item.id}" class="h-16 border-b border-border hover:bg-muted/50 even:bg-muted/30 transition-colors duration-150">
         ${
           showCheckbox
             ? `<td class="px-6 py-4">
-          <input type="checkbox" class="${tableName}Checkbox rounded border-input text-primary value="${item.id}" data-${tableName}-id="${item.id}">
+          <input type="checkbox" class="${entityName}Checkbox rounded border-input text-primary
+            value="${item.id}" data-${entityName}-id="${item.id}" aria-label="Select ${entityName} ${item.title || item.name || item.id}">
         </td>`
             : ''
         }`;
@@ -467,109 +471,74 @@ function generateTableHtml(data, config, pagination, tableName) {
           cellContent = `<div class="text-sm text-card-foreground truncate max-w-xs" title="${item[column.key]}">${item[column.key]}</div>`;
         }
 
-        tableHtml += `<td class="px-6 py-4${responsiveClass}">${cellContent}</td>`;
+        html += `<td class="px-6 py-4${responsiveClass}">${cellContent}</td>`;
       });
 
       // Add actions cell
       if (actions.length > 0) {
-        tableHtml += `<td class="px-6 py-4">
-          <div class="flex items-center gap-2">`;
-
-        actions.forEach((action) => {
-          // For HTMX requests, construct URLs based on action type
-          let url = '';
-          let hxGet = '';
-          let hxPut = '';
-          let hxDelete = '';
-          const hxConfirm = action.hxConfirm || '';
-
-          if (action.type === 'link') {
-            url = `${action.url}/${item.id}`;
-          } else if (action.type === 'button') {
-            hxGet = `${action.hxGet}/${item.id}`;
-          } else if (action.type === 'approve') {
-            hxPut = `${action.hxPut}/${item.id}/approve`;
-          } else if (action.type === 'reject') {
-            hxPut = `${action.hxPut}/${item.id}/reject`;
-          } else if (action.type === 'toggle') {
-            hxPut = `${action.hxPut}/${item.id}`;
-          } else if (action.type === 'delete') {
-            hxDelete = `${action.hxDelete}/${item.id}`;
-          }
-
-          if (action.type === 'link') {
-            tableHtml += `<a href="${url}" class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors" title="${action.label}">
-              ${action.icon.replace('mr-3', '')}
-            </a>`;
-          } else if (action.type === 'button') {
-            tableHtml += `<button hx-get="${hxGet}" hx-target="body" hx-swap="beforeend" class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors" title="${action.label}">
-              ${action.icon.replace('mr-3', '')}
-            </button>`;
-          } else if (
-            action.type === 'approve' ||
-            action.type === 'reject' ||
-            action.type === 'toggle'
-          ) {
-            tableHtml += `<button hx-put="${hxPut}" class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors" title="${action.label}">
-              ${action.icon.replace('mr-3', '')}
-            </button>`;
-          } else if (action.type === 'delete') {
-            tableHtml += `<button hx-delete="${hxDelete}" hx-confirm="${hxConfirm.replace('this idea', `"${item.title || item.name || 'this item'}"`)}" class="p-2 rounded-full hover:bg-destructive/10 text-destructive hover:text-destructive transition-colors" title="${action.label}">
-              ${action.icon.replace('mr-3', '')}
-            </button>`;
-          }
-        });
-
-        tableHtml += `
+        html += `<td class="px-6 py-4">
+          <div class="relative">
+            <button onclick="toggleActionMenu(this)"
+              class="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors"
+              aria-label="Actions menu for ${entityName} ${item.id}"
+              data-entity="${entityName}"
+              data-id="${item.id}">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V6a1 1 0 100 2h0m0 4v.01M12 18v.01"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12h.01M12 6h.01M12 18h.01"></path>
+              </svg>
+            </button>
           </div>
         </td>`;
       }
 
-      tableHtml += `</tr>`;
+      html += `</tr>`;
     });
   } else {
     // Empty state
-    const colspan =
-      columns.length + (showCheckbox ? 1 : 0) + (actions.length > 0 ? 1 : 0);
-    tableHtml += `<tr class="h-16">
+    html += `<tr class="h-16">
       <td colspan="${colspan}" class="px-6 py-8 text-center text-muted-foreground">
         <div class="flex flex-col items-center justify-center py-12">
           <svg class="w-16 h-16 text-muted-foreground/50 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
           </svg>
-          <p class="text-lg font-medium text-muted-foreground mb-2">No ${config.entityName} found</p>
-          <p class="text-sm text-muted-foreground/70">Get started by creating your first ${config.entityName}.</p>
+          <p class="text-lg font-medium text-muted-foreground mb-2">No ${entityName} found</p>
+          <p class="text-sm text-muted-foreground/70">Get started by creating your first ${entityName}.</p>
         </div>
       </td>
     </tr>`;
   }
 
-  tableHtml += `
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="${columns.length + (showCheckbox ? 1 : 0) + (actions.length > 0 ? 1 : 0)}" class="bg-card border-t border-border px-4 py-3">
-            <div class="max-w-7xl mx-auto flex items-center justify-between">
-              <div class="text-xs text-muted-foreground">
-                ${start}-${end} of ${total}
-              </div>
+  html += `
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="${colspan}" class="bg-card border-t border-border px-4 py-3">
+          <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="text-xs text-muted-foreground">
+              ${start}-${end} of ${total}
+            </div>
 
-              <div class="flex items-center gap-3">
-                <select id="rowsPerPage-${tableName}" name="limit" class="border border-input rounded px-2 py-1 text-xs bg-background focus:outline-none focus:border-ring transition-colors"
-                  hx-get="/admin/table-pages/${tableName}" hx-target="#${tableName}TableContainer" hx-vals="js:{limit: document.getElementById('rowsPerPage-${tableName}').value}">
-                  <option value="10" ${currentPage === 10 ? 'selected' : ''}>10</option>
-                  <option value="20" ${currentPage === 20 ? 'selected' : ''}>20</option>
-                  <option value="50" ${currentPage === 50 ? 'selected' : ''}>50</option>
-                  <option value="100" ${currentPage === 100 ? 'selected' : ''}>100</option>
-                </select>
+            <div class="flex items-center gap-3">
+              <select id="rowsPerPage-${tableName}" name="limit"
+                class="border border-input rounded px-2 py-1 text-xs bg-background focus:outline-none focus:border-ring transition-colors"
+                hx-get="/admin/table-pages/${tableName}" hx-target="#${tableName}TableContainer"
+                hx-vals="js:{limit: document.getElementById('rowsPerPage-${tableName}').value}">
+                <option value="10" ${limit === 10 ? 'selected' : ''}>10</option>
+                <option value="20" ${limit === 20 ? 'selected' : ''}>20</option>
+                <option value="50" ${limit === 50 ? 'selected' : ''}>50</option>
+                <option value="100" ${limit === 100 ? 'selected' : ''}>100</option>
+              </select>
 
-                <nav class="flex items-center gap-1">`;
+              <nav class="flex items-center gap-1">`;
 
   // Add pagination buttons
   if (hasPrev) {
-    tableHtml += `<button hx-get="/admin/table-pages/${tableName}?page=${prevPage}" hx-target="#${tableName}TableContainer"
-      class="inline-flex items-center justify-center w-8 h-8 rounded border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    html += `<button hx-get="/admin/table-pages/${tableName}?page=${prevPage}"
+      hx-target="#${tableName}TableContainer"
+      class="inline-flex items-center justify-center w-8 h-8 rounded border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+      title="Previous page">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
       </svg>
     </button>`;
@@ -577,49 +546,197 @@ function generateTableHtml(data, config, pagination, tableName) {
 
   pages.forEach((page) => {
     const isActive = page === currentPage;
-    tableHtml += `<button hx-get="/admin/table-pages/${tableName}?page=${page}" hx-target="#${tableName}TableContainer"
+    html += `<button hx-get="/admin/table-pages/${tableName}?page=${page}"
+      hx-target="#${tableName}TableContainer"
       class="inline-flex items-center justify-center px-2 py-1 rounded${isActive ? ' bg-muted text-foreground' : ' text-muted-foreground hover:text-foreground'} transition-colors text-xs font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">${page}</button>`;
   });
 
   if (hasNext) {
-    tableHtml += `<button hx-get="/admin/table-pages/${tableName}?page=${nextPage}" hx-target="#${tableName}TableContainer"
-      class="inline-flex items-center justify-center w-8 h-8 rounded border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    html += `<button hx-get="/admin/table-pages/${tableName}?page=${nextPage}"
+      hx-target="#${tableName}TableContainer"
+      class="inline-flex items-center justify-center w-8 h-8 rounded border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+      title="Next page">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
       </svg>
     </button>`;
   }
 
-  tableHtml += `
-                </nav>
-              </div>
+  html += `
+              </nav>
             </div>
           </td>
         </tr>
-      </tfoot>
-    </table>`;
+    </tfoot>
+  </table>`;
 
-  // Add bulk actions if enabled
-  if (showCheckbox && bulkActions.length > 0) {
-    tableHtml += `
-      <div id="bulkActions-${tableName}" class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-6 py-3 rounded-full z-30" style="display: none;">
-        <div class="flex items-center gap-4">
-          <span id="selectedCount-${tableName}">0 ${config.entityName} selected</span>
-          <div class="flex gap-2">`;
+  // Add action dropdowns (moved outside table to prevent overflow clipping)
+  if (data.length > 0 && actions.length > 0) {
+    data.forEach((item) => {
+      html += `<div id="actionMenu-${entityName}-${item.id}"
+        class="dropdown-menu fixed w-48 bg-popover rounded-md shadow-lg border border-border"
+        style="display: none;">
+        <div class="py-1">`;
+
+      actions.forEach((action) => {
+        let url = '';
+        let hxGet = '';
+        let hxPut = '';
+        let hxDelete = '';
+        const hxConfirm = action.hxConfirm || '';
+        const hxTarget = action.hxTarget || '';
+        const hxSwap = action.hxSwap || '';
+        const onclick = action.onclick || '';
+
+        if (action.type === 'link') {
+          url = `${action.url}/${item.id}`;
+        } else if (action.type === 'button') {
+          hxGet = `${action.hxGet}/${item.id}`;
+        } else if (action.type === 'approve') {
+          hxPut = `${action.hxPut}/${item.id}/approve`;
+        } else if (action.type === 'reject') {
+          hxPut = `${action.hxPut}/${item.id}/reject`;
+        } else if (action.type === 'delete') {
+          hxDelete = `${action.hxDelete}/${item.id}`;
+        }
+
+        if (action.type === 'link') {
+          html += `<a href="${url}"
+            class="flex items-center px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+            ${action.icon || '<span>Link</span>'}
+            ${action.label}
+          </a>`;
+        } else if (action.type === 'button') {
+          html += `<button ${hxGet ? `hx-get="${hxGet}"` : ''} ${hxTarget ? `hx-target="${hxTarget}"` : ''} ${hxSwap ? `hx-swap="${hxSwap}"` : ''}
+            class="flex items-center w-full px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+            ${action.icon || '<span>Button</span>'}
+            ${action.label}
+          </button>`;
+        } else if (action.type === 'delete') {
+          html += `<button ${hxDelete ? `hx-delete="${hxDelete}"` : ''} ${hxConfirm ? `hx-confirm="${hxConfirm.replace('this idea', `"${item.title || item.name || 'this item'}"`)}"` : ''} ${hxTarget ? `hx-target="${hxTarget}"` : ''} ${hxSwap ? `hx-swap="${hxSwap}"` : ''}
+            class="flex items-center w-full px-4 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors">
+            ${action.icon || '<span>Delete</span>'}
+            ${action.label}
+          </button>`;
+        } else if (action.type === 'approve') {
+          html += `<button ${hxPut ? `hx-put="${hxPut}"` : ''} ${hxTarget ? `hx-target="${hxTarget}"` : ''} ${hxSwap ? `hx-swap="${hxSwap}"` : ''}
+            class="flex items-center w-full px-4 py-2 text-sm text-green-600 hover:bg-green-50 transition-colors">
+            ${action.icon || '<span>Approve</span>'}
+            ${action.label}
+          </button>`;
+        } else if (action.type === 'reject') {
+          html += `<button ${hxPut ? `hx-put="${hxPut}"` : ''} ${hxTarget ? `hx-target="${hxTarget}"` : ''} ${hxSwap ? `hx-swap="${hxSwap}"` : ''}
+            class="flex items-center w-full px-4 py-2 text-sm text-yellow-600 hover:bg-yellow-50 transition-colors">
+            ${action.icon || '<span>Reject</span>'}
+            ${action.label}
+          </button>`;
+        } else {
+          html += `<div class="px-4 py-2 text-sm text-muted-foreground">No actions available</div>`;
+        }
+      });
+
+      html += `
+        </div>
+      </div>`;
+    });
+  }
+
+  // Add bulk actions panel
+  if (showCheckbox && bulkActions && bulkActions.length > 0) {
+    html += `<div id="bulkActions-${tableName}"
+      class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground px-6 py-3 rounded-full z-30"
+      style="display: none;">
+      <div class="flex items-center gap-4">
+        <span id="selectedCount-${tableName}">0 ${entityName} selected</span>
+        <div class="flex gap-2">`;
 
     bulkActions.forEach((action) => {
-      tableHtml += `<button onclick="${action.onclick}" id="${action.buttonId}-${tableName}" class="bg-primary-foreground/20 hover:bg-primary-foreground/30 text-primary-foreground px-3 py-1 rounded text-sm" disabled="">
+      html += `<button onclick="${action.onclick}" id="${action.buttonId}-${tableName}"
+        class="bg-primary-foreground/20 hover:bg-primary-foreground/30 text-primary-foreground px-3 py-1 rounded text-sm" disabled="">
         ${action.label}
       </button>`;
     });
 
-    tableHtml += `
-          </div>
+    html += `
         </div>
-      </div>`;
+      </div>
+    </div>`;
   }
 
-  return tableHtml;
+  // Add JavaScript for toggleActionMenu
+  html += `<script>
+    function toggleActionMenu(button) {
+      const entity = button.getAttribute('data-entity');
+      const id = button.getAttribute('data-id');
+
+      if (!entity || !id) {
+        console.error('Button missing data-entity or data-id attributes');
+        return;
+      }
+
+      const menu = document.getElementById(\`actionMenu-\${entity}-\${id}\`);
+
+      if (!menu) {
+        console.error(\`Dropdown not found: actionMenu-\${entity}-\${id}\`);
+        return;
+      }
+
+      const allMenus = document.querySelectorAll('[id^="actionMenu-"]');
+
+      // Close all other menus
+      allMenus.forEach((m) => {
+        if (m !== menu) {
+          m.style.display = 'none';
+        }
+      });
+
+      // Toggle current menu
+      if (menu.style.display === 'none' || menu.style.display === '') {
+        // Position the menu next to the button first
+        const rect = button.getBoundingClientRect();
+
+        // Set position and make visible temporarily to get dimensions
+        menu.style.position = 'fixed';
+        menu.style.zIndex = '9999';
+        menu.style.display = 'block';
+        menu.style.visibility = 'hidden';
+        menu.style.top = '0px';
+        menu.style.left = '0px';
+
+        // Get dimensions after it's in the DOM
+        const menuWidth = menu.offsetWidth;
+        const menuHeight = menu.offsetHeight;
+
+        // Calculate position: prefer below and to the right of button
+        let top = rect.bottom + window.scrollY + 5;
+        let left = rect.right + window.scrollX - menuWidth;
+
+        // If it would go off-screen to the left, position to the right of button
+        if (left < 0) {
+          left = rect.right + window.scrollX;
+        }
+
+        // If it would go off-screen to the bottom, position above button
+        if (top + menuHeight > window.scrollY + window.innerHeight) {
+          top = rect.top + window.scrollY - menuHeight - 5;
+        }
+
+        // If it would still go off-screen to the top, position below
+        if (top < 0) {
+          top = rect.bottom + window.scrollY + 5;
+        }
+
+        // Apply final position
+        menu.style.top = \`\${top}px\`;
+        menu.style.left = \`\${left}px\`;
+        menu.style.visibility = 'visible';
+      } else {
+        menu.style.display = 'none';
+      }
+    }
+  </script>`;
+
+  return html;
 }
 
 /**

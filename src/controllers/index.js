@@ -1,13 +1,20 @@
 // Import controllers from organized folders
-import { getProfile } from './admin/get-profile.js';
-import { getProfileSettings } from './admin/get-profile-settings.js';
-import { getSettings } from './admin/get-settings.js';
+
+import {
+  getProfileSettings,
+  postProfileSettings,
+} from './admin/get-profile-settings.js';
+import { getSettings, postSettings } from './admin/get-settings.js';
 import { getSystemHealth } from './admin/get-system-health.js';
 import { getSystemConfig } from './admin/get-system-config.js';
 import { getSystemLogs } from './admin/get-system-logs.js';
 import { getNotifications } from './admin/get-notifications.js';
 
-import { getActivity } from './admin/get-activity.js';
+import {
+  getActivity,
+  exportActivityCSV,
+  exportActivityJSON,
+} from './admin/get-activity.js';
 import { postLogout } from './admin/post-logout.js';
 
 import { getMain } from './overview/get-main.js';
@@ -29,15 +36,15 @@ import {
 import { requireAuth } from '../middleware/auth/index.js';
 
 // Re-export for backward compatibility
-export { getProfile };
-export { getProfileSettings };
-export { getSettings };
+
+export { getProfileSettings, postProfileSettings };
+export { getSettings, postSettings };
 export { getSystemHealth };
 export { getSystemConfig };
 export { getSystemLogs };
 export { getNotifications };
 
-export { getActivity };
+export { getActivity, exportActivityCSV, exportActivityJSON };
 export { postLogout };
 export { getMain };
 export { getContentManagement };
@@ -60,7 +67,7 @@ export default function adminRoutes(app) {
   });
 
   // Main pages (client-side auth protection via main layout)
-  app.get('/admin/profile', getProfile);
+
   app.get('/admin/profile-settings', getProfileSettings);
   app.get('/admin/settings', getSettings);
   app.get('/admin/system-health', getSystemHealth);
@@ -89,14 +96,18 @@ export default function adminRoutes(app) {
   app.get('/admin/table-pages/:tableName', getGenericTable);
 
   // Other pages (client-side auth protection)
-  app.get('/admin/other-pages/profile', getProfile);
+
   app.get('/admin/other-pages/profile-settings', getProfileSettings);
+  app.post('/admin/other-pages/profile-settings', postProfileSettings);
   app.get('/admin/other-pages/settings', getSettings);
+  app.post('/admin/other-pages/settings', postSettings);
   app.get('/admin/other-pages/system-health', getSystemHealth);
   app.get('/admin/other-pages/system-config', getSystemConfig);
   app.get('/admin/other-pages/system-logs', getSystemLogs);
   app.get('/admin/other-pages/notifications', getNotifications);
   app.get('/admin/other-pages/activity', getActivity);
+  app.get('/admin/other-pages/activity/export/csv', exportActivityCSV);
+  app.get('/admin/other-pages/activity/export/json', exportActivityJSON);
   app.get('/admin/other-pages/main', getMain);
   app.get('/admin/other-pages/content-management', getContentManagement);
   app.get('/admin/other-pages/system', getSystem);
