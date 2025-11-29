@@ -28,14 +28,6 @@ class CookieStorage {
     }
     return null;
   }
-        } catch (e) {
-          console.warn('CookieStorage: Failed to decode cookie value:', e);
-          return null;
-        }
-      }
-    }
-    return null;
-  }
 
   async setItem(key, value) {
     let valueToStore;
@@ -45,25 +37,6 @@ class CookieStorage {
       // Serialize objects to JSON
       valueToStore = JSON.stringify(value);
     }
-
-    const encodedValue = encodeURIComponent(valueToStore);
-
-    // Set cookie with appropriate settings
-    const cookieOptions = [
-      `${key}=${encodedValue}`,
-      'path=/',
-      'max-age=604800', // 7 days
-      'samesite=lax'
-    ];
-
-    // Only add secure in production
-    if (window.location.protocol === 'https:') {
-      cookieOptions.push('secure');
-    }
-
-    const cookieString = cookieOptions.join('; ');
-    document.cookie = cookieString;
-  }
 
     const encodedValue = encodeURIComponent(valueToStore);
 

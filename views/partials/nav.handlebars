@@ -27,10 +27,10 @@
                  placeholder="Search here..." aria-label="Search" id="navSearchInput" name="search" value="{{query.search}}" />
        </label>
       </div>
-        <!-- Theme Toggle Button -->
-           <button id="theme-toggle" class="ml-4 text-muted-foreground hover:text-primary rounded-full p-2 cursor-pointer font-medium" onclick="toggleTheme()">
-           <span id="theme-icon"></span>
-          </button>
+         <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="ml-4 text-muted-foreground hover:text-primary rounded-full p-2 cursor-pointer font-medium" onclick="toggleTheme()">
+            <span id="theme-icon">{{{icon 'sun-dim' size='16' class='h-4 w-4'}}}</span>
+           </button>
 
 {{> grid-menu}}
 
