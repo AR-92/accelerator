@@ -2,6 +2,7 @@ import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
 import { serviceFactory } from '../../../services/serviceFactory.js';
 import { formatDate } from '../../../helpers/format/index.js';
+import { authenticateUser, requireAuth } from '../../../middleware/auth/index.js';
 
 // Activity API
 export const getActivity = async (req, res) => {
@@ -130,5 +131,5 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
 
 // Route setup function
 export default function activityRoutes(app) {
-  app.get('/api/activity', getActivity);
+  app.get('/api/activity', authenticateUser, getActivity);
 }

@@ -26,9 +26,7 @@
   "homepage": "https://github.com/AR-92/accelerator#readme",
   "dependencies": {
     "@supabase/supabase-js": "^2.84.0",
-    "@tailwindcss/postcss": "^4.1.17",
-    "animate.css": "^4.1.1",
-    "chart.js": "^4.5.1",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
@@ -36,21 +34,18 @@
     "express-rate-limit": "^8.2.1",
     "express-validator": "^7.3.1",
     "helmet": "^8.1.0",
-    "json2csv": "^6.0.0-alpha.2",
-    "lucide-static": "^0.554.0",
-    "postgres": "^3.4.7",
-    "tailwindcss-animate": "^1.0.7",
+    "lucide-static": "^0.555.0",
     "winston": "^3.18.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.5",
-    "@babel/preset-env": "^7.28.5",
+    "@tailwindcss/postcss": "^4.1.17",
     "autoprefixer": "^10.4.22",
     "concurrently": "^9.2.1",
     "nodemon": "^3.1.11",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
     "prettier": "^3.6.2",
-    "tailwindcss": "^4.1.17"
+    "tailwindcss": "^4.1.17",
+    "tailwindcss-animate": "^1.0.7"
   }
 }

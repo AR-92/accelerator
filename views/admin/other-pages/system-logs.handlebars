@@ -351,7 +351,7 @@
  <script src="/js/chart.umd.js"></script>
  <script>
     document.addEventListener('DOMContentLoaded', function() {
-       console.log('System Logs Analytics page loaded, initializing charts...');
+       // System Logs Analytics page loaded, initializing charts...
 
        // Check if Chart.js is loaded
        if (typeof Chart === 'undefined') {
@@ -360,7 +360,7 @@
        }
 
        const logAnalytics = {{{json logAnalytics}};
-       console.log('Log analytics loaded:', logAnalytics);
+       // Log analytics loaded
 
        // Log Volume Chart
        try {
@@ -429,7 +429,7 @@
              }
           }
           });
-          console.log('Log volume chart created successfully');
+          // Log volume chart created successfully
        } catch (error) {
           console.error('Failed to create log volume chart:', error);
        }
@@ -507,7 +507,7 @@
              }
           }
           });
-          console.log('Log error chart created successfully');
+          // Log error chart created successfully
        } catch (error) {
           console.error('Failed to create log error chart:', error);
        }
@@ -567,7 +567,7 @@
              }
           }
           });
-          console.log('Log level chart created successfully');
+          // Log level chart created successfully
        } catch (error) {
           console.error('Failed to create log level chart:', error);
     }

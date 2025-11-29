@@ -1,5 +1,7 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
+import { authenticateUser, requireAuth } from '../../../middleware/auth/index.js';
+import { isHtmxRequest } from '../../../helpers/http/index.js';
 
 // Main API
 export const getMain = async (req, res) => {
@@ -102,5 +104,5 @@ export const getMain = async (req, res) => {
 
 // Route setup function
 export default function mainRoutes(app) {
-  app.get('/api/main', getMain);
+  app.get('/api/main', authenticateUser, getMain);
 }

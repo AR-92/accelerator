@@ -57,7 +57,12 @@ export default function authRoutes(app) {
         }
 
         logger.info(`User signed up: ${email}`);
-        res.json({ success: true, user: data.user, session: data.session });
+        res.json({
+          success: true,
+          user: data.user,
+          session: data.session,
+          redirect: '/dashboard',
+        });
       } catch (error) {
         logger.error('Signup server error:', error);
         res.status(500).json({ error: 'Signup failed' });
@@ -90,13 +95,109 @@ export default function authRoutes(app) {
         }
 
         logger.info(`User logged in: ${email}`);
-        res.json({ success: true, user: data.user, session: data.session });
+
+        // Set Supabase cookies for client-side session persistence
+        const supabaseUrl = config.supabase.url;
+        const projectMatch = supabaseUrl.match(/https:\/\/(.+)\.supabase\.co/);
+        const projectId = projectMatch ? projectMatch[1] : null;
+
+        if (projectId) {
+          // Set the standard Supabase cookies
+          res.cookie(`sb-${projectId}-auth-token`, data.session.access_token, {
+            httpOnly: false, // Allow client-side access
+            secure: false, // Allow on localhost
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            sameSite: 'lax',
+            path: '/',
+          });
+
+          if (data.session.refresh_token) {
+            res.cookie(
+              `sb-${projectId}-refresh-token`,
+              data.session.refresh_token,
+              {
+                httpOnly: false, // Allow client-side access
+                secure: false, // Allow on localhost
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+                sameSite: 'lax',
+                path: '/',
+              }
+            );
+          }
+        }
+
+        // Also set our custom cookie as fallback
+        res.cookie('sb-access-token', data.session.access_token, {
+          httpOnly: false, // Allow client-side access
+          secure: false, // Allow on localhost
+          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+          sameSite: 'lax',
+          path: '/',
+        });
+
+        res.json({
+          success: true,
+          user: data.user,
+          session: data.session,
+          redirect: '/dashboard',
+        });
       } catch (error) {
         logger.error('Login server error:', error);
         res.status(500).json({ error: 'Login failed' });
       }
     }
   );
+
+  // Session verification endpoint
+  app.get('/auth/session', async (req, res) => {
+    try {
+      logger.debug('Session verification request received');
+
+      // Try to get session token from headers or cookies
+      const authHeader =
+        req.headers.authorization || req.headers['x-auth-token'];
+      let token = authHeader?.startsWith('Bearer ')
+        ? authHeader.substring(7)
+        : null;
+
+      logger.debug('Auth header token:', !!token);
+
+      // Also check for our custom cookie
+      if (!token && req.cookies) {
+        token = req.cookies['sb-access-token'];
+        logger.debug('Cookie token found:', !!token);
+      }
+
+      if (!token) {
+        logger.debug('No token found, returning not authenticated');
+        return res.status(200).json({ authenticated: false });
+      }
+
+      logger.debug('Verifying token with Supabase...');
+
+      // Verify the token with Supabase
+      const { data, error } = await supabase.auth.getUser(token);
+
+      if (error || !data || !data.user) {
+        logger.debug('Token verification failed:', error?.message);
+        return res.status(200).json({ authenticated: false });
+      }
+
+      logger.debug('Token verified successfully for user:', data.user.id);
+
+      res.json({
+        authenticated: true,
+        user: {
+          id: data.user.id,
+          email: data.user.email,
+          user_metadata: data.user.user_metadata,
+        },
+      });
+    } catch (error) {
+      logger.error('Session verification error:', error);
+      res.status(200).json({ authenticated: false });
+    }
+  });
 
   // Server-side logout endpoint (for API consistency)
   app.post('/auth/logout', authRateLimiter, verifyCsrfToken, (req, res) => {

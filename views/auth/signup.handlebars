@@ -1,11 +1,7 @@
 <!-- Main Content -->
 <div class="flex-1 flex overflow-auto">
     <section id='examples'>
-  <div class='themes-wrapper bg-background h-screen w-full mx-auto p-0 relative'>
-    <!-- Theme Toggle Button -->
-    <button id="theme-toggle" class="absolute top-4 right-4 text-muted-foreground hover:text-primary rounded-full p-2 cursor-pointer z-10" onclick="toggleTheme()">
-      <span id="theme-icon"></span>
-    </button>
+  <div class='themes-wrapper bg-background h-screen w-full mx-auto p-0'>
     <div class='w-full h-full lg:grid lg:grid-cols-2 lg:gap-8'>
       <div class='flex items-center'>
         <div
@@ -127,7 +123,7 @@
 
             <button
               id='signup-button'
-              class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-center transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary/10 text-primary shadow hover:bg-primary/20 h-9 px-4 py-2 w-full'
+              class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-center transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full'
               type='submit'
             >
               <span id='signup-text'>Create an account</span>
@@ -188,7 +184,7 @@
         if (supabase) {
           supabase.auth.getSession().then(({ data: { session } }) => {
             if (session && session.user) {
-              // User is already logged in, redirect to admin
+              // User is already logged in, redirect to dashboard
               showToast('You are already logged in. Redirecting...', 'success');
               setTimeout(() => window.location.href = '/dashboard', 1000);
             } else if (authCheckAttempts < maxAuthCheckAttempts) {
@@ -246,44 +242,73 @@
       signupText.textContent = 'Creating account...';
       signupSpinner.classList.remove('hidden');
 
-      supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: { firstName, lastName }
+      // First try the server-side auth endpoint
+      fetch('/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('input[name="_csrf"]').value
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          firstName: firstName,
+          lastName: lastName
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          showToast('Account created successfully! Redirecting...', 'success');
+          // Redirect to dashboard
+          window.location.href = data.redirect || '/dashboard';
+        } else {
+          showToast(data.error || 'Signup failed', 'error');
+          // Reset loading state
+          signupButton.disabled = false;
+          signupText.textContent = 'Create an account';
+          signupSpinner.classList.add('hidden');
         }
-      }).then(({ data, error }) => {
-        if (error) {
-          // Check for network-related errors
-          if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch') || !navigator.onLine) {
+      })
+      .catch(error => {
+        console.error('Signup error:', error);
+        // Fallback to Supabase direct auth if server endpoint fails
+        supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { firstName, lastName }
+          }
+        }).then(({ data: supabaseData, error: supabaseError }) => {
+          if (supabaseError) {
+            // Check for network-related errors
+            if (supabaseError.message.includes('fetch') || supabaseError.message.includes('network') || supabaseError.message.includes('Failed to fetch') || !navigator.onLine) {
+              showToast('Network connection issue. Please check your internet connection and try again.', 'error');
+            } else {
+              showToast(supabaseError.message, 'error');
+            }
+            // Reset loading state
+            signupButton.disabled = false;
+            signupText.textContent = 'Create an account';
+            signupSpinner.classList.add('hidden');
+          } else {
+            showToast('Account created successfully! Please check your email to confirm your account.', 'success');
+            // Redirect to dashboard
+            window.location.href = '/dashboard';
+          }
+        }).catch(supabaseError => {
+          console.error('Supabase signup error:', supabaseError);
+          // Check for network errors
+          if (supabaseError.message.includes('fetch') || supabaseError.message.includes('network') || supabaseError.message.includes('Failed to fetch') || !navigator.onLine) {
             showToast('Network connection issue. Please check your internet connection and try again.', 'error');
           } else {
-            showToast(error.message, 'error');
+            showToast('An unexpected error occurred. Please try again.', 'error');
           }
           // Reset loading state
           signupButton.disabled = false;
           signupText.textContent = 'Create an account';
           signupSpinner.classList.add('hidden');
-        } else {
-          showToast('Account created successfully! Please check your email to confirm your account.', 'success');
-          // Reset loading state but keep success message
-          signupButton.disabled = false;
-          signupText.textContent = 'Create an account';
-          signupSpinner.classList.add('hidden');
-          // Stay on signup page to show confirmation message
-        }
-      }).catch(error => {
-        console.error('Signup error:', error);
-        // Check for network errors
-        if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch') || !navigator.onLine) {
-          showToast('Network connection issue. Please check your internet connection and try again.', 'error');
-        } else {
-          showToast('An unexpected error occurred. Please try again.', 'error');
-        }
-        // Reset loading state
-        signupButton.disabled = false;
-        signupText.textContent = 'Create an account';
-        signupSpinner.classList.add('hidden');
+        });
       });
     }
   </script>

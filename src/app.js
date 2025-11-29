@@ -1,4 +1,5 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import exphbs from 'express-handlebars';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -12,6 +13,7 @@ import {
 } from './middleware/security/index.js';
 import { errorHandler } from './middleware/error/index.js';
 import { handlebarsHelpers } from './helpers/handlebars.js';
+import { authenticateUser, requireAuth } from './middleware/auth/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -29,6 +31,9 @@ app.use(rateLimiter);
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Cookie parsing middleware
+app.use(cookieParser());
 
 // Input sanitization
 app.use(sanitizeInput);
@@ -64,6 +69,13 @@ if (config.nodeEnv === 'development') {
 
 // Serve static files
 app.use(express.static('public'));
+
+// Set up locals to pass Supabase config to all views
+app.use((req, res, next) => {
+  res.locals.supabaseUrl = config.supabase.url;
+  res.locals.supabaseKey = config.supabase.publicKey; // Use public key for client-side
+  next();
+});
 
 // Health check endpoint
 app.get('/health', (req, res) => {

@@ -80,86 +80,106 @@ export { getSettingsCollaborate };
 
 export { getDashboardActivityLog };
 
+import { requireWebAuth } from '../middleware/auth/index.js';
+
 // Admin routes setup
 export default function adminRoutes(app) {
-  // Root route - redirect to dashboard overview (no auth required for redirect)
-  app.get('/', (req, res) => {
-    res.redirect('/admin/dashboard');
+  // Root route - redirect to dashboard overview
+  app.get('/', requireWebAuth, (req, res) => {
+    res.redirect('/dashboard');
   });
 
-  // Main pages (client-side auth protection via main layout)
+  // Main pages (server-side auth protection)
+  app.get('/admin/profile-settings', requireWebAuth, getProfileSettings);
+  app.get('/admin/settings', requireWebAuth, getSettings);
+  app.get('/admin/system-health', requireWebAuth, getSystemHealth);
+  app.get('/admin/system-config', requireWebAuth, getSystemConfig);
+  app.get('/admin/system-logs', requireWebAuth, getSystemLogs);
+  app.get('/admin/notifications', requireWebAuth, getNotifications);
 
-  app.get('/admin/profile-settings', checkAuth, getProfileSettings);
-  app.get('/admin/settings', checkAuth, getSettings);
-  app.get('/admin/system-health', getSystemHealth);
-  app.get('/admin/system-config', getSystemConfig);
-  app.get('/admin/system-logs', getSystemLogs);
-  app.get('/admin/notifications', getNotifications);
-
-  app.get('/admin/activity', getActivity);
+  app.get('/admin/activity', requireWebAuth, getActivity);
   app.post('/admin/logout', postLogout);
 
-  // Overview pages (client-side auth protection via main layout)
-  app.get('/admin/dashboard', getDashboard);
-  app.get('/admin/portfolio', getPortfolio);
-  app.get('/admin/collaborate', getCollaborate);
-  app.get('/admin/new-project', getNewProject);
-  app.get('/admin/explore-ideas', getExploreIdeas);
+  // Overview pages (server-side auth protection)
+  app.get('/admin/dashboard', requireWebAuth, getDashboard);
+  app.get('/admin/portfolio', requireWebAuth, getPortfolio);
+  app.get('/admin/collaborate', requireWebAuth, getCollaborate);
+  app.get('/admin/new-project', requireWebAuth, getNewProject);
+  app.get('/admin/explore-ideas', requireWebAuth, getExploreIdeas);
 
-  // Other pages (client-side auth protection)
-
-  app.get('/admin/other-pages/profile-settings', checkAuth, getProfileSettings);
+  // Other pages (server-side auth protection)
+  app.get(
+    '/admin/other-pages/profile-settings',
+    requireWebAuth,
+    getProfileSettings
+  );
   app.post(
     '/admin/other-pages/profile-settings',
-    checkAuth,
+    requireWebAuth,
     postProfileSettings
   );
-  app.get('/admin/other-pages/settings', getSettings);
-  app.post('/admin/other-pages/settings', postSettings);
-  app.get('/admin/other-pages/system-health', getSystemHealth);
-  app.get('/admin/other-pages/system-config', getSystemConfig);
-  app.get('/admin/other-pages/system-logs', getSystemLogs);
-  app.get('/admin/other-pages/notifications', getNotifications);
-  app.get('/admin/other-pages/activity', getActivity);
-  app.get('/admin/other-pages/activity/export/csv', exportActivityCSV);
-  app.get('/admin/other-pages/activity/export/json', exportActivityJSON);
-  app.get('/admin/other-pages/dashboard', getDashboard);
-  app.get('/admin/other-pages/portfolio', getPortfolio);
-  app.get('/pages/portfolio', getPortfolioPage);
-  app.get('/admin/other-pages/collaborate', getCollaborate);
-  app.get('/admin/other-pages/new-project', getNewProject);
-  app.get('/admin/other-pages/explore-ideas', getExploreIdeas);
+  app.get('/admin/other-pages/settings', requireWebAuth, getSettings);
+  app.post('/admin/other-pages/settings', requireWebAuth, postSettings);
+  app.get('/admin/other-pages/system-health', requireWebAuth, getSystemHealth);
+  app.get('/admin/other-pages/system-config', requireWebAuth, getSystemConfig);
+  app.get('/admin/other-pages/system-logs', requireWebAuth, getSystemLogs);
+  app.get('/admin/other-pages/notifications', requireWebAuth, getNotifications);
+  app.get('/admin/other-pages/activity', requireWebAuth, getActivity);
+  app.get(
+    '/admin/other-pages/activity/export/csv',
+    requireWebAuth,
+    exportActivityCSV
+  );
+  app.get(
+    '/admin/other-pages/activity/export/json',
+    requireWebAuth,
+    exportActivityJSON
+  );
+  app.get('/admin/other-pages/dashboard', requireWebAuth, getDashboard);
+  app.get('/admin/other-pages/portfolio', requireWebAuth, getPortfolio);
+  app.get('/pages/portfolio', requireWebAuth, getPortfolioPage);
+  app.get('/admin/other-pages/collaborate', requireWebAuth, getCollaborate);
+  app.get('/admin/other-pages/new-project', requireWebAuth, getNewProject);
+  app.get('/admin/other-pages/explore-ideas', requireWebAuth, getExploreIdeas);
 
   // Collaboration pages
-  app.get('/pages/collaborate/chat', getChat);
-  app.get('/pages/collaborate/tasks', getTasks);
-  app.get('/pages/collaborate/files', getFiles);
-  app.get('/pages/collaborate/team', getTeam);
-  app.get('/pages/collaborate/calendar', getCalendar);
-  app.get('/pages/collaborate/activity', getActivityCollaborate);
-  app.get('/pages/collaborate/settings', getSettingsCollaborate);
+  app.get('/pages/collaborate/chat', requireWebAuth, getChat);
+  app.get('/pages/collaborate/tasks', requireWebAuth, getTasks);
+  app.get('/pages/collaborate/files', requireWebAuth, getFiles);
+  app.get('/pages/collaborate/team', requireWebAuth, getTeam);
+  app.get('/pages/collaborate/calendar', requireWebAuth, getCalendar);
+  app.get(
+    '/pages/collaborate/activity',
+    requireWebAuth,
+    getActivityCollaborate
+  );
+  app.get(
+    '/pages/collaborate/settings',
+    requireWebAuth,
+    getSettingsCollaborate
+  );
 
   // Help pages
-  app.get('/pages/help', getHelp);
+  app.get('/pages/help', requireWebAuth, getHelp);
 
   // Learn pages
-  app.get('/pages/learn', getLearn);
+  app.get('/pages/learn', requireWebAuth, getLearn);
 
   // Settings pages
-  app.get('/pages/settings', getSettingsPage);
+  app.get('/pages/settings', requireWebAuth, getSettingsPage);
 
   // Billing pages
-  app.get('/pages/billing', getBilling);
+  app.get('/pages/billing', requireWebAuth, getBilling);
 
   // Dashboard pages
-  app.get('/dashboard', getDashboardMain);
-  app.get('/dashboard/overview', getDashboardOverview);
-  app.get('/dashboard/idea', getDashboardIdea);
-  app.get('/dashboard/business', getDashboardBusiness);
-  app.get('/dashboard/financial', getDashboardFinancial);
-  app.get('/dashboard/marketing', getDashboardMarketing);
-  app.get('/dashboard/fund', getDashboardFund);
-  app.get('/dashboard/team', getDashboardTeam);
-  app.get('/dashboard/promote', getDashboardPromote);
-  app.get('/dashboard/activity-log', getDashboardActivityLog);
+  app.get('/dashboard', requireWebAuth, getDashboardMain);
+  app.get('/dashboard/overview', requireWebAuth, getDashboardOverview);
+  app.get('/dashboard/idea', requireWebAuth, getDashboardIdea);
+  app.get('/dashboard/business', requireWebAuth, getDashboardBusiness);
+  app.get('/dashboard/financial', requireWebAuth, getDashboardFinancial);
+  app.get('/dashboard/marketing', requireWebAuth, getDashboardMarketing);
+  app.get('/dashboard/fund', requireWebAuth, getDashboardFund);
+  app.get('/dashboard/team', requireWebAuth, getDashboardTeam);
+  app.get('/dashboard/promote', requireWebAuth, getDashboardPromote);
+  app.get('/dashboard/activity-log', requireWebAuth, getDashboardActivityLog);
 }

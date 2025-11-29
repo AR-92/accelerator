@@ -9,21 +9,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/output.css">
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Supabase configuration -->
+    {{#if supabaseUrl}}
+    <meta name="supabase-url" content="{{supabaseUrl}}">
+    {{/if}}
+    {{#if supabaseKey}}
+    <meta name="supabase-key" content="{{supabaseKey}}">
+    {{/if}}
      <!-- HTMX -->
      <script src="https://unpkg.com/htmx.org@1.9.10"></script>
      <!-- Hyperscript -->
      <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-     <!-- Supabase -->
-     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-     <!-- Chart.js -->
-     <script src="/js/chart.js"></script>
+      <!-- Supabase -->
+      <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+      <script src="/js/supabase-cookie-storage.js"></script>
+     <!-- Animate.css -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
      <script type="text/hyperscript">
          def updateThemeIcon()
            set isDark to document.documentElement.classList.contains('dark')
-           set moonSvg to '{{{icon 'moon' size='16' class='h-4 w-4'}}}'
-           set sunSvg to '{{{icon 'sun' size='16' class='h-4 w-4'}}}'
+           set moonSvg to '{{{icon "moon" size="16" class="h-4 w-4"}}}'
+           set sunSvg to '{{{icon "sun" size="16" class="h-4 w-4"}}}'
            set iconElement to document.querySelector('#theme-toggle-icon')
            if iconElement
              if isDark
@@ -78,20 +84,10 @@
 
     <!-- JavaScript Section -->
     <script>
-        // Toggle action menu dropdown - supports both old and new signatures
-        function toggleActionMenu(entityNameOrButton, id) {
-            let entity, button;
-
-            if (typeof entityNameOrButton === 'string') {
-                // Old signature: toggleActionMenu('entity', id)
-                entity = entityNameOrButton;
-                button = document.querySelector(`button[onclick="toggleActionMenu('${entity}', ${id})"]`);
-            } else {
-                // New signature: toggleActionMenu(button)
-                button = entityNameOrButton;
-                entity = button.getAttribute('data-entity');
-                id = button.getAttribute('data-id');
-            }
+        // Toggle action menu dropdown - consistent signature using button element
+        function toggleActionMenu(button) {
+            const entity = button.getAttribute('data-entity');
+            const id = button.getAttribute('data-id');
 
             if (!entity || !id || !button) {
                 console.error('Invalid parameters for toggleActionMenu');
@@ -311,92 +307,17 @@
             }
         }
 
-         // User actions
-         function openCreateUserModal() {
-             document.getElementById('createUserModal').classList.remove('hidden');
-         }
-
-         function editUser(id) {
-             // Fetch user data and populate modal
-             fetch(`/api/users/${id}`)
-                 .then(response => response.json())
-                 .then(user => {
-                     document.getElementById('editUserId').value = user.id;
-                     document.getElementById('editUserName').value = user.display_name || '';
-                     document.getElementById('editUserEmail').value = user.username || '';
-                     document.getElementById('editUserStatus').value = user.is_verified ? 'active' : 'inactive';
-                     document.getElementById('editUserForm').setAttribute('hx-put', `/api/users/${id}`);
-                     document.getElementById('editUserForm').setAttribute('hx-target', `#user-row-${id}`);
-                     document.getElementById('editUserModal').classList.remove('hidden');
-                 })
-                 .catch(error => console.error('Error fetching user:', error));
-         }
-
-        function deleteUser(id, title) {
-            if (confirm(`Are you sure you want to delete "${title}"?`)) {
-                htmx.ajax('DELETE', `/api/users/${id}`, {
-                    target: `#user-row-${id}`,
-                    swap: 'outerHTML'
-                });
-            }
-        }
-
-         function toggleUserStatus(id, currentStatus) {
-             const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
-             htmx.ajax('PUT', `/api/users/${id}?status=${newStatus}`, {
-                 target: `#user-row-${id}`,
-                 swap: 'outerHTML'
-             });
-         }
-
-          // Idea actions
-          function openCreateIdeaModal() {
-              fetch('/api/ideas/new')
-                  .then(response => response.text())
-                  .then(html => {
-                      document.body.insertAdjacentHTML('beforeend', html);
-                      const modal = document.querySelector('[data-modal-backdrop]');
-                      if (modal) {
-                          modal.classList.remove('hidden');
-                          modal.setAttribute('aria-hidden', 'false');
-                      }
-                  })
-                  .catch(error => console.error('Error loading create idea modal:', error));
-          }
-
-         function approveIdea(id) {
-             htmx.ajax('PUT', `/api/ideas/${id}?status=approved`, {
-                 target: `#idea-row-${id}`,
-                 swap: 'outerHTML'
-             });
-         }
-
-         function rejectIdea(id) {
-             htmx.ajax('PUT', `/api/ideas/${id}?status=rejected`, {
-                 target: `#idea-row-${id}`,
-                 swap: 'outerHTML'
-             });
-         }
-
-
-        // Create todo modal (placeholder)
+         // Create todo modal (placeholder)
         function openCreateTodoModal() {
             // This would open a modal for creating todos
-        }
-
-        // Export functionality (placeholder)
-        function exportToCSV() {
-            // Export to CSV functionality would be implemented here
         }
 
         // Sidebar toggle functionality
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            console.log('Sidebar element:', sidebar);
             if (!sidebar) return;
             const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
             const isCollapsed = collapsedFooter && collapsedFooter.style.display !== 'none';
-            console.log('Toggling sidebar, isCollapsed:', isCollapsed, 'collapsedFooter display:', collapsedFooter?.style.display);
 
              if (isCollapsed) {
                  sidebar.style.width = '224px';
@@ -413,19 +334,14 @@
                 const expandedFooter = document.getElementById('sidebar-footer-expanded');
                 const expandedButton = document.getElementById('sidebar-footer-expanded-button');
                 const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
-                console.log('Expanding sidebar - elements found:', !!expandedFooter, !!expandedButton, !!collapsedFooter);
-                console.log('Current display values:', expandedFooter?.style.display, expandedButton?.style.display, collapsedFooter?.style.display);
                 if (expandedFooter) {
                     expandedFooter.style.display = 'flex';
-                    console.log('Set expandedFooter to flex');
                 }
                 if (expandedButton) {
                     expandedButton.style.display = 'block';
-                    console.log('Set expandedButton to block');
                 }
                 if (collapsedFooter) {
                     collapsedFooter.style.display = 'none';
-                    console.log('Set collapsedFooter to none');
                 }
             } else {
                 sidebar.style.width = '66px';
@@ -455,10 +371,8 @@
         function initializeSidebar() {
             const sidebar = document.getElementById('sidebar');
             const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
-            console.log('Initializing sidebar, isCollapsed from localStorage:', isCollapsed);
 
             if (isCollapsed) {
-                console.log('Initializing sidebar as collapsed');
                 sidebar.style.width = '66px';
                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'none');
                  // Apply collapsed padding and remove margins
@@ -473,19 +387,16 @@
                 const expandedFooter = document.getElementById('sidebar-footer-expanded');
                 const expandedButton = document.getElementById('sidebar-footer-expanded-button');
                 const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
-                console.log('Setting collapsed state - expandedFooter:', expandedFooter, 'expandedButton:', expandedButton, 'collapsedFooter:', collapsedFooter);
                 if (expandedFooter) expandedFooter.style.display = 'none';
                 if (expandedButton) expandedButton.style.display = 'none';
                 if (collapsedFooter) collapsedFooter.style.display = 'flex';
             } else {
-                console.log('Initializing sidebar as expanded');
                 sidebar.style.width = '224px';
                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'flex');
                 // Show expanded footer, hide collapsed footer
                 const expandedFooter = document.getElementById('sidebar-footer-expanded');
                 const expandedButton = document.getElementById('sidebar-footer-expanded-button');
                 const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
-                console.log('Setting expanded state - expandedFooter:', expandedFooter, 'expandedButton:', expandedButton, 'collapsedFooter:', collapsedFooter);
                 if (expandedFooter) expandedFooter.style.display = 'flex';
                 if (expandedButton) expandedButton.style.display = 'block';
                 if (collapsedFooter) collapsedFooter.style.display = 'none';
@@ -555,53 +466,29 @@
             if (isDark) {
                 html.classList.remove('dark');
                 localStorage.setItem('theme', 'light');
-                // Change to sun icon
-                themeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
-                    <circle cx="12" cy="12" r="4"/>
-                    <path d="M12 4h.01"/>
-                    <path d="M20 12h.01"/>
-                    <path d="M12 20h.01"/>
-                    <path d="M4 12h.01"/>
-                    <path d="M17.657 6.343h.01"/>
-                    <path d="M17.657 17.657h.01"/>
-                    <path d="M6.343 17.657h.01"/>
-                    <path d="M6.343 6.343h.01"/>
-                </svg>`;
+                // Update icon using server-rendered content
+                if (themeIcon) {
+                    // The icon is already rendered server-side, so just toggle classes if needed
+                    // This function will work properly after initial render
+                }
             } else {
                 html.classList.add('dark');
                 localStorage.setItem('theme', 'dark');
-                // Change to moon icon
-                themeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
-                    <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>
-                </svg>`;
+                // Update icon using server-rendered content
+                if (themeIcon) {
+                    // The icon is already rendered server-side
+                }
             }
         }
 
         // Initialize theme on load
         function initializeTheme() {
             const savedTheme = localStorage.getItem('theme');
-            const themeIcon = document.getElementById('theme-icon');
 
             if (savedTheme === 'dark') {
                 document.documentElement.classList.add('dark');
-                // Set moon icon
-                themeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
-                    <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>
-                </svg>`;
             } else {
                 document.documentElement.classList.remove('dark');
-                // Set sun icon (default)
-                themeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
-                    <circle cx="12" cy="12" r="4"/>
-                    <path d="M12 4h.01"/>
-                    <path d="M20 12h.01"/>
-                    <path d="M12 20h.01"/>
-                    <path d="M4 12h.01"/>
-                    <path d="M17.657 6.343h.01"/>
-                    <path d="M17.657 17.657h.01"/>
-                    <path d="M6.343 17.657h.01"/>
-                    <path d="M6.343 6.343h.01"/>
-                </svg>`;
             }
         }
 
@@ -687,18 +574,7 @@
         }
 
         // Force logout function for stuck authentication (global scope)
-        async function forceLogout() {
-            console.log('Force logout triggered');
-            try {
-                // Properly sign out from Supabase
-                if (supabase) {
-                    await supabase.auth.signOut();
-                    console.log('Successfully signed out from Supabase');
-                }
-            } catch (error) {
-                console.error('Error during force logout:', error);
-            }
-
+        function forceLogout() {
             // Clear any cached data as fallback but preserve theme
             if (typeof localStorage !== 'undefined') {
                 const savedTheme = localStorage.getItem('theme');
@@ -717,275 +593,203 @@
 
      </script>
 
-     <!-- Supabase Auth -->
+     <!-- Client-side auth check for UI - server handles actual route protection -->
      <script>
-         let supabase = null;
-
+        // Initialize Supabase client
+        let supabase = null;
         function initSupabase() {
             if (window.supabase && !supabase) {
-                try {
-                    // Initialize Supabase client
-                    const supabaseUrl = 'https://wgmuxgylmvrsttdxwarw.supabase.co';
-                    const supabaseKey = 'sb_publishable_OvwrqcwJptCiC-Dz-_eSVg_hAVtpZJI';
-                    supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-                    console.log('Supabase client initialized successfully');
-                } catch (error) {
-                    console.error('Failed to initialize Supabase client:', error);
-                }
-            } else if (!window.supabase) {
-                console.log('Supabase script not loaded yet');
-            }
-        }
+                // Extract Supabase config from environment variables or meta tags
+                const supabaseUrl = document.querySelector('meta[name="supabase-url"]')?.content || '{{{supabaseUrl}}}';
+                const supabaseKey = document.querySelector('meta[name="supabase-key"]')?.content || '{{{supabaseKey}}}';
 
-        // Initialize Supabase when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            initSupabase();
-            // Also try to initialize after a short delay in case the script loads later
-            setTimeout(initSupabase, 1000);
-        });
+                console.log('Dashboard: Initializing Supabase with URL:', supabaseUrl, 'Key exists:', !!supabaseKey);
 
-        // Function to update user info in nav
-        function updateUserInfo(user) {
-            const userNameElement = document.getElementById('user-name');
-            const userAvatarElement = document.getElementById('user-avatar');
-            const userEmailElement = document.getElementById('user-email');
-            if (user) {
-                const displayName = user.user_metadata?.firstName
-                    ? `${user.user_metadata.firstName} ${user.user_metadata.lastName || ''}`.trim()
-                    : user.email || 'User';
-                const email = user.email || '';
-                const initials = user.user_metadata?.firstName && user.user_metadata?.lastName
-                    ? `${user.user_metadata.firstName.charAt(0)}${user.user_metadata.lastName.charAt(0)}`.toUpperCase()
-                    : email ? email.charAt(0).toUpperCase() : 'U';
-                if (userNameElement) userNameElement.textContent = displayName;
-                if (userAvatarElement) userAvatarElement.textContent = initials;
-                if (userEmailElement) userEmailElement.textContent = email;
-            } else {
-                if (userNameElement) userNameElement.textContent = 'Not logged in';
-                if (userAvatarElement) userAvatarElement.textContent = 'U';
-                if (userEmailElement) userEmailElement.textContent = '';
-            }
-        }
-
-        // Check auth state on page load
-        function setupAuthListeners() {
-            if (!supabase) {
-                initSupabase();
-            }
-
-            if (supabase) {
-                supabase.auth.onAuthStateChange((event, session) => {
-                    console.log('Auth state changed:', event, session ? 'session exists' : 'no session', session?.user ? 'with user' : 'no user');
-                    updateUserInfo(session?.user);
-                    if (event === 'SIGNED_OUT') {
-                        console.log('User signed out, redirecting to login');
-                        showToast('You have been logged out', 'info');
-                        window.location.href = '/auth';
-                    } else if (!session || !session.user) {
-                        // User is not authenticated
-                        if (window.location.pathname.startsWith('/admin')) {
-                            console.log('No session found, redirecting to login');
-                            window.location.href = '/auth';
-                        }
-                    }
-                });
-
-                // Check current session immediately
-                supabase.auth.getSession().then(({ data: { session } }) => {
-                    console.log('Initial session check:', session ? 'session exists' : 'no session', session?.user ? 'with user' : 'no user');
-                    updateUserInfo(session?.user);
-                    if (!session || !session.user) {
-                        if (window.location.pathname.startsWith('/admin')) {
-                            console.log('No session found, redirecting to login');
-                            setTimeout(() => window.location.href = '/auth', 100);
-                        }
-                    }
-                }).catch(error => {
-                    console.error('Session check error:', error);
-                    if (window.location.pathname.startsWith('/admin')) {
-                        setTimeout(() => window.location.href = '/auth', 100);
-                    }
-                });
-            }
-        }
-
-        // Logout function
-        async function handleLogout() {
-            try {
-                showToast('Logging out...', 'info');
-
-                if (supabase) {
-                    // Sign out from Supabase
-                    let { error } = await supabase.auth.signOut();
-                    if (error) {
-                        console.error('Logout error:', error);
-                        showToast('Logout error: ' + error.message, 'error');
-                    } else {
-                        console.log('Successfully signed out from Supabase');
-                        showToast('Logged out successfully', 'success');
-                    }
-                }
-
-                // Clear any cached data but preserve theme preference
-                if (typeof localStorage !== 'undefined') {
-                    const savedTheme = localStorage.getItem('theme');
-                    const sidebarCollapsed = localStorage.getItem('sidebarCollapsed');
-                    localStorage.clear();
-                    if (savedTheme) localStorage.setItem('theme', savedTheme);
-                    if (sidebarCollapsed) localStorage.setItem('sidebarCollapsed', sidebarCollapsed);
-                }
-                if (typeof sessionStorage !== 'undefined') {
-                    sessionStorage.clear();
-                }
-
-                // Redirect to login page immediately
-                window.location.href = '/auth';
-            } catch (error) {
-                console.error('Logout error:', error);
-                showToast('Logout failed', 'error');
-                // Still redirect even if there's an error
-                window.location.href = '/auth';
-            }
-        }
-
-        // Check auth and show content with retry logic
-        async function checkAuthAndShowContent(retryCount = 0) {
-            const authLoading = document.getElementById('auth-loading');
-            const mainContent = document.getElementById('main-content');
-            const maxRetries = 10;
-
-            if (window.location.pathname.startsWith('/admin')) {
-                // For admin pages, check authentication
-                if (supabase) {
+                if (supabaseUrl && supabaseKey) {
                     try {
-                        console.log('Checking authentication session...');
-                        const { data: { session }, error } = await supabase.auth.getSession();
-
-                        if (error) {
-                            console.error('Auth check error:', error);
-                            // Check if it's a network error
-                            if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch') || !navigator.onLine) {
-                                showToast('Network connection issue. Please check your internet connection and try again.', 'error');
-                                // Show retry option
-                                setTimeout(() => {
-                                    if (confirm('Network error detected. Would you like to retry?')) {
-                                        window.location.reload();
-                                    } else {
-                                        window.location.href = '/auth';
-                                    }
-                                }, 2000);
-                            } else {
-                                console.log('Auth error, redirecting to login');
-                                window.location.href = '/auth';
+                        // Use cookie storage for SSR compatibility
+                        const cookieStorage = new window.CookieStorage();
+                        supabase = window.supabase.createClient(supabaseUrl, supabaseKey, {
+                            auth: {
+                                storage: cookieStorage,
+                                autoRefreshToken: true,
+                                persistSession: true
                             }
-                            return;
-                        }
-
-                        if (!session || !session.user) {
-                            console.log('No session found, redirecting to login');
-                            window.location.href = '/auth';
-                            return;
-                        }
-
-                        // User is authenticated, show content
-                        console.log('User authenticated, showing admin content');
-                        authLoading.classList.add('hidden');
-                        mainContent.classList.remove('hidden');
-
-                        // Setup auth listeners for ongoing monitoring
-                        setupAuthListeners();
+                        });
+                        console.log('Dashboard: Supabase client created successfully');
                     } catch (error) {
-                        console.error('Auth check failed:', error);
-                        // Check if it's a network error
-                        if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('Failed to fetch') || !navigator.onLine) {
-                            showToast('Network connection issue. Please check your internet connection and try again.', 'error');
-                            // Show retry option
-                            setTimeout(() => {
-                                if (confirm('Network error detected. Would you like to retry?')) {
-                                    window.location.reload();
-                                } else {
-                                    window.location.href = '/auth';
-                                }
-                            }, 2000);
-                        } else {
-                            console.log('Auth check exception, redirecting to login');
-                            window.location.href = '/auth';
-                        }
+                        console.error('Dashboard: Failed to create Supabase client:', error);
                     }
                 } else {
-                    // Supabase not loaded yet, retry
-                    if (retryCount < maxRetries) {
-                        console.log(`Supabase not ready, retrying... (${retryCount + 1}/${maxRetries})`);
-                        setTimeout(() => checkAuthAndShowContent(retryCount + 1), 500);
-                    } else {
-                        console.log('Supabase failed to load after max retries, redirecting');
-                        showToast('Authentication service failed to load. Please refresh the page.', 'error');
-                        setTimeout(() => window.location.href = '/auth', 2000);
-                    }
+                    console.error('Dashboard: Missing Supabase configuration');
                 }
-            } else {
-                // For non-admin pages, show content immediately
+            }
+        }
+
+        // Check auth state and display appropriate UI
+        document.addEventListener('DOMContentLoaded', async () => {
+            const authLoading = document.getElementById('auth-loading');
+            const mainContent = document.getElementById('main-content');
+
+            try {
+                // Check auth state with retry logic (similar to login page)
+                let authCheckAttempts = 0;
+                const maxAuthCheckAttempts = 5;
+                let redirecting = false; // Prevent multiple redirects
+
+                const checkAuthStatus = async () => {
+                    authCheckAttempts++;
+                    console.log(`Dashboard auth check attempt ${authCheckAttempts}/${maxAuthCheckAttempts}`);
+
+                    // Ensure Supabase is initialized
+                    if (window.supabase && !supabase) {
+                        initSupabase();
+                        console.log('Dashboard: Supabase initialized');
+                    }
+
+                    // First try server-side session check (works with server-side login)
+                    try {
+                        console.log('Dashboard: Checking server session...');
+                        const serverResponse = await fetch('/auth/session', {
+                            method: 'GET',
+                            credentials: 'include'  // Include cookies for session validation
+                        });
+
+                        const serverResult = await serverResponse.json();
+                        console.log('Dashboard: Server session result:', serverResult);
+
+                        if (serverResult.authenticated) {
+                            // Server says we're authenticated, continue
+                            console.log('Dashboard: Authenticated via server session');
+                            return;
+                        }
+                    } catch (e) {
+                        console.log('Dashboard: Server session check failed:', e);
+                    }
+
+                    // Server says not authenticated, check Supabase client-side
+                    if (window.supabase && supabase) {
+                        try {
+                            console.log('Dashboard: Checking Supabase session...');
+                            // Try to get current session
+                            const { data: { session }, error } = await supabase.auth.getSession();
+                            console.log('Dashboard: Supabase session result:', { session: !!session, error: error?.message });
+
+                            if (!error && session && session.user) {
+                                // Session found, continue
+                                console.log('Dashboard: Authenticated via Supabase session');
+                                return;
+                            }
+                        } catch (e) {
+                            console.log('Dashboard: Supabase getSession error:', e);
+                        }
+                    } else {
+                        console.log('Dashboard: Supabase not available or not initialized');
+                    }
+
+                    // If we get here, not authenticated
+                    if (authCheckAttempts < maxAuthCheckAttempts) {
+                        // Try again after a longer delay
+                        console.log(`Dashboard: Retrying in 500ms...`);
+                        setTimeout(checkAuthStatus, 500);
+                    } else {
+                        // Max attempts reached, redirect to auth
+                        if (!redirecting) {
+                            console.log('Dashboard: Max attempts reached, redirecting to auth');
+                            redirecting = true;
+                            window.location.href = '/auth';
+                        }
+                    }
+                };
+
+                // Start the auth check with longer initial delay
+                console.log('Dashboard: Starting auth check in 1000ms...');
+                setTimeout(checkAuthStatus, 1000);
+
+                // Fallback: show main content after 10 seconds if auth check doesn't complete
+                setTimeout(() => {
+                    if (authLoading && mainContent && !mainContent.classList.contains('hidden')) {
+                        console.log('Dashboard: Auth check timeout, showing main content');
+                        authLoading.classList.add('hidden');
+                        mainContent.classList.remove('hidden');
+                    }
+                }, 10000);
+
+                // We have a valid session, continue to load main content
                 authLoading.classList.add('hidden');
                 mainContent.classList.remove('hidden');
-                setupAuthListeners();
+            } catch (error) {
+                console.error('Auth check error:', error);
+                // If auth check fails, redirect to login as fallback
+                window.location.href = '/auth';
+                return;
             }
-        }
 
-        // Session timeout configuration
-        const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes in milliseconds
-        let lastActivity = Date.now();
+            // Simple activity tracking
+            let lastActivity = Date.now();
+            const ACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 
-        // Function to update last activity
-        function updateActivity() {
-            lastActivity = Date.now();
-        }
-
-        // Function to check for session timeout
-        function checkSessionTimeout() {
-            const now = Date.now();
-            if (now - lastActivity > SESSION_TIMEOUT) {
-                console.log('Session timeout reached, logging out');
-                showToast('Your session has expired due to inactivity. Please log in again.', 'info');
-                handleLogout();
+            // Update last activity
+            function updateActivity() {
+                lastActivity = Date.now();
             }
-        }
 
-        // Set up activity listeners
-        function setupActivityListeners() {
-            // List of events that indicate user activity
+            // Set up activity listeners
             const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
-
             events.forEach(event => {
                 document.addEventListener(event, updateActivity, true);
             });
 
-            // Check for timeout every minute
-            setInterval(checkSessionTimeout, 60 * 1000);
-        }
-
-        // HTMX config to add auth header
-        document.addEventListener('DOMContentLoaded', () => {
-            // Add Authorization header to HTMX requests
-            document.body.addEventListener('htmx:configRequest', function(evt) {
-                if (supabase) {
-                    supabase.auth.getSession().then(({ data: { session } }) => {
-                        if (session && session.access_token) {
-                            evt.detail.headers['Authorization'] = 'Bearer ' + session.access_token;
-                        }
-                    });
+            // Check for session timeout (disabled for now)
+            /*
+            setInterval(() => {
+                const now = Date.now();
+                if (now - lastActivity > ACTIVITY_TIMEOUT) {
+                    // Show timeout message and redirect to login
+                    if (typeof showToast !== 'undefined') {
+                        showToast('Your session has expired due to inactivity. Please log in again.', 'info');
+                    }
+                    window.location.href = '/auth';
                 }
-            });
-        });
+            }, 60 * 1000); // Check every minute
+            */
 
-        // Check auth on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(checkAuthAndShowContent, 100); // Small delay for Supabase to load
-            setupActivityListeners(); // Set up activity tracking
+            // Initialize UI components
             initFilterNavScroll(); // Initialize filter nav scroll
             updateFilterNavActiveState(); // Update filter nav active state
         });
 
+        // Logout function - performs both client and server logout
+        async function handleLogout() {
+            try {
+                // First, try to logout from Supabase client-side
+                if (window.supabase && supabase) {
+                    await supabase.auth.signOut();
+                }
 
+                // Then call the server-side logout endpoint
+                await fetch('/auth/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': document.querySelector('input[name="_csrf"]')?.value || ''
+                    },
+                    credentials: 'include'
+                });
+
+                // Finally redirect to auth page
+                window.location.href = '/auth';
+            } catch (error) {
+                console.error('Logout error:', error);
+                // Even if logout fails, redirect to auth page
+                window.location.href = '/auth';
+            }
+        }
+
+        // Force logout function
+        function forceLogout() {
+            window.location.href = '/auth';
+        }
     </script>
 
     <!-- Toast notifications -->

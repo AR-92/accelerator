@@ -184,7 +184,7 @@
       <script src="/js/chart.umd.js"></script>
       <script>
          document.addEventListener('DOMContentLoaded', function() {
-            console.log('Notifications Management page loaded, initializing charts...');
+            // Notifications Management page loaded, initializing charts...
 
             // Check if Chart.js is loaded
             if (typeof Chart === 'undefined') {
@@ -193,7 +193,7 @@
             }
 
             const notificationTrends = {{{json notificationTrends}};
-            console.log('Notification trends loaded:', notificationTrends);
+            // Notification trends loaded
 
             // Notification Volume Chart
             try {
@@ -262,7 +262,7 @@
                   }
                }
                });
-               console.log('Notification volume chart created successfully');
+               // Notification volume chart created successfully
             } catch (error) {
                console.error('Failed to create notification volume chart:', error);
             }
@@ -340,7 +340,7 @@
                   }
                }
                });
-               console.log('Read rate chart created successfully');
+               // Read rate chart created successfully
             } catch (error) {
                console.error('Failed to create read rate chart:', error);
             }
@@ -405,7 +405,7 @@
                   }
                }
                });
-               console.log('Notification type chart created successfully');
+               // Notification type chart created successfully
             } catch (error) {
                console.error('Failed to create notification type chart:', error);
             }

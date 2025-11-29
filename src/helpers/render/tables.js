@@ -33,10 +33,10 @@ export const renderTableRowsHtml = (todos) => {
       </td>
       <td class="px-6 py-4">
         <div class="relative">
-          <button onclick="toggleActionMenu({{id}})" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors" aria-label="Actions menu">
+          <button onclick="toggleActionMenu(this)" data-entity="{{entity}}" data-id="{{id}}" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors" aria-label="Actions menu">
             {{{icon 'ellipsis-vertical' class='w-4 h-4'}}}
           </button>
-          <div id="actionMenu-{{id}}" class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
+          <div id="actionMenu-{{entity}}-{{id}}" class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
             <div class="py-1">
               <a href="/todos/{{id}}" class="flex items-center px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
                 {{{icon 'eye' class='w-4 h-4 mr-3'}}}

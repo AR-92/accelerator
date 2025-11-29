@@ -184,7 +184,7 @@
       <script src="/js/chart.umd.js"></script>
       <script>
          document.addEventListener('DOMContentLoaded', function() {
-            console.log('Activity Management page loaded, initializing charts...');
+            // Activity Management page loaded, initializing charts...
 
             // Check if Chart.js is loaded
             if (typeof Chart === 'undefined') {
@@ -193,8 +193,8 @@
             }
 
             const activityTrends = {{{json activityTrends}} || {};
-            console.log('Activity trends loaded:', activityTrends);
-            console.log('Activity trends keys:', Object.keys(activityTrends));
+            // Activity trends loaded
+            // Activity trends keys processed
 
             // Activity Volume Chart
             try {
@@ -268,7 +268,7 @@
                   }
                }
                });
-               console.log('Activity volume chart created successfully');
+               // Activity volume chart created successfully
             } catch (error) {
                console.error('Failed to create activity volume chart:', error);
             }
@@ -346,7 +346,7 @@
                   }
                }
                });
-               console.log('Error rate chart created successfully');
+               // Error rate chart created successfully
             } catch (error) {
                console.error('Failed to create error rate chart:', error);
             }
@@ -412,7 +412,7 @@
                   }
                }
                });
-               console.log('Activity type chart created successfully');
+               // Activity type chart created successfully
             } catch (error) {
                console.error('Failed to create activity type chart:', error);
             }

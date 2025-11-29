@@ -466,7 +466,7 @@
       <script src="/js/chart.umd.js"></script>
       <script>
          document.addEventListener('DOMContentLoaded', function() {
-            console.log('System Health page loaded, initializing charts...');
+            // System Health page loaded, initializing charts...
 
             // Check if Chart.js is loaded
             if (typeof Chart === 'undefined') {
@@ -476,7 +476,7 @@
             }
 
             const systemMetrics = {{{json systemMetrics}};
-            console.log('System metrics loaded:', systemMetrics);
+            // System metrics loaded
 
             // Validate data structure
             if (!systemMetrics || !systemMetrics.performanceTrends) {
@@ -499,7 +499,7 @@
                   return;
                }
 
-               console.log('Creating CPU chart with data:', systemMetrics.performanceTrends.cpuHistory);
+               // Creating CPU chart with data
                new Chart(cpuCtx, {
                type: 'line',
                data: {
@@ -559,7 +559,7 @@
                   }
                }
                });
-               console.log('CPU chart created successfully');
+               // CPU chart created successfully
             } catch (error) {
                console.error('Failed to create CPU chart:', error);
                showChartError('Failed to create CPU usage chart: ' + error.message);
@@ -579,7 +579,7 @@
                   return;
                }
 
-               console.log('Creating memory chart with data:', systemMetrics.performanceTrends.memoryHistory);
+               // Creating memory chart with data
                new Chart(memoryCtx, {
                type: 'line',
                data: {
@@ -639,7 +639,7 @@
                   }
                 }
                });
-               console.log('Memory chart created successfully');
+               // Memory chart created successfully
             } catch (error) {
                console.error('Failed to create memory chart:', error);
                showChartError('Failed to create memory usage chart: ' + error.message);
@@ -659,7 +659,7 @@
                   return;
                }
 
-               console.log('Creating response time chart with data:', systemMetrics.performanceTrends.responseTimeHistory);
+               // Creating response time chart with data
                new Chart(responseTimeCtx, {
                type: 'line',
                data: {
@@ -718,7 +718,7 @@
                   }
                 }
                });
-               console.log('Response time chart created successfully');
+               // Response time chart created successfully
             } catch (error) {
                console.error('Failed to create response time chart:', error);
                showChartError('Failed to create response time chart: ' + error.message);
