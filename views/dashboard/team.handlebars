@@ -1,0 +1,316 @@
+<!-- Dashboard Team Page -->
+<div class="min-h-screen bg-background">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+                <div class="flex flex-col gap-4 lg:gap-6">
+  <div class="flex items-center justify-between">
+    <div class="grid gap-1">
+      <h1 class="font-heading text-2xl font-semibold text-foreground">Team
+        Dashboard</h1>
+      <p class="text-base text-muted-foreground">Manage your team and foster
+        collaboration across projects.</p>
+    </div>
+    <div class="flex items-center gap-2">
+      {{> button text="Invite Member" icon="plus" variant="primary" class="flex items-center gap-2 px-4 py-2 rounded-md"}}
+    </div>
+  </div>
+
+    <!-- Team Metrics -->
+    <div class="grid grid-cols-1 gap-[17px] sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+      <div class="rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+        <div class="flex items-center justify-between px-[10px] py-[4px]">
+          <div class="flex flex-col gap-[4px]">
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Total Members</h3>
+            <p class="text-[18px] font-[600] text-foreground">12</p>
+          </div>
+           <div>
+              <div class="bg-primary/20 rounded-md">
+                <div class="w-10 h-10 bg-primary/20 rounded-full relative">
+                  <div class="flex items-center justify-center w-9 h-9 bg-primary rounded-full absolute top-0.5 left-0.5">
+{{{icon 'users' class='w-4 h-4 text-primary-foreground'}}}
+</div>
+                </div>
+              </div>
+           </div>
+        </div>
+        <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
+
+{{{icon 'trending-up' class='w-5 h-4'}}}
+
+          <span class="text-green-600 dark:text-green-400">+2</span>Since last
+          month
+        </p>
+      </div>
+
+      <div class="rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+        <div class="flex items-center justify-between px-[10px] py-[4px]">
+          <div class="flex flex-col gap-[4px]">
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Active Projects</h3>
+            <p class="text-[18px] font-[600] text-foreground">8</p>
+          </div>
+          <div>
+              <div class="bg-secondary/20 rounded-md">
+                <div class="w-10 h-10 bg-secondary/20 rounded-full relative">
+                  <div class="flex items-center justify-center w-9 h-9 bg-secondary rounded-full absolute top-0.5 left-0.5">
+{{{icon 'folder' class='w-4 h-4 text-secondary-foreground'}}}
+</div>
+               </div>
+             </div>
+          </div>
+        </div>
+        <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
+
+{{{icon 'trending-up' class='w-5 h-4'}}}
+
+          <span class="text-green-600 dark:text-green-400">+1</span>Since last
+          month
+        </p>
+      </div>
+
+      <div class="rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+        <div class="flex items-center justify-between px-[10px] py-[4px]">
+          <div class="flex flex-col gap-[4px]">
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Tasks Completed</h3>
+            <p class="text-[18px] font-[600] text-foreground">156</p>
+          </div>
+          <div>
+              <div class="bg-primary/20 rounded-md">
+                <div class="w-10 h-10 bg-primary/20 rounded-full relative">
+                  <div class="flex items-center justify-center w-9 h-9 bg-primary rounded-full absolute top-0.5 left-0.5">
+{{{icon 'check-circle' class='w-4 h-4 text-primary-foreground'}}}
+</div>
+               </div>
+             </div>
+          </div>
+        </div>
+        <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
+
+{{{icon 'trending-up' class='w-5 h-4'}}}
+
+          <span class="text-green-600 dark:text-green-400">+24</span>Since last
+          month
+        </p>
+      </div>
+
+      <div class="rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+        <div class="flex items-center justify-between px-[10px] py-[4px]">
+          <div class="flex flex-col gap-[4px]">
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Collaboration Score</h3>
+            <p class="text-[18px] font-[600] text-foreground">8.5/10</p>
+          </div>
+          <div>
+              <div class="bg-success/20 rounded-md">
+                <div class="w-10 h-10 bg-success/20 rounded-full relative">
+                  <div class="flex items-center justify-center w-9 h-9 bg-success rounded-full absolute top-0.5 left-0.5">
+{{{icon 'handshake' class='w-4 h-4 text-success-foreground'}}}
+</div>
+               </div>
+             </div>
+          </div>
+        </div>
+        <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
+
+{{{icon 'trending-up' class='w-5 h-4'}}}
+
+          <span class="text-green-600 dark:text-green-400">+0.3</span>Since last
+          month
+        </p>
+      </div>
+
+      <div class="rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+        <div class="flex items-center justify-between px-[10px] py-[4px]">
+          <div class="flex flex-col gap-[4px]">
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Avg Response Time</h3>
+            <p class="text-[18px] font-[600] text-foreground">2.4h</p>
+          </div>
+          <div>
+              <div class="bg-primary/20 rounded-md">
+                <div class="w-10 h-10 bg-primary/20 rounded-full relative">
+                  <div class="flex items-center justify-center w-9 h-9 bg-primary rounded-full absolute top-0.5 left-0.5">
+{{{icon 'clock' class='w-4 h-4 text-primary-foreground'}}}
+</div>
+               </div>
+             </div>
+          </div>
+        </div>
+        <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
+
+{{{icon 'trending-down' class='w-5 h-4'}}}
+
+          <span class="text-red-600 dark:text-red-400">-0.6h</span>Since last
+          month
+        </p>
+      </div>
+    </div>
+
+    <!-- Team Overview -->
+    <div class="flex flex-col items-stretch gap-[17px] lg:flex-row">
+      <div class="w-full rounded-md bg-card px-[26px] py-[20px] text-card-foreground lg:w-[60%] lg:min-w-[60%]">
+        <h3 class="text-[18px] font-[500] text-foreground mb-4">Team Performance</h3>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="p-4 bg-primary/10 rounded-lg border border-border">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
+{{{icon 'check-circle' class='w-4 h-4 text-primary'}}}
+              </div>
+              <h4 class="font-medium text-primary">Task Completion</h4>
+            </div>
+            <p class="text-sm text-primary/80">85% on time</p>
+            <div class="mt-2 w-full bg-muted rounded-full h-2">
+              <div class="bg-primary h-2 rounded-full" style="width: 85%"></div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-success/10 rounded-lg border border-border">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-8 h-8 bg-success/20 rounded-lg flex items-center justify-center">
+{{{icon 'message-circle' class='w-4 h-4 text-success'}}}
+              </div>
+              <h4 class="font-medium text-success">Communication</h4>
+            </div>
+            <p class="text-sm text-success/80">High engagement</p>
+            <div class="mt-2 w-full bg-muted rounded-full h-2">
+              <div class="bg-success h-2 rounded-full" style="width: 92%"></div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-warning/10 rounded-lg border border-border">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-8 h-8 bg-warning/20 rounded-lg flex items-center justify-center">
+{{{icon 'wrench' class='w-4 h-4 text-warning'}}}
+              </div>
+              <h4 class="font-medium text-warning">Productivity</h4>
+            </div>
+            <p class="text-sm text-warning/80">Above average</p>
+            <div class="mt-2 w-full bg-muted rounded-full h-2">
+              <div class="bg-warning h-2 rounded-full" style="width: 78%"></div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-primary/10 rounded-lg border border-border">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
+{{{icon 'heart' class='w-4 h-4 text-primary'}}}
+              </div>
+              <h4 class="font-medium text-primary">Team Satisfaction</h4>
+            </div>
+            <p class="text-sm text-primary/80">Very satisfied</p>
+            <div class="mt-2 w-full bg-muted rounded-full h-2">
+              <div class="bg-primary h-2 rounded-full" style="width: 88%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full rounded-md bg-card px-[26px] py-[20px] text-card-foreground">
+        <h3 class="text-[18px] font-[500] text-foreground mb-4">Quick Actions</h3>
+        <div class="space-y-3">
+          {{> button text="Invite Team Member" icon="plus" variant="secondary" href="/dashboard/team/invite" class="flex items-center justify-center w-full px-4 py-3 rounded-md text-sm font-medium transition mr-2"}}
+          {{> button text="Start Team Chat" icon="message-circle" variant="primary" class="flex items-center justify-center w-full px-4 py-3 rounded-md text-sm font-medium transition"}}
+          {{> button text="Schedule Meeting" icon="calendar" variant="secondary" class="flex items-center justify-center w-full px-4 py-3 rounded-md text-sm font-medium transition"}}
+        </div>
+      </div>
+    </div>
+
+    <!-- Team Members -->
+    <div class="rounded-[6px] bg-card px-2 py-[20px] text-card-foreground" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+      <div class="flex flex-col items-center justify-between gap-[16px] lg:flex-row">
+        <h3 class="text-[28px] font-[600] text-primary">Team Members</h3>
+        <div class="flex items-center gap-[20px]">
+          <button class="justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md flex items-center gap-[8px]" type="button">
+            {{{icon 'filter' class='w-5 h-5'}}}Filter
+          </button>
+        </div>
+      </div>
+
+       <div class="mt-[28px] w-full rounded-[8px]" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+        <div class="relative w-full overflow-auto">
+          <table class="w-full caption-bottom text-sm min-w-full overflow-x-auto">
+            <thead class="[&amp;_tr]:border-b h-[64px] bg-muted">
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Member</th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 w-[200px] text-[16px] font-[600] text-primary lg:text-[22px]">Role</th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 w-[116px] text-[16px] font-[600] text-primary lg:text-[22px]">Projects</th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Tasks</th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Status</th>
+              </tr>
+            </thead>
+            <tbody class="[&amp;_tr:last-child]:border-0">
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <div class="flex w-[200px] items-center gap-[10px]">
+                    <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
+<svg class="w-5 h-5 text-primary lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+  <circle cx="12" cy="7" r="4"></circle>
+</svg>
+                    </div>
+                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">John Doe</p>
+                  </div>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <span class="px-2 py-1 bg-primary/20 text-primary text-xs rounded">Founder</span>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">5</p>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">23</p>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <span class="px-2 py-1 bg-success/20 text-success text-xs rounded">Active</span>
+                </td>
+              </tr>
+
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <div class="flex w-[200px] items-center gap-[10px]">
+                    <div class="w-10 h-10 bg-warning/20 rounded-full flex items-center justify-center">
+{{{icon 'user' class='w-5 h-5 text-warning'}}}
+                    </div>
+                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Sarah Smith</p>
+                  </div>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <span class="px-2 py-1 bg-warning/20 text-warning text-xs rounded">Designer</span>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">3</p>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">18</p>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <span class="px-2 py-1 bg-success/20 text-success text-xs rounded">Active</span>
+                </td>
+              </tr>
+
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <div class="flex w-[200px] items-center gap-[10px]">
+                    <div class="w-10 h-10 bg-destructive/20 rounded-full flex items-center justify-center">
+{{{icon 'user' class='w-5 h-5 text-destructive'}}}
+                    </div>
+                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Mike Johnson</p>
+                  </div>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <span class="px-2 py-1 bg-destructive/20 text-destructive text-xs rounded">Developer</span>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">4</p>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">31</p>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <span class="px-2 py-1 bg-success/20 text-success text-xs rounded">Active</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

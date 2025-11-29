@@ -1,0 +1,28 @@
+{{#if href}}
+<a href="{{href}}" class="inline-flex items-center justify-center whitespace-nowrap {{#if rounded}}{{rounded}}{{else}}rounded-md{{/if}} {{#if textSize}}{{textSize}}{{else}}text-sm{{/if}} font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 {{#if variant}}
+  {{#eq variant 'primary'}}bg-primary text-primary-foreground hover:bg-primary/90{{/eq}}
+  {{#eq variant 'secondary'}}bg-secondary text-secondary-foreground hover:bg-secondary/80{{/eq}}
+  {{#eq variant 'destructive'}}bg-destructive text-destructive-foreground hover:bg-destructive/90{{/eq}}
+  {{#eq variant 'outline'}}border border-input bg-background hover:bg-accent hover:text-accent-foreground{{/eq}}
+  {{#eq variant 'ghost'}}hover:bg-accent hover:text-accent-foreground{{/eq}}
+  {{#eq variant 'link'}}text-primary underline-offset-4 hover:underline{{/eq}}
+  {{#unless variant}}bg-primary/10 text-primary hover:bg-primary/20{{/unless}}
+{{else}}bg-primary/10 text-primary hover:bg-primary/20{{/if}} {{#if height}}{{height}}{{else}}h-9{{/if}} {{#if padding}}{{padding}}{{else}}px-4 py-2{{/if}} {{#if class}}{{class}}{{/if}}" {{#if ariaLabel}}aria-label="{{ariaLabel}}"{{/if}}>
+{{else}}
+<button type="{{#if type}}{{type}}{{else}}button{{/if}}" class="inline-flex items-center justify-center whitespace-nowrap {{#if rounded}}{{rounded}}{{else}}rounded-md{{/if}} {{#if textSize}}{{textSize}}{{else}}text-sm{{/if}} font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 {{#if variant}}
+  {{#eq variant 'primary'}}bg-primary text-primary-foreground hover:bg-primary/90{{/eq}}
+  {{#eq variant 'secondary'}}bg-secondary text-secondary-foreground hover:bg-secondary/80{{/eq}}
+  {{#eq variant 'destructive'}}bg-destructive text-destructive-foreground hover:bg-destructive/90{{/eq}}
+  {{#eq variant 'outline'}}border border-input bg-background hover:bg-accent hover:text-accent-foreground{{/eq}}
+  {{#eq variant 'ghost'}}hover:bg-accent hover:text-accent-foreground{{/eq}}
+  {{#eq variant 'link'}}text-primary underline-offset-4 hover:underline{{/eq}}
+  {{#unless variant}}bg-primary/10 text-primary hover:bg-primary/20{{/unless}}
+{{else}}bg-primary/10 text-primary hover:bg-primary/20{{/if}} {{#if height}}{{height}}{{else}}h-9{{/if}} {{#if padding}}{{padding}}{{else}}px-4 py-2{{/if}} {{#if class}}{{class}}{{/if}}" {{#if ariaLabel}}aria-label="{{ariaLabel}}"{{/if}}>
+{{/if}}
+{{#if icon}}<span class="mr-2 h-4 w-4">{{{icon icon size=16}}}</span>{{/if}}
+{{text}}
+{{#if href}}
+</a>
+{{else}}
+</button>
+{{/if}}

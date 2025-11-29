@@ -1,7 +1,11 @@
 <!-- Main Content -->
 <div class="flex-1 flex overflow-auto">
     <section id='examples'>
-  <div class='themes-wrapper bg-background h-screen w-full mx-auto p-0'>
+  <div class='themes-wrapper bg-background h-screen w-full mx-auto p-0 relative'>
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" class="absolute top-4 right-4 text-muted-foreground hover:text-primary rounded-full p-2 cursor-pointer z-10" onclick="toggleTheme()">
+      <span id="theme-icon"></span>
+    </button>
     <div class='w-full h-full lg:grid lg:grid-cols-2 lg:gap-8'>
       <div class='flex items-center'>
         <div
@@ -123,7 +127,7 @@
 
             <button
               id='signup-button'
-              class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-center transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full'
+              class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-center transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary/10 text-primary shadow hover:bg-primary/20 h-9 px-4 py-2 w-full'
               type='submit'
             >
               <span id='signup-text'>Create an account</span>
@@ -186,7 +190,7 @@
             if (session && session.user) {
               // User is already logged in, redirect to admin
               showToast('You are already logged in. Redirecting...', 'success');
-              setTimeout(() => window.location.href = '/admin/main', 1000);
+              setTimeout(() => window.location.href = '/dashboard', 1000);
             } else if (authCheckAttempts < maxAuthCheckAttempts) {
               // Try again after a short delay
               setTimeout(checkAuthStatus, 200);

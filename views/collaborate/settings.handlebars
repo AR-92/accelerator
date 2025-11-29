@@ -1,0 +1,162 @@
+<!-- Settings Page -->
+<div class="min-h-screen bg-background">
+    <div id="collaborate-main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+        <div class="flex flex-col gap-4 lg:gap-6">
+            <div class="flex items-center justify-between">
+                <div class="grid gap-1">
+                    <h1 class="font-heading text-2xl font-semibold text-foreground">Settings</h1>
+                    <p class="text-base text-muted-foreground">Collaboration preferences</p>
+                </div>
+            </div>
+
+            <!-- Settings Sections -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Main Settings -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Notifications -->
+                    <div class="bg-card p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-semibold mb-4">Notifications</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium">Email Notifications</h4>
+                                    <p class="text-sm text-muted-foreground">Receive email updates for important activities</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/25 dark:peer-focus:ring-primary/25 rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium">Task Assignments</h4>
+                                    <p class="text-sm text-muted-foreground">Get notified when tasks are assigned to you</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/25 dark:peer-focus:ring-primary/25 rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium">File Uploads</h4>
+                                    <p class="text-sm text-muted-foreground">Notifications for new file uploads in shared folders</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/25 dark:peer-focus:ring-primary/25 rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Privacy -->
+                    <div class="bg-card p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-semibold mb-4">Privacy</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium">Profile Visibility</h4>
+                                    <p class="text-sm text-muted-foreground">Control who can see your profile information</p>
+                                </div>
+                                <select class="px-3 py-2 bg-background border border-border rounded-md text-sm">
+                                    <option>Team Only</option>
+                                    <option>Organization</option>
+                                    <option>Public</option>
+                                </select>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium">Activity Status</h4>
+                                    <p class="text-sm text-muted-foreground">Show when you're active in the collaboration tools</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer" checked>
+                                    <div class="w-11 h-6 bg-muted peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/25 dark:peer-focus:ring-primary/25 rounded-full peer  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Integrations -->
+                    <div class="bg-card p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-semibold mb-4">Integrations</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-background rounded-md border border-border">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-muted rounded-md flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-muted-foreground" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.69c-.39-.39-.39-1.02 0-1.41l1.06-1.06c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0L16.15 6.1c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l.39-.39-.39-.39.39.39zm-4.26 4.26c-.78-.78-.78-2.05 0-2.83l2.12-2.12c.78-.78.78-2.05 0-2.83-.78-.78-2.05-.78-2.83 0L10.47 9.1c-.78.78-.78 2.05 0 2.83.78.78 2.05.78 2.83 0l.39-.39-.39-.39.39.39zm-4.26 4.26c-.39-.39-1.02-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.06-1.06c.39-.39.39-1.02 0-1.41zm-4.26-4.26c.78-.78 2.05-.78 2.83 0l2.12 2.12c.78.78.78 2.05 0 2.83.78.78 2.05.78 2.83 0l2.12-2.12c.78-.78.78-2.05 0-2.83-.78-.78-2.05-.78-2.83 0l-2.12 2.12c-.78.78-.78 2.05 0 2.83z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium">Slack</h4>
+                                        <p class="text-sm text-muted-foreground">Connect your Slack workspace</p>
+                                    </div>
+                                </div>
+                                <button class="px-4 py-2 bg-primary/10 text-primary rounded-md hover:bg-primary/20 text-sm">
+                                    Connect
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-background rounded-md border border-border">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-muted rounded-md flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-muted-foreground" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm5.56 8.69c-.39-.39-.39-1.02 0-1.41l1.06-1.06c.39-.39.39-1.02 0-1.41-.39-.39-1.02-.39-1.41 0L16.15 6.1c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l.39-.39-.39-.39.39.39zm-4.26 4.26c-.78-.78-.78-2.05 0-2.83l2.12-2.12c.78-.78.78-2.05 0-2.83-.78-.78-2.05-.78-2.83 0L10.47 9.1c-.78.78-.78 2.05 0 2.83.78.78 2.05.78 2.83 0l.39-.39-.39-.39.39.39zm-4.26 4.26c-.39-.39-1.02-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.06-1.06c.39-.39.39-1.02 0-1.41zm-4.26-4.26c.78-.78 2.05-.78 2.83 0l2.12 2.12c.78.78.78 2.05 0 2.83.78.78 2.05.78 2.83 0l2.12-2.12c.78-.78.78-2.05 0-2.83-.78-.78-2.05-.78-2.83 0l-2.12 2.12c-.78.78-.78 2.05 0 2.83z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium">Google Calendar</h4>
+                                        <p class="text-sm text-muted-foreground">Sync your calendar events</p>
+                                    </div>
+                                </div>
+                                <button class="px-4 py-2 border border-border rounded-md hover:bg-accent text-sm">
+                                    Connected
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- Account -->
+                    <div class="bg-card p-6 rounded-lg shadow-sm">
+                        <h3 class="text-lg font-semibold mb-4">Account</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
+                                    <span class="text-sm font-semibold text-muted-foreground">JD</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium">John Doe</h4>
+                                    <p class="text-sm text-muted-foreground">john.doe@company.com</p>
+                                </div>
+                            </div>
+                            <button class="w-full px-4 py-2 border border-border rounded-md hover:bg-accent text-sm">
+                                Edit Profile
+                            </button>
+                            <button class="w-full px-4 py-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md text-sm">
+                                Sign Out
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Danger Zone -->
+                    <div class="bg-card p-6 rounded-lg shadow-sm border border-red-200 dark:border-red-800">
+                        <h3 class="text-lg font-semibold mb-4 text-red-600 dark:text-red-400">Danger Zone</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-medium">Leave Team</h4>
+                                <p class="text-sm text-muted-foreground mb-2">Remove yourself from this collaboration team</p>
+                                <button class="px-4 py-2 border border-red-300 dark:border-red-700 text-red-600 dark:text-red-400 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 text-sm">
+                                    Leave Team
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

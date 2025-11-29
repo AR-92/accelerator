@@ -64,7 +64,7 @@ export const getProjects = async (req, res) => {
               </div>
               <div class="ml-4">
                 <div class="text-sm font-medium text-gray-900">${project.title}</div>
-                <div class="text-sm text-gray-500">${project.description?.substring(0, 50)}${project.description?.length > 50 ? '...' : ''}</div>
+                <div class="text-sm text-muted-foreground">${project.description?.substring(0, 50)}${project.description?.length > 50 ? '...' : ''}</div>
               </div>
             </div>
           </td>
@@ -81,7 +81,7 @@ export const getProjects = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(project.created_at)}</td>
           <td class="px-6 py-4">
             <div class="relative">
-              <button onclick="toggleActionMenu('project', ${project.id})" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors">
+              <button onclick="toggleActionMenu('project', ${project.id})" class="p-2 rounded-full hover:bg-gray-100 text-muted-foreground hover:text-black dark:text-white transition-colors">
                 <svg class="w-4 h-4 lucide lucide-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="1"></circle>
                   <circle cx="12" cy="5" r="1"></circle>

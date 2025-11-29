@@ -17,21 +17,38 @@ import {
 } from './admin/get-activity.js';
 import { postLogout } from './admin/post-logout.js';
 
-import { getMain } from './overview/get-main.js';
-import { getContentManagement } from './overview/get-content-management.js';
-import { getSystem } from './overview/get-system.js';
-import { getBusiness } from './overview/get-business.js';
-import { getLearning } from './overview/get-learning.js';
-import { getProjects } from './overview/get-projects.js';
-import { getHelp } from './overview/get-help.js';
-import { getFinancial } from './overview/get-financial.js';
+import { getDashboard } from './overview/get-dashboard.js';
+import { getPortfolio } from './overview/get-portfolio.js';
+import { getPortfolioPage } from './overview/get-portfolio-page.js';
+import { getCollaborate } from './overview/get-collaborate.js';
+import { getNewProject } from './overview/get-new-project.js';
+import { getExploreIdeas } from './overview/get-explore-ideas.js';
+
+import { getChat } from './collaborate/chat.js';
+import { getTasks } from './collaborate/tasks.js';
+import { getFiles } from './collaborate/files.js';
+import { getTeam } from './collaborate/team.js';
+import { getCalendar } from './collaborate/calendar.js';
+import { getActivity as getActivityCollaborate } from './collaborate/activity.js';
+import { getSettings as getSettingsCollaborate } from './collaborate/settings.js';
+
+import { getHelp } from './help/index.js';
+import { getLearn } from './learn/index.js';
+import { getSettings as getSettingsPage } from './settings/index.js';
+import { getBilling } from './billing/index.js';
 
 import {
-  getGenericTable,
-  getRowDetail,
-  getRowEdit,
-  getRowCreate,
-} from './table-controller.js';
+  getDashboardMain,
+  getDashboardOverview,
+  getDashboardIdea,
+  getDashboardBusiness,
+  getDashboardFinancial,
+  getDashboardMarketing,
+  getDashboardFund,
+  getDashboardTeam,
+  getDashboardPromote,
+  getDashboardActivityLog,
+} from './dashboard/index.js';
 
 import { requireAuth, checkAuth } from '../middleware/auth/index.js';
 
@@ -46,24 +63,28 @@ export { getNotifications };
 
 export { getActivity, exportActivityCSV, exportActivityJSON };
 export { postLogout };
-export { getMain };
-export { getContentManagement };
-export { getSystem };
-export { getBusiness };
-export { getLearning };
-export { getProjects };
-export { getHelp };
-export { getFinancial };
-export { getGenericTable };
-export { getRowDetail };
-export { getRowEdit };
-export { getRowCreate };
+export { getDashboard };
+export { getPortfolio };
+export { getPortfolioPage };
+export { getCollaborate };
+export { getNewProject };
+export { getExploreIdeas };
+
+export { getChat };
+export { getTasks };
+export { getFiles };
+export { getTeam };
+export { getCalendar };
+export { getActivityCollaborate };
+export { getSettingsCollaborate };
+
+export { getDashboardActivityLog };
 
 // Admin routes setup
 export default function adminRoutes(app) {
-  // Root route - redirect to main overview (no auth required for redirect)
+  // Root route - redirect to dashboard overview (no auth required for redirect)
   app.get('/', (req, res) => {
-    res.redirect('/admin/main');
+    res.redirect('/admin/dashboard');
   });
 
   // Main pages (client-side auth protection via main layout)
@@ -79,21 +100,11 @@ export default function adminRoutes(app) {
   app.post('/admin/logout', postLogout);
 
   // Overview pages (client-side auth protection via main layout)
-  app.get('/admin/main', getMain);
-  app.get('/admin/content-management', getContentManagement);
-  app.get('/admin/system', getSystem);
-  app.get('/admin/business', getBusiness);
-  app.get('/admin/learning', getLearning);
-  app.get('/admin/projects', getProjects);
-  app.get('/admin/help', getHelp);
-  app.get('/admin/financial', getFinancial);
-
-  // Generic table pages - handles all table operations (client-side auth protection)
-  // Specific routes must come before generic ones
-  app.get('/admin/table-pages/:tableName/view/:id', getRowDetail);
-  app.get('/admin/table-pages/:tableName/edit/:id', getRowEdit);
-  app.get('/admin/table-pages/:tableName/create', getRowCreate);
-  app.get('/admin/table-pages/:tableName', getGenericTable);
+  app.get('/admin/dashboard', getDashboard);
+  app.get('/admin/portfolio', getPortfolio);
+  app.get('/admin/collaborate', getCollaborate);
+  app.get('/admin/new-project', getNewProject);
+  app.get('/admin/explore-ideas', getExploreIdeas);
 
   // Other pages (client-side auth protection)
 
@@ -112,12 +123,43 @@ export default function adminRoutes(app) {
   app.get('/admin/other-pages/activity', getActivity);
   app.get('/admin/other-pages/activity/export/csv', exportActivityCSV);
   app.get('/admin/other-pages/activity/export/json', exportActivityJSON);
-  app.get('/admin/other-pages/main', getMain);
-  app.get('/admin/other-pages/content-management', getContentManagement);
-  app.get('/admin/other-pages/system', getSystem);
-  app.get('/admin/other-pages/business', getBusiness);
-  app.get('/admin/other-pages/learning', getLearning);
-  app.get('/admin/other-pages/projects', getProjects);
-  app.get('/admin/other-pages/help', getHelp);
-  app.get('/admin/other-pages/financial', getFinancial);
+  app.get('/admin/other-pages/dashboard', getDashboard);
+  app.get('/admin/other-pages/portfolio', getPortfolio);
+  app.get('/pages/portfolio', getPortfolioPage);
+  app.get('/admin/other-pages/collaborate', getCollaborate);
+  app.get('/admin/other-pages/new-project', getNewProject);
+  app.get('/admin/other-pages/explore-ideas', getExploreIdeas);
+
+  // Collaboration pages
+  app.get('/pages/collaborate/chat', getChat);
+  app.get('/pages/collaborate/tasks', getTasks);
+  app.get('/pages/collaborate/files', getFiles);
+  app.get('/pages/collaborate/team', getTeam);
+  app.get('/pages/collaborate/calendar', getCalendar);
+  app.get('/pages/collaborate/activity', getActivityCollaborate);
+  app.get('/pages/collaborate/settings', getSettingsCollaborate);
+
+  // Help pages
+  app.get('/pages/help', getHelp);
+
+  // Learn pages
+  app.get('/pages/learn', getLearn);
+
+  // Settings pages
+  app.get('/pages/settings', getSettingsPage);
+
+  // Billing pages
+  app.get('/pages/billing', getBilling);
+
+  // Dashboard pages
+  app.get('/dashboard', getDashboardMain);
+  app.get('/dashboard/overview', getDashboardOverview);
+  app.get('/dashboard/idea', getDashboardIdea);
+  app.get('/dashboard/business', getDashboardBusiness);
+  app.get('/dashboard/financial', getDashboardFinancial);
+  app.get('/dashboard/marketing', getDashboardMarketing);
+  app.get('/dashboard/fund', getDashboardFund);
+  app.get('/dashboard/team', getDashboardTeam);
+  app.get('/dashboard/promote', getDashboardPromote);
+  app.get('/dashboard/activity-log', getDashboardActivityLog);
 }

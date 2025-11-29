@@ -11,12 +11,14 @@
     <link rel="stylesheet" href="/css/output.css">
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <!-- HTMX -->
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    <!-- Hyperscript -->
-    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-    <!-- Supabase -->
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+     <!-- HTMX -->
+     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+     <!-- Hyperscript -->
+     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+     <!-- Supabase -->
+     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+     <!-- Chart.js -->
+     <script src="/js/chart.js"></script>
      <script type="text/hyperscript">
          def updateThemeIcon()
            set isDark to document.documentElement.classList.contains('dark')
@@ -49,7 +51,7 @@
             end
      </script>
 </head>
-<body class="h-full">
+<body class="h-full overflow-hidden">
      <!-- Auth loading screen -->
      <div id="auth-loading" class="fixed inset-0 bg-background z-50 flex items-center justify-center">
          <div class="text-center">
@@ -59,14 +61,14 @@
          </div>
      </div>
 
-     <!-- Main content (hidden initially) -->
-     <div id="main-content" class="min-h-screen hidden flex flex-col">
+      <!-- Main content (hidden initially) -->
+      <div id="main-content" class="h-screen hidden flex flex-col">
          {{> nav}}
          {{> filter-nav}}
          <div class="flex flex-1 min-h-0">
              {{> sidebar}}
              <main class="flex-1 p-2 sm:p-4 overflow-y-auto">
-                 {{{body}}}
+                  {{{body}}}
              </main>
          </div>
      </div>
@@ -163,9 +165,35 @@
             }
         }
 
+        // Toggle grid menu dropdown
+        function toggleGridMenu() {
+            const menu = document.getElementById('grid-dropdown');
+            const isHidden = menu.classList.contains('hidden');
+            if (isHidden) {
+                menu.classList.remove('hidden');
+                setTimeout(() => menu.classList.remove('opacity-0', 'invisible'), 10);
+            } else {
+                menu.classList.add('opacity-0', 'invisible');
+                setTimeout(() => menu.classList.add('hidden'), 200);
+            }
+        }
+
+        // Toggle footer dropdown
+        function toggleFooterDropdown() {
+            const menu = document.getElementById('footer-dropdown-menu');
+            const isHidden = menu.classList.contains('hidden');
+            if (isHidden) {
+                menu.classList.remove('hidden');
+                setTimeout(() => menu.classList.remove('opacity-0', 'invisible'), 10);
+            } else {
+                menu.classList.add('opacity-0', 'invisible');
+                setTimeout(() => menu.classList.add('hidden'), 200);
+            }
+        }
+
         // Close dropdowns when clicking outside
         document.addEventListener('click', function (event) {
-            if (!event.target.closest('.relative') && !event.target.closest('#admin-user-menu') && !event.target.closest('[id^="actionMenu-"]') && !event.target.closest('button[onclick*="toggleActionMenu"]')) {
+            if (!event.target.closest('.relative') && !event.target.closest('#admin-user-menu') && !event.target.closest('#grid-menu') && !event.target.closest('[id^="actionMenu-"]') && !event.target.closest('button[onclick*="toggleActionMenu"]') && !event.target.closest('#footer-dropdown-trigger') && !event.target.closest('#footer-dropdown-menu')) {
                 // Close action menus
                 document.querySelectorAll('[id^="actionMenu-"]').forEach(menu => {
                     menu.style.display = 'none';
@@ -179,6 +207,13 @@
                 const userMenu = document.getElementById('admin-user-dropdown');
                 userMenu.classList.add('opacity-0', 'invisible');
                 setTimeout(() => userMenu.classList.add('hidden'), 200);
+                const gridMenu = document.getElementById('grid-dropdown');
+                gridMenu.classList.add('opacity-0', 'invisible');
+                setTimeout(() => gridMenu.classList.add('hidden'), 200);
+                // Close footer dropdown
+                const footerMenu = document.getElementById('footer-dropdown-menu');
+                footerMenu.classList.add('opacity-0', 'invisible');
+                setTimeout(() => footerMenu.classList.add('hidden'), 200);
             }
         });
 
@@ -359,31 +394,57 @@
             const sidebar = document.getElementById('sidebar');
             console.log('Sidebar element:', sidebar);
             if (!sidebar) return;
-            const isCollapsed = sidebar.style.width === '66px';
-            console.log('Toggling sidebar, isCollapsed:', isCollapsed);
+            const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
+            const isCollapsed = collapsedFooter && collapsedFooter.style.display !== 'none';
+            console.log('Toggling sidebar, isCollapsed:', isCollapsed, 'collapsedFooter display:', collapsedFooter?.style.display);
 
-            if (isCollapsed) {
-                sidebar.style.width = '224px';
-                document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'flex');
-                // Restore normal padding and margins for expanded state
-                document.querySelectorAll('#sidebar a').forEach(link => {
-                    link.classList.remove('px-1', 'justify-center');
-                    link.classList.add('px-3');
-                });
-                document.querySelectorAll('#sidebar svg').forEach(icon => {
-                    icon.classList.add('mr-3');
-                });
+             if (isCollapsed) {
+                 sidebar.style.width = '224px';
+                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'flex');
+                  // Restore normal padding and margins for expanded state
+                  document.querySelectorAll('#sidebar nav a').forEach(link => {
+                      link.classList.remove('px-1', 'justify-center');
+                      link.classList.add('px-3');
+                  });
+                  document.querySelectorAll('#sidebar nav svg').forEach(icon => {
+                      icon.classList.add('mr-3');
+                  });
+                // Show expanded footer, hide collapsed footer
+                const expandedFooter = document.getElementById('sidebar-footer-expanded');
+                const expandedButton = document.getElementById('sidebar-footer-expanded-button');
+                const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
+                console.log('Expanding sidebar - elements found:', !!expandedFooter, !!expandedButton, !!collapsedFooter);
+                console.log('Current display values:', expandedFooter?.style.display, expandedButton?.style.display, collapsedFooter?.style.display);
+                if (expandedFooter) {
+                    expandedFooter.style.display = 'flex';
+                    console.log('Set expandedFooter to flex');
+                }
+                if (expandedButton) {
+                    expandedButton.style.display = 'block';
+                    console.log('Set expandedButton to block');
+                }
+                if (collapsedFooter) {
+                    collapsedFooter.style.display = 'none';
+                    console.log('Set collapsedFooter to none');
+                }
             } else {
                 sidebar.style.width = '66px';
                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'none');
-                // Adjust padding for collapsed state and remove margins
-                document.querySelectorAll('#sidebar a').forEach(link => {
-                    link.classList.remove('px-3');
-                    link.classList.add('px-1', 'justify-center');
-                });
-                document.querySelectorAll('#sidebar svg').forEach(icon => {
-                    icon.classList.remove('mr-3');
-                });
+                 // Adjust padding for collapsed state and remove margins
+                 document.querySelectorAll('#sidebar nav a').forEach(link => {
+                     link.classList.remove('px-3');
+                     link.classList.add('px-1', 'justify-center');
+                 });
+                 document.querySelectorAll('#sidebar nav svg').forEach(icon => {
+                     icon.classList.remove('mr-3');
+                 });
+                // Show collapsed footer, hide expanded footer
+                const expandedFooter = document.getElementById('sidebar-footer-expanded');
+                const expandedButton = document.getElementById('sidebar-footer-expanded-button');
+                const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
+                if (expandedFooter) expandedFooter.style.display = 'none';
+                if (expandedButton) expandedButton.style.display = 'none';
+                if (collapsedFooter) collapsedFooter.style.display = 'flex';
             }
 
             // Save state to localStorage
@@ -394,22 +455,40 @@
         function initializeSidebar() {
             const sidebar = document.getElementById('sidebar');
             const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
-            console.log('Initializing sidebar, isCollapsed:', isCollapsed);
+            console.log('Initializing sidebar, isCollapsed from localStorage:', isCollapsed);
 
             if (isCollapsed) {
+                console.log('Initializing sidebar as collapsed');
                 sidebar.style.width = '66px';
                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'none');
-                // Apply collapsed padding and remove margins
-                document.querySelectorAll('#sidebar a').forEach(link => {
-                    link.classList.remove('px-3');
-                    link.classList.add('px-1', 'justify-center');
-                });
-                document.querySelectorAll('#sidebar svg').forEach(icon => {
-                    icon.classList.remove('mr-3');
-                });
+                 // Apply collapsed padding and remove margins
+                 document.querySelectorAll('#sidebar nav a').forEach(link => {
+                     link.classList.remove('px-3');
+                     link.classList.add('px-1', 'justify-center');
+                 });
+                 document.querySelectorAll('#sidebar nav svg').forEach(icon => {
+                     icon.classList.remove('mr-3');
+                 });
+                // Show collapsed footer, hide expanded footer
+                const expandedFooter = document.getElementById('sidebar-footer-expanded');
+                const expandedButton = document.getElementById('sidebar-footer-expanded-button');
+                const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
+                console.log('Setting collapsed state - expandedFooter:', expandedFooter, 'expandedButton:', expandedButton, 'collapsedFooter:', collapsedFooter);
+                if (expandedFooter) expandedFooter.style.display = 'none';
+                if (expandedButton) expandedButton.style.display = 'none';
+                if (collapsedFooter) collapsedFooter.style.display = 'flex';
             } else {
+                console.log('Initializing sidebar as expanded');
                 sidebar.style.width = '224px';
                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'flex');
+                // Show expanded footer, hide collapsed footer
+                const expandedFooter = document.getElementById('sidebar-footer-expanded');
+                const expandedButton = document.getElementById('sidebar-footer-expanded-button');
+                const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
+                console.log('Setting expanded state - expandedFooter:', expandedFooter, 'expandedButton:', expandedButton, 'collapsedFooter:', collapsedFooter);
+                if (expandedFooter) expandedFooter.style.display = 'flex';
+                if (expandedButton) expandedButton.style.display = 'block';
+                if (collapsedFooter) collapsedFooter.style.display = 'none';
             }
         }
 
@@ -510,6 +589,7 @@
                     <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>
                 </svg>`;
             } else {
+                document.documentElement.classList.remove('dark');
                 // Set sun icon (default)
                 themeIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
                     <circle cx="12" cy="12" r="4"/>
@@ -539,108 +619,71 @@
             });
         }
 
-        // Filter nav scroll functionality
-        function initFilterNavScroll() {
-            // Settings filter scroll
-            const settingsLeft = document.getElementById('settings-filter-scroll-left');
-            const settingsRight = document.getElementById('settings-filter-scroll-right');
-            const settingsContainer = document.getElementById('settings-filter-scroll-container');
+         // Filter nav scroll functionality
+         function initFilterNavScroll() {
+             // Function to check and update chevron visibility
+             function updateChevronVisibility(leftBtn, rightBtn, container) {
+                 if (!leftBtn || !rightBtn || !container) return;
 
-            if (settingsLeft && settingsRight && settingsContainer) {
-                settingsLeft.addEventListener('click', () => {
-                    settingsContainer.scrollBy({ left: -200, behavior: 'smooth' });
-                });
-                settingsRight.addEventListener('click', () => {
-                    settingsContainer.scrollBy({ left: 200, behavior: 'smooth' });
-                });
-            }
+                 const hasOverflow = container.scrollWidth > container.clientWidth;
+                 const isAtStart = container.scrollLeft <= 0;
+                 const isAtEnd = container.scrollLeft >= container.scrollWidth - container.clientWidth - 1;
 
-            // Table filter scroll
-            const tableLeft = document.getElementById('table-filter-scroll-left');
-            const tableRight = document.getElementById('table-filter-scroll-right');
-            const tableContainer = document.getElementById('table-filter-scroll-container');
+                 leftBtn.style.display = hasOverflow && !isAtStart ? 'flex' : 'none';
+                 rightBtn.style.display = hasOverflow && !isAtEnd ? 'flex' : 'none';
+             }
 
-            if (tableLeft && tableRight && tableContainer) {
-                tableLeft.addEventListener('click', () => {
-                    tableContainer.scrollBy({ left: -200, behavior: 'smooth' });
-                });
-                tableRight.addEventListener('click', () => {
-                    tableContainer.scrollBy({ left: 200, behavior: 'smooth' });
-                });
-            }
+             // Settings filter scroll
+             const settingsLeft = document.getElementById('settings-filter-scroll-left');
+             const settingsRight = document.getElementById('settings-filter-scroll-right');
+             const settingsContainer = document.getElementById('settings-filter-scroll-container');
 
-            // Overview filter scroll
-            const overviewLeft = document.getElementById('overview-filter-scroll-left');
-            const overviewRight = document.getElementById('overview-filter-scroll-right');
-            const overviewContainer = document.getElementById('overview-filter-scroll-container');
+             if (settingsLeft && settingsRight && settingsContainer) {
+                 settingsLeft.addEventListener('click', () => {
+                     settingsContainer.scrollBy({ left: -200, behavior: 'smooth' });
+                     setTimeout(() => updateChevronVisibility(settingsLeft, settingsRight, settingsContainer), 300);
+                 });
+                 settingsRight.addEventListener('click', () => {
+                     settingsContainer.scrollBy({ left: 200, behavior: 'smooth' });
+                     setTimeout(() => updateChevronVisibility(settingsLeft, settingsRight, settingsContainer), 300);
+                 });
 
-            if (overviewLeft && overviewRight && overviewContainer) {
-                overviewLeft.addEventListener('click', () => {
-                    overviewContainer.scrollBy({ left: -200, behavior: 'smooth' });
-                });
-                overviewRight.addEventListener('click', () => {
-                    overviewContainer.scrollBy({ left: 200, behavior: 'smooth' });
-                });
-            }
-        }
+                 // Initial visibility check
+                 updateChevronVisibility(settingsLeft, settingsRight, settingsContainer);
+
+                 // Update on resize
+                 window.addEventListener('resize', () => updateChevronVisibility(settingsLeft, settingsRight, settingsContainer));
+             }
+
+             // Overview filter scroll
+             const overviewLeft = document.getElementById('overview-filter-scroll-left');
+             const overviewRight = document.getElementById('overview-filter-scroll-right');
+             const overviewContainer = document.getElementById('overview-filter-scroll-container');
+
+             if (overviewLeft && overviewRight && overviewContainer) {
+                 overviewLeft.addEventListener('click', () => {
+                     overviewContainer.scrollBy({ left: -200, behavior: 'smooth' });
+                     setTimeout(() => updateChevronVisibility(overviewLeft, overviewRight, overviewContainer), 300);
+                 });
+                 overviewRight.addEventListener('click', () => {
+                     overviewContainer.scrollBy({ left: 200, behavior: 'smooth' });
+                     setTimeout(() => updateChevronVisibility(overviewLeft, overviewRight, overviewContainer), 300);
+                 });
+
+                 // Initial visibility check
+                 updateChevronVisibility(overviewLeft, overviewRight, overviewContainer);
+
+                 // Update on resize
+                 window.addEventListener('resize', () => updateChevronVisibility(overviewLeft, overviewRight, overviewContainer));
+             }
+         }
 
         // Update filter nav active state
         function updateFilterNavActiveState() {
             const urlParams = new URLSearchParams(window.location.search);
             const status = urlParams.get('status');
 
-            // Update table filter active state
-            const tableFilterButtons = document.querySelectorAll('#table-filter-scroll-container button');
-            tableFilterButtons.forEach(button => {
-                button.classList.remove('text-foreground', 'font-medium');
-                button.classList.add('text-muted-foreground');
-            });
 
-            if (!status) {
-                // "All" is active
-                const allButton = document.getElementById('filter-link-all');
-                if (allButton) {
-                    allButton.classList.remove('text-muted-foreground');
-                    allButton.classList.add('text-foreground', 'font-medium');
-                }
-            } else {
-                // Find the button with matching status
-                const activeButton = document.querySelector(`#table-filter-scroll-container button[id="filter-link-${status}"]`);
-                if (activeButton) {
-                    activeButton.classList.remove('text-muted-foreground');
-                    activeButton.classList.add('text-foreground', 'font-medium');
-                }
-            }
-
-            // Update border indicators
-            const tableFilterDivs = document.querySelectorAll('#table-filter-scroll-container > div');
-            tableFilterDivs.forEach(div => {
-                const borderDiv = div.querySelector('div:first-child');
-                if (borderDiv) {
-                    borderDiv.classList.remove('opacity-100');
-                    borderDiv.classList.add('opacity-0', 'group-hover:opacity-100');
-                }
-            });
-
-            if (!status) {
-                const allDiv = document.querySelector('#table-filter-scroll-container > div:first-child');
-                if (allDiv) {
-                    const borderDiv = allDiv.querySelector('div:first-child');
-                    if (borderDiv) {
-                        borderDiv.classList.remove('opacity-0', 'group-hover:opacity-100');
-                        borderDiv.classList.add('opacity-100');
-                    }
-                }
-            } else {
-                const activeDiv = document.querySelector(`#table-filter-scroll-container button[id="filter-link-${status}"]`)?.closest('div');
-                if (activeDiv) {
-                    const borderDiv = activeDiv.querySelector('div:first-child');
-                    if (borderDiv) {
-                        borderDiv.classList.remove('opacity-0', 'group-hover:opacity-100');
-                        borderDiv.classList.add('opacity-100');
-                    }
-                }
-            }
         }
 
         // Force logout function for stuck authentication (global scope)
@@ -656,9 +699,13 @@
                 console.error('Error during force logout:', error);
             }
 
-            // Clear any cached data as fallback
+            // Clear any cached data as fallback but preserve theme
             if (typeof localStorage !== 'undefined') {
+                const savedTheme = localStorage.getItem('theme');
+                const sidebarCollapsed = localStorage.getItem('sidebarCollapsed');
                 localStorage.clear();
+                if (savedTheme) localStorage.setItem('theme', savedTheme);
+                if (sidebarCollapsed) localStorage.setItem('sidebarCollapsed', sidebarCollapsed);
             }
             if (typeof sessionStorage !== 'undefined') {
                 sessionStorage.clear();
@@ -668,14 +715,11 @@
             window.location.href = '/auth';
         }
 
-    </script>
+     </script>
 
-    <!-- Filter functionality -->
-    <script src="/js/filters.js"></script>
-
-    <!-- Supabase Auth -->
-    <script>
-        let supabase = null;
+     <!-- Supabase Auth -->
+     <script>
+         let supabase = null;
 
         function initSupabase() {
             if (window.supabase && !supabase) {
@@ -703,15 +747,23 @@
         // Function to update user info in nav
         function updateUserInfo(user) {
             const userNameElement = document.getElementById('user-name');
-            if (userNameElement) {
-                if (user) {
-                    const displayName = user.user_metadata?.firstName
-                        ? `${user.user_metadata.firstName} ${user.user_metadata.lastName || ''}`.trim()
-                        : user.email || 'User';
-                    userNameElement.textContent = displayName;
-                } else {
-                    userNameElement.textContent = 'Not logged in';
-                }
+            const userAvatarElement = document.getElementById('user-avatar');
+            const userEmailElement = document.getElementById('user-email');
+            if (user) {
+                const displayName = user.user_metadata?.firstName
+                    ? `${user.user_metadata.firstName} ${user.user_metadata.lastName || ''}`.trim()
+                    : user.email || 'User';
+                const email = user.email || '';
+                const initials = user.user_metadata?.firstName && user.user_metadata?.lastName
+                    ? `${user.user_metadata.firstName.charAt(0)}${user.user_metadata.lastName.charAt(0)}`.toUpperCase()
+                    : email ? email.charAt(0).toUpperCase() : 'U';
+                if (userNameElement) userNameElement.textContent = displayName;
+                if (userAvatarElement) userAvatarElement.textContent = initials;
+                if (userEmailElement) userEmailElement.textContent = email;
+            } else {
+                if (userNameElement) userNameElement.textContent = 'Not logged in';
+                if (userAvatarElement) userAvatarElement.textContent = 'U';
+                if (userEmailElement) userEmailElement.textContent = '';
             }
         }
 
@@ -774,9 +826,13 @@
                     }
                 }
 
-                // Clear any cached data
+                // Clear any cached data but preserve theme preference
                 if (typeof localStorage !== 'undefined') {
+                    const savedTheme = localStorage.getItem('theme');
+                    const sidebarCollapsed = localStorage.getItem('sidebarCollapsed');
                     localStorage.clear();
+                    if (savedTheme) localStorage.setItem('theme', savedTheme);
+                    if (sidebarCollapsed) localStorage.setItem('sidebarCollapsed', sidebarCollapsed);
                 }
                 if (typeof sessionStorage !== 'undefined') {
                     sessionStorage.clear();
@@ -929,10 +985,7 @@
             updateFilterNavActiveState(); // Update filter nav active state
         });
 
-        // Handle browser back/forward navigation for table filters
-        window.addEventListener('popstate', function () {
-            updateFilterNavActiveState();
-        });
+
     </script>
 
     <!-- Toast notifications -->

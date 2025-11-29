@@ -1,158 +1,109 @@
 <!-- Sidebar -->
-  <div id="sidebar" class="w-56 transition-all duration-300 bg-card border border-border fixed md:relative inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto" style="height: -webkit-fill-available;">
-   <div class=" h-full overflow-y-auto">
-     <nav class="px-3 py-3 text-sm">
-       <!-- Top-level Sections -->
-       <ul class="space-y-1 border-b border-border pb-2 mb-2 md:hidden">
-         {{#> sidebar-item href="/admin/other-pages/main" title="Main" text="Main" spanClass="font-medium sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-         {{#> sidebar-item href="/admin/other-pages/content-management" title="Content" text="Content" spanClass="font-medium sidebar-text"}}{{{icon 'file-text' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-         {{#> sidebar-item href="/admin/other-pages/system" title="System" text="System" spanClass="font-medium sidebar-text"}}{{{icon 'settings' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-         {{#> sidebar-item href="/admin/other-pages/business" title="Business" text="Business" spanClass="font-medium sidebar-text"}}{{{icon 'briefcase' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-         {{#> sidebar-item href="/admin/other-pages/learning" title="Learning" text="Learning" spanClass="font-medium sidebar-text"}}{{{icon 'book-open' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-         {{#> sidebar-item href="/admin/other-pages/projects" title="Projects" text="Projects" spanClass="font-medium sidebar-text"}}{{{icon 'folder' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-         {{#> sidebar-item href="/admin/other-pages/help" title="Help" text="Help" spanClass="font-medium sidebar-text"}}{{{icon 'help-circle' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-         {{#> sidebar-item href="/admin/other-pages/financial" title="Financial" text="Financial" spanClass="font-medium sidebar-text"}}{{{icon 'dollar-sign' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-       </ul>
-       {{#if (eq currentSection 'main')}}
-      <ul class="space-y-1">
-         {{#> sidebar-item href="/admin/other-pages/main" title="Overview" page="main" text="Overview" spanClass="font-medium
-         sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-         {{#> sidebar-item href="/admin/table-pages/users" title="Users" page="users" text="Users" spanClass="font-medium
-        sidebar-text"}}{{{icon 'users' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/ideas" title="Ideas" page="ideas" text="Ideas" spanClass="font-medium
-        sidebar-text"}}{{{icon 'lightbulb' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/votes" title="Votes" page="votes" text="Votes" spanClass="font-medium
-        sidebar-text"}}{{{icon 'heart' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/collaborations" title="Collaborations" page="collaborations"
-        text="Collaborations" spanClass="font-medium sidebar-text"}}{{{icon 'users' size='16' class='w-4 h-4
-        mr-3'}}}{{/sidebar-item}}
-      </ul>
-      {{/if}}
+  <div id="sidebar" class="w-56 transition-all duration-300 bg-card border border-border fixed md:relative inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto flex flex-col" style="height: calc(100vh - 90px);">
+    <div class="flex-1 overflow-y-auto">
+      <nav class="px-3 py-3 text-sm">
+         <!-- Top-level Sections -->
+          <ul class="space-y-1 border-b border-border pb-2 mb-2 md:hidden">
+             {{#> sidebar-item href="/admin/other-pages/dashboard" title="Dashboard" text="Dashboard" spanClass="font-medium sidebar-text"}} {{{icon 'bar-chart' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+             {{#> sidebar-item href="/admin/other-pages/portfolio" title="Portfolio" text="Portfolio" spanClass="font-medium sidebar-text"}} {{{icon 'briefcase' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+              {{#> sidebar-item href="/admin/other-pages/collaborate" title="Collaborate" spanClass="font-medium sidebar-text"}} {{{icon 'users' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+             {{#> sidebar-item href="/pages/help" title="Help" text="Help" spanClass="font-medium sidebar-text"}} {{{icon 'help-circle' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+             {{#> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text"}} {{{icon 'book-open' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+             {{#> sidebar-item href="/pages/settings" title="Settings" text="Settings" spanClass="font-medium sidebar-text"}} {{{icon 'settings' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+             {{#> sidebar-item href="/pages/billing" title="Billing" text="Billing" spanClass="font-medium sidebar-text"}} {{{icon 'credit-card' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+          </ul>
+          {{#if (eq currentSection 'dashboard')}}
+          <ul class="space-y-1">
+              {{#> sidebar-item href="/admin/other-pages/dashboard" title="Overview" page="dashboard" text="Overview" spanClass="font-medium
+              sidebar-text"}} {{{icon 'bar-chart' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+              {{#> sidebar-item href="/admin/other-pages/new-project" title="New Project" page="new-project" text="New Project" spanClass="font-medium
+              sidebar-text"}} {{{icon 'plus' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+               {{#> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" page="explore-ideas" text="Explore Ideas" spanClass="font-medium
+               sidebar-text"}} {{{icon 'lightbulb' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+              {{#> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="sidebar-text"}} {{{icon 'book-open' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+          </ul>
+          {{/if}}
 
-      {{#if (eq currentSection 'content-management')}}
-      <ul class="space-y-1">
-        {{#> sidebar-item href="/admin/other-pages/content-management" title="Overview" page="content-management" text="Overview"
-        spanClass="font-medium sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/content" title="Content" page="content" text="Content" spanClass="font-medium
-        sidebar-text"}}{{{icon 'file-text' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/landing-page" title="Landing Page" page="landing-page" text="Landing Page"
-        spanClass="font-medium sidebar-text"}}{{{icon 'globe' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-      </ul>
-      {{/if}}
+         {{#if (eq currentSection 'portfolio')}}
+         <ul class="space-y-1">
+            {{#> sidebar-item href="/admin/other-pages/portfolio" title="Overview" page="portfolio" text="Overview"
+            spanClass="sidebar-text"}} {{{icon 'briefcase' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+         </ul>
+         {{/if}}
 
-      {{#if (eq currentSection 'system')}}
-      <ul class="space-y-1">
-        {{#> sidebar-item href="/admin/other-pages/system" title="Overview" page="system" text="Overview" spanClass="font-medium
-        sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/other-pages/system-health" title="System Health" page="system-health" text="System Health"
-        spanClass="font-medium sidebar-text"}}{{{icon 'activity' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/other-pages/notifications" title="Notifications" page="notifications" text="Notifications"
-        spanClass="font-medium sidebar-text"}}{{{icon 'bell' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-         {{#> sidebar-item href="/admin/other-pages/activity" title="Activity Log" page="activity" text="Activity Log"
-         spanClass="font-medium sidebar-text"}}{{{icon 'activity' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
+          {{#if (eq currentSection 'collaborate')}}
+          <ul class="space-y-1">
+             {{#> sidebar-item href="/admin/other-pages/collaborate" title="Overview" page="collaborate" text="Overview"
+             spanClass="sidebar-text"}} {{{icon 'users' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+          </ul>
+          {{/if}}
 
-         {{#> sidebar-item href="/admin/other-pages/settings" title="Settings" page="settings" text="Settings" spanClass="font-medium
-         sidebar-text"}}{{{icon 'settings' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-      </ul>
-      {{/if}}
+          {{#if (eq currentSection 'help')}}
+          <ul class="space-y-1">
+             {{#> sidebar-item href="/pages/help" title="Help" text="Help" spanClass="sidebar-text"}} {{{icon 'help-circle' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+          </ul>
+          {{/if}}
 
-      {{#if (eq currentSection 'business')}}
-      <ul class="space-y-1">
-        {{#> sidebar-item href="/admin/other-pages/business" title="Overview" page="business" text="Overview"
-        spanClass="sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/business-model" title="Business Model" page="business-model" text="Business
-        Model" spanClass="sidebar-text"}}{{{icon 'table' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/business-plan" title="Business Plan" page="business-plan" text="Business Plan"
-        spanClass="sidebar-text"}}{{{icon 'file-text' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/financial-model" title="Financial Model" page="financial-model" text="Financial
-        Model" spanClass="sidebar-text"}}{{{icon 'credit-card' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/pitchdeck" title="PitchDeck" page="pitchdeck" text="PitchDeck"
-        spanClass="sidebar-text"}}{{{icon 'file-text' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/valuation" title="Valuation" page="valuation" text="Valuation"
-        spanClass="sidebar-text"}}{{{icon 'dollar-sign' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/funding" title="Funding" page="funding" text="Funding"
-        spanClass="sidebar-text"}}{{{icon 'wallet' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/team" title="Team" page="team" text="Team" spanClass="sidebar-text"}}{{{icon
-        'users' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/legal" title="Legal" page="legal" text="Legal" spanClass="sidebar-text"}}{{{icon
-        'shield-check' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/marketing" title="Marketing" page="marketing" text="Marketing"
-        spanClass="sidebar-text"}}{{{icon 'globe' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/corporate" title="Corporate" page="corporate" text="Corporate"
-        spanClass="sidebar-text"}}{{{icon 'building-2' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/enterprises" title="Enterprises" page="enterprises" text="Enterprises"
-        spanClass="sidebar-text"}}{{{icon 'building-2' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-      </ul>
-      {{/if}}
+          {{#if (eq currentSection 'learn')}}
+          <ul class="space-y-1">
+             {{#> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="sidebar-text"}} {{{icon 'book-open' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+          </ul>
+          {{/if}}
 
-      {{#if (eq currentSection 'learning')}}
-      <ul class="space-y-1">
-        {{#> sidebar-item href="/admin/other-pages/learning" title="Overview" page="learning" text="Overview"
-        spanClass="sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/learning-content" title="Learning Content" page="learning-content" text="Learning
-        Content" spanClass="sidebar-text"}}{{{icon 'file-text' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/learning-categories" title="Learning Categories" page="learning-categories"
-        text="Learning Categories" spanClass="sidebar-text"}}{{{icon 'folder' size='16' class='w-4 h-4
-        mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/learning-assessments" title="Learning Assessments" page="learning-assessments"
-        text="Learning Assessments" spanClass="sidebar-text"}}{{{icon 'clipboard-check' size='16' class='w-4 h-4
-        mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/todos" title="Todos" page="todos" text="Todos" spanClass="font-medium
-        sidebar-text"}}{{{icon 'lock' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/learning-analytics" title="Learning Analytics" page="learning-analytics"
-        text="Learning Analytics" spanClass="sidebar-text"}}{{{icon 'bar-chart-3' size='16' class='w-4 h-4
-        mr-3'}}}{{/sidebar-item}}
-      </ul>
-      {{/if}}
+          {{#if (eq currentSection 'settings')}}
+          <ul class="space-y-1">
+             {{#> sidebar-item href="/pages/settings" title="Settings" text="Settings" spanClass="sidebar-text"}} {{{icon 'settings' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+          </ul>
+          {{/if}}
 
-      {{#if (eq currentSection 'projects')}}
-      <ul class="space-y-1">
-        {{#> sidebar-item href="/admin/other-pages/projects" title="Overview" page="projects" text="Overview"
-        spanClass="sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/messages" title="Messages" page="messages" text="Messages"
-        spanClass="sidebar-text"}}{{{icon 'message-square' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/project-collaborators" title="Project Collaborators" page="project-collaborators"
-        text="Project Collaborators" spanClass="sidebar-text"}}{{{icon 'users' size='16' class='w-4 h-4
-        mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/calendar" title="Calendar" page="calendar" text="Calendar"
-        spanClass="sidebar-text"}}{{{icon 'calendar' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-      </ul>
-      {{/if}}
+          {{#if (eq currentSection 'billing')}}
+          <ul class="space-y-1">
+             {{#> sidebar-item href="/pages/billing" title="Billing" text="Billing" spanClass="sidebar-text"}} {{{icon 'credit-card' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+          </ul>
+          {{/if}}
 
-      {{#if (eq currentSection 'help')}}
-      <ul class="space-y-1">
-        {{#> sidebar-item href="/admin/other-pages/help" title="Overview" page="help" text="Overview"
-        spanClass="sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/help-center" title="Help Center" page="help-center" text="Help Center"
-        spanClass="sidebar-text"}}{{{icon 'help-circle' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-      </ul>
-      {{/if}}
+           {{#if (eq currentPage 'explore-ideas')}}
+           <ul class="space-y-1">
+              {{#> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="sidebar-text"}} {{{icon 'lightbulb' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+              {{#> sidebar-item href="/admin/other-pages/explore-ideas" title="All Ideas" text="All Ideas" spanClass="sidebar-text ml-4"}} {{{icon 'list' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+              {{#> sidebar-item href="/admin/other-pages/explore-ideas?category=healthcare" title="Healthcare" text="Healthcare" spanClass="sidebar-text ml-4"}} {{{icon 'heart' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+              {{#> sidebar-item href="/admin/other-pages/explore-ideas?category=technology" title="Technology" text="Technology" spanClass="sidebar-text ml-4"}} {{{icon 'cpu' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+              {{#> sidebar-item href="/admin/other-pages/explore-ideas?category=environment" title="Environment" text="Environment" spanClass="sidebar-text ml-4"}} {{{icon 'leaf' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+              {{#> sidebar-item href="/admin/other-pages/explore-ideas?category=agriculture" title="Agriculture" text="Agriculture" spanClass="sidebar-text ml-4"}} {{{icon 'sprout' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+              {{#> sidebar-item href="/admin/other-pages/explore-ideas?category=research" title="Research" text="Research" spanClass="sidebar-text ml-4"}} {{{icon 'search' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+           </ul>
+           {{/if}}
 
-      {{#if (eq currentSection 'financial')}}
-      <ul class="space-y-1">
-        {{#> sidebar-item href="/admin/other-pages/financial" title="Overview" page="financial" text="Overview"
-        spanClass="sidebar-text"}}{{{icon 'layout' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/packages" title="Packages" page="packages" text="Packages"
-        spanClass="sidebar-text"}}{{{icon 'package' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/billing" title="Billing" page="billing" text="Billing"
-        spanClass="sidebar-text"}}{{{icon 'credit-card' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-        {{#> sidebar-item href="/admin/table-pages/rewards" title="Rewards" page="rewards" text="Rewards"
-        spanClass="sidebar-text"}}{{{icon 'gift' size='16' class='w-4 h-4 mr-3'}}}{{/sidebar-item}}
-       </ul>
-       {{/if}}
+           {{#if (eq currentPage 'portfolio')}}
+           <ul class="space-y-1">
+              {{#> sidebar-item href="/admin/other-pages/portfolio" title="Portfolio" text="Portfolio" spanClass="sidebar-text"}} {{{icon 'briefcase' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+              {{#> sidebar-item href="/admin/other-pages/portfolio?filter=professional" title="Professional Projects" text="Professional Projects" spanClass="sidebar-text ml-4"}} {{{icon 'zap' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+              {{#> sidebar-item href="/admin/other-pages/portfolio?filter=community" title="Community Driven" text="Community Driven" spanClass="sidebar-text ml-4"}} {{{icon 'users' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+              {{#> sidebar-item href="/admin/other-pages/portfolio?filter=quality" title="Quality Assured" text="Quality Assured" spanClass="sidebar-text ml-4"}} {{{icon 'shield-check' size='16' class='w-4 h-4 mr-3'}}} {{/sidebar-item}}
+           </ul>
+           {{/if}}
 
-        {{#if isRowPage}}
-        <ul class="space-y-1 mt-4">
-          {{#each rowActions}}
-          <li>
-            <a href="{{link}}" class="flex items-center px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
-              {{{icon icon size='16' class='w-4 h-4 mr-3'}}}
-              {{text}}
-            </a>
-          </li>
-          {{/each}}
-        </ul>
-        {{/if}}
-     </nav>
+
+
+
+
+
+
+
+
+         {{#if isRowPage}}
+         <ul class="space-y-1 mt-4">
+           {{#each rowActions}}
+           <li>
+               <a href="{{link}}" class="flex items-center px-3 py-2 text-sm text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
+                {{{icon icon size='16' class='w-4 h-4 mr-3'}}}
+                {{text}}
+              </a>
+           </li>
+           {{/each}}
+         </ul>
+          {{/if}}
+         </nav>
+     </div>
+     {{> sidebar-footer}}
    </div>
- </div>

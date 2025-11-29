@@ -17,9 +17,9 @@
                   </p>
                   <p class="text-xs text-muted-foreground">{{systemMetrics.database.connections}} connections</p>
                </div>
-               <div class="w-12 h-12 {{#if systemMetrics.database.connected}}bg-green-100{{else}}bg-red-100{{/if}} rounded-full flex items-center justify-center">
-                  {{{icon 'database' size='24' class='{{#if systemMetrics.database.connected}}text-green-600{{else}}text-red-600{{/if}}'}}}
-               </div>
+                <div class="w-12 h-12 {{#if systemMetrics.database.connected}}bg-green-100 dark:bg-green-900/30{{else}}bg-red-100 dark:bg-red-900/30{{/if}} rounded-full flex items-center justify-center">
+                   {{{icon 'database' size='24' class='{{#if systemMetrics.database.connected}}}text-green-600 dark:text-green-400{{else}}}}text-red-600 dark:text-red-400{{/if}}}}'}}}}
+                </div>
             </div>
          </div>
 
@@ -31,9 +31,9 @@
                   <p class="text-2xl font-bold text-blue-600">{{systemMetrics.memory.usagePercent}}%</p>
                   <p class="text-xs text-muted-foreground">{{systemMetrics.memory.usageGB.used}}GB / {{systemMetrics.memory.usageGB.total}}GB</p>
                </div>
-               <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                  {{{icon 'cpu' size='24' class='text-blue-600'}}}
-               </div>
+                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                   {{{icon 'cpu' size='24' class='text-blue-600 dark:text-blue-400'}}}
+                </div>
             </div>
          </div>
 
@@ -45,9 +45,9 @@
                   <p class="text-2xl font-bold text-orange-600">{{systemMetrics.cpu.usage}}%</p>
                   <p class="text-xs text-muted-foreground">{{systemMetrics.cpu.count}} cores @ {{systemMetrics.cpu.speed}}MHz</p>
                </div>
-               <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                  {{{icon 'activity' size='24' class='text-orange-600'}}}
-               </div>
+                <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
+                   {{{icon 'activity' size='24' class='text-orange-600 dark:text-orange-400'}}}
+                </div>
             </div>
          </div>
 
@@ -59,9 +59,9 @@
                   <p class="text-2xl font-bold text-purple-600">{{systemMetrics.disk.usage}}%</p>
                   <p class="text-xs text-muted-foreground">{{systemMetrics.disk.info.used}}GB / {{systemMetrics.disk.info.total}}GB</p>
                </div>
-               <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                  {{{icon 'hard-drive' size='24' class='text-purple-600'}}}
-               </div>
+                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                   {{{icon 'hard-drive' size='24' class='text-purple-600 dark:text-purple-400'}}}
+                </div>
             </div>
          </div>
       </div>
@@ -375,11 +375,11 @@
                         <p class="text-xs text-muted-foreground">Usage</p>
                      </div>
                      <div class="text-center">
-                        <p class="text-lg font-bold text-gray-600">{{systemMetrics.cpu.count}}</p>
+                        <p class="text-lg font-bold text-muted-foreground">{{systemMetrics.cpu.count}}</p>
                         <p class="text-xs text-muted-foreground">Cores</p>
                      </div>
                      <div class="text-center">
-                        <p class="text-lg font-bold text-gray-600">{{systemMetrics.cpu.speed}}</p>
+                        <p class="text-lg font-bold text-muted-foreground">{{systemMetrics.cpu.speed}}</p>
                         <p class="text-xs text-muted-foreground">MHz</p>
                      </div>
                   </div>
@@ -409,9 +409,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                <!-- Database Health -->
                <div class="flex items-center p-4 border border-border rounded-lg">
-                  <div class="w-10 h-10 {{#if systemMetrics.database.connected}}bg-green-100{{else}}bg-red-100{{/if}} rounded-full flex items-center justify-center mr-3">
-                     {{{icon 'database' size='20' class='{{#if systemMetrics.database.connected}}text-green-600{{else}}text-red-600{{/if}}'}}}
-                  </div>
+                   <div class="w-10 h-10 {{#if systemMetrics.database.connected}}bg-green-100 dark:bg-green-900/30{{else}}bg-red-100 dark:bg-red-900/30{{/if}} rounded-full flex items-center justify-center mr-3">
+                      {{{icon 'database' size='20' class='{{#if systemMetrics.database.connected}}}text-green-600 dark:text-green-400{{else}}}}text-red-600 dark:text-red-400{{/if}}}}'}}}}
+                   </div>
                   <div>
                      <p class="text-sm font-medium text-card-foreground">Database</p>
                      <p class="text-xs {{#if systemMetrics.database.connected}}text-green-600{{else}}text-red-600{{/if}} font-medium">
@@ -422,9 +422,9 @@
 
                <!-- Memory Health -->
                <div class="flex items-center p-4 border border-border rounded-lg">
-                  <div class="w-10 h-10 {{#if (lt systemMetrics.memory.usagePercent 90)}}bg-green-100{{else}}bg-yellow-100{{/if}} rounded-full flex items-center justify-center mr-3">
-                     {{{icon 'cpu' size='20' class='{{#if (lt systemMetrics.memory.usagePercent 90)}}text-green-600{{else}}text-yellow-600{{/if}}'}}}
-                  </div>
+                   <div class="w-10 h-10 {{#if (lt systemMetrics.memory.usagePercent 90)}}bg-green-100 dark:bg-green-900/30{{else}}bg-yellow-100 dark:bg-yellow-900/30{{/if}} rounded-full flex items-center justify-center mr-3">
+                      {{{icon 'cpu' size='20' class='{{#if (lt systemMetrics.memory.usagePercent 90)}}}text-green-600 dark:text-green-400{{else}}}}text-yellow-600 dark:text-yellow-400{{/if}}}}'}}}}
+                   </div>
                   <div>
                      <p class="text-sm font-medium text-card-foreground">Memory</p>
                      <p class="text-xs {{#if (lt systemMetrics.memory.usagePercent 90)}}text-green-600{{else}}text-yellow-600{{/if}} font-medium">
@@ -435,9 +435,9 @@
 
                <!-- CPU Health -->
                <div class="flex items-center p-4 border border-border rounded-lg">
-                  <div class="w-10 h-10 {{#if (lt systemMetrics.cpu.usage 80)}}bg-green-100{{else}}bg-yellow-100{{/if}} rounded-full flex items-center justify-center mr-3">
-                     {{{icon 'activity' size='20' class='{{#if (lt systemMetrics.cpu.usage 80)}}text-green-600{{else}}text-yellow-600{{/if}}'}}}
-                  </div>
+                   <div class="w-10 h-10 {{#if (lt systemMetrics.cpu.usage 80)}}bg-green-100 dark:bg-green-900/30{{else}}bg-yellow-100 dark:bg-yellow-900/30{{/if}} rounded-full flex items-center justify-center mr-3">
+                      {{{icon 'activity' size='20' class='{{#if (lt systemMetrics.cpu.usage 80)}}}text-green-600 dark:text-green-400{{else}}}}text-yellow-600 dark:text-yellow-400{{/if}}}}'}}}}
+                   </div>
                   <div>
                      <p class="text-sm font-medium text-card-foreground">CPU</p>
                      <p class="text-xs {{#if (lt systemMetrics.cpu.usage 80)}}text-green-600{{else}}text-yellow-600{{/if}} font-medium">
@@ -448,9 +448,9 @@
 
                <!-- Disk Health -->
                <div class="flex items-center p-4 border border-border rounded-lg">
-                  <div class="w-10 h-10 {{#if (lt systemMetrics.disk.usage 85)}}bg-green-100{{else}}bg-yellow-100{{/if}} rounded-full flex items-center justify-center mr-3">
-                     {{{icon 'hard-drive' size='20' class='{{#if (lt systemMetrics.disk.usage 85)}}text-green-600{{else}}text-yellow-600{{/if}}'}}}
-                  </div>
+                   <div class="w-10 h-10 {{#if (lt systemMetrics.disk.usage 85)}}bg-green-100 dark:bg-green-900/30{{else}}bg-yellow-100 dark:bg-yellow-900/30{{/if}} rounded-full flex items-center justify-center mr-3">
+                      {{{icon 'hard-drive' size='20' class='{{#if (lt systemMetrics.disk.usage 85)}}}text-green-600 dark:text-green-400{{else}}}}text-yellow-600 dark:text-yellow-400{{/if}}}}'}}}}
+                   </div>
                   <div>
                      <p class="text-sm font-medium text-card-foreground">Disk</p>
                      <p class="text-xs {{#if (lt systemMetrics.disk.usage 85)}}text-green-600{{else}}text-yellow-600{{/if}} font-medium">
@@ -475,7 +475,7 @@
                return;
             }
 
-            const systemMetrics = {{{json systemMetrics}}};
+            const systemMetrics = {{{json systemMetrics}};
             console.log('System metrics loaded:', systemMetrics);
 
             // Validate data structure
@@ -763,44 +763,44 @@
          </div>
          <div class="p-6">
              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <button id="refresh-metrics-btn" class="flex items-center justify-center px-4 py-3 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors border border-blue-200">
-                   {{{icon 'refresh-cw' size='20' class='mr-2'}}}
-                   <span class="text-sm font-medium">Refresh Metrics</span>
-                </button>
-                <button id="export-report-btn" class="flex items-center justify-center px-4 py-3 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors border border-green-200">
-                   {{{icon 'download' size='20' class='mr-2'}}}
-                   <span class="text-sm font-medium">Export Report</span>
-                </button>
-                <button id="db-health-check-btn" class="flex items-center justify-center px-4 py-3 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-colors border border-purple-200">
-                   {{{icon 'database' size='20' class='mr-2'}}}
-                   <span class="text-sm font-medium">DB Health Check</span>
-                </button>
-                <button id="system-config-btn" class="flex items-center justify-center px-4 py-3 bg-orange-50 text-orange-700 rounded-lg hover:bg-orange-100 transition-colors border border-orange-200">
-                   {{{icon 'settings' size='20' class='mr-2'}}}
-                   <span class="text-sm font-medium">System Config</span>
-                </button>
+                 <button id="refresh-metrics-btn" class="flex items-center justify-center px-4 py-3 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-800 transition-colors border border-blue-200 dark:border-blue-700">
+                    {{{icon 'refresh-cw' size='20' class='mr-2'}}}
+                    <span class="text-sm font-medium">Refresh Metrics</span>
+                 </button>
+                 <button id="export-report-btn" class="flex items-center justify-center px-4 py-3 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-100 dark:hover:bg-green-800 transition-colors border border-green-200 dark:border-green-700">
+                    {{{icon 'download' size='20' class='mr-2'}}}
+                    <span class="text-sm font-medium">Export Report</span>
+                 </button>
+                 <button id="db-health-check-btn" class="flex items-center justify-center px-4 py-3 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors border border-purple-200 dark:border-purple-700">
+                    {{{icon 'database' size='20' class='mr-2'}}}
+                    <span class="text-sm font-medium">DB Health Check</span>
+                 </button>
+                 <button id="system-config-btn" class="flex items-center justify-center px-4 py-3 bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-800 transition-colors border border-orange-200 dark:border-orange-700">
+                    {{{icon 'settings' size='20' class='mr-2'}}}
+                    <span class="text-sm font-medium">System Config</span>
+                 </button>
              </div>
 
              <!-- Additional Tools -->
              <div class="mt-6 pt-6 border-t border-border">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                    <div class="text-center">
-                      <button id="clear-cache-btn" class="w-full flex items-center justify-center px-4 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200">
-                         {{{icon 'trash-2' size='16' class='mr-2'}}}
-                         <span class="text-sm">Clear Cache</span>
-                      </button>
-                   </div>
-                   <div class="text-center">
-                      <button id="view-logs-btn" class="w-full flex items-center justify-center px-4 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200">
-                         {{{icon 'file-text' size='16' class='mr-2'}}}
-                         <span class="text-sm">View Logs</span>
-                      </button>
-                   </div>
-                   <div class="text-center">
-                      <button id="run-diagnostics-btn" class="w-full flex items-center justify-center px-4 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200">
-                         {{{icon 'alert-triangle' size='16' class='mr-2'}}}
-                         <span class="text-sm">Run Diagnostics</span>
-                      </button>
+                       <button id="clear-cache-btn" class="w-full flex items-center justify-center px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors border border-border">
+                          {{{icon 'trash-2' size='16' class='mr-2'}}}
+                          <span class="text-sm">Clear Cache</span>
+                       </button>
+                    </div>
+                    <div class="text-center">
+                       <button id="view-logs-btn" class="w-full flex items-center justify-center px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors border border-border">
+                          {{{icon 'file-text' size='16' class='mr-2'}}}
+                          <span class="text-sm">View Logs</span>
+                       </button>
+                    </div>
+                    <div class="text-center">
+                       <button id="run-diagnostics-btn" class="w-full flex items-center justify-center px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors border border-border">
+                          {{{icon 'alert-triangle' size='16' class='mr-2'}}}
+                          <span class="text-sm">Run Diagnostics</span>
+                       </button>
                    </div>
                 </div>
              </div>

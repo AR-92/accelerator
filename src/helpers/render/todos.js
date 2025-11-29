@@ -79,7 +79,7 @@ export const renderPagination = (page, limit, total, query) => {
 
   for (let i = startPage; i <= endPage; i++) {
     if (i === page) {
-      html += `<span class="inline-flex items-center justify-center w-10 h-10 rounded-md bg-primary text-primary-foreground shadow-sm font-medium">${i}</span>`;
+      html += `<span class="inline-flex items-center justify-center w-10 h-10 rounded-md bg-primary/10 text-primary shadow-sm font-medium">${i}</span>`;
     } else {
       html += `<button hx-get="/api/todos?page=${i}&${params}" hx-target="#todosList" class="inline-flex items-center justify-center w-10 h-10 rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-accent-foreground transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">${i}</button>`;
     }

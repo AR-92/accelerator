@@ -4,14 +4,13 @@
 @tailwind utilities;
 
 /* ----- Theme tokens (Tailwind v4: CSS-first) -----
-   Fill these with the exact shadcn values you want. These are the
-   canonical semantic variables the components will use. */
+    Fill these with the exact shadcn values you want. These are the
+    canonical semantic variables the components will use. */
 @theme {
   --color-background: 255 255 255;
   --color-foreground: 15 23 42;
-  --color-muted-foreground: 115 115 115;
 
-  --color-primary: 59 130 246;
+  --color-primary: 158 40 181;
   --color-primary-foreground: 248 250 252;
 
   --color-secondary: 241 245 249;
@@ -25,6 +24,7 @@
   --color-border: 226 232 240;
   --color-input: 226 232 240;
   --color-ring: 59 130 246;
+  --color-muted-foreground: 115 115 115;
   --color-destructive: 239 68 68;
   --color-destructive-foreground: 248 250 252;
 
@@ -35,12 +35,36 @@
   --radius-lg: 14px;
 }
 
+/* Dark mode theme tokens */
+.dark {
+  --color-background: 15 23 42;
+  --color-foreground: 248 250 252;
+
+  --color-primary: 158 40 181;
+  --color-primary-foreground: 15 23 42;
+
+  --color-secondary: 30 41 59;
+  --color-secondary-foreground: 248 250 252;
+
+  --color-card: 30 41 59;
+  --color-muted: 51 65 85;
+  --color-accent: 51 65 85;
+  --color-accent-foreground: 248 250 252;
+
+  --color-border: 51 65 85;
+  --color-input: 51 65 85;
+  --color-ring: 59 130 246;
+  --color-muted-foreground: 148 163 184;
+  --color-destructive: 239 68 68;
+  --color-destructive-foreground: 248 250 252;
+}
+
 /* Fallbacks for environments that don't process @theme (optional) */
 :root {
   --color-background: 255 255 255;
   --color-foreground: 15 23 42;
   --color-muted-foreground: 115 115 115;
-  --color-primary: 59 130 246;
+  --color-primary: 158 40 181;
   --color-primary-foreground: 248 250 252;
   --color-secondary: 241 245 249;
   --color-secondary-foreground: 59 130 246;
@@ -58,6 +82,25 @@
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
+}
+
+.dark {
+  --color-background: 15 23 42;
+  --color-foreground: 248 250 252;
+  --color-muted-foreground: 148 163 184;
+  --color-primary: 158 40 181;
+  --color-primary-foreground: 15 23 42;
+  --color-secondary: 30 41 59;
+  --color-secondary-foreground: 248 250 252;
+  --color-card: 30 41 59;
+  --color-muted: 51 65 85;
+  --color-accent: 51 65 85;
+  --color-accent-foreground: 248 250 252;
+  --color-border: 51 65 85;
+  --color-input: 51 65 85;
+  --color-ring: 59 130 246;
+  --color-destructive: 239 68 68;
+  --color-destructive-foreground: 248 250 252;
 }
 
 @layer base {

@@ -51,7 +51,7 @@ export const getBusinessModels = async (req, res) => {
               </div>
               <div class="ml-4">
                 <div class="text-sm font-medium text-gray-900">${model.name || 'Untitled Model'}</div>
-                <div class="text-sm text-gray-500">${model.description?.substring(0, 50)}${model.description?.length > 50 ? '...' : ''}</div>
+                <div class="text-sm text-muted-foreground">${model.description?.substring(0, 50)}${model.description?.length > 50 ? '...' : ''}</div>
               </div>
             </div>
           </td>
@@ -72,44 +72,25 @@ export const getBusinessModels = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(model.created_at)}</td>
           <td class="px-6 py-4">
             <div class="relative">
-              <button onclick="toggleActionMenu('business-model', ${model.id})" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors">
-                <svg class="w-4 h-4 lucide lucide-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="1"></circle>
-                  <circle cx="12" cy="5" r="1"></circle>
-                  <circle cx="12" cy="19" r="1"></circle>
-                </svg>
+              <button onclick="toggleActionMenu('business-model', ${model.id})" class="p-2 rounded-full hover:bg-gray-100 text-muted-foreground hover:text-black dark:text-white transition-colors">
+                {{{icon 'ellipsis-vertical' class='w-4 h-4'}}}
               </button>
               <div id="actionMenu-business-model-${model.id}" class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
                 <div class="py-1">
                   <a href="/admin/table-pages/business-model/${model.id}" class="flex items-center px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
-                    <svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path>
-                      <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
+                    {{{icon 'eye' class='w-4 h-4 mr-3'}}}
                     View Details
                   </a>
                   <button onclick="editBusinessModel(${model.id})" class="flex items-center w-full px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
-                    <svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                      <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path>
-                    </svg>
+                    {{{icon 'square-pen' class='w-4 h-4 mr-3'}}}
                     Edit Model
                   </button>
                   <button onclick="duplicateBusinessModel(${model.id})" class="flex items-center w-full px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
-                    <svg class="w-4 h-4 mr-3 lucide lucide-copy" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
+                    {{{icon 'copy' class='w-4 h-4 mr-3'}}}
                     Duplicate
                   </button>
                   <button onclick="deleteBusinessModel(${model.id}, '${model.name || 'Untitled Model'}')" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                    <svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M10 11v6"></path>
-                      <path d="M14 11v6"></path>
-                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
-                      <path d="M3 6h18"></path>
-                      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    </svg>
+                    {{{icon 'trash-2' class='w-4 h-4 mr-3'}}}
                     Delete
                   </button>
                 </div>
@@ -202,7 +183,7 @@ export const getBusinessPlans = async (req, res) => {
               </div>
               <div class="ml-4">
                 <div class="text-sm font-medium text-gray-900">${plan.company_name || 'Untitled Plan'}</div>
-                <div class="text-sm text-gray-500">${plan.company_description?.substring(0, 50)}${plan.company_description?.length > 50 ? '...' : ''}</div>
+                <div class="text-sm text-muted-foreground">${plan.company_description?.substring(0, 50)}${plan.company_description?.length > 50 ? '...' : ''}</div>
               </div>
             </div>
           </td>
@@ -223,45 +204,25 @@ export const getBusinessPlans = async (req, res) => {
            <td class="px-6 py-4 text-sm text-gray-900">${formatDate(plan.created_at)}</td>
           <td class="px-6 py-4">
             <div class="relative">
-              <button onclick="toggleActionMenu('business-plan', ${plan.id})" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors">
-                <svg class="w-4 h-4 lucide lucide-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="1"></circle>
-                  <circle cx="12" cy="5" r="1"></circle>
-                  <circle cx="12" cy="19" r="1"></circle>
-                </svg>
+              <button onclick="toggleActionMenu('business-plan', ${plan.id})" class="p-2 rounded-full hover:bg-gray-100 text-muted-foreground hover:text-black dark:text-white transition-colors">
+                {{{icon 'ellipsis-vertical' class='w-4 h-4'}}}
               </button>
               <div id="actionMenu-business-plan-${plan.id}" class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-200">
                 <div class="py-1">
                   <a href="/admin/table-pages/business-plan/${plan.id}" class="flex items-center px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
-                    <svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path>
-                      <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
+                    {{{icon 'eye' class='w-4 h-4 mr-3'}}}
                     View Details
                   </a>
                   <button onclick="editBusinessPlan(${plan.id})" class="flex items-center w-full px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
-                    <svg class="w-4 h-4 mr-3 lucide lucide-square-pen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                      <path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"></path>
-                    </svg>
+                    {{{icon 'square-pen' class='w-4 h-4 mr-3'}}}
                     Edit Plan
                   </button>
                   <button onclick="exportBusinessPlan(${plan.id})" class="flex items-center w-full px-4 py-2 text-sm text-black dark:text-white hover:bg-gray-100 transition-colors">
-                    <svg class="w-4 h-4 mr-3 lucide lucide-download" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                      <polyline points="7,10 12,15 17,10"></polyline>
-                      <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
+                    {{{icon 'download' class='w-4 h-4 mr-3'}}}
                     Export PDF
                   </button>
                   <button onclick="deleteBusinessPlan(${plan.id}, '${plan.company_name || 'Untitled Plan'}')" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                    <svg class="w-4 h-4 mr-3 lucide lucide-trash-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M10 11v6"></path>
-                      <path d="M14 11v6"></path>
-                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
-                      <path d="M3 6h18"></path>
-                      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    </svg>
+                    {{{icon 'trash-2' class='w-4 h-4 mr-3'}}}
                     Delete
                   </button>
                 </div>
@@ -351,7 +312,7 @@ export const getFinancialModels = async (req, res) => {
               </div>
               <div class="ml-4">
                 <div class="text-sm font-medium text-gray-900">${model.model_name || 'Untitled Model'}</div>
-                <div class="text-sm text-gray-500">${model.model_description?.substring(0, 50)}${model.model_description?.length > 50 ? '...' : ''}</div>
+                <div class="text-sm text-muted-foreground">${model.model_description?.substring(0, 50)}${model.model_description?.length > 50 ? '...' : ''}</div>
               </div>
             </div>
           </td>
@@ -379,7 +340,7 @@ export const getFinancialModels = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(model.created_at)}</td>
           <td class="px-6 py-4">
             <div class="relative">
-              <button onclick="toggleActionMenu('financial-model', ${model.id})" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors">
+              <button onclick="toggleActionMenu('financial-model', ${model.id})" class="p-2 rounded-full hover:bg-gray-100 text-muted-foreground hover:text-black dark:text-white transition-colors">
                 <svg class="w-4 h-4 lucide lucide-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="1"></circle>
                   <circle cx="12" cy="5" r="1"></circle>
@@ -504,7 +465,7 @@ export const getFunding = async (req, res) => {
               </div>
                <div class="ml-4">
                  <div class="text-sm font-medium text-gray-900">${formatCurrency(record.total_funding_required)}</div>
-                 <div class="text-sm text-gray-500">${record.funding_stage || 'N/A'} Stage</div>
+                 <div class="text-sm text-muted-foreground">${record.funding_stage || 'N/A'} Stage</div>
                </div>
             </div>
           </td>
@@ -514,7 +475,7 @@ export const getFunding = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(record.created_at)}</td>
           <td class="px-6 py-4">
             <div class="relative">
-              <button onclick="toggleActionMenu('funding', ${record.id})" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors">
+              <button onclick="toggleActionMenu('funding', ${record.id})" class="p-2 rounded-full hover:bg-gray-100 text-muted-foreground hover:text-black dark:text-white transition-colors">
                 <svg class="w-4 h-4 lucide lucide-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="1"></circle>
                   <circle cx="12" cy="5" r="1"></circle>
@@ -618,7 +579,7 @@ const generatePaginationHtml = (page, limit, total, query, endpoint) => {
 
   for (let i = startPage; i <= endPage; i++) {
     if (i === page) {
-      html += `<span class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground h-9 w-9">${i}</span>`;
+      html += `<span class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary/10 text-primary h-9 w-9">${i}</span>`;
     } else {
       html += `<button hx-get="/api/business/${endpoint}?page=${i}&${params}" hx-target="#${endpoint.replace('-', '')}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 w-9">${i}</button>`;
     }

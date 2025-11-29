@@ -1,7 +1,11 @@
 <!-- Main Content -->
 <div class="flex-1 flex overflow-auto">
     <section id='examples'>
-  <div class='themes-wrapper bg-background h-screen w-full mx-auto p-0'>
+  <div class='themes-wrapper bg-background h-screen w-full mx-auto p-0 relative'>
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" class="absolute top-4 right-4 text-muted-foreground hover:text-primary rounded-full p-2 cursor-pointer z-10" onclick="toggleTheme()">
+      <span id="theme-icon"></span>
+    </button>
     <div class='w-full h-full lg:grid lg:grid-cols-2 lg:gap-8'>
       <div class='flex items-center'>
         <div
@@ -80,7 +84,7 @@
               <button
                 type='submit'
                 id='login-button'
-                class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-center transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full'
+                class='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-center transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary/10 text-primary shadow hover:bg-primary/20 h-9 px-4 py-2 w-full'
               >
                 <span id='login-text'>Login</span>
                 <div id='login-spinner' class='hidden ml-2 animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground'></div>
@@ -143,10 +147,10 @@
           supabase.auth.getSession().then(({ data: { session } }) => {
             console.log('Session check result:', session ? 'session exists' : 'no session', session?.user ? 'with user' : 'no user');
             if (session && session.user) {
-              // User is already logged in, redirect to admin
-              console.log('User is logged in, redirecting to admin');
-              showToast('You are already logged in. Redirecting...', 'success');
-              setTimeout(() => window.location.href = '/admin/main', 1000);
+               // User is already logged in, redirect to dashboard
+               console.log('User is logged in, redirecting to dashboard');
+               showToast('You are already logged in. Redirecting...', 'success');
+               setTimeout(() => window.location.href = '/dashboard', 1000);
             } else if (authCheckAttempts < maxAuthCheckAttempts) {
               // Try again after a short delay
               setTimeout(checkAuthStatus, 200);
@@ -215,38 +219,38 @@
           loginText.textContent = 'Login';
           loginSpinner.classList.add('hidden');
         } else {
-          showToast('Login successful! Redirecting...', 'success');
-          // Wait for session to be established, then redirect
-          let attempts = 0;
-          const maxAttempts = 10;
-          const checkSession = () => {
-            attempts++;
-            supabase.auth.getSession().then(({ data: { session } }) => {
-              if (session) {
-                window.location.href = '/admin/main';
-              } else if (attempts < maxAttempts) {
-                setTimeout(checkSession, 300);
-              } else {
-                showToast('Login successful but session not established. Please refresh and try again.', 'warning');
-                // Reset loading state
-                loginButton.disabled = false;
-                loginText.textContent = 'Login';
-                loginSpinner.classList.add('hidden');
-              }
-            }).catch(sessionError => {
-              console.error('Session check error:', sessionError);
-              if (sessionError.message.includes('fetch') || sessionError.message.includes('network') || !navigator.onLine) {
-                showToast('Network connection issue during session check. Please try logging in again.', 'error');
-              } else {
-                showToast('Session check failed. Please refresh and try again.', 'error');
-              }
-              // Reset loading state
-              loginButton.disabled = false;
-              loginText.textContent = 'Login';
-              loginSpinner.classList.add('hidden');
-            });
-          };
-          setTimeout(checkSession, 500);
+           showToast('Login successful! Redirecting...', 'success');
+           // Wait for session to be established, then redirect
+           let attempts = 0;
+           const maxAttempts = 10;
+           const checkSession = () => {
+             attempts++;
+             supabase.auth.getSession().then(({ data: { session } }) => {
+               if (session) {
+                 window.location.href = '/dashboard';
+               } else if (attempts < maxAttempts) {
+                 setTimeout(checkSession, 300);
+               } else {
+                 showToast('Login successful but session not established. Please refresh and try again.', 'warning');
+                 // Reset loading state
+                 loginButton.disabled = false;
+                 loginText.textContent = 'Login';
+                 loginSpinner.classList.add('hidden');
+               }
+             }).catch(sessionError => {
+               console.error('Session check error:', sessionError);
+               if (sessionError.message.includes('fetch') || sessionError.message.includes('network') || !navigator.onLine) {
+                 showToast('Network connection issue during session check. Please try logging in again.', 'error');
+               } else {
+                 showToast('Session check failed. Please refresh and try again.', 'error');
+               }
+               // Reset loading state
+               loginButton.disabled = false;
+               loginText.textContent = 'Login';
+               loginSpinner.classList.add('hidden');
+             });
+           };
+           setTimeout(checkSession, 500);
         }
       }).catch(error => {
         console.error('Login error:', error);

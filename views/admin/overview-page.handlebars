@@ -1,763 +1,149 @@
 <!-- Generic Overview Page Template -->
 <div class="min-h-screen bg-background">
-   <div id="{{section}}-main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-     {{> page-header title=title description=description simple=true}}
+    <div id="{{section}}-main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+                <div class="flex flex-col gap-4 lg:gap-6">
+  <div class="flex items-center justify-between">
+    <div class="grid gap-1">
+      <h1 class="font-heading text-2xl font-semibold text-foreground">Startup
+        Overview</h1>
+      <p class="text-base text-muted-foreground">Monitor your startup's progress
+        and key metrics.</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-md hover:bg-primary/20">
+        {{{icon 'plus' size='16'}}}
+        New Project
+      </button>
+    </div>
+  </div>
 
-     <!-- Stats Grid -->
-     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-{{#each statsGrid}}
- {{#> stats-card icon=icon title=title link=link}}
-{{#each items}}
- {{> stats-item label=label value=value color=color}}
-{{/each}}
- {{/stats-card}}
-{{/each}}
-     </div>
-
-{{#if (eq section 'system')}}
-      <!-- System Health Card -->
-      <div class="bg-card rounded-lg border border-border p-6 mb-8">
-        <div class="flex items-center justify-between mb-4">
-           <div class="flex items-center">
-             {{{icon 'activity' size='32' class='text-primary mr-3'}}}
-             <h3 class="text-lg font-semibold text-card-foreground">System Health</h3>
-           </div>
-          <a href="/admin/other-pages/system-health" class="text-primary hover:text-primary/80 text-sm font-medium">View Details</a>
+  <!-- Startup Metrics -->
+  <div class="grid grid-cols-1 gap-[17px] sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+    <div class="rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+      <div class="flex items-center justify-between px-[10px] py-[4px]">
+        <div class="flex flex-col gap-[4px]">
+          <h3 class="text-[14px] font-[500] text-muted-foreground">Active Projects</h3>
+          <p class="text-[18px] font-[600] text-card-foreground">12</p>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="text-center">
-            <div class="text-2xl font-bold {{#if dbConnection}}text-green-600{{else}}text-red-600{{/if}}">●</div>
-            <div class="text-sm text-muted-foreground">Database</div>
-            <div class="text-xs {{#if dbConnection}}text-green-600{{else}}text-red-600{{/if}}">{{#if dbConnection}}Connected{{else}}Disconnected{{/if}}</div>
+        <div>
+          <div class="bg-blue-50 dark:bg-blue-900/20 rounded-md">
+            <div class="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-full relative">
+              <div class="flex items-center justify-center w-9 h-9 bg-blue-500 rounded-full absolute top-1.5 left-1.5">
+{{{icon 'folder-open' class='w-4 h-4 text-white'}}}
+</div>
+            </div>
           </div>
-          <div class="text-center">
-            <div class="text-2xl font-bold text-blue-600">{{memoryMB}}MB</div>
-            <div class="text-sm text-muted-foreground">Memory</div>
-            <div class="text-xs text-blue-600">Usage</div>
-          </div>
-          <div class="text-center">
-            <div class="text-2xl font-bold text-purple-600">{{totalTables}}</div>
-            <div class="text-sm text-muted-foreground">Tables</div>
-            <div class="text-xs text-purple-600">Active</div>
-          </div>
-          <div class="text-center">
-            <div class="text-2xl font-bold text-orange-600">{{totalRecords}}</div>
-            <div class="text-sm text-muted-foreground">Records</div>
-            <div class="text-xs text-orange-600">Total</div>
-          </div>
-         </div>
-       </div>
-
-       <!-- System Performance Overview -->
-       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-         <!-- Performance Metrics -->
-         <div class="bg-card rounded-lg border border-border p-6">
-           <div class="p-6 border-b border-border">
-             <h3 class="text-lg font-semibold text-card-foreground flex items-center">
-               {{{icon 'trending-up' size='20' class='mr-2'}}}
-               Performance Metrics
-             </h3>
-           </div>
-           <div class="p-6 space-y-3">
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Uptime</span>
-               <span class="text-sm text-muted-foreground">{{systemPerformance.uptime}}</span>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Response Time</span>
-               <span class="text-sm text-muted-foreground">{{systemPerformance.responseTime}}</span>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Error Rate</span>
-               <span class="text-sm text-muted-foreground">{{systemPerformance.errorRate}}</span>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Throughput</span>
-               <span class="text-sm text-muted-foreground">{{systemPerformance.throughput}}</span>
-             </div>
-           </div>
-         </div>
-
-         <!-- Active Users & Load -->
-         <div class="bg-card rounded-lg border border-border p-6">
-           <div class="p-6 border-b border-border">
-             <h3 class="text-lg font-semibold text-card-foreground flex items-center">
-               {{{icon 'users' size='20' class='mr-2'}}}
-               System Status
-             </h3>
-           </div>
-           <div class="p-6 space-y-3">
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Active Users</span>
-               <span class="text-sm text-muted-foreground">{{systemPerformance.activeUsers}}</span>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">System Load</span>
-               <span class="text-sm text-muted-foreground">{{systemPerformance.systemLoad}}</span>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Database</span>
-               <div class="flex items-center">
-                 <div class="w-2 h-2 {{#if dbConnection}}bg-green-500{{else}}bg-red-500{{/if}} rounded-full animate-pulse mr-2"></div>
-                 <span class="text-sm {{#if dbConnection}}text-green-600{{else}}text-red-600{{/if}} font-medium">
-                   {{#if dbConnection}}Connected{{else}}Disconnected{{/if}}
-                 </span>
-               </div>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Memory Usage</span>
-               <span class="text-sm text-muted-foreground">{{memoryMB}}MB</span>
-             </div>
-           </div>
-         </div>
-
-         <!-- System Health Status -->
-         <div class="bg-card rounded-lg border border-border p-6">
-           <div class="p-6 border-b border-border">
-             <h3 class="text-lg font-semibold text-card-foreground flex items-center">
-               {{{icon 'shield-check' size='20' class='mr-2'}}}
-               Health Status
-             </h3>
-           </div>
-           <div class="p-6 space-y-3">
-             <div class="flex items-center justify-between">
-               <span class="text-sm font-medium text-card-foreground">Overall Status</span>
-               <div class="flex items-center">
-                 <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
-                 <span class="text-sm text-green-600 font-medium">Healthy</span>
-               </div>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Last Check</span>
-               <span class="text-sm text-muted-foreground">{{lastUpdated}}</span>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Alerts</span>
-               <span class="text-sm text-muted-foreground">0 active</span>
-             </div>
-           </div>
-         </div>
-       </div>
-
-       <!-- System Trends -->
-       <div class="bg-card rounded-lg border border-border p-6 mb-8">
-         <div class="p-6 border-b border-border">
-           <h3 class="text-lg font-semibold text-card-foreground flex items-center">
-             {{{icon 'bar-chart-3' size='20' class='mr-2'}}}
-             System Trends (Last 7 Days)
-           </h3>
-           <p class="text-sm text-muted-foreground mt-1">Activity volume, notifications, and memory usage patterns</p>
-         </div>
-         <div class="p-6">
-           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-             <!-- Activity Volume Trend -->
-             <div>
-               <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
-                 {{{icon 'activity' size='16' class='mr-2 text-blue-600'}}}
-                 Activity Volume
-               </h4>
-               <div class="h-32">
-                 <canvas id="systemActivityChart" width="300" height="150"></canvas>
-               </div>
-             </div>
-
-             <!-- Notification Volume Trend -->
-             <div>
-               <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
-                 {{{icon 'bell' size='16' class='mr-2 text-green-600'}}}
-                 Notifications
-               </h4>
-               <div class="h-32">
-                 <canvas id="systemNotificationChart" width="300" height="150"></canvas>
-               </div>
-             </div>
-
-             <!-- Memory Usage Trend -->
-             <div>
-               <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
-                 {{{icon 'cpu' size='16' class='mr-2 text-purple-600'}}}
-                 Memory Usage (MB)
-               </h4>
-               <div class="h-32">
-                 <canvas id="systemMemoryChart" width="300" height="150"></canvas>
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
- {{/if}}
-
- {{#if (eq section 'business')}}
-       <!-- Business Performance Overview -->
-       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-         <!-- Business Metrics -->
-         <div class="bg-card rounded-lg border border-border p-6">
-           <div class="p-6 border-b border-border">
-             <h3 class="text-lg font-semibold text-card-foreground flex items-center">
-               {{{icon 'trending-up' size='20' class='mr-2'}}}
-               Business Metrics
-             </h3>
-           </div>
-           <div class="p-6 space-y-3">
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Growth Rate</span>
-               <span class="text-sm text-muted-foreground">{{businessPerformance.growthRate}}</span>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Success Rate</span>
-               <span class="text-sm text-muted-foreground">{{businessPerformance.successRate}}</span>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Avg Funding</span>
-               <span class="text-sm text-muted-foreground">{{businessPerformance.avgFunding}}</span>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Market Reach</span>
-               <span class="text-sm text-muted-foreground">{{businessPerformance.marketReach}}</span>
-             </div>
-           </div>
-         </div>
-
-         <!-- Project Status -->
-         <div class="bg-card rounded-lg border border-border p-6">
-           <div class="p-6 border-b border-border">
-             <h3 class="text-lg font-semibold text-card-foreground flex items-center">
-               {{{icon 'briefcase' size='20' class='mr-2'}}}
-               Project Status
-             </h3>
-           </div>
-           <div class="p-6 space-y-3">
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Active Projects</span>
-               <span class="text-sm text-muted-foreground">{{businessPerformance.activeProjects}}</span>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Completed Milestones</span>
-               <span class="text-sm text-muted-foreground">{{businessPerformance.completedMilestones}}</span>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Total Models</span>
-               <span class="text-sm text-muted-foreground">{{#each statsGrid}}{{#if (eq title 'Business Models')}}{{items.0.value}}{{/if}}{{/each}}</span>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Total Plans</span>
-               <span class="text-sm text-muted-foreground">{{#each statsGrid}}{{#if (eq title 'Business Plans')}}{{items.0.value}}{{/if}}{{/each}}</span>
-             </div>
-           </div>
-         </div>
-
-         <!-- Business Health -->
-         <div class="bg-card rounded-lg border border-border p-6">
-           <div class="p-6 border-b border-border">
-             <h3 class="text-lg font-semibold text-card-foreground flex items-center">
-               {{{icon 'shield-check' size='20' class='mr-2'}}}
-               Business Health
-             </h3>
-           </div>
-           <div class="p-6 space-y-3">
-             <div class="flex items-center justify-between">
-               <span class="text-sm font-medium text-card-foreground">Overall Status</span>
-               <div class="flex items-center">
-                 <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
-                 <span class="text-sm text-green-600 font-medium">Growing</span>
-               </div>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Last Updated</span>
-               <span class="text-sm text-muted-foreground">{{lastUpdated}}</span>
-             </div>
-             <div class="flex justify-between">
-               <span class="text-sm font-medium text-card-foreground">Active Ventures</span>
-               <span class="text-sm text-muted-foreground">{{#each statsGrid}}{{#if (eq title 'Enterprises')}}{{items.0.value}}{{/if}}{{/each}}</span>
-             </div>
-           </div>
-         </div>
-       </div>
-
-       <!-- Business Trends -->
-       <div class="bg-card rounded-lg border border-border p-6 mb-8">
-         <div class="p-6 border-b border-border">
-           <h3 class="text-lg font-semibold text-card-foreground flex items-center">
-             {{{icon 'bar-chart-3' size='20' class='mr-2'}}}
-             Business Trends (Last 6 Months)
-           </h3>
-           <p class="text-sm text-muted-foreground mt-1">Business models growth, funding progress, and team expansion</p>
-         </div>
-         <div class="p-6">
-           <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-             <!-- Business Models Growth -->
-             <div>
-               <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
-                 {{{icon 'table' size='16' class='mr-2 text-blue-600'}}}
-                 Business Models
-               </h4>
-               <div class="h-32">
-                 <canvas id="businessModelsChart" width="300" height="150"></canvas>
-               </div>
-             </div>
-
-             <!-- Funding Progress -->
-             <div>
-               <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
-                 {{{icon 'dollar-sign' size='16' class='mr-2 text-green-600'}}}
-                 Funding Progress
-               </h4>
-               <div class="h-32">
-                 <canvas id="businessFundingChart" width="300" height="150"></canvas>
-               </div>
-             </div>
-
-             <!-- Team Growth -->
-             <div>
-               <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
-                 {{{icon 'users' size='16' class='mr-2 text-purple-600'}}}
-                 Team Growth
-               </h4>
-               <div class="h-32">
-                 <canvas id="businessTeamChart" width="300" height="150"></canvas>
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
- {{/if}}
-
-      <!-- Quick Actions -->
-     <div class="bg-card rounded-lg border border-border p-6">
-       <h3 class="text-lg font-semibold text-card-foreground mb-4">Quick Actions</h3>
-       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-{{#each quickActions}}
- {{> quick-action link=link icon=icon text=text}}
-{{/each}}
+        </div>
       </div>
-   </div>
- </div>
+      <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
 
- {{#if (eq section 'system')}}
- <!-- Chart.js Script for System Overview -->
- <script src="/js/chart.umd.js"></script>
- <script>
-   document.addEventListener('DOMContentLoaded', function() {
-     console.log('System Overview page loaded, initializing charts...');
+{{{icon 'trending-up' class='w-5 h-4'}}}
 
-     // Check if Chart.js is loaded
-     if (typeof Chart === 'undefined') {
-       console.error('Chart.js not loaded, charts will not display');
-       return;
-     }
+        <span class="text-blue-600 dark:text-blue-400">+2</span>Since last
+        month
+      </p>
+    </div>
 
-     const systemTrends = {{{json systemTrends}}};
-     console.log('System trends loaded:', systemTrends);
+    <div class="rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+      <div class="flex items-center justify-between px-[10px] py-[4px]">
+        <div class="flex flex-col gap-[4px]">
+          <h3 class="text-[14px] font-[500] text-muted-foreground">Total Ideas</h3>
+          <p class="text-[18px] font-[600] text-card-foreground">47</p>
+        </div>
+        <div>
+          <div class="bg-orange-50 dark:bg-orange-900/20 rounded-md">
+            <div class="w-10 h-10 bg-orange-50 dark:bg-orange-900/20 rounded-full relative">
+              <div class="flex items-center justify-center w-9 h-9 bg-orange-500 rounded-full absolute top-1.5 left-1.5">
+{{{icon 'lightbulb' class='w-4 h-4 text-white'}}}
+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
 
-     // Activity Volume Chart
-     try {
-       const activityCanvas = document.getElementById('systemActivityChart');
-       if (!activityCanvas) {
-         console.error('System activity chart canvas element not found');
-         return;
-       }
+{{{icon 'trending-up' class='w-5 h-4'}}}
 
-       const activityCtx = activityCanvas.getContext('2d');
-       if (!activityCtx) {
-         console.error('Could not get 2D context for system activity chart');
-         return;
-       }
+        <span class="text-orange-600 dark:text-orange-400">+8</span>Since last
+        month
+      </p>
+    </div>
 
-       new Chart(activityCtx, {
-       type: 'line',
-       data: {
-         labels: systemTrends.activityVolume.labels,
-         datasets: [{
-           label: 'Activity Volume',
-           data: systemTrends.activityVolume.data,
-            borderColor: 'rgb(59, 130, 246)',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-            tension: 0.4,
-            fill: true,
-            pointBackgroundColor: 'rgb(59, 130, 246)',
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-         }]
-       },
-       options: {
-         responsive: true,
-         maintainAspectRatio: false,
-         aspectRatio: 2,
-         plugins: {
-           legend: {
-             display: false
-           }
-         },
-         scales: {
-           y: {
-             beginAtZero: true,
-             grid: {
-               color: 'rgba(0, 0, 0, 0.1)'
-             }
-           },
-           x: {
-             grid: {
-               display: false
-             }
-           }
-         },
-         elements: {
-           point: {
-             radius: 2,
-             hoverRadius: 4
-           }
-         }
-       }
-       });
-       console.log('System activity chart created successfully');
-     } catch (error) {
-       console.error('Failed to create system activity chart:', error);
-     }
+    <div class="rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+      <div class="flex items-center justify-between px-[10px] py-[4px]">
+        <div class="flex flex-col gap-[4px]">
+          <h3 class="text-[14px] font-[500] text-muted-foreground">Team Members</h3>
+          <p class="text-[18px] font-[600] text-card-foreground">15</p>
+        </div>
+        <div>
+          <div class="bg-pink-50 dark:bg-pink-900/20 rounded-md">
+            <div class="w-10 h-10 bg-pink-50 dark:bg-pink-900/20 rounded-full relative">
+              <div class="flex items-center justify-center w-9 h-9 bg-pink-500 rounded-full absolute top-1.5 left-1.5">
+{{{icon 'users' class='w-4 h-4 text-white'}}}
+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
 
-     // Notification Volume Chart
-     try {
-       const notificationCanvas = document.getElementById('systemNotificationChart');
-       if (!notificationCanvas) {
-         console.error('System notification chart canvas element not found');
-         return;
-       }
+{{{icon 'trending-up' class='w-5 h-4'}}}
 
-       const notificationCtx = notificationCanvas.getContext('2d');
-       if (!notificationCtx) {
-         console.error('Could not get 2D context for system notification chart');
-         return;
-       }
+        <span class="text-pink-600 dark:text-pink-400">+3</span>Since last
+        month
+      </p>
+    </div>
 
-       new Chart(notificationCtx, {
-       type: 'line',
-       data: {
-         labels: systemTrends.notificationVolume.labels,
-         datasets: [{
-           label: 'Notifications',
-           data: systemTrends.notificationVolume.data,
-            borderColor: 'rgb(16, 185, 129)',
-            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-            tension: 0.4,
-            fill: true,
-            pointBackgroundColor: 'rgb(16, 185, 129)',
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-         }]
-       },
-       options: {
-         responsive: true,
-         maintainAspectRatio: false,
-         aspectRatio: 2,
-         plugins: {
-           legend: {
-             display: false
-           }
-         },
-         scales: {
-           y: {
-             beginAtZero: true,
-             grid: {
-               color: 'rgba(0, 0, 0, 0.1)'
-             }
-           },
-           x: {
-             grid: {
-               display: false
-             }
-           }
-         },
-         elements: {
-           point: {
-             radius: 2,
-             hoverRadius: 4
-           }
-         }
-       }
-       });
-       console.log('System notification chart created successfully');
-     } catch (error) {
-       console.error('Failed to create system notification chart:', error);
-     }
+    <div class="rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+      <div class="flex items-center justify-between px-[10px] py-[4px]">
+        <div class="flex flex-col gap-[4px]">
+          <h3 class="text-[14px] font-[500] text-muted-foreground">Funding Raised</h3>
+          <p class="text-[18px] font-[600] text-card-foreground">$125K</p>
+        </div>
+        <div>
+          <div class="bg-green-50 dark:bg-green-900/20 rounded-md">
+            <div class="w-10 h-10 bg-green-50 dark:bg-green-900/20 rounded-full relative">
+              <div class="flex items-center justify-center w-9 h-9 bg-green-500 rounded-full absolute top-1.5 left-1.5">
+{{{icon 'dollar-sign' class='w-4 h-4 text-white'}}}
+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
 
-     // Memory Usage Chart
-     try {
-       const memoryCanvas = document.getElementById('systemMemoryChart');
-       if (!memoryCanvas) {
-         console.error('System memory chart canvas element not found');
-         return;
-       }
+{{{icon 'trending-up' class='w-5 h-4'}}}
 
-       const memoryCtx = memoryCanvas.getContext('2d');
-       if (!memoryCtx) {
-         console.error('Could not get 2D context for system memory chart');
-         return;
-       }
+        <span class="text-green-600 dark:text-green-400">+25%</span>Since last
+        month
+      </p>
+    </div>
 
-       new Chart(memoryCtx, {
-       type: 'line',
-       data: {
-         labels: systemTrends.memoryUsage.labels,
-         datasets: [{
-           label: 'Memory Usage (MB)',
-           data: systemTrends.memoryUsage.data,
-            borderColor: 'rgb(139, 92, 246)',
-            backgroundColor: 'rgba(139, 92, 246, 0.1)',
-            tension: 0.4,
-            fill: true,
-            pointBackgroundColor: 'rgb(139, 92, 246)',
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-         }]
-       },
-       options: {
-         responsive: true,
-         maintainAspectRatio: false,
-         aspectRatio: 2,
-         plugins: {
-           legend: {
-             display: false
-           }
-         },
-         scales: {
-           y: {
-             beginAtZero: true,
-             grid: {
-               color: 'rgba(0, 0, 0, 0.1)'
-             }
-           },
-           x: {
-             grid: {
-               display: false
-             }
-           }
-         },
-         elements: {
-           point: {
-             radius: 2,
-             hoverRadius: 4
-           }
-         }
-       }
-       });
-       console.log('System memory chart created successfully');
-     } catch (error) {
-       console.error('Failed to create system memory chart:', error);
-     }
-   });
- </script>
- {{/if}}
+    <div class="rounded-md bg-card px-2 py-[40px] text-card-foreground shadow-sm" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;">
+      <div class="flex items-center justify-between px-[10px] py-[4px]">
+        <div class="flex flex-col gap-[4px]">
+          <h3 class="text-[14px] font-[500] text-muted-foreground">Growth Rate</h3>
+          <p class="text-[18px] font-[600] text-card-foreground">18%</p>
+        </div>
+        <div>
+          <div class="bg-purple-50 dark:bg-purple-900/20 rounded-md">
+            <div class="w-10 h-10 bg-purple-50 dark:bg-purple-900/20 rounded-full relative">
+              <div class="flex items-center justify-center w-9 h-9 bg-purple-500 rounded-full absolute top-1.5 left-1.5">
+{{{icon 'trending-up' class='w-4 h-4 text-white'}}}
+</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
 
- {{#if (eq section 'business')}}
- <!-- Chart.js Script for Business Overview -->
- <script src="/js/chart.umd.js"></script>
- <script>
-   document.addEventListener('DOMContentLoaded', function() {
-     console.log('Business Overview page loaded, initializing charts...');
+{{{icon 'trending-up' class='w-5 h-4'}}}
 
-     // Check if Chart.js is loaded
-     if (typeof Chart === 'undefined') {
-       console.error('Chart.js not loaded, charts will not display');
-       return;
-     }
-
-     const businessTrends = {{{json businessTrends}}};
-     console.log('Business trends loaded:', businessTrends);
-
-     // Business Models Growth Chart
-     try {
-       const modelsCanvas = document.getElementById('businessModelsChart');
-       if (!modelsCanvas) {
-         console.error('Business models chart canvas element not found');
-         return;
-       }
-
-       const modelsCtx = modelsCanvas.getContext('2d');
-       if (!modelsCtx) {
-         console.error('Could not get 2D context for business models chart');
-         return;
-       }
-
-       new Chart(modelsCtx, {
-       type: 'line',
-       data: {
-         labels: businessTrends.modelsGrowth.labels,
-         datasets: [{
-           label: 'Business Models',
-           data: businessTrends.modelsGrowth.data,
-            borderColor: 'rgb(59, 130, 246)',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-            tension: 0.4,
-            fill: true,
-            pointBackgroundColor: 'rgb(59, 130, 246)',
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-         }]
-       },
-       options: {
-         responsive: true,
-         maintainAspectRatio: false,
-         aspectRatio: 2,
-         plugins: {
-           legend: {
-             display: false
-           }
-         },
-         scales: {
-           y: {
-             beginAtZero: true,
-             grid: {
-               color: 'rgba(0, 0, 0, 0.1)'
-             }
-           },
-           x: {
-             grid: {
-               display: false
-             }
-           }
-         },
-         elements: {
-           point: {
-             radius: 2,
-             hoverRadius: 4
-           }
-         }
-       }
-       });
-       console.log('Business models chart created successfully');
-     } catch (error) {
-       console.error('Failed to create business models chart:', error);
-     }
-
-     // Funding Progress Chart
-     try {
-       const fundingCanvas = document.getElementById('businessFundingChart');
-       if (!fundingCanvas) {
-         console.error('Business funding chart canvas element not found');
-         return;
-       }
-
-       const fundingCtx = fundingCanvas.getContext('2d');
-       if (!fundingCtx) {
-         console.error('Could not get 2D context for business funding chart');
-         return;
-       }
-
-       new Chart(fundingCtx, {
-       type: 'line',
-       data: {
-         labels: businessTrends.fundingProgress.labels,
-         datasets: [{
-           label: 'Funding Progress',
-           data: businessTrends.fundingProgress.data,
-            borderColor: 'rgb(16, 185, 129)',
-            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-            tension: 0.4,
-            fill: true,
-            pointBackgroundColor: 'rgb(16, 185, 129)',
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-         }]
-       },
-       options: {
-         responsive: true,
-         maintainAspectRatio: false,
-         aspectRatio: 2,
-         plugins: {
-           legend: {
-             display: false
-           }
-         },
-         scales: {
-           y: {
-             beginAtZero: true,
-             grid: {
-               color: 'rgba(0, 0, 0, 0.1)'
-             }
-           },
-           x: {
-             grid: {
-               display: false
-             }
-           }
-         },
-         elements: {
-           point: {
-             radius: 2,
-             hoverRadius: 4
-           }
-         }
-       }
-       });
-       console.log('Business funding chart created successfully');
-     } catch (error) {
-       console.error('Failed to create business funding chart:', error);
-     }
-
-     // Team Growth Chart
-     try {
-       const teamCanvas = document.getElementById('businessTeamChart');
-       if (!teamCanvas) {
-         console.error('Business team chart canvas element not found');
-         return;
-       }
-
-       const teamCtx = teamCanvas.getContext('2d');
-       if (!teamCtx) {
-         console.error('Could not get 2D context for business team chart');
-         return;
-       }
-
-       new Chart(teamCtx, {
-       type: 'line',
-       data: {
-         labels: businessTrends.teamGrowth.labels,
-         datasets: [{
-           label: 'Team Growth',
-           data: businessTrends.teamGrowth.data,
-            borderColor: 'rgb(139, 92, 246)',
-            backgroundColor: 'rgba(139, 92, 246, 0.1)',
-            tension: 0.4,
-            fill: true,
-            pointBackgroundColor: 'rgb(139, 92, 246)',
-            pointBorderColor: '#fff',
-            pointBorderWidth: 2,
-         }]
-       },
-       options: {
-         responsive: true,
-         maintainAspectRatio: false,
-         aspectRatio: 2,
-         plugins: {
-           legend: {
-             display: false
-           }
-         },
-         scales: {
-           y: {
-             beginAtZero: true,
-             grid: {
-               color: 'rgba(0, 0, 0, 0.1)'
-             }
-           },
-           x: {
-             grid: {
-               display: false
-             }
-           }
-         },
-         elements: {
-           point: {
-             radius: 2,
-             hoverRadius: 4
-           }
-         }
-       }
-       });
-       console.log('Business team chart created successfully');
-     } catch (error) {
-       console.error('Failed to create business team chart:', error);
-     }
-   });
- </script>
- {{/if}}
+        <span class="text-purple-600 dark:text-purple-400">+5%</span>Since last
+        month
+      </p>
+    </div>
+  </div>
+</div>
+             </div>
 

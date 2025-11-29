@@ -16,25 +16,25 @@ export const getSettings = async (req, res) => {
     if (isHtmxRequest(req)) {
       const settingsHtml = settings
         ? `
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <div class="bg-card rounded-lg shadow p-6">
           <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">System Settings</h3>
           <div class="space-y-4">
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Site Name</label>
+              <label class="block text-sm font-medium text-foreground">Site Name</label>
               <p class="mt-1 text-sm text-gray-900 dark:text-white">${settings.site_name || 'N/A'}</p>
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Maintenance Mode</label>
+              <label class="block text-sm font-medium text-foreground">Maintenance Mode</label>
               <p class="mt-1 text-sm text-gray-900 dark:text-white">${settings.maintenance_mode ? 'Enabled' : 'Disabled'}</p>
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Default Language</label>
+              <label class="block text-sm font-medium text-foreground">Default Language</label>
               <p class="mt-1 text-sm text-gray-900 dark:text-white">${settings.default_language || 'English'}</p>
             </div>
           </div>
         </div>
       `
-        : '<p class="text-gray-500">Settings not found</p>';
+        : '<p class="text-muted-foreground">Settings not found</p>';
       res.send(settingsHtml);
     } else {
       res.json({ success: true, data: settings });

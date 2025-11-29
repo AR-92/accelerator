@@ -27,7 +27,7 @@ function openBulkActionModal(type, ids) {
       'px-4 py-2 text-sm font-medium bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-md';
   } else {
     btn.className =
-      'px-4 py-2 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 rounded-md';
+      'px-4 py-2 text-sm font-medium bg-primary/10 text-primary hover:bg-primary/20 rounded-md';
   }
 
   const modal = document.getElementById('bulkActionModal');

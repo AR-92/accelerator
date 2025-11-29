@@ -54,7 +54,7 @@ export const getNotifications = async (req, res) => {
               </div>
               <div class="ml-4">
                 <div class="text-sm font-medium text-gray-900">${notif.title}</div>
-                <div class="text-sm text-gray-500">${notif.message?.substring(0, 50)}${notif.message?.length > 50 ? '...' : ''}</div>
+                <div class="text-sm text-muted-foreground">${notif.message?.substring(0, 50)}${notif.message?.length > 50 ? '...' : ''}</div>
               </div>
             </div>
           </td>
@@ -88,7 +88,7 @@ export const getNotifications = async (req, res) => {
           <td class="px-6 py-4 text-sm text-gray-900">${formatDate(notif.created_at)}</td>
           <td class="px-6 py-4">
             <div class="relative">
-              <button onclick="toggleActionMenu('notification', ${notif.id})" class="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-black dark:text-white transition-colors">
+              <button onclick="toggleActionMenu('notification', ${notif.id})" class="p-2 rounded-full hover:bg-gray-100 text-muted-foreground hover:text-black dark:text-white transition-colors">
                 <svg class="w-4 h-4 lucide lucide-ellipsis-vertical" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="1"></circle>
                   <circle cx="12" cy="5" r="1"></circle>
@@ -398,7 +398,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 
   for (let i = startPage; i <= endPage; i++) {
     if (i === page) {
-      html += `<span class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground h-9 w-9">${i}</span>`;
+      html += `<span class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary/10 text-primary h-9 w-9">${i}</span>`;
     } else {
       html += `<button hx-get="/api/notifications?page=${i}&${params}" hx-target="#notificationsTableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 w-9">${i}</button>`;
     }

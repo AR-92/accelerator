@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        // Apply theme immediately to prevent flash
+        try {
+            const savedTheme = localStorage.getItem('theme');
+            console.log('Auth page theme check:', savedTheme);
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                console.log('Applied dark theme to auth page');
+            }
+        } catch (e) {
+            console.error('Error applying theme:', e);
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
@@ -16,7 +29,7 @@
     <!-- Hyperscript -->
     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-     <script type="text/hyperscript">
+      <script type="text/hyperscript">
          def updateThemeIcon()
            set isDark to document.documentElement.classList.contains('dark')
            set moonSvg to '{{{icon 'moon' size='16' class='h-4 w-4'}}}'
@@ -38,7 +51,7 @@
      </script>
 </head>
 <body>
-    {{{body}}}
+    {{{body}}
 
     <!-- JavaScript Section -->
     <script>

@@ -1,3 +1,4 @@
+import Handlebars from 'handlebars';
 import icons from 'lucide-static';
 import {
   formatDate,
@@ -86,6 +87,13 @@ export const handlebarsHelpers = {
   array: function (...args) {
     return args.slice(0, -1);
   },
+  range: function (start, end) {
+    const result = [];
+    for (let i = start; i <= end; i++) {
+      result.push(i);
+    }
+    return result;
+  },
   icon: function (name, options) {
     if (!name || typeof name !== 'string') return '';
     const capitalizedName =
@@ -99,6 +107,10 @@ export const handlebarsHelpers = {
     const attrs = options.hash || {};
     const className = attrs.class || '';
     const size = attrs.size || 24;
+    // If class contains 'fill-', make the icon filled
+    if (className && className.includes('fill-')) {
+      svg = svg.replace('fill="none"', 'fill="currentColor"');
+    }
     // Replace width and height
     svg = svg.replace(/width="[^"]*"/, `width="${size}"`);
     svg = svg.replace(/height="[^"]*"/, `height="${size}"`);

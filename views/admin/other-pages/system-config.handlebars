@@ -60,7 +60,7 @@
                    <div class="flex items-center">
                       <input type="text" value="{{#if config.server.clusterMode}}Enabled{{else}}Disabled{{/if}}" readonly
                              class="w-full px-3 py-2 border border-border rounded-md bg-muted">
-                      <span class="ml-2 {{#if config.server.clusterMode}}text-green-600{{else}}text-gray-400{{/if}}">
+                      <span class="ml-2 {{#if config.server.clusterMode}}text-green-600{{else}}text-muted-foreground{{/if}}">
                          {{#if config.server.clusterMode}}
                          {{{icon 'check-circle' size='16'}}}
                          {{else}}
@@ -110,7 +110,7 @@
                    <div class="flex items-center">
                       <input type="text" value="{{#if config.server.trustProxy}}Enabled{{else}}Disabled{{/if}}" readonly
                              class="w-full px-3 py-2 border border-border rounded-md bg-muted">
-                      <span class="ml-2 {{#if config.server.trustProxy}}text-green-600{{else}}text-gray-400{{/if}}">
+                      <span class="ml-2 {{#if config.server.trustProxy}}text-green-600{{else}}text-muted-foreground{{/if}}">
                          {{#if config.server.trustProxy}}
                          {{{icon 'check-circle' size='16'}}}
                          {{else}}
@@ -204,7 +204,7 @@
                    <div class="flex items-center">
                       <input type="text" value="{{config.database.readReplicaUrls}}" readonly
                              class="w-full px-3 py-2 border border-border rounded-md bg-muted">
-                      <span class="ml-2 {{#if (eq config.database.readReplicaUrls 'Configured')}}text-green-600{{else}}text-gray-400{{/if}}">
+                      <span class="ml-2 {{#if (eq config.database.readReplicaUrls 'Configured')}}text-green-600{{else}}text-muted-foreground{{/if}}">
                          {{#if (eq config.database.readReplicaUrls 'Configured')}}
                          {{{icon 'check-circle' size='16'}}}
                          {{else}}
@@ -273,7 +273,7 @@
                    <div class="flex items-center">
                       <input type="text" value="{{config.auth.ipWhitelist}}" readonly
                              class="w-full px-3 py-2 border border-border rounded-md bg-muted">
-                      <span class="ml-2 {{#if (eq config.auth.ipWhitelist 'Configured')}}text-green-600{{else}}text-gray-400{{/if}}">
+                      <span class="ml-2 {{#if (eq config.auth.ipWhitelist 'Configured')}}text-green-600{{else}}text-muted-foreground{{/if}}">
                          {{#if (eq config.auth.ipWhitelist 'Configured')}}
                          {{{icon 'check-circle' size='16'}}}
                          {{else}}
@@ -287,7 +287,7 @@
                    <div class="flex items-center">
                       <input type="text" value="{{config.auth.ipBlacklist}}" readonly
                              class="w-full px-3 py-2 border border-border rounded-md bg-muted">
-                      <span class="ml-2 {{#if (eq config.auth.ipBlacklist 'Configured')}}text-red-600{{else}}text-gray-400{{/if}}">
+                      <span class="ml-2 {{#if (eq config.auth.ipBlacklist 'Configured')}}text-red-600{{else}}text-muted-foreground{{/if}}">
                          {{#if (eq config.auth.ipBlacklist 'Configured')}}
                          {{{icon 'x-circle' size='16'}}}
                          {{else}}
@@ -393,7 +393,7 @@
                    <div class="flex items-center">
                       <input type="text" value="{{config.performance.redisUrl}}" readonly
                              class="w-full px-3 py-2 border border-border rounded-md bg-muted">
-                      <span class="ml-2 {{#if (eq config.performance.redisUrl 'Configured')}}text-green-600{{else}}text-gray-400{{/if}}">
+                      <span class="ml-2 {{#if (eq config.performance.redisUrl 'Configured')}}text-green-600{{else}}text-muted-foreground{{/if}}">
                          {{#if (eq config.performance.redisUrl 'Configured')}}
                          {{{icon 'check-circle' size='16'}}}
                          {{else}}
@@ -462,7 +462,7 @@
                    <div class="flex items-center">
                       <input type="text" value="{{config.logging.sentryDsn}}" readonly
                              class="w-full px-3 py-2 border border-border rounded-md bg-muted">
-                      <span class="ml-2 {{#if (eq config.logging.sentryDsn 'Configured')}}text-green-600{{else}}text-gray-400{{/if}}">
+                      <span class="ml-2 {{#if (eq config.logging.sentryDsn 'Configured')}}text-green-600{{else}}text-muted-foreground{{/if}}">
                          {{#if (eq config.logging.sentryDsn 'Configured')}}
                          {{{icon 'check-circle' size='16'}}}
                          {{else}}
@@ -476,7 +476,7 @@
                    <div class="flex items-center">
                       <input type="text" value="{{config.logging.newRelicLicenseKey}}" readonly
                              class="w-full px-3 py-2 border border-border rounded-md bg-muted">
-                      <span class="ml-2 {{#if (eq config.logging.newRelicLicenseKey 'Configured')}}text-green-600{{else}}text-gray-400{{/if}}">
+                      <span class="ml-2 {{#if (eq config.logging.newRelicLicenseKey 'Configured')}}text-green-600{{else}}text-muted-foreground{{/if}}">
                          {{#if (eq config.logging.newRelicLicenseKey 'Configured')}}
                          {{{icon 'check-circle' size='16'}}}
                          {{else}}
@@ -492,7 +492,7 @@
                    <div class="flex items-center">
                       <input type="text" value="{{#if config.logging.prometheusMetricsEnabled}}Enabled{{else}}Disabled{{/if}}" readonly
                              class="w-full px-3 py-2 border border-border rounded-md bg-muted">
-                      <span class="ml-2 {{#if config.logging.prometheusMetricsEnabled}}text-green-600{{else}}text-gray-400{{/if}}">
+                      <span class="ml-2 {{#if config.logging.prometheusMetricsEnabled}}text-green-600{{else}}text-muted-foreground{{/if}}">
                          {{#if config.logging.prometheusMetricsEnabled}}
                          {{{icon 'check-circle' size='16'}}}
                          {{else}}
@@ -575,7 +575,7 @@
                    <div class="flex items-center">
                       <input type="text" value="{{#if config.ai.contentGenerationEnabled}}Enabled{{else}}Disabled{{/if}}" readonly
                              class="w-full px-3 py-2 border border-border rounded-md bg-muted">
-                      <span class="ml-2 {{#if config.ai.contentGenerationEnabled}}text-green-600{{else}}text-gray-400{{/if}}">
+                      <span class="ml-2 {{#if config.ai.contentGenerationEnabled}}text-green-600{{else}}text-muted-foreground{{/if}}">
                          {{#if config.ai.contentGenerationEnabled}}
                          {{{icon 'check-circle' size='16'}}}
                          {{else}}
@@ -589,7 +589,7 @@
                    <div class="flex items-center">
                       <input type="text" value="{{#if config.ai.biAnalyticsEnabled}}Enabled{{else}}Disabled{{/if}}" readonly
                              class="w-full px-3 py-2 border border-border rounded-md bg-muted">
-                      <span class="ml-2 {{#if config.ai.biAnalyticsEnabled}}text-green-600{{else}}text-gray-400{{/if}}">
+                      <span class="ml-2 {{#if config.ai.biAnalyticsEnabled}}text-green-600{{else}}text-muted-foreground{{/if}}">
                          {{#if config.ai.biAnalyticsEnabled}}
                          {{{icon 'check-circle' size='16'}}}
                          {{else}}
@@ -605,7 +605,7 @@
                    <div class="flex items-center">
                       <input type="text" value="{{#if config.ai.costTrackingEnabled}}Enabled{{else}}Disabled{{/if}}" readonly
                              class="w-full px-3 py-2 border border-border rounded-md bg-muted">
-                      <span class="ml-2 {{#if config.ai.costTrackingEnabled}}text-green-600{{else}}text-gray-400{{/if}}">
+                      <span class="ml-2 {{#if config.ai.costTrackingEnabled}}text-green-600{{else}}text-muted-foreground{{/if}}">
                          {{#if config.ai.costTrackingEnabled}}
                          {{{icon 'check-circle' size='16'}}}
                          {{else}}
@@ -632,14 +632,14 @@
                    <p class="text-sm text-muted-foreground mt-1">Manage system configuration settings</p>
                 </div>
                 <div class="flex space-x-3">
-                   <button class="px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors border border-blue-200">
-                      {{{icon 'download' size='16' class='mr-2'}}}
-                      Export Config
-                   </button>
-                   <button class="px-4 py-2 bg-gray-50 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors border border-gray-200">
-                      {{{icon 'refresh-cw' size='16' class='mr-2'}}}
-                      Reload Config
-                   </button>
+                    <button class="px-4 py-2 bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors border border-blue-200 dark:border-blue-800">
+                       {{{icon 'download' size='16' class='mr-2'}}}
+                       Export Config
+                    </button>
+                    <button class="px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors border border-border">
+                       {{{icon 'refresh-cw' size='16' class='mr-2'}}}
+                       Reload Config
+                    </button>
                 </div>
              </div>
           </div>

@@ -24,11 +24,11 @@
                    {{#each settingsCategories}}
                     <div class="flex flex-col items-center justify-center group flex-shrink-0">
                       <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq ../activeCategory value)}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
-                       <button
-                         type="button"
-                         class="settings-filter-btn flex items-center justify-center min-h-[44px] px-3 {{#if (eq ../activeCategory value)}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap"
-                         data-category="{{value}}"
-                       >
+                        <button
+                          type="button"
+                          class="settings-filter-btn flex items-center justify-center min-h-[44px] pl-6 pr-3 {{#if (eq ../activeCategory value)}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap"
+                          data-category="{{value}}"
+                        >
                          {{{icon icon size='14' class='mr-1'}}}
                          {{label}}
                        </button>
@@ -41,40 +41,7 @@
                     {{{icon 'chevron-right' size='16' class='text-muted-foreground'}}}
                   </button>
                 </div>
-              {{else if @root.tableConfig}}
-               {{#if @root.tableConfig.statusOptions}}
-               {{#if @root.tableConfig.statusOptions.length}}
-                <!-- Table Filter Navigation -->
-                <div class="flex items-center gap-2 max-w-4xl w-full">
-                  <!-- Left Arrow Button -->
-                  <button id="table-filter-scroll-left" class="flex items-center justify-center w-6 h-6 rounded-md hover:bg-accent transition-colors flex-shrink-0" title="Scroll left">
-                    {{{icon 'chevron-left' size='16' class='text-muted-foreground'}}}
-                  </button>
 
-                   <!-- Scrollable Filter Container -->
-                   <div id="table-filter-scroll-container" class="flex gap-0 overflow-x-auto flex-1 min-w-0" style="-ms-overflow-style: none; scrollbar-width: none; -webkit-overflow-scrolling: touch;">
-                    <style>
-                      #table-filter-scroll-container::-webkit-scrollbar { display: none; }
-                    </style>
-                     <div class="flex flex-col items-center justify-center group flex-shrink-0">
-                        <div class="border-t-4 border-primary w-6 rounded-full {{#unless @root.query.status}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/unless}}"></div>
-                          <button id="filter-link-all" type="button" hx-get="/admin/table-pages/{{@root.currentPage}}" hx-push-url="/admin/table-pages/{{@root.currentPage}}" hx-target="#{{@root.currentPage}}TableContainer" data-table="{{@root.currentPage}}" class="settings-filter-btn flex items-center justify-center min-h-[44px] px-3 {{#unless @root.query.status}}text-foreground font-medium{{else}}text-muted-foreground{{/unless}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon 'list' size='14' class='mr-1'}}}All</button>
-                     </div>
-                     {{#each @root.tableConfig.statusOptions}}
-                      <div class="flex flex-col items-center justify-center group flex-shrink-0">
-                        <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq ../query.status value)}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
-                          <button id="filter-link-{{value}}" type="button" hx-get="/admin/table-pages/{{../currentPage}}?status={{value}}" hx-push-url="/admin/table-pages/{{../currentPage}}?status={{value}}" hx-target="#{{../currentPage}}TableContainer" data-table="{{../currentPage}}" class="settings-filter-btn flex items-center justify-center min-h-[44px] px-3 {{#if (eq ../query.status value)}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon icon size='14' class='mr-1'}}}{{label}}</button>
-                      </div>
-                      {{/each}}
-                  </div>
-
-                  <!-- Right Arrow Button -->
-                  <button id="table-filter-scroll-right" class="flex items-center justify-center w-6 h-6 rounded-md hover:bg-accent transition-colors flex-shrink-0" title="Scroll right">
-                    {{{icon 'chevron-right' size='16' class='text-muted-foreground'}}}
-                  </button>
-                </div>
-                {{/if}}
-                {{/if}}
                {{else if @root.filterLinks}}
                  <!-- Overview Filter Navigation -->
                  <div class="flex items-center gap-2 max-w-4xl w-full">
@@ -91,7 +58,7 @@
                      {{#each @root.filterLinks}}
                      <div class="flex flex-col items-center justify-center group flex-shrink-0">
                        <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
-                        <a id="{{id}}" href="{{href}}" hx-get="{{href}}" hx-target="#{{@root.section}}-main-content" class="flex items-center justify-center min-h-[44px] px-3 text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon icon size='14' class='mr-1'}}}{{text}}</a>
+                          <a id="{{id}}" href="{{href}}" hx-get="{{href}}" hx-target="#{{@root.section}}-main-content" class="flex items-center justify-center min-h-[44px] pr-6 text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon icon size='14' class='mr-1'}}}{{text}}</a>
                      </div>
                      {{/each}}
                    </div>
@@ -112,172 +79,7 @@
             {{{icon 'save' size='16' class='w-4 h-4'}}}
             <span class="text-xs">Save Settings</span>
           </button>
-        {{else if (eq @root.currentPage 'todos')}}
-           <a href="/admin/table-pages/todos/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Todo</span>
-          </a>
-         {{else if (eq @root.currentPage 'users')}}
-           <a href="/admin/table-pages/users/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create User</span>
-          </a>
-         {{else if (eq @root.currentPage 'ideas')}}
-           <a href="/admin/table-pages/ideas/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Idea</span>
-          </a>
-           {{else if (eq @root.currentPage 'votes')}}
-             <!-- No create button for votes -->
-          {{else if (eq @root.currentPage 'collaborations')}}
-           <a href="/admin/table-pages/collaborations/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Collaboration</span>
-          </a>
-         {{else if (eq @root.currentPage 'content')}}
-           <a href="/admin/table-pages/content/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Content</span>
-          </a>
-         {{else if (eq @root.currentPage 'landing-page')}}
-           <a href="/admin/table-pages/landing-page/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Landing Page</span>
-          </a>
-         {{else if (eq @root.currentPage 'learning-content')}}
-           <a href="/admin/table-pages/learning-content/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Learning Content</span>
-          </a>
-         {{else if (eq @root.currentPage 'learning-categories')}}
-           <a href="/admin/table-pages/learning-categories/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Category</span>
-          </a>
-         {{else if (eq @root.currentPage 'learning-assessments')}}
-           <a href="/admin/table-pages/learning-assessments/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Assessment</span>
-          </a>
-         {{else if (eq @root.currentPage 'learning-analytics')}}
-           <!-- No create for analytics -->
-         {{else if (eq @root.currentPage 'packages')}}
-           <a href="/admin/table-pages/packages/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Package</span>
-          </a>
-         {{else if (eq @root.currentPage 'billing')}}
-           <a href="/admin/table-pages/billing/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Billing</span>
-          </a>
-         {{else if (eq @root.currentPage 'rewards')}}
-           <a href="/admin/table-pages/rewards/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Reward</span>
-          </a>
-         {{else if (eq @root.currentPage 'business-model')}}
-           <a href="/admin/table-pages/business-model/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Business Model</span>
-          </a>
-         {{else if (eq @root.currentPage 'business-plan')}}
-           <a href="/admin/table-pages/business-plan/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Business Plan</span>
-          </a>
-         {{else if (eq @root.currentPage 'financial-model')}}
-           <a href="/admin/table-pages/financial-model/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Financial Model</span>
-          </a>
-         {{else if (eq @root.currentPage 'pitchdeck')}}
-           <a href="/admin/table-pages/pitchdeck/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Pitchdeck</span>
-          </a>
-         {{else if (eq @root.currentPage 'valuation')}}
-           <a href="/admin/table-pages/valuation/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Valuation</span>
-          </a>
-         {{else if (eq @root.currentPage 'funding')}}
-           <a href="/admin/table-pages/funding/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Funding</span>
-          </a>
-         {{else if (eq @root.currentPage 'team')}}
-           <a href="/admin/table-pages/team/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Team</span>
-          </a>
-         {{else if (eq @root.currentPage 'legal')}}
-           <a href="/admin/table-pages/legal/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Legal</span>
-          </a>
-         {{else if (eq @root.currentPage 'marketing')}}
-           <a href="/admin/table-pages/marketing/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Marketing</span>
-          </a>
-         {{else if (eq @root.currentPage 'corporate')}}
-           <a href="/admin/table-pages/corporate/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Corporate</span>
-          </a>
-         {{else if (eq @root.currentPage 'enterprises')}}
-           <a href="/admin/table-pages/enterprises/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Enterprise</span>
-          </a>
-         {{else if (eq @root.currentPage 'messages')}}
-           <a href="/admin/table-pages/messages/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Message</span>
-          </a>
-         {{else if (eq @root.currentPage 'project-collaborators')}}
-           <a href="/admin/table-pages/project-collaborators/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Collaborator</span>
-          </a>
-         {{else if (eq @root.currentPage 'calendar')}}
-           <a href="/admin/table-pages/calendar/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Event</span>
-          </a>
-         {{else if (eq @root.currentPage 'help-center')}}
-           <a href="/admin/table-pages/help-center/create"
-             class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-             {{{icon 'plus' size='16' class='w-4 h-4'}}}
-            <span class="text-xs">Create Article</span>
-          </a>
+
          {{/if}}
        </div>
   </nav>

@@ -192,7 +192,7 @@
                return;
             }
 
-            const activityTrends = {{{json activityTrends}}} || {};
+            const activityTrends = {{{json activityTrends}} || {};
             console.log('Activity trends loaded:', activityTrends);
             console.log('Activity trends keys:', Object.keys(activityTrends));
 
@@ -421,8 +421,8 @@
 
       <!-- Debug Info -->
       <div style="display: none;">
-         Activity Trends: {{{json activityTrends}}}
-         Activity Analytics: {{{json activityAnalytics}}}
+         Activity Trends: {{{json activityTrends}}
+         Activity Analytics: {{{json activityAnalytics}}
          Test Math: {{math 2 '+' 2}}
          Test Max: {{max (array 1 2 3 4 5)}}
          Test Last: {{last (array 1 2 3 4 5)}}
@@ -605,7 +605,7 @@
          </div>
           <div class="flex items-center space-x-4">
              <a href="/admin/other-pages/activity/export/csv?search={{query.search}}&category={{query.category}}&status={{query.status}}"
-                class="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors inline-flex items-center">
+                class="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors inline-flex items-center">
                {{{icon 'download' size='16' class='mr-2'}}}
                Export CSV
              </a>

@@ -43,7 +43,7 @@ export const getDashboard = async (req, res) => {
       // Return HTML for HTMX requests
       const statsHtml = `
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+          <div class="bg-card rounded-lg shadow p-6">
             <div class="flex items-center">
               <div class="p-2 bg-blue-100 rounded-lg">
                 <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@ export const getDashboard = async (req, res) => {
               </div>
             </div>
           </div>
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+          <div class="bg-card rounded-lg shadow p-6">
             <div class="flex items-center">
               <div class="p-2 bg-green-100 rounded-lg">
                 <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,7 +69,7 @@ export const getDashboard = async (req, res) => {
               </div>
             </div>
           </div>
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+          <div class="bg-card rounded-lg shadow p-6">
             <div class="flex items-center">
               <div class="p-2 bg-purple-100 rounded-lg">
                 <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -82,7 +82,7 @@ export const getDashboard = async (req, res) => {
               </div>
             </div>
           </div>
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+          <div class="bg-card rounded-lg shadow p-6">
             <div class="flex items-center">
               <div class="p-2 bg-yellow-100 rounded-lg">
                 <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -1,0 +1,194 @@
+<!-- Dashboard Activity Log Page -->
+<div class="min-h-screen bg-background">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+                <div class="flex flex-col gap-4 lg:gap-6">
+  <div class="flex items-center justify-between">
+    <div class="grid gap-1">
+      <h1 class="font-heading text-2xl font-semibold text-foreground">Activity
+        Log</h1>
+      <p class="text-base text-muted-foreground">Track all user activities and
+        system events within your startup.</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+        {{{icon 'download' class='w-4 h-4'}}}
+        Export Log
+      </button>
+    </div>
+  </div>
+
+  <!-- Activity Filters -->
+  <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="text-sm font-medium text-muted-foreground">Filter by:</span>
+      <select class="px-3 py-1 border border-border rounded-md text-sm bg-card">
+        <option>All Activities</option>
+        <option>User Actions</option>
+        <option>System Events</option>
+        <option>Project Updates</option>
+        <option>Team Changes</option>
+      </select>
+      <select class="px-3 py-1 border border-border rounded-md text-sm bg-card">
+        <option>All Users</option>
+        <option>John Doe</option>
+        <option>Sarah Smith</option>
+        <option>Mike Johnson</option>
+      </select>
+      <select class="px-3 py-1 border border-border rounded-md text-sm bg-card">
+        <option>Last 7 days</option>
+        <option>Last 30 days</option>
+        <option>Last 90 days</option>
+        <option>All time</option>
+      </select>
+    </div>
+    <div class="flex items-center gap-2">
+      <input type="text" placeholder="Search activities..." class="px-3 py-1 border border-border rounded-md text-sm bg-card w-64">
+      <button class="px-3 py-1 bg-muted text-foreground rounded-md text-sm hover:bg-muted/50">
+        Search
+      </button>
+    </div>
+  </div>
+
+  <!-- Activity Log -->
+  <div class="rounded-md bg-card border border-border">
+    <div class="p-6">
+      <div class="space-y-6">
+        <!-- Today's Activities -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-foreground">Today</h3>
+          <div class="space-y-4">
+            <div class="flex items-start gap-4 p-4 bg-primary/10 rounded-lg border border-border">
+              <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                {{{icon 'plus' class='w-5 h-5 text-primary'}}}
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-medium text-primary">John Doe</span>
+                  <span class="text-sm text-primary">created
+                    a new project</span>
+                  <span class="text-xs text-muted-foreground">2 hours ago</span>
+                </div>
+                <p class="text-sm text-primary/80">AI-Powered
+                  Learning Platform - A comprehensive educational technology
+                  solution</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 p-4 bg-success/10 rounded-lg border border-border">
+              <div class="w-10 h-10 bg-success/20 rounded-full flex items-center justify-center flex-shrink-0">
+                {{{icon 'check-circle' class='w-5 h-5 text-success'}}}
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-medium text-success">Sarah Smith</span>
+                  <span class="text-sm text-success">completed milestone</span>
+                  <span class="text-xs text-muted-foreground">4 hours ago</span>
+                </div>
+                <p class="text-sm text-success/80">Market
+                  research phase completed for Sustainable Energy project</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 p-4 bg-primary/10 rounded-lg border border-border">
+              <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                {{{icon 'user-plus' class='w-5 h-5 text-primary'}}}
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-medium text-primary">Mike Johnson</span>
+                  <span class="text-sm text-primary">invited new team member</span>
+                  <span class="text-xs text-muted-foreground">6 hours ago</span>
+                </div>
+                <p class="text-sm text-primary/80">Added
+                  Alex Rivera to the development team</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Yesterday's Activities -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-foreground">Yesterday</h3>
+          <div class="space-y-4">
+            <div class="flex items-start gap-4 p-4 bg-warning/10 rounded-lg border border-border">
+              <div class="w-10 h-10 bg-warning/20 rounded-full flex items-center justify-center flex-shrink-0">
+                {{{icon 'square-pen' class='w-5 h-5 text-warning'}}}
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-medium text-warning">Emma Wilson</span>
+                  <span class="text-sm text-warning">updated project details</span>
+                  <span class="text-xs text-muted-foreground">1 day ago</span>
+                </div>
+                <p class="text-sm text-warning/80">Modified
+                  budget and timeline for Healthcare Innovation project</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 p-4 bg-destructive/10 rounded-lg border border-border">
+              <div class="w-10 h-10 bg-destructive/20 rounded-full flex items-center justify-center flex-shrink-0">
+                {{{icon 'trash-2' class='w-5 h-5 text-destructive'}}}
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-medium text-destructive">David
+                    Chen</span>
+                  <span class="text-sm text-destructive">archived
+                    project</span>
+                  <span class="text-xs text-muted-foreground">1 day ago</span>
+                </div>
+                <p class="text-sm text-destructive/80">Archived
+                  "Mobile App Redesign" project due to scope changes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Days Ago -->
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-foreground">3 days ago</h3>
+          <div class="space-y-4">
+            <div class="flex items-start gap-4 p-4 bg-primary/10 rounded-lg border border-border">
+              <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                {{{icon 'message-circle' class='w-5 h-5 text-primary'}}}
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-medium text-primary">Lisa Park</span>
+                  <span class="text-sm text-primary">commented on idea</span>
+                  <span class="text-xs text-muted-foreground">3 days ago</span>
+                </div>
+                <p class="text-sm text-primary/80">Added
+                  feedback to "AI-Powered Learning Platform" idea validation</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4 p-4 bg-card rounded-lg border border-border">
+              <div class="w-10 h-10 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
+                {{{icon 'settings' class='w-5 h-5 text-muted-foreground'}}}
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-medium text-foreground">System</span>
+                  <span class="text-sm text-muted-foreground dark:text-muted-foreground">automated backup completed</span>
+                  <span class="text-xs text-muted-foreground">3 days ago</span>
+                </div>
+                <p class="text-sm text-foreground">Daily backup
+                  of all project data and user activities completed successfully</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Load More -->
+      <div class="mt-6 text-center">
+        <button class="px-4 py-2 bg-muted text-foreground rounded-md hover:bg-muted/50 text-sm font-medium">
+          Load More Activities
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+             </div>
+</div>

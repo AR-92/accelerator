@@ -37,8 +37,8 @@ export const getHelp = async (req, res) => {
           (item) => `
         <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
           <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">${item.title}</td>
-          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">${item.category}</td>
-          <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">${formatDate(item.created_at)}</td>
+          <td class="px-6 py-4 text-sm text-muted-foreground">${item.category}</td>
+          <td class="px-6 py-4 text-sm text-muted-foreground">${formatDate(item.created_at)}</td>
         </tr>
       `
         )
@@ -102,7 +102,7 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
 
   for (let i = startPage; i <= endPage; i++) {
     if (i === page) {
-      html += `<span class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground h-9 w-9">${i}</span>`;
+      html += `<span class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary/10 text-primary h-9 w-9">${i}</span>`;
     } else {
       html += `<button hx-get="/api/${entity}?page=${i}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 w-9">${i}</button>`;
     }

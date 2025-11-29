@@ -1,0 +1,93 @@
+<!-- Chat Page -->
+<div class="min-h-screen bg-background">
+    <div id="collaborate-main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+        <div class="flex flex-col gap-4 lg:gap-6">
+            <div class="flex items-center justify-between">
+                <div class="grid gap-1">
+                    <h1 class="font-heading text-2xl font-semibold text-foreground">Chat</h1>
+                    <p class="text-base text-muted-foreground">Team messaging and discussions</p>
+                </div>
+            </div>
+
+            <!-- Chat Interface -->
+            <div class="flex flex-col h-96 bg-card rounded-lg shadow-sm">
+                <!-- Chat Header -->
+                <div class="flex items-center justify-between p-4 border-b border-border">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Team Chat</h3>
+                            <p class="text-sm text-muted-foreground">12 members online</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button class="p-2 hover:bg-accent rounded-md">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages Area -->
+                <div class="flex-1 p-4 space-y-4 overflow-y-auto">
+                    <!-- Sample Messages -->
+                    <div class="flex gap-3">
+                        <div class="w-8 h-8 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-xs font-semibold text-muted-foreground">JD</span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="font-semibold text-sm">John Doe</span>
+                                <span class="text-xs text-muted-foreground">2 hours ago</span>
+                            </div>
+                            <p class="text-sm">Hey team! How's the project coming along?</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <div class="w-8 h-8 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-xs font-semibold text-muted-foreground">SM</span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="font-semibold text-sm">Sarah Miller</span>
+                                <span class="text-xs text-muted-foreground">1 hour ago</span>
+                            </div>
+                            <p class="text-sm">Great progress! The new features are almost ready for testing.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <div class="w-8 h-8 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-xs font-semibold text-muted-foreground">MR</span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="font-semibold text-sm">Mike Ross</span>
+                                <span class="text-xs text-muted-foreground">30 min ago</span>
+                            </div>
+                            <p class="text-sm">I'll review the code this afternoon. Let me know if you need any help!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message Input -->
+                <div class="p-4 border-t border-border">
+                    <div class="flex gap-3">
+                        <input type="text" placeholder="Type your message..." class="flex-1 px-3 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+                        <button class="px-4 py-2 bg-primary/10 text-primary rounded-md hover:bg-primary/20">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

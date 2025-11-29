@@ -230,16 +230,16 @@
             <label class="block text-sm font-medium text-card-foreground mb-3">Theme</label>
             <div class="grid grid-cols-3 gap-4">
               <div class="border-2 {{#eq profileSettings.appearance.theme "light"}}border-primary{{else}}border-border{{/eq}} rounded-lg p-4 cursor-pointer bg-card">
-                <div class="w-full h-16 bg-gray-100 rounded mb-2"></div>
-                <p class="text-sm font-medium text-center">Light</p>
+                <div class="w-full h-16 bg-muted rounded mb-2"></div>
+                <p class="text-sm font-medium text-center text-foreground">Light</p>
               </div>
-              <div class="border-2 {{#eq profileSettings.appearance.theme "dark"}}border-primary{{else}}border-border{{/eq}} rounded-lg p-4 cursor-pointer bg-gray-800">
-                <div class="w-full h-16 bg-gray-700 rounded mb-2"></div>
-                <p class="text-sm font-medium text-center text-white">Dark</p>
+              <div class="border-2 {{#eq profileSettings.appearance.theme "dark"}}border-primary{{else}}border-border{{/eq}} rounded-lg p-4 cursor-pointer bg-muted">
+                <div class="w-full h-16 bg-card rounded mb-2"></div>
+                <p class="text-sm font-medium text-center text-foreground">Dark</p>
               </div>
-              <div class="border-2 {{#eq profileSettings.appearance.theme "auto"}}border-primary{{else}}border-border{{/eq}} rounded-lg p-4 cursor-pointer bg-gradient-to-r from-blue-500 to-purple-600">
-                <div class="w-full h-16 bg-gradient-to-r from-blue-400 to-purple-500 rounded mb-2"></div>
-                <p class="text-sm font-medium text-center text-white">Auto</p>
+              <div class="border-2 {{#eq profileSettings.appearance.theme "auto"}}border-primary{{else}}border-border{{/eq}} rounded-lg p-4 cursor-pointer bg-gradient-to-r from-primary to-accent">
+                <div class="w-full h-16 bg-gradient-to-r from-primary to-accent rounded mb-2"></div>
+                <p class="text-sm font-medium text-center text-primary-foreground">Auto</p>
               </div>
             </div>
           </div>
@@ -657,4 +657,18 @@
       </div>
     </div>
     </form>
+
+    <script>
+        // Apply theme from settings
+        document.addEventListener('DOMContentLoaded', function() {
+            const theme = '{{profileSettings.appearance.theme}}';
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else if (theme === 'light') {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } // For 'auto', let the system handle it
+        });
+    </script>
 </div>
