@@ -182,4 +182,97 @@ export default function adminRoutes(app) {
   app.get('/dashboard/team', requireWebAuth, getDashboardTeam);
   app.get('/dashboard/promote', requireWebAuth, getDashboardPromote);
   app.get('/dashboard/activity-log', requireWebAuth, getDashboardActivityLog);
+
+  // Additional pages
+  app.get('/pages/terms', requireWebAuth, (req, res) => {
+    res.render('terms', { layout: 'main', title: 'Terms and Conditions' });
+  });
+  app.get('/pages/core/upgrade-plan', requireWebAuth, (req, res) => {
+    res.render('upgrade-plan', { layout: 'main', title: 'Upgrade Plan' });
+  });
+  app.get('/pages/buy-credits', requireWebAuth, (req, res) => {
+    res.render('buy-credits', { layout: 'main', title: 'Buy Credits' });
+  });
+  app.get('/pages/settings/profile', requireWebAuth, (req, res) => {
+    res.render('settings/profile', {
+      layout: 'main',
+      title: 'Profile Settings',
+    });
+  });
+  app.get('/pages/settings/billing', requireWebAuth, (req, res) => {
+    res.render('settings/billing', {
+      layout: 'main',
+      title: 'Billing Settings',
+    });
+  });
+  app.get('/pages/settings/other', requireWebAuth, (req, res) => {
+    res.render('settings/other', {
+      layout: 'main',
+      title: 'Security & Privacy',
+    });
+  });
+  app.get('/dashboard/team/invite', requireWebAuth, (req, res) => {
+    res.render('dashboard/team-invite', {
+      layout: 'main',
+      title: 'Invite Team Member',
+    });
+  });
+  app.get('/pages/idea-model', requireWebAuth, (req, res) => {
+    res.render('idea-model', {
+      layout: 'main',
+      title: 'Idea Generation Model',
+    });
+  });
+  app.get('/dashboard/promote/social-post', requireWebAuth, (req, res) => {
+    res.render('dashboard/promote-social-post', {
+      layout: 'main',
+      title: 'Create Social Post',
+    });
+  });
+  app.get('/pages/portfolio/:id', requireWebAuth, (req, res) => {
+    const id = req.params.id;
+    res.render('portfolio-detail', {
+      layout: 'main',
+      title: `Portfolio Project ${id}`,
+      id,
+    });
+  });
+  app.get('/usecase-from-user', requireWebAuth, (req, res) => {
+    res.render('usecase-from-user', {
+      layout: 'main',
+      title: 'User-Generated Use Cases',
+    });
+  });
+  app.get('/dashboard/fund/pitch-deck', requireWebAuth, (req, res) => {
+    res.render('dashboard/fund-pitch-deck', {
+      layout: 'main',
+      title: 'Create Pitch Deck',
+    });
+  });
+  app.get('/pages/business-model', requireWebAuth, (req, res) => {
+    res.render('business-model', {
+      layout: 'main',
+      title: 'Business Model Canvas',
+    });
+  });
+  app.get('/dashboard/financial/add-expense', requireWebAuth, (req, res) => {
+    res.render('dashboard/financial-add-expense', {
+      layout: 'main',
+      title: 'Add Expense',
+    });
+  });
+  app.get(
+    '/dashboard/marketing/create-campaign',
+    requireWebAuth,
+    (req, res) => {
+      res.render('dashboard/marketing-create-campaign', {
+        layout: 'main',
+        title: 'Create Marketing Campaign',
+      });
+    }
+  );
+  app.post('/projects/new', requireWebAuth, (req, res) => {
+    // Handle project creation logic here
+    res.redirect('/dashboard');
+  });
 }

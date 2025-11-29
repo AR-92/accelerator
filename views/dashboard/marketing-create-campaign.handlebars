@@ -1,0 +1,114 @@
+<!-- Create Campaign Page -->
+<div class="min-h-screen bg-background">
+<div id="create-campaign-main-content" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+        <div class="flex flex-col gap-4 lg:gap-6">
+  <div class="flex items-center justify-between">
+    <div class="grid gap-1">
+      <h1 class="font-heading text-2xl font-semibold text-foreground">Create Marketing Campaign</h1>
+      <p class="text-base text-muted-foreground">Launch targeted marketing campaigns to grow your business.</p>
+    </div>
+  </div>
+
+    <!-- Campaign Form -->
+    <div class="rounded-lg bg-card px-6 py-5 text-card-foreground">
+      <form class="space-y-6">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div>
+            <label for="name" class="block text-sm font-medium text-foreground mb-2">Campaign Name</label>
+            <input type="text" id="name" name="name" required class="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Enter campaign name">
+          </div>
+          <div>
+            <label for="type" class="block text-sm font-medium text-foreground mb-2">Campaign Type</label>
+            <select id="type" name="type" class="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+              <option>Email Marketing</option>
+              <option>Social Media</option>
+              <option>Content Marketing</option>
+              <option>PPC Advertising</option>
+              <option>SEO</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="description" class="block text-sm font-medium text-foreground mb-2">Description</label>
+          <textarea id="description" name="description" rows="3" class="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Describe your campaign goals and strategy..."></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div>
+            <label for="budget" class="block text-sm font-medium text-foreground mb-2">Budget</label>
+            <div class="relative">
+              <span class="absolute left-3 top-2 text-muted-foreground">$</span>
+              <input type="number" id="budget" name="budget" step="0.01" class="w-full pl-8 pr-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="0.00">
+            </div>
+          </div>
+          <div>
+            <label for="duration" class="block text-sm font-medium text-foreground mb-2">Duration</label>
+            <select id="duration" name="duration" class="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+              <option>1 week</option>
+              <option>2 weeks</option>
+              <option>1 month</option>
+              <option>3 months</option>
+              <option>6 months</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="targetAudience" class="block text-sm font-medium text-foreground mb-2">Target Audience</label>
+          <input type="text" id="targetAudience" name="targetAudience" class="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Describe your target audience">
+        </div>
+
+        <div>
+          <label for="goals" class="block text-sm font-medium text-foreground mb-2">Campaign Goals</label>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input type="checkbox" name="goals" value="brand-awareness" class="w-4 h-4 text-primary border-border rounded">
+              <span class="ml-2 text-sm">Increase brand awareness</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" name="goals" value="lead-generation" class="w-4 h-4 text-primary border-border rounded">
+              <span class="ml-2 text-sm">Generate leads</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" name="goals" value="sales" class="w-4 h-4 text-primary border-border rounded">
+              <span class="ml-2 text-sm">Drive sales</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" name="goals" value="engagement" class="w-4 h-4 text-primary border-border rounded">
+              <span class="ml-2 text-sm">Increase engagement</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <button type="submit" class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+{{{icon 'rocket' class='w-4 h-4 mr-2')}}}
+            Launch Campaign
+          </button>
+          <button type="button" class="px-4 py-2 border border-border text-foreground rounded-md hover:bg-muted transition-colors">Save as Draft</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Campaign Templates -->
+    <div class="rounded-lg bg-card px-6 py-5 text-card-foreground">
+      <h3 class="text-lg font-medium text-foreground mb-4">Campaign Templates</h3>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div class="p-4 border border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
+          <h4 class="font-medium text-foreground mb-2">Product Launch</h4>
+          <p class="text-sm text-muted-foreground">Announce new products or features to your audience.</p>
+        </div>
+        <div class="p-4 border border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
+          <h4 class="font-medium text-foreground mb-2">Seasonal Promotion</h4>
+          <p class="text-sm text-muted-foreground">Drive sales with time-limited offers and discounts.</p>
+        </div>
+        <div class="p-4 border border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
+          <h4 class="font-medium text-foreground mb-2">Lead Nurturing</h4>
+          <p class="text-sm text-muted-foreground">Build relationships with potential customers.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

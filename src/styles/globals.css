@@ -148,7 +148,14 @@
 @layer utilities {
   .scrollbar-hide {
     -ms-overflow-style: none;
+
     scrollbar-width: none;
+
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
@@ -198,5 +205,10 @@
   /* Mobile-optimized spacing */
   .space-responsive {
     gap: clamp(0.5rem, 2vw, 1rem);
+  }
+
+  /* Sidebar footer dropdown positioning */
+  .sidebar-footer-dropdown {
+    left: calc(var(--spacing) * 18);
   }
 }

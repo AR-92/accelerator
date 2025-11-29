@@ -1,0 +1,118 @@
+<!-- Use Case from User Page -->
+<div class="min-h-screen bg-background">
+<div id="usecase-main-content" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+        <div class="flex flex-col gap-4 lg:gap-6">
+  <div class="flex items-center justify-between">
+    <div class="grid gap-1">
+      <h1 class="font-heading text-2xl font-semibold text-foreground">User-Generated Use Cases</h1>
+      <p class="text-base text-muted-foreground">Explore innovative use cases submitted by our community.</p>
+    </div>
+  </div>
+
+    <!-- Featured Use Case -->
+    <div class="rounded-lg bg-card px-6 py-5 text-card-foreground">
+      <div class="flex items-center gap-4 mb-4">
+        <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
+{{{icon 'lightbulb' class='w-6 h-6 text-primary')}}}
+        </div>
+        <div>
+          <h3 class="text-lg font-medium text-foreground">AI-Powered Healthcare Management</h3>
+          <p class="text-sm text-muted-foreground">Submitted by Dr. Sarah Chen • 2 weeks ago</p>
+        </div>
+      </div>
+      <p class="text-muted-foreground mb-4">A comprehensive platform that uses AI to streamline hospital operations, predict patient needs, and optimize resource allocation. This system could reduce wait times by 40% and improve patient outcomes through predictive analytics.</p>
+      <div class="flex items-center gap-4">
+        <span class="px-2 py-1 bg-primary/20 text-primary text-xs rounded">Healthcare</span>
+        <span class="px-2 py-1 bg-success/20 text-success text-xs rounded">High Impact</span>
+        <div class="flex items-center gap-1 text-sm text-muted-foreground">
+{{{icon 'thumbs-up' class='w-4 h-4')}}}
+          <span>127 votes</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Use Cases Grid -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="rounded-lg bg-card p-6 text-card-foreground hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 bg-secondary/20 rounded-lg flex items-center justify-center">
+{{{icon 'cpu' class='w-4 h-4 text-secondary')}}}
+          </div>
+          <h4 class="font-medium text-foreground">Smart City Infrastructure</h4>
+        </div>
+        <p class="text-sm text-muted-foreground mb-3">IoT sensors and AI analytics for urban planning and resource management.</p>
+        <div class="flex items-center justify-between">
+          <span class="px-2 py-1 bg-secondary/20 text-secondary text-xs rounded">Technology</span>
+          <div class="flex items-center gap-1 text-sm text-muted-foreground">
+{{{icon 'thumbs-up' class='w-4 h-4')}}}
+            <span>89</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-lg bg-card p-6 text-card-foreground hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 bg-success/20 rounded-lg flex items-center justify-center">
+{{{icon 'leaf' class='w-4 h-4 text-success')}}}
+          </div>
+          <h4 class="font-medium text-foreground">Sustainable Agriculture Platform</h4>
+        </div>
+        <p class="text-sm text-muted-foreground mb-3">AI-driven farming solutions for optimized crop yields and environmental monitoring.</p>
+        <div class="flex items-center justify-between">
+          <span class="px-2 py-1 bg-success/20 text-success text-xs rounded">Agriculture</span>
+          <div class="flex items-center gap-1 text-sm text-muted-foreground">
+{{{icon 'thumbs-up' class='w-4 h-4')}}}
+            <span>156</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-lg bg-card p-6 text-card-foreground hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 bg-warning/20 rounded-lg flex items-center justify-center">
+{{{icon 'search' class='w-4 h-4 text-warning')}}}
+          </div>
+          <h4 class="font-medium text-foreground">Research Collaboration Network</h4>
+        </div>
+        <p class="text-sm text-muted-foreground mb-3">Platform connecting researchers globally for collaborative scientific discovery.</p>
+        <div class="flex items-center justify-between">
+          <span class="px-2 py-1 bg-warning/20 text-warning text-xs rounded">Research</span>
+          <div class="flex items-center gap-1 text-sm text-muted-foreground">
+{{{icon 'thumbs-up' class='w-4 h-4')}}}
+            <span>203</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-lg bg-card p-6 text-card-foreground hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
+{{{icon 'dollar-sign' class='w-4 h-4 text-primary')}}}
+          </div>
+          <h4 class="font-medium text-foreground">Decentralized Finance Hub</h4>
+        </div>
+        <p class="text-sm text-muted-foreground mb-3">Blockchain-based financial services for secure and transparent transactions.</p>
+        <div class="flex items-center justify-between">
+          <span class="px-2 py-1 bg-primary/20 text-primary text-xs rounded">Finance</span>
+          <div class="flex items-center gap-1 text-sm text-muted-foreground">
+{{{icon 'thumbs-up' class='w-4 h-4')}}}
+            <span>178</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Use Case -->
+    <div class="rounded-lg bg-primary/10 px-6 py-5 text-card-foreground">
+      <div class="text-center">
+        <h3 class="text-lg font-medium text-foreground mb-2">Have a Great Use Case Idea?</h3>
+        <p class="text-sm text-muted-foreground mb-4">Share your innovative ideas with the community and get feedback from experts.</p>
+        <button class="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+{{{icon 'plus' class='w-4 h-4 mr-2')}}}
+          Submit Your Idea
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

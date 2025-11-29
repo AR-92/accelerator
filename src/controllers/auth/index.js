@@ -148,6 +148,10 @@ export default function authRoutes(app) {
     }
   );
 
+  app.get('/forgot-password', (req, res) => {
+    res.render('forgot-password', { layout: 'auth', title: 'Reset Password' });
+  });
+
   // Session verification endpoint
   app.get('/auth/session', async (req, res) => {
     try {

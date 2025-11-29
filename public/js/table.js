@@ -390,7 +390,6 @@ function openBulkActionModal(tableName, type, ids) {
 
   const modal = document.getElementById('bulkActionModal');
   modal.classList.remove('hidden');
-  modal.style.display = 'flex';
   modal.setAttribute('aria-hidden', 'false');
 
   // Store bulk action data
@@ -400,7 +399,6 @@ function openBulkActionModal(tableName, type, ids) {
 function closeBulkActionModal() {
   const modal = document.getElementById('bulkActionModal');
   modal.classList.add('hidden');
-  modal.style.display = '';
   modal.setAttribute('aria-hidden', 'true');
   window.currentBulkAction = null;
 }
@@ -1016,19 +1014,19 @@ function toggleActionMenu(button) {
   // Close all other menus
   allMenus.forEach((m) => {
     if (m !== menu) {
-      m.style.display = 'none';
+      m.classList.add('hidden');
     }
   });
 
   // Toggle current menu
-  if (menu.style.display === 'none' || menu.style.display === '') {
+  if (menu.classList.contains('hidden')) {
     // Position the menu next to the button first
     const rect = button.getBoundingClientRect();
 
     // Set position and make visible temporarily to get dimensions
     menu.style.position = 'fixed';
     menu.style.zIndex = '9999';
-    menu.style.display = 'block';
+    menu.classList.remove('hidden');
     menu.style.visibility = 'hidden';
     menu.style.top = '0px';
     menu.style.left = '0px';
@@ -1061,7 +1059,7 @@ function toggleActionMenu(button) {
     menu.style.left = `${left}px`;
     menu.style.visibility = 'visible';
   } else {
-    menu.style.display = 'none';
+    menu.classList.add('hidden');
   }
 }
 
@@ -1073,7 +1071,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const modal = this.closest('[data-modal-backdrop]');
       if (modal) {
         modal.classList.add('hidden');
-        modal.style.display = '';
+        modal.classList.add('hidden');
         modal.setAttribute('aria-hidden', 'true');
       }
     });
@@ -1127,12 +1125,12 @@ function updateBulkActionsVisibility(tableName) {
   const config = tableConfigs[tableName];
 
   if (checkedBoxes.length > 0 && bulkActions) {
-    bulkActions.style.display = 'flex';
+    bulkActions.classList.remove('hidden');
     if (selectedCount) {
       selectedCount.textContent = `${checkedBoxes.length} ${config ? config.entityName : 'item'}${checkedBoxes.length > 1 ? 's' : ''} selected`;
     }
   } else if (bulkActions) {
-    bulkActions.style.display = 'none';
+    bulkActions.classList.add('hidden');
   }
 }
 

@@ -1,0 +1,81 @@
+<!-- Tasks Page -->
+<div class="min-h-screen bg-background">
+<div id="tasks-main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+        <div class="flex flex-col gap-4 lg:gap-6">
+  <div class="flex items-center justify-between">
+    <div class="grid gap-1">
+      <h1 class="font-heading text-2xl font-semibold text-foreground">Team Tasks</h1>
+      <p class="text-base text-muted-foreground">Manage and track team tasks and assignments.</p>
+    </div>
+    <button class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+{{{icon "plus" class="w-4 h-4 mr-2"}}}
+      Add Task
+    </button>
+  </div>
+
+    <!-- Task Filters -->
+    <div class="flex flex-wrap gap-2">
+      <button class="px-3 py-1 bg-primary text-primary-foreground text-sm rounded-full">All Tasks</button>
+      <button class="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full hover:bg-muted/80">My Tasks</button>
+      <button class="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full hover:bg-muted/80">Overdue</button>
+      <button class="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full hover:bg-muted/80">Completed</button>
+    </div>
+
+    <!-- Tasks List -->
+    <div class="rounded-lg bg-card px-6 py-5 text-card-foreground">
+      <div class="space-y-4">
+        <div class="flex items-center justify-between p-4 border border-border rounded-lg">
+          <div class="flex items-center gap-3">
+            <input type="checkbox" class="w-4 h-4 text-primary border-border rounded">
+            <div>
+              <h4 class="font-medium text-foreground">Design new landing page</h4>
+              <p class="text-sm text-muted-foreground">Create wireframes and mockups for the new homepage</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="px-2 py-1 bg-warning/20 text-warning text-xs rounded">In Progress</span>
+            <span class="text-sm text-muted-foreground">Due: Dec 20</span>
+            <div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
+              <span class="text-primary font-medium text-sm">JD</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between p-4 border border-border rounded-lg">
+          <div class="flex items-center gap-3">
+            <input type="checkbox" class="w-4 h-4 text-primary border-border rounded">
+            <div>
+              <h4 class="font-medium text-foreground">Implement user authentication</h4>
+              <p class="text-sm text-muted-foreground">Set up login and registration system</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="px-2 py-1 bg-success/20 text-success text-xs rounded">Completed</span>
+            <span class="text-sm text-muted-foreground">Due: Dec 15</span>
+            <div class="w-8 h-8 bg-secondary/20 rounded-full flex items-center justify-center">
+              <span class="text-secondary font-medium text-sm">SM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between p-4 border border-border rounded-lg">
+          <div class="flex items-center gap-3">
+            <input type="checkbox" class="w-4 h-4 text-primary border-border rounded">
+            <div>
+              <h4 class="font-medium text-foreground">Write API documentation</h4>
+              <p class="text-sm text-muted-foreground">Document all API endpoints and usage examples</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="px-2 py-1 bg-primary/20 text-primary text-xs rounded">Todo</span>
+            <span class="text-sm text-muted-foreground">Due: Dec 25</span>
+            <div class="w-8 h-8 bg-success/20 rounded-full flex items-center justify-center">
+              <span class="text-success font-medium text-sm">MJ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,99 @@
+<!-- Other Settings Page -->
+<div class="min-h-screen bg-background">
+<div id="other-settings-main-content" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+        <div class="flex flex-col gap-4 lg:gap-6">
+  <div class="flex items-center justify-between">
+    <div class="grid gap-1">
+      <h1 class="font-heading text-2xl font-semibold text-foreground">Security & Privacy</h1>
+      <p class="text-base text-muted-foreground">Configure security settings and privacy preferences.</p>
+    </div>
+  </div>
+
+    <!-- Security Settings -->
+    <div class="rounded-lg bg-card px-6 py-5 text-card-foreground">
+      <h3 class="text-lg font-medium text-foreground mb-4">Security</h3>
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-sm font-medium text-foreground">Two-Factor Authentication</h4>
+            <p class="text-xs text-muted-foreground">Add an extra layer of security to your account</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer">
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/25 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-sm font-medium text-foreground">Login Notifications</h4>
+            <p class="text-xs text-muted-foreground">Get notified of new sign-ins to your account</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer" checked>
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/25 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+          </label>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-foreground mb-2">Change Password</h4>
+          <button class="px-4 py-2 border border-border text-foreground rounded-md hover:bg-muted transition-colors">Change Password</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Privacy Settings -->
+    <div class="rounded-lg bg-card px-6 py-5 text-card-foreground">
+      <h3 class="text-lg font-medium text-foreground mb-4">Privacy</h3>
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-sm font-medium text-foreground">Profile Visibility</h4>
+            <p class="text-xs text-muted-foreground">Control who can see your profile information</p>
+          </div>
+          <select class="px-3 py-1 border border-border rounded text-sm">
+            <option>Public</option>
+            <option>Team Only</option>
+            <option>Private</option>
+          </select>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-sm font-medium text-foreground">Activity Status</h4>
+            <p class="text-xs text-muted-foreground">Show when you're active on the platform</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer" checked>
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/25 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-sm font-medium text-foreground">Data Collection</h4>
+            <p class="text-xs text-muted-foreground">Allow analytics and usage data collection</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer" checked>
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/25 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Management -->
+    <div class="rounded-lg bg-card px-6 py-5 text-card-foreground">
+      <h3 class="text-lg font-medium text-foreground mb-4">Data Management</h3>
+      <div class="space-y-4">
+        <div>
+          <h4 class="text-sm font-medium text-foreground mb-2">Export Your Data</h4>
+          <p class="text-xs text-muted-foreground mb-3">Download a copy of all your data</p>
+          <button class="px-4 py-2 border border-border text-foreground rounded-md hover:bg-muted transition-colors">Export Data</button>
+        </div>
+        <div>
+          <h4 class="text-sm font-medium text-foreground mb-2">Delete Account</h4>
+          <p class="text-xs text-muted-foreground mb-3">Permanently delete your account and all associated data</p>
+          <button class="px-4 py-2 border border-destructive text-destructive rounded-md hover:bg-destructive/10 transition-colors">Delete Account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

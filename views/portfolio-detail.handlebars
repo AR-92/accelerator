@@ -1,0 +1,106 @@
+<!-- Portfolio Detail Page -->
+<div class="min-h-screen bg-background">
+<div id="portfolio-detail-main-content" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+        <div class="flex flex-col gap-4 lg:gap-6">
+  <div class="flex items-center justify-between">
+    <div class="grid gap-1">
+      <h1 class="font-heading text-2xl font-semibold text-foreground">Portfolio Project #{{id}}</h1>
+      <p class="text-base text-muted-foreground">Detailed view of this portfolio project.</p>
+    </div>
+  </div>
+
+    <!-- Project Details -->
+    <div class="rounded-lg bg-card px-6 py-5 text-card-foreground">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div>
+          <h3 class="text-lg font-medium text-foreground mb-3">Project Information</h3>
+          <div class="space-y-3">
+            <div>
+              <p class="text-sm text-muted-foreground">Project Name</p>
+              <p class="font-medium text-foreground">Sample Project {{id}}</p>
+            </div>
+            <div>
+              <p class="text-sm text-muted-foreground">Category</p>
+              <p class="font-medium text-foreground">Web Development</p>
+            </div>
+            <div>
+              <p class="text-sm text-muted-foreground">Status</p>
+              <span class="px-2 py-1 bg-success/20 text-success text-xs rounded">Completed</span>
+            </div>
+            <div>
+              <p class="text-sm text-muted-foreground">Completion Date</p>
+              <p class="font-medium text-foreground">December 2024</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-lg font-medium text-foreground mb-3">Project Stats</h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="text-center p-3 bg-primary/10 rounded-lg">
+              <p class="text-2xl font-bold text-primary">95%</p>
+              <p class="text-xs text-primary/80">Success Rate</p>
+            </div>
+            <div class="text-center p-3 bg-secondary/10 rounded-lg">
+              <p class="text-2xl font-bold text-secondary">2.5k</p>
+              <p class="text-xs text-secondary/80">Users</p>
+            </div>
+            <div class="text-center p-3 bg-success/10 rounded-lg">
+              <p class="text-2xl font-bold text-success">$50k</p>
+              <p class="text-xs text-success/80">Revenue</p>
+            </div>
+            <div class="text-center p-3 bg-warning/10 rounded-lg">
+              <p class="text-2xl font-bold text-warning">4.8</p>
+              <p class="text-xs text-warning/80">Rating</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Description -->
+    <div class="rounded-lg bg-card px-6 py-5 text-card-foreground">
+      <h3 class="text-lg font-medium text-foreground mb-3">Project Description</h3>
+      <p class="text-muted-foreground mb-4">This is a detailed description of portfolio project #{{id}}. The project showcases innovative solutions and demonstrates technical expertise in modern web development practices.</p>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div class="p-4 bg-muted/50 rounded-lg">
+          <h4 class="font-medium text-foreground mb-2">Technologies Used</h4>
+          <ul class="text-sm text-muted-foreground space-y-1">
+            <li>• React</li>
+            <li>• Node.js</li>
+            <li>• PostgreSQL</li>
+          </ul>
+        </div>
+        <div class="p-4 bg-muted/50 rounded-lg">
+          <h4 class="font-medium text-foreground mb-2">Key Features</h4>
+          <ul class="text-sm text-muted-foreground space-y-1">
+            <li>• User Authentication</li>
+            <li>• Real-time Updates</li>
+            <li>• Mobile Responsive</li>
+          </ul>
+        </div>
+        <div class="p-4 bg-muted/50 rounded-lg">
+          <h4 class="font-medium text-foreground mb-2">Challenges Solved</h4>
+          <ul class="text-sm text-muted-foreground space-y-1">
+            <li>• Scalability</li>
+            <li>• Performance</li>
+            <li>• Security</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Gallery -->
+    <div class="rounded-lg bg-card px-6 py-5 text-card-foreground">
+      <h3 class="text-lg font-medium text-foreground mb-3">Project Gallery</h3>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div class="aspect-video bg-muted/50 rounded-lg flex items-center justify-center">
+          <span class="text-muted-foreground">Screenshot 1</span>
+        </div>
+        <div class="aspect-video bg-muted/50 rounded-lg flex items-center justify-center">
+          <span class="text-muted-foreground">Screenshot 2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

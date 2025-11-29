@@ -17,10 +17,7 @@
                   </button>
 
                    <!-- Scrollable Filter Container -->
-                   <div id="settings-filter-scroll-container" class="flex gap-0 overflow-x-auto flex-1 min-w-0" style="-ms-overflow-style: none; scrollbar-width: none; -webkit-overflow-scrolling: touch;">
-                    <style>
-                      #settings-filter-scroll-container::-webkit-scrollbar { display: none; }
-                    </style>
+                    <div id="settings-filter-scroll-container" class="flex gap-0 overflow-x-auto flex-1 min-w-0 scrollbar-hide">
                    {{#each settingsCategories}}
                     <div class="flex flex-col items-center justify-center group flex-shrink-0">
                       <div class="border-t-4 border-primary w-6 rounded-full {{#if (eq ../activeCategory value)}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
@@ -51,10 +48,7 @@
                    </button>
 
                     <!-- Scrollable Filter Container -->
-                    <div id="overview-filter-scroll-container" class="flex gap-0 overflow-x-auto flex-1 min-w-0" style="-ms-overflow-style: none; scrollbar-width: none; -webkit-overflow-scrolling: touch;">
-                     <style>
-                       #overview-filter-scroll-container::-webkit-scrollbar { display: none; }
-                     </style>
+                     <div id="overview-filter-scroll-container" class="flex gap-0 overflow-x-auto flex-1 min-w-0 scrollbar-hide">
                      {{#each @root.filterLinks}}
                      <div class="flex flex-col items-center justify-center group flex-shrink-0">
                        <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>

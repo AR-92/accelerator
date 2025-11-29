@@ -1,0 +1,92 @@
+<!-- Files Page -->
+<div class="min-h-screen bg-background">
+<div id="files-main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+        <div class="flex flex-col gap-4 lg:gap-6">
+  <div class="flex items-center justify-between">
+    <div class="grid gap-1">
+      <h1 class="font-heading text-2xl font-semibold text-foreground">Shared Files</h1>
+      <p class="text-base text-muted-foreground">Access and manage files shared with your team.</p>
+    </div>
+    <button class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+{{{icon "upload" class="w-4 h-4 mr-2"}}}
+      Upload File
+    </button>
+  </div>
+
+    <!-- File Filters -->
+    <div class="flex flex-wrap gap-2">
+      <button class="px-3 py-1 bg-primary text-primary-foreground text-sm rounded-full">All Files</button>
+      <button class="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full hover:bg-muted/80">Recent</button>
+      <button class="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full hover:bg-muted/80">Shared with me</button>
+      <button class="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full hover:bg-muted/80">My uploads</button>
+    </div>
+
+    <!-- Files Grid -->
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div class="rounded-lg bg-card p-4 text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
+{{{icon "file-text" class="w-5 h-5 text-primary"}}}
+          </div>
+          <div class="flex-1">
+            <h4 class="font-medium text-foreground">Project Proposal.pdf</h4>
+            <p class="text-sm text-muted-foreground">2.3 MB • PDF</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-sm text-muted-foreground">
+          <span>Uploaded by John Doe</span>
+          <span>2 days ago</span>
+        </div>
+      </div>
+
+      <div class="rounded-lg bg-card p-4 text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
+{{{icon "image" class="w-5 h-5 text-secondary"}}}
+          </div>
+          <div class="flex-1">
+            <h4 class="font-medium text-foreground">Design Mockup.png</h4>
+            <p class="text-sm text-muted-foreground">5.1 MB • PNG</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-sm text-muted-foreground">
+          <span>Uploaded by Sarah Miller</span>
+          <span>1 week ago</span>
+        </div>
+      </div>
+
+      <div class="rounded-lg bg-card p-4 text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 bg-success/20 rounded-lg flex items-center justify-center">
+{{{icon "file" class="w-5 h-5 text-success"}}}
+          </div>
+          <div class="flex-1">
+            <h4 class="font-medium text-foreground">Requirements.docx</h4>
+            <p class="text-sm text-muted-foreground">1.8 MB • DOCX</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-sm text-muted-foreground">
+          <span>Uploaded by Mike Johnson</span>
+          <span>3 days ago</span>
+        </div>
+      </div>
+
+      <div class="rounded-lg bg-card p-4 text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 bg-warning/20 rounded-lg flex items-center justify-center">
+{{{icon "folder" class="w-5 h-5 text-warning"}}}
+          </div>
+          <div class="flex-1">
+            <h4 class="font-medium text-foreground">Assets</h4>
+            <p class="text-sm text-muted-foreground">12 files • Folder</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-sm text-muted-foreground">
+          <span>Created by John Doe</span>
+          <span>1 month ago</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

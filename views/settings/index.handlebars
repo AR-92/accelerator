@@ -1,0 +1,76 @@
+<!-- Settings Page -->
+<div class="min-h-screen bg-background">
+<div id="settings-main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+        <div class="flex flex-col gap-4 lg:gap-6">
+  <div class="flex items-center justify-between">
+    <div class="grid gap-1">
+      <h1 class="font-heading text-2xl font-semibold text-foreground">Settings</h1>
+      <p class="text-base text-muted-foreground">Manage your account preferences and configuration.</p>
+    </div>
+  </div>
+
+    <!-- Settings Categories -->
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="rounded-lg bg-card px-6 py-5 text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
+{{{icon 'user' class='w-5 h-5 text-primary'}}}
+          </div>
+          <h3 class="text-lg font-medium text-foreground">Profile</h3>
+        </div>
+        <p class="text-sm text-muted-foreground mb-4">Update your personal information and preferences.</p>
+        <a href="/pages/settings/profile" class="text-primary hover:underline text-sm font-medium">Edit profile →</a>
+      </div>
+
+      <div class="rounded-lg bg-card px-6 py-5 text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 bg-secondary/20 rounded-lg flex items-center justify-center">
+{{{icon 'credit-card' class='w-5 h-5 text-secondary'}}}
+          </div>
+          <h3 class="text-lg font-medium text-foreground">Billing</h3>
+        </div>
+        <p class="text-sm text-muted-foreground mb-4">Manage your subscription and payment methods.</p>
+        <a href="/pages/settings/billing" class="text-primary hover:underline text-sm font-medium">Manage billing →</a>
+      </div>
+
+      <div class="rounded-lg bg-card px-6 py-5 text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="w-10 h-10 bg-success/20 rounded-lg flex items-center justify-center">
+{{{icon 'shield' class='w-5 h-5 text-success'}}}
+          </div>
+          <h3 class="text-lg font-medium text-foreground">Security</h3>
+        </div>
+        <p class="text-sm text-muted-foreground mb-4">Configure security settings and privacy options.</p>
+        <a href="/pages/settings/other" class="text-primary hover:underline text-sm font-medium">Security settings →</a>
+      </div>
+    </div>
+
+    <!-- Quick Settings -->
+    <div class="rounded-lg bg-card px-6 py-5 text-card-foreground">
+      <h3 class="text-xl font-semibold text-foreground mb-4">Quick Settings</h3>
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-sm font-medium text-foreground">Email Notifications</h4>
+            <p class="text-xs text-muted-foreground">Receive email updates about your projects</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer">
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/25 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="text-sm font-medium text-foreground">Dark Mode</h4>
+            <p class="text-xs text-muted-foreground">Toggle between light and dark themes</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="theme-toggle" class="sr-only peer">
+            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/25 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
