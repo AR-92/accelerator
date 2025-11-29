@@ -1,6 +1,4 @@
 // Generic table functionality - works for all tables
-console.log('Generic table.js loaded');
-
 // Configuration for table-specific behavior
 const tableConfigs = {
   ideas: {
@@ -1140,6 +1138,5 @@ function updateBulkActionsVisibility(tableName) {
 
 // Toast notification helper (assuming this exists elsewhere)
 function showToast(message, type = 'info') {
-  console.log(`${type.toUpperCase()}: ${message}`);
   // Implement actual toast notification here
 }

@@ -603,7 +603,7 @@
                 const supabaseUrl = document.querySelector('meta[name="supabase-url"]')?.content || '{{{supabaseUrl}}}';
                 const supabaseKey = document.querySelector('meta[name="supabase-key"]')?.content || '{{{supabaseKey}}}';
 
-                console.log('Dashboard: Initializing Supabase with URL:', supabaseUrl, 'Key exists:', !!supabaseKey);
+
 
                 if (supabaseUrl && supabaseKey) {
                     try {
@@ -616,7 +616,7 @@
                                 persistSession: true
                             }
                         });
-                        console.log('Dashboard: Supabase client created successfully');
+
                     } catch (error) {
                         console.error('Dashboard: Failed to create Supabase client:', error);
                     }
@@ -639,63 +639,63 @@
 
                 const checkAuthStatus = async () => {
                     authCheckAttempts++;
-                    console.log(`Dashboard auth check attempt ${authCheckAttempts}/${maxAuthCheckAttempts}`);
+
 
                     // Ensure Supabase is initialized
                     if (window.supabase && !supabase) {
                         initSupabase();
-                        console.log('Dashboard: Supabase initialized');
+
                     }
 
                     // First try server-side session check (works with server-side login)
                     try {
-                        console.log('Dashboard: Checking server session...');
+
                         const serverResponse = await fetch('/auth/session', {
                             method: 'GET',
                             credentials: 'include'  // Include cookies for session validation
                         });
 
                         const serverResult = await serverResponse.json();
-                        console.log('Dashboard: Server session result:', serverResult);
+
 
                         if (serverResult.authenticated) {
                             // Server says we're authenticated, continue
-                            console.log('Dashboard: Authenticated via server session');
+
                             return;
                         }
                     } catch (e) {
-                        console.log('Dashboard: Server session check failed:', e);
+
                     }
 
                     // Server says not authenticated, check Supabase client-side
                     if (window.supabase && supabase) {
                         try {
-                            console.log('Dashboard: Checking Supabase session...');
+
                             // Try to get current session
                             const { data: { session }, error } = await supabase.auth.getSession();
-                            console.log('Dashboard: Supabase session result:', { session: !!session, error: error?.message });
+
 
                             if (!error && session && session.user) {
                                 // Session found, continue
-                                console.log('Dashboard: Authenticated via Supabase session');
+
                                 return;
                             }
                         } catch (e) {
-                            console.log('Dashboard: Supabase getSession error:', e);
+
                         }
                     } else {
-                        console.log('Dashboard: Supabase not available or not initialized');
+
                     }
 
                     // If we get here, not authenticated
                     if (authCheckAttempts < maxAuthCheckAttempts) {
                         // Try again after a longer delay
-                        console.log(`Dashboard: Retrying in 500ms...`);
+
                         setTimeout(checkAuthStatus, 500);
                     } else {
                         // Max attempts reached, redirect to auth
                         if (!redirecting) {
-                            console.log('Dashboard: Max attempts reached, redirecting to auth');
+
                             redirecting = true;
                             window.location.href = '/auth';
                         }
@@ -703,13 +703,13 @@
                 };
 
                 // Start the auth check with longer initial delay
-                console.log('Dashboard: Starting auth check in 1000ms...');
+
                 setTimeout(checkAuthStatus, 1000);
 
                 // Fallback: show main content after 10 seconds if auth check doesn't complete
                 setTimeout(() => {
                     if (authLoading && mainContent && !mainContent.classList.contains('hidden')) {
-                        console.log('Dashboard: Auth check timeout, showing main content');
+
                         authLoading.classList.add('hidden');
                         mainContent.classList.remove('hidden');
                     }
