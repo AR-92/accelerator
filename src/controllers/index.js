@@ -284,6 +284,12 @@ export default function adminRoutes(app) {
         icon: 'credit-card',
       },
       {
+        id: 'buy-credits-link',
+        href: '/pages/buy-credits',
+        text: 'Buy Credits',
+        icon: 'coins',
+      },
+      {
         id: 'upgrade-plan-link',
         href: '/pages/core/upgrade-plan',
         text: 'Upgrade Plan',
@@ -300,7 +306,33 @@ export default function adminRoutes(app) {
     });
   });
   app.get('/pages/buy-credits', requireWebAuth, (req, res) => {
-    res.render('buy-credits', { layout: 'main', title: 'Buy Credits' });
+    const filterLinks = [
+      {
+        id: 'billing-link',
+        href: '/pages/billing',
+        text: 'Billing',
+        icon: 'credit-card',
+      },
+      {
+        id: 'buy-credits-link',
+        href: '/pages/buy-credits',
+        text: 'Buy Credits',
+        icon: 'coins',
+      },
+      {
+        id: 'upgrade-plan-link',
+        href: '/pages/core/upgrade-plan',
+        text: 'Upgrade Plan',
+        icon: 'star',
+      },
+    ];
+    res.render('buy-credits', {
+      layout: 'main',
+      title: 'Buy Credits',
+      filterLinks,
+      currentSection: 'billing',
+      currentPage: 'Buy Credits',
+    });
   });
   app.get('/pages/settings/profile', requireWebAuth, (req, res) => {
     const settingsCategories = [

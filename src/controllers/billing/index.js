@@ -12,6 +12,12 @@ export const getBilling = async (req, res) => {
         icon: 'credit-card',
       },
       {
+        id: 'buy-credits-link',
+        href: '/pages/buy-credits',
+        text: 'Buy Credits',
+        icon: 'coins',
+      },
+      {
         id: 'upgrade-plan-link',
         href: '/pages/core/upgrade-plan',
         text: 'Upgrade Plan',
