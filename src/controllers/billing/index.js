@@ -4,10 +4,27 @@ import logger from '../../utils/logger.js';
 export const getBilling = async (req, res) => {
   try {
     logger.info('Billing page accessed');
+    const filterLinks = [
+      {
+        id: 'billing-link',
+        href: '/pages/billing',
+        text: 'Billing',
+        icon: 'credit-card',
+      },
+      {
+        id: 'upgrade-plan-link',
+        href: '/pages/core/upgrade-plan',
+        text: 'Upgrade Plan',
+        icon: 'star',
+      },
+    ];
     res.render('billing/index', {
       title: 'Billing',
       description: 'Manage your billing and subscriptions',
       currentSection: 'billing',
+      currentPage: 'Billing',
+      filterLinks,
+      section: 'billing',
       layout: req.headers['hx-request'] ? false : 'main',
     });
   } catch (error) {

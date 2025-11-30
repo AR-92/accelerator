@@ -61,6 +61,18 @@ export const getDashboardMain = async (req, res) => {
         text: 'Activity Log',
         icon: 'activity',
       },
+      {
+        id: 'new-project-btn',
+        href: '/admin/other-pages/new-project',
+        text: 'New Project',
+        icon: 'plus',
+      },
+      {
+        id: 'explore-ideas-btn',
+        href: '/admin/other-pages/explore-ideas',
+        text: 'Explore Ideas',
+        icon: 'lightbulb',
+      },
     ];
 
     const layout = isHtmxRequest(req) ? false : 'main';

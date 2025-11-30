@@ -216,27 +216,93 @@ export const getDashboard = async (req, res) => {
       },
     ];
 
+    const overviewFilterLinks = [
+      {
+        id: 'dashboard-link',
+        href: '/admin/dashboard',
+        text: 'Dashboard',
+        icon: 'bar-chart',
+      },
+      {
+        id: 'portfolio-link',
+        href: '/admin/portfolio',
+        text: 'Portfolio',
+        icon: 'briefcase',
+      },
+      {
+        id: 'collaborate-link',
+        href: '/admin/collaborate',
+        text: 'Collaborate',
+        icon: 'users',
+      },
+      {
+        id: 'new-project-link',
+        href: '/admin/new-project',
+        text: 'New Project',
+        icon: 'plus',
+      },
+      {
+        id: 'explore-ideas-link',
+        href: '/admin/explore-ideas',
+        text: 'Explore Ideas',
+        icon: 'lightbulb',
+      },
+    ];
+
     res.render('admin/overview-page', {
       title: 'Dashboard Overview',
       description: 'Overview of core system components and user management',
-      section: 'dashboard',
-      currentSection: 'dashboard',
-      currentPage: 'dashboard',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Dashboard',
       statsGrid,
       quickActions,
-      filterLinks,
+      filterLinks: overviewFilterLinks,
     });
   } catch (error) {
     logger.error('Error loading dashboard overview:', error);
+    const overviewFilterLinks = [
+      {
+        id: 'dashboard-link',
+        href: '/admin/dashboard',
+        text: 'Dashboard',
+        icon: 'bar-chart',
+      },
+      {
+        id: 'portfolio-link',
+        href: '/admin/portfolio',
+        text: 'Portfolio',
+        icon: 'briefcase',
+      },
+      {
+        id: 'collaborate-link',
+        href: '/admin/collaborate',
+        text: 'Collaborate',
+        icon: 'users',
+      },
+      {
+        id: 'new-project-link',
+        href: '/admin/new-project',
+        text: 'New Project',
+        icon: 'plus',
+      },
+      {
+        id: 'explore-ideas-link',
+        href: '/admin/explore-ideas',
+        text: 'Explore Ideas',
+        icon: 'lightbulb',
+      },
+    ];
+
     res.render('admin/overview-page', {
       title: 'Dashboard Overview',
       description: 'Overview of core system components and user management',
-      section: 'dashboard',
-      currentSection: 'dashboard',
-      currentPage: 'dashboard',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Dashboard',
       statsGrid: [],
       quickActions: [],
-      filterLinks: [],
+      filterLinks: overviewFilterLinks,
     });
   }
 };

@@ -161,9 +161,9 @@ export const getCollaborate = async (req, res) => {
 
     const filterLinks = [
       {
-        id: 'dashboard-link',
+        id: 'overview-link',
         href: '/admin/collaborate',
-        text: 'Dashboard',
+        text: 'Overview',
         icon: 'layout-dashboard',
       },
       {
@@ -215,7 +215,7 @@ export const getCollaborate = async (req, res) => {
       description: 'Overview of collaborations and teamwork',
       section: 'collaborate',
       currentSection: 'collaborate',
-      currentPage: 'collaborate',
+      currentPage: 'Overview',
       statsGrid,
       quickActions,
       filterLinks,
@@ -228,7 +228,7 @@ export const getCollaborate = async (req, res) => {
       description: 'Overview of collaborations and teamwork',
       section: 'collaborate',
       currentSection: 'collaborate',
-      currentPage: 'collaborate',
+      currentPage: 'Overview',
       statsGrid: [],
       quickActions: [],
       filterLinks: [],

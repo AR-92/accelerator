@@ -28,44 +28,46 @@
            </ul>
            {{/if}}
 
-          {{#if (eq currentSection 'corporate-dashboard')}}
- <ul class="space-y-1">
- {{#each filterLinks}}
- {{> sidebar-item href=href title=text page=text text=text spanClass="sidebar-text" icon=icon }}
- {{/each}}
- {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" text="New Project" spanClass="sidebar-text" icon='plus' }}
- {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="sidebar-text" icon='lightbulb' }}
- {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="sidebar-text" icon='book-open' }}
- </ul>
- {{/if}}
+  {{#if (eq currentSection 'corporate-dashboard')}}
+  <ul class="space-y-1">
+  {{#each filterLinks}}
+  {{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
+  {{/each}}
+  {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" text="New Project" spanClass="font-medium sidebar-text" icon='plus' }}
+  {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="font-medium sidebar-text" icon='lightbulb' }}
+  {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text" icon='book-open' }}
+  </ul>
+  {{/if}}
 
- {{#if (eq currentSection 'enterprise-dashboard')}}
- <ul class="space-y-1">
- {{#each filterLinks}}
- {{> sidebar-item href=href title=text page=text text=text spanClass="sidebar-text" icon=icon }}
- {{/each}}
- {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" text="New Project" spanClass="sidebar-text" icon='plus' }}
- {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="sidebar-text" icon='lightbulb' }}
- {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="sidebar-text" icon='book-open' }}
- </ul>
- {{/if}}
+  {{#if (eq currentSection 'enterprise-dashboard')}}
+  <ul class="space-y-1">
+  {{#each filterLinks}}
+  {{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
+  {{/each}}
+  {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" text="New Project" spanClass="font-medium sidebar-text" icon='plus' }}
+  {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="font-medium sidebar-text" icon='lightbulb' }}
+  {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text" icon='book-open' }}
+  </ul>
+  {{/if}}
 
- {{#if (eq currentSection 'startup-dashboard')}}
- <ul class="space-y-1">
- {{#each filterLinks}}
- {{> sidebar-item href=href title=text page=text text=text spanClass="sidebar-text" icon=icon }}
- {{/each}}
- {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" text="New Project" spanClass="sidebar-text" icon='plus' }}
- {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="sidebar-text" icon='lightbulb' }}
- {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="sidebar-text" icon='book-open' }}
- </ul>
- {{/if}}
+           {{#if (eq currentSection 'startup-dashboard')}}
+  <ul class="space-y-1">
+  {{#each filterLinks}}
+  {{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
+  {{/each}}
+  {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" text="New Project" spanClass="font-medium sidebar-text" icon='plus' }}
+  {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="font-medium sidebar-text" icon='lightbulb' }}
+  {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text" icon='book-open' }}
+  </ul>
+  {{/if}}
 
-          {{#if (eq currentSection 'collaborate')}}
-          <ul class="space-y-1">
-{{> sidebar-item href="/admin/other-pages/collaborate" title="Overview" page="collaborate" text="Overview" spanClass="sidebar-text" icon='users' }}
-          </ul>
-          {{/if}}
+           {{#if (eq currentSection 'collaborate')}}
+           <ul class="space-y-1">
+  {{#each filterLinks}}
+  {{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
+  {{/each}}
+           </ul>
+           {{/if}}
 
           {{#if (eq currentSection 'help')}}
           <ul class="space-y-1">
@@ -79,17 +81,41 @@
           </ul>
           {{/if}}
 
-          {{#if (eq currentSection 'settings')}}
-          <ul class="space-y-1">
-             {{> sidebar-item href="/pages/settings" title="Settings" text="Settings" spanClass="sidebar-text" icon='settings' }}
-          </ul>
-          {{/if}}
+           {{#if (eq currentSection 'settings')}}
+           <ul class="space-y-1">
+              {{> sidebar-item href="/pages/settings" title="Overview" text="Overview" spanClass="font-medium sidebar-text" icon='settings' }}
+              {{> sidebar-item href="/pages/settings/profile" title="Account" text="Account" spanClass="font-medium sidebar-text" icon='user' }}
+              {{> sidebar-item href="/pages/settings/billing" title="Billing" text="Billing" spanClass="font-medium sidebar-text" icon='credit-card' }}
+              {{> sidebar-item href="/pages/settings/other" title="Security & Privacy" text="Security & Privacy" spanClass="font-medium sidebar-text" icon='shield' }}
+           </ul>
+           {{/if}}
 
-          {{#if (eq currentSection 'billing')}}
-          <ul class="space-y-1">
-             {{> sidebar-item href="/pages/billing" title="Billing" text="Billing" spanClass="sidebar-text" icon='credit-card' }}
-          </ul>
-          {{/if}}
+           {{#if (eq currentSection 'billing')}}
+           <ul class="space-y-1">
+              {{> sidebar-item href="/pages/billing" title="Billing" text="Billing" spanClass="font-medium sidebar-text" icon='credit-card' }}
+              {{> sidebar-item href="/pages/core/upgrade-plan" title="Upgrade Plan" text="Upgrade Plan" spanClass="font-medium sidebar-text" icon='star' }}
+           </ul>
+           {{/if}}
+
+           {{#if (eq currentSection 'system')}}
+           <ul class="space-y-1">
+              {{> sidebar-item href="/admin/other-pages/activity" title="Activity" text="Activity" spanClass="sidebar-text" icon='activity' }}
+              {{> sidebar-item href="/admin/other-pages/notifications" title="Notifications" text="Notifications" spanClass="sidebar-text" icon='bell' }}
+              {{> sidebar-item href="/admin/other-pages/system-health" title="System Health" text="System Health" spanClass="sidebar-text" icon='shield-check' }}
+              {{> sidebar-item href="/admin/other-pages/system-config" title="System Config" text="System Config" spanClass="sidebar-text" icon='settings' }}
+              {{> sidebar-item href="/admin/other-pages/system-logs" title="System Logs" text="System Logs" spanClass="sidebar-text" icon='file-text' }}
+              {{> sidebar-item href="/admin/other-pages/profile-settings" title="Profile Settings" text="Profile Settings" spanClass="sidebar-text" icon='user' }}
+              {{> sidebar-item href="/admin/other-pages/settings" title="Settings" text="Settings" spanClass="sidebar-text" icon='settings' }}
+           </ul>
+           {{/if}}
+
+           {{#if (eq currentSection 'main')}}
+           <ul class="space-y-1">
+  {{#each filterLinks}}
+  {{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
+  {{/each}}
+           </ul>
+           {{/if}}
 
            {{#if (eq currentPage 'explore-ideas')}}
            <ul class="space-y-1">

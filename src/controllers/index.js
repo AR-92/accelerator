@@ -276,27 +276,108 @@ export default function adminRoutes(app) {
     res.render('terms', { layout: 'main', title: 'Terms and Conditions' });
   });
   app.get('/pages/core/upgrade-plan', requireWebAuth, (req, res) => {
-    res.render('upgrade-plan', { layout: 'main', title: 'Upgrade Plan' });
+    const filterLinks = [
+      {
+        id: 'billing-link',
+        href: '/pages/billing',
+        text: 'Billing',
+        icon: 'credit-card',
+      },
+      {
+        id: 'upgrade-plan-link',
+        href: '/pages/core/upgrade-plan',
+        text: 'Upgrade Plan',
+        icon: 'star',
+      },
+    ];
+    res.render('upgrade-plan', {
+      layout: 'main',
+      title: 'Upgrade Plan',
+      currentSection: 'billing',
+      currentPage: 'Upgrade Plan',
+      filterLinks,
+      section: 'billing',
+    });
   });
   app.get('/pages/buy-credits', requireWebAuth, (req, res) => {
     res.render('buy-credits', { layout: 'main', title: 'Buy Credits' });
   });
   app.get('/pages/settings/profile', requireWebAuth, (req, res) => {
+    const settingsCategories = [
+      { value: 'account', label: 'Account', icon: 'user' },
+      { value: 'privacy', label: 'Privacy', icon: 'shield' },
+      { value: 'notifications', label: 'Notifications', icon: 'bell' },
+      { value: 'appearance', label: 'Appearance', icon: 'palette' },
+      { value: 'ai', label: 'AI Assistant', icon: 'brain' },
+      { value: 'security', label: 'Security', icon: 'lock' },
+      { value: 'accessibility', label: 'Accessibility', icon: 'eye' },
+      {
+        value: 'communication',
+        label: 'Communication',
+        icon: 'message-circle',
+      },
+      { value: 'integrations', label: 'Integrations', icon: 'link' },
+      { value: 'preferences', label: 'Preferences', icon: 'sliders' },
+    ];
     res.render('settings/profile', {
       layout: 'main',
       title: 'Profile Settings',
+      currentSection: 'settings',
+      currentPage: 'Account',
+      settingsCategories,
+      activeCategory: 'account',
     });
   });
   app.get('/pages/settings/billing', requireWebAuth, (req, res) => {
+    const settingsCategories = [
+      { value: 'account', label: 'Account', icon: 'user' },
+      { value: 'privacy', label: 'Privacy', icon: 'shield' },
+      { value: 'notifications', label: 'Notifications', icon: 'bell' },
+      { value: 'appearance', label: 'Appearance', icon: 'palette' },
+      { value: 'ai', label: 'AI Assistant', icon: 'brain' },
+      { value: 'security', label: 'Security', icon: 'lock' },
+      { value: 'accessibility', label: 'Accessibility', icon: 'eye' },
+      {
+        value: 'communication',
+        label: 'Communication',
+        icon: 'message-circle',
+      },
+      { value: 'integrations', label: 'Integrations', icon: 'link' },
+      { value: 'preferences', label: 'Preferences', icon: 'sliders' },
+    ];
     res.render('settings/billing', {
       layout: 'main',
       title: 'Billing Settings',
+      currentSection: 'settings',
+      currentPage: 'Billing',
+      settingsCategories,
+      activeCategory: 'billing',
     });
   });
   app.get('/pages/settings/other', requireWebAuth, (req, res) => {
+    const settingsCategories = [
+      { value: 'account', label: 'Account', icon: 'user' },
+      { value: 'privacy', label: 'Privacy', icon: 'shield' },
+      { value: 'notifications', label: 'Notifications', icon: 'bell' },
+      { value: 'appearance', label: 'Appearance', icon: 'palette' },
+      { value: 'ai', label: 'AI Assistant', icon: 'brain' },
+      { value: 'security', label: 'Security', icon: 'lock' },
+      { value: 'accessibility', label: 'Accessibility', icon: 'eye' },
+      {
+        value: 'communication',
+        label: 'Communication',
+        icon: 'message-circle',
+      },
+      { value: 'integrations', label: 'Integrations', icon: 'link' },
+      { value: 'preferences', label: 'Preferences', icon: 'sliders' },
+    ];
     res.render('settings/other', {
       layout: 'main',
       title: 'Security & Privacy',
+      currentSection: 'settings',
+      currentPage: 'Security & Privacy',
+      settingsCategories,
+      activeCategory: 'security',
     });
   });
   app.get('/startup-dashboard/team/invite', requireWebAuth, (req, res) => {

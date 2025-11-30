@@ -14,7 +14,7 @@ export const getPortfolio = async (req, res) => {
         description: 'Showcase your professional projects and portfolio',
         section: 'main',
         currentSection: 'main',
-        currentPage: 'portfolio',
+        currentPage: 'Portfolio',
         filterLinks: [
           {
             id: 'professional-projects',
@@ -227,27 +227,93 @@ export const getPortfolio = async (req, res) => {
       },
     ];
 
+    const overviewFilterLinks = [
+      {
+        id: 'dashboard-link',
+        href: '/admin/dashboard',
+        text: 'Dashboard',
+        icon: 'bar-chart',
+      },
+      {
+        id: 'portfolio-link',
+        href: '/admin/portfolio',
+        text: 'Portfolio',
+        icon: 'briefcase',
+      },
+      {
+        id: 'collaborate-link',
+        href: '/admin/collaborate',
+        text: 'Collaborate',
+        icon: 'users',
+      },
+      {
+        id: 'new-project-link',
+        href: '/admin/new-project',
+        text: 'New Project',
+        icon: 'plus',
+      },
+      {
+        id: 'explore-ideas-link',
+        href: '/admin/explore-ideas',
+        text: 'Explore Ideas',
+        icon: 'lightbulb',
+      },
+    ];
+
     res.render('admin/overview-page', {
       title: 'Portfolio Overview',
       description: 'Overview of portfolio and projects',
-      section: 'portfolio',
-      currentSection: 'portfolio',
-      currentPage: 'portfolio',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Portfolio',
       statsGrid,
       quickActions,
-      filterLinks,
+      filterLinks: overviewFilterLinks,
     });
   } catch (error) {
     logger.error('Error loading portfolio overview:', error);
+    const overviewFilterLinks = [
+      {
+        id: 'dashboard-link',
+        href: '/admin/dashboard',
+        text: 'Dashboard',
+        icon: 'bar-chart',
+      },
+      {
+        id: 'portfolio-link',
+        href: '/admin/portfolio',
+        text: 'Portfolio',
+        icon: 'briefcase',
+      },
+      {
+        id: 'collaborate-link',
+        href: '/admin/collaborate',
+        text: 'Collaborate',
+        icon: 'users',
+      },
+      {
+        id: 'new-project-link',
+        href: '/admin/new-project',
+        text: 'New Project',
+        icon: 'plus',
+      },
+      {
+        id: 'explore-ideas-link',
+        href: '/admin/explore-ideas',
+        text: 'Explore Ideas',
+        icon: 'lightbulb',
+      },
+    ];
+
     res.render('admin/overview-page', {
       title: 'Portfolio Overview',
       description: 'Overview of portfolio and projects',
-      section: 'portfolio',
-      currentSection: 'portfolio',
-      currentPage: 'portfolio',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Portfolio',
       statsGrid: [],
       quickActions: [],
-      filterLinks: [],
+      filterLinks: overviewFilterLinks,
     });
   }
 };
