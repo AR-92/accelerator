@@ -23,6 +23,8 @@ import { getPortfolioPage } from './overview/get-portfolio-page.js';
 import { getCollaborate } from './overview/get-collaborate.js';
 import { getNewProject } from './overview/get-new-project.js';
 import { getExploreIdeas } from './overview/get-explore-ideas.js';
+import { getAllProjects } from './projects/get-all-projects.js';
+import { getProjectDetail } from './projects/get-project-detail.js';
 
 import { getChat } from './collaborate/chat.js';
 import { getTasks } from './collaborate/tasks.js';
@@ -87,6 +89,8 @@ export { getPortfolioPage };
 export { getCollaborate };
 export { getNewProject };
 export { getExploreIdeas };
+export { getAllProjects };
+export { getProjectDetail };
 
 export { getChat };
 export { getTasks };
@@ -124,8 +128,98 @@ export default function adminRoutes(app) {
   app.get('/admin/collaborate', requireWebAuth, getCollaborate);
   app.get('/admin/new-project', requireWebAuth, getNewProject);
   app.get('/admin/explore-ideas', requireWebAuth, getExploreIdeas);
-
-  // Other pages (server-side auth protection)
+  app.get('/projects/all-projects', requireWebAuth, getAllProjects);
+  app.get('/projects/idea-model', requireWebAuth, (req, res) => {
+    res.render('projects/idea-model', {
+      layout: 'main',
+      title: 'Idea Generation Model',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Idea Model',
+    });
+  });
+  app.get('/projects/business-model', requireWebAuth, (req, res) => {
+    res.render('projects/business-model', {
+      layout: 'main',
+      title: 'Business Model Canvas',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Business Model',
+    });
+  });
+  app.get('/projects/business-plan', requireWebAuth, (req, res) => {
+    res.render('projects/business-plan', {
+      layout: 'main',
+      title: 'Business Plan',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Business Plan',
+    });
+  });
+  app.get('/projects/financial-model', requireWebAuth, (req, res) => {
+    res.render('projects/financial-model', {
+      layout: 'main',
+      title: 'Financial Model',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Financial Model',
+    });
+  });
+  app.get('/projects/funding-model', requireWebAuth, (req, res) => {
+    res.render('projects/funding-model', {
+      layout: 'main',
+      title: 'Funding Model',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Funding Model',
+    });
+  });
+  app.get('/projects/legal-model', requireWebAuth, (req, res) => {
+    res.render('projects/legal-model', {
+      layout: 'main',
+      title: 'Legal Model',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Legal Model',
+    });
+  });
+  app.get('/projects/marketing-model', requireWebAuth, (req, res) => {
+    res.render('projects/marketing-model', {
+      layout: 'main',
+      title: 'Marketing Model',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Marketing Model',
+    });
+  });
+  app.get('/projects/pitch-deck', requireWebAuth, (req, res) => {
+    res.render('projects/pitch-deck', {
+      layout: 'main',
+      title: 'Pitch Deck',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Pitch Deck',
+    });
+  });
+  app.get('/projects/team-model', requireWebAuth, (req, res) => {
+    res.render('projects/team-model', {
+      layout: 'main',
+      title: 'Team Model',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Team Model',
+    });
+  });
+  app.get('/projects/valuation', requireWebAuth, (req, res) => {
+    res.render('projects/valuation', {
+      layout: 'main',
+      title: 'Valuation',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Valuation',
+    });
+  });
+  app.get('/projects/:id', requireWebAuth, getProjectDetail);
   app.get(
     '/admin/other-pages/profile-settings',
     requireWebAuth,
@@ -422,6 +516,9 @@ export default function adminRoutes(app) {
     res.render('projects/idea-model', {
       layout: 'main',
       title: 'Idea Generation Model',
+      section: 'main',
+      currentSection: 'main',
+      currentPage: 'Idea Model',
     });
   });
   app.get(
@@ -454,60 +551,7 @@ export default function adminRoutes(app) {
       title: 'Create Pitch Deck',
     });
   });
-  app.get('/projects/business-model', requireWebAuth, (req, res) => {
-    res.render('projects/business-model', {
-      layout: 'main',
-      title: 'Business Model Canvas',
-    });
-  });
-  app.get('/projects/financial-model', requireWebAuth, (req, res) => {
-    res.render('projects/financial-model', {
-      layout: 'main',
-      title: 'Financial Model',
-    });
-  });
-  app.get('/projects/funding-model', requireWebAuth, (req, res) => {
-    res.render('projects/funding-model', {
-      layout: 'main',
-      title: 'Funding Model',
-    });
-  });
-  app.get('/projects/marketing-model', requireWebAuth, (req, res) => {
-    res.render('projects/marketing-model', {
-      layout: 'main',
-      title: 'Marketing Model',
-    });
-  });
-  app.get('/projects/team-model', requireWebAuth, (req, res) => {
-    res.render('projects/team-model', {
-      layout: 'main',
-      title: 'Team Model',
-    });
-  });
-  app.get('/projects/legal-model', requireWebAuth, (req, res) => {
-    res.render('projects/legal-model', {
-      layout: 'main',
-      title: 'Legal Model',
-    });
-  });
-  app.get('/projects/pitch-deck', requireWebAuth, (req, res) => {
-    res.render('projects/pitch-deck', {
-      layout: 'main',
-      title: 'Pitch Deck',
-    });
-  });
-  app.get('/projects/business-plan', requireWebAuth, (req, res) => {
-    res.render('projects/business-plan', {
-      layout: 'main',
-      title: 'Business Plan',
-    });
-  });
-  app.get('/projects/valuation', requireWebAuth, (req, res) => {
-    res.render('projects/valuation', {
-      layout: 'main',
-      title: 'Valuation',
-    });
-  });
+
   app.get(
     '/startup-dashboard/financial/add-expense',
     requireWebAuth,

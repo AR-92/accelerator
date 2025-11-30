@@ -1,0 +1,111 @@
+<main class="flex w-full flex-col px-4 mx-auto max-w-7xl mt-[100px]">
+  <!-- Header -->
+  <header class="w-full mb-8">
+    <h1 class="text-3xl font-sans font-medium text-foreground mb-2">
+      All Projects Dashboard
+    </h1>
+    <p class="text-muted-foreground">
+      Overview of all your projects and their progress
+    </p>
+  </header>
+
+  <!-- Stats Grid -->
+  {{#if statsGrid}}
+    <section class="mb-8">
+      <h2 class="text-xl font-medium mb-4">Project Statistics</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {{#each statsGrid}}
+          <div class="bg-card border border-border rounded-lg p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M{{this.icon}}"></path>
+                </svg>
+              </div>
+              <h3 class="font-medium">{{this.title}}</h3>
+            </div>
+            <div class="space-y-2">
+              {{#each this.items}}
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-muted-foreground">{{this.label}}</span>
+                  <span class="font-semibold {{#if this.color}}{{this.color}}{{/if}}">{{this.value}}</span>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </section>
+  {{/if}}
+
+  <!-- Quick Actions -->
+  {{#if quickActions}}
+    <section class="mb-8">
+      <h2 class="text-xl font-medium mb-4">Quick Actions</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {{#each quickActions}}
+          <a href="{{this.href}}" class="bg-card border border-border rounded-lg p-4 hover:bg-accent transition-colors block">
+            <div class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M{{this.icon}}"></path>
+              </svg>
+              <span class="font-medium">{{this.text}}</span>
+            </div>
+          </a>
+        {{/each}}
+      </div>
+    </section>
+  {{/if}}
+
+  <!-- Projects List -->
+  <section>
+    <h2 class="text-xl font-medium mb-4">All Projects</h2>
+    {{#if projects}}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {{#each projects}}
+          <div class="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                  <span class="text-primary font-semibold">{{this.initials}}</span>
+                </div>
+                <div>
+                  <h3 class="font-medium text-lg">{{this.name}}</h3>
+                  <p class="text-sm text-muted-foreground">{{this.description}}</p>
+                </div>
+              </div>
+              <span class="text-xs px-2 py-1 rounded-full bg-{{#if (eq this.status 'completed')}}green{{else if (eq this.status 'in_progress')}}blue{{else}}gray{{/if}}-100 text-{{#if (eq this.status 'completed')}}green{{else if (eq this.status 'in_progress')}}blue{{else}}gray{{/if}}-800">
+                {{this.status}}
+              </span>
+            </div>
+            <div class="mb-4">
+              <div class="flex justify-between text-sm text-muted-foreground mb-1">
+                <span>Progress</span>
+                <span>{{this.progress}}%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-primary h-2 rounded-full" style="width: {{this.progress}}%"></div>
+              </div>
+            </div>
+            <a href="/projects/{{this.id}}" class="inline-flex items-center text-primary hover:underline text-sm font-medium">
+              View Details →
+            </a>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="text-center py-12 bg-card border border-border rounded-lg">
+        <div class="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+          </svg>
+        </div>
+        <h3 class="text-lg font-medium mb-2">No projects yet</h3>
+        <p class="text-muted-foreground mb-4">Start your first project to see it here.</p>
+        <a href="/admin/new-project" class="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
+          Create New Project
+        </a>
+      </div>
+    {{/if}}
+  </section>
+</main>

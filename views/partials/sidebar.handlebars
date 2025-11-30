@@ -2,22 +2,20 @@
   <div id="sidebar" class="w-56 transition-all duration-300 bg-card border border-border fixed md:relative inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto flex flex-col h-[calc(100vh-90px)]">
     <div class="flex-1 overflow-y-auto">
       <nav class="px-3 py-3 text-sm">
-         <!-- Top-level Sections -->
-          <ul class="space-y-1 border-b border-border pb-2 mb-2 md:hidden">
-             {{> sidebar-item href="/admin/other-pages/dashboard" title="Dashboard" text="Dashboard" spanClass="font-medium sidebar-text" icon='bar-chart' }}
-             {{> sidebar-item href="/admin/other-pages/portfolio" title="Portfolio" text="Portfolio" spanClass="font-medium sidebar-text" icon='briefcase' }}
-              {{> sidebar-item href="/admin/other-pages/collaborate" title="Collaborate" text="Collaborate" spanClass="font-medium sidebar-text" icon='users' }}
-             {{> sidebar-item href="/pages/help" title="Help" text="Help" spanClass="font-medium sidebar-text" icon='help-circle' }}
-             {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text" icon='book-open' }}
-             {{> sidebar-item href="/pages/settings" title="Settings" text="Settings" spanClass="font-medium sidebar-text" icon='settings' }}
-             {{> sidebar-item href="/pages/billing" title="Billing" text="Billing" spanClass="font-medium sidebar-text" icon='credit-card' }}
-          </ul>
+          <!-- Top-level Sections -->
+           <ul class="space-y-1 border-b border-border pb-2 mb-2 md:hidden">
+              {{> sidebar-item href="/admin/other-pages/dashboard" title="Dashboard" text="Dashboard" spanClass="font-medium sidebar-text" icon='bar-chart' }}
+              {{> sidebar-item href="/admin/other-pages/portfolio" title="Portfolio" text="Portfolio" spanClass="font-medium sidebar-text" icon='briefcase' }}
+              {{> sidebar-item href="/pages/help" title="Help" text="Help" spanClass="font-medium sidebar-text" icon='help-circle' }}
+              {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text" icon='book-open' }}
+              {{> sidebar-item href="/pages/settings" title="Settings" text="Settings" spanClass="font-medium sidebar-text" icon='settings' }}
+              {{> sidebar-item href="/pages/billing" title="Billing" text="Billing" spanClass="font-medium sidebar-text" icon='credit-card' }}
+           </ul>
            {{#if (eq currentSection 'dashboard')}}
            <ul class="space-y-1">
 {{> sidebar-item href="/admin/other-pages/dashboard" title="Overview" page="dashboard" text="Overview" spanClass="font-medium sidebar-text" icon='bar-chart' }}
 {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" page="new-project" text="New Project" spanClass="font-medium sidebar-text" icon='plus' }}
 {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" page="explore-ideas" text="Explore Ideas" spanClass="font-medium sidebar-text" icon='lightbulb' }}
-               {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text" icon='book-open' }}
            </ul>
            {{/if}}
 
@@ -28,38 +26,29 @@
            </ul>
            {{/if}}
 
-  {{#if (eq currentSection 'corporate-dashboard')}}
-  <ul class="space-y-1">
-  {{#each filterLinks}}
-  {{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
-  {{/each}}
-  {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" text="New Project" spanClass="font-medium sidebar-text" icon='plus' }}
-  {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="font-medium sidebar-text" icon='lightbulb' }}
-  {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text" icon='book-open' }}
-  </ul>
-  {{/if}}
+{{#if (eq currentSection 'corporate-dashboard')}}
+<ul class="space-y-1">
+{{#each filterLinks}}
+{{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
+{{/each}}
+</ul>
+{{/if}}
 
-  {{#if (eq currentSection 'enterprise-dashboard')}}
-  <ul class="space-y-1">
-  {{#each filterLinks}}
-  {{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
-  {{/each}}
-  {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" text="New Project" spanClass="font-medium sidebar-text" icon='plus' }}
-  {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="font-medium sidebar-text" icon='lightbulb' }}
-  {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text" icon='book-open' }}
-  </ul>
-  {{/if}}
+{{#if (eq currentSection 'enterprise-dashboard')}}
+<ul class="space-y-1">
+{{#each filterLinks}}
+{{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
+{{/each}}
+</ul>
+{{/if}}
 
-           {{#if (eq currentSection 'startup-dashboard')}}
-  <ul class="space-y-1">
-  {{#each filterLinks}}
-  {{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
-  {{/each}}
-  {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" text="New Project" spanClass="font-medium sidebar-text" icon='plus' }}
-  {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="font-medium sidebar-text" icon='lightbulb' }}
-  {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text" icon='book-open' }}
-  </ul>
-  {{/if}}
+{{#if (eq currentSection 'startup-dashboard')}}
+<ul class="space-y-1">
+{{#each filterLinks}}
+{{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
+{{/each}}
+</ul>
+{{/if}}
 
            {{#if (eq currentSection 'collaborate')}}
            <ul class="space-y-1">
@@ -280,14 +269,31 @@
            </ul>
            {{/if}}
 
-           {{#if (eq currentPage 'portfolio')}}
-           <ul class="space-y-1">
-               {{> sidebar-item href="/admin/other-pages/portfolio" title="Portfolio" text="Portfolio" spanClass="font-medium sidebar-text" icon='briefcase' }}
-               {{> sidebar-item href="/admin/other-pages/portfolio?filter=professional" title="Professional Projects" text="Professional Projects" spanClass="font-medium sidebar-text ml-4" icon='zap' }}
-               {{> sidebar-item href="/admin/other-pages/portfolio?filter=community" title="Community Driven" text="Community Driven" spanClass="font-medium sidebar-text ml-4" icon='users' }}
-               {{> sidebar-item href="/admin/other-pages/portfolio?filter=quality" title="Quality Assured" text="Quality Assured" spanClass="font-medium sidebar-text ml-4" icon='shield-check' }}
-           </ul>
-           {{/if}}
+            {{#if (eq currentPage 'portfolio')}}
+            <ul class="space-y-1">
+                {{> sidebar-item href="/admin/other-pages/portfolio" title="Portfolio" text="Portfolio" spanClass="font-medium sidebar-text" icon='briefcase' }}
+                {{> sidebar-item href="/admin/other-pages/portfolio?filter=professional" title="Professional Projects" text="Professional Projects" spanClass="font-medium sidebar-text ml-4" icon='zap' }}
+                {{> sidebar-item href="/admin/other-pages/portfolio?filter=community" title="Community Driven" text="Community Driven" spanClass="font-medium sidebar-text ml-4" icon='users' }}
+                {{> sidebar-item href="/admin/other-pages/portfolio?filter=quality" title="Quality Assured" text="Quality Assured" spanClass="font-medium sidebar-text ml-4" icon='shield-check' }}
+            </ul>
+            {{/if}}
+
+             {{#if (eq currentPage 'Project Detail')}}
+             <ul class="space-y-1">
+                 {{> sidebar-item href="/projects/idea-model" title="Idea Model" text="Idea Model" spanClass="font-medium sidebar-text" icon='lightbulb' }}
+                 {{> sidebar-item href="/projects/business-model" title="Business Model" text="Business Model" spanClass="font-medium sidebar-text" icon='briefcase' }}
+                 {{> sidebar-item href="/projects/business-plan" title="Business Plan" text="Business Plan" spanClass="font-medium sidebar-text" icon='file-text' }}
+                 {{> sidebar-item href="/projects/financial-model" title="Financial Model" text="Financial Model" spanClass="font-medium sidebar-text" icon='dollar-sign' }}
+                 {{> sidebar-item href="/projects/funding-model" title="Funding Model" text="Funding Model" spanClass="font-medium sidebar-text" icon='trending-up' }}
+                 {{> sidebar-item href="/projects/legal-model" title="Legal Model" text="Legal Model" spanClass="font-medium sidebar-text" icon='scale' }}
+                 {{> sidebar-item href="/projects/marketing-model" title="Marketing Model" text="Marketing Model" spanClass="font-medium sidebar-text" icon='megaphone' }}
+                 {{> sidebar-item href="/projects/pitch-deck" title="Pitch Deck" text="Pitch Deck" spanClass="font-medium sidebar-text" icon='presentation' }}
+                 {{> sidebar-item href="/projects/team-model" title="Team Model" text="Team Model" spanClass="font-medium sidebar-text" icon='users' }}
+                 {{> sidebar-item href="/projects/valuation" title="Valuation" text="Valuation" spanClass="font-medium sidebar-text" icon='calculator' }}
+             </ul>
+             {{/if}}
+
+
 
 
 

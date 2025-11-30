@@ -7,26 +7,8 @@ export const getNewProject = async (req, res) => {
 
     const overviewFilterLinks = [
       {
-        id: 'dashboard-link',
-        href: '/admin/dashboard',
-        text: 'Dashboard',
-        icon: 'bar-chart',
-      },
-      {
-        id: 'portfolio-link',
-        href: '/admin/portfolio',
-        text: 'Portfolio',
-        icon: 'briefcase',
-      },
-      {
-        id: 'collaborate-link',
-        href: '/admin/collaborate',
-        text: 'Collaborate',
-        icon: 'users',
-      },
-      {
         id: 'new-project-link',
-        href: '/admin/new-project',
+        href: '/admin/other-pages/new-project',
         text: 'New Project',
         icon: 'plus',
       },
@@ -35,6 +17,18 @@ export const getNewProject = async (req, res) => {
         href: '/admin/explore-ideas',
         text: 'Explore Ideas',
         icon: 'lightbulb',
+      },
+      {
+        id: 'learn-link',
+        href: '/pages/learn',
+        text: 'Learn',
+        icon: 'book-open',
+      },
+      {
+        id: 'all-projects-link',
+        href: '/projects/all-projects',
+        text: 'All Projects',
+        icon: 'briefcase',
       },
     ];
 
@@ -51,26 +45,8 @@ export const getNewProject = async (req, res) => {
 
     const overviewFilterLinks = [
       {
-        id: 'dashboard-link',
-        href: '/admin/dashboard',
-        text: 'Dashboard',
-        icon: 'bar-chart',
-      },
-      {
-        id: 'portfolio-link',
-        href: '/admin/portfolio',
-        text: 'Portfolio',
-        icon: 'briefcase',
-      },
-      {
-        id: 'collaborate-link',
-        href: '/admin/collaborate',
-        text: 'Collaborate',
-        icon: 'users',
-      },
-      {
         id: 'new-project-link',
-        href: '/admin/new-project',
+        href: '/admin/other-pages/new-project',
         text: 'New Project',
         icon: 'plus',
       },
@@ -79,6 +55,18 @@ export const getNewProject = async (req, res) => {
         href: '/admin/explore-ideas',
         text: 'Explore Ideas',
         icon: 'lightbulb',
+      },
+      {
+        id: 'learn-link',
+        href: '/pages/learn',
+        text: 'Learn',
+        icon: 'book-open',
+      },
+      {
+        id: 'all-projects-link',
+        href: '/projects/all-projects',
+        text: 'All Projects',
+        icon: 'briefcase',
       },
     ];
 
