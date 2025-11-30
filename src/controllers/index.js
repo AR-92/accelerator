@@ -386,8 +386,8 @@ export default function adminRoutes(app) {
       title: 'Invite Team Member',
     });
   });
-  app.get('/pages/idea-model', requireWebAuth, (req, res) => {
-    res.render('idea-model', {
+  app.get('/projects/idea-model', requireWebAuth, (req, res) => {
+    res.render('projects/idea-model', {
       layout: 'main',
       title: 'Idea Generation Model',
     });
@@ -422,10 +422,58 @@ export default function adminRoutes(app) {
       title: 'Create Pitch Deck',
     });
   });
-  app.get('/pages/business-model', requireWebAuth, (req, res) => {
-    res.render('business-model', {
+  app.get('/projects/business-model', requireWebAuth, (req, res) => {
+    res.render('projects/business-model', {
       layout: 'main',
       title: 'Business Model Canvas',
+    });
+  });
+  app.get('/projects/financial-model', requireWebAuth, (req, res) => {
+    res.render('projects/financial-model', {
+      layout: 'main',
+      title: 'Financial Model',
+    });
+  });
+  app.get('/projects/funding-model', requireWebAuth, (req, res) => {
+    res.render('projects/funding-model', {
+      layout: 'main',
+      title: 'Funding Model',
+    });
+  });
+  app.get('/projects/marketing-model', requireWebAuth, (req, res) => {
+    res.render('projects/marketing-model', {
+      layout: 'main',
+      title: 'Marketing Model',
+    });
+  });
+  app.get('/projects/team-model', requireWebAuth, (req, res) => {
+    res.render('projects/team-model', {
+      layout: 'main',
+      title: 'Team Model',
+    });
+  });
+  app.get('/projects/legal-model', requireWebAuth, (req, res) => {
+    res.render('projects/legal-model', {
+      layout: 'main',
+      title: 'Legal Model',
+    });
+  });
+  app.get('/projects/pitch-deck', requireWebAuth, (req, res) => {
+    res.render('projects/pitch-deck', {
+      layout: 'main',
+      title: 'Pitch Deck',
+    });
+  });
+  app.get('/projects/business-plan', requireWebAuth, (req, res) => {
+    res.render('projects/business-plan', {
+      layout: 'main',
+      title: 'Business Plan',
+    });
+  });
+  app.get('/projects/valuation', requireWebAuth, (req, res) => {
+    res.render('projects/valuation', {
+      layout: 'main',
+      title: 'Valuation',
     });
   });
   app.get(

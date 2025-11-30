@@ -16,7 +16,7 @@
                    <p class="text-xs text-muted-foreground">{{activityStats.today}} today</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                   {{{icon 'bar-chart-3' size='24' class='text-blue-600'}}}
+                   {{{icon 'bar-chart-3' size="16" class='text-blue-600'}}}
                 </div>
              </div>
           </div>
@@ -30,7 +30,7 @@
                    <p class="text-xs text-muted-foreground">{{activityStats.failed}} failed</p>
                 </div>
                 <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                   {{{icon 'check-circle' size='24' class='text-green-600'}}}
+                   {{{icon 'check-circle' size="16" class='text-green-600'}}}
                 </div>
              </div>
           </div>
@@ -44,7 +44,7 @@
                    <p class="text-xs text-muted-foreground">This session</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                   {{{icon 'users' size='24' class='text-purple-600'}}}
+                   {{{icon 'users' size="16" class='text-purple-600'}}}
                 </div>
              </div>
           </div>
@@ -58,7 +58,7 @@
                    <p class="text-xs text-muted-foreground">System average</p>
                 </div>
                 <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                   {{{icon 'zap' size='24' class='text-orange-600'}}}
+                   {{{icon 'zap' size="16" class='text-orange-600'}}}
                 </div>
              </div>
           </div>
@@ -70,7 +70,7 @@
           <div class="bg-card rounded-lg border border-border">
              <div class="p-6 border-b border-border">
                 <h3 class="text-lg font-semibold text-card-foreground flex items-center">
-                   {{{icon 'pie-chart' size='20' class='mr-2'}}}
+                   {{{icon 'pie-chart' size="16" class='mr-2'}}}
                    Activity Types
                 </h3>
              </div>
@@ -88,7 +88,7 @@
           <div class="bg-card rounded-lg border border-border">
              <div class="p-6 border-b border-border">
                 <h3 class="text-lg font-semibold text-card-foreground flex items-center">
-                   {{{icon 'trending-up' size='20' class='mr-2'}}}
+                   {{{icon 'trending-up' size="16" class='mr-2'}}}
                    Performance Metrics
                 </h3>
              </div>
@@ -116,7 +116,7 @@
           <div class="bg-card rounded-lg border border-border">
              <div class="p-6 border-b border-border">
                 <h3 class="text-lg font-semibold text-card-foreground flex items-center">
-                   {{{icon 'shield-check' size='20' class='mr-2'}}}
+                   {{{icon 'shield-check' size="16" class='mr-2'}}}
                    System Health
                 </h3>
              </div>
@@ -144,7 +144,7 @@
        <div class="bg-card rounded-lg border border-border">
           <div class="p-6 border-b border-border">
              <h3 class="text-lg font-semibold text-card-foreground flex items-center">
-                {{{icon 'trending-up' size='20' class='mr-2'}}}
+                {{{icon 'trending-up' size="16" class='mr-2'}}}
                 Activity Trends
              </h3>
              <p class="text-sm text-muted-foreground mt-1">Activity volume and error rates over the last 24 hours</p>
@@ -154,7 +154,7 @@
                 <!-- Activity Volume Trend -->
                 <div>
                    <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
-                      {{{icon 'bar-chart-3' size='16' class='mr-2 text-blue-600'}}}
+                      {{{icon 'bar-chart-3' size="16" class='mr-2 text-blue-600'}}}
                       Activity Volume (24h)
                    </h4>
                     <div class="h-48">
@@ -169,7 +169,7 @@
                 <!-- Error Rate Trend -->
                 <div>
                    <h4 class="text-sm font-medium text-card-foreground mb-3 flex items-center">
-                      {{{icon 'alert-triangle' size='16' class='mr-2 text-red-600'}}}
+                      {{{icon 'alert-triangle' size="16" class='mr-2 text-red-600'}}}
                       Error Rate (%)
                    </h4>
                     <div class="h-48">
@@ -438,7 +438,7 @@
        <div class="bg-card rounded-lg border border-border">
           <div class="p-6 border-b border-border">
              <h3 class="text-lg font-semibold text-card-foreground flex items-center">
-                {{{icon 'pie-chart' size='20' class='mr-2'}}}
+                {{{icon 'pie-chart' size="16" class='mr-2'}}}
                 Activity Type Distribution
              </h3>
              <p class="text-sm text-muted-foreground mt-1">Breakdown of activity types in the current session</p>
@@ -469,7 +469,7 @@
                        hx-trigger="input changed delay:300ms, keyup[key=='Enter']"
                        hx-vals='{"category": "{{query.category}}", "status": "{{query.status}}"}'>
                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                   {{{icon 'search' size='20' class='text-muted-foreground'}}}
+                   {{{icon 'search' size="16" class='text-muted-foreground'}}}
                  </div>
               </div>
               <select name="category"
@@ -514,13 +514,13 @@
                    <div>
                       <span class="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-background {{#eq status "success"}}bg-success{{else if eq status "failed"}}bg-destructive{{else if eq status "warning"}}bg-warning{{else}}bg-primary{{/eq}}">
                         {{#eq activity_type "login"}}
-                        {{{icon 'log-in' size='20' class='text-white'}}}
+                        {{{icon 'log-in' size="16" class='text-white'}}}
                         {{else if eq activity_type "user"}}
-                        {{{icon 'user' size='20' class='text-white'}}}
+                        {{{icon 'user' size="16" class='text-white'}}}
                         {{else if eq activity_type "system"}}
-                        {{{icon 'server' size='20' class='text-white'}}}
+                        {{{icon 'server' size="16" class='text-white'}}}
                         {{else}}
-                        {{{icon 'lock' size='20' class='text-white'}}}
+                        {{{icon 'lock' size="16" class='text-white'}}}
                         {{/eq}}
                      </span>
                    </div>
@@ -556,7 +556,7 @@
          {{#if (eq activities.length 0)}}
          <!-- Empty State -->
          <div class="text-center py-12">
-{{{icon 'clipboard-list' size='48' class='mx-auto text-muted-foreground'}}}
+{{{icon 'clipboard-list' size="16" class='mx-auto text-muted-foreground'}}}
            <h3 class="mt-2 text-sm font-medium text-card-foreground">No activity found</h3>
            <p class="mt-1 text-sm text-muted-foreground">No activity has been logged yet.</p>
          </div>
@@ -606,12 +606,12 @@
           <div class="flex items-center space-x-4">
              <a href="/admin/other-pages/activity/export/csv?search={{query.search}}&category={{query.category}}&status={{query.status}}"
                 class="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors inline-flex items-center">
-               {{{icon 'download' size='16' class='mr-2'}}}
+               {{{icon 'download' size="16" class='mr-2'}}}
                Export CSV
              </a>
              <a href="/admin/other-pages/activity/export/json?search={{query.search}}&category={{query.category}}&status={{query.status}}"
                 class="px-4 py-2 bg-success text-success-foreground rounded-lg hover:bg-success/90 transition-colors inline-flex items-center">
-               {{{icon 'file-text' size='16' class='mr-2'}}}
+               {{{icon 'file-text' size="16" class='mr-2'}}}
                Export JSON
              </a>
           </div>

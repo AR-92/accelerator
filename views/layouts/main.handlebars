@@ -752,6 +752,25 @@
         function forceLogout() {
             window.location.href = '/auth';
         }
+
+        // Collapsible content toggle
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('[data-collapsible="true"]')) {
+                const target = e.target.closest('[data-collapsible="true"]');
+                const contentId = target.getAttribute('data-target');
+                const content = document.getElementById(contentId);
+                if (content) {
+                    content.classList.toggle('hidden');
+                    // Toggle chevron icons
+                    const collapsed = target.querySelector('.chevron-collapsed');
+                    const expanded = target.querySelector('.chevron-expanded');
+                    if (collapsed && expanded) {
+                        collapsed.classList.toggle('hidden');
+                        expanded.classList.toggle('hidden');
+                    }
+                }
+            }
+        });
     </script>
 
     <!-- Toast notifications -->

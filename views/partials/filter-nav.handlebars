@@ -4,7 +4,7 @@
     <div class="flex items-center gap-4">
         <!-- Sidebar Toggle Button -->
          <button id="sidebar-toggle" class="flex w-6 h-6 ml-1 mr-6 flex items-center justify-center hover:bg-accent rounded-md transition-colors" onclick="toggleSidebarOrMobile()" title="Toggle Sidebar">
-          {{{icon 'panel-right' size='16' class='text-muted-foreground w-4 h-4'}}}
+          {{{icon 'panel-right' size="16" class='text-muted-foreground w-4 h-4'}}}
         </button>
             <!-- Filter Links -->
             <div id="filter-links" class="hidden md:flex items-center justify-center flex-1">
@@ -13,7 +13,7 @@
                 <div class="flex items-center gap-2 max-w-4xl w-full">
                   <!-- Left Arrow Button -->
                   <button id="settings-filter-scroll-left" class="flex items-center justify-center w-6 h-6 rounded-md hover:bg-accent transition-colors flex-shrink-0" title="Scroll left">
-                    {{{icon 'chevron-left' size='16' class='text-muted-foreground'}}}
+                    {{{icon 'chevron-left' size="16" class='text-muted-foreground'}}}
                   </button>
 
                    <!-- Scrollable Filter Container -->
@@ -26,7 +26,7 @@
                           class="settings-filter-btn flex items-center justify-center min-h-[44px] pl-6 pr-3 {{#if (eq ../activeCategory value)}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap"
                           data-category="{{value}}"
                         >
-                         {{{icon icon size='14' class='mr-1'}}}
+                         {{{icon icon size="16" class='mr-1'}}}
                          {{label}}
                        </button>
                     </div>
@@ -35,7 +35,7 @@
 
                   <!-- Right Arrow Button -->
                   <button id="settings-filter-scroll-right" class="flex items-center justify-center w-6 h-6 rounded-md hover:bg-accent transition-colors flex-shrink-0" title="Scroll right">
-                    {{{icon 'chevron-right' size='16' class='text-muted-foreground'}}}
+                    {{{icon 'chevron-right' size="16" class='text-muted-foreground'}}}
                   </button>
                 </div>
 
@@ -44,7 +44,7 @@
                  <div class="flex items-center gap-2 max-w-4xl w-full">
                    <!-- Left Arrow Button -->
                    <button id="overview-filter-scroll-left" class="flex items-center justify-center w-6 h-6 rounded-md hover:bg-accent transition-colors flex-shrink-0" title="Scroll left">
-                     {{{icon 'chevron-left' size='16' class='text-muted-foreground'}}}
+                     {{{icon 'chevron-left' size="16" class='text-muted-foreground'}}}
                    </button>
 
                     <!-- Scrollable Filter Container -->
@@ -52,14 +52,14 @@
                      {{#each @root.filterLinks}}
                      <div class="flex flex-col items-center justify-center group flex-shrink-0">
                        <div class="border-t-4 border-primary w-6 rounded-full opacity-0 group-hover:opacity-100"></div>
-                          <a id="{{id}}" href="{{href}}" hx-get="{{href}}" hx-target="#{{@root.section}}-main-content" class="flex items-center justify-center min-h-[44px] pr-6 text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon icon size='14' class='mr-1'}}}{{text}}</a>
+                          <a id="{{id}}" href="{{href}}" hx-get="{{href}}" hx-target="#{{@root.section}}-main-content" class="flex items-center justify-center min-h-[44px] pr-6 text-muted-foreground text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon icon size="16" class='mr-1'}}}{{text}}</a>
                      </div>
                      {{/each}}
                    </div>
 
                    <!-- Right Arrow Button -->
                    <button id="overview-filter-scroll-right" class="flex items-center justify-center w-6 h-6 rounded-md hover:bg-accent transition-colors flex-shrink-0" title="Scroll right">
-                     {{{icon 'chevron-right' size='16' class='text-muted-foreground'}}}
+                     {{{icon 'chevron-right' size="16" class='text-muted-foreground'}}}
                    </button>
                  </div>
               {{/if}}
@@ -70,7 +70,7 @@
         {{#if settingsCategories}}
           <!-- Settings Save Button -->
           <button class="flex items-center gap-2 px-3 py-2 rounded-md text-muted-foreground text-xs leading-[2.5] hover:bg-accent hover:text-accent-foreground focus:outline-none">
-            {{{icon 'save' size='16' class='w-4 h-4'}}}
+            {{{icon 'save' size="16" class='w-4 h-4'}}}
             <span class="text-xs">Save Settings</span>
           </button>
 
