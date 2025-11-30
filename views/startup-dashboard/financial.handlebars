@@ -1,42 +1,41 @@
-<!-- Dashboard Marketing Page -->
+<!-- Dashboard Financial Page -->
 <div class="min-h-screen bg-background">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
                 <div class="flex flex-col gap-4 lg:gap-6">
   <div class="flex items-center justify-between">
     <div class="grid gap-1">
-      <h1 class="font-heading text-2xl font-semibold text-foreground">Marketing
+      <h1 class="font-heading text-2xl font-semibold text-foreground">Financial
         Dashboard</h1>
-      <p class="text-base text-muted-foreground">Track campaign performance and
-        audience engagement.</p>
+      <p class="text-base text-muted-foreground">Track your startup's financial
+        health and performance metrics.</p>
     </div>
     <div class="flex items-center gap-2">
       <button class="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14"></path>
-          <path d="M12 5v14"></path>
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7,10 12,15 17,10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
         </svg>
-        New Campaign
+        Export Report
       </button>
     </div>
   </div>
 
-    <!-- Marketing Metrics -->
+    <!-- Financial Metrics -->
     <div class="grid grid-cols-1 gap-[17px] sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
       <div class="rounded-md bg-card px-2 py-10 text-card-foreground shadow-sm">
         <div class="flex items-center justify-between px-[10px] py-[4px]">
           <div class="flex flex-col gap-[4px]">
-            <h3 class="text-[14px] font-[500] text-muted-foreground">Website Traffic</h3>
-            <p class="text-[18px] font-[600] text-foreground">12.5K</p>
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Total Revenue</h3>
+            <p class="text-[18px] font-[600] text-foreground">$125K</p>
           </div>
             <div>
                <div class="bg-blue-50 dark:bg-blue-950 rounded-md">
                  <div class="w-10 h-10 bg-blue-50 dark:bg-blue-950 rounded-full relative">
                    <div class="flex items-center justify-center w-9 h-9 bg-blue-600 dark:bg-blue-400 rounded-full absolute top-0.5 left-0.5">
-<svg class="w-4 h-4 text-white lucide lucide-users" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-  <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
-  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-  <circle cx="9" cy="7" r="4"></circle>
+<svg class="w-4 h-4 text-white lucide lucide-dollar-sign" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="12" x2="12" y1="2" y2="22"></line>
+  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
 </svg>
      </div>
    </div>
@@ -45,23 +44,21 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const ctx = document.getElementById('campaignChart').getContext('2d');
+  const ctx = document.getElementById('revenueChart').getContext('2d');
   new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
-      labels: ['Facebook', 'Twitter', 'Instagram', 'LinkedIn', 'Email'],
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
       datasets: [{
-        label: 'Impressions',
-        data: [12000, 8000, 15000, 6000, 10000],
-        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1
+        label: 'Revenue',
+        data: [120, 150, 180, 200, 250, 300],
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
       }, {
-        label: 'Clicks',
-        data: [1200, 800, 1500, 600, 1000],
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1
+        label: 'Expenses',
+        data: [100, 120, 140, 160, 180, 200],
+        borderColor: 'rgb(255, 99, 132)',
+        tension: 0.1
       }]
     },
     options: {
@@ -92,17 +89,16 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="rounded-md bg-card px-2 py-10 text-card-foreground shadow-sm">
         <div class="flex items-center justify-between px-[10px] py-[4px]">
           <div class="flex flex-col gap-[4px]">
-            <h3 class="text-[14px] font-[500] text-muted-foreground">Conversion Rate</h3>
-            <p class="text-[18px] font-[600] text-foreground">3.2%</p>
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Total Expenses</h3>
+            <p class="text-[18px] font-[600] text-foreground">$78K</p>
           </div>
            <div>
               <div class="bg-orange-50 dark:bg-orange-950 rounded-md">
                 <div class="w-10 h-10 bg-orange-50 dark:bg-orange-950 rounded-full relative">
                   <div class="flex items-center justify-center w-9 h-9 bg-orange-600 dark:bg-orange-400 rounded-full absolute top-0.5 left-0.5">
-<svg class="w-4 h-4 text-white lucide lucide-target" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="12" cy="12" r="10"></circle>
-  <circle cx="12" cy="12" r="6"></circle>
-  <circle cx="12" cy="12" r="2"></circle>
+<svg class="w-4 h-4 text-white lucide lucide-trending-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M22 17H2"></path>
+  <path d="m22 17-8.5-8.5-5 5L2 7"></path>
 </svg>
 </div>
                </div>
@@ -111,12 +107,12 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
 
-<svg class="w-5 h-4 lucide lucide-trending-up" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M16 7h6v6"></path>
-  <path d="m22 7-8.5 8.5-5-5L2 17"></path>
+<svg class="w-5 h-4 lucide lucide-trending-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M22 17H2"></path>
+  <path d="m22 17-8.5-8.5-5 5L2 7"></path>
 </svg>
 
-          <span class="text-green-600 dark:text-green-400">+0.8%</span>Since last
+          <span class="text-red-600 dark:text-red-400">-5%</span>Since last
           month
         </p>
       </div>
@@ -124,15 +120,17 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="rounded-md bg-card px-2 py-10 text-card-foreground shadow-sm">
         <div class="flex items-center justify-between px-[10px] py-[4px]">
           <div class="flex flex-col gap-[4px]">
-            <h3 class="text-[14px] font-[500] text-muted-foreground">Social Engagement</h3>
-            <p class="text-[18px] font-[600] text-foreground">8.7K</p>
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Net Profit</h3>
+            <p class="text-[18px] font-[600] text-foreground">$47K</p>
           </div>
            <div>
               <div class="bg-pink-50 dark:bg-pink-950 rounded-md">
                 <div class="w-10 h-10 bg-pink-50 dark:bg-pink-950 rounded-full relative">
                   <div class="flex items-center justify-center w-9 h-9 bg-pink-600 dark:bg-pink-400 rounded-full absolute top-0.5 left-0.5">
-<svg class="w-4 h-4 text-white lucide lucide-heart" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"></path>
+<svg class="w-4 h-4 text-white lucide lucide-bar-chart" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="12" x1="12" y1="20" y2="10"></line>
+  <line x1="18" x1="18" y1="20" y2="4"></line>
+  <line x1="6" x1="6" y1="20" y2="16"></line>
 </svg>
 </div>
                </div>
@@ -146,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <path d="m22 7-8.5 8.5-5-5L2 17"></path>
 </svg>
 
-          <span class="text-green-600 dark:text-green-400">+25%</span>Since last
+          <span class="text-green-600 dark:text-green-400">+32%</span>Since last
           month
         </p>
       </div>
@@ -154,16 +152,17 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="rounded-md bg-card px-2 py-10 text-card-foreground shadow-sm">
         <div class="flex items-center justify-between px-[10px] py-[4px]">
           <div class="flex flex-col gap-[4px]">
-            <h3 class="text-[14px] font-[500] text-muted-foreground">Email Subscribers</h3>
-            <p class="text-[18px] font-[600] text-foreground">2.1K</p>
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Cash Flow</h3>
+            <p class="text-[18px] font-[600] text-foreground">$89K</p>
           </div>
            <div>
               <div class="bg-green-50 dark:bg-green-950 rounded-md">
                 <div class="w-10 h-10 bg-green-50 dark:bg-green-950 rounded-full relative">
                   <div class="flex items-center justify-center w-9 h-9 bg-green-600 dark:bg-green-400 rounded-full absolute top-0.5 left-0.5">
-<svg class="w-4 h-4 text-white lucide lucide-mail" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-  <polyline points="22,6 12,13 2,6"></polyline>
+<svg class="w-4 h-4 text-white lucide lucide-wallet" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M21 12V7H5a2 2 0 0 1 0-4h14v12"></path>
+  <path d="M3 5a2 2 0 0 1 0-4h16v20"></path>
+  <path d="M8 5a2 2 0 0 1 0-4h8a2 2 0 0 1 2 2v12"></path>
 </svg>
 </div>
                </div>
@@ -177,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <path d="m22 7-8.5 8.5-5-5L2 17"></path>
 </svg>
 
-          <span class="text-green-600 dark:text-green-400">+12%</span>Since last
+          <span class="text-green-600 dark:text-green-400">+15%</span>Since last
           month
         </p>
       </div>
@@ -185,76 +184,76 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="rounded-md bg-card px-2 py-10 text-card-foreground shadow-sm">
         <div class="flex items-center justify-between px-[10px] py-[4px]">
           <div class="flex flex-col gap-[4px]">
-            <h3 class="text-[14px] font-[500] text-muted-foreground">Campaign ROI</h3>
-            <p class="text-[18px] font-[600] text-foreground">340%</p>
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Burn Rate</h3>
+            <p class="text-[18px] font-[600] text-foreground">$12K/mo</p>
           </div>
            <div>
               <div class="bg-purple-50 dark:bg-purple-950 rounded-md">
                 <div class="w-10 h-10 bg-purple-50 dark:bg-purple-950 rounded-full relative">
                   <div class="flex items-center justify-center w-9 h-9 bg-purple-600 dark:bg-purple-400 rounded-full absolute top-0.5 left-0.5">
- <svg class="w-4 h-4 text-white lucide lucide-bar-chart" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-   <line x1="12" x1="12" y1="20" y2="10"></line>
-   <line x1="18" x1="18" y1="20" y2="4"></line>
-   <line x1="6" x1="6" y1="20" y2="16"></line>
- </svg>
+<svg class="w-4 h-4 text-white lucide lucide-flame" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
+</svg>
 </div>
-                </div>
-              </div>
-           </div>
+               </div>
+             </div>
+          </div>
         </div>
         <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
 
-<svg class="w-5 h-4 lucide lucide-trending-up" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M16 7h6v6"></path>
-  <path d="m22 7-8.5 8.5-5-5L2 17"></path>
+<svg class="w-5 h-4 lucide lucide-trending-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M22 17H2"></path>
+  <path d="m22 17-8.5-8.5-5 5L2 7"></path>
 </svg>
 
-          <span class="text-green-600 dark:text-green-400">+45%</span>Since last
+          <span class="text-red-600 dark:text-red-400">-8%</span>Since last
           month
         </p>
       </div>
     </div>
 
-    <!-- Campaign Performance -->
+    <!-- Revenue Chart and Expenses -->
     <div class="flex flex-col items-stretch gap-[17px] lg:flex-row">
       <div class="w-full rounded-md bg-card px-[26px] py-[20px] text-card-foreground lg:w-[60%] lg:min-w-[60%]">
-        <h3 class="text-[18px] font-[500] text-foreground mb-4">Campaign Performance</h3>
-         <canvas id="campaignChart" class="h-64 w-full"></canvas>
+        <h3 class="text-[18px] font-[500] text-foreground mb-4">Revenue vs Expenses</h3>
+         <canvas id="revenueChart" class="h-64 w-full"></canvas>
       </div>
 
       <div class="w-full rounded-md bg-card px-[26px] py-[20px] text-card-foreground">
         <h3 class="text-[18px] font-[500] text-foreground mb-4">Quick Actions</h3>
         <div class="space-y-3">
-          <a href="/dashboard/marketing/create-campaign" class="flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-foreground hover:bg-muted rounded-md text-sm font-medium transition">
+          <a href="/startup-dashboard/financial/add-expense" class="flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-foreground hover:bg-muted rounded-md text-sm font-medium transition">
 <svg class="w-4 h-4 mr-2 lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <path d="M5 12h14"></path>
   <path d="M12 5v14"></path>
 </svg>
-            Create Campaign
+            Add Expense
           </a>
            <button class="flex items-center justify-center w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-md text-sm font-medium transition">
-<svg class="w-4 h-4 mr-2 lucide lucide-mail" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-  <polyline points="22,6 12,13 2,6"></polyline>
+<svg class="w-4 h-4 mr-2 lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+  <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+  <path d="M10 9H8"></path>
+  <path d="M16 13H8"></path>
+  <path d="M16 17H8"></path>
 </svg>
-            Send Newsletter
+            Generate Report
           </button>
           <button class="flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-foreground hover:bg-muted rounded-md text-sm font-medium transition">
-<svg class="w-4 h-4 mr-2 lucide lucide-bar-chart" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <line x1="12" x1="12" y1="20" y2="10"></line>
-  <line x1="18" x1="18" y1="20" y2="4"></line>
-  <line x1="6" x1="6" y1="20" y2="16"></line>
+<svg class="w-4 h-4 mr-2 lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+  <circle cx="12" cy="12" r="3"></circle>
 </svg>
-            View Analytics
+            Budget Settings
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Active Campaigns -->
+    <!-- Financial Transactions -->
     <div class="rounded-[6px] bg-card px-2 py-5 text-card-foreground shadow-sm">
       <div class="flex flex-col items-center justify-between gap-[16px] lg:flex-row">
-        <h3 class="text-[28px] font-[600] text-primary">Active Campaigns</h3>
+        <h3 class="text-[28px] font-[600] text-primary">Recent Transactions</h3>
         <div class="flex items-center gap-[20px]">
           <button class="justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md flex items-center gap-[8px]" type="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -269,63 +268,37 @@ document.addEventListener('DOMContentLoaded', function() {
           <table class="w-full caption-bottom text-sm min-w-full overflow-x-auto">
             <thead class="[&amp;_tr]:border-b h-[64px] bg-muted">
               <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Campaign</th>
-                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 w-[200px] text-[16px] font-[600] text-primary lg:text-[22px]">Status</th>
-                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 w-[116px] text-[16px] font-[600] text-primary lg:text-[22px]">Reach</th>
-                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Engagement</th>
-                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">ROI</th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Description</th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 w-[200px] text-[16px] font-[600] text-primary lg:text-[22px]">Category</th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 w-[116px] text-[16px] font-[600] text-primary lg:text-[22px]">Amount</th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Date</th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Type</th>
               </tr>
             </thead>
             <tbody class="[&amp;_tr:last-child]:border-0">
               <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                   <div class="flex w-[200px] items-center gap-[10px]">
-                    <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-<svg class="w-5 h-5 text-blue-600 dark:text-blue-400 lucide lucide-megaphone" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M3 11l18-5v12L3 14v-3z"></path>
-  <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+                    <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+<svg class="w-5 h-5 text-green-600 dark:text-green-400 lucide lucide-trending-up" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M16 7h6v6"></path>
+  <path d="m22 7-8.5 8.5-5-5L2 17"></path>
 </svg>
                     </div>
-                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Product Launch</p>
+                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Client Payment</p>
                   </div>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded">Active</span>
+                  <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs rounded">Revenue</span>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">15.2K</p>
+                  <p class="text-[14px] font-[500] text-green-600 dark:text-green-400 lg:text-[16px]">+$15,000</p>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">8.7%</p>
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Dec 15, 2023</p>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <p class="text-[14px] font-[500] text-green-600 dark:text-green-400 lg:text-[16px]">+245%</p>
-                </td>
-              </tr>
-
-              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <div class="flex w-[200px] items-center gap-[10px]">
-                    <div class="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center">
-<svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 lucide lucide-mail" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-  <polyline points="22,6 12,13 2,6"></polyline>
-</svg>
-                    </div>
-                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Newsletter Campaign</p>
-                  </div>
-                </td>
-                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs rounded">Paused</span>
-                </td>
-                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">8.9K</p>
-                </td>
-                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">12.3%</p>
-                </td>
-                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <p class="text-[14px] font-[500] text-green-600 dark:text-green-400 lg:text-[16px]">+180%</p>
+                  <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded">Income</span>
                 </td>
               </tr>
 
@@ -333,28 +306,51 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                   <div class="flex w-[200px] items-center gap-[10px]">
                     <div class="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center">
-<svg class="w-5 h-5 text-red-600 dark:text-red-400 lucide lucide-share-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="18" cy="5" r="3"></circle>
-  <circle cx="6" cy="12" r="3"></circle>
-  <circle cx="18" cy="19" r="3"></circle>
-  <path d="m8.59 13.51 6.83 3.98"></path>
-  <path d="m15.41 6.51-6.82 3.98"></path>
+<svg class="w-5 h-5 text-red-600 dark:text-red-400 lucide lucide-trending-down" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M22 17H2"></path>
+  <path d="m22 17-8.5-8.5-5 5L2 7"></path>
 </svg>
                     </div>
-                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Social Media Blitz</p>
+                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Office Rent</p>
                   </div>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <span class="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 text-xs rounded">Ended</span>
+                  <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs rounded">Operations</span>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">22.1K</p>
+                  <p class="text-[14px] font-[500] text-red-600 dark:text-red-400 lg:text-[16px]">-$3,500</p>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">6.4%</p>
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Dec 1, 2023</p>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <p class="text-[14px] font-[500] text-green-600 dark:text-green-400 lg:text-[16px]">+320%</p>
+                  <span class="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 text-xs rounded">Expense</span>
+                </td>
+              </tr>
+
+              <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <div class="flex w-[200px] items-center gap-[10px]">
+                    <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+<svg class="w-5 h-5 text-green-600 dark:text-green-400 lucide lucide-trending-up" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M16 7h6v6"></path>
+  <path d="m22 7-8.5 8.5-5-5L2 17"></path>
+</svg>
+                    </div>
+                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Product Sale</p>
+                  </div>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs rounded">Revenue</span>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <p class="text-[14px] font-[500] text-green-600 dark:text-green-400 lg:text-[16px]">+$8,750</p>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Nov 28, 2023</p>
+                </td>
+                <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                  <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded">Income</span>
                 </td>
               </tr>
             </tbody>

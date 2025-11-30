@@ -1,0 +1,689 @@
+<!-- Enterprise Dashboard Users Page -->
+<div class="min-h-screen bg-background">
+  <div id="enterprise-dashboard-main-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+                <div class="flex flex-col gap-4 lg:gap-6">
+  <div class="flex items-center justify-between">
+    <div class="grid gap-1">
+      <h1 class="font-heading text-2xl font-semibold text-foreground">Enterprise
+        User Management</h1>
+      <p class="text-base text-muted-foreground">Manage user roles and
+        permissions within your enterprise.</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <line x1="19" y1="8" x2="19" y2="14"></line>
+          <line x1="22" y1="11" x2="16" y2="11"></line>
+        </svg>
+        Add Enterprise User
+      </button>
+    </div>
+  </div>
+
+   <!-- Enterprise Role Management -->
+   <div class="mb-8">
+     <div class="flex items-center justify-between mb-4">
+       <h3 class="text-xl font-semibold text-foreground">Enterprise User Roles</h3>
+       <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+         <!-- Search Input -->
+         <div class="relative">
+           <input type="text" placeholder="Search users..." class="pl-9 pr-4 py-1.5 text-sm border border-border dark:border-border rounded-md bg-background focus:outline-none focus:ring-1 focus:ring-blue-500">
+           <div class="absolute left-2.5 top-1.5 text-gray-400">
+             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search">
+               <circle cx="11" cy="11" r="8"></circle>
+               <path d="m21 21-4.3-4.3"></path>
+             </svg>
+           </div>
+         </div>
+
+         <div class="relative">
+           <select class="px-3 py-1.5 text-sm border border-border dark:border-border rounded-md bg-background appearance-none pr-8">
+             <option>All Roles</option>
+             <option>Enterprise Admin</option>
+             <option>Startup Manager</option>
+             <option>Project Lead</option>
+             <option>Analyst</option>
+             <option>Viewer</option>
+           </select>
+           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-foreground">
+             <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+             </svg>
+           </div>
+         </div>
+
+         <div class="relative">
+           <select class="px-3 py-1.5 text-sm border border-border dark:border-border rounded-md bg-background appearance-none pr-8">
+             <option>All Startups</option>
+             <option>TechStart Inc</option>
+             <option>HealthTech Solutions</option>
+             <option>FinTech Innovations</option>
+             <option>AgriTech Ventures</option>
+             <option>EduTech Academy</option>
+             <option>LogiTech Systems</option>
+           </select>
+           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-foreground">
+             <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+             </svg>
+           </div>
+         </div>
+
+         <button class="px-3 py-1.5 text-sm bg-muted dark:bg-background rounded-md hover:bg-muted/50 flex items-center gap-1 export-btn">
+           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download">
+             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+             <polyline points="7 10 12 15 17 10"></polyline>
+             <line x1="12" y1="15" x2="12" y2="3"></line>
+           </svg>
+           Export
+         </button>
+       </div>
+     </div>
+
+     <div class="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+       <table class="min-w-full text-sm">
+         <thead class="bg-muted">
+           <tr>
+             <th class="py-3 px-4 text-left font-medium text-foreground">
+               <div class="flex items-center">
+                 <input type="checkbox" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border">
+                 <span class="ml-2">User</span>
+               </div>
+             </th>
+             <th class="py-3 px-4 text-left font-medium text-foreground">Enterprise Role</th>
+             <th class="py-3 px-4 text-left font-medium text-foreground">Startup Access</th>
+             <th class="py-3 px-4 text-left font-medium text-foreground">Permissions</th>
+             <th class="py-3 px-4 text-left font-medium text-foreground">Status</th>
+             <th class="py-3 px-4 text-left font-medium text-foreground">Last Login</th>
+             <th class="py-3 px-4 text-left font-medium text-foreground"></th>
+           </tr>
+         </thead>
+         <tbody class="divide-y divide-border">
+           <!-- User 1 -->
+           <tr class="hover:bg-muted dark:hover:bg-muted/50" data-user-id="enterprise-user-1">
+             <td class="py-3 px-4">
+               <div class="flex items-center">
+                 <input type="checkbox" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border mr-2">
+                 <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-bold mr-2">
+                   JS
+                 </div>
+                 <div>
+                   <div class="font-medium">John Smith</div>
+                   <div class="text-xs text-muted-foreground dark:text-gray-400">john.smith@enterprise.com</div>
+                 </div>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <select class="px-2 py-1 text-xs border border-border dark:border-border rounded bg-background role-select" data-user-id="enterprise-user-1">
+                 <option value="Enterprise Admin" selected="">Enterprise Admin</option>
+                 <option value="Startup Manager">Startup Manager</option>
+                 <option value="Project Lead">Project Lead</option>
+                 <option value="Analyst">Analyst</option>
+                 <option value="Viewer">Viewer</option>
+               </select>
+             </td>
+             <td class="py-3 px-4">
+               <div class="flex -space-x-2">
+                 <div class="w-6 h-6 rounded-full bg-gray-300 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-gray-700" title="All Startups">ALL</div>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <div class="flex flex-wrap gap-1">
+                 <span class="px-2 py-0.5 text-xs bg-muted dark:bg-background rounded">Full Access</span>
+                 <span class="px-2 py-0.5 text-xs bg-muted dark:bg-background rounded">Admin</span>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <span class="px-2 py-1 text-xs rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">
+                 Active
+               </span>
+             </td>
+             <td class="py-3 px-4 text-foreground">2 hours ago</td>
+             <td class="py-3 px-4">
+               <div class="flex gap-1">
+                 <button class="p-1.5 rounded-md hover:bg-muted/50 edit-permissions-btn" data-user-id="enterprise-user-1" title="Edit Permissions">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings">
+                     <circle cx="12" cy="12" r="3"></circle>
+                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                   </svg>
+                 </button>
+                 <button class="p-1.5 rounded-md hover:bg-muted/50" title="More options">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal">
+                     <circle cx="12" cy="12" r="1"></circle>
+                     <circle cx="19" cy="12" r="1"></circle>
+                     <circle cx="5" cy="12" r="1"></circle>
+                   </svg>
+                 </button>
+               </div>
+             </td>
+           </tr>
+
+           <!-- User 2 -->
+           <tr class="hover:bg-muted dark:hover:bg-muted/50" data-user-id="enterprise-user-2">
+             <td class="py-3 px-4">
+               <div class="flex items-center">
+                 <input type="checkbox" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border mr-2">
+                 <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white text-sm font-bold mr-2">
+                   JD
+                 </div>
+                 <div>
+                   <div class="font-medium">Jane Doe</div>
+                   <div class="text-xs text-muted-foreground dark:text-gray-400">jane.doe@enterprise.com</div>
+                 </div>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <select class="px-2 py-1 text-xs border border-border dark:border-border rounded bg-background role-select" data-user-id="enterprise-user-2">
+                 <option value="Enterprise Admin">Enterprise Admin</option>
+                 <option value="Startup Manager" selected="">Startup Manager</option>
+                 <option value="Project Lead">Project Lead</option>
+                 <option value="Analyst">Analyst</option>
+                 <option value="Viewer">Viewer</option>
+               </select>
+             </td>
+             <td class="py-3 px-4">
+               <div class="flex -space-x-2">
+                 <div class="w-6 h-6 rounded-full bg-gray-300 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-gray-700" title="TechStart Inc">TS</div>
+                 <div class="w-6 h-6 rounded-full bg-gray-300 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-gray-700" title="HealthTech Solutions">HS</div>
+                 <div class="w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600">+2</div>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <div class="flex flex-wrap gap-1">
+                 <span class="px-2 py-0.5 text-xs bg-muted dark:bg-background rounded">Read</span>
+                 <span class="px-2 py-0.5 text-xs bg-muted dark:bg-background rounded">Write</span>
+                 <span class="px-2 py-0.5 text-xs bg-muted dark:bg-background rounded">Manage</span>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <span class="px-2 py-1 text-xs rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">
+                 Active
+               </span>
+             </td>
+             <td class="py-3 px-4 text-foreground">1 day ago</td>
+             <td class="py-3 px-4">
+               <div class="flex gap-1">
+                 <button class="p-1.5 rounded-md hover:bg-muted/50 edit-permissions-btn" data-user-id="enterprise-user-2" title="Edit Permissions">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings">
+                     <circle cx="12" cy="12" r="3"></circle>
+                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                   </svg>
+                 </button>
+                 <button class="p-1.5 rounded-md hover:bg-muted/50" title="More options">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal">
+                     <circle cx="12" cy="12" r="1"></circle>
+                     <circle cx="19" cy="12" r="1"></circle>
+                     <circle cx="5" cy="12" r="1"></circle>
+                   </svg>
+                 </button>
+               </div>
+             </td>
+           </tr>
+
+           <!-- User 3 -->
+           <tr class="hover:bg-muted dark:hover:bg-muted/50" data-user-id="enterprise-user-3">
+             <td class="py-3 px-4">
+               <div class="flex items-center">
+                 <input type="checkbox" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border mr-2">
+                 <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white text-sm font-bold mr-2">
+                   BW
+                 </div>
+                 <div>
+                   <div class="font-medium">Bob Wilson</div>
+                   <div class="text-xs text-muted-foreground dark:text-gray-400">bob.wilson@enterprise.com</div>
+                 </div>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <select class="px-2 py-1 text-xs border border-border dark:border-border rounded bg-background role-select" data-user-id="enterprise-user-3">
+                 <option value="Enterprise Admin">Enterprise Admin</option>
+                 <option value="Startup Manager">Startup Manager</option>
+                 <option value="Project Lead" selected="">Project Lead</option>
+                 <option value="Analyst">Analyst</option>
+                 <option value="Viewer">Viewer</option>
+               </select>
+             </td>
+             <td class="py-3 px-4">
+               <div class="flex -space-x-2">
+                 <div class="w-6 h-6 rounded-full bg-gray-300 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-gray-700" title="TechStart Inc">TS</div>
+                 <div class="w-6 h-6 rounded-full bg-gray-300 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-gray-700" title="LogiTech Systems">LS</div>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <div class="flex flex-wrap gap-1">
+                 <span class="px-2 py-0.5 text-xs bg-muted dark:bg-background rounded">Read</span>
+                 <span class="px-2 py-0.5 text-xs bg-muted dark:bg-background rounded">Write</span>
+                 <span class="px-2 py-0.5 text-xs bg-muted dark:bg-background rounded">Project Mgmt</span>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <span class="px-2 py-1 text-xs rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">
+                 Active
+               </span>
+             </td>
+             <td class="py-3 px-4 text-foreground">3 hours ago</td>
+             <td class="py-3 px-4">
+               <div class="flex gap-1">
+                 <button class="p-1.5 rounded-md hover:bg-muted/50 edit-permissions-btn" data-user-id="enterprise-user-3" title="Edit Permissions">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings">
+                     <circle cx="12" cy="12" r="3"></circle>
+                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                   </svg>
+                 </button>
+                 <button class="p-1.5 rounded-md hover:bg-muted/50" title="More options">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal">
+                     <circle cx="12" cy="12" r="1"></circle>
+                     <circle cx="19" cy="12" r="1"></circle>
+                     <circle cx="5" cy="12" r="1"></circle>
+                   </svg>
+                 </button>
+               </div>
+             </td>
+           </tr>
+
+           <!-- User 4 -->
+           <tr class="hover:bg-muted dark:hover:bg-muted/50" data-user-id="enterprise-user-4">
+             <td class="py-3 px-4">
+               <div class="flex items-center">
+                 <input type="checkbox" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border mr-2">
+                 <div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-white text-sm font-bold mr-2">
+                   EC
+                 </div>
+                 <div>
+                   <div class="font-medium">Dr. Emily Carter</div>
+                   <div class="text-xs text-muted-foreground dark:text-gray-400">emily.carter@enterprise.com</div>
+                 </div>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <select class="px-2 py-1 text-xs border border-border dark:border-border rounded bg-background role-select" data-user-id="enterprise-user-4">
+                 <option value="Enterprise Admin">Enterprise Admin</option>
+                 <option value="Startup Manager">Startup Manager</option>
+                 <option value="Project Lead">Project Lead</option>
+                 <option value="Analyst" selected="">Analyst</option>
+                 <option value="Viewer">Viewer</option>
+               </select>
+             </td>
+             <td class="py-3 px-4">
+               <div class="flex -space-x-2">
+                 <div class="w-6 h-6 rounded-full bg-gray-300 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-gray-700" title="HealthTech Solutions">HS</div>
+                 <div class="w-6 h-6 rounded-full bg-gray-300 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-gray-700" title="EduTech Academy">EA</div>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <div class="flex flex-wrap gap-1">
+                 <span class="px-2 py-0.5 text-xs bg-muted dark:bg-background rounded">Read</span>
+                 <span class="px-2 py-0.5 text-xs bg-muted dark:bg-background rounded">Analytics</span>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <span class="px-2 py-1 text-xs rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400">
+                 Active
+               </span>
+             </td>
+             <td class="py-3 px-4 text-foreground">5 hours ago</td>
+             <td class="py-3 px-4">
+               <div class="flex gap-1">
+                 <button class="p-1.5 rounded-md hover:bg-muted/50 edit-permissions-btn" data-user-id="enterprise-user-4" title="Edit Permissions">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings">
+                     <circle cx="12" cy="12" r="3"></circle>
+                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                   </svg>
+                 </button>
+                 <button class="p-1.5 rounded-md hover:bg-muted/50" title="More options">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal">
+                     <circle cx="12" cy="12" r="1"></circle>
+                     <circle cx="19" cy="12" r="1"></circle>
+                     <circle cx="5" cy="12" r="1"></circle>
+                   </svg>
+                 </button>
+               </div>
+             </td>
+           </tr>
+
+           <!-- User 5 -->
+           <tr class="hover:bg-muted dark:hover:bg-muted/50" data-user-id="enterprise-user-5">
+             <td class="py-3 px-4">
+               <div class="flex items-center">
+                 <input type="checkbox" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border mr-2">
+                 <div class="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-sm font-bold mr-2">
+                   TH
+                 </div>
+                 <div>
+                   <div class="font-medium">Tom Harris</div>
+                   <div class="text-xs text-muted-foreground dark:text-gray-400">tom.harris@enterprise.com</div>
+                 </div>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <select class="px-2 py-1 text-xs border border-border dark:border-border rounded bg-background role-select" data-user-id="enterprise-user-5">
+                 <option value="Enterprise Admin">Enterprise Admin</option>
+                 <option value="Startup Manager">Startup Manager</option>
+                 <option value="Project Lead">Project Lead</option>
+                 <option value="Analyst">Analyst</option>
+                 <option value="Viewer" selected="">Viewer</option>
+               </select>
+             </td>
+             <td class="py-3 px-4">
+               <div class="flex -space-x-2">
+                 <div class="w-6 h-6 rounded-full bg-gray-300 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-gray-700" title="FinTech Innovations">FI</div>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <div class="flex flex-wrap gap-1">
+                 <span class="px-2 py-0.5 text-xs bg-muted dark:bg-background rounded">Read Only</span>
+               </div>
+             </td>
+             <td class="py-3 px-4">
+               <span class="px-2 py-1 text-xs rounded-full bg-muted dark:bg-background text-gray-800 dark:text-gray-300">
+                 Inactive
+               </span>
+             </td>
+             <td class="py-3 px-4 text-foreground">2 weeks ago</td>
+             <td class="py-3 px-4">
+               <div class="flex gap-1">
+                 <button class="p-1.5 rounded-md hover:bg-muted/50 edit-permissions-btn" data-user-id="enterprise-user-5" title="Edit Permissions">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings">
+                     <circle cx="12" cy="12" r="3"></circle>
+                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                   </svg>
+                 </button>
+                 <button class="p-1.5 rounded-md hover:bg-muted/50" title="More options">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-more-horizontal">
+                     <circle cx="12" cy="12" r="1"></circle>
+                     <circle cx="19" cy="12" r="1"></circle>
+                     <circle cx="5" cy="12" r="1"></circle>
+                   </svg>
+                 </button>
+               </div>
+             </td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+
+     <!-- Permissions Modal (Hidden by default) -->
+     <div id="enterprise-permissions-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
+       <div class="bg-background rounded-lg w-full max-w-md">
+         <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+           <h3 class="text-lg font-semibold">Edit Enterprise Permissions</h3>
+           <button id="close-enterprise-permissions-modal" class="text-muted-foreground hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x">
+               <path d="M18 6 6 18"></path>
+               <path d="m6 6 12 12"></path>
+             </svg>
+           </button>
+         </div>
+         <div class="p-4">
+           <div class="mb-4">
+             <label class="block text-sm font-medium text-foreground mb-2">User</label>
+             <div id="enterprise-modal-user-name" class="text-foreground font-medium"></div>
+           </div>
+
+           <div class="mb-4">
+             <label class="block text-sm font-medium text-foreground mb-2">Enterprise Role</label>
+             <select id="enterprise-modal-user-role" class="w-full px-3 py-2 border border-border dark:border-border rounded-md bg-background dark:bg-background">
+               <option value="Enterprise Admin">Enterprise Admin</option>
+               <option value="Startup Manager">Startup Manager</option>
+               <option value="Project Lead">Project Lead</option>
+               <option value="Analyst">Analyst</option>
+               <option value="Viewer">Viewer</option>
+             </select>
+           </div>
+
+           <div class="mb-4">
+             <label class="block text-sm font-medium text-foreground mb-2">Startup Access</label>
+             <div class="space-y-2 max-h-32 overflow-y-auto" id="startup-access-list">
+               <label class="flex items-center">
+                 <input type="checkbox" value="all" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border mr-2">
+                 <span class="text-sm text-foreground">All
+                   Startups</span>
+               </label>
+               <label class="flex items-center">
+                 <input type="checkbox" value="techstart" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border mr-2">
+                 <span class="text-sm text-foreground">TechStart
+                   Inc</span>
+               </label>
+               <label class="flex items-center">
+                 <input type="checkbox" value="healthtech" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border mr-2">
+                 <span class="text-sm text-foreground">HealthTech Solutions</span>
+               </label>
+               <label class="flex items-center">
+                 <input type="checkbox" value="fintech" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border mr-2">
+                 <span class="text-sm text-foreground">FinTech
+                   Innovations</span>
+               </label>
+               <label class="flex items-center">
+                 <input type="checkbox" value="agritech" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border mr-2">
+                 <span class="text-sm text-foreground">AgriTech
+                   Ventures</span>
+               </label>
+               <label class="flex items-center">
+                 <input type="checkbox" value="edutech" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border mr-2">
+                 <span class="text-sm text-foreground">EduTech
+                   Academy</span>
+               </label>
+               <label class="flex items-center">
+                 <input type="checkbox" value="logitech" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border mr-2">
+                 <span class="text-sm text-foreground">LogiTech
+                   Systems</span>
+               </label>
+             </div>
+           </div>
+
+           <div class="mb-4">
+             <label class="block text-sm font-medium text-foreground mb-2">Permissions</label>
+             <div class="space-y-2" id="enterprise-permissions-checklist">
+               <label class="flex items-center">
+                 <input type="checkbox" value="read" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border">
+                 <span class="ml-2 text-sm text-foreground">Read</span>
+               </label>
+               <label class="flex items-center">
+                 <input type="checkbox" value="write" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border">
+                 <span class="ml-2 text-sm text-foreground">Write</span>
+               </label>
+               <label class="flex items-center">
+                 <input type="checkbox" value="manage" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border">
+                 <span class="ml-2 text-sm text-foreground">Manage Startups</span>
+               </label>
+               <label class="flex items-center">
+                 <input type="checkbox" value="analytics" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border">
+                 <span class="ml-2 text-sm text-foreground">View
+                   Analytics</span>
+               </label>
+               <label class="flex items-center">
+                 <input type="checkbox" value="admin" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border">
+                 <span class="ml-2 text-sm text-foreground">Enterprise Admin</span>
+               </label>
+             </div>
+           </div>
+         </div>
+         <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-2">
+           <button id="cancel-enterprise-permissions" class="px-4 py-2 text-sm border border-border dark:border-border rounded-md hover:bg-muted/50">
+             Cancel
+           </button>
+           <button id="save-enterprise-permissions" class="px-4 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+             Save
+           </button>
+         </div>
+       </div>
+     </div>
+
+     <!-- Data Export Modal -->
+     <div id="enterprise-export-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 p-4">
+       <div class="bg-background rounded-lg w-full max-w-md">
+         <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+           <h3 class="text-lg font-semibold">Export Enterprise Data</h3>
+           <button id="close-enterprise-export-modal" class="text-muted-foreground hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x">
+               <path d="M18 6 6 18"></path>
+               <path d="m6 6 12 12"></path>
+             </svg>
+           </button>
+         </div>
+         <div class="p-4">
+           <div class="mb-4">
+             <label class="block text-sm font-medium text-foreground mb-2">Export Section</label>
+             <select id="enterprise-export-section" class="w-full px-3 py-2 border border-border dark:border-border rounded-md bg-background dark:bg-background">
+               <option value="users">Enterprise Users</option>
+               <option value="startups">All Startups</option>
+               <option value="projects">All Projects</option>
+               <option value="analytics">Enterprise Analytics</option>
+               <option value="all">All Enterprise Data</option>
+             </select>
+           </div>
+
+           <div class="mb-4">
+             <label class="block text-sm font-medium text-foreground mb-2">Format</label>
+             <div class="grid grid-cols-3 gap-2" id="enterprise-format-options">
+               <label class="flex items-center justify-center p-2 border border-border dark:border-border rounded-md cursor-pointer hover:bg-muted/50">
+                 <input type="radio" name="enterprise-format" value="csv" class="mr-2" checked="">
+                 <span class="text-sm">CSV</span>
+               </label>
+               <label class="flex items-center justify-center p-2 border border-border dark:border-border rounded-md cursor-pointer hover:bg-muted/50">
+                 <input type="radio" name="enterprise-format" value="excel" class="mr-2">
+                 <span class="text-sm">Excel</span>
+               </label>
+               <label class="flex items-center justify-center p-2 border border-border dark:border-border rounded-md cursor-pointer hover:bg-muted/50">
+                 <input type="radio" name="enterprise-format" value="pdf" class="mr-2">
+                 <span class="text-sm">PDF</span>
+               </label>
+             </div>
+           </div>
+
+           <div class="mb-4">
+             <label class="flex items-center">
+               <input type="checkbox" id="enterprise-include-filters" class="rounded border-border text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-background dark:border-border">
+               <span class="ml-2 text-sm text-foreground">Include current filters</span>
+             </label>
+           </div>
+         </div>
+         <div class="p-4 border-t border-gray-200 dark:border-gray-700 flex justify-end gap-2">
+           <button id="cancel-enterprise-export" class="px-4 py-2 text-sm border border-border dark:border-border rounded-md hover:bg-muted/50">
+             Cancel
+           </button>
+           <button id="start-enterprise-export" class="px-4 py-2 text-sm bg-primary text-primary-foreground rounded-md hover:bg-primary/90 flex items-center gap-2">
+             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download">
+               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+               <polyline points="7 10 12 15 17 10"></polyline>
+               <line x1="12" y1="15" x2="12" y2="3"></line>
+             </svg>
+             Export
+           </button>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+
+<script>
+  // Function to handle enterprise user management function
+  initEnterpriseUserManagement() { // Handle add enterprise user button const
+  addUserBtn = document.querySelector('button[title="Add Enterprise User"]'); if
+  (addUserBtn) { addUserBtn.addEventListener('click', function() { // Open user
+  creation modal or navigate to creation page console.log('Adding new enterprise
+  user...'); // In a real implementation, this would open a modal or navigate to
+  a form }); } // Initialize permissions modal initEnterprisePermissionsModal();
+  // Initialize data export functionality initEnterpriseExportFunctionality(); }
+  // Initialize enterprise permissions modal function
+  initEnterprisePermissionsModal() { // Handle edit permissions buttons
+  document.querySelectorAll('.edit-permissions-btn').forEach(button => {
+  button.addEventListener('click', function() { const userId =
+  this.dataset.userId; const userRow =
+  document.querySelector(`tr[data-user-id="${userId}"]`); const userName =
+  userRow.querySelector('td:first-child .font-medium').textContent; const
+  userRole = userRow.querySelector('.role-select').value;
+  document.getElementById('enterprise-modal-user-name').textContent = userName;
+  document.getElementById('enterprise-modal-user-role').value = userRole; // In a
+  real implementation, we would load the user's permissions and startup
+  access here // For now, just set some sample permissions based on role const
+  permissionsChecklist =
+  document.getElementById('enterprise-permissions-checklist'); const
+  startupAccessList = document.getElementById('startup-access-list');
+  const checkboxes =
+  permissionsChecklist.querySelectorAll('input[type="checkbox"]'); const
+  startupCheckboxes =
+  startupAccessList.querySelectorAll('input[type="checkbox"]'); // Reset all
+  checkboxes.forEach(checkbox => checkbox.checked = false);
+  startupCheckboxes.forEach(checkbox => checkbox.checked = false); // Set
+  based on role if (userRole === 'Enterprise Admin') {
+  checkboxes.forEach(checkbox => checkbox.checked = true);
+  startupCheckboxes.forEach(checkbox => { if (checkbox.value === 'all')
+  checkbox.checked = true; }); } else if (userRole === 'Startup Manager') {
+  ['read', 'write', 'manage'].forEach(perm => { const checkbox =
+  permissionsChecklist.querySelector(`input[value="${perm}"]`); if (checkbox)
+  checkbox.checked = true; }); ['techstart', 'healthtech'].forEach(ent => { const
+  checkbox = startupAccessList.querySelector(`input[value="${ent}"]`); if
+  (checkbox) checkbox.checked = true; }); } else if (userRole === 'Project
+  Lead') { ['read', 'write'].forEach(perm => { const checkbox =
+  permissionsChecklist.querySelector(`input[value="${perm}"]`); if (checkbox)
+  checkbox.checked = true; }); ['techstart', 'logitech'].forEach(ent => { const
+  checkbox = startupAccessList.querySelector(`input[value="${ent}"]`); if
+  (checkbox) checkbox.checked = true; }); } else if (userRole === 'Analyst') {
+  ['read', 'analytics'].forEach(perm => { const checkbox =
+  permissionsChecklist.querySelector(`input[value="${perm}"]`); if (checkbox)
+  checkbox.checked = true; }); ['healthtech', 'edutech'].forEach(ent => { const
+  checkbox = startupAccessList.querySelector(`input[value="${ent}"]`); if
+  (checkbox) checkbox.checked = true; }); } else if (userRole === 'Viewer') {
+  const checkbox = permissionsChecklist.querySelector('input[value="read"]'); if
+  (checkbox) checkbox.checked = true; const entCheckbox =
+  startupAccessList.querySelector('input[value="fintech"]'); if (entCheckbox)
+  entCheckbox.checked = true; }
+  document.getElementById('enterprise-permissions-modal').classList.remove('hidden');
+  }); }); // Close enterprise permissions modal
+  document.getElementById('close-enterprise-permissions-modal').addEventListener('click',
+  function() {
+  document.getElementById('enterprise-permissions-modal').classList.add('hidden');
+  });
+  document.getElementById('cancel-enterprise-permissions').addEventListener('click',
+  function() {
+  document.getElementById('enterprise-permissions-modal').classList.add('hidden');
+  }); // Handle save enterprise permissions
+  document.getElementById('save-enterprise-permissions').addEventListener('click',
+  function() { const userId =
+  document.querySelector('tr[data-user-id]').dataset.userId; // This would be
+  the current user being edited const newRole =
+  document.getElementById('enterprise-modal-user-role').value; const permissions
+  = Array.from(document.querySelectorAll('#enterprise-permissions-checklist
+  input:checked')) .map(checkbox => checkbox.value); const startupAccess =
+  Array.from(document.querySelectorAll('#startup-access-list input:checked'))
+  .map(checkbox => checkbox.value); console.log(`Updating enterprise user
+  ${userId} to role ${newRole} with permissions:`, permissions, 'and startup
+  access:', startupAccess); // In a real implementation, this would update
+  the user's permissions // For now, just show a success message and close the
+  modal   showToast(`Enterprise permissions updated for user. Role: ${newRole},
+  Permissions: ${permissions.join(', ')}, Startup Access:
+  ${startupAccess.join(', ')}`, 'success');
+  document.getElementById('enterprise-permissions-modal').classList.add('hidden');
+  }); } // Initialize enterprise data export functionality function
+  initEnterpriseExportFunctionality() { const exportButtons =
+  document.querySelectorAll('.export-btn, [id*="enterprise-export"], [class*="export"]');
+  // Add event listeners to all export buttons
+  exportButtons.forEach(button => { button.addEventListener('click', function()
+  {
+  document.getElementById('enterprise-export-modal').classList.remove('hidden');
+  }); }); // Close enterprise export modal
+  document.getElementById('close-enterprise-export-modal').addEventListener('click',
+  function() {
+  document.getElementById('enterprise-export-modal').classList.add('hidden'); });
+  document.getElementById('cancel-enterprise-export').addEventListener('click',
+  function() {
+  document.getElementById('enterprise-export-modal').classList.add('hidden'); });
+  // Handle enterprise export start
+  document.getElementById('start-enterprise-export').addEventListener('click',
+  function() { const section =
+  document.getElementById('enterprise-export-section').value; const format =
+  document.querySelector('input[name="enterprise-format"]:checked').value; const
+  includeFilters = document.getElementById('enterprise-include-filters').checked;
+  console.log(`Exporting enterprise ${section} data in ${format} format. Include
+  filters: ${includeFilters}`); // In a real implementation, this would trigger
+  the actual export // For now, just show a success message and close the modal
+  showToast(`Enterprise export started: ${section} data as
+  ${format.toUpperCase()}`, 'success');
+  document.getElementById('enterprise-export-modal').classList.add('hidden'); }); }
+  // Initialize when page loads document.addEventListener('DOMContentLoaded',
+  initEnterpriseUserManagement);
+</script>

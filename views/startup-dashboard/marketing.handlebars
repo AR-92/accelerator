@@ -1,46 +1,81 @@
-<!-- Dashboard Fund Page -->
+<!-- Dashboard Marketing Page -->
 <div class="min-h-screen bg-background">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
                 <div class="flex flex-col gap-4 lg:gap-6">
   <div class="flex items-center justify-between">
     <div class="grid gap-1">
-      <h1 class="font-heading text-2xl font-semibold text-foreground">Funding
+      <h1 class="font-heading text-2xl font-semibold text-foreground">Marketing
         Dashboard</h1>
-      <p class="text-base text-muted-foreground">Track your fundraising progress
-        and investor relations.</p>
+      <p class="text-base text-muted-foreground">Track campaign performance and
+        audience engagement.</p>
     </div>
     <div class="flex items-center gap-2">
       <button class="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="7,10 12,15 17,10"></polyline>
-          <line x1="12" y1="15" x2="12" y2="3"></line>
+          <path d="M5 12h14"></path>
+          <path d="M12 5v14"></path>
         </svg>
-        Update Investors
+        New Campaign
       </button>
     </div>
   </div>
 
-    <!-- Funding Metrics -->
+    <!-- Marketing Metrics -->
     <div class="grid grid-cols-1 gap-[17px] sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
       <div class="rounded-md bg-card px-2 py-10 text-card-foreground shadow-sm">
         <div class="flex items-center justify-between px-[10px] py-[4px]">
           <div class="flex flex-col gap-[4px]">
-            <h3 class="text-[14px] font-[500] text-muted-foreground">Funds Raised</h3>
-            <p class="text-[18px] font-[600] text-foreground">$250K</p>
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Website Traffic</h3>
+            <p class="text-[18px] font-[600] text-foreground">12.5K</p>
           </div>
             <div>
                <div class="bg-blue-50 dark:bg-blue-950 rounded-md">
                  <div class="w-10 h-10 bg-blue-50 dark:bg-blue-950 rounded-full relative">
                    <div class="flex items-center justify-center w-9 h-9 bg-blue-600 dark:bg-blue-400 rounded-full absolute top-0.5 left-0.5">
-<svg class="w-4 h-4 text-white lucide lucide-dollar-sign" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <line x1="12" x2="12" y1="2" y2="22"></line>
-  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+<svg class="w-4 h-4 text-white lucide lucide-users" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+  <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+  <circle cx="9" cy="7" r="4"></circle>
 </svg>
+     </div>
+   </div>
+ </div>
 </div>
-                </div>
-              </div>
-           </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const ctx = document.getElementById('campaignChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Facebook', 'Twitter', 'Instagram', 'LinkedIn', 'Email'],
+      datasets: [{
+        label: 'Impressions',
+        data: [12000, 8000, 15000, 6000, 10000],
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }, {
+        label: 'Clicks',
+        data: [1200, 800, 1500, 600, 1000],
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+});
+</script>
         </div>
         <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
 
@@ -49,7 +84,7 @@
   <path d="m22 7-8.5 8.5-5-5L2 17"></path>
 </svg>
 
-          <span class="text-green-600 dark:text-green-400">+25%</span>Since last
+          <span class="text-green-600 dark:text-green-400">+18%</span>Since last
           month
         </p>
       </div>
@@ -57,8 +92,8 @@
       <div class="rounded-md bg-card px-2 py-10 text-card-foreground shadow-sm">
         <div class="flex items-center justify-between px-[10px] py-[4px]">
           <div class="flex flex-col gap-[4px]">
-            <h3 class="text-[14px] font-[500] text-muted-foreground">Target Amount</h3>
-            <p class="text-[18px] font-[600] text-foreground">$500K</p>
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Conversion Rate</h3>
+            <p class="text-[18px] font-[600] text-foreground">3.2%</p>
           </div>
            <div>
               <div class="bg-orange-50 dark:bg-orange-950 rounded-md">
@@ -75,25 +110,29 @@
           </div>
         </div>
         <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
-50% of goal achieved
+
+<svg class="w-5 h-4 lucide lucide-trending-up" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M16 7h6v6"></path>
+  <path d="m22 7-8.5 8.5-5-5L2 17"></path>
+</svg>
+
+          <span class="text-green-600 dark:text-green-400">+0.8%</span>Since last
+          month
         </p>
       </div>
 
       <div class="rounded-md bg-card px-2 py-10 text-card-foreground shadow-sm">
         <div class="flex items-center justify-between px-[10px] py-[4px]">
           <div class="flex flex-col gap-[4px]">
-            <h3 class="text-[14px] font-[500] text-muted-foreground">Investors</h3>
-            <p class="text-[18px] font-[600] text-foreground">12</p>
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Social Engagement</h3>
+            <p class="text-[18px] font-[600] text-foreground">8.7K</p>
           </div>
            <div>
               <div class="bg-pink-50 dark:bg-pink-950 rounded-md">
                 <div class="w-10 h-10 bg-pink-50 dark:bg-pink-950 rounded-full relative">
                   <div class="flex items-center justify-center w-9 h-9 bg-pink-600 dark:bg-pink-400 rounded-full absolute top-0.5 left-0.5">
-<svg class="w-4 h-4 text-white lucide lucide-users" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-  <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
-  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-  <circle cx="9" cy="7" r="4"></circle>
+<svg class="w-4 h-4 text-white lucide lucide-heart" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"></path>
 </svg>
 </div>
                </div>
@@ -107,7 +146,7 @@
   <path d="m22 7-8.5 8.5-5-5L2 17"></path>
 </svg>
 
-          <span class="text-green-600 dark:text-green-400">+4</span>Since last
+          <span class="text-green-600 dark:text-green-400">+25%</span>Since last
           month
         </p>
       </div>
@@ -115,16 +154,16 @@
       <div class="rounded-md bg-card px-2 py-10 text-card-foreground shadow-sm">
         <div class="flex items-center justify-between px-[10px] py-[4px]">
           <div class="flex flex-col gap-[4px]">
-            <h3 class="text-[14px] font-[500] text-muted-foreground">Valuation</h3>
-            <p class="text-[18px] font-[600] text-foreground">$2.5M</p>
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Email Subscribers</h3>
+            <p class="text-[18px] font-[600] text-foreground">2.1K</p>
           </div>
            <div>
               <div class="bg-green-50 dark:bg-green-950 rounded-md">
                 <div class="w-10 h-10 bg-green-50 dark:bg-green-950 rounded-full relative">
                   <div class="flex items-center justify-center w-9 h-9 bg-green-600 dark:bg-green-400 rounded-full absolute top-0.5 left-0.5">
-<svg class="w-4 h-4 text-white lucide lucide-trending-up" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M16 7h6v6"></path>
-  <path d="m22 7-8.5 8.5-5-5L2 17"></path>
+<svg class="w-4 h-4 text-white lucide lucide-mail" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+  <polyline points="22,6 12,13 2,6"></polyline>
 </svg>
 </div>
                </div>
@@ -138,7 +177,7 @@
   <path d="m22 7-8.5 8.5-5-5L2 17"></path>
 </svg>
 
-          <span class="text-green-600 dark:text-green-400">+15%</span>Since last
+          <span class="text-green-600 dark:text-green-400">+12%</span>Since last
           month
         </p>
       </div>
@@ -146,90 +185,76 @@
       <div class="rounded-md bg-card px-2 py-10 text-card-foreground shadow-sm">
         <div class="flex items-center justify-between px-[10px] py-[4px]">
           <div class="flex flex-col gap-[4px]">
-            <h3 class="text-[14px] font-[500] text-muted-foreground">Days to Close</h3>
-            <p class="text-[18px] font-[600] text-foreground">45</p>
+            <h3 class="text-[14px] font-[500] text-muted-foreground">Campaign ROI</h3>
+            <p class="text-[18px] font-[600] text-foreground">340%</p>
           </div>
            <div>
               <div class="bg-purple-50 dark:bg-purple-950 rounded-md">
                 <div class="w-10 h-10 bg-purple-50 dark:bg-purple-950 rounded-full relative">
                   <div class="flex items-center justify-center w-9 h-9 bg-purple-600 dark:bg-purple-400 rounded-full absolute top-0.5 left-0.5">
-<svg class="w-4 h-4 text-white lucide lucide-calendar" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-  <line x1="16" y1="2" x2="16" y2="6"></line>
-  <line x1="8" y1="2" x2="8" y2="6"></line>
-  <line x1="3" y1="10" x2="21" y2="10"></line>
-</svg>
+ <svg class="w-4 h-4 text-white lucide lucide-bar-chart" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+   <line x1="12" x1="12" y1="20" y2="10"></line>
+   <line x1="18" x1="18" y1="20" y2="4"></line>
+   <line x1="6" x1="6" y1="20" y2="16"></line>
+ </svg>
 </div>
-               </div>
-             </div>
-          </div>
+                </div>
+              </div>
+           </div>
         </div>
         <p class="flex items-center gap-[4px] text-[13px] font-[500] text-muted-foreground">
-Round closes Jan 15
+
+<svg class="w-5 h-4 lucide lucide-trending-up" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M16 7h6v6"></path>
+  <path d="m22 7-8.5 8.5-5-5L2 17"></path>
+</svg>
+
+          <span class="text-green-600 dark:text-green-400">+45%</span>Since last
+          month
         </p>
       </div>
     </div>
 
-    <!-- Funding Progress -->
+    <!-- Campaign Performance -->
     <div class="flex flex-col items-stretch gap-[17px] lg:flex-row">
       <div class="w-full rounded-md bg-card px-[26px] py-[20px] text-card-foreground lg:w-[60%] lg:min-w-[60%]">
-        <h3 class="text-[18px] font-[500] text-foreground mb-4">Funding Progress</h3>
-        <div class="space-y-4">
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-medium">Pre-seed Round</span>
-            <span class="text-sm text-muted-foreground">$250K / $500K</span>
-          </div>
-          <div class="w-full bg-muted rounded-full h-3">
-            <div class="bg-green-600 dark:bg-green-400 h-3 rounded-full" style="width: 50%"></div>
-          </div>
-          <div class="grid grid-cols-2 gap-4 mt-4">
-            <div class="text-center">
-              <p class="text-2xl font-bold text-green-600 dark:text-green-400">$250K</p>
-              <p class="text-sm text-muted-foreground">Raised</p>
-            </div>
-            <div class="text-center">
-              <p class="text-2xl font-bold text-muted-foreground">$250K</p>
-            <p class="text-sm text-muted-foreground">Remaining</p>
-            </div>
-          </div>
-        </div>
+        <h3 class="text-[18px] font-[500] text-foreground mb-4">Campaign Performance</h3>
+         <canvas id="campaignChart" class="h-64 w-full"></canvas>
       </div>
 
       <div class="w-full rounded-md bg-card px-[26px] py-[20px] text-card-foreground">
         <h3 class="text-[18px] font-[500] text-foreground mb-4">Quick Actions</h3>
         <div class="space-y-3">
-          <a href="/dashboard/fund/pitch-deck" class="flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-foreground hover:bg-muted rounded-md text-sm font-medium transition">
-<svg class="w-4 h-4 mr-2 lucide lucide-file-text" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
-  <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
-  <path d="M10 9H8"></path>
-  <path d="M16 13H8"></path>
-  <path d="M16 17H8"></path>
+          <a href="/startup-dashboard/marketing/create-campaign" class="flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-foreground hover:bg-muted rounded-md text-sm font-medium transition">
+<svg class="w-4 h-4 mr-2 lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M5 12h14"></path>
+  <path d="M12 5v14"></path>
 </svg>
-            Update Pitch Deck
+            Create Campaign
           </a>
            <button class="flex items-center justify-center w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-md text-sm font-medium transition">
 <svg class="w-4 h-4 mr-2 lucide lucide-mail" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
   <polyline points="22,6 12,13 2,6"></polyline>
 </svg>
-            Send Updates
+            Send Newsletter
           </button>
           <button class="flex items-center justify-center w-full px-4 py-3 border border-gray-300 dark:border-gray-600 text-foreground hover:bg-muted rounded-md text-sm font-medium transition">
-<svg class="w-4 h-4 mr-2 lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M5 12h14"></path>
-  <path d="M12 5v14"></path>
+<svg class="w-4 h-4 mr-2 lucide lucide-bar-chart" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <line x1="12" x1="12" y1="20" y2="10"></line>
+  <line x1="18" x1="18" y1="20" y2="4"></line>
+  <line x1="6" x1="6" y1="20" y2="16"></line>
 </svg>
-            Add Investor
+            View Analytics
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Investors List -->
+    <!-- Active Campaigns -->
     <div class="rounded-[6px] bg-card px-2 py-5 text-card-foreground shadow-sm">
       <div class="flex flex-col items-center justify-between gap-[16px] lg:flex-row">
-        <h3 class="text-[28px] font-[600] text-primary">Investors</h3>
+        <h3 class="text-[28px] font-[600] text-primary">Active Campaigns</h3>
         <div class="flex items-center gap-[20px]">
           <button class="justify-center text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ring-offset-background select-none active:scale-[0.98] bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4 rounded-md flex items-center gap-[8px]" type="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -244,11 +269,11 @@ Round closes Jan 15
           <table class="w-full caption-bottom text-sm min-w-full overflow-x-auto">
             <thead class="[&amp;_tr]:border-b h-[64px] bg-muted">
               <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Investor</th>
-                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 w-[200px] text-[16px] font-[600] text-primary lg:text-[22px]">Investment</th>
-                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 w-[116px] text-[16px] font-[600] text-primary lg:text-[22px]">Date</th>
-                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Status</th>
-                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]"></th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Campaign</th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 w-[200px] text-[16px] font-[600] text-primary lg:text-[22px]">Status</th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 w-[116px] text-[16px] font-[600] text-primary lg:text-[22px]">Reach</th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">Engagement</th>
+                <th class="h-12 px-4 text-left align-middle [&amp;:has([role=checkbox])]:pr-0 text-[16px] font-[600] text-primary lg:text-[22px]">ROI</th>
               </tr>
             </thead>
             <tbody class="[&amp;_tr:last-child]:border-0">
@@ -256,42 +281,25 @@ Round closes Jan 15
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                   <div class="flex w-[200px] items-center gap-[10px]">
                     <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-<svg class="w-5 h-5 text-blue-600 dark:text-blue-400 lucide lucide-building" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M12 10h.01"></path>
-  <path d="M12 14h.01"></path>
-  <path d="M12 6h.01"></path>
-  <path d="M16 10h.01"></path>
-  <path d="M16 14h.01"></path>
-  <path d="M16 6h.01"></path>
-  <path d="M8 10h.01"></path>
-  <path d="M8 14h.01"></path>
-  <path d="M8 6h.01"></path>
-  <path d="M9 22v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"></path>
-  <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+<svg class="w-5 h-5 text-blue-600 dark:text-blue-400 lucide lucide-megaphone" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M3 11l18-5v12L3 14v-3z"></path>
+  <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
 </svg>
                     </div>
-                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Tech Ventures Inc.</p>
+                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Product Launch</p>
                   </div>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded">$50,000</span>
+                  <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded">Active</span>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Dec 1, 2023</p>
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">15.2K</p>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded">Committed</span>
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">8.7%</p>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <div class="flex justify-end">
-                    <button class="p-2 text-muted-foreground hover:text-foreground">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="1"></circle>
-                        <circle cx="12" cy="5" r="1"></circle>
-                        <circle cx="12" cy="19" r="1"></circle>
-                      </svg>
-                    </button>
-                  </div>
+                  <p class="text-[14px] font-[500] text-green-600 dark:text-green-400 lg:text-[16px]">+245%</p>
                 </td>
               </tr>
 
@@ -299,33 +307,25 @@ Round closes Jan 15
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                   <div class="flex w-[200px] items-center gap-[10px]">
                     <div class="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center">
-<svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 lucide lucide-user" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-  <circle cx="12" cy="7" r="4"></circle>
+<svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 lucide lucide-mail" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+  <polyline points="22,6 12,13 2,6"></polyline>
 </svg>
                     </div>
-                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Sarah Johnson</p>
+                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Newsletter Campaign</p>
                   </div>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded">$25,000</span>
+                  <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs rounded">Paused</span>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Nov 15, 2023</p>
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">8.9K</p>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 text-xs rounded">Committed</span>
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">12.3%</p>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <div class="flex justify-end">
-                    <button class="p-2 text-muted-foreground hover:text-foreground">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="1"></circle>
-                        <circle cx="12" cy="5" r="1"></circle>
-                        <circle cx="12" cy="19" r="1"></circle>
-                      </svg>
-                    </button>
-                  </div>
+                  <p class="text-[14px] font-[500] text-green-600 dark:text-green-400 lg:text-[16px]">+180%</p>
                 </td>
               </tr>
 
@@ -333,38 +333,28 @@ Round closes Jan 15
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                   <div class="flex w-[200px] items-center gap-[10px]">
                     <div class="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center">
-<svg class="w-5 h-5 text-red-600 dark:text-red-400 lucide lucide-building-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
-  <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
-  <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
-  <path d="M10 6h4"></path>
-  <path d="M10 10h4"></path>
-  <path d="M10 14h4"></path>
-  <path d="M10 18h4"></path>
+<svg class="w-5 h-5 text-red-600 dark:text-red-400 lucide lucide-share-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="18" cy="5" r="3"></circle>
+  <circle cx="6" cy="12" r="3"></circle>
+  <circle cx="18" cy="19" r="3"></circle>
+  <path d="m8.59 13.51 6.83 3.98"></path>
+  <path d="m15.41 6.51-6.82 3.98"></path>
 </svg>
                     </div>
-                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Angel Investors Group</p>
+                    <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Social Media Blitz</p>
                   </div>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs rounded">$30,000</span>
+                  <span class="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 text-xs rounded">Ended</span>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">Nov 20, 2023</p>
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">22.1K</p>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <span class="px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 text-xs rounded">Interested</span>
+                  <p class="text-[14px] font-[500] text-foreground lg:text-[16px]">6.4%</p>
                 </td>
                 <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                  <div class="flex justify-end">
-                    <button class="p-2 text-muted-foreground hover:text-foreground">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="1"></circle>
-                        <circle cx="12" cy="5" r="1"></circle>
-                        <circle cx="12" cy="19" r="1"></circle>
-                      </svg>
-                    </button>
-                  </div>
+                  <p class="text-[14px] font-[500] text-green-600 dark:text-green-400 lg:text-[16px]">+320%</p>
                 </td>
               </tr>
             </tbody>

@@ -61,7 +61,7 @@ export default function authRoutes(app) {
           success: true,
           user: data.user,
           session: data.session,
-          redirect: '/dashboard',
+          redirect: '/startup-dashboard',
         });
       } catch (error) {
         logger.error('Signup server error:', error);
@@ -139,7 +139,7 @@ export default function authRoutes(app) {
           success: true,
           user: data.user,
           session: data.session,
-          redirect: '/dashboard',
+          redirect: '/startup-dashboard',
         });
       } catch (error) {
         logger.error('Login server error:', error);

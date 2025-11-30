@@ -1,6 +1,6 @@
 <li>
-   <a href="{{href}}" title="{{title}}" onclick="closeMobileSidebar()" class="flex items-center px-3 py-2 rounded-md {{#if (eq currentPage page)}}bg-primary/20 text-primary font-bold{{/if}} text-muted-foreground hover:bg-primary/10 hover:text-primary">
-    {{> @partial-block }}
-    <span class="{{spanClass}}">{{text}}</span>
-  </a>
+    <a href="{{href}}" title="{{title}}" onclick="closeMobileSidebar()" class="flex items-center px-3 py-2 rounded-md {{#if (eq currentPage page)}}bg-primary/20 text-primary font-bold{{/if}} text-muted-foreground hover:bg-primary/10 hover:text-primary">
+     {{{icon icon size='16' class='w-4 h-4 mr-3'}}}
+     <span class="{{spanClass}}">{{text}}</span>
+   </a>
 </li>

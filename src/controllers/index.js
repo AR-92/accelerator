@@ -48,7 +48,25 @@ import {
   getDashboardTeam,
   getDashboardPromote,
   getDashboardActivityLog,
-} from './dashboard/index.js';
+} from './startup-dashboard/index.js';
+import {
+  getEnterpriseMain,
+  getEnterpriseOverview,
+  getEnterpriseStartups,
+  getEnterpriseProjects,
+  getEnterpriseAnalytics,
+  getEnterpriseUsers,
+  getEnterpriseActivityLog,
+} from './enterprise-dashboard/index.js';
+import {
+  getCorporateMain,
+  getCorporateOverview,
+  getCorporateEnterprises,
+  getCorporateProjects,
+  getCorporateAnalytics,
+  getCorporateUsers,
+  getCorporateActivityLog,
+} from './corporate-dashboard/index.js';
 
 import { requireAuth, checkAuth } from '../middleware/auth/index.js';
 
@@ -84,9 +102,9 @@ import { requireWebAuth } from '../middleware/auth/index.js';
 
 // Admin routes setup
 export default function adminRoutes(app) {
-  // Root route - redirect to dashboard overview
+  // Root route - redirect to startup dashboard overview
   app.get('/', requireWebAuth, (req, res) => {
-    res.redirect('/dashboard');
+    res.redirect('/startup-dashboard');
   });
 
   // Main pages (server-side auth protection)
@@ -171,17 +189,87 @@ export default function adminRoutes(app) {
   // Billing pages
   app.get('/pages/billing', requireWebAuth, getBilling);
 
-  // Dashboard pages
-  app.get('/dashboard', requireWebAuth, getDashboardMain);
-  app.get('/dashboard/overview', requireWebAuth, getDashboardOverview);
-  app.get('/dashboard/idea', requireWebAuth, getDashboardIdea);
-  app.get('/dashboard/business', requireWebAuth, getDashboardBusiness);
-  app.get('/dashboard/financial', requireWebAuth, getDashboardFinancial);
-  app.get('/dashboard/marketing', requireWebAuth, getDashboardMarketing);
-  app.get('/dashboard/fund', requireWebAuth, getDashboardFund);
-  app.get('/dashboard/team', requireWebAuth, getDashboardTeam);
-  app.get('/dashboard/promote', requireWebAuth, getDashboardPromote);
-  app.get('/dashboard/activity-log', requireWebAuth, getDashboardActivityLog);
+  // Startup Dashboard pages
+  app.get('/startup-dashboard', requireWebAuth, getDashboardMain);
+  app.get('/startup-dashboard/overview', requireWebAuth, getDashboardOverview);
+  app.get('/startup-dashboard/idea', requireWebAuth, getDashboardIdea);
+  app.get('/startup-dashboard/business', requireWebAuth, getDashboardBusiness);
+  app.get(
+    '/startup-dashboard/financial',
+    requireWebAuth,
+    getDashboardFinancial
+  );
+  app.get(
+    '/startup-dashboard/marketing',
+    requireWebAuth,
+    getDashboardMarketing
+  );
+  app.get('/startup-dashboard/fund', requireWebAuth, getDashboardFund);
+  app.get('/startup-dashboard/team', requireWebAuth, getDashboardTeam);
+  app.get('/startup-dashboard/promote', requireWebAuth, getDashboardPromote);
+  app.get(
+    '/startup-dashboard/activity-log',
+    requireWebAuth,
+    getDashboardActivityLog
+  );
+
+  // Enterprise Dashboard pages
+  app.get('/enterprise-dashboard', requireWebAuth, getEnterpriseMain);
+  app.get(
+    '/enterprise-dashboard/overview',
+    requireWebAuth,
+    getEnterpriseOverview
+  );
+  app.get(
+    '/enterprise-dashboard/startups',
+    requireWebAuth,
+    getEnterpriseStartups
+  );
+  app.get(
+    '/enterprise-dashboard/projects',
+    requireWebAuth,
+    getEnterpriseProjects
+  );
+  app.get(
+    '/enterprise-dashboard/analytics',
+    requireWebAuth,
+    getEnterpriseAnalytics
+  );
+  app.get('/enterprise-dashboard/users', requireWebAuth, getEnterpriseUsers);
+  app.get(
+    '/enterprise-dashboard/activity-log',
+    requireWebAuth,
+    getEnterpriseActivityLog
+  );
+
+  // Corporate Dashboard pages
+  app.get('/corporate-dashboard', requireWebAuth, getCorporateMain);
+  app.get(
+    '/corporate-dashboard/overview',
+    requireWebAuth,
+    getCorporateOverview
+  );
+  app.get(
+    '/corporate-dashboard/enterprises',
+    requireWebAuth,
+    getCorporateEnterprises
+  );
+  app.get(
+    '/corporate-dashboard/projects',
+    requireWebAuth,
+    getCorporateProjects
+  );
+  app.get(
+    '/corporate-dashboard/analytics',
+    requireWebAuth,
+    getCorporateAnalytics
+  );
+  app.get('/corporate-dashboard/users', requireWebAuth, getCorporateUsers);
+  app.get(
+    '/corporate-dashboard/activity-log',
+    requireWebAuth,
+    getCorporateActivityLog
+  );
 
   // Additional pages
   app.get('/pages/terms', requireWebAuth, (req, res) => {
@@ -211,8 +299,8 @@ export default function adminRoutes(app) {
       title: 'Security & Privacy',
     });
   });
-  app.get('/dashboard/team/invite', requireWebAuth, (req, res) => {
-    res.render('dashboard/team-invite', {
+  app.get('/startup-dashboard/team/invite', requireWebAuth, (req, res) => {
+    res.render('startup-dashboard/team-invite', {
       layout: 'main',
       title: 'Invite Team Member',
     });
@@ -223,12 +311,16 @@ export default function adminRoutes(app) {
       title: 'Idea Generation Model',
     });
   });
-  app.get('/dashboard/promote/social-post', requireWebAuth, (req, res) => {
-    res.render('dashboard/promote-social-post', {
-      layout: 'main',
-      title: 'Create Social Post',
-    });
-  });
+  app.get(
+    '/startup-dashboard/promote/social-post',
+    requireWebAuth,
+    (req, res) => {
+      res.render('startup-dashboard/promote-social-post', {
+        layout: 'main',
+        title: 'Create Social Post',
+      });
+    }
+  );
   app.get('/pages/portfolio/:id', requireWebAuth, (req, res) => {
     const id = req.params.id;
     res.render('portfolio-detail', {
@@ -243,8 +335,8 @@ export default function adminRoutes(app) {
       title: 'User-Generated Use Cases',
     });
   });
-  app.get('/dashboard/fund/pitch-deck', requireWebAuth, (req, res) => {
-    res.render('dashboard/fund-pitch-deck', {
+  app.get('/startup-dashboard/fund/pitch-deck', requireWebAuth, (req, res) => {
+    res.render('startup-dashboard/fund-pitch-deck', {
       layout: 'main',
       title: 'Create Pitch Deck',
     });
@@ -255,17 +347,21 @@ export default function adminRoutes(app) {
       title: 'Business Model Canvas',
     });
   });
-  app.get('/dashboard/financial/add-expense', requireWebAuth, (req, res) => {
-    res.render('dashboard/financial-add-expense', {
-      layout: 'main',
-      title: 'Add Expense',
-    });
-  });
   app.get(
-    '/dashboard/marketing/create-campaign',
+    '/startup-dashboard/financial/add-expense',
     requireWebAuth,
     (req, res) => {
-      res.render('dashboard/marketing-create-campaign', {
+      res.render('startup-dashboard/financial-add-expense', {
+        layout: 'main',
+        title: 'Add Expense',
+      });
+    }
+  );
+  app.get(
+    '/startup-dashboard/marketing/create-campaign',
+    requireWebAuth,
+    (req, res) => {
+      res.render('startup-dashboard/marketing-create-campaign', {
         layout: 'main',
         title: 'Create Marketing Campaign',
       });
@@ -273,6 +369,6 @@ export default function adminRoutes(app) {
   );
   app.post('/projects/new', requireWebAuth, (req, res) => {
     // Handle project creation logic here
-    res.redirect('/dashboard');
+    res.redirect('/startup-dashboard');
   });
 }

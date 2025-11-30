@@ -1,86 +1,86 @@
 import logger from '../../utils/logger.js';
 import { isHtmxRequest } from '../../helpers/http/index.js';
 
-// Dashboard Main Page
+// Startup Dashboard Main Page
 export const getDashboardMain = async (req, res) => {
   try {
-    logger.info('Dashboard main page accessed');
+    logger.info('Startup Dashboard main page accessed');
 
     const filterLinks = [
       {
         id: 'overview-btn',
-        href: '/dashboard/overview',
+        href: '/startup-dashboard/overview',
         text: 'Overview',
         icon: 'layout',
       },
       {
         id: 'idea-btn',
-        href: '/dashboard/idea',
+        href: '/startup-dashboard/idea',
         text: 'Idea',
         icon: 'lightbulb',
       },
       {
         id: 'business-btn',
-        href: '/dashboard/business',
+        href: '/startup-dashboard/business',
         text: 'Business',
         icon: 'briefcase',
       },
       {
         id: 'financial-btn',
-        href: '/dashboard/financial',
+        href: '/startup-dashboard/financial',
         text: 'Financial',
         icon: 'dollar-sign',
       },
       {
         id: 'marketing-btn',
-        href: '/dashboard/marketing',
+        href: '/startup-dashboard/marketing',
         text: 'Marketing',
         icon: 'globe',
       },
       {
         id: 'fund-btn',
-        href: '/dashboard/fund',
+        href: '/startup-dashboard/fund',
         text: 'Fund',
         icon: 'wallet',
       },
       {
         id: 'team-btn',
-        href: '/dashboard/team',
+        href: '/startup-dashboard/team',
         text: 'Team',
         icon: 'users',
       },
       {
         id: 'promote-btn',
-        href: '/dashboard/promote',
+        href: '/startup-dashboard/promote',
         text: 'Promote',
         icon: 'megaphone',
       },
       {
         id: 'activity-log-btn',
-        href: '/dashboard/activity-log',
+        href: '/startup-dashboard/activity-log',
         text: 'Activity Log',
         icon: 'activity',
       },
     ];
 
     const layout = isHtmxRequest(req) ? false : 'main';
-    res.render('dashboard/overview', {
-      title: 'Dashboard',
-      description: 'Dashboard overview',
-      section: 'dashboard',
-      currentSection: 'dashboard',
-      currentPage: 'dashboard',
+    res.render('startup-dashboard/overview', {
+      title: 'Startup Dashboard',
+      description: 'Startup Dashboard overview',
+      section: 'startup-dashboard',
+      currentSection: 'startup-dashboard',
+      currentPage: 'Overview',
       filterLinks,
       layout,
     });
   } catch (error) {
-    logger.error('Error loading dashboard main:', error);
-    res.render('dashboard/overview', {
-      title: 'Dashboard',
-      description: 'Dashboard overview',
-      section: 'dashboard',
-      currentSection: 'dashboard',
-      currentPage: 'dashboard',
+    logger.error('Error loading startup dashboard main:', error);
+    res.render('startup-dashboard/overview', {
+      title: 'Startup Dashboard',
+      description: 'Startup Dashboard overview',
+      section: 'startup-dashboard',
+      currentSection: 'startup-dashboard',
+      currentPage: 'Overview',
       filterLinks: [],
     });
   }

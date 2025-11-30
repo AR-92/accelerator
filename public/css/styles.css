@@ -114,7 +114,7 @@
     @apply bg-background text-foreground;
   }
   :focus-visible {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply focus-visible:outline-none;
   }
 }
 
