@@ -679,21 +679,15 @@
               </a>     </div>
          </div>
 
-         <div class="flex justify-center items-center mt-6">
-           <a class="group rounded-full relative inline-flex h-[32px] animate-rainbow cursor-pointer items-center justify-center border-0 bg-[length:200%] px-3 max-md:px-[12px] py-2 font-medium text-primary-foreground transition-colors [background-clip:padding-box,border-box,border-box] [background-origin:border-box] [border:calc(0.08*1rem)_solid_transparent] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 before:absolute before:bottom-[-20%] before:left-1/2 before:z-0 before:h-1/5 before:w-3/5 before:-translate-x-1/2 before:animate-rainbow before:bg-[linear-gradient(90deg,hsl(var(--color-1)),hsl(var(--color-5)),hsl(var(--color-3)),hsl(var(--color-4)),hsl(var(--color-2)))] before:[filter:blur(calc(0.8*1rem))] bg-[linear-gradient(#121213,#121213),linear-gradient(#121213_50%,rgba(18,18,19,0.6)_80%,rgba(18,18,19,0)),linear-gradient(90deg,hsl(var(--color-1)),hsl(var(--color-5)),hsl(var(--color-3)),hsl(var(--color-4)),hsl(var(--color-2)))]" target="_blank" rel="noreferrer" href="/usecase-from-user">
-             <button class="relative flex w-fit cursor-pointer items-center justify-center rounded-lg border-none bg-primary/10 text-primary px-0" style="opacity: 1;">
-               <span class="relative flex items-center justify-center font-semibold" style="transform: none;">
-                 <span class="group inline-flex items-center text-[13px] leading-[18px] text-white font-medium group-hover:opacity-80 duration-300">
-                   <span class="relative top-[-1px] hidden @sm:block px-6 py-1">Explore
-                     more use cases</span>
-                   <span class="relative top-[-1px] block @sm:hidden px-6 py-1">Explore
-                     more</span>
-                   {{{icon 'chevron-right' size="16" class='ml-1 size-4'}}}
-                 </span>
-               </span>
-             </button>
-           </a>
-         </div>
+          <div class="flex justify-center items-center mt-6">
+            <a class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-foreground bg-transparent border border-transparent rounded-md transition-all duration-200 hover:bg-muted/50 hover:border-border focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50" target="_blank" rel="noreferrer" href="/usecase-from-user">
+              <span class="inline-flex items-center">
+                <span class="hidden sm:inline">Explore more use cases</span>
+                <span class="sm:hidden">Explore more</span>
+                {{{icon 'chevron-right' size="14" class='ml-1'}}}
+              </span>
+            </a>
+          </div>
         </div>
       </div>
      </div>

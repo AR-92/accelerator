@@ -48,6 +48,16 @@
   }
 }
 
+@keyframes rainbow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 @plugin "tailwindcss-animate";
 
 @layer base {
@@ -76,6 +86,13 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.5rem;
+
+    /* Rainbow colors for button animation */
+    --color-1: 0 100% 50%; /* Red */
+    --color-2: 39 100% 50%; /* Orange */
+    --color-3: 60 100% 50%; /* Yellow */
+    --color-4: 120 100% 50%; /* Green */
+    --color-5: 240 100% 50%; /* Blue */
   }
 
   .dark {
@@ -103,6 +120,13 @@
     --input: 0 0% 25%;
     --ring: 217.2 91.2% 59.8%;
     --radius: 0.5rem;
+
+    /* Rainbow colors for button animation - brighter for dark mode */
+    --color-1: 0 100% 60%; /* Red */
+    --color-2: 39 100% 60%; /* Orange */
+    --color-3: 60 100% 60%; /* Yellow */
+    --color-4: 120 100% 60%; /* Green */
+    --color-5: 240 100% 60%; /* Blue */
   }
 }
 
