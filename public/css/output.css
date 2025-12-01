@@ -3429,6 +3429,14 @@
       }
     }
   }
+  .hover\:shadow-\[0_0_25px_rgba\(255\,0\,0\,0\.15\)\,0_0_50px_rgba\(255\,165\,0\,0\.12\)\,0_0_75px_rgba\(255\,255\,0\,0\.1\)\,0_0_100px_rgba\(0\,255\,0\,0\.1\)\,0_0_125px_rgba\(0\,0\,255\,0\.1\)\,0_0_150px_rgba\(128\,0\,128\,0\.1\)\] {
+    &:hover {
+      @media (hover: hover) {
+        --tw-shadow: 0 0 25px var(--tw-shadow-color, rgba(255,0,0,0.15)), 0 0 50px var(--tw-shadow-color, rgba(255,165,0,0.12)), 0 0 75px var(--tw-shadow-color, rgba(255,255,0,0.1)), 0 0 100px var(--tw-shadow-color, rgba(0,255,0,0.1)), 0 0 125px var(--tw-shadow-color, rgba(0,0,255,0.1)), 0 0 150px var(--tw-shadow-color, rgba(128,0,128,0.1));
+        box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+      }
+    }
+  }
   .hover\:shadow-lg {
     &:hover {
       @media (hover: hover) {
