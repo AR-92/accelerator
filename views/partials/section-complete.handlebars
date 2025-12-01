@@ -1,0 +1,48 @@
+<div class="bg-muted rounded-2xl p-4 my-6">
+  <div class="flex items-start gap-3 mb-4">
+    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-{{buttonColor}}-100 flex items-center justify-center">
+      <span class="text-lg">{{emoji}}</span>
+    </div>
+    <div class="flex-1">
+      <h4 class="text-sm font-semibold text-foreground mb-1">{{title}}</h4>
+      <p class="text-sm text-muted-foreground">{{message}}</p>
+    </div>
+  </div>
+  <div class="bg-background rounded-lg p-3 mb-4 border border-border">
+    <div class="flex items-center gap-2 mb-2">
+      <div class="w-2 h-2 rounded-full bg-{{buttonColor}}-500"></div>
+      <span class="text-sm font-medium text-foreground">{{sectionName}}</span>
+    </div>
+    <p class="text-xs text-muted-foreground">{{completedTopics}}</p>
+  </div>
+  <!-- Overall Progress Bar -->
+  <div class="mb-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-sm font-medium text-foreground">Overall Progress</span>
+      <span class="text-sm text-muted-foreground">{{progressFraction}}</span>
+    </div>
+     <div class="w-full bg-secondary rounded-full h-4 flex overflow-hidden shadow-inner">
+       {{#each progressBars}}{{{this}}}{{/each}}
+     </div>
+     <div class="flex justify-between text-xs text-muted-foreground mt-2">
+       {{#each progressLabels}}{{{this}}}{{/each}}
+     </div>
+  </div>
+  <div class="flex gap-3">
+    {{#if isFinal}}
+      <button class="flex-1 px-4 py-2 text-sm bg-{{buttonColor}}-600 text-white rounded-md hover:bg-{{buttonColor}}-700 font-medium">
+        {{finalButtonText1}}
+      </button>
+      <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium">
+        {{finalButtonText2}}
+      </button>
+    {{else}}
+      <button class="flex-1 px-4 py-2 text-sm bg-{{buttonColor}}-600 text-white rounded-md hover:bg-{{buttonColor}}-700 font-medium" data-action="proceed" data-target="{{nextTarget}}">
+        Proceed to Section {{nextTarget}}
+      </button>
+      <button class="px-4 py-2 text-sm bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 font-medium" data-action="review" data-target="{{currentTarget}}">
+        Review Section {{currentTarget}}
+      </button>
+    {{/if}}
+  </div>
+</div>

@@ -91,6 +91,32 @@ export const getProjectDetail = async (req, res) => {
       currentPage: 'Project Detail',
       project: projectData,
       quickActions,
+      filterLinks: [
+        {
+          id: 'overview',
+          href: `/projects/${id}`,
+          text: 'Overview',
+          icon: 'bar-chart',
+        },
+        {
+          id: 'pitch-deck',
+          href: '/projects/pitch-deck',
+          text: 'Pitch Deck',
+          icon: 'presentation',
+        },
+        {
+          id: 'business-plan',
+          href: '/projects/business-plan',
+          text: 'Business Plan',
+          icon: 'file-text',
+        },
+        {
+          id: 'valuation',
+          href: '/projects/valuation',
+          text: 'Valuation',
+          icon: 'calculator',
+        },
+      ],
     });
   } catch (error) {
     logger.error('Error loading project detail page:', error);

@@ -16,7 +16,7 @@ export const handlebarsHelpers = {
     let svg = icons[capitalizedName];
     if (!svg) {
       console.log(`Icon not found: ${capitalizedName} (original: ${name})`);
-      return `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-off-icon lucide-circle-off"><path d="m2 2 20 20"/><path d="M8.35 2.69A10 10 0 0 1 21.3 15.65"/><path d="M19.08 19.08A10 10 0 1 1 4.92 4.92"/></svg>`;
+      svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-off-icon lucide-circle-off"><path d="m2 2 20 20"/><path d="M8.35 2.69A10 10 0 0 1 21.3 15.65"/><path d="M19.08 19.08A10 10 0 1 1 4.92 4.92"/></svg>`;
     }
     const attrs = options.hash || {};
     const className = attrs.class || '';
@@ -36,7 +36,7 @@ export const handlebarsHelpers = {
         svg = svg.replace('<svg ', `<svg class="${className}" `);
       }
     }
-    return svg;
+    return new Handlebars.SafeString(svg);
   },
   eq: function (a, b) {
     return a === b;
@@ -116,6 +116,14 @@ export const handlebarsHelpers = {
   },
   array: function (...args) {
     return args.slice(0, -1);
+  },
+  hash: function (...args) {
+    const options = args.pop();
+    const hash = {};
+    for (let i = 0; i < args.length; i += 2) {
+      hash[args[i]] = args[i + 1];
+    }
+    return hash;
   },
   range: function (start, end) {
     const result = [];

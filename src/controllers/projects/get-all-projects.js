@@ -115,22 +115,40 @@ export const getAllProjects = async (req, res) => {
 
     const filterLinks = [
       {
-        id: 'new-project-link',
-        href: '/admin/new-project',
-        text: 'New Project',
-        icon: 'plus',
+        id: 'overview-link',
+        href: '/projects/all-projects',
+        text: 'Overview',
+        icon: 'bar-chart',
       },
       {
-        id: 'explore-ideas-link',
-        href: '/admin/explore-ideas',
-        text: 'Explore Ideas',
-        icon: 'lightbulb',
+        id: 'pendings-link',
+        href: '/projects/all-projects?status=pending',
+        text: 'Pendings',
+        icon: 'clock',
       },
       {
-        id: 'learn-link',
-        href: '/pages/learn',
-        text: 'Learn',
-        icon: 'book-open',
+        id: 'drafts-link',
+        href: '/projects/all-projects?status=draft',
+        text: 'Drafts',
+        icon: 'file-text',
+      },
+      {
+        id: 'public-link',
+        href: '/projects/all-projects?visibility=public',
+        text: 'Public',
+        icon: 'globe',
+      },
+      {
+        id: 'private-link',
+        href: '/projects/all-projects?visibility=private',
+        text: 'Private',
+        icon: 'lock',
+      },
+      {
+        id: 'recent-link',
+        href: '/projects/all-projects?sort=recent',
+        text: 'Recent',
+        icon: 'calendar',
       },
     ];
 
@@ -150,22 +168,40 @@ export const getAllProjects = async (req, res) => {
 
     const filterLinks = [
       {
-        id: 'new-project-link',
-        href: '/admin/new-project',
-        text: 'New Project',
-        icon: 'plus',
+        id: 'overview-link',
+        href: '/projects/all-projects',
+        text: 'Overview',
+        icon: 'bar-chart',
       },
       {
-        id: 'explore-ideas-link',
-        href: '/admin/explore-ideas',
-        text: 'Explore Ideas',
-        icon: 'lightbulb',
+        id: 'pendings-link',
+        href: '/projects/all-projects?status=pending',
+        text: 'Pendings',
+        icon: 'clock',
       },
       {
-        id: 'learn-link',
-        href: '/pages/learn',
-        text: 'Learn',
-        icon: 'book-open',
+        id: 'drafts-link',
+        href: '/projects/all-projects?status=draft',
+        text: 'Drafts',
+        icon: 'file-text',
+      },
+      {
+        id: 'public-link',
+        href: '/projects/all-projects?visibility=public',
+        text: 'Public',
+        icon: 'globe',
+      },
+      {
+        id: 'private-link',
+        href: '/projects/all-projects?visibility=private',
+        text: 'Private',
+        icon: 'lock',
+      },
+      {
+        id: 'recent-link',
+        href: '/projects/all-projects?sort=recent',
+        text: 'Recent',
+        icon: 'calendar',
       },
     ];
 

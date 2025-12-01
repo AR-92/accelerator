@@ -16,6 +16,11 @@ import {
   exportActivityJSON,
 } from './admin/get-activity.js';
 import { postLogout } from './admin/post-logout.js';
+import formConfigs from '../config/formConfigs.js';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
+import express from 'express';
 
 import { getDashboard } from './overview/get-dashboard.js';
 import { getPortfolio } from './overview/get-portfolio.js';
@@ -104,6 +109,65 @@ export { getDashboardActivityLog };
 
 import { requireWebAuth } from '../middleware/auth/index.js';
 
+// File upload configuration
+const uploadsDir = path.join(process.cwd(), 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadsDir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(
+      null,
+      file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    // Allow common file types
+    const allowedTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'image/svg+xml',
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ];
+
+    // Check file type
+    if (!allowedTypes.includes(file.mimetype)) {
+      return cb(
+        new Error(
+          `Invalid file type: ${file.mimetype}. Allowed types: ${allowedTypes.join(', ')}`
+        ),
+        false
+      );
+    }
+
+    // Additional security checks
+    if (
+      file.originalname.includes('..') ||
+      file.originalname.includes('/') ||
+      file.originalname.includes('\\')
+    ) {
+      return cb(new Error('Invalid filename'), false);
+    }
+
+    cb(null, true);
+  },
+});
+
 // Admin routes setup
 export default function adminRoutes(app) {
   // Root route - redirect to startup dashboard overview
@@ -129,13 +193,142 @@ export default function adminRoutes(app) {
   app.get('/admin/new-project', requireWebAuth, getNewProject);
   app.get('/admin/explore-ideas', requireWebAuth, getExploreIdeas);
   app.get('/projects/all-projects', requireWebAuth, getAllProjects);
-  app.get('/projects/idea-model', requireWebAuth, (req, res) => {
+  app.get('/projects/idea-model', (req, res) => {
+    const steps = [
+      {
+        number: 1,
+        iconName: 'file-text',
+        title: 'On-Boarding',
+        description:
+          'So you have an idea, that is great! We will help with some questions to get you started on your entrepreneurial journey.',
+        time: '2.3s',
+        confidence: '98%',
+      },
+      {
+        number: 2,
+        iconName: 'alert-triangle',
+        title: 'Problem',
+        description:
+          'Write the problem that you want to solve with assumptions, and share it to validate that this is a real problem needs to be solved.',
+        time: '5.7s',
+        confidence: '95%',
+      },
+      {
+        number: 3,
+        iconName: 'check-circle',
+        title: 'Solution',
+        description:
+          'Enter your solution for the proposed problem and how to overcome it.',
+        time: '8.2s',
+        confidence: '92%',
+      },
+      {
+        number: 4,
+        iconName: 'users',
+        title: 'Customers',
+        description:
+          'Propose your customers segments, early adopters, and unique value proposition.',
+        time: '3.1s',
+        confidence: '96%',
+      },
+      {
+        number: 5,
+        iconName: 'palette',
+        title: 'Brand',
+        description:
+          'Add your visual identity of your solution or startup to make it unique and easy to remember by customers.',
+        time: '4.2s',
+        confidence: '94%',
+      },
+      {
+        number: 6,
+        iconName: 'shield',
+        title: 'IP',
+        description:
+          'Protect your idea by uploading your IP domain, elements, and any document which proof that you are the real owner of that idea.',
+        time: '6.8s',
+        confidence: '91%',
+      },
+    ];
+
     res.render('projects/idea-model', {
       layout: 'main',
       title: 'Idea Generation Model',
       section: 'main',
       currentSection: 'main',
       currentPage: 'Idea Model',
+      steps: steps,
+      formConfigs: formConfigs,
+      progressBars1: [
+        '<div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="Problem Validation - Completed"></div>',
+        '<div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Solution Development - Completed"></div>',
+        '<div class="bg-muted h-4 flex-1" title="Customer Model - Remaining"></div>',
+        '<div class="bg-muted h-4 flex-1" title="Branding - Remaining"></div>',
+        '<div class="bg-muted h-4 rounded-r-full flex-1" title="IP Protection - Remaining"></div>',
+      ],
+      progressLabels1: [
+        '<span class="text-blue-600 font-medium">Problem</span>',
+        '<span class="text-green-600 font-medium">Solution</span>',
+        '<span>Customer</span>',
+        '<span>Branding</span>',
+        '<span>IP</span>',
+      ],
+      progressBars2: [
+        '<div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="Problem Validation - Completed"></div>',
+        '<div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Solution Development - Completed"></div>',
+        '<div class="bg-purple-500 h-4 flex-1 transition-all duration-500" title="Customer Model - Completed"></div>',
+        '<div class="bg-muted h-4 flex-1" title="Branding - Remaining"></div>',
+        '<div class="bg-muted h-4 rounded-r-full flex-1" title="IP Protection - Remaining"></div>',
+      ],
+      progressLabels2: [
+        '<span class="text-blue-600 font-medium">Problem</span>',
+        '<span class="text-green-600 font-medium">Solution</span>',
+        '<span class="text-purple-600 font-medium">Customer</span>',
+        '<span>Branding</span>',
+        '<span>IP</span>',
+      ],
+      progressBars3: [
+        '<div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="Problem Validation - Completed"></div>',
+        '<div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Solution Development - Completed"></div>',
+        '<div class="bg-purple-500 h-4 flex-1 transition-all duration-500" title="Customer Model - Completed"></div>',
+        '<div class="bg-orange-500 h-4 flex-1 transition-all duration-500" title="Branding - Completed"></div>',
+        '<div class="bg-muted h-4 rounded-r-full flex-1" title="IP Protection - Remaining"></div>',
+      ],
+      progressLabels3: [
+        '<span class="text-blue-600 font-medium">Problem</span>',
+        '<span class="text-green-600 font-medium">Solution</span>',
+        '<span class="text-purple-600 font-medium">Customer</span>',
+        '<span class="text-orange-600 font-medium">Branding</span>',
+        '<span>IP</span>',
+      ],
+      progressBars4: [
+        '<div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="Problem Validation - Completed"></div>',
+        '<div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Solution Development - Completed"></div>',
+        '<div class="bg-purple-500 h-4 flex-1 transition-all duration-500" title="Customer Model - Completed"></div>',
+        '<div class="bg-orange-500 h-4 flex-1 transition-all duration-500" title="Branding - Completed"></div>',
+        '<div class="bg-red-500 h-4 rounded-r-full flex-1 transition-all duration-500" title="IP Protection - Completed"></div>',
+      ],
+      progressLabels4: [
+        '<span class="text-blue-600 font-medium">Problem</span>',
+        '<span class="text-green-600 font-medium">Solution</span>',
+        '<span class="text-purple-600 font-medium">Customer</span>',
+        '<span class="text-orange-600 font-medium">Branding</span>',
+        '<span class="text-red-600 font-medium">IP</span>',
+      ],
+      progressBars5: [
+        '<div class="bg-blue-500 h-4 rounded-l-full flex-1 transition-all duration-500" title="Problem Validation - Completed"></div>',
+        '<div class="bg-green-500 h-4 flex-1 transition-all duration-500" title="Solution Development - Completed"></div>',
+        '<div class="bg-purple-500 h-4 flex-1 transition-all duration-500" title="Customer Model - Completed"></div>',
+        '<div class="bg-orange-500 h-4 flex-1 transition-all duration-500" title="Branding - Completed"></div>',
+        '<div class="bg-red-500 h-4 rounded-r-full flex-1 transition-all duration-500" title="IP Protection - Completed"></div>',
+      ],
+      progressLabels5: [
+        '<span class="text-blue-600 font-medium">Problem</span>',
+        '<span class="text-green-600 font-medium">Solution</span>',
+        '<span class="text-purple-600 font-medium">Customer</span>',
+        '<span class="text-orange-600 font-medium">Branding</span>',
+        '<span class="text-red-600 font-medium">IP</span>',
+      ],
     });
   });
   app.get('/projects/business-model', requireWebAuth, (req, res) => {
@@ -512,15 +705,6 @@ export default function adminRoutes(app) {
       title: 'Invite Team Member',
     });
   });
-  app.get('/projects/idea-model', requireWebAuth, (req, res) => {
-    res.render('projects/idea-model', {
-      layout: 'main',
-      title: 'Idea Generation Model',
-      section: 'main',
-      currentSection: 'main',
-      currentPage: 'Idea Model',
-    });
-  });
   app.get(
     '/startup-dashboard/promote/social-post',
     requireWebAuth,
@@ -576,4 +760,63 @@ export default function adminRoutes(app) {
     // Handle project creation logic here
     res.redirect('/startup-dashboard');
   });
+
+  // File upload routes
+  app.post('/api/upload', requireWebAuth, upload.single('file'), (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+      }
+
+      const fileInfo = {
+        filename: req.file.filename,
+        originalname: req.file.originalname,
+        mimetype: req.file.mimetype,
+        size: req.file.size,
+        path: req.file.path,
+        url: `/uploads/${req.file.filename}`,
+      };
+
+      res.json({
+        success: true,
+        file: fileInfo,
+      });
+    } catch (error) {
+      console.error('File upload error:', error);
+      res.status(500).json({ error: 'File upload failed' });
+    }
+  });
+
+  app.post(
+    '/api/upload-multiple',
+    requireWebAuth,
+    upload.array('files', 10),
+    (req, res) => {
+      try {
+        if (!req.files || req.files.length === 0) {
+          return res.status(400).json({ error: 'No files uploaded' });
+        }
+
+        const filesInfo = req.files.map((file) => ({
+          filename: file.filename,
+          originalname: file.originalname,
+          mimetype: file.mimetype,
+          size: file.size,
+          path: file.path,
+          url: `/uploads/${file.filename}`,
+        }));
+
+        res.json({
+          success: true,
+          files: filesInfo,
+        });
+      } catch (error) {
+        console.error('Multiple file upload error:', error);
+        res.status(500).json({ error: 'File upload failed' });
+      }
+    }
+  );
+
+  // Serve uploaded files
+  app.use('/uploads', express.static(uploadsDir));
 }
