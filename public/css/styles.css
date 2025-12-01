@@ -58,6 +58,34 @@
   }
 }
 
+@keyframes rainbow-shadow {
+  0% {
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.15);
+  }
+  16.67% {
+    box-shadow: 0 0 50px rgba(255, 165, 0, 0.12);
+  }
+  33.33% {
+    box-shadow: 0 0 75px rgba(255, 255, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 100px rgba(0, 255, 0, 0.1);
+  }
+  66.67% {
+    box-shadow: 0 0 125px rgba(0, 0, 255, 0.1);
+  }
+  83.33% {
+    box-shadow: 0 0 150px rgba(128, 0, 128, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.15);
+  }
+}
+
+.animate-rainbow-shadow {
+  animation: rainbow-shadow 1.5s ease-in-out infinite;
+}
+
 @plugin "tailwindcss-animate";
 
 @layer base {
