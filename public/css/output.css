@@ -5985,29 +5985,29 @@
 }
 @keyframes rainbow-shadow {
   0% {
-    box-shadow: 0 0 25px rgba(255, 0, 0, 0.15);
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
   }
   16.67% {
-    box-shadow: 0 0 50px rgba(255, 165, 0, 0.12);
+    box-shadow: 0 0 30px rgba(255, 165, 0, 0.8);
   }
   33.33% {
-    box-shadow: 0 0 75px rgba(255, 255, 0, 0.1);
+    box-shadow: 0 0 30px rgba(255, 255, 0, 0.8);
   }
   50% {
-    box-shadow: 0 0 100px rgba(0, 255, 0, 0.1);
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
   }
   66.67% {
-    box-shadow: 0 0 125px rgba(0, 0, 255, 0.1);
+    box-shadow: 0 0 30px rgba(0, 0, 255, 0.8);
   }
   83.33% {
-    box-shadow: 0 0 150px rgba(128, 0, 128, 0.1);
+    box-shadow: 0 0 30px rgba(128, 0, 128, 0.8);
   }
   100% {
-    box-shadow: 0 0 25px rgba(255, 0, 0, 0.15);
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
   }
 }
 .animate-rainbow-shadow {
-  animation: rainbow-shadow 1.5s ease-in-out infinite;
+  animation: rainbow-shadow 0.8s ease-in-out infinite;
 }
 @layer base {
   :root {
