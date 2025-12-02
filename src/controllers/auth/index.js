@@ -166,10 +166,25 @@ export default function authRoutes(app) {
 
       logger.debug('Auth header token:', !!token);
 
-      // Also check for our custom cookie
+      // Also check for our custom cookie and project-specific cookies
       if (!token && req.cookies) {
+        // First try the custom cookie
         token = req.cookies['sb-access-token'];
-        logger.debug('Cookie token found:', !!token);
+        logger.debug('Custom cookie token found:', !!token);
+
+        // If no custom cookie, try project-specific cookies
+        if (!token) {
+          const supabaseUrl = config.supabase.url;
+          const projectMatch = supabaseUrl.match(
+            /https:\/\/(.+)\.supabase\.co/
+          );
+          const projectId = projectMatch ? projectMatch[1] : null;
+
+          if (projectId) {
+            token = req.cookies[`sb-${projectId}-auth-token`];
+            logger.debug('Project-specific cookie token found:', !!token);
+          }
+        }
       }
 
       if (!token) {
@@ -206,6 +221,20 @@ export default function authRoutes(app) {
   // Server-side logout endpoint (for API consistency)
   app.post('/auth/logout', authRateLimiter, verifyCsrfToken, (req, res) => {
     logger.info('User logged out via server endpoint');
+
+    // Clear Supabase cookies
+    const supabaseUrl = config.supabase.url;
+    const projectMatch = supabaseUrl.match(/https:\/\/(.+)\.supabase\.co/);
+    const projectId = projectMatch ? projectMatch[1] : null;
+
+    if (projectId) {
+      res.clearCookie(`sb-${projectId}-auth-token`, { path: '/' });
+      res.clearCookie(`sb-${projectId}-refresh-token`, { path: '/' });
+    }
+
+    // Clear custom cookie
+    res.clearCookie('sb-access-token', { path: '/' });
+
     res.json({ success: true, message: 'Logged out successfully' });
   });
 }

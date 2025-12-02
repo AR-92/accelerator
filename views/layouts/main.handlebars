@@ -86,7 +86,7 @@
     </div>
 
     <!-- Mobile sidebar overlay -->
-    <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="closeMobileSidebar()"></div>
+    <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 hidden" onclick="closeMobileSidebar()"></div>
 
     <!-- JavaScript Section -->
     <script>
@@ -493,6 +493,13 @@
             }
             if (typeof sessionStorage !== 'undefined') {
                 sessionStorage.clear();
+            }
+
+            // Clear cookies by setting them to expire
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [name] = cookie.trim().split('=');
+                document.cookie = `${name}=; path=/; max-age=0`;
             }
 
             // Redirect to login

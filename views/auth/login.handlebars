@@ -54,7 +54,7 @@
                <input
                  type='password'
                  name='password'
-                 class='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
+                class='flex h-9 w-full rounded-md border border-input/80 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
                  id='password'
                  placeholder='Enter your password'
                  required=''
@@ -62,12 +62,12 @@
              </div>
 
              <div class='flex items-center space-x-2'>
-               <input
-                 type='checkbox'
-                 name='remember'
-                 id='remember'
-                 class='h-4 w-4 rounded border border-input'
-               />
+                <input
+                  class='h-4 w-4 rounded border border-input/80'
+                  id='remember'
+                  name='remember'
+                  type='checkbox'
+                />
                <label
                  class='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
                  for='remember'
@@ -146,7 +146,7 @@
               // User is already logged in, redirect to dashboard
               console.log('User is logged in, redirecting to dashboard');
               showToast('You are already logged in. Redirecting...', 'success');
-              setTimeout(() => window.location.href = '/dashboard', 1000);
+              setTimeout(() => window.location.href = '/startup-dashboard', 1000);
             } else if (authCheckAttempts < maxAuthCheckAttempts) {
               // Try again after a short delay
               setTimeout(checkAuthStatus, 200);
@@ -219,7 +219,7 @@
         if (data.success) {
           showToast('Login successful! Redirecting...', 'success');
           // Redirect to dashboard
-          window.location.href = data.redirect || '/dashboard';
+          window.location.href = data.redirect || '/startup-dashboard';
         } else {
           showToast(data.error || 'Login failed', 'error');
           // Reset loading state
@@ -243,11 +243,11 @@
             loginButton.disabled = false;
             loginText.textContent = 'Login';
             loginSpinner.classList.add('hidden');
-          } else {
-            showToast('Login successful! Redirecting...', 'success');
-            // Wait for session to be established, then redirect to dashboard
-            setTimeout(() => window.location.href = '/dashboard', 500);
-          }
+            } else {
+              showToast('Login successful! Redirecting...', 'success');
+              // Wait for session to be established, then redirect to dashboard
+              setTimeout(() => window.location.href = '/startup-dashboard', 500);
+            }
         }).catch(supabaseError => {
           console.error('Supabase login error:', supabaseError);
           // Check for network errors
