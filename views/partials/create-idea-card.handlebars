@@ -8,6 +8,54 @@
   </header>
 
   <!-- Form / Input area -->
+   <style>
+     .new-project-form:hover {
+       animation: rainbow-shadow 20s infinite linear;
+     }
+     @keyframes rainbow-shadow {
+       0% { box-shadow: 0 0 70px 55px rgba(255,0,0,0.15); }
+       2.5% { box-shadow: 0 0 70px 55px rgba(255,32,0,0.15); }
+       5% { box-shadow: 0 0 70px 55px rgba(255,64,0,0.15); }
+       7.5% { box-shadow: 0 0 70px 55px rgba(255,96,0,0.15); }
+       10% { box-shadow: 0 0 70px 55px rgba(255,128,0,0.15); }
+       12.5% { box-shadow: 0 0 70px 55px rgba(255,160,0,0.15); }
+       15% { box-shadow: 0 0 70px 55px rgba(255,192,0,0.15); }
+       17.5% { box-shadow: 0 0 70px 55px rgba(255,224,0,0.15); }
+       20% { box-shadow: 0 0 70px 55px rgba(255,255,0,0.15); }
+       22.5% { box-shadow: 0 0 70px 55px rgba(224,255,0,0.15); }
+       25% { box-shadow: 0 0 70px 55px rgba(192,255,0,0.15); }
+       27.5% { box-shadow: 0 0 70px 55px rgba(160,255,0,0.15); }
+       30% { box-shadow: 0 0 70px 55px rgba(128,255,0,0.15); }
+       32.5% { box-shadow: 0 0 70px 55px rgba(96,255,0,0.15); }
+       35% { box-shadow: 0 0 70px 55px rgba(64,255,0,0.15); }
+       37.5% { box-shadow: 0 0 70px 55px rgba(32,255,0,0.15); }
+       40% { box-shadow: 0 0 70px 55px rgba(0,255,0,0.15); }
+       42.5% { box-shadow: 0 0 70px 55px rgba(0,255,32,0.15); }
+       45% { box-shadow: 0 0 70px 55px rgba(0,255,64,0.15); }
+       47.5% { box-shadow: 0 0 70px 55px rgba(0,255,96,0.15); }
+       50% { box-shadow: 0 0 70px 55px rgba(0,255,128,0.15); }
+       52.5% { box-shadow: 0 0 70px 55px rgba(0,255,160,0.15); }
+       55% { box-shadow: 0 0 70px 55px rgba(0,255,192,0.15); }
+       57.5% { box-shadow: 0 0 70px 55px rgba(0,224,255,0.15); }
+       60% { box-shadow: 0 0 70px 55px rgba(0,192,255,0.15); }
+       62.5% { box-shadow: 0 0 70px 55px rgba(0,160,255,0.15); }
+       65% { box-shadow: 0 0 70px 55px rgba(0,128,255,0.15); }
+       67.5% { box-shadow: 0 0 70px 55px rgba(0,96,255,0.15); }
+       70% { box-shadow: 0 0 70px 55px rgba(0,64,255,0.15); }
+       72.5% { box-shadow: 0 0 70px 55px rgba(0,32,255,0.15); }
+       75% { box-shadow: 0 0 70px 55px rgba(0,0,255,0.15); }
+       77.5% { box-shadow: 0 0 70px 55px rgba(32,0,255,0.15); }
+       80% { box-shadow: 0 0 70px 55px rgba(64,0,255,0.15); }
+       82.5% { box-shadow: 0 0 70px 55px rgba(96,0,255,0.15); }
+       85% { box-shadow: 0 0 70px 55px rgba(128,0,255,0.15); }
+       87.5% { box-shadow: 0 0 70px 55px rgba(160,0,255,0.15); }
+       90% { box-shadow: 0 0 70px 55px rgba(192,0,255,0.15); }
+       92.5% { box-shadow: 0 0 70px 55px rgba(224,0,255,0.15); }
+       95% { box-shadow: 0 0 70px 55px rgba(255,0,224,0.15); }
+       97.5% { box-shadow: 0 0 70px 55px rgba(255,0,192,0.15); }
+       100% { box-shadow: 0 0 70px 55px rgba(255,0,0,0.15); }
+     }
+   </style>
    <form id="new-project-form" class="flex flex-col gap-1 w-full" method="post" action="/projects/new">
      <!-- CSRF Token (Important for security) -->
      <input type="hidden" name="_csrf" value="{{csrfToken}}">
