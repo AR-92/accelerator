@@ -327,7 +327,7 @@
 
   /* Global card styles */
   .card,
-  [class*='card'] {
+  [class*='card']:not(svg) {
     @apply bg-card border border-border rounded-lg shadow-sm p-4;
   }
 

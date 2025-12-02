@@ -473,6 +473,9 @@
   .right-0 {
     right: calc(var(--spacing) * 0);
   }
+  .right-2 {
+    right: calc(var(--spacing) * 2);
+  }
   .right-4 {
     right: calc(var(--spacing) * 4);
   }
@@ -1480,6 +1483,18 @@
   .border-red-400 {
     border-color: var(--color-red-400);
   }
+  .border-secondary\/20 {
+    border-color: color-mix(in srgb, hsl(var(--secondary)) 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-secondary) 20%, transparent);
+    }
+  }
+  .border-secondary\/30 {
+    border-color: color-mix(in srgb, hsl(var(--secondary)) 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-secondary) 30%, transparent);
+    }
+  }
   .border-secondary\/40 {
     border-color: color-mix(in srgb, hsl(var(--secondary)) 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1762,6 +1777,12 @@
   .bg-secondary {
     background-color: var(--color-secondary);
   }
+  .bg-secondary\/1 {
+    background-color: color-mix(in srgb, hsl(var(--secondary)) 1%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-secondary) 1%, transparent);
+    }
+  }
   .bg-secondary\/5 {
     background-color: color-mix(in srgb, hsl(var(--secondary)) 5%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1772,6 +1793,12 @@
     background-color: color-mix(in srgb, hsl(var(--secondary)) 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-secondary) 10%, transparent);
+    }
+  }
+  .bg-secondary\/15 {
+    background-color: color-mix(in srgb, hsl(var(--secondary)) 15%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-secondary) 15%, transparent);
     }
   }
   .bg-secondary\/20 {
@@ -3578,6 +3605,11 @@
   .focus\:border-transparent {
     &:focus {
       border-color: transparent;
+    }
+  }
+  .focus\:bg-accent {
+    &:focus {
+      background-color: var(--color-accent);
     }
   }
   .focus\:ring {
@@ -6142,7 +6174,7 @@
     }
   }
   .card,
-  [class*='card'] {
+  [class*='card']:not(svg) {
     border-radius: var(--radius-lg);
     border-style: var(--tw-border-style);
     border-width: 1px;

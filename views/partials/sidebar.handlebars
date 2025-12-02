@@ -1,6 +1,6 @@
 <!-- Sidebar -->
 <div id="sidebar"
-  class="w-56 transition-all duration-300 bg-card border border-input/80 fixed md:relative inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto flex flex-col h-[calc(100vh-90px)]">
+  class="w-56 transition-all duration-300 border border-input/80 fixed md:relative inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto flex flex-col h-[calc(100vh-90px)]">
   <div class="flex-1 overflow-y-auto">
     <nav class="px-3 py-3 text-sm">
       <!-- Top-level Sections -->
@@ -133,26 +133,34 @@
           {{/each}}
         </ul>
       </div>
-       {{#if (eq currentPage 'New Project')}}
-       <ul class="space-y-1">
-         {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" text="New Project" spanClass="font-medium sidebar-text" icon='plus' }}
-         {{> sidebar-item href="/projects/all-projects" title="All Projects" text="All Projects" spanClass="font-medium sidebar-text" icon='list' }}
-         {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="font-medium sidebar-text" icon='lightbulb' }}
-         {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text" icon='book-open' }}
-       </ul>
-        {{/if}}
-       {{/if}}
+      {{#if (eq currentPage 'New Project')}}
+      <ul class="space-y-1">
+        {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" text="New Project"
+        spanClass="font-medium sidebar-text" icon='plus' }}
+        {{> sidebar-item href="/projects/all-projects" title="All Projects" text="All Projects" spanClass="font-medium
+        sidebar-text" icon='list' }}
+        {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas"
+        spanClass="font-medium sidebar-text" icon='lightbulb' }}
+        {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text"
+        icon='book-open' }}
+      </ul>
+      {{/if}}
+      {{/if}}
 
-        {{#if (eq currentPage 'All Ideas')}}
-        <ul class="space-y-1">
-          {{> sidebar-item href="/admin/other-pages/new-project" title="New Idea" text="New Idea" spanClass="font-medium sidebar-text" icon='plus' }}
-          {{> sidebar-item href="/projects/all-projects" title="All Ideas" text="All Ideas" spanClass="font-medium sidebar-text" icon='list' }}
-          {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="font-medium sidebar-text" icon='lightbulb' }}
-          {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text" icon='book-open' }}
-        </ul>
-        {{/if}}
+      {{#if (eq currentPage 'All Ideas')}}
+      <ul class="space-y-1">
+        {{> sidebar-item href="/admin/other-pages/new-project" title="New Idea" text="New Idea" spanClass="font-medium
+        sidebar-text" icon='plus' }}
+        {{> sidebar-item href="/projects/all-projects" title="All Ideas" text="All Ideas" spanClass="font-medium
+        sidebar-text" icon='list' }}
+        {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas"
+        spanClass="font-medium sidebar-text" icon='lightbulb' }}
+        {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text"
+        icon='book-open' }}
+      </ul>
+      {{/if}}
 
-       {{#if (eq currentPage 'Project Detail')}}
+      {{#if (eq currentPage 'Project Detail')}}
       <ul class="space-y-1">
         {{> sidebar-item href="/projects/idea-model" title="Idea Model" text="Idea Model" spanClass="font-medium
         sidebar-text" icon='lightbulb' }}
