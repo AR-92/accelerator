@@ -8,56 +8,56 @@
        <!-- Critical Status Overview -->
        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <!-- Total Activities -->
-          <div class="bg-card rounded-lg border border-border p-6">
+          <div class="bg-card rounded-md border border-input/80 p-6">
              <div class="flex items-center justify-between">
                 <div>
                    <p class="text-sm font-medium text-muted-foreground">Total Activities</p>
                    <p class="text-2xl font-bold text-blue-600">{{activityAnalytics.totalActivities}}</p>
                    <p class="text-xs text-muted-foreground">{{activityStats.today}} today</p>
                 </div>
-                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                <div class="w-12 h-12 bg-blue-100 rounded-md flex items-center justify-center">
                    {{{icon 'bar-chart-3' size="16" class='text-blue-600'}}}
                 </div>
              </div>
           </div>
 
           <!-- Success Rate -->
-          <div class="bg-card rounded-lg border border-border p-6">
+          <div class="bg-card rounded-md border border-input/80 p-6">
              <div class="flex items-center justify-between">
                 <div>
                    <p class="text-sm font-medium text-muted-foreground">Success Rate</p>
                    <p class="text-2xl font-bold text-green-600">{{activityAnalytics.successRate}}%</p>
                    <p class="text-xs text-muted-foreground">{{activityStats.failed}} failed</p>
                 </div>
-                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                <div class="w-12 h-12 bg-green-100 rounded-md flex items-center justify-center">
                    {{{icon 'check-circle' size="16" class='text-green-600'}}}
                 </div>
              </div>
           </div>
 
           <!-- Active Users -->
-          <div class="bg-card rounded-lg border border-border p-6">
+          <div class="bg-card rounded-md border border-input/80 p-6">
              <div class="flex items-center justify-between">
                 <div>
                    <p class="text-sm font-medium text-muted-foreground">Active Users</p>
                    <p class="text-2xl font-bold text-purple-600">{{activityAnalytics.uniqueUsers}}</p>
                    <p class="text-xs text-muted-foreground">This session</p>
                 </div>
-                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                <div class="w-12 h-12 bg-purple-100 rounded-md flex items-center justify-center">
                    {{{icon 'users' size="16" class='text-purple-600'}}}
                 </div>
              </div>
           </div>
 
           <!-- Response Time -->
-          <div class="bg-card rounded-lg border border-border p-6">
+          <div class="bg-card rounded-md border border-input/80 p-6">
              <div class="flex items-center justify-between">
                 <div>
                    <p class="text-sm font-medium text-muted-foreground">Avg Response Time</p>
                    <p class="text-2xl font-bold text-orange-600">{{activityAnalytics.avgResponseTime}}</p>
                    <p class="text-xs text-muted-foreground">System average</p>
                 </div>
-                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                <div class="w-12 h-12 bg-orange-100 rounded-md flex items-center justify-center">
                    {{{icon 'zap' size="16" class='text-orange-600'}}}
                 </div>
              </div>
@@ -67,8 +67,8 @@
        <!-- Activity Analytics & Performance -->
        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <!-- Activity Types Overview -->
-          <div class="bg-card rounded-lg border border-border">
-             <div class="p-6 border-b border-border">
+          <div class="bg-card rounded-md border border-input/80">
+             <div class="p-6 border-b border-input/80">
                 <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                    {{{icon 'pie-chart' size="16" class='mr-2'}}}
                    Activity Types
@@ -85,8 +85,8 @@
           </div>
 
           <!-- Performance Metrics -->
-          <div class="bg-card rounded-lg border border-border">
-             <div class="p-6 border-b border-border">
+          <div class="bg-card rounded-md border border-input/80">
+             <div class="p-6 border-b border-input/80">
                 <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                    {{{icon 'trending-up' size="16" class='mr-2'}}}
                    Performance Metrics
@@ -113,8 +113,8 @@
           </div>
 
           <!-- System Health -->
-          <div class="bg-card rounded-lg border border-border">
-             <div class="p-6 border-b border-border">
+          <div class="bg-card rounded-md border border-input/80">
+             <div class="p-6 border-b border-input/80">
                 <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                    {{{icon 'shield-check' size="16" class='mr-2'}}}
                    System Health
@@ -124,7 +124,7 @@
                 <div class="flex items-center justify-between">
                    <span class="text-sm font-medium text-card-foreground">Activity Status</span>
                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
+                      <div class="w-2 h-2 bg-green-500 rounded-md animate-pulse mr-2"></div>
                       <span class="text-sm text-green-600 font-medium">Healthy</span>
                    </div>
                 </div>
@@ -141,8 +141,8 @@
        </div>
 
        <!-- Activity Trends -->
-       <div class="bg-card rounded-lg border border-border">
-          <div class="p-6 border-b border-border">
+       <div class="bg-card rounded-md border border-input/80">
+          <div class="p-6 border-b border-input/80">
              <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                 {{{icon 'trending-up' size="16" class='mr-2'}}}
                 Activity Trends
@@ -435,8 +435,8 @@
        </div>
 
        <!-- Activity Type Distribution -->
-       <div class="bg-card rounded-lg border border-border">
-          <div class="p-6 border-b border-border">
+       <div class="bg-card rounded-md border border-input/80">
+          <div class="p-6 border-b border-input/80">
              <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                 {{{icon 'pie-chart' size="16" class='mr-2'}}}
                 Activity Type Distribution
@@ -453,8 +453,8 @@
   </div>
 
         <!-- Activity Filters and Search -->
-      <div class="bg-card rounded-lg border border-border">
-        <div class="p-6 border-b border-border">
+      <div class="bg-card rounded-md border border-input/80">
+        <div class="p-6 border-b border-input/80">
           <div class="flex items-center justify-between">
             <h3 class="text-lg font-semibold text-card-foreground">Activity Log</h3>
             <div class="flex items-center space-x-4">
@@ -512,7 +512,7 @@
                  {{/unless}}
                  <div class="relative flex space-x-3">
                    <div>
-                      <span class="h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-background {{#eq status "success"}}bg-success{{else if eq status "failed"}}bg-destructive{{else if eq status "warning"}}bg-warning{{else}}bg-primary{{/eq}}">
+                      <span class="h-8 w-8 rounded-md flex items-center justify-center ring-8 ring-background {{#eq status "success"}}bg-success{{else if eq status "failed"}}bg-destructive{{else if eq status "warning"}}bg-warning{{else}}bg-primary{{/eq}}">
                         {{#eq activity_type "login"}}
                         {{{icon 'log-in' size="16" class='text-white'}}}
                         {{else if eq activity_type "user"}}
@@ -531,7 +531,7 @@
                      </div>
                      <p class="text-sm text-muted-foreground mt-1">{{description}}</p>
                      <div class="flex items-center mt-2 space-x-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{#eq activity_type "login"}}bg-primary/10 text-primary{{else if eq activity_type "user"}}bg-success/10 text-success{{else if eq activity_type "system"}}bg-secondary/10 text-secondary{{else if eq activity_type "security"}}bg-destructive/10 text-destructive{{else}}bg-muted/50 text-muted-foreground{{/eq}}">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium {{#eq activity_type "login"}}bg-primary/10 text-primary{{else if eq activity_type "user"}}bg-success/10 text-success{{else if eq activity_type "system"}}bg-secondary/10 text-secondary{{else if eq activity_type "security"}}bg-destructive/10 text-destructive{{else}}bg-muted/50 text-muted-foreground{{/eq}}">
                          {{activity_type}}
                        </span>
                        {{#if user_id}}
@@ -565,7 +565,7 @@
 
         {{#if activities.length}}
         <!-- Pagination -->
-        <div class="px-6 py-4 border-t border-border">
+        <div class="px-6 py-4 border-t border-input/80">
           <div class="flex items-center justify-between">
             <div class="text-sm text-card-foreground">
               Showing {{pagination.start}} to {{pagination.end}} of {{pagination.total}} activities
@@ -597,7 +597,7 @@
 
      <!-- Export Options -->
      {{#if activities.length}}
-     <div class="bg-card rounded-lg border border-border p-6">
+     <div class="bg-card rounded-md border border-input/80 p-6">
        <div class="flex items-center justify-between">
          <div>
            <h3 class="text-lg font-semibold text-card-foreground">Export Activity Log</h3>
@@ -605,12 +605,12 @@
          </div>
           <div class="flex items-center space-x-4">
              <a href="/admin/other-pages/activity/export/csv?search={{query.search}}&category={{query.category}}&status={{query.status}}"
-                class="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors inline-flex items-center">
+                class="px-4 py-2 bg-primary/10 text-primary rounded-md hover:bg-primary/20 transition-colors inline-flex items-center">
                {{{icon 'download' size="16" class='mr-2'}}}
                Export CSV
              </a>
              <a href="/admin/other-pages/activity/export/json?search={{query.search}}&category={{query.category}}&status={{query.status}}"
-                class="px-4 py-2 bg-success text-success-foreground rounded-lg hover:bg-success/90 transition-colors inline-flex items-center">
+                class="px-4 py-2 bg-success text-success-foreground rounded-md hover:bg-success/90 transition-colors inline-flex items-center">
                {{{icon 'file-text' size="16" class='mr-2'}}}
                Export JSON
              </a>

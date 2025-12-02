@@ -8,63 +8,63 @@
        <!-- Critical Status Overview -->
        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <!-- Total Logs -->
-          <div class="bg-card rounded-lg border border-border p-6">
+          <div class="bg-card rounded-md border border-input/80 p-6">
              <div class="flex items-center justify-between">
                 <div>
                    <p class="text-sm font-medium text-muted-foreground">Total Logs</p>
                    <p class="text-2xl font-bold text-blue-600">{{systemLogAnalytics.totalLogs}}</p>
                    <p class="text-xs text-muted-foreground">{{systemLogAnalytics.avgLogsPerHour}}/hour avg</p>
                 </div>
-                 <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                 <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-md flex items-center justify-center">
                     {{{icon 'file-text' size="16" class='text-blue-600 dark:text-blue-400'}}}
                  </div>
              </div>
           </div>
 
           <!-- Error Rate -->
-          <div class="bg-card rounded-lg border border-border p-6">
+          <div class="bg-card rounded-md border border-input/80 p-6">
              <div class="flex items-center justify-between">
                 <div>
                    <p class="text-sm font-medium text-muted-foreground">Error Rate</p>
                    <p class="text-2xl font-bold text-red-600">{{systemLogAnalytics.errorRate}}%</p>
                    <p class="text-xs text-muted-foreground">{{systemLogAnalytics.errorCount}} errors</p>
                 </div>
-                 <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+                 <div class="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-md flex items-center justify-center">
                     {{{icon 'alert-triangle' size="16" class='text-red-600 dark:text-red-400'}}}
                  </div>
              </div>
           </div>
 
           <!-- System Health -->
-          <div class="bg-card rounded-lg border border-border p-6">
+          <div class="bg-card rounded-md border border-input/80 p-6">
              <div class="flex items-center justify-between">
                 <div>
                    <p class="text-sm font-medium text-muted-foreground">System Health</p>
                    <p class="text-2xl font-bold text-green-600">{{systemLogAnalytics.systemHealth}}</p>
                    <p class="text-xs text-muted-foreground">Based on logs</p>
                 </div>
-                 <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                 <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-md flex items-center justify-center">
                     {{{icon 'shield-check' size="16" class='text-green-600 dark:text-green-400'}}}
                  </div>
              </div>
           </div>
 
           <!-- Response Time -->
-          <div class="bg-card rounded-lg border border-border p-6">
+          <div class="bg-card rounded-md border border-input/80 p-6">
              <div class="flex items-center justify-between">
                 <div>
                    <p class="text-sm font-medium text-muted-foreground">Avg Response</p>
                    <p class="text-2xl font-bold text-purple-600">{{systemLogAnalytics.performanceInsights.responseTime}}</p>
                    <p class="text-xs text-muted-foreground">System average</p>
                 </div>
-                 <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                 <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-md flex items-center justify-center">
                     {{{icon 'zap' size="16" class='text-purple-600 dark:text-purple-400'}}}
                  </div>
              </div>
           </div>
        </div>
       {{#if error}}
-      <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+      <div class="bg-red-50 border border-red-200 rounded-md p-4">
          <div class="flex">
             <div class="flex-shrink-0">
                {{{icon 'alert-triangle' size="16" class='text-red-400'}}}
@@ -82,8 +82,8 @@
        <!-- Log Analytics & Performance -->
        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <!-- Log Levels Overview -->
-          <div class="bg-card rounded-lg border border-border">
-             <div class="p-6 border-b border-border">
+          <div class="bg-card rounded-md border border-input/80">
+             <div class="p-6 border-b border-input/80">
                 <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                    {{{icon 'bar-chart-3' size="16" class='mr-2'}}}
                    Log Levels
@@ -110,8 +110,8 @@
           </div>
 
           <!-- Performance Insights -->
-          <div class="bg-card rounded-lg border border-border">
-             <div class="p-6 border-b border-border">
+          <div class="bg-card rounded-md border border-input/80">
+             <div class="p-6 border-b border-input/80">
                 <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                    {{{icon 'trending-up' size="16" class='mr-2'}}}
                    Performance Insights
@@ -138,8 +138,8 @@
           </div>
 
           <!-- Critical Patterns -->
-          <div class="bg-card rounded-lg border border-border">
-             <div class="p-6 border-b border-border">
+          <div class="bg-card rounded-md border border-input/80">
+             <div class="p-6 border-b border-input/80">
                 <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                    {{{icon 'alert-triangle' size="16" class='mr-2'}}}
                    Critical Patterns
@@ -148,7 +148,7 @@
              <div class="p-6 space-y-3">
                 {{#each systemLogAnalytics.criticalPatterns}}
                 <div class="flex items-center">
-                   <div class="w-2 h-2 bg-red-500 rounded-full mr-3"></div>
+                   <div class="w-2 h-2 bg-red-500 rounded-md mr-3"></div>
                    <span class="text-sm text-card-foreground">{{this}}</span>
                 </div>
                 {{/each}}
@@ -157,8 +157,8 @@
        </div>
 
        <!-- Log Trends -->
-       <div class="bg-card rounded-lg border border-border">
-          <div class="p-6 border-b border-border">
+       <div class="bg-card rounded-md border border-input/80">
+          <div class="p-6 border-b border-input/80">
              <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                 {{{icon 'trending-up' size="16" class='mr-2'}}}
                 Log Trends & Analytics
@@ -201,8 +201,8 @@
        </div>
 
        <!-- Log Level Distribution -->
-       <div class="bg-card rounded-lg border border-border">
-          <div class="p-6 border-b border-border">
+       <div class="bg-card rounded-md border border-input/80">
+          <div class="p-6 border-b border-input/80">
              <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                 {{{icon 'pie-chart' size="16" class='mr-2'}}}
                 Log Level Distribution
@@ -217,17 +217,17 @@
        </div>
 
        <!-- Filters -->
-      <div class="bg-card rounded-lg border border-border p-6">
+      <div class="bg-card rounded-md border border-input/80 p-6">
          <form method="GET" class="flex flex-wrap gap-4 items-end">
             <div class="flex-1 min-w-0">
                <label class="block text-sm font-medium text-card-foreground mb-2">Search Logs</label>
                <input type="text" name="search" value="{{filters.search}}"
                       placeholder="Search log messages..."
-                      class="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                      class="w-full px-3 py-2 border border-input/80 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
             <div class="w-48">
                <label class="block text-sm font-medium text-card-foreground mb-2">Log Level</label>
-               <select name="level" class="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+               <select name="level" class="w-full px-3 py-2 border border-input/80 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                   <option value="all" {{#eq filters.level 'all'}}selected{{/eq}}>All Levels</option>
                   <option value="error" {{#eq filters.level 'error'}}selected{{/eq}}>Errors</option>
                   <option value="warn" {{#eq filters.level 'warn'}}selected{{/eq}}>Warnings</option>
@@ -237,7 +237,7 @@
             </div>
             <div class="w-48">
                <label class="block text-sm font-medium text-card-foreground mb-2">Date</label>
-               <select name="date" class="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+               <select name="date" class="w-full px-3 py-2 border border-input/80 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                   <option value="">All Dates</option>
                   {{#each availableDates}}
                   <option value="{{this}}" {{#eq ../filters.date this}}selected{{/eq}}>{{this}}</option>
@@ -245,11 +245,11 @@
                </select>
             </div>
             <div class="flex gap-2">
-                <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+                <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors">
                    {{{icon 'search' size="16" class='mr-2'}}}
                    Filter
                 </button>
-                <a href="/admin/other-pages/system-logs" class="px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors border border-border">
+                <a href="/admin/other-pages/system-logs" class="px-4 py-2 bg-card text-foreground rounded-md hover:bg-muted transition-colors border border-input/80">
                    {{{icon 'x' size="16" class='mr-2'}}}
                    Clear
                 </a>
@@ -259,8 +259,8 @@
 
       <!-- Logs Display -->
       {{#if hasLogs}}
-      <div class="bg-card rounded-lg border border-border">
-         <div class="p-6 border-b border-border flex items-center justify-between">
+      <div class="bg-card rounded-md border border-input/80">
+         <div class="p-6 border-b border-input/80 flex items-center justify-between">
             <div>
                <h3 class="text-lg font-semibold text-card-foreground">Log Entries</h3>
                <p class="text-sm text-muted-foreground mt-1">
@@ -268,7 +268,7 @@
                   {{#if filters.search}} matching "{{filters.search}}"{{/if}}
                </p>
             </div>
-             <button id="export-logs-btn" class="px-4 py-2 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-100 dark:hover:bg-green-800 transition-colors border border-green-200 dark:border-green-700">
+             <button id="export-logs-btn" class="px-4 py-2 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-md hover:bg-green-100 dark:hover:bg-green-800 transition-colors border border-green-200 dark:border-green-700">
                 {{{icon 'download' size="16" class='mr-2'}}}
                 Export Logs
              </button>
@@ -280,7 +280,7 @@
                <div class="flex items-start justify-between">
                   <div class="flex-1 min-w-0">
                      <div class="flex items-center gap-3 mb-2">
-                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium
                            {{#eq level 'error'}}bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400{{/eq}}
                            {{#eq level 'warn'}}bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400{{/eq}}
                            {{#eq level 'info'}}bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400{{/eq}}
@@ -300,21 +300,21 @@
 
          <!-- Pagination -->
          {{#if (gt totalPages 1)}}
-         <div class="px-6 py-4 border-t border-border flex items-center justify-between">
+         <div class="px-6 py-4 border-t border-input/80 flex items-center justify-between">
             <div class="text-sm text-muted-foreground">
                Page {{currentPage}} of {{totalPages}}
             </div>
             <div class="flex gap-2">
                {{#if (gt currentPage 1)}}
                 <a href="?page={{subtract currentPage 1}}&level={{filters.level}}&date={{filters.date}}&search={{filters.search}}"
-                   class="px-3 py-1 bg-card text-foreground rounded hover:bg-muted border border-border">
+                   class="px-3 py-1 bg-card text-foreground rounded hover:bg-muted border border-input/80">
                    Previous
                 </a>
                {{/if}}
 
                {{#if (lt currentPage totalPages)}}
                 <a href="?page={{add currentPage 1}}&level={{filters.level}}&date={{filters.date}}&search={{filters.search}}"
-                   class="px-3 py-1 bg-card text-foreground rounded hover:bg-muted border border-border">
+                   class="px-3 py-1 bg-card text-foreground rounded hover:bg-muted border border-input/80">
                    Next
                 </a>
                {{/if}}
@@ -323,9 +323,9 @@
          {{/if}}
       </div>
       {{else}}
-      <div class="bg-card rounded-lg border border-border p-12">
+      <div class="bg-card rounded-md border border-input/80 p-12">
          <div class="text-center">
-            <div class="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+            <div class="w-16 h-16 bg-muted rounded-md flex items-center justify-center mx-auto mb-4">
                {{{icon 'file-text' size="16" class='text-muted-foreground'}}}
             </div>
             <h3 class="text-lg font-medium text-card-foreground mb-2">No Logs Found</h3>
@@ -592,7 +592,7 @@ document.addEventListener('DOMContentLoaded', function() {
          logText += '=' .repeat(50) + '\n\n';
 
          logs.forEach(log => {
-            const level = log.querySelector('.rounded-full')?.textContent.trim() || '';
+            const level = log.querySelector('.rounded-md')?.textContent.trim() || '';
             const timestamp = log.querySelector('.font-mono')?.textContent.trim() || '';
             const message = log.querySelector('p:last-child')?.textContent.trim() || '';
 

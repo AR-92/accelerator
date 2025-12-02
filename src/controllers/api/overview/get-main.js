@@ -45,8 +45,8 @@ export const getMain = async (req, res) => {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div class="bg-card rounded-lg shadow p-6">
             <div class="flex items-center">
-              <div class="p-2 bg-blue-100 rounded-lg">
-                {{{icon 'users' class='w-6 h-6 text-blue-600'}}}
+              <div class="p-2 bg-primary/10 rounded-lg">
+                {{{icon 'users' class='w-6 h-6 text-primary'}}}
               </div>
               <div class="ml-4">
                 <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Users</p>
@@ -56,8 +56,8 @@ export const getMain = async (req, res) => {
           </div>
           <div class="bg-card rounded-lg shadow p-6">
             <div class="flex items-center">
-              <div class="p-2 bg-green-100 rounded-lg">
-                {{{icon 'folder' class='w-6 h-6 text-green-600'}}}
+              <div class="p-2 bg-success/10 rounded-lg">
+                {{{icon 'folder' class='w-6 h-6 text-success'}}}
               </div>
               <div class="ml-4">
                 <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Projects</p>
@@ -67,8 +67,8 @@ export const getMain = async (req, res) => {
           </div>
           <div class="bg-card rounded-lg shadow p-6">
             <div class="flex items-center">
-              <div class="p-2 bg-purple-100 rounded-lg">
-                {{{icon 'lightbulb' class='w-6 h-6 text-purple-600'}}}
+              <div class="p-2 bg-secondary/20 rounded-lg">
+                {{{icon 'lightbulb' class='w-6 h-6 text-secondary-foreground'}}}
               </div>
               <div class="ml-4">
                 <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Ideas</p>
@@ -78,8 +78,8 @@ export const getMain = async (req, res) => {
           </div>
           <div class="bg-card rounded-lg shadow p-6">
             <div class="flex items-center">
-              <div class="p-2 bg-yellow-100 rounded-lg">
-                {{{icon 'users' class='w-6 h-6 text-yellow-600'}}}
+              <div class="p-2 bg-warning/10 rounded-lg">
+                {{{icon 'users' class='w-6 h-6 text-warning'}}}
               </div>
               <div class="ml-4">
                 <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Active Collaborations</p>

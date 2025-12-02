@@ -15,7 +15,7 @@
       <div class="flex items-center gap-2 flex-wrap sm:flex-nowrap">
         <!-- Search Input -->
         <div class="relative">
-          <input type="text" placeholder="Search startups..." class="pl-9 pr-4 py-1.5 text-sm border border-border rounded-md bg-background focus:outline-none focus:ring-1 focus:ring-blue-500 min-w-[180px]">
+          <input type="text" placeholder="Search startups..." class="pl-9 pr-4 py-1.5 text-sm border border-input/80 rounded-md bg-background focus:outline-none focus:ring-1 focus:ring-blue-500 min-w-[180px]">
           <div class="absolute left-2.5 top-1.5 text-gray-400">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search">
               <circle cx="11" cy="11" r="8"></circle>
@@ -24,7 +24,7 @@
           </div>
         </div>
 
-        <select class="px-3 py-1.5 text-sm border border-border rounded-md bg-background min-w-[120px]">
+        <select class="px-3 py-1.5 text-sm border border-input/80 rounded-md bg-background min-w-[120px]">
           <option>All Startups</option>
           <option>Active Startups</option>
           <option>Under Review</option>
@@ -38,15 +38,15 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <!-- Startup 1 -->
-      <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow">
+      <div class="border border-gray-200 dark:border-gray-700 rounded-md p-4 hover:shadow-md transition-shadow">
         <div class="flex items-start justify-between">
           <div>
             <h4 class="font-medium text-lg">TechStart Ventures</h4>
             <p class="text-sm text-muted-foreground">Technology
               startup developing AI solutions</p>
             <div class="mt-2 flex items-center gap-2">
-              <span class="text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full">Active</span>
-              <span class="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 rounded-full">Seed</span>
+              <span class="text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-md">Active</span>
+              <span class="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 rounded-md">Seed</span>
             </div>
           </div>
           <div class="flex gap-1">
@@ -96,8 +96,8 @@
             <span class="text-muted-foreground">Progress</span>
             <span>85%</span>
           </div>
-          <div class="mt-1 w-full bg-muted rounded-full h-2">
-            <div class="bg-blue-600 h-2 rounded-full" style="width: 85%"></div>
+          <div class="mt-1 w-full bg-muted rounded-md h-2">
+            <div class="bg-blue-600 h-2 rounded-md" style="width: 85%"></div>
           </div>
         </div>
 
@@ -108,24 +108,24 @@
             <button class="text-xs text-blue-600 dark:text-blue-400 hover:underline">Manage</button>
           </div>
           <div class="flex -space-x-2">
-            <div class="w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="John Smith - CEO">JS</div>
-            <div class="w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Jane Doe - CTO">JD</div>
-            <div class="w-6 h-6 rounded-full bg-purple-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Bob Wilson - Lead">BW</div>
-            <div class="w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600">+5</div>
+            <div class="w-6 h-6 rounded-md bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="John Smith - CEO">JS</div>
+            <div class="w-6 h-6 rounded-md bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Jane Doe - CTO">JD</div>
+            <div class="w-6 h-6 rounded-md bg-purple-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Bob Wilson - Lead">BW</div>
+            <div class="w-6 h-6 rounded-md bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600">+5</div>
           </div>
         </div>
       </div>
 
       <!-- Startup 2 -->
-      <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow">
+      <div class="border border-gray-200 dark:border-gray-700 rounded-md p-4 hover:shadow-md transition-shadow">
         <div class="flex items-start justify-between">
           <div>
             <h4 class="font-medium text-lg">HealthLaunch Inc</h4>
             <p class="text-sm text-muted-foreground">Healthcare
               startup with innovative solutions</p>
             <div class="mt-2 flex items-center gap-2">
-              <span class="text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-full">Active</span>
-              <span class="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 rounded-full">Series A</span>
+              <span class="text-xs px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-md">Active</span>
+              <span class="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 rounded-md">Series A</span>
             </div>
           </div>
           <div class="flex gap-1">
@@ -175,8 +175,8 @@
             <span class="text-muted-foreground">Progress</span>
             <span>72%</span>
           </div>
-          <div class="mt-1 w-full bg-muted rounded-full h-2">
-            <div class="bg-blue-600 h-2 rounded-full" style="width: 72%"></div>
+          <div class="mt-1 w-full bg-muted rounded-md h-2">
+            <div class="bg-blue-600 h-2 rounded-md" style="width: 72%"></div>
           </div>
         </div>
 
@@ -187,24 +187,24 @@
             <button class="text-xs text-blue-600 dark:text-blue-400 hover:underline">Manage</button>
           </div>
           <div class="flex -space-x-2">
-            <div class="w-6 h-6 rounded-full bg-red-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Dr. Emily Carter - CEO">EC</div>
-            <div class="w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Alex Kumar - CTO">AK</div>
-            <div class="w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Rachel Green - CMO">RG</div>
-            <div class="w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600">+8</div>
+            <div class="w-6 h-6 rounded-md bg-red-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Dr. Emily Carter - CEO">EC</div>
+            <div class="w-6 h-6 rounded-md bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Alex Kumar - CTO">AK</div>
+            <div class="w-6 h-6 rounded-md bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Rachel Green - CMO">RG</div>
+            <div class="w-6 h-6 rounded-md bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600">+8</div>
           </div>
         </div>
       </div>
 
       <!-- Startup 3 -->
-      <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow">
+      <div class="border border-gray-200 dark:border-gray-700 rounded-md p-4 hover:shadow-md transition-shadow">
         <div class="flex items-start justify-between">
           <div>
             <h4 class="font-medium text-lg">FinBoost Startups</h4>
             <p class="text-sm text-muted-foreground">FinTech
               startup revolutionizing payments</p>
             <div class="mt-2 flex items-center gap-2">
-              <span class="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 rounded-full">Under Review</span>
-              <span class="text-xs px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 rounded-full">Pre-seed</span>
+              <span class="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 rounded-md">Under Review</span>
+              <span class="text-xs px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-400 rounded-md">Pre-seed</span>
             </div>
           </div>
           <div class="flex gap-1">
@@ -254,8 +254,8 @@
             <span class="text-muted-foreground">Progress</span>
             <span>45%</span>
           </div>
-          <div class="mt-1 w-full bg-muted rounded-full h-2">
-            <div class="bg-blue-600 h-2 rounded-full" style="width: 45%"></div>
+          <div class="mt-1 w-full bg-muted rounded-md h-2">
+            <div class="bg-blue-600 h-2 rounded-md" style="width: 45%"></div>
           </div>
         </div>
 
@@ -266,10 +266,10 @@
             <button class="text-xs text-blue-600 dark:text-blue-400 hover:underline">Manage</button>
           </div>
           <div class="flex -space-x-2">
-            <div class="w-6 h-6 rounded-full bg-purple-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Tom Harris - CEO">TH</div>
-            <div class="w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Nina Patel - CTO">NP</div>
-            <div class="w-6 h-6 rounded-full bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="David Kim - Dev">DK</div>
-            <div class="w-6 h-6 rounded-full bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600">+2</div>
+            <div class="w-6 h-6 rounded-md bg-purple-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Tom Harris - CEO">TH</div>
+            <div class="w-6 h-6 rounded-md bg-blue-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="Nina Patel - CTO">NP</div>
+            <div class="w-6 h-6 rounded-md bg-green-500 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs font-bold text-white" title="David Kim - Dev">DK</div>
+            <div class="w-6 h-6 rounded-md bg-gray-200 border-2 border-white dark:border-gray-800 flex items-center justify-center text-xs text-gray-600">+2</div>
           </div>
         </div>
       </div>

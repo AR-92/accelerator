@@ -21,20 +21,20 @@
   <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
     <div class="flex flex-wrap items-center gap-2">
       <span class="text-sm font-medium text-muted-foreground">Filter by:</span>
-      <select class="px-3 py-1 border border-border rounded-md text-sm bg-card">
+      <select class="px-3 py-1 border border-input/80 rounded-md text-sm bg-card">
         <option>All Activities</option>
         <option>User Actions</option>
         <option>System Events</option>
         <option>Project Updates</option>
         <option>Team Changes</option>
       </select>
-      <select class="px-3 py-1 border border-border rounded-md text-sm bg-card">
+      <select class="px-3 py-1 border border-input/80 rounded-md text-sm bg-card">
         <option>All Users</option>
         <option>John Doe</option>
         <option>Sarah Smith</option>
         <option>Mike Johnson</option>
       </select>
-      <select class="px-3 py-1 border border-border rounded-md text-sm bg-card">
+      <select class="px-3 py-1 border border-input/80 rounded-md text-sm bg-card">
         <option>Last 7 days</option>
         <option>Last 30 days</option>
         <option>Last 90 days</option>
@@ -42,7 +42,7 @@
       </select>
     </div>
     <div class="flex items-center gap-2">
-      <input type="text" placeholder="Search activities..." class="px-3 py-1 border border-border rounded-md text-sm bg-card w-64">
+      <input type="text" placeholder="Search activities..." class="px-3 py-1 border border-input/80 rounded-md text-sm bg-card w-64">
       <button class="px-3 py-1 bg-muted text-foreground rounded-md text-sm hover:bg-muted/50">
         Search
       </button>
@@ -50,15 +50,15 @@
   </div>
 
   <!-- Activity Log -->
-  <div class="rounded-md bg-card border border-border">
+  <div class="rounded-md bg-card border border-input/80">
     <div class="p-6">
       <div class="space-y-6">
         <!-- Today's Activities -->
         <div>
           <h3 class="text-lg font-semibold mb-4 text-foreground">Today</h3>
           <div class="space-y-4">
-            <div class="flex items-start gap-4 p-4 bg-primary/10 rounded-lg border border-border">
-              <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+            <div class="flex items-start gap-4 p-4 bg-primary/10 rounded-md border border-input/80">
+              <div class="w-10 h-10 bg-primary/20 rounded-md flex items-center justify-center flex-shrink-0">
                 {{{icon 'plus' size="16" class='w-5 h-5 text-primary'}}}
               </div>
               <div class="flex-1 min-w-0">
@@ -74,8 +74,8 @@
               </div>
             </div>
 
-            <div class="flex items-start gap-4 p-4 bg-success/10 rounded-lg border border-border">
-              <div class="w-10 h-10 bg-success/20 rounded-full flex items-center justify-center flex-shrink-0">
+            <div class="flex items-start gap-4 p-4 bg-success/10 rounded-md border border-input/80">
+              <div class="w-10 h-10 bg-success/20 rounded-md flex items-center justify-center flex-shrink-0">
                 {{{icon 'check-circle' size="16" class='w-5 h-5 text-success'}}}
               </div>
               <div class="flex-1 min-w-0">
@@ -89,8 +89,8 @@
               </div>
             </div>
 
-            <div class="flex items-start gap-4 p-4 bg-primary/10 rounded-lg border border-border">
-              <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+            <div class="flex items-start gap-4 p-4 bg-primary/10 rounded-md border border-input/80">
+              <div class="w-10 h-10 bg-primary/20 rounded-md flex items-center justify-center flex-shrink-0">
                 {{{icon 'user-plus' size="16" class='w-5 h-5 text-primary'}}}
               </div>
               <div class="flex-1 min-w-0">
@@ -110,8 +110,8 @@
         <div>
           <h3 class="text-lg font-semibold mb-4 text-foreground">Yesterday</h3>
           <div class="space-y-4">
-            <div class="flex items-start gap-4 p-4 bg-warning/10 rounded-lg border border-border">
-              <div class="w-10 h-10 bg-warning/20 rounded-full flex items-center justify-center flex-shrink-0">
+            <div class="flex items-start gap-4 p-4 bg-warning/10 rounded-md border border-input/80">
+              <div class="w-10 h-10 bg-warning/20 rounded-md flex items-center justify-center flex-shrink-0">
                 {{{icon 'square-pen' size="16" class='w-5 h-5 text-warning'}}}
               </div>
               <div class="flex-1 min-w-0">
@@ -125,8 +125,8 @@
               </div>
             </div>
 
-            <div class="flex items-start gap-4 p-4 bg-destructive/10 rounded-lg border border-border">
-              <div class="w-10 h-10 bg-destructive/20 rounded-full flex items-center justify-center flex-shrink-0">
+            <div class="flex items-start gap-4 p-4 bg-destructive/10 rounded-md border border-input/80">
+              <div class="w-10 h-10 bg-destructive/20 rounded-md flex items-center justify-center flex-shrink-0">
                 {{{icon 'trash-2' size="16" class='w-5 h-5 text-destructive'}}}
               </div>
               <div class="flex-1 min-w-0">
@@ -148,8 +148,8 @@
         <div>
           <h3 class="text-lg font-semibold mb-4 text-foreground">3 days ago</h3>
           <div class="space-y-4">
-            <div class="flex items-start gap-4 p-4 bg-primary/10 rounded-lg border border-border">
-              <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+            <div class="flex items-start gap-4 p-4 bg-primary/10 rounded-md border border-input/80">
+              <div class="w-10 h-10 bg-primary/20 rounded-md flex items-center justify-center flex-shrink-0">
                 {{{icon 'message-circle' size="16" class='w-5 h-5 text-primary'}}}
               </div>
               <div class="flex-1 min-w-0">
@@ -163,8 +163,8 @@
               </div>
             </div>
 
-            <div class="flex items-start gap-4 p-4 bg-card rounded-lg border border-border">
-              <div class="w-10 h-10 bg-muted rounded-full flex items-center justify-center flex-shrink-0">
+            <div class="flex items-start gap-4 p-4 bg-card rounded-md border border-input/80">
+              <div class="w-10 h-10 bg-muted rounded-md flex items-center justify-center flex-shrink-0">
                 {{{icon 'settings' size="16" class='w-5 h-5 text-muted-foreground'}}}
               </div>
               <div class="flex-1 min-w-0">

@@ -195,8 +195,8 @@ class FileUploadManager {
       }
 
       // Change border color to indicate success
-      uploadArea.classList.remove('border-border', 'hover:border-primary/50');
-      uploadArea.classList.add('border-green-500');
+      uploadArea.classList.remove('border-input', 'hover:border-primary/50');
+      uploadArea.classList.add('border-success');
     }
   }
 
@@ -207,7 +207,7 @@ class FileUploadManager {
         <svg class="w-8 h-8 text-red-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
-        <p class="text-sm font-medium text-red-600">Upload failed</p>
+        <p class="text-sm font-medium text-destructive">Upload failed</p>
         <p class="text-xs text-muted-foreground">${errorMessage}</p>
         <button class="mt-2 px-3 py-1 text-xs bg-primary text-primary-foreground rounded hover:bg-primary/90" onclick="location.reload()">
           Try again
@@ -215,8 +215,8 @@ class FileUploadManager {
       `;
 
       // Change border color to indicate error
-      uploadArea.classList.remove('border-border', 'hover:border-primary/50');
-      uploadArea.classList.add('border-red-500');
+      uploadArea.classList.remove('border-input', 'hover:border-primary/50');
+      uploadArea.classList.add('border-destructive');
     }
   }
 

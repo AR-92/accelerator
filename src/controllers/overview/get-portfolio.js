@@ -125,12 +125,12 @@ export const getPortfolio = async (req, res) => {
           {
             label: 'Completed',
             value: completedTodos || 0,
-            color: 'text-green-600',
+            color: 'text-step-revenue',
           },
           {
             label: 'Pending',
             value: pendingTodos || 0,
-            color: 'text-orange-600',
+            color: 'text-step-cogs',
           },
         ],
       },
@@ -139,11 +139,15 @@ export const getPortfolio = async (req, res) => {
         title: 'Accounts',
         items: [
           { label: 'Total', value: totalUsers || 0 },
-          { label: 'Active', value: activeUsers || 0, color: 'text-green-600' },
+          {
+            label: 'Active',
+            value: activeUsers || 0,
+            color: 'text-step-revenue',
+          },
           {
             label: 'Pending',
             value: pendingUsers || 0,
-            color: 'text-orange-600',
+            color: 'text-step-cogs',
           },
         ],
       },
@@ -155,12 +159,12 @@ export const getPortfolio = async (req, res) => {
           {
             label: 'Approved',
             value: approvedIdeas || 0,
-            color: 'text-green-600',
+            color: 'text-step-revenue',
           },
           {
             label: 'Pending',
             value: pendingIdeas || 0,
-            color: 'text-orange-600',
+            color: 'text-step-cogs',
           },
         ],
       },
@@ -169,8 +173,12 @@ export const getPortfolio = async (req, res) => {
         title: 'Votes Management',
         items: [
           { label: 'Total', value: totalVotes || 0 },
-          { label: 'Upvotes', value: upvotes || 0, color: 'text-green-600' },
-          { label: 'Downvotes', value: downvotes || 0, color: 'text-red-600' },
+          { label: 'Upvotes', value: upvotes || 0, color: 'text-step-revenue' },
+          {
+            label: 'Downvotes',
+            value: downvotes || 0,
+            color: 'text-step-opex',
+          },
         ],
       },
       {
@@ -181,12 +189,12 @@ export const getPortfolio = async (req, res) => {
           {
             label: 'Active',
             value: activeCollaborations || 0,
-            color: 'text-green-600',
+            color: 'text-step-revenue',
           },
           {
             label: 'Archived',
             value: archivedCollaborations || 0,
-            color: 'text-gray-600',
+            color: 'text-muted-foreground',
           },
         ],
       },

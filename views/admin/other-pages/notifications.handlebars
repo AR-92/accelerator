@@ -8,56 +8,56 @@
        <!-- Critical Status Overview -->
        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <!-- Total Notifications -->
-          <div class="bg-card rounded-lg border border-border p-6">
+          <div class="bg-card rounded-md border border-input/80 p-6">
              <div class="flex items-center justify-between">
                 <div>
                    <p class="text-sm font-medium text-muted-foreground">Total Notifications</p>
                    <p class="text-2xl font-bold text-blue-600">{{notificationAnalytics.totalNotifications}}</p>
                    <p class="text-xs text-muted-foreground">{{notificationStats.unread}} unread</p>
                 </div>
-                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                <div class="w-12 h-12 bg-blue-100 rounded-md flex items-center justify-center">
                    {{{icon 'bell' size="16" class='text-blue-600'}}}
                 </div>
              </div>
           </div>
 
           <!-- Read Rate -->
-          <div class="bg-card rounded-lg border border-border p-6">
+          <div class="bg-card rounded-md border border-input/80 p-6">
              <div class="flex items-center justify-between">
                 <div>
                    <p class="text-sm font-medium text-muted-foreground">Read Rate</p>
                    <p class="text-2xl font-bold text-green-600">{{notificationAnalytics.readRate}}%</p>
                    <p class="text-xs text-muted-foreground">{{notificationStats.thisWeek}} this week</p>
                 </div>
-                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                <div class="w-12 h-12 bg-green-100 rounded-md flex items-center justify-center">
                    {{{icon 'check-circle' size="16" class='text-green-600'}}}
                 </div>
              </div>
           </div>
 
           <!-- Urgent Notifications -->
-          <div class="bg-card rounded-lg border border-border p-6">
+          <div class="bg-card rounded-md border border-input/80 p-6">
              <div class="flex items-center justify-between">
                 <div>
                    <p class="text-sm font-medium text-muted-foreground">Urgent Alerts</p>
                    <p class="text-2xl font-bold text-red-600">{{notificationAnalytics.urgentCount}}</p>
                    <p class="text-xs text-muted-foreground">High priority</p>
                 </div>
-                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                <div class="w-12 h-12 bg-red-100 rounded-md flex items-center justify-center">
                    {{{icon 'alert-triangle' size="16" class='text-red-600'}}}
                 </div>
              </div>
           </div>
 
           <!-- Delivery Success -->
-          <div class="bg-card rounded-lg border border-border p-6">
+          <div class="bg-card rounded-md border border-input/80 p-6">
              <div class="flex items-center justify-between">
                 <div>
                    <p class="text-sm font-medium text-muted-foreground">Delivery Success</p>
                    <p class="text-2xl font-bold text-purple-600">{{notificationAnalytics.deliverySuccess}}</p>
                    <p class="text-xs text-muted-foreground">System uptime</p>
                 </div>
-                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                <div class="w-12 h-12 bg-purple-100 rounded-md flex items-center justify-center">
                    {{{icon 'send' size="16" class='text-purple-600'}}}
                 </div>
              </div>
@@ -67,8 +67,8 @@
        <!-- Notification Analytics & Performance -->
        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <!-- Notification Types Overview -->
-          <div class="bg-card rounded-lg border border-border">
-             <div class="p-6 border-b border-border">
+          <div class="bg-card rounded-md border border-input/80">
+             <div class="p-6 border-b border-input/80">
                 <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                    {{{icon 'pie-chart' size="16" class='mr-2'}}}
                    Notification Types
@@ -85,8 +85,8 @@
           </div>
 
           <!-- User Engagement Metrics -->
-          <div class="bg-card rounded-lg border border-border">
-             <div class="p-6 border-b border-border">
+          <div class="bg-card rounded-md border border-input/80">
+             <div class="p-6 border-b border-input/80">
                 <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                    {{{icon 'users' size="16" class='mr-2'}}}
                    User Engagement
@@ -113,8 +113,8 @@
           </div>
 
           <!-- Delivery Health -->
-          <div class="bg-card rounded-lg border border-border">
-             <div class="p-6 border-b border-border">
+          <div class="bg-card rounded-md border border-input/80">
+             <div class="p-6 border-b border-input/80">
                 <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                    {{{icon 'shield-check' size="16" class='mr-2'}}}
                    Delivery Health
@@ -124,7 +124,7 @@
                 <div class="flex items-center justify-between">
                    <span class="text-sm font-medium text-card-foreground">Delivery Status</span>
                    <div class="flex items-center">
-                      <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></div>
+                      <div class="w-2 h-2 bg-green-500 rounded-md animate-pulse mr-2"></div>
                       <span class="text-sm text-green-600 font-medium">Healthy</span>
                    </div>
                 </div>
@@ -141,8 +141,8 @@
        </div>
 
        <!-- Notification Trends -->
-       <div class="bg-card rounded-lg border border-border">
-          <div class="p-6 border-b border-border">
+       <div class="bg-card rounded-md border border-input/80">
+          <div class="p-6 border-b border-input/80">
              <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                 {{{icon 'trending-up' size="16" class='mr-2'}}}
                 Notification Trends
@@ -419,8 +419,8 @@
        </div>
 
        <!-- Notification Type Distribution -->
-       <div class="bg-card rounded-lg border border-border">
-          <div class="p-6 border-b border-border">
+       <div class="bg-card rounded-md border border-input/80">
+          <div class="p-6 border-b border-input/80">
              <h3 class="text-lg font-semibold text-card-foreground flex items-center">
                 {{{icon 'pie-chart' size="16" class='mr-2'}}}
                 Notification Type Distribution
@@ -437,8 +437,8 @@
   </div>
 
       <!-- Notification Filters -->
-     <div class="bg-card rounded-lg border border-border">
-       <div class="p-6 border-b border-border">
+     <div class="bg-card rounded-md border border-input/80">
+       <div class="p-6 border-b border-input/80">
          <div class="flex items-center justify-between">
            <h3 class="text-lg font-semibold text-card-foreground">Notifications</h3>
            <div class="flex items-center space-x-4">
@@ -464,9 +464,9 @@
            <div class="flex items-start space-x-4">
              <div class="flex-shrink-0">
                {{#if is_read}}
-               <div class="w-2 h-2 bg-muted rounded-full"></div>
+               <div class="w-2 h-2 bg-muted rounded-md"></div>
                {{else}}
-               <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+               <div class="w-2 h-2 bg-blue-500 rounded-md"></div>
                {{/if}}
              </div>
              <div class="flex-1 min-w-0">
@@ -476,11 +476,11 @@
                </div>
                <p class="text-sm text-muted-foreground mt-1">{{message}}</p>
                <div class="flex items-center mt-2 space-x-4">
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{#eq type "system"}}bg-destructive/10 text-destructive{{else if eq type "user"}}bg-primary/10 text-primary{{else if eq type "security"}}bg-warning/10 text-warning{{else}}bg-muted/50 text-muted-foreground{{/eq}}">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium {{#eq type "system"}}bg-destructive/10 text-destructive{{else if eq type "user"}}bg-primary/10 text-primary{{else if eq type "security"}}bg-warning/10 text-warning{{else}}bg-muted/50 text-muted-foreground{{/eq}}">
                    {{type}}
                  </span>
                  {{#if (eq priority "high")}}
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-destructive/10 text-destructive">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-destructive/10 text-destructive">
                    High Priority
                  </span>
                  {{/if}}
@@ -503,7 +503,7 @@
 
        {{#if (gt notifications.length 0)}}
        <!-- Pagination -->
-       <div class="px-6 py-4 border-t border-border">
+       <div class="px-6 py-4 border-t border-input/80">
          <div class="flex items-center justify-between">
            <div class="text-sm text-card-foreground">
              Showing {{pagination.start}} to {{pagination.end}} of {{pagination.total}} notifications
@@ -539,17 +539,17 @@
 
      <!-- Bulk Actions -->
      {{#if notifications.length}}
-     <div class="bg-card rounded-lg border border-border p-6">
+     <div class="bg-card rounded-md border border-input/80 p-6">
        <div class="flex items-center justify-between">
          <div>
            <h3 class="text-lg font-semibold text-card-foreground">Bulk Actions</h3>
            <p class="text-sm text-muted-foreground">Perform actions on multiple notifications</p>
          </div>
          <div class="flex items-center space-x-4">
-            <button class="px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors">
+            <button class="px-4 py-2 bg-primary/10 text-primary rounded-md hover:bg-primary/20 transition-colors">
              Mark Selected as Read
            </button>
-           <button class="px-4 py-2 bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/90 transition-colors">
+           <button class="px-4 py-2 bg-destructive text-destructive-foreground rounded-md hover:bg-destructive/90 transition-colors">
              Delete Selected
            </button>
          </div>

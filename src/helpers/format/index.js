@@ -44,13 +44,13 @@ export const statusClass = (status) => {
     case 'completed':
     case 'active':
     case 'published':
-      return 'bg-green-100 text-green-800';
+      return 'bg-success/10 text-success-foreground';
     case 'pending':
-      return 'bg-yellow-100 text-yellow-800';
+      return 'bg-warning/10 text-warning-foreground';
     case 'inactive':
-      return 'bg-gray-100 text-gray-800';
+      return 'bg-muted text-muted-foreground';
     default:
-      return 'bg-blue-100 text-blue-800';
+      return 'bg-info/10 text-info-foreground';
   }
 };
 

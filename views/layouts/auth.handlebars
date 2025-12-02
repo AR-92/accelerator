@@ -62,8 +62,13 @@
             end
      </script>
 </head>
-<body>
-    {{{body}}}
+ <body>
+     <!-- Theme Toggle Button -->
+     <button id="theme-toggle" class="fixed top-4 right-4 z-50 text-muted-foreground hover:text-primary rounded-md p-2 cursor-pointer font-medium bg-card border border-input/80 shadow-sm" onclick="toggleTheme()">
+       <span id="theme-icon">{{{icon 'sun-dim' size="16" class='h-4 w-4'}}}</span>
+     </button>
+
+     {{{body}}}
 
     <!-- JavaScript Section -->
     <script>

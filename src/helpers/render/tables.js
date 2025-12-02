@@ -7,9 +7,9 @@ export const renderTableRowsHtml = (todos) => {
   const Handlebars = require('handlebars');
   const template = Handlebars.compile(`
     {{#each todos}}
-    <tr id="todo-row-{{id}}" class="border-b border-border hover:bg-muted dark:hover:bg-muted transition-colors duration-150 even:bg-muted dark:even:bg-muted">
+    <tr id="todo-row-{{id}}" class="border-b border-input/40 hover:bg-muted dark:hover:bg-muted transition-colors duration-150 even:bg-muted dark:even:bg-muted">
       <td class="px-6 py-4">
-        <input type="checkbox" class="todoCheckbox rounded border-border text-primary  value="{{id}}" data-todo-id="{{id}}" aria-label="Select todo {{title}}">
+        <input type="checkbox" class="todoCheckbox rounded border-input/80 text-primary  value="{{id}}" data-todo-id="{{id}}" aria-label="Select todo {{title}}">
       </td>
       <td class="px-6 py-4">
         <div>
@@ -36,7 +36,7 @@ export const renderTableRowsHtml = (todos) => {
           <button onclick="toggleActionMenu(this)" data-entity="{{entity}}" data-id="{{id}}" class="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors" aria-label="Actions menu">
             {{{icon 'ellipsis-vertical' class='w-4 h-4'}}}
           </button>
-          <div id="actionMenu-{{entity}}-{{id}}" class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-card rounded-md shadow-lg z-10 border border-border">
+          <div id="actionMenu-{{entity}}-{{id}}" class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-card rounded-md shadow-lg z-10 border border-input/80">
             <div class="py-1">
               <a href="/todos/{{id}}" class="flex items-center px-4 py-2 text-sm text-foreground hover:bg-muted transition-colors">
                 {{{icon 'eye' class='w-4 h-4 mr-3'}}}

@@ -1,143 +1,168 @@
 <!-- Top Navigation Bar -->
-<nav class="bg-card text-card-foreground px-2 sm:px-4 border-b border-border flex items-center justify-between min-h-12">
-    <div class="flex items-center gap-2 sm:gap-4">
-        <div class="h-6 w-6 ml-1 mr-4 sm:mr-6 text-primary"><svg xmlns="http://www.w3.org/2000/svg" width="33" height="36" viewBox="0 0 33 36"
-         fill="none" class="h-full w-full">
-         <path
-           d="M31.6035 7.28044C31.1951 7.03803 30.7235 7.06833 30.3421 7.35872L26.4519 10.3182C25.9036 10.7348 25.5764 11.4317 25.5764 12.1868V21.1636C25.5764 24.2695 23.7757 26.9638 21.1966 27.7138L6.895 31.8726V14.5099C6.895 11.7171 8.5129 9.29549 10.8326 8.62128L31.4004 2.64179C31.9126 2.4928 32.2714 1.9701 32.2714 1.37165C32.2714 1.01561 32.1405 0.672189 31.9149 0.424727C31.687 0.177265 31.3823 0.0510083 31.0777 0.0611088L27.8352 0.177265C26.7972 0.215142 25.7615 0.3818 24.7551 0.674714L7.27635 5.75527C3.11314 6.9648 0.206787 11.2853 0.206787 16.2598V32.8423C0.206787 33.7033 0.716752 34.4508 1.44785 34.6629L5.68553 35.8876C5.8164 35.9255 5.95405 35.9457 6.09169 35.9457C6.22934 35.9457 6.36698 35.9255 6.49786 35.8876L24.8792 30.5444C29.2342 29.2793 32.2759 24.7594 32.2759 19.5526V8.52785C32.2759 8.00263 32.0209 7.52538 31.6103 7.28297L31.6035 7.28044Z"
-           fill="currentColor" />
-       </svg></div>
+<nav
+  class="navbar-bg text-card-foreground px-2 sm:px-4 border-b border-input/80 flex items-center justify-between min-h-12">
+  <div class="flex items-center gap-2 sm:gap-4">
+    <div class="h-6 w-6 ml-1 mr-4 sm:mr-6 text-primary"><svg xmlns="http://www.w3.org/2000/svg" width="33" height="36"
+        viewBox="0 0 33 36" fill="none" class="h-full w-full">
+        <path
+          d="M31.6035 7.28044C31.1951 7.03803 30.7235 7.06833 30.3421 7.35872L26.4519 10.3182C25.9036 10.7348 25.5764 11.4317 25.5764 12.1868V21.1636C25.5764 24.2695 23.7757 26.9638 21.1966 27.7138L6.895 31.8726V14.5099C6.895 11.7171 8.5129 9.29549 10.8326 8.62128L31.4004 2.64179C31.9126 2.4928 32.2714 1.9701 32.2714 1.37165C32.2714 1.01561 32.1405 0.672189 31.9149 0.424727C31.687 0.177265 31.3823 0.0510083 31.0777 0.0611088L27.8352 0.177265C26.7972 0.215142 25.7615 0.3818 24.7551 0.674714L7.27635 5.75527C3.11314 6.9648 0.206787 11.2853 0.206787 16.2598V32.8423C0.206787 33.7033 0.716752 34.4508 1.44785 34.6629L5.68553 35.8876C5.8164 35.9255 5.95405 35.9457 6.09169 35.9457C6.22934 35.9457 6.36698 35.9255 6.49786 35.8876L24.8792 30.5444C29.2342 29.2793 32.2759 24.7594 32.2759 19.5526V8.52785C32.2759 8.00263 32.0209 7.52538 31.6103 7.28297L31.6035 7.28044Z"
+          fill="currentColor" />
+      </svg></div>
 
-          <div class="hidden md:flex items-center gap-2 sm:gap-4">
-    {{> nav-item section="startup-dashboard" text="Startup Dashboard" href="/startup-dashboard"}}
-    {{> nav-item section="enterprise-dashboard" text="Enterprise Dashboard" href="/enterprise-dashboard"}}
-    {{> nav-item section="corporate-dashboard" text="Corporate Dashboard" href="/corporate-dashboard"}}
-    {{> nav-item section="portfolio" text="Portfolio"}}
-   {{> nav-item section="collaborate" text="Collaborate"}}
+    <div class="hidden md:flex items-center gap-2 sm:gap-4">
+      {{> nav-item section="startup-dashboard" text="Startup Dashboard" href="/startup-dashboard"}}
+      {{> nav-item section="enterprise-dashboard" text="Enterprise Dashboard" href="/enterprise-dashboard"}}
+      {{> nav-item section="corporate-dashboard" text="Corporate Dashboard" href="/corporate-dashboard"}}
+      {{> nav-item section="portfolio" text="Portfolio"}}
+      {{> nav-item section="collaborate" text="Collaborate"}}
 
-          </div>
-      </div>
-   <div class="flex">
-      <div class="h-12 w-px bg-border"></div>
-       <div class="self-center">
-         <label class="relative block">
-           <span class="sr-only">Search</span>
-                 <input class="max-w-36 pl-3 sm:pl-4 pr-3 sm:pr-4 py-1.5 rounded-md placeholder:text-xs sm:placeholder:text-sm text-foreground bg-transparent focus:outline-none"
-                  placeholder="Search here..." aria-label="Search" id="navSearchInput" name="search" value="{{query.search}}" />
-        </label>
-       </div>
-          <!-- Theme Toggle Button -->
-            <button id="theme-toggle" class="ml-4 text-muted-foreground hover:text-primary rounded-full p-2 cursor-pointer font-medium" onclick="toggleTheme()">
-            <span id="theme-icon">{{{icon 'sun-dim' size="16" class='h-4 w-4'}}}</span>
-           </button>
+    </div>
+  </div>
+  <div class="flex items-center">
+    <div class="h-12 w-px bg-border"></div>
+    <div class="self-center">
+      <label class="relative block">
+        <span class="sr-only">Search</span>
+        <input
+          class="max-w-36 pl-3 sm:pl-4 pr-3 sm:pr-4 py-1.5 rounded-md placeholder:text-xs sm:placeholder:text-sm text-foreground bg-transparent focus:outline-none border-0"
+          placeholder="Search here..." aria-label="Search" id="navSearchInput" name="search" value="{{query.search}}" />
+      </label>
+    </div>
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle"
+      class="ml-4 self-center w-6 h-6 text-muted-foreground hover:text-primary rounded-full p-2 cursor-pointer font-medium border-0"
+      onclick="toggleTheme()">
+      <span id="theme-icon">{{{icon 'sun-dim' size="16" class='h-4 w-4'}}}</span>
+    </button>
 
-{{> grid-menu}}
+    {{> grid-menu}}
 
-       <!-- User Menu -->
-      <div class="relative self-center" id="admin-user-menu">
-        <button onclick="toggleUserMenu()"
-          class="flex items-center gap-3 h-10 px-3 rounded-xl transition-all duration-200 hover:text-primary cursor-pointer"
-          id="admin-user-menu-button">
-         <div class="hidden md:flex flex-col items-start min-w-0">
-           <span class="text-sm font-bold text-foreground leading-tight truncate max-w-32" id="user-name">Loading...</span>
-           <span class="text-xs text-muted-foreground leading-tight flex items-center gap-1.5">
-             <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-             Administrator
-           </span>
-         </div>
-         <div
-           class="flex items-center justify-center w-5 h-5 rounded-md hover:bg-muted/50 transition-colors duration-200"
-           id="admin-user-menu-arrow">
+    <!-- User Menu -->
+    <div class="relative self-center" id="admin-user-menu">
+      <button onclick="toggleUserMenu()"
+        class="flex items-center gap-3 h-10 px-3 rounded-md transition-all duration-200 hover:text-primary cursor-pointer border-0"
+        id="admin-user-menu-button">
+        <div class="hidden md:flex flex-col items-start min-w-0">
+          <span class="text-sm font-bold text-foreground leading-tight truncate max-w-32"
+            id="user-name">Loading...</span>
+          <span class="text-xs text-muted-foreground leading-tight flex items-center gap-1.5">
+            <div class="w-2 h-2 bg-success rounded-md animate-pulse"></div>
+            Administrator
+          </span>
+        </div>
+        <div
+          class="flex items-center justify-center w-5 h-5 rounded-md hover:bg-muted/50 transition-colors duration-200"
+          id="admin-user-menu-arrow">
 
-           {{{icon 'chevron-down' size="16" class='w-3 h-3 text-muted-foreground'}}}
+          {{{icon 'chevron-down' size="16" class='w-3 h-3 text-muted-foreground'}}}
 
         </div>
       </button>
 
-        <!-- User Dropdown -->
-        <div
-          class="absolute right-0 mt-2 w-72 bg-popover backdrop-blur-sm border border-border rounded-xl shadow-xl z-30 transition-all duration-200 opacity-0 invisible hidden"
-          id="admin-user-dropdown">
-          <div class="p-1" role="none">
-            <!-- User profile section -->
-            <div class="flex items-center gap-2 px-2 py-2 text-left text-sm">
-              <span class="relative flex size-8 shrink-0 overflow-hidden h-8 w-8 rounded-full bg-purple-500 dark:bg-purple-600 text-white items-center justify-center text-xs font-bold" id="user-avatar">ER</span>
-              <div class="grid flex-1 text-left text-sm leading-tight">
-                <span class="truncate font-medium" id="user-name">Loading...</span>
-                <span class="truncate text-xs text-muted-foreground" id="user-email">startup3@example.com</span>
-              </div>
+      <!-- User Dropdown -->
+      <div
+        class="absolute right-0 mt-2 w-72 bg-popover backdrop-blur-sm border border-input/80 rounded-md shadow-xl z-30 transition-all duration-200 opacity-0 invisible hidden"
+        id="admin-user-dropdown">
+        <div class="p-1" role="none">
+          <!-- User profile section -->
+          <div class="flex items-center gap-2 px-2 py-2 text-left text-sm">
+            <span
+              class="relative flex size-8 shrink-0 overflow-hidden h-8 w-8 rounded-md bg-primary text-primary-foreground items-center justify-center text-xs font-bold"
+              id="user-avatar">ER</span>
+            <div class="grid flex-1 text-left text-sm leading-tight">
+              <span class="truncate font-medium" id="user-name">Loading...</span>
+              <span class="truncate text-xs text-muted-foreground" id="user-email">startup3@example.com</span>
             </div>
+          </div>
 
-            <!-- Separator -->
-            <div class="bg-border -mx-1 my-1 h-px"></div>
+          <!-- Separator -->
+          <div class="bg-border -mx-1 my-1 h-px"></div>
 
-            <!-- Upgrade to Pro item -->
-             <a href="/pages/core/upgrade-plan" class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-              <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path>
-                <path d="M20 2v4"></path>
-                <path d="M22 4h-4"></path>
-                <circle cx="4" cy="20" r="2"></circle>
+          <!-- Upgrade to Pro item -->
+          <a href="/pages/core/upgrade-plan"
+            class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+            <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z">
+              </path>
+              <path d="M20 2v4"></path>
+              <path d="M22 4h-4"></path>
+              <circle cx="4" cy="20" r="2"></circle>
+            </svg>
+            Upgrade to Pro
+          </a>
+
+          <!-- Separator -->
+          <div class="bg-border -mx-1 my-1 h-px"></div>
+
+          <!-- Account group -->
+          <div role="group" class="p-1">
+            <!-- Settings Dashboard item -->
+            <a href="/pages/settings"
+              class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+              <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915">
+                </path>
+                <circle cx="12" cy="12" r="3"></circle>
               </svg>
-              Upgrade to Pro
+              Settings Dashboard
             </a>
 
-            <!-- Separator -->
-            <div class="bg-border -mx-1 my-1 h-px"></div>
-
-            <!-- Account group -->
-            <div role="group" class="p-1">
-              <!-- Settings Dashboard item -->
-               <a href="/pages/settings" class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"></path>
-                  <circle cx="12" cy="12" r="3"></circle>
-                </svg>
-                Settings Dashboard
-              </a>
-
-              <!-- Account item -->
-               <a href="/pages/settings/profile" class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path>
-                  <path d="m9 12 2 2 4-4"></path>
-                </svg>
-                Account
-              </a>
-
-              <!-- Billing item -->
-               <a href="/pages/settings/billing" class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect width="20" height="14" x="2" y="5" rx="2"></rect>
-                  <line x1="2" x2="22" y1="10" y2="10"></line>
-                </svg>
-                Billing
-              </a>
-
-              <!-- Settings item -->
-               <a href="/pages/settings/other" class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-                Other Settings
-              </a>
-            </div>
-
-            <!-- Separator -->
-            <div class="bg-border -mx-1 my-1 h-px"></div>
-
-            <!-- Log out item -->
-            <button onclick="handleLogout()" class="w-full relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors text-destructive hover:bg-destructive/10">
-              <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m16 17 5-5-5-5"></path>
-                <path d="M21 12H9"></path>
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <!-- Account item -->
+            <a href="/pages/settings/profile"
+              class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+              <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z">
+                </path>
+                <path d="m9 12 2 2 4-4"></path>
               </svg>
-              Log out
-            </button>
+              Account
+            </a>
+
+            <!-- Billing item -->
+            <a href="/pages/settings/billing"
+              class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+              <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                <line x1="2" x2="22" y1="10" y2="10"></line>
+              </svg>
+              Billing
+            </a>
+
+            <!-- Settings item -->
+            <a href="/pages/settings/other"
+              class="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+              <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              Other Settings
+            </a>
           </div>
+
+          <!-- Separator -->
+          <div class="bg-border -mx-1 my-1 h-px"></div>
+
+          <!-- Log out item -->
+          <button onclick="handleLogout()"
+            class="w-full relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors text-destructive hover:bg-destructive/10">
+            <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m16 17 5-5-5-5"></path>
+              <path d="M21 12H9"></path>
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            </svg>
+            Log out
+          </button>
         </div>
-     </div>
-   </div>
-  </nav>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,5 +1,5 @@
 <div class="flex justify-end mb-4">
-  <div class="bg-background rounded-2xl p-4 max-w-2xl border border-border shadow-sm">
+  <div class="bg-background rounded-2xl p-4 max-w-2xl border border-input/80 shadow-sm">
   <!-- FORM-CARD: {{title}} -->
     <div class="flex items-start gap-3 mb-3{{#if alignRight}} justify-end{{/if}}">
       <div class="flex-1{{#if alignRight}} text-right{{/if}}">
@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="flex-shrink-0">
-        <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">{{#if avatar}}{{avatar}}{{else}}U{{/if}}</div>
+        <div class="w-8 h-8 rounded-md bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">{{#if avatar}}{{avatar}}{{else}}U{{/if}}</div>
       </div>
     </div>
      {{> @partial-block}}

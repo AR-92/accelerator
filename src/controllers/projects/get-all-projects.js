@@ -78,7 +78,7 @@ export const getAllProjects = async (req, res) => {
           {
             label: 'Active',
             value: activeIdeas || 0,
-            color: 'text-green-600',
+            color: 'text-step-revenue',
           },
           {
             label: 'Draft',
@@ -100,7 +100,7 @@ export const getAllProjects = async (req, res) => {
           {
             label: 'Total Views',
             value: totalViews || 0,
-            color: 'text-blue-600',
+            color: 'text-step-kpi',
           },
         ],
       },

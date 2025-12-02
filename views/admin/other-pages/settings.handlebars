@@ -19,8 +19,8 @@
     <form hx-post="/admin/other-pages/settings" hx-target="#settings-container" hx-swap="innerHTML" class="space-y-6">
     <div id="settings-container" class="p-6 space-y-6">
        <!-- General Settings -->
-       <div class="settings-section bg-card rounded-lg border border-border" data-category="general">
-         <div class="p-6 border-b border-border">
+       <div class="settings-section bg-card rounded-md border border-input/80" data-category="general">
+         <div class="p-6 border-b border-input/80">
            <h3 class="text-lg font-semibold text-card-foreground">General Settings</h3>
            <p class="text-sm text-muted-foreground mt-1">Basic system configuration and preferences</p>
          </div>
@@ -59,8 +59,8 @@
       </div>
 
        <!-- Server Settings -->
-       <div class="settings-section bg-card rounded-lg border border-border" data-category="server">
-         <div class="p-6 border-b border-border">
+       <div class="settings-section bg-card rounded-md border border-input/80" data-category="server">
+         <div class="p-6 border-b border-input/80">
            <h3 class="text-lg font-semibold text-card-foreground">Server Settings</h3>
            <p class="text-sm text-muted-foreground mt-1">Server performance and deployment configuration</p>
          </div>
@@ -73,7 +73,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="clusterMode" {{#if settings.server.clusterMode}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
             <div>
@@ -113,7 +113,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="trustProxy" {{#if settings.server.trustProxy}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -121,8 +121,8 @@
       </div>
 
       <!-- Database Settings -->
-      <div class="settings-section bg-card rounded-lg border border-border" data-category="database">
-        <div class="p-6 border-b border-border">
+      <div class="settings-section bg-card rounded-md border border-input/80" data-category="database">
+        <div class="p-6 border-b border-input/80">
           <h3 class="text-lg font-semibold text-card-foreground">Database Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Configure database connection and performance settings</p>
         </div>
@@ -189,8 +189,8 @@
       </div>
 
       <!-- Security Settings -->
-      <div class="settings-section bg-card rounded-lg border border-border" data-category="security">
-        <div class="p-6 border-b border-border">
+      <div class="settings-section bg-card rounded-md border border-input/80" data-category="security">
+        <div class="p-6 border-b border-input/80">
           <h3 class="text-lg font-semibold text-card-foreground">Security Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Configure authentication and security policies</p>
         </div>
@@ -202,7 +202,7 @@
             </div>
             <label class="relative inline-flex items-center cursor-pointer">
               <input type="checkbox" name="twoFactorAuth" class="sr-only peer" {{#if settings.security.twoFactorAuth}}checked{{/if}}>
-              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
             </label>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -217,7 +217,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="passwordPolicy" class="sr-only peer" {{#if settings.security.passwordPolicy}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -229,8 +229,8 @@
       </div>
 
       <!-- Email Settings -->
-      <div class="settings-section bg-card rounded-lg border border-border" data-category="email">
-        <div class="p-6 border-b border-border">
+      <div class="settings-section bg-card rounded-md border border-input/80" data-category="email">
+        <div class="p-6 border-b border-input/80">
           <h3 class="text-lg font-semibold text-card-foreground">Email Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Configure email notifications and SMTP settings</p>
         </div>
@@ -286,15 +286,15 @@
             </div>
             <label class="relative inline-flex items-center cursor-pointer">
               <input type="checkbox" name="emailNotifications" class="sr-only peer" {{#if settings.email.emailNotifications}}checked{{/if}}>
-              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
             </label>
           </div>
         </div>
       </div>
 
       <!-- UI & Appearance Settings -->
-      <div class="settings-section bg-card rounded-lg border border-border" data-category="ui">
-        <div class="p-6 border-b border-border">
+      <div class="settings-section bg-card rounded-md border border-input/80" data-category="ui">
+        <div class="p-6 border-b border-input/80">
           <h3 class="text-lg font-semibold text-card-foreground">UI & Appearance Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Customize the look and feel of your interface</p>
         </div>
@@ -331,7 +331,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="sidebarCollapsedDefault" {{#if settings.ui.sidebarCollapsedDefault}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -366,8 +366,8 @@
       </div>
 
       <!-- Performance & Caching Settings -->
-      <div class="settings-section bg-card rounded-lg border border-border" data-category="performance">
-        <div class="p-6 border-b border-border">
+      <div class="settings-section bg-card rounded-md border border-input/80" data-category="performance">
+        <div class="p-6 border-b border-input/80">
           <h3 class="text-lg font-semibold text-card-foreground">Performance & Caching Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Configure caching and performance optimization</p>
         </div>
@@ -393,7 +393,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="cacheCompressionEnabled" {{#if settings.performance.cacheCompressionEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
             <div>
@@ -445,8 +445,8 @@
       </div>
 
        <!-- Logging & Monitoring Settings -->
-       <div class="settings-section bg-card rounded-lg border border-border" data-category="logging">
-        <div class="p-6 border-b border-border">
+       <div class="settings-section bg-card rounded-md border border-input/80" data-category="logging">
+        <div class="p-6 border-b border-input/80">
           <h3 class="text-lg font-semibold text-card-foreground">Logging & Monitoring Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Configure logging and monitoring services</p>
         </div>
@@ -496,7 +496,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="prometheusMetricsEnabled" {{#if settings.logging.prometheusMetricsEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -522,8 +522,8 @@
       </div>
 
        <!-- API & Integration Settings -->
-       <div class="settings-section bg-card rounded-lg border border-border" data-category="api">
-        <div class="p-6 border-b border-border">
+       <div class="settings-section bg-card rounded-md border border-input/80" data-category="api">
+        <div class="p-6 border-b border-input/80">
           <h3 class="text-lg font-semibold text-card-foreground">API & Integration Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Configure API versioning and third-party integrations</p>
         </div>
@@ -549,7 +549,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="apiDocumentationEnabled" {{#if settings.api.documentationEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
             <div class="flex items-center justify-between">
@@ -559,7 +559,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="graphqlEnabled" {{#if settings.api.graphqlEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -571,7 +571,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="restApiEnabled" {{#if settings.api.restApiEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
             <div class="flex items-center justify-between">
@@ -581,7 +581,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="websocketEnabled" {{#if settings.api.websocketEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -606,8 +606,8 @@
       </div>
 
        <!-- Business Logic Settings -->
-       <div class="settings-section bg-card rounded-lg border border-border" data-category="business">
-        <div class="p-6 border-b border-border">
+       <div class="settings-section bg-card rounded-md border border-input/80" data-category="business">
+        <div class="p-6 border-b border-input/80">
           <h3 class="text-lg font-semibold text-card-foreground">Business Logic Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Configure accelerator-specific business rules</p>
         </div>
@@ -644,7 +644,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="collaborationToolsEnabled" {{#if settings.business.collaborationToolsEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -663,7 +663,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="enterpriseFeaturesEnabled" {{#if settings.business.enterpriseFeaturesEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -675,8 +675,8 @@
       </div>
 
        <!-- User Management Settings -->
-       <div class="settings-section bg-card rounded-lg border border-border" data-category="userManagement">
-        <div class="p-6 border-b border-border">
+       <div class="settings-section bg-card rounded-md border border-input/80" data-category="userManagement">
+        <div class="p-6 border-b border-input/80">
           <h3 class="text-lg font-semibold text-card-foreground">User Management Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Configure user roles and permissions</p>
         </div>
@@ -703,7 +703,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="teamHierarchyEnabled" {{#if settings.userManagement.teamHierarchyEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -719,7 +719,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="bulkImportEnabled" {{#if settings.userManagement.bulkImportEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -744,8 +744,8 @@
       </div>
 
        <!-- Backup & Maintenance Settings -->
-       <div class="settings-section bg-card rounded-lg border border-border" data-category="backup">
-        <div class="p-6 border-b border-border">
+       <div class="settings-section bg-card rounded-md border border-input/80" data-category="backup">
+        <div class="p-6 border-b border-input/80">
           <h3 class="text-lg font-semibold text-card-foreground">Backup & Maintenance Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Configure backup and maintenance operations</p>
         </div>
@@ -772,7 +772,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="autoUpdateEnabled" {{#if settings.backup.autoUpdateEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -806,8 +806,8 @@
       </div>
 
        <!-- Compliance & Legal Settings -->
-       <div class="settings-section bg-card rounded-lg border border-border" data-category="compliance">
-        <div class="p-6 border-b border-border">
+       <div class="settings-section bg-card rounded-md border border-input/80" data-category="compliance">
+        <div class="p-6 border-b border-input/80">
           <h3 class="text-lg font-semibold text-card-foreground">Compliance & Legal Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Configure compliance and legal requirements</p>
         </div>
@@ -820,7 +820,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="gdprComplianceEnabled" {{#if settings.compliance.gdprComplianceEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
             <div class="flex items-center justify-between">
@@ -830,7 +830,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="cookieConsentRequired" {{#if settings.compliance.cookieConsentRequired}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -852,7 +852,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="dataExportEnabled" {{#if settings.compliance.dataExportEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
             <div class="flex items-center justify-between">
@@ -862,7 +862,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="rightToForgetImplemented" {{#if settings.compliance.rightToForgetImplemented}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -874,7 +874,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="auditTrailEnabled" {{#if settings.compliance.auditTrailEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
             <div class="flex items-center justify-between">
@@ -884,7 +884,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="legalHoldEnabled" {{#if settings.compliance.legalHoldEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -900,8 +900,8 @@
       </div>
 
        <!-- AI & LLM Settings -->
-       <div class="settings-section bg-card rounded-lg border border-border" data-category="ai">
-        <div class="p-6 border-b border-border">
+       <div class="settings-section bg-card rounded-md border border-input/80" data-category="ai">
+        <div class="p-6 border-b border-input/80">
           <h3 class="text-lg font-semibold text-card-foreground">AI & LLM Settings</h3>
           <p class="text-sm text-muted-foreground mt-1">Configure AI and language model integrations</p>
         </div>
@@ -1014,7 +1014,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="contentGenerationEnabled" {{#if settings.ai.contentGenerationEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -1040,7 +1040,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="biAnalyticsEnabled" {{#if settings.ai.biAnalyticsEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
             <div>
@@ -1070,7 +1070,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="learningAdaptationEnabled" {{#if settings.ai.learningAdaptationEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
             <div class="flex items-center justify-between">
@@ -1080,7 +1080,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="userFeedbackCollection" {{#if settings.ai.userFeedbackCollection}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -1109,7 +1109,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="contextAwareness" {{#if settings.ai.contextAwareness}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
             <div class="flex items-center justify-between">
@@ -1119,7 +1119,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="multiModalEnabled" {{#if settings.ai.multiModalEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -1135,7 +1135,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="aiDataAnonymization" {{#if settings.ai.dataAnonymization}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -1147,7 +1147,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="aiUsageAuditLog" {{#if settings.ai.usageAuditLog}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
             <div class="flex items-center justify-between">
@@ -1157,7 +1157,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="aiContentWatermarking" {{#if settings.ai.contentWatermarking}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -1169,7 +1169,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="aiBiasMonitoring" {{#if settings.ai.biasMonitoring}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
             <div>
@@ -1197,7 +1197,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="costTrackingEnabled" {{#if settings.ai.costTrackingEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -1213,7 +1213,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="performanceMetrics" {{#if settings.ai.performanceMetrics}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -1225,7 +1225,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="cacheAiResponses" {{#if settings.ai.cacheAiResponses}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
             <div class="flex items-center justify-between">
@@ -1235,7 +1235,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="aiLoadBalancing" {{#if settings.ai.loadBalancing}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -1255,7 +1255,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="workflowAutomationEnabled" {{#if settings.ai.workflowAutomationEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -1271,7 +1271,7 @@
               </div>
               <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" name="aiSchedulerEnabled" {{#if settings.ai.schedulerEnabled}}checked{{/if}}>
-                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
               </label>
             </div>
           </div>
@@ -1282,7 +1282,7 @@
              </div>
              <label class="relative inline-flex items-center cursor-pointer">
                <input type="checkbox" name="notificationAiEvents" {{#if settings.ai.notificationAiEvents}}checked{{/if}}>
-               <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+               <div class="w-11 h-6 bg-muted peer-focus:outline-none peer- peer- rounded-md peer peer-checked:after:translate-x-full peer-checked:after:border-background after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-background after:rounded-md after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
              </label>
           </div>
         </div>

@@ -31,15 +31,15 @@ export const getActivity = async (req, res) => {
       const activityHtml = activities
         .map(
           (activity) => `
-        <tr class="border-b border-gray-100/40 hover:bg-purple-100 dark:hover:bg-purple-800 transition-colors duration-150">
+        <tr class="border-b border-input/40 hover:bg-accent/50 transition-colors duration-150">
           <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">${activity.description}</td>
           <td class="px-6 py-4">
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
               activity.type === 'user'
-                ? 'bg-blue-100 text-blue-800'
+                ? 'bg-primary/10 text-primary'
                 : activity.type === 'system'
-                  ? 'bg-green-100 text-green-800'
-                  : 'bg-gray-100 text-gray-800'
+                  ? 'bg-success/10 text-success'
+                  : 'bg-muted text-muted-foreground'
             }">${activity.type}</span>
           </td>
           <td class="px-6 py-4 text-sm text-muted-foreground">${activity.user_name || 'System'}</td>
@@ -90,7 +90,7 @@ const generatePaginationHtml = (page, limit, total, query, entity) => {
   const type = query.type || '';
   const params = `limit=${limit}&search=${encodeURIComponent(search)}&type=${type}`;
 
-  let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
+  let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-input/80">`;
   if (page > 1) {
     html += `<button hx-get="/api/${entity}?page=${page - 1}&${params}" hx-target="#${entity}TableContainer" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-3"></button>`;
   } else {

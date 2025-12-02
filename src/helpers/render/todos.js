@@ -14,7 +14,7 @@ export const renderTodoHtml = (todo) => `
         <p class="text-xs text-muted-foreground">Created: ${new Date(todo.created_at).toLocaleDateString()}</p>
       </div>
       <div class="flex items-center space-x-2">
-        <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none    ${todo.completed ? 'border-transparent bg-green-100 text-green-800' : 'border-transparent bg-yellow-100 text-yellow-800'}">
+        <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none    ${todo.completed ? 'border-transparent bg-success/10 text-success-foreground' : 'border-transparent bg-warning/10 text-warning-foreground'}">
           ${todo.completed ? 'Completed' : 'Pending'}
         </span>
          <button hx-get="/api/todos/${todo.id}/edit"
@@ -59,7 +59,7 @@ export const renderPagination = (page, limit, total, query) => {
   const status = query.status || '';
   const params = `limit=${limit}&search=${encodeURIComponent(search)}&status=${status}`;
 
-  let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-border">`;
+  let html = `<div class="flex items-center justify-center gap-2 mt-4 pt-4 border-t border-input/80">`;
 
   // Previous button
   if (page > 1) {

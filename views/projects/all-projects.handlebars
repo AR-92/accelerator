@@ -15,9 +15,9 @@
       <h2 class="text-xl font-medium mb-4">Project Statistics</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {{#each statsGrid}}
-          <div class="bg-card border border-border rounded-lg p-6">
+          <div class="bg-card border border-input/80 rounded-md p-6">
             <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+              <div class="w-10 h-10 bg-primary/10 rounded-md flex items-center justify-center">
                 <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M{{this.icon}}"></path>
                 </svg>
@@ -44,7 +44,7 @@
       <h2 class="text-xl font-medium mb-4">Quick Actions</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {{#each quickActions}}
-          <a href="{{this.href}}" class="bg-card border border-border rounded-lg p-4 hover:bg-accent transition-colors block">
+          <a href="{{this.href}}" class="bg-card border border-input/80 rounded-md p-4 hover:bg-accent transition-colors block">
             <div class="flex items-center gap-3">
               <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M{{this.icon}}"></path>
@@ -64,7 +64,7 @@
       <div class="my-6">
         <div class="flex-row flex-wrap grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 relative">
           {{#each projects}}
-            <a class="flex relative flex-col gap-1 items-start p-4 cursor-pointer group/item-btns overflow-hidden border rounded-[12px] border-border" href="/ideas/{{this.href}}" target="_blank" draggable="false" rel="noreferrer">
+             <a class="flex relative flex-col gap-1 items-start p-4 cursor-pointer group/item-btns overflow-hidden border rounded-md border-input/80 bg-background shadow-sm hover:animate-rainbow-shadow" href="/ideas/{{this.href}}" target="_blank" draggable="false" rel="noreferrer">
               <div class="w-full">
                 <span class="text-ellipsis break-words line-clamp-2 text-sm text-foreground font-medium">{{this.name}}</span>
               </div>
@@ -79,12 +79,12 @@
                 <div class="flex flex-wrap gap-1 mb-2">
                   {{#if this.tags}}
                     {{#each this.tags}}
-                      <span class="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded-full">{{this}}</span>
+                       <span class="px-2 py-0.5 bg-secondary/10 text-secondary-foreground text-xs rounded-md border border-secondary/40">{{this}}</span>
                     {{/each}}
                   {{/if}}
                 </div>
 
-                <div class="flex items-center justify-between w-full mt-auto pt-2 border-t border-border">
+                <div class="flex items-center justify-between w-full mt-auto pt-2 border-t border-input/80">
                   <div class="flex items-center">
                     <button class="mr-2 text-muted-foreground hover:text-yellow-500">
                       {{#if this.is_favorite}}
@@ -122,8 +122,8 @@
         </div>
       </div>
     {{else}}
-       <div class="text-center py-12 bg-card border border-border rounded-lg">
-        <div class="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+       <div class="text-center py-12 bg-card border border-input/80 rounded-md">
+        <div class="w-16 h-16 bg-muted rounded-md flex items-center justify-center mx-auto mb-4">
           <svg class="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
           </svg>

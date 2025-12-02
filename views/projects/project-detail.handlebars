@@ -12,7 +12,7 @@
       </div>
       <div class="flex items-center gap-4">
         <span
-          class="text-sm px-3 py-1 rounded-full bg-{{#if (eq project.status 'completed')}}green{{else if (eq project.status 'in_progress')}}blue{{else}}gray{{/if}}-100 text-{{#if (eq project.status 'completed')}}green{{else if (eq project.status 'in_progress')}}blue{{else}}gray{{/if}}-800">
+          class="text-sm px-3 py-1 rounded-md bg-{{#if (eq project.status 'completed')}}green{{else if (eq project.status 'in_progress')}}blue{{else}}gray{{/if}}-100 text-{{#if (eq project.status 'completed')}}green{{else if (eq project.status 'in_progress')}}blue{{else}}gray{{/if}}-800">
           {{project.status}}
         </span>
         <span class="text-sm text-muted-foreground">
@@ -24,13 +24,13 @@
 
   <!-- Progress Bar -->
   <section class="mb-8">
-    <div class="bg-card border border-border rounded-lg p-6">
+    <div class="bg-card border border-input/80 rounded-md p-6">
       <div class="flex justify-between text-sm text-muted-foreground mb-2">
         <span>Overall Progress</span>
         <span>{{project.progress}}%</span>
       </div>
-      <div class="w-full bg-gray-200 rounded-full h-3">
-        <div class="bg-primary h-3 rounded-full transition-all duration-300" style="width: {{project.progress}}%"></div>
+      <div class="w-full bg-gray-200 rounded-md h-3">
+        <div class="bg-primary h-3 rounded-md transition-all duration-300" style="width: {{project.progress}}%"></div>
       </div>
     </div>
   </section>
@@ -42,7 +42,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       {{#each quickActions}}
       <a href="{{this.href}}"
-        class="bg-card border border-border rounded-lg p-4 hover:bg-accent transition-colors block">
+        class="bg-card border border-input/80 rounded-md p-4 hover:bg-accent transition-colors block">
         <div class="flex items-center gap-3">
           <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M{{this.icon}}"></path>
@@ -58,7 +58,7 @@
   <!-- Project Details Grid -->
   <section class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-8">
     <!-- Idea Model -->
-    <div class="bg-card border border-border rounded-lg p-6">
+    <div class="bg-card border border-input/80 rounded-md p-6">
       <h3 class="text-lg font-medium mb-4">Idea Model</h3>
       {{#if project.idea_model}}
       <p class="text-muted-foreground">{{project.idea_model}}</p>
@@ -71,7 +71,7 @@
     </div>
 
     <!-- Business Model -->
-    <div class="bg-card border border-border rounded-lg p-6">
+    <div class="bg-card border border-input/80 rounded-md p-6">
       <h3 class="text-lg font-medium mb-4">Business Model</h3>
       {{#if project.business_model}}
       <p class="text-muted-foreground">{{project.business_model}}</p>
@@ -86,7 +86,7 @@
 
 
     <!-- Financial Model -->
-    <div class="bg-card border border-border rounded-lg p-6">
+    <div class="bg-card border border-input/80 rounded-md p-6">
       <h3 class="text-lg font-medium mb-4">Financial Model</h3>
       {{#if project.financial_model}}
       <p class="text-muted-foreground">{{project.financial_model}}</p>
@@ -99,7 +99,7 @@
     </div>
 
     <!-- Funding Model -->
-    <div class="bg-card border border-border rounded-lg p-6">
+    <div class="bg-card border border-input/80 rounded-md p-6">
       <h3 class="text-lg font-medium mb-4">Funding Model</h3>
       {{#if project.funding_model}}
       <p class="text-muted-foreground">{{project.funding_model}}</p>
@@ -112,7 +112,7 @@
     </div>
 
     <!-- Legal Model -->
-    <div class="bg-card border border-border rounded-lg p-6">
+    <div class="bg-card border border-input/80 rounded-md p-6">
       <h3 class="text-lg font-medium mb-4">Legal Model</h3>
       {{#if project.legal_model}}
       <p class="text-muted-foreground">{{project.legal_model}}</p>
@@ -125,7 +125,7 @@
     </div>
 
     <!-- Marketing Model -->
-    <div class="bg-card border border-border rounded-lg p-6">
+    <div class="bg-card border border-input/80 rounded-md p-6">
       <h3 class="text-lg font-medium mb-4">Marketing Model</h3>
       {{#if project.marketing_model}}
       <p class="text-muted-foreground">{{project.marketing_model}}</p>
@@ -140,7 +140,7 @@
 
 
     <!-- Team Model -->
-    <div class="bg-card border border-border rounded-lg p-6">
+    <div class="bg-card border border-input/80 rounded-md p-6">
       <h3 class="text-lg font-medium mb-4">Team Model</h3>
       {{#if project.team_model}}
       <p class="text-muted-foreground">{{project.team_model}}</p>
@@ -159,16 +159,16 @@
   {{#if project.tasks}}
   <section class="mb-8">
     <h2 class="text-xl font-medium mb-4">Tasks</h2>
-    <div class="bg-card border border-border rounded-lg p-6">
+    <div class="bg-card border border-input/80 rounded-md p-6">
       <div class="space-y-3">
         {{#each project.tasks}}
-        <div class="flex items-center justify-between p-3 bg-accent/50 rounded-lg">
+        <div class="flex items-center justify-between p-3 bg-accent/50 rounded-md">
           <div class="flex items-center gap-3">
             <input type="checkbox" {{#if this.completed}}checked{{/if}} disabled class="rounded">
             <span class="{{#if this.completed}}line-through text-muted-foreground{{/if}}">{{this.title}}</span>
           </div>
           <span
-            class="text-xs px-2 py-1 rounded-full bg-{{#if (eq this.priority 'high')}}red{{else if (eq this.priority 'medium')}}yellow{{else}}green{{/if}}-100 text-{{#if (eq this.priority 'high')}}red{{else if (eq this.priority 'medium')}}yellow{{else}}green{{/if}}-800">
+            class="text-xs px-2 py-1 rounded-md bg-{{#if (eq this.priority 'high')}}red{{else if (eq this.priority 'medium')}}yellow{{else}}green{{/if}}-100 text-{{#if (eq this.priority 'high')}}red{{else if (eq this.priority 'medium')}}yellow{{else}}green{{/if}}-800">
             {{this.priority}}
           </span>
         </div>
@@ -184,9 +184,9 @@
     <h2 class="text-xl font-medium mb-4">Team Members</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {{#each project.team}}
-      <div class="bg-card border border-border rounded-lg p-4">
+      <div class="bg-card border border-input/80 rounded-md p-4">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+          <div class="w-10 h-10 bg-primary/10 rounded-md flex items-center justify-center">
             <span class="text-primary font-semibold">{{this.name.charAt 0}}</span>
           </div>
           <div>

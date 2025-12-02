@@ -1,12 +1,18 @@
-// tailwind.config.js (minimal for a .hbs project on Tailwind v4)
+// tailwind.config.js (minimal for a .handlebars project on Tailwind v4)
 export default {
-  content: ['./views/**/*.hbs', './src/**/*.{html,hbs}', './public/**/*.html'],
+  content: ['./views/**/*.handlebars', './src/**/*.{html,handlebars}', './public/**/*.html'],
   safelist: ['animate-rainbow-shadow', 'hover:animate-rainbow-shadow'],
   // keep theme minimal — colors & other tokens live in CSS @theme
   theme: {
     extend: {
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+      },
+      borderRadius: {
+        card: '32px',
+      },
+      boxShadow: {
+        subtle: '0 1px 2px rgb(0 0 0 / 0.05)',
       },
     },
   },

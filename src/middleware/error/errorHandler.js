@@ -41,8 +41,8 @@ const errorHandler = (err, req, res, next) => {
   if (isHtmxRequest(req)) {
     // Return HTML error for HTMX requests
     res.status(error.statusCode || 500).send(`
-      <div class="alert alert-error p-4 bg-red-50 border border-red-200 rounded-lg">
-        <p class="text-red-800">${error.message || 'An error occurred'}</p>
+      <div class="alert alert-error p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+        <p class="text-destructive">${error.message || 'An error occurred'}</p>
       </div>
     `);
   } else {
