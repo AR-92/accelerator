@@ -143,14 +143,14 @@
         {{/if}}
        {{/if}}
 
-       {{#if (eq currentPage 'All Projects')}}
-       <ul class="space-y-1">
-         {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" text="New Project" spanClass="font-medium sidebar-text" icon='plus' }}
-         {{> sidebar-item href="/projects/all-projects" title="All Projects" text="All Projects" spanClass="font-medium sidebar-text" icon='list' }}
-         {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="font-medium sidebar-text" icon='lightbulb' }}
-         {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text" icon='book-open' }}
-       </ul>
-       {{/if}}
+        {{#if (eq currentPage 'All Ideas')}}
+        <ul class="space-y-1">
+          {{> sidebar-item href="/admin/other-pages/new-project" title="New Idea" text="New Idea" spanClass="font-medium sidebar-text" icon='plus' }}
+          {{> sidebar-item href="/projects/all-projects" title="All Ideas" text="All Ideas" spanClass="font-medium sidebar-text" icon='list' }}
+          {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas" spanClass="font-medium sidebar-text" icon='lightbulb' }}
+          {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text" icon='book-open' }}
+        </ul>
+        {{/if}}
 
        {{#if (eq currentPage 'Project Detail')}}
       <ul class="space-y-1">

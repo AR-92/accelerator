@@ -8,13 +8,54 @@ const supabase = createClient(config.supabase.url, config.supabase.key);
 /**
  * Middleware to verify Supabase JWT token and attach user to request
  * This should be used for API routes
+ * Checks both Authorization header and cookies
  */
 export const authenticateUser = async (req, res, next) => {
   try {
+    let token = null;
+
+    // First, check Authorization header
     const authHeader = req.headers.authorization;
-    const token = authHeader?.startsWith('Bearer ')
-      ? authHeader.substring(7)
-      : null;
+    if (authHeader?.startsWith('Bearer ')) {
+      token = authHeader.substring(7);
+    }
+
+    // If no header token, check cookies
+    if (!token) {
+      const cookies = req.headers.cookie;
+      if (cookies) {
+        // Extract project ID from config
+        const supabaseUrl = config.supabase.url;
+        const projectMatch = supabaseUrl.match(/https:\/\/(.+)\.supabase\.co/);
+        const projectId = projectMatch ? projectMatch[1] : null;
+
+        if (projectId) {
+          const cookiePairs = cookies.split(';');
+          for (const cookiePair of cookiePairs) {
+            const [name, value] = cookiePair.trim().split('=');
+            if (name.includes(`sb-${projectId}-auth-token`)) {
+              try {
+                token = decodeURIComponent(value);
+                break;
+              } catch (e) {
+                logger.warn('Failed to decode auth token cookie:', e.message);
+              }
+            }
+            if (name === 'sb-access-token') {
+              try {
+                token = decodeURIComponent(value);
+                break;
+              } catch (e) {
+                logger.warn(
+                  'Failed to decode custom auth token cookie:',
+                  e.message
+                );
+              }
+            }
+          }
+        }
+      }
+    }
 
     if (!token) {
       logger.debug('No auth token provided');

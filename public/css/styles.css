@@ -1,3 +1,6 @@
+/* IMPORTANT: This is the PRIMARY CSS file processed by the build system.
+   Changes here will affect the final output. Do NOT modify src/styles/globals.css */
+
 @import 'tailwindcss';
 
 @source "../views/**/*.handlebars";
@@ -60,25 +63,25 @@
 
 @keyframes rainbow-shadow {
   0% {
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.05));
   }
   16.67% {
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    filter: drop-shadow(0 0 60px rgba(255, 0, 0, 0.3));
   }
   33.33% {
-    box-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+    filter: drop-shadow(0 0 60px rgba(255, 165, 0, 0.3));
   }
   50% {
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+    filter: drop-shadow(0 0 60px rgba(0, 255, 0, 0.3));
   }
   66.67% {
-    box-shadow: 0 0 20px rgba(0, 0, 255, 0.5);
+    filter: drop-shadow(0 0 60px rgba(0, 0, 255, 0.3));
   }
   83.33% {
-    box-shadow: 0 0 20px rgba(128, 0, 128, 0.5);
+    filter: drop-shadow(0 0 60px rgba(128, 0, 128, 0.3));
   }
   100% {
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.05));
   }
 }
 
@@ -101,7 +104,7 @@
     --secondary: 210 40% 96%;
     --secondary-foreground: 222.2 84% 4.9%;
     --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted-foreground: 0 0% 10%;
     --accent: 210 40% 96%;
     --accent-foreground: 222.2 84% 4.9%;
     --destructive: 0 84.2% 60.2%;
@@ -135,7 +138,7 @@
     --secondary: 0 0% 20%;
     --secondary-foreground: 0 0% 80%;
     --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 70%;
+    --muted-foreground: 210 20% 70%;
     --accent: 0 0% 20%;
     --accent-foreground: 0 0% 80%;
     --destructive: 0 62.8% 50%;

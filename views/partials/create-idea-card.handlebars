@@ -1,0 +1,170 @@
+{{!-- create idea main card --}}
+<div class="flex flex-col max-w-3xl w-full px-4 mx-auto my-14">
+  <!-- Header -->
+  <header class="w-full flex flex-col items-center gap-2 mb-2">
+    <h1 class="text-4xl font-sans font-light text-foreground mb-2">
+      What problem are you trying to solve?
+    </h1>
+  </header>
+
+  <!-- Form / Input area -->
+  <form id="new-project-form" class="flex flex-col gap-1 w-full" method="post" action="/projects/new">
+    <!-- CSRF Token (Important for security) -->
+    <input type="hidden" name="csrf_token" value="">
+
+    <div class="flex flex-col w-full">
+      <div class="">
+        <div
+          class="new-project-form flex flex-col gap-2 rounded-[22px] relative py-2 max-h-[220px] border border-input bg-background shadow-sm">
+          <!-- Title wrapper -->
+          <div class="pl-4 pr-2">
+            <div class="flex flex-wrap gap-1">
+              <span contenteditable="true" id="title"
+                class="inline-flex items-center gap-1 px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded-full">Untitled
+                {{{icon 'edit' size="12" class='w-3 h-3'}}}</span>
+              <span contenteditable="true"
+                class="inline-flex items-center gap-1 px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded-full">Category
+                {{{icon 'edit' size="12" class='w-3 h-3'}}}</span>
+            </div>
+          </div>
+
+          <!-- Description wrapper -->
+          <div class="overflow-y-auto pl-4 pr-2">
+            <label for="assistant-prompt" class="sr-only">Describe your
+              project requirements</label>
+            <textarea id="assistant-prompt" name="prompt" rows="2" placeholder="Describe your project requirements..."
+              aria-label="Describe your project requirements" aria-describedby="prompt-help"
+              class="flex w-full rounded-md border-0 bg-transparent p-0 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 overflow-hidden resize-none min-h-[40px] max-h-32"
+              required=""></textarea>
+            <p id="prompt-help" class="sr-only">Enter your project
+              description or requirements</p>
+          </div>
+
+          <!-- Tags wrapper -->
+          <div class="pl-4 pr-2">
+            <div class="flex flex-wrap gap-1">
+
+              <!-- Add more -->
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 
+             bg-green-100 dark:bg-green-900/30
+             text-green-800 dark:text-green-200
+             border border-green-300 dark:border-green-700
+             text-xs rounded-full">
+                {{{icon 'plus' size="12" class='w-3 h-3'}}} Add more
+              </span>
+
+              <!-- Neutral tag template -->
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 
+             bg-slate-100 dark:bg-slate-900/30
+             text-slate-700 dark:text-slate-200
+             border border-slate-300 dark:border-slate-700
+             text-xs rounded-full">
+                AI
+                <button class="text-slate-500 dark:text-slate-400 
+               hover:text-slate-800 dark:hover:text-white">
+                  ×
+                </button>
+              </span>
+
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 
+             bg-slate-100 dark:bg-slate-900/30
+             text-slate-700 dark:text-slate-200
+             border border-slate-300 dark:border-slate-700
+             text-xs rounded-full">
+                Technology
+                <button class="text-slate-500 dark:text-slate-400 
+               hover:text-slate-800 dark:hover:text-white">
+                  ×
+                </button>
+              </span>
+
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 
+             bg-slate-100 dark:bg-slate-900/30
+             text-slate-700 dark:text-slate-200
+             border border-slate-300 dark:border-slate-700
+             text-xs rounded-full">
+                Innovation
+                <button class="text-slate-500 dark:text-slate-400 
+               hover:text-slate-800 dark:hover:text-white">
+                  ×
+                </button>
+              </span>
+
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 
+             bg-slate-100 dark:bg-slate-900/30
+             text-slate-700 dark:text-slate-200
+             border border-slate-300 dark:border-slate-700
+             text-xs rounded-full">
+                Startup
+                <button class="text-slate-500 dark:text-slate-400 
+               hover:text-slate-800 dark:hover:text-white">
+                  ×
+                </button>
+              </span>
+
+              <!-- Remove all -->
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 
+             bg-red-100 dark:bg-red-900/30
+             text-red-800 dark:text-red-200
+             border border-red-300 dark:border-red-700
+             text-xs rounded-full">
+                {{{icon 'trash' size="12" class='w-3 h-3'}}} Remove all
+              </span>
+
+            </div>
+          </div>
+
+
+          <!-- toolbar -->
+          <div class="px-3 flex gap-2 items-center">
+            <div class="flex gap-2 items-center flex-shrink-0">
+              <!-- Auto fill with AI -->
+              <button type="button" aria-label="Auto fill with AI" title="Auto fill with AI"
+                class="rounded-full border border-input inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-accent px-2 py-1 shrink-0 transition-all duration-300 group">
+                {{{icon 'wand2' size="16" class='w-4 h-4'}}}
+                <span class="hidden group-hover:inline transition-all duration-200">Auto Fill with AI</span>
+              </button>
+
+              <!-- Improve with AI -->
+              <button type="button" aria-label="Improve with AI" title="Improve with AI"
+                class="rounded-full border border-input inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-accent px-2 py-1 shrink-0 transition-all duration-300 group">
+                {{{icon 'lightbulb' size="16" class='w-4 h-4'}}}
+                <span class="hidden group-hover:inline transition-all duration-200">Improve with AI</span>
+              </button>
+
+              <!-- Add tags with AI -->
+              <button type="button" aria-label="Add tags with AI" title="Add tags with AI"
+                class="rounded-full border border-input inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-accent px-2 py-1 shrink-0 transition-all duration-300 group">
+                {{{icon 'tag' size="16" class='w-4 h-4'}}}
+                <span class="hidden group-hover:inline transition-all duration-200">Add Tags with AI</span>
+              </button>
+
+              <!-- Add category with AI -->
+              <button type="button" aria-label="Add category with AI" title="Add category with AI"
+                class="rounded-full border border-input inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-accent px-2 py-1 shrink-0 transition-all duration-300 group">
+                {{{icon 'folder' size="16" class='w-4 h-4'}}}
+                <span class="hidden group-hover:inline transition-all duration-200">Add Category with AI</span>
+              </button>
+
+              <!-- Generate random idea -->
+              <button type="button" aria-label="Generate random idea" title="Generate random idea"
+                class="rounded-full border border-input inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-accent px-2 py-1 shrink-0 transition-all duration-300 group">
+                {{{icon 'shuffle' size="16" class='w-4 h-4'}}}
+                <span class="hidden group-hover:inline transition-all duration-200">Random Idea with AI</span>
+              </button>
+            </div>
+
+            <!-- Submit button on the right -->
+            <div class="min-w-0 flex gap-2 ml-auto flex-shrink items-center">
+              <button type="submit" aria-label="Create project" title="Create project"
+                class="rounded-full border border-input inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-accent px-2 py-1 shrink-0 transition-all duration-300 group">
+                {{{icon 'plus' size="16" class='w-4 h-4'}}}
+                <span class="hidden group-hover:inline transition-all duration-200">Create Project</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

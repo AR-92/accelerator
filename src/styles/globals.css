@@ -1,4 +1,6 @@
-/* globals.css — Tailwind v4: imports, @theme tokens, and base layer */
+/* IMPORTANT: This file is NOT processed by the build system.
+   The actual CSS is in public/css/styles.css - modify that file instead.
+   This file exists for reference/development purposes only. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,18 +15,18 @@
   --color-primary: 158 40 181;
   --color-primary-foreground: 248 250 252;
 
-  --color-secondary: 241 245 249;
-  --color-secondary-foreground: 59 130 246;
+  --color-secondary: 210 215 220;
+  --color-secondary-foreground: 15 23 42;
 
   --color-card: 255 255 255;
   --color-muted: 241 245 249;
   --color-accent: 241 245 249;
-  --color-accent-foreground: 59 130 246;
+  --color-accent-foreground: 15 23 42;
 
   --color-border: 226 232 240;
   --color-input: 226 232 240;
   --color-ring: 59 130 246;
-  --color-muted-foreground: 115 115 115;
+  --color-muted-foreground: 26 26 26;
   --color-destructive: 239 68 68;
   --color-destructive-foreground: 248 250 252;
 
@@ -54,7 +56,7 @@
   --color-border: 51 65 85;
   --color-input: 51 65 85;
   --color-ring: 59 130 246;
-  --color-muted-foreground: 148 163 184;
+  --color-muted-foreground: 160 175 195;
   --color-destructive: 239 68 68;
   --color-destructive-foreground: 248 250 252;
 }
@@ -63,15 +65,15 @@
 :root {
   --color-background: 255 255 255;
   --color-foreground: 15 23 42;
-  --color-muted-foreground: 115 115 115;
+  --color-muted-foreground: 26 26 26;
   --color-primary: 158 40 181;
   --color-primary-foreground: 248 250 252;
-  --color-secondary: 241 245 249;
-  --color-secondary-foreground: 59 130 246;
+  --color-secondary: 210 215 220;
+  --color-secondary-foreground: 15 23 42;
   --color-card: 255 255 255;
   --color-muted: 241 245 249;
   --color-accent: 241 245 249;
-  --color-accent-foreground: 59 130 246;
+  --color-accent-foreground: 15 23 42;
   --color-border: 226 232 240;
   --color-input: 226 232 240;
   --color-ring: 59 130 246;
@@ -87,7 +89,7 @@
 .dark {
   --color-background: 15 23 42;
   --color-foreground: 248 250 252;
-  --color-muted-foreground: 148 163 184;
+  --color-muted-foreground: 160 175 195;
   --color-primary: 158 40 181;
   --color-primary-foreground: 15 23 42;
   --color-secondary: 30 41 59;

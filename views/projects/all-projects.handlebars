@@ -2,10 +2,10 @@
   <!-- Header -->
   <header class="w-full mb-8">
     <h1 class="text-3xl font-sans font-medium text-foreground mb-2">
-      All Projects Dashboard
+      All Ideas
     </h1>
     <p class="text-muted-foreground">
-      Overview of all your projects and their progress
+      Explore and manage all your innovative ideas
     </p>
   </header>
 
@@ -57,53 +57,81 @@
     </section>
   {{/if}}
 
-  <!-- Projects List -->
+  <!-- Ideas List -->
   <section>
-    <h2 class="text-xl font-medium mb-4">All Projects</h2>
+    <h2 class="text-xl font-medium mb-4">All Ideas</h2>
     {{#if projects}}
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {{#each projects}}
-          <div class="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow">
-            <div class="flex items-start justify-between mb-4">
-              <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                  <span class="text-primary font-semibold">{{this.initials}}</span>
+      <div class="my-6">
+        <div class="flex-row flex-wrap grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 relative">
+          {{#each projects}}
+            <a class="flex relative flex-col gap-1 items-start p-4 cursor-pointer group/item-btns overflow-hidden border rounded-[12px] border-border" href="/ideas/{{this.href}}" target="_blank" draggable="false" rel="noreferrer">
+              <div class="w-full">
+                <span class="text-ellipsis break-words line-clamp-2 text-sm text-foreground font-medium">{{this.name}}</span>
+              </div>
+
+               <div class="flex items-center gap-1.5 mb-1">
+
+                  <div class="text-muted-foreground text-[13px] leading-[18px] truncate">{{this.type}}</div>
                 </div>
-                <div>
-                  <h3 class="font-medium text-lg">{{this.name}}</h3>
-                  <p class="text-sm text-muted-foreground">{{this.description}}</p>
+
+                <div class="text-xs text-muted-foreground mb-2 line-clamp-2">{{this.description}}</div>
+
+                <div class="flex flex-wrap gap-1 mb-2">
+                  {{#if this.tags}}
+                    {{#each this.tags}}
+                      <span class="px-2 py-0.5 bg-muted text-muted-foreground text-xs rounded-full">{{this}}</span>
+                    {{/each}}
+                  {{/if}}
                 </div>
-              </div>
-              <span class="text-xs px-2 py-1 rounded-full bg-{{#if (eq this.status 'completed')}}green{{else if (eq this.status 'in_progress')}}blue{{else}}gray{{/if}}-100 text-{{#if (eq this.status 'completed')}}green{{else if (eq this.status 'in_progress')}}blue{{else}}gray{{/if}}-800">
-                {{this.status}}
-              </span>
-            </div>
-            <div class="mb-4">
-              <div class="flex justify-between text-sm text-muted-foreground mb-1">
-                <span>Progress</span>
-                <span>{{this.progress}}%</span>
-              </div>
-              <div class="w-full bg-gray-200 rounded-full h-2">
-                <div class="bg-primary h-2 rounded-full" style="width: {{this.progress}}%"></div>
-              </div>
-            </div>
-            <a href="/projects/{{this.id}}" class="inline-flex items-center text-primary hover:underline text-sm font-medium">
-              View Details →
-            </a>
-          </div>
-        {{/each}}
+
+                <div class="flex items-center justify-between w-full mt-auto pt-2 border-t border-border">
+                  <div class="flex items-center">
+                    <button class="mr-2 text-muted-foreground hover:text-yellow-500">
+                      {{#if this.is_favorite}}
+                        {{{icon 'star' size="16" class='w-4 h-4 fill-yellow-400 text-yellow-400'}}}
+                      {{else}}
+                        {{{icon 'star' size="16" class='w-4 h-4'}}}
+                      {{/if}}
+                    </button>
+                    <div class="flex">
+                      {{#each (range 1 5)}}
+                        {{#if (lte @index ../rating)}}
+                          {{{icon 'star' size="16" class='w-3.5 h-3.5 fill-yellow-400 text-yellow-400'}}}
+                        {{else}}
+                          {{{icon 'star' size="16" class='w-3.5 h-3.5 text-muted-foreground'}}}
+                        {{/if}}
+                      {{/each}}
+                    </div>
+                  </div>
+
+                  <div class="flex space-x-2">
+                    <button class="text-muted-foreground hover:text-blue-500">
+                      {{{icon 'share' size="16" class='w-4 h-4'}}}
+                    </button>
+                    <button class="text-muted-foreground hover:text-green-500">
+                      {{#if this.is_favorite}}
+                        {{{icon 'heart' size="16" class='w-4 h-4 fill-red-500 text-red-500'}}}
+                      {{else}}
+                        {{{icon 'heart' size="16" class='w-4 h-4'}}}
+                      {{/if}}
+                    </button>
+                  </div>
+                </div>
+              </a>
+          {{/each}}
+        </div>
       </div>
     {{else}}
-      <div class="text-center py-12 bg-card border border-border rounded-lg">
+       <div class="text-center py-12 bg-card border border-border rounded-lg">
         <div class="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
           <svg class="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
           </svg>
         </div>
-        <h3 class="text-lg font-medium mb-2">No projects yet</h3>
-        <p class="text-muted-foreground mb-4">Start your first project to see it here.</p>
+        <h3 class="text-lg font-medium mb-2">No ideas yet</h3>
+        <p class="text-muted-foreground mb-4">Start your first idea to see it here.</p>
         <a href="/admin/new-project" class="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">
-          Create New Project
+          Create New Idea
         </a>
       </div>
     {{/if}}

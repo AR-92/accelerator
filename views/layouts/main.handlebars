@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,19 +17,19 @@
     {{#if supabaseKey}}
     <meta name="supabase-key" content="{{supabaseKey}}">
     {{/if}}
-     <!-- HTMX -->
-     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-     <!-- Hyperscript -->
-     <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-      <!-- Supabase -->
-       <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-        <script src="/js/supabase-cookie-storage.js"></script>
-        <script src="/js/theme.js"></script>
-        <script src="/js/common.js"></script>
-        <script src="/js/upload.js"></script>
-     <!-- Animate.css -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-     <script type="text/hyperscript">
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- Hyperscript -->
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    <!-- Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="/js/supabase-cookie-storage.js"></script>
+    <script src="/js/theme.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="/js/upload.js"></script>
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script type="text/hyperscript">
          def updateThemeIcon()
            set isDark to document.documentElement.classList.contains('dark')
            set moonSvg to '{{{icon "moon" size="16" class="h-4 w-4"}}}'
@@ -60,30 +61,32 @@
             end
      </script>
 </head>
+
 <body class="h-full overflow-hidden">
-     <!-- Auth loading screen -->
-     <div id="auth-loading" class="fixed inset-0 bg-background z-50 flex items-center justify-center">
-         <div class="text-center">
-             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-             <p class="text-muted-foreground">Checking authentication...</p>
-             <p class="text-sm text-muted-foreground mt-2">If this takes too long, <button onclick="forceLogout()" class="underline hover:text-foreground">click here to logout</button></p>
-         </div>
-     </div>
+    <!-- Auth loading screen -->
+    <div id="auth-loading" class="fixed inset-0 bg-background z-50 flex items-center justify-center">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+            <p class="text-muted-foreground">Checking authentication...</p>
+            <p class="text-sm text-muted-foreground mt-2">If this takes too long, <button onclick="forceLogout()"
+                    class="underline hover:text-foreground">click here to logout</button></p>
+        </div>
+    </div>
 
-      <!-- Main content (hidden initially) -->
-      <div id="main-content" class="h-screen hidden flex flex-col">
-         {{> nav}}
-         {{> filter-nav}}
-         <div class="flex flex-1 min-h-0">
-             {{> sidebar}}
-             <main class="flex-1 p-2 sm:p-4 overflow-y-auto">
-                  {{{body}}}
-             </main>
-         </div>
-     </div>
+    <!-- Main content (hidden initially) -->
+    <div id="main-content" class="h-screen hidden flex flex-col">
+        {{> nav}}
+        {{> filter-nav}}
+        <div class="flex flex-1 min-h-0">
+            {{> sidebar}}
+            <main class="flex-1 p-2 sm:p-4 overflow-auto">
+                {{{body}}}
+            </main>
+        </div>
+    </div>
 
-     <!-- Mobile sidebar overlay -->
-     <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="closeMobileSidebar()"></div>
+    <!-- Mobile sidebar overlay -->
+    <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden" onclick="closeMobileSidebar()"></div>
 
     <!-- JavaScript Section -->
     <script>
@@ -310,7 +313,7 @@
             }
         }
 
-         // Create todo modal (placeholder)
+        // Create todo modal (placeholder)
         function openCreateTodoModal() {
             // This would open a modal for creating todos
         }
@@ -322,17 +325,17 @@
             const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
             const isCollapsed = collapsedFooter && collapsedFooter.style.display !== 'none';
 
-             if (isCollapsed) {
-                 sidebar.style.width = '224px';
-                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'flex');
-                  // Restore normal padding and margins for expanded state
-                  document.querySelectorAll('#sidebar nav a').forEach(link => {
-                      link.classList.remove('px-1', 'justify-center');
-                      link.classList.add('px-3');
-                  });
-                  document.querySelectorAll('#sidebar nav svg').forEach(icon => {
-                      icon.classList.add('mr-3');
-                  });
+            if (isCollapsed) {
+                sidebar.style.width = '224px';
+                document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'flex');
+                // Restore normal padding and margins for expanded state
+                document.querySelectorAll('#sidebar nav a').forEach(link => {
+                    link.classList.remove('px-1', 'justify-center');
+                    link.classList.add('px-3');
+                });
+                document.querySelectorAll('#sidebar nav svg').forEach(icon => {
+                    icon.classList.add('mr-3');
+                });
                 // Show expanded footer, hide collapsed footer
                 const expandedFooter = document.getElementById('sidebar-footer-expanded');
                 const expandedButton = document.getElementById('sidebar-footer-expanded-button');
@@ -349,14 +352,14 @@
             } else {
                 sidebar.style.width = '66px';
                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'none');
-                 // Adjust padding for collapsed state and remove margins
-                 document.querySelectorAll('#sidebar nav a').forEach(link => {
-                     link.classList.remove('px-3');
-                     link.classList.add('px-1', 'justify-center');
-                 });
-                 document.querySelectorAll('#sidebar nav svg').forEach(icon => {
-                     icon.classList.remove('mr-3');
-                 });
+                // Adjust padding for collapsed state and remove margins
+                document.querySelectorAll('#sidebar nav a').forEach(link => {
+                    link.classList.remove('px-3');
+                    link.classList.add('px-1', 'justify-center');
+                });
+                document.querySelectorAll('#sidebar nav svg').forEach(icon => {
+                    icon.classList.remove('mr-3');
+                });
                 // Show collapsed footer, hide expanded footer
                 const expandedFooter = document.getElementById('sidebar-footer-expanded');
                 const expandedButton = document.getElementById('sidebar-footer-expanded-button');
@@ -378,14 +381,14 @@
             if (isCollapsed) {
                 sidebar.style.width = '66px';
                 document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'none');
-                 // Apply collapsed padding and remove margins
-                 document.querySelectorAll('#sidebar nav a').forEach(link => {
-                     link.classList.remove('px-3');
-                     link.classList.add('px-1', 'justify-center');
-                 });
-                 document.querySelectorAll('#sidebar nav svg').forEach(icon => {
-                     icon.classList.remove('mr-3');
-                 });
+                // Apply collapsed padding and remove margins
+                document.querySelectorAll('#sidebar nav a').forEach(link => {
+                    link.classList.remove('px-3');
+                    link.classList.add('px-1', 'justify-center');
+                });
+                document.querySelectorAll('#sidebar nav svg').forEach(icon => {
+                    icon.classList.remove('mr-3');
+                });
                 // Show collapsed footer, hide expanded footer
                 const expandedFooter = document.getElementById('sidebar-footer-expanded');
                 const expandedButton = document.getElementById('sidebar-footer-expanded-button');
@@ -496,10 +499,10 @@
             window.location.href = '/auth';
         }
 
-     </script>
+    </script>
 
-     <!-- Client-side auth check for UI - server handles actual route protection -->
-     <script>
+    <!-- Client-side auth check for UI - server handles actual route protection -->
+    <script>
         // Initialize Supabase client
         let supabase = null;
         function initSupabase() {
@@ -755,7 +758,7 @@
         }
 
         // Collapsible content toggle
-        document.addEventListener('click', function(e) {
+        document.addEventListener('click', function (e) {
             if (e.target.closest('[data-collapsible="true"]')) {
                 const target = e.target.closest('[data-collapsible="true"]');
                 const contentId = target.getAttribute('data-target');
@@ -778,4 +781,5 @@
     {{> toast}}
 
 </body>
+
 </html>

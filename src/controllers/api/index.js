@@ -11,6 +11,9 @@ import notificationsRoutes from './admin/get-notifications.js';
 // Overview API routes
 import mainRoutes from './overview/get-main.js';
 
+// AI API routes
+import aiRoutes from './ai.js';
+
 // API routes setup
 export default function apiRoutes(app) {
   // Admin API routes
@@ -22,4 +25,7 @@ export default function apiRoutes(app) {
 
   // Overview API routes
   mainRoutes(app);
+
+  // AI API routes
+  aiRoutes(app);
 }

@@ -1,16 +1,16 @@
 // Chat input functionality
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const chatForm = document.getElementById('chat-form');
   const messageInput = document.getElementById('message-input');
   const sendButton = document.getElementById('send-button');
 
   // Enable/disable send button based on input
-  messageInput.addEventListener('input', function() {
+  messageInput.addEventListener('input', function () {
     sendButton.disabled = !this.value.trim();
   });
 
   // Handle form submission
-  chatForm.addEventListener('submit', function(e) {
+  chatForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
     if (messageInput.value.trim()) {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Handle Enter key (submit) and Shift+Enter (new line)
-  messageInput.addEventListener('keydown', function(e) {
+  messageInput.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       if (!sendButton.disabled) {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Attachment button functionality
   const attachmentBtn = document.querySelector('[aria-label="Attach file"]');
-  attachmentBtn.addEventListener('click', function(e) {
+  attachmentBtn.addEventListener('click', function (e) {
     e.preventDefault();
 
     // Create hidden file input
@@ -48,11 +48,11 @@ document.addEventListener('DOMContentLoaded', function() {
     fileInput.multiple = true;
     fileInput.accept = 'image/*,application/pdf,text/plain,.doc,.docx';
 
-    fileInput.onchange = function(event) {
+    fileInput.onchange = function (event) {
       const files = event.target.files;
       if (files.length > 0) {
         // Process selected files
-        Array.from(files).forEach(file => {
+        Array.from(files).forEach((file) => {
           console.log('Selected file:', file.name, file.size, file.type);
           // In a real app: upload files to server or process them
         });
@@ -65,14 +65,16 @@ document.addEventListener('DOMContentLoaded', function() {
         attachmentPreview.id = 'attachment-preview';
 
         const formContainer = chatForm.parentElement;
-        const existingPreview = formContainer.querySelector('#attachment-preview');
+        const existingPreview = formContainer.querySelector(
+          '#attachment-preview'
+        );
         if (existingPreview) {
           existingPreview.remove();
         }
         formContainer.insertBefore(attachmentPreview, chatForm.nextSibling);
 
         // Remove preview after sending
-        chatForm.addEventListener('submit', function() {
+        chatForm.addEventListener('submit', function () {
           setTimeout(() => {
             const preview = document.querySelector('#attachment-preview');
             if (preview) preview.remove();
