@@ -16,6 +16,7 @@ import {
   exportActivityJSON,
 } from './admin/get-activity.js';
 import { postLogout } from './admin/post-logout.js';
+import { csrfProtection } from '../middleware/security/csrf.js';
 import formConfigs from '../config/formConfigs.js';
 import multer from 'multer';
 import path from 'path';
@@ -758,120 +759,156 @@ export default function adminRoutes(app) {
       });
     }
   );
-  app.post('/projects/new', requireWebAuth, async (req, res) => {
-    try {
-      // Extract and validate user from cookies (since requireWebAuth doesn't set req.user for HTML requests)
-      const cookies = req.headers.cookie;
-      if (!cookies) {
-        return res.redirect(
-          '/admin/other-pages/new-project?error=auth_required'
-        );
-      }
+  app.post(
+    '/projects/new',
+    requireWebAuth,
+    csrfProtection,
+    async (req, res) => {
+      try {
+        // Extract and validate user from cookies (since requireWebAuth doesn't set req.user for HTML requests)
+        const cookies = req.headers.cookie;
+        if (!cookies) {
+          return res.redirect('/auth/login?error=auth_required');
+        }
 
-      // Extract project ID from config
-      const supabaseUrl = process.env.SUPABASE_URL;
-      const projectMatch = supabaseUrl.match(/https:\/\/(.+)\.supabase\.co/);
-      const projectId = projectMatch ? projectMatch[1] : null;
+        // Extract project ID from config
+        const supabaseUrl = process.env.SUPABASE_URL;
+        const projectMatch = supabaseUrl.match(/https:\/\/(.+)\.supabase\.co/);
+        const projectId = projectMatch ? projectMatch[1] : null;
 
-      if (!projectId) {
-        console.error(
-          'Could not extract Supabase project ID from URL:',
-          supabaseUrl
-        );
-        return res.redirect(
-          '/admin/other-pages/new-project?error=config_error'
-        );
-      }
+        if (!projectId) {
+          console.error(
+            'Could not extract Supabase project ID from URL:',
+            supabaseUrl
+          );
+          return res.redirect('/auth/login?error=config_error');
+        }
 
-      // Extract access token from cookies
-      const cookiePairs = cookies.split(';');
-      let accessToken = null;
+        // Extract access token from cookies
+        const cookiePairs = cookies.split(';');
+        let accessToken = null;
 
-      for (const cookiePair of cookiePairs) {
-        const [name, value] = cookiePair.trim().split('=');
-        if (name.includes(`sb-${projectId}-auth-token`)) {
-          try {
-            accessToken = decodeURIComponent(value);
-            break;
-          } catch (e) {
-            console.warn('Failed to decode auth token cookie:', e.message);
+        for (const cookiePair of cookiePairs) {
+          const [name, value] = cookiePair.trim().split('=');
+          if (name.includes(`sb-${projectId}-auth-token`)) {
+            try {
+              accessToken = decodeURIComponent(value);
+              break;
+            } catch (e) {
+              console.warn('Failed to decode auth token cookie:', e.message);
+            }
+          }
+          if (name === 'sb-access-token') {
+            try {
+              accessToken = decodeURIComponent(value);
+              break;
+            } catch (e) {
+              console.warn(
+                'Failed to decode custom auth token cookie:',
+                e.message
+              );
+            }
           }
         }
-        if (name === 'sb-access-token') {
-          try {
-            accessToken = decodeURIComponent(value);
-            break;
-          } catch (e) {
-            console.warn(
-              'Failed to decode custom auth token cookie:',
-              e.message
-            );
+
+        if (!accessToken) {
+          return res.redirect('/auth/login?error=no_token');
+        }
+
+        // Validate token and get user
+        const supabase = createClient(
+          process.env.SUPABASE_URL,
+          process.env.SUPABASE_KEY
+        );
+        const { data, error } = await supabase.auth.getUser(accessToken);
+
+        if (error || !data || !data.user) {
+          console.warn('Invalid or expired Supabase token:', error?.message);
+
+          return res.redirect('/auth/login?error=invalid_token');
+        }
+
+        const userId = data.user.id;
+
+        // Extract form data
+        const description = req.body.prompt;
+        const title =
+          req.body.title ||
+          description.split('.')[0].substring(0, 255) ||
+          'New Project';
+        const category = req.body.category || 'General';
+        let tags = [];
+        try {
+          tags = req.body.tags ? JSON.parse(req.body.tags) : [];
+        } catch (e) {
+          tags = [];
+        }
+
+        // Get idea service
+        const ideaService = serviceFactory.getIdeaService();
+
+        // Generate slug from title
+        let slug = title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-|-$/g, '');
+
+        // Ensure slug uniqueness
+        let existingIdea;
+        let counter = 1;
+        let originalSlug = slug;
+        do {
+          existingIdea = await ideaService.getIdeaBySlug(slug);
+          if (existingIdea) {
+            slug = `${originalSlug}-${counter}`;
+            counter++;
           }
+        } while (existingIdea);
+
+        // Default category icon (could be enhanced with AI categorization later)
+        const category_icon = 'folder'; // Default icon
+
+        // Create idea with all required fields matching schema
+        const ideaData = {
+          title: title,
+          slug: slug,
+          category_icon: category_icon,
+          description: description,
+          category: category,
+          tags: tags,
+          user_id: userId,
+          status: 'active',
+        };
+
+        // Create the idea using the service
+        const createdIdea = await ideaService.createIdea(ideaData);
+
+        // Check if request expects JSON (AJAX) or HTML redirect
+        if (
+          req.headers.accept &&
+          req.headers.accept.includes('application/json')
+        ) {
+          res.json({ success: true, idea: createdIdea });
+        } else {
+          // Redirect to projects page with success message
+          res.redirect('/projects/all-projects?success=created');
+        }
+      } catch (error) {
+        console.error('Error creating idea:', error);
+
+        // Check if request expects JSON (AJAX) or HTML redirect
+        if (
+          req.headers.accept &&
+          req.headers.accept.includes('application/json')
+        ) {
+          res.status(500).json({ error: 'Failed to create project' });
+        } else {
+          // Redirect back with error
+          res.redirect('/projects/new?error=creation_failed');
         }
       }
-
-      if (!accessToken) {
-        return res.redirect('/admin/other-pages/new-project?error=no_token');
-      }
-
-      // Validate token and get user
-      const supabase = createClient(
-        process.env.SUPABASE_URL,
-        process.env.SUPABASE_KEY
-      );
-      const { data, error } = await supabase.auth.getUser(accessToken);
-
-      if (error || !data || !data.user) {
-        console.warn('Invalid or expired Supabase token:', error?.message);
-        return res.redirect(
-          '/admin/other-pages/new-project?error=invalid_token'
-        );
-      }
-
-      const userId = data.user.id;
-
-      // Extract form data
-      const description = req.body.prompt;
-
-      // Generate title from description (first sentence or first 50 chars)
-      const title =
-        description.split('.')[0].substring(0, 255) || 'New Project';
-
-      // Generate href from title (slug)
-      const href = title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-|-$/g, '');
-
-      // Default type and icon (could be enhanced with AI categorization later)
-      const type = 'Project';
-      const type_icon = 'briefcase';
-
-      // Create idea with all required fields
-      const ideaData = {
-        title: title,
-        href: href,
-        type: type,
-        type_icon: type_icon,
-        description: description,
-        user_id: userId,
-        status: 'draft',
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      };
-
-      // Create the idea using the service
-      const ideaService = serviceFactory.getIdeaService();
-      await ideaService.createIdea(ideaData);
-
-      // Redirect back to new project page with success message
-      res.redirect('/admin/other-pages/new-project?success=idea_created');
-    } catch (error) {
-      console.error('Error creating idea:', error);
-      // Redirect back with error (could be enhanced with flash messages)
-      res.redirect('/admin/other-pages/new-project?error=creation_failed');
     }
-  });
+  );
 
   // File upload routes
   app.post('/api/upload', requireWebAuth, upload.single('file'), (req, res) => {

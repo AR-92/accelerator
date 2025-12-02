@@ -25,6 +25,8 @@
   },
   "homepage": "https://github.com/AR-92/accelerator#readme",
   "dependencies": {
+    "@google/genai": "^1.30.0",
+    "@google/generative-ai": "^0.24.1",
     "@supabase/supabase-js": "^2.84.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",

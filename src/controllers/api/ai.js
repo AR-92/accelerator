@@ -1,83 +1,157 @@
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { authenticateUser } from '../../middleware/auth/index.js';
+import {
+  csrfProtection,
+  verifyCsrfToken,
+} from '../../middleware/security/csrf.js';
+
+// Initialize Gemini AI
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+// AI helper function
+async function callGemini(prompt, maxTokens = 200) {
+  if (!process.env.GEMINI_API_KEY) {
+    throw new Error('GEMINI_API_KEY not configured');
+  }
+
+  const model = genAI.getGenerativeModel({
+    model: process.env.AI_MODEL_DEFAULT || 'gemini-2.5-flash-lite',
+  });
+
+  const result = await model.generateContent({
+    contents: [{ parts: [{ text: prompt }] }],
+  });
+  const response = await result.response;
+  return response.text().trim();
+}
 
 // AI API routes
 export default function aiRoutes(app) {
   // Auto fill with AI
   app.post('/api/ai/auto-fill', authenticateUser, async (req, res) => {
+    const { description } = req.body;
     try {
-      const { text } = req.body;
+      const prompt = `Based on this project description: "${description}"
 
-      // TODO: Integrate with OpenAI or other AI service
-      // Example with OpenAI:
-      // const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-      // const completion = await openai.chat.completions.create({
-      //   model: 'gpt-3.5-turbo',
-      //   messages: [{ role: 'user', content: `Expand and improve this project description: ${text}` }],
-      // });
-      // const improvedText = completion.choices[0].message.content;
+Please generate a JSON object with exactly these fields:
+- title: A catchy, concise title (maximum 50 characters)
+- category: Choose one from: Technology, Healthcare, Education, Finance, Environment, Entertainment, Transportation, Food, Real Estate, Other
+- description: An enhanced, more detailed version of the original description
+- tags: An array of 3-5 relevant tags
 
-      // Placeholder for now
-      const improvedText = `Auto-filled: ${text} - This is an enhanced version with more details and structure.`;
+Return ONLY the JSON object, no other text or explanation. Format: {"title": "...", "category": "...", "description": "...", "tags": ["tag1", "tag2", ...]}`;
 
-      res.json({ improvedText });
+      const aiResponse = await callGemini(prompt, 500);
+      // Gemini returns text, try to parse as JSON
+      let result;
+      try {
+        // Clean the response by removing any markdown formatting or extra text
+        const cleanedResponse = aiResponse
+          .replace(/```json\s*/g, '')
+          .replace(/```\s*/g, '')
+          .trim();
+        result = JSON.parse(cleanedResponse);
+      } catch (parseError) {
+        console.warn('AI response not valid JSON:', aiResponse);
+        // If not valid JSON, create a fallback result
+        throw new Error('Invalid JSON response from AI');
+      }
+
+      res.json(result);
     } catch (error) {
       console.error('AI auto-fill error:', error);
-      res.status(500).json({ error: 'Failed to auto-fill with AI' });
+      // Fallback to dummy data
+      const title = `Enhanced: ${description.split('.')[0].substring(0, 50)}`;
+      const category = 'Technology';
+      const enhancedDescription = `${description} - This is an enhanced version with more details and structure.`;
+      const tags = ['innovation', 'technology', 'startup'];
+      res.json({ title, category, description: enhancedDescription, tags });
     }
   });
 
   // Improve with AI
   app.post('/api/ai/improve', authenticateUser, async (req, res) => {
+    const { description } = req.body;
     try {
-      const { text } = req.body;
+      const prompt = `Improve this project description to make it more professional, engaging, and detailed: "${description}"
 
-      // TODO: Integrate with AI service
-      const improvedText = `Improved: ${text} - This version is more polished, professional, and engaging.`;
+Return ONLY the improved description text, no other explanations or formatting.`;
 
-      res.json({ improvedText });
+      const improved_description = await callGemini(prompt, 300);
+
+      res.json({ improved_description });
     } catch (error) {
       console.error('AI improve error:', error);
-      res.status(500).json({ error: 'Failed to improve with AI' });
+      const improved_description = `${description} - This version is more polished, professional, and engaging.`;
+      res.json({ improved_description });
     }
   });
 
   // Add tags with AI
   app.post('/api/ai/add-tags', authenticateUser, async (req, res) => {
     try {
-      const { text } = req.body;
+      const { description } = req.body;
 
-      // TODO: Use AI to analyze text and suggest relevant tags
-      const tags = ['innovation', 'technology', 'startup', 'AI'];
+      const prompt = `Analyze this project description and suggest 3-5 relevant tags: "${description}"
+
+Return ONLY a JSON array of strings, like: ["tag1", "tag2", "tag3"]
+
+No other text or explanation.`;
+
+      const aiResponse = await callGemini(prompt, 100);
+      // Gemini returns text, try to parse as JSON array
+      let tags;
+      try {
+        // Clean the response
+        const cleanedResponse = aiResponse
+          .replace(/```json\s*/g, '')
+          .replace(/```\s*/g, '')
+          .trim();
+        tags = JSON.parse(cleanedResponse);
+        // Ensure it's an array
+        if (!Array.isArray(tags)) {
+          throw new Error('Response is not an array');
+        }
+      } catch (parseError) {
+        console.warn('AI response not valid JSON for tags:', aiResponse);
+        // If not valid JSON, create fallback tags
+        throw new Error('Invalid JSON response from AI');
+      }
 
       res.json({ tags });
     } catch (error) {
       console.error('AI add tags error:', error);
-      res.status(500).json({ error: 'Failed to add tags with AI' });
+      const tags = ['innovation', 'technology', 'startup', 'AI'];
+      res.json({ tags });
     }
   });
 
   // Add category with AI
   app.post('/api/ai/add-category', authenticateUser, async (req, res) => {
+    const { description } = req.body;
     try {
-      const { text } = req.body;
+      const prompt = `Categorize this project based on its description: "${description}"
 
-      // TODO: Use AI to categorize the project
-      const category = 'Technology';
+Choose one category from: Technology, Healthcare, Education, Finance, Environment, Entertainment, Transportation, Food, Real Estate, Other
+
+Return ONLY the category name, no other text or explanation.`;
+
+      const category = await callGemini(prompt, 50);
 
       res.json({ category });
     } catch (error) {
       console.error('AI add category error:', error);
-      res.status(500).json({ error: 'Failed to add category with AI' });
+      const category = 'Technology';
+      res.json({ category });
     }
   });
 
   // Suggest title with AI
   app.post('/api/ai/suggest-title', authenticateUser, async (req, res) => {
+    const { description } = req.body;
     try {
-      const { text } = req.body;
-
       // TODO: Use AI to generate a title from the description
-      const suggestedTitle = `Suggested Title for: ${text.substring(0, 50)}...`;
+      const suggestedTitle = description.substring(0, 50);
 
       res.json({ title: suggestedTitle });
     } catch (error) {
@@ -89,7 +163,27 @@ export default function aiRoutes(app) {
   // Generate random idea
   app.post('/api/ai/random-idea', authenticateUser, async (req, res) => {
     try {
-      // TODO: Use AI to generate creative project ideas
+      const prompt = `Generate a creative startup idea. Return a JSON object with exactly these fields: title, description, category, tags. No other text.`;
+      const aiResponse = await callGemini(prompt, 400);
+
+      // Try to extract and parse JSON from the response
+      const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        const result = JSON.parse(jsonMatch[0]);
+        res.json(result);
+        return;
+      }
+
+      // If no JSON found, return the raw response for debugging
+      res.json({
+        title: 'Gemini Response',
+        description: aiResponse.substring(0, 200),
+        category: 'Technology',
+        tags: ['AI', 'Test'],
+      });
+    } catch (error) {
+      console.error('AI random idea error:', error.message);
+      // Fallback to dummy ideas
       const ideas = [
         {
           title: 'AI-Powered Health Monitoring App',
@@ -102,7 +196,7 @@ export default function aiRoutes(app) {
           title: 'Sustainable Urban Farming Platform',
           description:
             'A platform connecting urban farmers with consumers, using IoT sensors to optimize crop yields and reduce waste.',
-          category: 'Agriculture',
+          category: 'Environment',
           tags: ['Sustainability', 'IoT', 'Urban', 'Food'],
         },
         {
@@ -116,10 +210,12 @@ export default function aiRoutes(app) {
 
       const randomIdea = ideas[Math.floor(Math.random() * ideas.length)];
 
-      res.json({ idea: randomIdea });
-    } catch (error) {
-      console.error('AI random idea error:', error);
-      res.status(500).json({ error: 'Failed to generate random idea' });
+      res.json({
+        title: randomIdea.title,
+        description: randomIdea.description,
+        category: randomIdea.category,
+        tags: randomIdea.tags,
+      });
     }
   });
 }

@@ -20,6 +20,16 @@ export const serviceFactory = {
       return data;
     },
 
+    getIdeaBySlug: async (slug) => {
+      const { data, error } = await databaseService.supabase
+        .from('ideas')
+        .select('*')
+        .eq('slug', slug)
+        .single();
+      if (error && error.code !== 'PGRST116') throw error; // PGRST116 is "not found"
+      return data;
+    },
+
     createIdea: async (ideaData) => {
       const { data, error } = await databaseService.supabase
         .from('ideas')

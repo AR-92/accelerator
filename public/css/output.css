@@ -458,6 +458,9 @@
   .top-1\.5 {
     top: calc(var(--spacing) * 1.5);
   }
+  .top-1\/2 {
+    top: calc(1/2 * 100%);
+  }
   .top-2 {
     top: calc(var(--spacing) * 2);
   }
@@ -667,6 +670,9 @@
   }
   .block {
     display: block;
+  }
+  .contents {
+    display: contents;
   }
   .flex {
     display: flex;
@@ -1025,6 +1031,10 @@
   }
   .translate-x-0 {
     --tw-translate-x: calc(var(--spacing) * 0);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+  .-translate-y-1\/2 {
+    --tw-translate-y: calc(calc(1/2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .-translate-y-full {
@@ -1483,18 +1493,6 @@
   .border-red-400 {
     border-color: var(--color-red-400);
   }
-  .border-secondary\/20 {
-    border-color: color-mix(in srgb, hsl(var(--secondary)) 20%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-secondary) 20%, transparent);
-    }
-  }
-  .border-secondary\/30 {
-    border-color: color-mix(in srgb, hsl(var(--secondary)) 30%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-secondary) 30%, transparent);
-    }
-  }
   .border-secondary\/40 {
     border-color: color-mix(in srgb, hsl(var(--secondary)) 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1777,12 +1775,6 @@
   .bg-secondary {
     background-color: var(--color-secondary);
   }
-  .bg-secondary\/1 {
-    background-color: color-mix(in srgb, hsl(var(--secondary)) 1%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-secondary) 1%, transparent);
-    }
-  }
   .bg-secondary\/5 {
     background-color: color-mix(in srgb, hsl(var(--secondary)) 5%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1793,12 +1785,6 @@
     background-color: color-mix(in srgb, hsl(var(--secondary)) 10%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-secondary) 10%, transparent);
-    }
-  }
-  .bg-secondary\/15 {
-    background-color: color-mix(in srgb, hsl(var(--secondary)) 15%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-secondary) 15%, transparent);
     }
   }
   .bg-secondary\/20 {
@@ -2530,6 +2516,12 @@
   .text-green-500 {
     color: var(--color-green-500);
   }
+  .text-green-500\/60 {
+    color: color-mix(in srgb, oklch(72.3% 0.219 149.579) 60%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--color-green-500) 60%, transparent);
+    }
+  }
   .text-green-600 {
     color: var(--color-green-600);
   }
@@ -2560,8 +2552,17 @@
   .text-info-foreground {
     color: var(--color-info-foreground);
   }
+  .text-muted {
+    color: var(--color-muted);
+  }
   .text-muted-foreground {
     color: var(--color-muted-foreground);
+  }
+  .text-muted\/60 {
+    color: color-mix(in srgb, hsl(var(--muted)) 60%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--color-muted) 60%, transparent);
+    }
   }
   .text-orange-600 {
     color: var(--color-orange-600);
@@ -2628,6 +2629,12 @@
   }
   .text-red-500 {
     color: var(--color-red-500);
+  }
+  .text-red-500\/60 {
+    color: color-mix(in srgb, oklch(63.7% 0.237 25.331) 60%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--color-red-500) 60%, transparent);
+    }
   }
   .text-red-600 {
     color: var(--color-red-600);
@@ -2819,6 +2826,10 @@
   .outline {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
+  }
+  .blur {
+    --tw-blur: blur(8px);
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .filter {
     filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
