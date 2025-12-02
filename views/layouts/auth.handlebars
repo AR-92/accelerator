@@ -67,33 +67,7 @@
 
     <!-- JavaScript Section -->
     <script>
-        // Theme toggle functionality for auth pages
-        function toggleTheme() {
-            const html = document.documentElement;
-            const isDark = html.classList.contains('dark');
 
-            if (isDark) {
-                html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-
-        // Initialize theme on load
-        function initializeTheme() {
-            const savedTheme = localStorage.getItem('theme');
-
-            if (savedTheme === 'dark') {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        }
-
-        // Initialize theme when page loads
-        document.addEventListener('DOMContentLoaded', initializeTheme);
     </script>
 
     <!-- Filter functionality -->
