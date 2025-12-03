@@ -133,7 +133,9 @@ function updateFilterNavActiveState() {
 // Load credit balance in navigation
 async function loadNavCreditBalance() {
   try {
-    const response = await fetch('/api/credits/balance');
+    const response = await fetch('/api/credits/balance', {
+      credentials: 'include',
+    });
     const data = await response.json();
 
     if (data.success) {
@@ -156,7 +158,9 @@ window.loadCurrentPlan = loadCurrentPlan;
 // Load current plan details
 async function loadCurrentPlan() {
   try {
-    const response = await fetch('/api/billing/subscription');
+    const response = await fetch('/api/billing/subscription', {
+      credentials: 'include',
+    });
     const data = await response.json();
 
     if (data.success && data.subscription) {

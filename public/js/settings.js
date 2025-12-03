@@ -3,7 +3,9 @@
 // Load credit balance in settings
 async function loadSettingsCreditBalance() {
   try {
-    const response = await fetch('/api/credits/balance');
+    const response = await fetch('/api/credits/balance', {
+      credentials: 'include',
+    });
     const data = await response.json();
 
     if (data.success) {
