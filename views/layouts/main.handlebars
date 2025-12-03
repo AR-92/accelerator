@@ -80,7 +80,7 @@
         {{> filter-nav}}
         <div class="flex flex-1 min-h-0">
             {{> sidebar}}
-            <main class="flex-1 p-2 sm:p-4 overflow-auto">
+            <main id="{{@root.section}}-main-content" class="flex-1 p-2 sm:p-4 overflow-auto">
                 {{{body}}}
             </main>
         </div>
