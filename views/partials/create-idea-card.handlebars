@@ -479,26 +479,30 @@
       e.preventDefault();
 
 
-      const result = await callAIApi('random-idea', {});
-      if (result.error) {
-        if (typeof showToast !== 'undefined') {
-          showToast('AI error: ' + result.error, 'error');
-        }
-      } else {
-        titleSpan.innerHTML = result.title || '';
-        categorySpan.innerHTML = result.category || '';
-        descriptionTextarea.value = result.description || '';
-        updateCharCounter();
-        removeAllTags();
-        if (result.tags) {
-          addTagsFromArray(result.tags);
-        }
-        if (result.title) addTag(result.title);
-        if (result.category) addTag(result.category);
-        if (typeof showToast !== 'undefined') {
-          showToast('Random idea generated successfully', 'success');
-        }
-      }
+       const result = await callAIApi('random-idea', {});
+       if (result.error) {
+         if (typeof showToast !== 'undefined') {
+           showToast('AI error: ' + result.error, 'error');
+         }
+       } else {
+         titleSpan.innerHTML = result.title || '';
+         categorySpan.innerHTML = result.category || '';
+         descriptionTextarea.value = result.description || '';
+         updateCharCounter();
+         removeAllTags();
+         if (result.tags) {
+           addTagsFromArray(result.tags);
+         }
+         if (result.title) addTag(result.title);
+         if (result.category) addTag(result.category);
+         if (typeof showToast !== 'undefined') {
+           showToast('Random idea generated successfully', 'success');
+           showToast('10 credits deducted for AI usage', 'warning');
+         }
+         if (typeof window.loadNavCreditBalance === 'function') {
+           window.loadNavCreditBalance();
+         }
+       }
     });
 
     // Generate title with AI
@@ -518,6 +522,10 @@
         } else {
           titleSpan.innerHTML = result.title || '';
           showToastMessage('Title generated successfully', 'success');
+          showToastMessage('10 credits deducted for AI usage', 'warning');
+          if (typeof window.loadNavCreditBalance === 'function') {
+            window.loadNavCreditBalance();
+          }
         }
       });
     }
@@ -539,6 +547,10 @@
         } else {
           categorySpan.innerHTML = result.category || '';
           showToastMessage('Category set successfully', 'success');
+          showToastMessage('10 credits deducted for AI usage', 'warning');
+          if (typeof window.loadNavCreditBalance === 'function') {
+            window.loadNavCreditBalance();
+          }
         }
       });
     }
@@ -560,6 +572,10 @@
         } else if (result.tags) {
           addTagsFromArray(result.tags);
           showToastMessage(`${result.tags.length} tags added successfully`, 'success');
+          showToastMessage('10 credits deducted for AI usage', 'warning');
+          if (typeof window.loadNavCreditBalance === 'function') {
+            window.loadNavCreditBalance();
+          }
         }
       });
     }
@@ -601,6 +617,10 @@
             addTagsFromArray(result.tags);
           }
           showToastMessage('Form auto filled successfully', 'success');
+          showToastMessage('10 credits deducted for AI usage', 'warning');
+          if (typeof window.loadNavCreditBalance === 'function') {
+            window.loadNavCreditBalance();
+          }
         }
       });
     }
@@ -623,6 +643,10 @@
           descriptionTextarea.value = result.improved_description;
           updateCharCounter();
           showToastMessage('Description improved successfully', 'success');
+          showToastMessage('10 credits deducted for AI usage', 'warning');
+          if (typeof window.loadNavCreditBalance === 'function') {
+            window.loadNavCreditBalance();
+          }
         }
       });
     }
