@@ -146,8 +146,61 @@ async function loadNavCreditBalance() {
 window.initFilterNavScroll = initFilterNavScroll;
 window.updateFilterNavActiveState = updateFilterNavActiveState;
 window.loadNavCreditBalance = loadNavCreditBalance;
+window.loadCurrentPlan = loadCurrentPlan;
+
+// Load current plan details
+async function loadCurrentPlan() {
+  try {
+    const response = await fetch('/api/billing/subscription');
+    const data = await response.json();
+
+    if (data.success && data.subscription) {
+      const plan = data.subscription.plan;
+      const planName = plan ? `${plan.name} Plan` : 'Free Plan';
+      const planDetails = plan
+        ? `$${plan.price_monthly}/month`
+        : 'Upgrade for more features';
+
+      // Update sidebar footer
+      const sidebarPlan = document.getElementById('sidebar-current-plan');
+      if (sidebarPlan) sidebarPlan.textContent = planName;
+
+      // Update navbar dropdown
+      const navPlanName = document.getElementById('nav-current-plan-name');
+      const navPlanDetails = document.getElementById(
+        'nav-current-plan-details'
+      );
+      if (navPlanName) navPlanName.textContent = planName;
+      if (navPlanDetails) navPlanDetails.textContent = planDetails;
+    } else {
+      // No subscription, show free plan
+      const sidebarPlan = document.getElementById('sidebar-current-plan');
+      if (sidebarPlan) sidebarPlan.textContent = 'Free Plan';
+
+      const navPlanName = document.getElementById('nav-current-plan-name');
+      const navPlanDetails = document.getElementById(
+        'nav-current-plan-details'
+      );
+      if (navPlanName) navPlanName.textContent = 'Free Plan';
+      if (navPlanDetails)
+        navPlanDetails.textContent = 'Upgrade for more features';
+    }
+  } catch (error) {
+    console.error('Error loading current plan:', error);
+    // Fallback to free plan
+    const sidebarPlan = document.getElementById('sidebar-current-plan');
+    if (sidebarPlan) sidebarPlan.textContent = 'Free Plan';
+
+    const navPlanName = document.getElementById('nav-current-plan-name');
+    const navPlanDetails = document.getElementById('nav-current-plan-details');
+    if (navPlanName) navPlanName.textContent = 'Free Plan';
+    if (navPlanDetails)
+      navPlanDetails.textContent = 'Upgrade for more features';
+  }
+}
 
 // Load credit balance on page load
 document.addEventListener('DOMContentLoaded', function () {
   loadNavCreditBalance();
+  loadCurrentPlan();
 });
