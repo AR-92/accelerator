@@ -15,6 +15,7 @@ import {
   exportActivityCSV,
   exportActivityJSON,
 } from './admin/get-activity.js';
+import { getUserManagement } from './admin/get-user-management.js';
 import { postLogout } from './admin/post-logout.js';
 import { csrfProtection } from '../middleware/security/csrf.js';
 import formConfigs from '../config/formConfigs.js';
@@ -468,6 +469,11 @@ export default function adminRoutes(app) {
   app.get('/admin/other-pages/system-logs', requireWebAuth, getSystemLogs);
   app.get('/admin/other-pages/notifications', requireWebAuth, getNotifications);
   app.get('/admin/other-pages/activity', requireWebAuth, getActivity);
+  app.get(
+    '/admin/other-pages/user-management',
+    requireWebAuth,
+    getUserManagement
+  );
   app.get(
     '/admin/other-pages/activity/export/csv',
     requireWebAuth,
