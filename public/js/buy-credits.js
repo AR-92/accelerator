@@ -143,6 +143,12 @@ async function buyPackage(packageId) {
     if (data.success) {
       showToast('Credits purchased successfully!', 'success');
       loadCreditBalance(); // Refresh balance
+      if (typeof window.loadNavCreditBalance === 'function') {
+        window.loadNavCreditBalance();
+      }
+      if (typeof window.loadCurrentPlan === 'function') {
+        window.loadCurrentPlan();
+      }
     } else {
       showToast('Purchase failed: ' + data.error, 'error');
     }
