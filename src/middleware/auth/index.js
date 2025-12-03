@@ -120,102 +120,106 @@ export const requireAuth = (req, res, next) => {
  */
 export const requireWebAuth = async (req, res, next) => {
   try {
-    // For HTML requests, we'll render the page but let client-side JS handle auth
-    // This is necessary because Supabase sets cookies that may not be immediately available
     // Check if this is a browser request that expects HTML
     const wantsHtml =
       req.headers.accept && req.headers.accept.includes('text/html');
-    const isBrowser =
-      req.headers['user-agent'] && !req.headers['user-agent'].includes('curl');
 
-    // Only allow HTML requests to proceed, not all browser requests
-    if (wantsHtml) {
-      // For web routes, just proceed but let the client-side JS redirect if needed
+    // Always try to authenticate by checking cookies
+    const cookies = req.headers.cookie;
+    let accessToken = null;
+
+    if (cookies) {
+      // Look for Supabase auth cookies - they contain the project ID in the URL
+      // Extract project ID from config
+      const supabaseUrl = config.supabase.url;
+      if (!supabaseUrl) {
+        logger.error('Supabase URL not configured');
+        if (!wantsHtml) {
+          return res
+            .status(401)
+            .json({ error: 'Authentication configuration error' });
+        }
+      } else {
+        // Extract the project ID from the Supabase URL (first part before '.supabase.co')
+        const projectMatch = supabaseUrl.match(/https:\/\/(.+)\.supabase\.co/);
+        const projectId = projectMatch ? projectMatch[1] : null;
+
+        if (!projectId) {
+          logger.error(
+            'Could not extract Supabase project ID from URL:',
+            supabaseUrl
+          );
+          if (!wantsHtml) {
+            return res
+              .status(401)
+              .json({ error: 'Authentication configuration error' });
+          }
+        } else {
+          // Look for the auth token cookie with the specific project ID
+          const cookiePairs = cookies.split(';');
+
+          for (const cookiePair of cookiePairs) {
+            const [name, value] = cookiePair.trim().split('=');
+            // Check for Supabase token cookie format: sb-[project-id]-auth-token
+            if (name.includes(`sb-${projectId}-auth-token`)) {
+              try {
+                // The value is URL-encoded, decode it
+                accessToken = decodeURIComponent(value);
+                break;
+              } catch (e) {
+                logger.warn('Failed to decode auth token cookie:', e.message);
+              }
+            }
+            // Also check for our custom cookie
+            if (name === 'sb-access-token') {
+              try {
+                accessToken = decodeURIComponent(value);
+                break;
+              } catch (e) {
+                logger.warn(
+                  'Failed to decode custom auth token cookie:',
+                  e.message
+                );
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // If we have a token, validate it
+    if (accessToken) {
+      try {
+        const { data, error } = await supabase.auth.getUser(accessToken);
+        if (!error && data && data.user) {
+          // Authentication successful, attach user to request
+          req.user = data.user;
+          logger.debug(`Authenticated user: ${data.user.id}`);
+        } else {
+          logger.warn('Invalid or expired Supabase token:', error?.message);
+        }
+      } catch (tokenError) {
+        logger.error('Token validation error:', tokenError.message);
+      }
+    }
+
+    // For API requests, require authentication
+    if (!wantsHtml) {
+      if (!req.user) {
+        return res.status(401).json({ error: 'Authentication required' });
+      }
       next();
       return;
     }
 
-    // For API requests, do strict auth check
-    const cookies = req.headers.cookie;
-
-    if (!cookies) {
-      return res.status(401).json({ error: 'Authentication required' });
-    }
-
-    // Look for Supabase auth cookies - they contain the project ID in the URL
-    // Extract project ID from config
-    const supabaseUrl = config.supabase.url;
-    if (!supabaseUrl) {
-      logger.error('Supabase URL not configured');
-      return res
-        .status(401)
-        .json({ error: 'Authentication configuration error' });
-    }
-
-    // Extract the project ID from the Supabase URL (first part before '.supabase.co')
-    const projectMatch = supabaseUrl.match(/https:\/\/(.+)\.supabase\.co/);
-    const projectId = projectMatch ? projectMatch[1] : null;
-
-    if (!projectId) {
-      logger.error(
-        'Could not extract Supabase project ID from URL:',
-        supabaseUrl
-      );
-      return res
-        .status(401)
-        .json({ error: 'Authentication configuration error' });
-    }
-
-    // Look for the auth token cookie with the specific project ID
-    const cookiePairs = cookies.split(';');
-    let accessToken = null;
-
-    for (const cookiePair of cookiePairs) {
-      const [name, value] = cookiePair.trim().split('=');
-      // Check for Supabase token cookie format: sb-[project-id]-auth-token
-      if (name.includes(`sb-${projectId}-auth-token`)) {
-        try {
-          // The value is URL-encoded, decode it
-          accessToken = decodeURIComponent(value);
-          break;
-        } catch (e) {
-          logger.warn('Failed to decode auth token cookie:', e.message);
-        }
-      }
-      // Also check for our custom cookie
-      if (name === 'sb-access-token') {
-        try {
-          accessToken = decodeURIComponent(value);
-          break;
-        } catch (e) {
-          logger.warn('Failed to decode custom auth token cookie:', e.message);
-        }
-      }
-    }
-
-    if (!accessToken) {
-      // No access token found
-      return res.status(401).json({ error: 'Authentication required' });
-    }
-
-    // Validate the token with Supabase
-    try {
-      const { data, error } = await supabase.auth.getUser(accessToken);
-      if (error || !data || !data.user) {
-        logger.warn('Invalid or expired Supabase token:', error?.message);
-        return res.status(401).json({ error: 'Invalid authentication token' });
-      }
-
-      // Authentication successful, attach user to request
-      req.user = data.user;
-      next();
-    } catch (tokenError) {
-      logger.error('Token validation error:', tokenError.message);
-      return res.status(401).json({ error: 'Token validation failed' });
-    }
+    // For HTML requests, proceed regardless (client-side JS will handle redirects if needed)
+    next();
   } catch (error) {
     logger.error('Web auth middleware error:', error);
-    return res.status(401).json({ error: 'Authentication failed' });
+    if (!wantsHtml) {
+      return res.status(401).json({ error: 'Authentication failed' });
+    }
+    next(); // For HTML, continue even on error
   }
 };
 

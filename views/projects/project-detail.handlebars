@@ -1,209 +1,238 @@
 <main class="flex w-full flex-col p-4 mx-auto max-w-7xl">
-  <!-- Header -->
-  <header class="w-full mb-8">
-    <div class="flex items-center justify-between">
-      <div>
-        <h1 class="text-3xl font-sans font-medium text-foreground mb-2">
-          {{project.name}}
-        </h1>
-        <p class="text-muted-foreground">
-          {{project.description}}
-        </p>
-      </div>
-      <div class="flex items-center gap-4">
-        <span
-          class="text-sm px-3 py-1 rounded-md bg-{{#if (eq project.status 'completed')}}green{{else if (eq project.status 'in_progress')}}blue{{else}}gray{{/if}}-100 text-{{#if (eq project.status 'completed')}}green{{else if (eq project.status 'in_progress')}}blue{{else}}gray{{/if}}-800">
-          {{project.status}}
-        </span>
-        <span class="text-sm text-muted-foreground">
-          Progress: {{project.progress}}%
-        </span>
-      </div>
-    </div>
-  </header>
-
-  <!-- Progress Bar -->
-  <section class="mb-8">
-    <div class="bg-card border border-input/80 rounded-md p-6">
-      <div class="flex justify-between text-sm text-muted-foreground mb-2">
-        <span>Overall Progress</span>
-        <span>{{project.progress}}%</span>
-      </div>
-      <div class="w-full bg-gray-200 rounded-md h-3">
-        <div class="bg-primary h-3 rounded-md transition-all duration-300" style="width: {{project.progress}}%"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Quick Actions -->
-  {{#if quickActions}}
-  <section class="mb-8">
-    <h2 class="text-xl font-medium mb-4">Quick Actions</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {{#each quickActions}}
-      <a href="{{this.href}}"
-        class="bg-card border border-input/80 rounded-md p-4 hover:bg-accent transition-colors block">
-        <div class="flex items-center gap-3">
-          <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M{{this.icon}}"></path>
-          </svg>
-          <span class="font-medium">{{this.text}}</span>
-        </div>
-      </a>
-      {{/each}}
-    </div>
-  </section>
-  {{/if}}
-
-  <!-- Project Details Grid -->
-  <section class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-8">
-    <!-- Idea Model -->
-    <div class="bg-card border border-input/80 rounded-md p-6">
-      <h3 class="text-lg font-medium mb-4">Idea Model</h3>
-      {{#if project.idea_model}}
-      <p class="text-muted-foreground">{{project.idea_model}}</p>
-      {{else}}
-      <p class="text-muted-foreground italic">Not defined yet</p>
-      <a href="/projects/idea-model" class="text-primary hover:underline text-sm mt-2 inline-block">
-        Define Idea Model →
-      </a>
-      {{/if}}
-    </div>
-
-    <!-- Business Model -->
-    <div class="bg-card border border-input/80 rounded-md p-6">
-      <h3 class="text-lg font-medium mb-4">Business Model</h3>
-      {{#if project.business_model}}
-      <p class="text-muted-foreground">{{project.business_model}}</p>
-      {{else}}
-      <p class="text-muted-foreground italic">Not defined yet</p>
-      <a href="/projects/business-model" class="text-primary hover:underline text-sm mt-2 inline-block">
-        Define Business Model →
-      </a>
-      {{/if}}
-    </div>
+   <!-- Header -->
+   <header class="w-full mb-20">
+     <div class="flex items-center gap-3 mb-2">
+       {{icon "briefcase" class="text-muted-foreground" size=24}}
+       <h1 class="text-2xl text-foreground">
+         {{project.name}}
+       </h1>
+     </div>
+     <p class="text-muted-foreground text-sm ml-9">
+       {{project.description}}
+     </p>
+   </header>
 
 
 
-    <!-- Financial Model -->
-    <div class="bg-card border border-input/80 rounded-md p-6">
-      <h3 class="text-lg font-medium mb-4">Financial Model</h3>
-      {{#if project.financial_model}}
-      <p class="text-muted-foreground">{{project.financial_model}}</p>
-      {{else}}
-      <p class="text-muted-foreground italic">Not defined yet</p>
-      <a href="/projects/financial-model" class="text-primary hover:underline text-sm mt-2 inline-block">
-        Define Financial Model →
-      </a>
-      {{/if}}
-    </div>
-
-    <!-- Funding Model -->
-    <div class="bg-card border border-input/80 rounded-md p-6">
-      <h3 class="text-lg font-medium mb-4">Funding Model</h3>
-      {{#if project.funding_model}}
-      <p class="text-muted-foreground">{{project.funding_model}}</p>
-      {{else}}
-      <p class="text-muted-foreground italic">Not defined yet</p>
-      <a href="/projects/funding-model" class="text-primary hover:underline text-sm mt-2 inline-block">
-        Define Funding Model →
-      </a>
-      {{/if}}
-    </div>
-
-    <!-- Legal Model -->
-    <div class="bg-card border border-input/80 rounded-md p-6">
-      <h3 class="text-lg font-medium mb-4">Legal Model</h3>
-      {{#if project.legal_model}}
-      <p class="text-muted-foreground">{{project.legal_model}}</p>
-      {{else}}
-      <p class="text-muted-foreground italic">Not defined yet</p>
-      <a href="/projects/legal-model" class="text-primary hover:underline text-sm mt-2 inline-block">
-        Define Legal Model →
-      </a>
-      {{/if}}
-    </div>
-
-    <!-- Marketing Model -->
-    <div class="bg-card border border-input/80 rounded-md p-6">
-      <h3 class="text-lg font-medium mb-4">Marketing Model</h3>
-      {{#if project.marketing_model}}
-      <p class="text-muted-foreground">{{project.marketing_model}}</p>
-      {{else}}
-      <p class="text-muted-foreground italic">Not defined yet</p>
-      <a href="/projects/marketing-model" class="text-primary hover:underline text-sm mt-2 inline-block">
-        Define Marketing Model →
-      </a>
-      {{/if}}
-    </div>
 
 
+   <!-- Project Models Section -->
+   <section class="mb-20">
+     <div class="flex items-center gap-2 mb-10">
+       {{icon "bar-chart-3" class="text-muted-foreground" size=20}}
+       <h2 class="text-lg text-foreground">Project Models</h2>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
+       <!-- Idea Model -->
+       <div class="p-4">
+         <div class="flex items-center gap-2 mb-3">
+           {{icon "lightbulb" class="text-muted-foreground" size=16}}
+           <h3 class="text-base text-foreground">Idea Model</h3>
+         </div>
+         {{#if project.idea_model}}
+         <p class="text-muted-foreground text-sm">{{project.idea_model}}</p>
+         {{else}}
+         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
+         <a href="/projects/idea-model" class="text-primary text-sm mt-1 inline-block">
+           Define Model →
+         </a>
+         {{/if}}
+       </div>
 
-    <!-- Team Model -->
-    <div class="bg-card border border-input/80 rounded-md p-6">
-      <h3 class="text-lg font-medium mb-4">Team Model</h3>
-      {{#if project.team_model}}
-      <p class="text-muted-foreground">{{project.team_model}}</p>
-      {{else}}
-      <p class="text-muted-foreground italic">Not defined yet</p>
-      <a href="/projects/team-model" class="text-primary hover:underline text-sm mt-2 inline-block">
-        Define Team Model →
-      </a>
-      {{/if}}
-    </div>
+       <!-- Business Model -->
+       <div class="p-4">
+         <div class="flex items-center gap-2 mb-3">
+           {{icon "building-2" class="text-muted-foreground" size=16}}
+           <h3 class="text-base text-foreground">Business Model</h3>
+         </div>
+         {{#if project.business_model}}
+         <p class="text-muted-foreground text-sm">{{project.business_model}}</p>
+         {{else}}
+         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
+         <a href="/projects/business-model" class="text-primary text-sm mt-1 inline-block">
+           Define Model →
+         </a>
+         {{/if}}
+       </div>
 
+       <!-- Financial Model -->
+       <div class="p-4">
+         <div class="flex items-center gap-2 mb-3">
+           {{icon "dollar-sign" class="text-muted-foreground" size=16}}
+           <h3 class="text-base text-foreground">Financial Model</h3>
+         </div>
+         {{#if project.financial_model}}
+         <p class="text-muted-foreground text-sm">{{project.financial_model}}</p>
+         {{else}}
+         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
+         <a href="/projects/financial-model" class="text-primary text-sm mt-1 inline-block">
+           Define Model →
+         </a>
+         {{/if}}
+       </div>
 
-  </section>
+       <!-- Funding Model -->
+       <div class="p-4">
+         <div class="flex items-center gap-2 mb-3">
+           {{icon "wallet" class="text-muted-foreground" size=16}}
+           <h3 class="text-base text-foreground">Funding Model</h3>
+         </div>
+         {{#if project.funding_model}}
+         <p class="text-muted-foreground text-sm">{{project.funding_model}}</p>
+         {{else}}
+         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
+         <a href="/projects/funding-model" class="text-primary text-sm mt-1 inline-block">
+           Define Model →
+         </a>
+         {{/if}}
+       </div>
 
-  <!-- Tasks Section -->
-  {{#if project.tasks}}
-  <section class="mb-8">
-    <h2 class="text-xl font-medium mb-4">Tasks</h2>
-    <div class="bg-card border border-input/80 rounded-md p-6">
-      <div class="space-y-3">
-        {{#each project.tasks}}
-        <div class="flex items-center justify-between p-3 bg-accent/50 rounded-md">
-          <div class="flex items-center gap-3">
-            <input type="checkbox" {{#if this.completed}}checked{{/if}} disabled class="rounded">
-            <span class="{{#if this.completed}}line-through text-muted-foreground{{/if}}">{{this.title}}</span>
-          </div>
-          <span
-            class="text-xs px-2 py-1 rounded-md bg-{{#if (eq this.priority 'high')}}red{{else if (eq this.priority 'medium')}}yellow{{else}}green{{/if}}-100 text-{{#if (eq this.priority 'high')}}red{{else if (eq this.priority 'medium')}}yellow{{else}}green{{/if}}-800">
-            {{this.priority}}
-          </span>
-        </div>
-        {{/each}}
-      </div>
-    </div>
-  </section>
-  {{/if}}
+       <!-- Legal Model -->
+       <div class="p-4">
+         <div class="flex items-center gap-2 mb-3">
+           {{icon "file-text" class="text-muted-foreground" size=16}}
+           <h3 class="text-base text-foreground">Legal Model</h3>
+         </div>
+         {{#if project.legal_model}}
+         <p class="text-muted-foreground text-sm">{{project.legal_model}}</p>
+         {{else}}
+         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
+         <a href="/projects/legal-model" class="text-primary text-sm mt-1 inline-block">
+           Define Model →
+         </a>
+         {{/if}}
+       </div>
 
-  <!-- Team Section -->
-  {{#if project.team}}
-  <section class="mb-8">
-    <h2 class="text-xl font-medium mb-4">Team Members</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {{#each project.team}}
-      <div class="bg-card border border-input/80 rounded-md p-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-primary/10 rounded-md flex items-center justify-center">
-            <span class="text-primary font-semibold">{{this.name.charAt 0}}</span>
-          </div>
-          <div>
-            <p class="font-medium">{{this.name}}</p>
-            <p class="text-sm text-muted-foreground">{{this.email}}</p>
-          </div>
-        </div>
-      </div>
-      {{/each}}
-    </div>
-  </section>
-  {{/if}}
+       <!-- Marketing Model -->
+       <div class="p-4">
+         <div class="flex items-center gap-2 mb-3">
+           {{icon "megaphone" class="text-muted-foreground" size=16}}
+           <h3 class="text-base text-foreground">Marketing Model</h3>
+         </div>
+         {{#if project.marketing_model}}
+         <p class="text-muted-foreground text-sm">{{project.marketing_model}}</p>
+         {{else}}
+         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
+         <a href="/projects/marketing-model" class="text-primary text-sm mt-1 inline-block">
+           Define Model →
+         </a>
+         {{/if}}
+       </div>
 
-  <!-- Back to All Projects -->
-  <section class="mt-8">
-    <a href="/projects/all-projects" class="inline-flex items-center text-primary hover:underline">
-      ← Back to All Projects
-    </a>
-  </section>
+       <!-- Team Model -->
+       <div class="p-4">
+         <div class="flex items-center gap-2 mb-3">
+           {{icon "users" class="text-muted-foreground" size=16}}
+           <h3 class="text-base text-foreground">Team Model</h3>
+         </div>
+         {{#if project.team_model}}
+         <p class="text-muted-foreground text-sm">{{project.team_model}}</p>
+         {{else}}
+         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
+         <a href="/projects/team-model" class="text-primary text-sm mt-1 inline-block">
+           Define Model →
+         </a>
+         {{/if}}
+       </div>
+     </div>
+   </section>
+
+   <!-- Reports Section -->
+   <section class="mb-20">
+     <div class="flex items-center gap-2 mb-10">
+       {{icon "file-bar-chart" class="text-muted-foreground" size=20}}
+       <h2 class="text-lg text-foreground">Reports</h2>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+       <!-- Pitch Deck -->
+       <div class="p-4">
+         <div class="flex items-center gap-2 mb-3">
+           {{icon "presentation" class="text-muted-foreground" size=16}}
+           <h3 class="text-base text-foreground">Pitch Deck</h3>
+         </div>
+         <p class="text-muted-foreground text-sm italic">Coming soon</p>
+       </div>
+
+       <!-- Business Plan -->
+       <div class="p-4">
+         <div class="flex items-center gap-2 mb-3">
+           {{icon "clipboard-list" class="text-muted-foreground" size=16}}
+           <h3 class="text-base text-foreground">Business Plan</h3>
+         </div>
+         <p class="text-muted-foreground text-sm italic">Coming soon</p>
+       </div>
+
+       <!-- Valuation -->
+       <div class="p-4">
+         <div class="flex items-center gap-2 mb-3">
+           {{icon "trending-up" class="text-muted-foreground" size=16}}
+           <h3 class="text-base text-foreground">Valuation</h3>
+         </div>
+         <p class="text-muted-foreground text-sm italic">Coming soon</p>
+       </div>
+     </div>
+   </section>
+
+   <!-- Tasks Section -->
+   {{#if project.tasks}}
+   <section class="mb-20">
+     <div class="flex items-center gap-2 mb-8">
+       {{icon "check-square" class="text-muted-foreground" size=20}}
+       <h2 class="text-lg text-foreground">Tasks</h2>
+     </div>
+     <div class="space-y-4">
+       {{#each project.tasks}}
+       <div class="flex items-center justify-between">
+         <div class="flex items-center gap-3">
+           <input type="checkbox" {{#if this.completed}}checked{{/if}} disabled class="rounded">
+           <span class="text-sm {{#if this.completed}}line-through text-muted-foreground{{/if}}">{{this.title}}</span>
+         </div>
+         <div class="flex items-center gap-2">
+           {{#if (eq this.priority 'high')}}
+           {{icon "alert-triangle" class="text-destructive" size=12}}
+           {{else if (eq this.priority 'medium')}}
+           {{icon "alert-circle" class="text-warning" size=12}}
+           {{else}}
+           {{icon "check-circle" class="text-success" size=12}}
+           {{/if}}
+           <span class="text-xs {{#if (eq this.priority 'high')}}text-destructive{{else if (eq this.priority 'medium')}}text-warning{{else}}text-success{{/if}}">
+             {{this.priority}}
+           </span>
+         </div>
+       </div>
+       {{/each}}
+     </div>
+   </section>
+   {{/if}}
+
+   <!-- Team Section -->
+   {{#if project.team}}
+   <section class="mb-20">
+     <div class="flex items-center gap-2 mb-8">
+       {{icon "user-check" class="text-muted-foreground" size=20}}
+       <h2 class="text-lg text-foreground">Team Members</h2>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+       {{#each project.team}}
+       <div class="flex items-center gap-3">
+         <div class="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
+           <span class="text-foreground text-sm">{{this.name.charAt 0}}</span>
+         </div>
+         <div>
+           <p class="text-sm">{{this.name}}</p>
+           <p class="text-xs text-muted-foreground">{{this.email}}</p>
+         </div>
+       </div>
+       {{/each}}
+     </div>
+   </section>
+   {{/if}}
+
+   <!-- Back to All Projects -->
+   <section class="mt-20">
+     <a href="/projects/all-projects" class="inline-flex items-center gap-2 text-primary text-sm">
+       {{icon "arrow-left" size=16}}
+       Back to All Projects
+     </a>
+   </section>
 </main>

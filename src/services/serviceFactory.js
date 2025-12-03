@@ -112,7 +112,7 @@ export const serviceFactory = {
     publishIdea: async (id) => {
       const { data, error } = await databaseService.supabase
         .from('ideas')
-        .update({ status: 'published' })
+        .update({ status: 'active' })
         .eq('id', id)
         .select()
         .single();
@@ -127,6 +127,103 @@ export const serviceFactory = {
         .eq('id', id)
         .select()
         .single();
+      if (error) throw error;
+      return data;
+    },
+
+    favoriteIdea: async (id) => {
+      const { data, error } = await databaseService.supabase
+        .from('ideas')
+        .update({ is_favorite: true })
+        .eq('id', id)
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+
+    unfavoriteIdea: async (id) => {
+      const { data, error } = await databaseService.supabase
+        .from('ideas')
+        .update({ is_favorite: false })
+        .eq('id', id)
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+
+    archiveIdea: async (id) => {
+      const { data, error } = await databaseService.supabase
+        .from('ideas')
+        .update({ status: 'archived' })
+        .eq('id', id)
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+
+    unarchiveIdea: async (id) => {
+      const { data, error } = await databaseService.supabase
+        .from('ideas')
+        .update({ status: 'draft' })
+        .eq('id', id)
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+
+    deleteIdea: async (id) => {
+      const { error } = await databaseService.supabase
+        .from('ideas')
+        .delete()
+        .eq('id', id);
+      if (error) throw error;
+    },
+
+    publishIdeasByCategory: async (category) => {
+      // Assuming category maps to status or other field
+      let query = databaseService.supabase
+        .from('ideas')
+        .update({ status: 'active' });
+      if (category === 'drafts') {
+        query = query.eq('status', 'draft');
+      } else if (category === 'recent') {
+        // For recent, perhaps last 30 days
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        query = query.gte('created_at', thirtyDaysAgo.toISOString());
+      } else if (category === 'favorites') {
+        // Assuming favorites are in a separate table or field
+        // For now, skip or handle differently
+        return [];
+      } else {
+        // For all-projects, publish all
+        // But perhaps filter by type if available
+      }
+      const { data, error } = await query.select();
+      if (error) throw error;
+      return data;
+    },
+
+    unpublishIdeasByCategory: async (category) => {
+      let query = databaseService.supabase
+        .from('ideas')
+        .update({ status: 'draft' });
+      if (category === 'drafts') {
+        query = query.eq('status', 'draft');
+      } else if (category === 'recent') {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        query = query.gte('created_at', thirtyDaysAgo.toISOString());
+      } else if (category === 'favorites') {
+        return [];
+      } else {
+        // For others, unpublish all
+      }
+      const { data, error } = await query.select();
       if (error) throw error;
       return data;
     },
@@ -1855,6 +1952,510 @@ export const serviceFactory = {
         .delete()
         .eq('id', id);
       if (error) throw error;
+    },
+  }),
+  getDashboardService: () => ({
+    // Overview metrics
+    getOverviewMetrics: async (user) => {
+      // Mock data - in real implementation, this would query actual data based on user role
+      const baseMetrics = {
+        activeProjects: 12,
+        projectGrowth: 8,
+        totalIdeas: 45,
+        ideaGrowth: 15,
+        teamMembers: 8,
+        teamGrowth: 2,
+        fundingRaised: 250000,
+        fundingGrowth: 25,
+        growthRate: 18,
+        growthChange: 3,
+        successRate: 85,
+        successRateChange: 5,
+        activeUsers: 1250,
+        userGrowth: 12,
+        totalEnterprises: 8,
+        enterpriseGrowth: 2,
+        portfolioValue: 45,
+        portfolioGrowth: 18,
+        systemHealth: 98,
+      };
+
+      // Filter metrics based on user role
+      switch (user.role) {
+        case 'startup':
+          return {
+            activeProjects: baseMetrics.activeProjects,
+            projectGrowth: baseMetrics.projectGrowth,
+            totalIdeas: baseMetrics.totalIdeas,
+            ideaGrowth: baseMetrics.ideaGrowth,
+            teamMembers: baseMetrics.teamMembers,
+            teamGrowth: baseMetrics.teamGrowth,
+            fundingRaised: baseMetrics.fundingRaised,
+            fundingGrowth: baseMetrics.fundingGrowth,
+            growthRate: baseMetrics.growthRate,
+            growthChange: baseMetrics.growthChange,
+          };
+        case 'enterprise':
+          return {
+            ...baseMetrics,
+            successRate: baseMetrics.successRate,
+            successRateChange: baseMetrics.successRateChange,
+            activeUsers: baseMetrics.activeUsers,
+            userGrowth: baseMetrics.userGrowth,
+          };
+        case 'corporate':
+          return {
+            ...baseMetrics,
+            totalEnterprises: baseMetrics.totalEnterprises,
+            enterpriseGrowth: baseMetrics.enterpriseGrowth,
+            portfolioValue: baseMetrics.portfolioValue,
+            portfolioGrowth: baseMetrics.portfolioGrowth,
+          };
+        case 'admin':
+          return baseMetrics;
+        default:
+          return baseMetrics;
+      }
+    },
+
+    // Recent activities
+    getRecentActivities: async (user) => {
+      // Mock data - in real implementation, this would query activity_logs table
+      return [
+        {
+          id: 1,
+          action: 'Project milestone completed',
+          description: 'AI Integration Phase 1 completed successfully',
+          created_at: '2 hours ago',
+          status: 'success',
+          activity_type: 'project',
+          user: 'John Doe',
+        },
+        {
+          id: 2,
+          action: 'New team member added',
+          description: 'Sarah Johnson joined the development team',
+          created_at: '4 hours ago',
+          status: 'success',
+          activity_type: 'user',
+          user: 'Mike Chen',
+        },
+        {
+          id: 3,
+          action: 'Funding round closed',
+          description: 'Series A funding of $2.5M secured',
+          created_at: '1 day ago',
+          status: 'success',
+          activity_type: 'funding',
+          user: 'Emma Wilson',
+        },
+        {
+          id: 4,
+          action: 'System backup completed',
+          description: 'Daily automated backup finished successfully',
+          created_at: '1 day ago',
+          status: 'success',
+          activity_type: 'system',
+          user: 'System',
+        },
+        {
+          id: 5,
+          action: 'Security alert resolved',
+          description: 'Unusual login attempt from unknown IP blocked',
+          created_at: '2 days ago',
+          status: 'warning',
+          activity_type: 'security',
+          user: 'Security System',
+        },
+      ];
+    },
+
+    // Project stats
+    getProjectStats: async (user) => {
+      return {
+        totalProjects: 15,
+        activeProjects: 12,
+        completedThisMonth: 3,
+        averageScore: 8.2,
+        projectGrowth: 8,
+        completionGrowth: 15,
+        scoreGrowth: 3,
+      };
+    },
+
+    // Projects list
+    getProjects: async (user) => {
+      // Mock data based on user role
+      const mockProjects = [
+        {
+          id: 1,
+          name: 'AI-Powered Learning Platform',
+          type: 'project',
+          status: 'Active',
+          progress: 75,
+          organization: user.role === 'enterprise' ? 'TechStart Inc' : '',
+          dueDate: 'Dec 15, 2024',
+          score: 8.7,
+          scoreType: 'Technical',
+          team: [
+            { name: 'John Doe', initials: 'JD' },
+            { name: 'Sarah Smith', initials: 'SS' },
+            { name: 'Mike Johnson', initials: 'MJ' },
+          ],
+          teamCount: 5,
+        },
+        {
+          id: 2,
+          name: 'Sustainable Energy Initiative',
+          type: 'initiative',
+          status: 'In Progress',
+          progress: 45,
+          organization: user.role === 'enterprise' ? 'GreenTech Solutions' : '',
+          dueDate: 'Jan 28, 2025',
+          score: 9.2,
+          scoreType: 'Market',
+          team: [
+            { name: 'Emma Wilson', initials: 'EW' },
+            { name: 'David Chen', initials: 'DC' },
+          ],
+          teamCount: 2,
+        },
+        {
+          id: 3,
+          name: 'Blockchain Integration',
+          type: 'project',
+          status: 'Under Review',
+          progress: 90,
+          organization: user.role === 'enterprise' ? 'LogiTech Systems' : '',
+          dueDate: 'Nov 30, 2024',
+          score: 7.8,
+          scoreType: 'Technical',
+          team: [
+            { name: 'Lisa Park', initials: 'LP' },
+            { name: 'Robert Chen', initials: 'RC' },
+          ],
+          teamCount: 3,
+        },
+      ];
+
+      return mockProjects;
+    },
+
+    // Organizations list
+    getOrganizations: async (user) => {
+      if (user.role === 'enterprise') {
+        return [
+          { id: 1, name: 'TechStart Inc' },
+          { id: 2, name: 'GreenTech Solutions' },
+          { id: 3, name: 'LogiTech Systems' },
+        ];
+      } else if (user.role === 'corporate') {
+        return [
+          { id: 1, name: 'TechCorp Enterprises' },
+          { id: 2, name: 'HealthCorp Enterprises' },
+          { id: 3, name: 'FinCorp Enterprises' },
+        ];
+      }
+      return [];
+    },
+
+    // Team stats
+    getTeamStats: async (user) => {
+      if (user.role === 'startup') {
+        return {
+          totalUsers: 8,
+          activeUsers: 7,
+          tasksCompleted: 156,
+          taskCompletionRate: 85,
+          teamProductivity: 92,
+          communicationScore: 88,
+          productivityScore: 78,
+          satisfactionScore: 91,
+          userGrowth: 2,
+          taskGrowth: 24,
+          activePercentage: 88,
+        };
+      } else {
+        return {
+          totalUsers: 1250,
+          activeUsers: 1180,
+          rolesAssigned: 45,
+          uniqueRoles: 8,
+          permissionChanges: 23,
+          userGrowth: 12,
+          permissionGrowth: 8,
+          activePercentage: 94,
+        };
+      }
+    },
+
+    // Team members
+    getTeamMembers: async (user) => {
+      if (user.role === 'startup') {
+        return [
+          {
+            id: 1,
+            name: 'John Doe',
+            email: 'john@startup.com',
+            role: 'Founder',
+            projects: 5,
+            tasks: 23,
+            status: 'Active',
+            lastLogin: '2 hours ago',
+          },
+          {
+            id: 2,
+            name: 'Sarah Smith',
+            email: 'sarah@startup.com',
+            role: 'Designer',
+            projects: 3,
+            tasks: 18,
+            status: 'Active',
+            lastLogin: '1 day ago',
+          },
+          {
+            id: 3,
+            name: 'Mike Johnson',
+            email: 'mike@startup.com',
+            role: 'Developer',
+            projects: 4,
+            tasks: 31,
+            status: 'Active',
+            lastLogin: '30 min ago',
+          },
+        ];
+      } else {
+        return [
+          {
+            id: 1,
+            name: 'John Smith',
+            email: 'john@enterprise.com',
+            role: 'Enterprise Admin',
+            status: 'Active',
+            lastLogin: '2 hours ago',
+            access: [{ name: 'All Startups', initials: 'ALL' }],
+            accessCount: 1,
+            permissions: ['Full Access', 'Admin'],
+          },
+          {
+            id: 2,
+            name: 'Jane Doe',
+            email: 'jane@enterprise.com',
+            role: 'Startup Manager',
+            status: 'Active',
+            lastLogin: '1 day ago',
+            access: [
+              { name: 'TechStart Inc', initials: 'TS' },
+              { name: 'GreenTech Solutions', initials: 'GS' },
+            ],
+            accessCount: 4,
+            permissions: ['Read', 'Write', 'Manage'],
+          },
+        ];
+      }
+    },
+
+    // Analytics data
+    getAnalytics: async (user) => {
+      const baseAnalytics = {
+        // Metrics based on role
+        activeOrganizations:
+          user.role === 'enterprise' ? 6 : user.role === 'corporate' ? 8 : 1,
+        averageScore: 8.5,
+        totalUsers: user.role === 'startup' ? 8 : 1250,
+        averageCycleTime: 14,
+        organizationGrowth: 8,
+        scoreGrowth: 3,
+        userGrowth: 12,
+        cycleTimeChange: -2,
+
+        // Financial data for enterprise+
+        totalBudget: 2500000,
+        budgetAllocated: 1800000,
+        budgetAvailable: 700000,
+        averageROI: 185,
+
+        // AI insights
+        aiInsights: [
+          {
+            title: 'Project Completion Trend',
+            description:
+              'Your project completion rate has improved by 15% this month. Consider maintaining current team size.',
+            type: 'trending-up',
+            category: 'Performance',
+            impact: 'High',
+          },
+          {
+            title: 'Resource Optimization',
+            description:
+              'AI suggests reallocating 20% of development resources to marketing for better ROI.',
+            type: 'cpu',
+            category: 'Optimization',
+            impact: 'Medium',
+          },
+          {
+            title: 'Team Collaboration',
+            description:
+              'Communication patterns indicate strong team cohesion. Continue current collaboration practices.',
+            type: 'users',
+            category: 'Culture',
+            impact: 'Positive',
+          },
+        ],
+
+        // Portfolio data for corporate
+        portfolioMetrics:
+          user.role === 'corporate'
+            ? [
+                {
+                  name: 'TechCorp Ventures',
+                  performance: 125,
+                  roi: 180,
+                  value: 25,
+                  status: 'Excellent',
+                },
+                {
+                  name: 'HealthTech Investments',
+                  performance: 95,
+                  roi: 145,
+                  value: 18,
+                  status: 'Good',
+                },
+                {
+                  name: 'FinTech Portfolio',
+                  performance: 78,
+                  roi: 120,
+                  value: 12,
+                  status: 'Average',
+                },
+              ]
+            : [],
+
+        // Chart data
+        chartMetric:
+          user.role === 'startup'
+            ? 'Project Progress'
+            : 'Organization Performance',
+      };
+
+      return baseAnalytics;
+    },
+
+    // System health
+    getSystemHealth: async (user) => {
+      if (['enterprise', 'corporate', 'admin'].includes(user.role)) {
+        return {
+          overall: 98,
+          activeUsers: 1180,
+          userGrowth: 5,
+          avgResponseTime: 45,
+          responseTimeChange: -5,
+          securityAlerts: 2,
+          alertChange: -3,
+        };
+      }
+      return null;
+    },
+
+    // Alerts
+    getAlerts: async (user) => {
+      if (['enterprise', 'corporate', 'admin'].includes(user.role)) {
+        return [
+          {
+            title: 'High CPU Usage',
+            description:
+              'Server CPU usage has exceeded 85% for the last 30 minutes.',
+            severity: 'warning',
+            timeAgo: '15 min ago',
+            icon: 'cpu',
+          },
+          {
+            title: 'Security Alert',
+            description:
+              'Multiple failed login attempts detected from IP 192.168.1.100.',
+            severity: 'critical',
+            timeAgo: '1 hour ago',
+            icon: 'shield-alert',
+          },
+        ];
+      }
+      return [];
+    },
+
+    // Activity groups
+    getActivityGroups: async (user) => {
+      return [
+        {
+          date: 'Today',
+          isToday: true,
+          activities: [
+            {
+              id: 1,
+              user: 'John Doe',
+              action: 'Created new project',
+              description: 'AI-Powered Learning Platform project initialized',
+              time: '2 hours ago',
+              status: 'success',
+              icon: 'plus',
+              activity_type: 'project',
+            },
+            {
+              id: 2,
+              user: 'Sarah Smith',
+              action: 'Completed milestone',
+              description:
+                'Market research phase finished for Sustainable Energy project',
+              time: '4 hours ago',
+              status: 'success',
+              icon: 'check-circle',
+              activity_type: 'milestone',
+            },
+          ],
+        },
+        {
+          date: 'Yesterday',
+          activities: [
+            {
+              id: 3,
+              user: 'Mike Johnson',
+              action: 'Updated team permissions',
+              description: 'Granted admin access to development team',
+              time: '1 day ago',
+              status: 'warning',
+              icon: 'settings',
+              activity_type: 'security',
+              metadata: [
+                { key: 'Permission', value: 'Admin' },
+                { key: 'Team', value: 'Development' },
+              ],
+            },
+          ],
+        },
+      ];
+    },
+
+    // Audit trail (admin only)
+    getAuditTrail: async () => {
+      return [
+        {
+          timestamp: '2024-12-03 14:30:25',
+          user: 'System Admin',
+          action: 'USER_LOGIN',
+          resource: 'Authentication',
+          ipAddress: '192.168.1.1',
+          status: 'success',
+          userInitials: 'SA',
+        },
+        {
+          timestamp: '2024-12-03 14:25:10',
+          user: 'John Smith',
+          action: 'PERMISSION_CHANGE',
+          resource: 'User Management',
+          ipAddress: '192.168.1.100',
+          status: 'success',
+          userInitials: 'JS',
+        },
+      ];
     },
   }),
 };

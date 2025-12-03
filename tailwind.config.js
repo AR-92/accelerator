@@ -1,6 +1,10 @@
 // tailwind.config.js (minimal for a .handlebars project on Tailwind v4)
 export default {
-  content: ['./views/**/*.handlebars', './src/**/*.{html,handlebars}', './public/**/*.html'],
+  content: [
+    './views/**/*.handlebars',
+    './src/**/*.{html,handlebars}',
+    './public/**/*.html',
+  ],
   safelist: ['animate-rainbow-shadow', 'hover:animate-rainbow-shadow'],
   // keep theme minimal — colors & other tokens live in CSS @theme
   theme: {

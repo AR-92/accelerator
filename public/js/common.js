@@ -103,7 +103,26 @@ function initFilterNavScroll() {
 // Update filter nav active state
 function updateFilterNavActiveState() {
   const urlParams = new URLSearchParams(window.location.search);
-  const status = urlParams.get('status');
+  const filter = urlParams.get('filter') || 'all-projects';
+
+  // Reset all filter links
+  document.querySelectorAll('#filter-links a').forEach((link) => {
+    link.classList.remove('text-foreground', 'font-medium');
+    link.classList.add('text-muted-foreground');
+    link.previousElementSibling.classList.remove('opacity-100');
+    link.previousElementSibling.classList.add('opacity-0');
+  });
+
+  // Highlight active filter
+  const activeLink = document.querySelector(
+    `#filter-links a[href*="${filter}"]`
+  );
+  if (activeLink) {
+    activeLink.classList.remove('text-muted-foreground');
+    activeLink.classList.add('text-foreground', 'font-medium');
+    activeLink.previousElementSibling.classList.remove('opacity-0');
+    activeLink.previousElementSibling.classList.add('opacity-100');
+  }
 }
 
 // Make functions globally available

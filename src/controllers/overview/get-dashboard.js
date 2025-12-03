@@ -232,28 +232,10 @@ export const getDashboard = async (req, res) => {
         icon: 'bar-chart',
       },
       {
-        id: 'portfolio-link',
-        href: '/admin/portfolio',
-        text: 'Portfolio',
-        icon: 'briefcase',
-      },
-      {
-        id: 'collaborate-link',
-        href: '/admin/collaborate',
-        text: 'Collaborate',
-        icon: 'users',
-      },
-      {
         id: 'new-project-link',
         href: '/admin/new-project',
         text: 'New Project',
         icon: 'plus',
-      },
-      {
-        id: 'explore-ideas-link',
-        href: '/admin/explore-ideas',
-        text: 'Explore Ideas',
-        icon: 'lightbulb',
       },
     ];
 
@@ -277,28 +259,10 @@ export const getDashboard = async (req, res) => {
         icon: 'bar-chart',
       },
       {
-        id: 'portfolio-link',
-        href: '/admin/portfolio',
-        text: 'Portfolio',
-        icon: 'briefcase',
-      },
-      {
-        id: 'collaborate-link',
-        href: '/admin/collaborate',
-        text: 'Collaborate',
-        icon: 'users',
-      },
-      {
         id: 'new-project-link',
         href: '/admin/new-project',
         text: 'New Project',
         icon: 'plus',
-      },
-      {
-        id: 'explore-ideas-link',
-        href: '/admin/explore-ideas',
-        text: 'Explore Ideas',
-        icon: 'lightbulb',
       },
     ];
 

@@ -1,28 +1,34 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import OpenAI from 'openai';
 import { authenticateUser } from '../../middleware/auth/index.js';
 import {
   csrfProtection,
   verifyCsrfToken,
 } from '../../middleware/security/csrf.js';
 
-// Initialize Gemini AI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// Initialize OpenAI client configured for OpenRouter
+const openai = new OpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY || process.env.OPENAI_API_KEY,
+  baseURL: 'https://openrouter.ai/api/v1',
+});
 
 // AI helper function
-async function callGemini(prompt, maxTokens = 200) {
-  if (!process.env.GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY not configured');
+async function callAI(prompt, maxTokens = 200) {
+  if (!process.env.OPENROUTER_API_KEY) {
+    throw new Error('OPENROUTER_API_KEY not configured');
   }
 
-  const model = genAI.getGenerativeModel({
-    model: process.env.AI_MODEL_DEFAULT || 'gemini-2.5-flash-lite',
+  const completion = await openai.chat.completions.create({
+    model: process.env.AI_MODEL_DEFAULT || 'google/gemma-3n-e2b-it:free',
+    messages: [
+      {
+        role: 'user',
+        content: prompt,
+      },
+    ],
+    max_tokens: maxTokens,
   });
 
-  const result = await model.generateContent({
-    contents: [{ parts: [{ text: prompt }] }],
-  });
-  const response = await result.response;
-  return response.text().trim();
+  return completion.choices[0]?.message?.content?.trim() || '';
 }
 
 // AI API routes
@@ -41,7 +47,7 @@ Please generate a JSON object with exactly these fields:
 
 Return ONLY the JSON object, no other text or explanation. Format: {"title": "...", "category": "...", "description": "...", "tags": ["tag1", "tag2", ...]}`;
 
-      const aiResponse = await callGemini(prompt, 500);
+      const aiResponse = await callAI(prompt, 500);
       // Gemini returns text, try to parse as JSON
       let result;
       try {
@@ -73,11 +79,13 @@ Return ONLY the JSON object, no other text or explanation. Format: {"title": "..
   app.post('/api/ai/improve', authenticateUser, async (req, res) => {
     const { description } = req.body;
     try {
-      const prompt = `Improve this project description to make it more professional, engaging, and detailed: "${description}"
+      const prompt = `Rewrite this as a problem statement in paragraph form. Focus only on the problem, not solutions.
 
-Return ONLY the improved description text, no other explanations or formatting.`;
+Original: "${description}"
 
-      const improved_description = await callGemini(prompt, 300);
+Keep it under 500 words. Return only the problem statement paragraph.`;
+
+      const improved_description = await callAI(prompt, 300);
 
       res.json({ improved_description });
     } catch (error) {
@@ -98,7 +106,7 @@ Return ONLY a JSON array of strings, like: ["tag1", "tag2", "tag3"]
 
 No other text or explanation.`;
 
-      const aiResponse = await callGemini(prompt, 100);
+      const aiResponse = await callAI(prompt, 100);
       // Gemini returns text, try to parse as JSON array
       let tags;
       try {
@@ -136,7 +144,7 @@ Choose one category from: Technology, Healthcare, Education, Finance, Environmen
 
 Return ONLY the category name, no other text or explanation.`;
 
-      const category = await callGemini(prompt, 50);
+      const category = await callAI(prompt, 50);
 
       res.json({ category });
     } catch (error) {
@@ -150,10 +158,15 @@ Return ONLY the category name, no other text or explanation.`;
   app.post('/api/ai/suggest-title', authenticateUser, async (req, res) => {
     const { description } = req.body;
     try {
-      // TODO: Use AI to generate a title from the description
-      const suggestedTitle = description.substring(0, 50);
+      const prompt = `Based on this project description: "${description}"
 
-      res.json({ title: suggestedTitle });
+Generate a catchy, concise title (maximum 50 characters) that captures the essence of this project.
+
+Return ONLY the title text, no quotes or explanation.`;
+
+      const suggestedTitle = await callAI(prompt, 100);
+
+      res.json({ title: suggestedTitle.trim() });
     } catch (error) {
       console.error('AI suggest title error:', error);
       res.status(500).json({ error: 'Failed to suggest title with AI' });
@@ -164,7 +177,7 @@ Return ONLY the category name, no other text or explanation.`;
   app.post('/api/ai/random-idea', authenticateUser, async (req, res) => {
     try {
       const prompt = `Generate a creative startup idea. Return a JSON object with exactly these fields: title, description, category, tags. No other text.`;
-      const aiResponse = await callGemini(prompt, 400);
+      const aiResponse = await callAI(prompt, 400);
 
       // Try to extract and parse JSON from the response
       const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
@@ -174,48 +187,11 @@ Return ONLY the category name, no other text or explanation.`;
         return;
       }
 
-      // If no JSON found, return the raw response for debugging
-      res.json({
-        title: 'Gemini Response',
-        description: aiResponse.substring(0, 200),
-        category: 'Technology',
-        tags: ['AI', 'Test'],
-      });
+      // If no JSON found, return an error
+      throw new Error('Invalid JSON response from AI');
     } catch (error) {
       console.error('AI random idea error:', error.message);
-      // Fallback to dummy ideas
-      const ideas = [
-        {
-          title: 'AI-Powered Health Monitoring App',
-          description:
-            'A mobile application that uses AI to monitor user health metrics and provide personalized wellness recommendations.',
-          category: 'Healthcare',
-          tags: ['AI', 'Health', 'Mobile', 'Wellness'],
-        },
-        {
-          title: 'Sustainable Urban Farming Platform',
-          description:
-            'A platform connecting urban farmers with consumers, using IoT sensors to optimize crop yields and reduce waste.',
-          category: 'Environment',
-          tags: ['Sustainability', 'IoT', 'Urban', 'Food'],
-        },
-        {
-          title: 'Blockchain-Based Supply Chain Tracker',
-          description:
-            'A transparent supply chain management system using blockchain to track products from origin to consumer.',
-          category: 'Technology',
-          tags: ['Blockchain', 'Supply Chain', 'Transparency', 'Logistics'],
-        },
-      ];
-
-      const randomIdea = ideas[Math.floor(Math.random() * ideas.length)];
-
-      res.json({
-        title: randomIdea.title,
-        description: randomIdea.description,
-        category: randomIdea.category,
-        tags: randomIdea.tags,
-      });
+      res.status(500).json({ error: 'Failed to generate random idea with AI' });
     }
   });
 }

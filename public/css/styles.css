@@ -336,7 +336,7 @@
   button:active,
   a:focus,
   a:active {
-    @apply outline-none bg-accent;
+    @apply outline-none;
   }
 }
 
@@ -773,6 +773,15 @@
 
   .accordion-content-closed {
     max-height: 0;
+  }
+
+  /* Archived item styles */
+  .archived-item {
+    @apply bg-muted border-muted-foreground opacity-75;
+  }
+
+  .archived-badge {
+    @apply bg-muted-foreground text-background;
   }
 
   /* Custom scrollbar */

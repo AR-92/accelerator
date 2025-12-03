@@ -10,7 +10,11 @@ import {
 const supabase = createClient(config.supabase.url, config.supabase.key);
 
 export default function authRoutes(app) {
-  app.get('/auth', csrfProtection, (req, res) => {
+  app.get('/auth', (req, res) => {
+    res.redirect('/auth/login');
+  });
+
+  app.get('/auth/login', csrfProtection, (req, res) => {
     res.render('auth/login', {
       layout: 'auth',
       title: 'Sign In - Accelerator Platform',

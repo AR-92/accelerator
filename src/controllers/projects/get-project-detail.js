@@ -9,7 +9,7 @@ export const getProjectDetail = async (req, res) => {
 
     // Fetch project from database
     const { data: project, error } = await databaseService.supabase
-      .from('projects')
+      .from('ideas')
       .select('*')
       .eq('id', id)
       .single();
@@ -36,7 +36,7 @@ export const getProjectDetail = async (req, res) => {
     // Transform data for template
     const projectData = {
       id: project.id,
-      name: project.name || 'Untitled Project',
+      name: project.title || 'Untitled Project',
       description: project.description || 'No description available',
       status: project.status || 'draft',
       progress: project.progress || 0,

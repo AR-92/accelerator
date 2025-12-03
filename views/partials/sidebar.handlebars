@@ -7,8 +7,12 @@
       <ul class="space-y-1 border-b border-input/80 pb-2 mb-2 md:hidden">
         {{> sidebar-item href="/admin/other-pages/dashboard" title="Dashboard" text="Dashboard" spanClass="font-medium
         sidebar-text" icon='bar-chart' }}
-        {{> sidebar-item href="/admin/other-pages/portfolio" title="Portfolio" text="Portfolio" spanClass="font-medium
-        sidebar-text" icon='briefcase' }}
+        {{> sidebar-item href="/admin/other-pages/new-project?showCard=true" title="New Project" text="New Project"
+        spanClass="font-medium
+        sidebar-text" icon='plus' }}
+        {{> sidebar-item href="/admin/other-pages/new-project?filter=explore" title="Explore" text="Explore"
+        spanClass="font-medium
+        sidebar-text" icon='search' }}
         {{> sidebar-item href="/pages/help" title="Help" text="Help" spanClass="font-medium sidebar-text"
         icon='help-circle' }}
         {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text"
@@ -20,53 +24,13 @@
       </ul>
       {{#if (eq currentSection 'dashboard')}}
       <ul class="space-y-1">
-        {{> sidebar-item href="/admin/other-pages/dashboard" title="Overview" page="dashboard" text="Overview"
-        spanClass="font-medium sidebar-text" icon='bar-chart' }}
-        {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" page="new-project" text="New Project"
+        {{> sidebar-item href="/admin/other-pages/new-project?showCard=true" title="New Project" text="New Project"
         spanClass="font-medium sidebar-text" icon='plus' }}
-        {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" page="explore-ideas"
-        text="Explore Ideas" spanClass="font-medium sidebar-text" icon='lightbulb' }}
+        {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text"
+        icon='book-open' }}
       </ul>
       {{/if}}
 
-      {{#if (eq currentSection 'portfolio')}}
-      <ul class="space-y-1">
-        {{> sidebar-item href="/admin/other-pages/portfolio" title="Overview" page="portfolio" text="Overview"
-        spanClass="font-medium sidebar-text" icon='briefcase' }}
-      </ul>
-      {{/if}}
-
-      {{#if (eq currentSection 'corporate-dashboard')}}
-      <ul class="space-y-1">
-        {{#each filterLinks}}
-        {{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
-        {{/each}}
-      </ul>
-      {{/if}}
-
-      {{#if (eq currentSection 'enterprise-dashboard')}}
-      <ul class="space-y-1">
-        {{#each filterLinks}}
-        {{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
-        {{/each}}
-      </ul>
-      {{/if}}
-
-      {{#if (eq currentSection 'startup-dashboard')}}
-      <ul class="space-y-1">
-        {{#each filterLinks}}
-        {{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
-        {{/each}}
-      </ul>
-      {{/if}}
-
-      {{#if (eq currentSection 'collaborate')}}
-      <ul class="space-y-1">
-        {{#each filterLinks}}
-        {{> sidebar-item href=href title=text page=text text=text spanClass="font-medium sidebar-text" icon=icon }}
-        {{/each}}
-      </ul>
-      {{/if}}
 
       {{#if (eq currentSection 'help')}}
       <ul class="space-y-1">
@@ -135,30 +99,17 @@
       </div>
       {{#if (eq currentPage 'New Project')}}
       <ul class="space-y-1">
-        {{> sidebar-item href="/admin/other-pages/new-project" title="New Project" text="New Project"
+        {{> sidebar-item href="/admin/other-pages/new-project?showCard=true" title="New Project" text="New Project"
         spanClass="font-medium sidebar-text" icon='plus' }}
-        {{> sidebar-item href="/projects/all-projects" title="All Projects" text="All Projects" spanClass="font-medium
-        sidebar-text" icon='list' }}
-        {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas"
-        spanClass="font-medium sidebar-text" icon='lightbulb' }}
+        {{> sidebar-item href="/admin/other-pages/new-project?filter=explore" title="Explore Ideas" text="Explore Ideas"
+        spanClass="font-medium sidebar-text" icon='search' }}
         {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text"
         icon='book-open' }}
       </ul>
       {{/if}}
       {{/if}}
 
-      {{#if (eq currentPage 'All Ideas')}}
-      <ul class="space-y-1">
-        {{> sidebar-item href="/admin/other-pages/new-project" title="New Idea" text="New Idea" spanClass="font-medium
-        sidebar-text" icon='plus' }}
-        {{> sidebar-item href="/projects/all-projects" title="All Ideas" text="All Ideas" spanClass="font-medium
-        sidebar-text" icon='list' }}
-        {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas"
-        spanClass="font-medium sidebar-text" icon='lightbulb' }}
-        {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text"
-        icon='book-open' }}
-      </ul>
-      {{/if}}
+
 
       {{#if (eq currentPage 'Project Detail')}}
       <ul class="space-y-1">
@@ -178,48 +129,6 @@
         sidebar-text" icon='users' }}
       </ul>
       {{/if}}
-
-      {{#if (eq currentPage 'explore-ideas')}}
-      <ul class="space-y-1">
-        {{> sidebar-item href="/admin/other-pages/explore-ideas" title="Explore Ideas" text="Explore Ideas"
-        spanClass="font-medium sidebar-text" icon='lightbulb' }}
-        {{> sidebar-item href="/admin/other-pages/explore-ideas" title="All Ideas" text="All Ideas"
-        spanClass="font-medium sidebar-text ml-4" icon='list' }}
-        {{> sidebar-item href="/admin/other-pages/explore-ideas?category=healthcare" title="Healthcare"
-        text="Healthcare" spanClass="font-medium sidebar-text ml-4" icon='heart' }}
-        {{> sidebar-item href="/admin/other-pages/explore-ideas?category=technology" title="Technology"
-        text="Technology" spanClass="font-medium sidebar-text ml-4" icon='cpu' }}
-        {{> sidebar-item href="/admin/other-pages/explore-ideas?category=environment" title="Environment"
-        text="Environment" spanClass="font-medium sidebar-text ml-4" icon='leaf' }}
-        {{> sidebar-item href="/admin/other-pages/explore-ideas?category=agriculture" title="Agriculture"
-        text="Agriculture" spanClass="font-medium sidebar-text ml-4" icon='sprout' }}
-        {{> sidebar-item href="/admin/other-pages/explore-ideas?category=research" title="Research" text="Research"
-        spanClass="font-medium sidebar-text ml-4" icon='search' }}
-      </ul>
-      {{/if}}
-
-      {{#if (eq currentPage 'portfolio')}}
-      <ul class="space-y-1">
-        {{> sidebar-item href="/admin/other-pages/portfolio" title="Portfolio" text="Portfolio" spanClass="font-medium
-        sidebar-text" icon='briefcase' }}
-        {{> sidebar-item href="/admin/other-pages/portfolio?filter=professional" title="Professional Projects"
-        text="Professional Projects" spanClass="font-medium sidebar-text ml-4" icon='zap' }}
-        {{> sidebar-item href="/admin/other-pages/portfolio?filter=community" title="Community Driven" text="Community
-        Driven" spanClass="font-medium sidebar-text ml-4" icon='users' }}
-        {{> sidebar-item href="/admin/other-pages/portfolio?filter=quality" title="Quality Assured" text="Quality
-        Assured" spanClass="font-medium sidebar-text ml-4" icon='shield-check' }}
-      </ul>
-      {{/if}}
-
-
-
-
-
-
-
-
-
-
 
 
 

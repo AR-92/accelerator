@@ -132,4 +132,9 @@ export const handlebarsHelpers = {
     }
     return result;
   },
+  or: function (...args) {
+    // Remove the options object from args
+    const values = args.slice(0, -1);
+    return values.some((value) => !!value);
+  },
 };

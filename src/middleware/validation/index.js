@@ -157,9 +157,3 @@ export {
   validatePackageUpdate,
   validatePackageDeletion,
 } from './system/package.js';
-
-export {
-  validatePortfolioCreation,
-  validatePortfolioUpdate,
-  validatePortfolioDeletion,
-} from './system/portfolio.js';

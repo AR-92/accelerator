@@ -1,5 +1,10 @@
 <script>
-function showToast(message, type = 'info') {
+let toastConfirmCallback = null;
+let toastCancelCallback = null;
+
+function showToast(message, type = 'info', options = {}) {
+  const { confirmText, cancelText, onConfirm, onCancel, persistent = false } = options;
+
   const toast = document.createElement('div');
   toast.className = `fixed top-4 right-4 z-50 max-w-sm w-full rounded-md border px-4 py-3 text-sm ${
     type === 'success'
@@ -10,6 +15,13 @@ function showToast(message, type = 'info') {
           ? 'bg-yellow-50 text-yellow-800 border-yellow-200'
           : 'bg-blue-50 text-blue-800 border-blue-200'
   }`;
+
+  const hasConfirmation = confirmText && onConfirm;
+
+  if (hasConfirmation) {
+    toastConfirmCallback = onConfirm;
+    toastCancelCallback = onCancel;
+  }
 
   toast.innerHTML = `
     <div class="flex items-start gap-3">
@@ -25,17 +37,47 @@ function showToast(message, type = 'info') {
         }"></path>
       </svg>
       <div class="flex-1">${message}</div>
+      ${hasConfirmation ? `
+        <div class="flex gap-2 ml-4">
+          <button class="px-2 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700" onclick="handleToastConfirm()">${confirmText}</button>
+          <button class="px-2 py-1 text-xs bg-gray-600 text-white rounded hover:bg-gray-700" onclick="handleToastCancel()">${cancelText || 'Cancel'}</button>
+        </div>
+      ` : ''}
     </div>
   `;
 
   document.body.appendChild(toast);
 
-  // Auto-remove after 2 seconds
-  setTimeout(() => {
-    if (toast.parentNode) {
-      toast.parentNode.removeChild(toast);
-    }
-  }, 2000);
+  // Auto-remove after 2 seconds if not persistent and not confirmation
+  if (!persistent && !hasConfirmation) {
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 2000);
+  }
+}
+
+function handleToastConfirm() {
+  if (toastConfirmCallback) {
+    toastConfirmCallback();
+    toastConfirmCallback = null;
+    toastCancelCallback = null;
+  }
+  // Remove the toast
+  const toast = document.querySelector('.fixed.top-4.right-4');
+  if (toast) toast.remove();
+}
+
+function handleToastCancel() {
+  if (toastCancelCallback) {
+    toastCancelCallback();
+    toastConfirmCallback = null;
+    toastCancelCallback = null;
+  }
+  // Remove the toast
+  const toast = document.querySelector('.fixed.top-4.right-4');
+  if (toast) toast.remove();
 }
 
 // Auto-remove toasts observer

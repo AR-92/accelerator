@@ -25,21 +25,8 @@ import express from 'express';
 import { createClient } from '@supabase/supabase-js';
 
 import { getDashboard } from './overview/get-dashboard.js';
-import { getPortfolio } from './overview/get-portfolio.js';
-import { getPortfolioPage } from './overview/get-portfolio-page.js';
-import { getCollaborate } from './overview/get-collaborate.js';
 import { getNewProject } from './overview/get-new-project.js';
-import { getExploreIdeas } from './overview/get-explore-ideas.js';
-import { getAllProjects } from './projects/get-all-projects.js';
 import { getProjectDetail } from './projects/get-project-detail.js';
-
-import { getChat } from './collaborate/chat.js';
-import { getTasks } from './collaborate/tasks.js';
-import { getFiles } from './collaborate/files.js';
-import { getTeam } from './collaborate/team.js';
-import { getCalendar } from './collaborate/calendar.js';
-import { getActivity as getActivityCollaborate } from './collaborate/activity.js';
-import { getSettings as getSettingsCollaborate } from './collaborate/settings.js';
 
 import { getHelp } from './help/index.js';
 import { getLearn } from './learn/index.js';
@@ -47,36 +34,7 @@ import { getSettings as getSettingsPage } from './settings/index.js';
 import { getBilling } from './billing/index.js';
 import { serviceFactory } from '../services/serviceFactory.js';
 
-import {
-  getDashboardMain,
-  getDashboardOverview,
-  getDashboardIdea,
-  getDashboardBusiness,
-  getDashboardFinancial,
-  getDashboardMarketing,
-  getDashboardFund,
-  getDashboardTeam,
-  getDashboardPromote,
-  getDashboardActivityLog,
-} from './startup-dashboard/index.js';
-import {
-  getEnterpriseMain,
-  getEnterpriseOverview,
-  getEnterpriseStartups,
-  getEnterpriseProjects,
-  getEnterpriseAnalytics,
-  getEnterpriseUsers,
-  getEnterpriseActivityLog,
-} from './enterprise-dashboard/index.js';
-import {
-  getCorporateMain,
-  getCorporateOverview,
-  getCorporateEnterprises,
-  getCorporateProjects,
-  getCorporateAnalytics,
-  getCorporateUsers,
-  getCorporateActivityLog,
-} from './corporate-dashboard/index.js';
+import { getDashboardMain } from './dashboard/index.js';
 
 import { requireAuth, checkAuth } from '../middleware/auth/index.js';
 
@@ -92,23 +50,8 @@ export { getNotifications };
 export { getActivity, exportActivityCSV, exportActivityJSON };
 export { postLogout };
 export { getDashboard };
-export { getPortfolio };
-export { getPortfolioPage };
-export { getCollaborate };
 export { getNewProject };
-export { getExploreIdeas };
-export { getAllProjects };
 export { getProjectDetail };
-
-export { getChat };
-export { getTasks };
-export { getFiles };
-export { getTeam };
-export { getCalendar };
-export { getActivityCollaborate };
-export { getSettingsCollaborate };
-
-export { getDashboardActivityLog };
 
 import { requireWebAuth } from '../middleware/auth/index.js';
 
@@ -173,9 +116,9 @@ const upload = multer({
 
 // Admin routes setup
 export default function adminRoutes(app) {
-  // Root route - redirect to startup dashboard overview
+  // Root route - redirect to unified dashboard overview
   app.get('/', requireWebAuth, (req, res) => {
-    res.redirect('/startup-dashboard');
+    res.redirect('/dashboard');
   });
 
   // Main pages (server-side auth protection)
@@ -191,10 +134,7 @@ export default function adminRoutes(app) {
 
   // Overview pages (server-side auth protection)
   app.get('/admin/dashboard', requireWebAuth, getDashboard);
-  app.get('/admin/portfolio', requireWebAuth, getPortfolio);
-  app.get('/admin/collaborate', requireWebAuth, getCollaborate);
   app.get('/admin/new-project', requireWebAuth, getNewProject);
-  app.get('/admin/explore-ideas', requireWebAuth, getExploreIdeas);
 
   app.post('/admin/ideas/:id/publish', requireWebAuth, async (req, res) => {
     try {
@@ -220,7 +160,66 @@ export default function adminRoutes(app) {
     }
   });
 
-  app.get('/projects/all-projects', requireWebAuth, getAllProjects);
+  app.post('/admin/ideas/:id/favorite', requireWebAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const ideaService = serviceFactory.getIdeaService();
+      const updatedIdea = await ideaService.favoriteIdea(id);
+      res.json({ success: true, idea: updatedIdea });
+    } catch (error) {
+      console.error('Error favoriting idea:', error);
+      res.status(500).json({ error: 'Failed to favorite idea' });
+    }
+  });
+
+  app.post('/admin/ideas/:id/unfavorite', requireWebAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const ideaService = serviceFactory.getIdeaService();
+      const updatedIdea = await ideaService.unfavoriteIdea(id);
+      res.json({ success: true, idea: updatedIdea });
+    } catch (error) {
+      console.error('Error unfavoriting idea:', error);
+      res.status(500).json({ error: 'Failed to unfavorite idea' });
+    }
+  });
+
+  app.post('/admin/ideas/:id/archive', requireWebAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const ideaService = serviceFactory.getIdeaService();
+      const updatedIdea = await ideaService.archiveIdea(id);
+      res.json({ success: true, idea: updatedIdea });
+    } catch (error) {
+      console.error('Error archiving idea:', error);
+      res.status(500).json({ error: 'Failed to archive idea' });
+    }
+  });
+
+  app.post('/admin/ideas/:id/unarchive', requireWebAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const ideaService = serviceFactory.getIdeaService();
+      const updatedIdea = await ideaService.unarchiveIdea(id);
+      res.json({ success: true, idea: updatedIdea });
+    } catch (error) {
+      console.error('Error unarchiving idea:', error);
+      res.status(500).json({ error: 'Failed to unarchive idea' });
+    }
+  });
+
+  app.delete('/admin/ideas/:id', requireWebAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const ideaService = serviceFactory.getIdeaService();
+      await ideaService.deleteIdea(id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error('Error deleting idea:', error);
+      res.status(500).json({ error: 'Failed to delete idea' });
+    }
+  });
+
   app.get('/projects/idea-model', (req, res) => {
     const steps = [
       {
@@ -469,28 +468,7 @@ export default function adminRoutes(app) {
     exportActivityJSON
   );
   app.get('/admin/other-pages/dashboard', requireWebAuth, getDashboard);
-  app.get('/admin/other-pages/portfolio', requireWebAuth, getPortfolio);
-  app.get('/pages/portfolio', requireWebAuth, getPortfolioPage);
-  app.get('/admin/other-pages/collaborate', requireWebAuth, getCollaborate);
   app.get('/admin/other-pages/new-project', requireWebAuth, getNewProject);
-  app.get('/admin/other-pages/explore-ideas', requireWebAuth, getExploreIdeas);
-
-  // Collaboration pages
-  app.get('/pages/collaborate/chat', requireWebAuth, getChat);
-  app.get('/pages/collaborate/tasks', requireWebAuth, getTasks);
-  app.get('/pages/collaborate/files', requireWebAuth, getFiles);
-  app.get('/pages/collaborate/team', requireWebAuth, getTeam);
-  app.get('/pages/collaborate/calendar', requireWebAuth, getCalendar);
-  app.get(
-    '/pages/collaborate/activity',
-    requireWebAuth,
-    getActivityCollaborate
-  );
-  app.get(
-    '/pages/collaborate/settings',
-    requireWebAuth,
-    getSettingsCollaborate
-  );
 
   // Help pages
   app.get('/pages/help', requireWebAuth, getHelp);
@@ -504,86 +482,50 @@ export default function adminRoutes(app) {
   // Billing pages
   app.get('/pages/billing', requireWebAuth, getBilling);
 
-  // Startup Dashboard pages
-  app.get('/startup-dashboard', requireWebAuth, getDashboardMain);
-  app.get('/startup-dashboard/overview', requireWebAuth, getDashboardOverview);
-  app.get('/startup-dashboard/idea', requireWebAuth, getDashboardIdea);
-  app.get('/startup-dashboard/business', requireWebAuth, getDashboardBusiness);
-  app.get(
-    '/startup-dashboard/financial',
-    requireWebAuth,
-    getDashboardFinancial
-  );
-  app.get(
-    '/startup-dashboard/marketing',
-    requireWebAuth,
-    getDashboardMarketing
-  );
-  app.get('/startup-dashboard/fund', requireWebAuth, getDashboardFund);
-  app.get('/startup-dashboard/team', requireWebAuth, getDashboardTeam);
-  app.get('/startup-dashboard/promote', requireWebAuth, getDashboardPromote);
-  app.get(
-    '/startup-dashboard/activity-log',
-    requireWebAuth,
-    getDashboardActivityLog
+  // Unified Dashboard pages
+  app.get('/dashboard', requireWebAuth, getDashboardMain);
+
+  // Legacy Dashboard redirects (for backward compatibility)
+  app.get('/startup-dashboard', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard')
   );
 
-  // Enterprise Dashboard pages
-  app.get('/enterprise-dashboard', requireWebAuth, getEnterpriseMain);
-  app.get(
-    '/enterprise-dashboard/overview',
-    requireWebAuth,
-    getEnterpriseOverview
+  app.get('/enterprise-dashboard', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard')
   );
-  app.get(
-    '/enterprise-dashboard/startups',
-    requireWebAuth,
-    getEnterpriseStartups
+  app.get('/enterprise-dashboard/overview', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/overview')
   );
-  app.get(
-    '/enterprise-dashboard/projects',
-    requireWebAuth,
-    getEnterpriseProjects
+  app.get('/enterprise-dashboard/projects', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/projects')
   );
-  app.get(
-    '/enterprise-dashboard/analytics',
-    requireWebAuth,
-    getEnterpriseAnalytics
+  app.get('/enterprise-dashboard/analytics', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/analytics')
   );
-  app.get('/enterprise-dashboard/users', requireWebAuth, getEnterpriseUsers);
-  app.get(
-    '/enterprise-dashboard/activity-log',
-    requireWebAuth,
-    getEnterpriseActivityLog
+  app.get('/enterprise-dashboard/users', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/team')
+  );
+  app.get('/enterprise-dashboard/activity-log', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/activity')
   );
 
-  // Corporate Dashboard pages
-  app.get('/corporate-dashboard', requireWebAuth, getCorporateMain);
-  app.get(
-    '/corporate-dashboard/overview',
-    requireWebAuth,
-    getCorporateOverview
+  app.get('/corporate-dashboard', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard')
   );
-  app.get(
-    '/corporate-dashboard/enterprises',
-    requireWebAuth,
-    getCorporateEnterprises
+  app.get('/corporate-dashboard/overview', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/overview')
   );
-  app.get(
-    '/corporate-dashboard/projects',
-    requireWebAuth,
-    getCorporateProjects
+  app.get('/corporate-dashboard/projects', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/projects')
   );
-  app.get(
-    '/corporate-dashboard/analytics',
-    requireWebAuth,
-    getCorporateAnalytics
+  app.get('/corporate-dashboard/analytics', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/analytics')
   );
-  app.get('/corporate-dashboard/users', requireWebAuth, getCorporateUsers);
-  app.get(
-    '/corporate-dashboard/activity-log',
-    requireWebAuth,
-    getCorporateActivityLog
+  app.get('/corporate-dashboard/users', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/team')
+  );
+  app.get('/corporate-dashboard/activity-log', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/activity')
   );
 
   // Additional pages
@@ -727,28 +669,20 @@ export default function adminRoutes(app) {
       activeCategory: 'security',
     });
   });
-  app.get('/startup-dashboard/team/invite', requireWebAuth, (req, res) => {
-    res.render('startup-dashboard/team-invite', {
-      layout: 'main',
-      title: 'Invite Team Member',
-    });
+
+  // Portfolio page - redirect to new project with portfolio filter
+  app.get('/portfolio', requireWebAuth, (req, res) => {
+    res.redirect('/admin/other-pages/new-project?filter=portfolio');
   });
-  app.get(
-    '/startup-dashboard/promote/social-post',
-    requireWebAuth,
-    (req, res) => {
-      res.render('startup-dashboard/promote-social-post', {
-        layout: 'main',
-        title: 'Create Social Post',
-      });
-    }
-  );
-  app.get('/pages/portfolio/:id', requireWebAuth, (req, res) => {
-    const id = req.params.id;
-    res.render('portfolio-detail', {
+
+  // Collaborate coming soon page
+  app.get('/collaborate', requireWebAuth, (req, res) => {
+    res.render('collaborate', {
       layout: 'main',
-      title: `Portfolio Project ${id}`,
-      id,
+      title: 'Collaborate - Coming Soon',
+      section: 'collaborate',
+      currentSection: 'collaborate',
+      currentPage: 'Collaborate',
     });
   });
   app.get('/usecase-from-user', requireWebAuth, (req, res) => {
@@ -757,33 +691,6 @@ export default function adminRoutes(app) {
       title: 'User-Generated Use Cases',
     });
   });
-  app.get('/startup-dashboard/fund/pitch-deck', requireWebAuth, (req, res) => {
-    res.render('startup-dashboard/fund-pitch-deck', {
-      layout: 'main',
-      title: 'Create Pitch Deck',
-    });
-  });
-
-  app.get(
-    '/startup-dashboard/financial/add-expense',
-    requireWebAuth,
-    (req, res) => {
-      res.render('startup-dashboard/financial-add-expense', {
-        layout: 'main',
-        title: 'Add Expense',
-      });
-    }
-  );
-  app.get(
-    '/startup-dashboard/marketing/create-campaign',
-    requireWebAuth,
-    (req, res) => {
-      res.render('startup-dashboard/marketing-create-campaign', {
-        layout: 'main',
-        title: 'Create Marketing Campaign',
-      });
-    }
-  );
   app.post(
     '/projects/new',
     requireWebAuth,
@@ -915,8 +822,8 @@ export default function adminRoutes(app) {
         ) {
           res.json({ success: true, idea: createdIdea });
         } else {
-          // Redirect to projects page with success message
-          res.redirect('/projects/all-projects?success=created');
+          // Redirect to project detail page
+          res.redirect(`/projects/${createdIdea.id}`);
         }
       } catch (error) {
         console.error('Error creating idea:', error);
