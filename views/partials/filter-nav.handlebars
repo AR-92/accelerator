@@ -60,9 +60,15 @@
           {{#each @root.filterLinks}}
            <div class="flex flex-col items-center justify-center group flex-shrink-0">
              <div class="border-t-4 border-primary w-6 rounded-md {{#if active}}opacity-100{{else}}opacity-0 group-hover:opacity-100{{/if}}"></div>
-             <a id="{{id}}" href="{{href}}" hx-get="{{href}}" hx-target="#{{@root.section}}-main-content"
-               class="flex items-center justify-center min-h-[44px] pr-6 {{#if active}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon
-               icon size="16" class='mr-1'}}}{{text}}</a>
+              {{#if (eq @root.section 'dashboard')}}
+              <a id="{{id}}" href="{{href}}"
+                class="flex items-center justify-center min-h-[44px] pr-6 {{#if active}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon
+                icon size="16" class='mr-1'}}}{{text}}</a>
+              {{else}}
+              <a id="{{id}}" href="{{href}}" hx-get="{{href}}" hx-target="#{{@root.section}}-main-content"
+                class="flex items-center justify-center min-h-[44px] pr-6 {{#if active}}text-foreground font-medium{{else}}text-muted-foreground{{/if}} text-xs leading-[2.5] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium whitespace-nowrap">{{{icon
+                icon size="16" class='mr-1'}}}{{text}}</a>
+              {{/if}}
            </div>
           {{/each}}
         </div>

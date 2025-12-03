@@ -102,6 +102,11 @@ function initFilterNavScroll() {
 
 // Update filter nav active state
 function updateFilterNavActiveState() {
+  // Skip for dashboard pages as active state is set server-side
+  if (window.location.pathname.startsWith('/dashboard')) {
+    return;
+  }
+
   const urlParams = new URLSearchParams(window.location.search);
   const filter = urlParams.get('filter') || 'all-projects';
 
