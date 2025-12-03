@@ -1,5 +1,3 @@
-import { serviceFactory } from '../../services/serviceFactory.js';
-
 // Main dashboard redirect based on user role
 export const getDashboardMain = async (req, res) => {
   try {

@@ -1,0 +1,310 @@
+
+<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <!-- Header -->
+    <div class="flex flex-col gap-4 lg:gap-6">
+      <div class="flex items-center justify-between">
+        <div class="grid gap-1">
+          <h1 class="font-heading text-3xl font-semibold text-foreground">
+            Team Management
+          </h1>
+          <p class="text-lg text-muted-foreground">
+            Build and optimize teams
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="btn btn-primary">
+            {{{icon 'plus' size='16'}}}
+            Add Team Member
+          </button>
+        </div>
+      </div>
+
+      <!-- Team Overview Cards -->
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+          <div class="flex items-center justify-between px-3 py-1">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-sm font-medium text-muted-foreground">Team Size</h3>
+              <p class="text-2xl font-semibold text-step-revenue">{{teamMembers.stats.total}}</p>
+            </div>
+            <div class="bg-step-revenue/20 rounded-lg">
+              <div class="w-10 h-10 bg-step-revenue/20 rounded-lg relative">
+                <div class="flex items-center justify-center w-9 h-9 bg-step-revenue rounded-lg absolute top-0.5 left-0.5">
+                  {{{icon 'users' size="16" class='w-4 h-4 text-step-revenue-foreground'}}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+          <div class="flex items-center justify-between px-3 py-1">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-sm font-medium text-muted-foreground">Open Positions</h3>
+              <p class="text-2xl font-semibold text-step-kpi">{{hiringPlans.stats.planned}}</p>
+            </div>
+            <div class="bg-step-kpi/20 rounded-lg">
+              <div class="w-10 h-10 bg-step-kpi/20 rounded-lg relative">
+                <div class="flex items-center justify-center w-9 h-9 bg-step-kpi rounded-lg absolute top-0.5 left-0.5">
+                  {{{icon 'user-plus' size="16" class='w-4 h-4 text-step-kpi-foreground'}}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+          <div class="flex items-center justify-between px-3 py-1">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-sm font-medium text-muted-foreground">Skills Proficiency</h3>
+              <p class="text-2xl font-semibold text-step-streams">{{skillsAssessment.avgProficiency}}/10</p>
+            </div>
+            <div class="bg-step-streams/20 rounded-lg">
+              <div class="w-10 h-10 bg-step-streams/20 rounded-lg relative">
+                <div class="flex items-center justify-center w-9 h-9 bg-step-streams rounded-lg absolute top-0.5 left-0.5">
+                  {{{icon 'award' size="16" class='w-4 h-4 text-step-streams-foreground'}}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+          <div class="flex items-center justify-between px-3 py-1">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-sm font-medium text-muted-foreground">Avg Tenure</h3>
+              <p class="text-2xl font-semibold text-step-cogs">{{teamMembers.stats.avgTenure}} yrs</p>
+            </div>
+            <div class="bg-step-cogs/20 rounded-lg">
+              <div class="w-10 h-10 bg-step-cogs/20 rounded-lg relative">
+                <div class="flex items-center justify-center w-9 h-9 bg-step-cogs rounded-lg absolute top-0.5 left-0.5">
+                  {{{icon 'clock' size="16" class='w-4 h-4 text-step-cogs-foreground'}}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Team Members & Hiring Plans -->
+        <div class="lg:col-span-2 space-y-6">
+          <!-- Team Members -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-xl font-semibold text-foreground">Team Members</h2>
+              <button class="btn btn-ghost text-sm">
+                View All
+                {{{icon 'arrow-right' size='14'}}}
+              </button>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div class="text-center p-3 bg-step-revenue/10 rounded-lg">
+                <div class="text-lg font-bold text-step-revenue">{{teamMembers.stats.active}}</div>
+                <p class="text-xs text-muted-foreground">Active Members</p>
+              </div>
+              <div class="text-center p-3 bg-step-revenue/10 rounded-lg">
+                <div class="text-lg font-bold text-step-revenue">{{teamMembers.stats.total}}</div>
+                <p class="text-xs text-muted-foreground">Total Members</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              {{#if teamMembers.members.length}}
+                {{#each teamMembers.members}}
+                <div class="flex items-center justify-between p-4 bg-muted/50 rounded-lg border border-border/50">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                      {{{icon 'user' size='20' class='text-primary'}}}
+                    </div>
+                    <div>
+                      <h3 class="font-medium text-foreground">{{name}}</h3>
+                      <p class="text-sm text-muted-foreground">{{role}} • {{department}}</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <span class="tag {{#if (eq status 'active')}}tag-success{{else}}tag-secondary{{/if}}">{{status}}</span>
+                  </div>
+                </div>
+                {{/each}}
+              {{else}}
+                <div class="text-center py-8">
+                  <div class="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                    {{{icon 'users' size='24' class='text-muted-foreground'}}}
+                  </div>
+                  <h3 class="text-lg font-medium text-foreground mb-2">No team members yet</h3>
+                  <p class="text-muted-foreground mb-4">Start building your team</p>
+                  <button class="btn btn-primary">Add First Member</button>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+
+          <!-- Hiring Plans -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-xl font-semibold text-foreground">Hiring Plans</h2>
+              <button class="btn btn-ghost text-sm">
+                New Plan
+                {{{icon 'plus' size='14'}}}
+              </button>
+            </div>
+            <div class="grid grid-cols-3 gap-4 mb-4">
+              <div class="text-center p-3 bg-step-kpi/10 rounded-lg">
+                <div class="text-lg font-bold text-step-kpi">{{hiringPlans.stats.totalPositions}}</div>
+                <p class="text-xs text-muted-foreground">Total Positions</p>
+              </div>
+              <div class="text-center p-3 bg-step-kpi/10 rounded-lg">
+                <div class="text-lg font-bold text-step-kpi">{{hiringPlans.stats.inProgress}}</div>
+                <p class="text-xs text-muted-foreground">In Progress</p>
+              </div>
+              <div class="text-center p-3 bg-step-kpi/10 rounded-lg">
+                <div class="text-lg font-bold text-step-kpi">{{hiringPlans.stats.filled}}</div>
+                <p class="text-xs text-muted-foreground">Filled</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              {{#if hiringPlans.plans.length}}
+                {{#each hiringPlans.plans}}
+                <div class="p-4 bg-muted/50 rounded-lg border border-border/50">
+                  <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-medium text-foreground">{{role_title}}</h3>
+                    <span class="tag {{#if (eq status 'filled')}}tag-success{{else if (eq status 'in_progress')}}tag-warning{{else}}tag-secondary{{/if}}">{{status}}</span>
+                  </div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-muted-foreground">{{department}}</span>
+                    <span class="text-muted-foreground">Target: {{target_date}}</span>
+                  </div>
+                  <div class="mt-2">
+                    <span class="text-xs text-muted-foreground">Priority: {{priority}}</span>
+                  </div>
+                </div>
+                {{/each}}
+              {{else}}
+                <div class="text-center py-4">
+                  <p class="text-sm text-muted-foreground">No hiring plans defined</p>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills Assessment & Organizational Structure -->
+        <div class="space-y-6">
+          <!-- Skills Assessment -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <h2 class="text-xl font-semibold text-foreground mb-4">Skills Assessment</h2>
+            <div class="space-y-4">
+              <div class="text-center">
+                <div class="text-xl font-bold text-step-streams mb-1">{{skillsAssessment.avgProficiency}}/10</div>
+                <p class="text-sm text-muted-foreground">Average Proficiency</p>
+              </div>
+              <div class="space-y-3">
+                {{#if skillsAssessment.assessments.length}}
+                  {{#each skillsAssessment.assessments}}
+                  <div class="p-3 bg-muted/50 rounded-lg border border-border/50">
+                    <h4 class="font-medium text-foreground text-sm">{{skill_name}}</h4>
+                    <div class="flex items-center justify-between mt-1">
+                      <span class="text-xs text-muted-foreground">Level: {{proficiency_level}}/10</span>
+                      {{#if skill_gap}}
+                        <span class="tag tag-warning">Gap</span>
+                      {{/if}}
+                    </div>
+                  </div>
+                  {{/each}}
+                {{else}}
+                  <div class="text-center py-4">
+                    <p class="text-sm text-muted-foreground">No skills assessments</p>
+                    <button class="btn btn-outline btn-sm mt-2">Start Assessment</button>
+                  </div>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Organizational Structure -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <h2 class="text-xl font-semibold text-foreground mb-4">Organizational Structure</h2>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-muted-foreground">Structure Type</span>
+                <span class="text-sm font-medium text-foreground">{{organizationalStructure.structure_type}}</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-muted-foreground">Hierarchy Levels</span>
+                <span class="text-sm font-medium text-foreground">{{organizationalStructure.hierarchy_levels}}</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-muted-foreground">Reporting Lines</span>
+                <span class="text-sm font-medium text-foreground">{{organizationalStructure.reporting_lines}}</span>
+              </div>
+            </div>
+            <button class="btn btn-outline w-full mt-4">Edit Structure</button>
+          </div>
+
+          <!-- Department Breakdown -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <h2 class="text-xl font-semibold text-foreground mb-4">Department Breakdown</h2>
+            <div class="space-y-3">
+              {{#each teamMembers.stats.departments}}
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-foreground">{{@key}}</span>
+                <span class="text-sm text-step-cogs">{{this}}</span>
+              </div>
+              {{/each}}
+              {{#if (eq (len teamMembers.stats.departments) 0)}}
+              <p class="text-sm text-muted-foreground text-center">No departments defined</p>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enterprise/Corporate Specific Sections -->
+      {{#if features.enterprise}}
+      <div class="bg-card rounded-lg border border-border p-6">
+        <h2 class="text-xl font-semibold text-foreground mb-4">Large Team Management</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-revenue mb-2">200+</div>
+            <p class="text-sm text-muted-foreground">Team Members</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-streams mb-2">12</div>
+            <p class="text-sm text-muted-foreground">Departments</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-kpi mb-2">94%</div>
+            <p class="text-sm text-muted-foreground">Retention Rate</p>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+
+      {{#if features.corporate}}
+      <div class="bg-card rounded-lg border border-border p-6">
+        <h2 class="text-xl font-semibold text-foreground mb-4">Executive Leadership & Board</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-kpi mb-2">15</div>
+            <p class="text-sm text-muted-foreground">Executive Team</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-revenue mb-2">9</div>
+            <p class="text-sm text-muted-foreground">Board Members</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-cogs mb-2">6</div>
+            <p class="text-sm text-muted-foreground">Leadership Tracks</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-streams mb-2">98%</div>
+            <p class="text-sm text-muted-foreground">Succession Readiness</p>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

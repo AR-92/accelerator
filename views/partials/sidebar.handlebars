@@ -21,18 +21,30 @@
         icon='settings' }}
         {{> sidebar-item href="/pages/billing" title="Billing" text="Billing" spanClass="font-medium sidebar-text"
         icon='credit-card' }}
-      </ul>
-      {{#if (eq currentSection 'dashboard')}}
-      <ul class="space-y-1">
-        {{> sidebar-item href="/admin/other-pages/new-project?showCard=true" title="New Project" text="New Project"
-        spanClass="font-medium sidebar-text" icon='plus' }}
-        {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text"
-        icon='book-open' }}
-      </ul>
-      {{/if}}
+       </ul>
 
+       {{#if (eq currentSection 'dashboard')}}
+       <li class="mb-2">
+         <a href="/admin/other-pages/new-project?showCard=true" class="flex items-center px-4 py-2 text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground rounded-md {{#if (eq currentPage 'New Project')}}bg-accent{{/if}}">
+           {{{icon 'plus' size='20' class='mr-3'}}}
+           + New Project
+         </a>
+       </li>
+       <li class="mb-2">
+         <a href="/admin/other-pages/new-project?filter=explore" class="flex items-center px-4 py-2 text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground rounded-md">
+           {{{icon 'search' size='20' class='mr-3'}}}
+           Explore Ideas
+         </a>
+       </li>
+       <li class="mb-2">
+         <a href="/pages/learn" class="flex items-center px-4 py-2 text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground rounded-md {{#if (eq currentSection 'learn')}}bg-accent{{/if}}">
+           {{{icon 'book-open' size='20' class='mr-3'}}}
+           Learn
+         </a>
+       </li>
+       {{/if}}
 
-      {{#if (eq currentSection 'help')}}
+       {{#if (eq currentSection 'help')}}
       <ul class="space-y-1">
         {{> sidebar-item href="/pages/help" title="Help" text="Help" spanClass="font-medium sidebar-text"
         icon='help-circle' }}

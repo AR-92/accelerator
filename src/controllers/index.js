@@ -35,6 +35,15 @@ import { getBilling } from './billing/index.js';
 import { serviceFactory } from '../services/serviceFactory.js';
 
 import { getDashboardMain } from './dashboard/index.js';
+import { getDashboardOverview } from './dashboard/overview.js';
+import { getDashboardIdea } from './dashboard/idea.js';
+import { getDashboardBusiness } from './dashboard/business.js';
+import { getDashboardFinancial } from './dashboard/financial.js';
+import { getDashboardMarketing } from './dashboard/marketing.js';
+import { getDashboardFund } from './dashboard/fund.js';
+import { getDashboardTeam } from './dashboard/team.js';
+import { getDashboardPromote } from './dashboard/promote.js';
+import { getDashboardActivityLog } from './dashboard/activity-log.js';
 
 import { requireAuth, checkAuth } from '../middleware/auth/index.js';
 
@@ -483,11 +492,69 @@ export default function adminRoutes(app) {
   app.get('/pages/billing', requireWebAuth, getBilling);
 
   // Unified Dashboard pages
+  // Dashboard routes
   app.get('/dashboard', requireWebAuth, getDashboardMain);
+  app.get('/dashboard/overview', requireWebAuth, getDashboardOverview);
+  app.get('/dashboard/idea', requireWebAuth, getDashboardIdea);
+  app.get('/dashboard/business', requireWebAuth, getDashboardBusiness);
+  app.get('/dashboard/financial', requireWebAuth, getDashboardFinancial);
+  app.get('/dashboard/marketing', requireWebAuth, getDashboardMarketing);
+  app.get('/dashboard/fund', requireWebAuth, getDashboardFund);
+  app.get('/dashboard/team', requireWebAuth, getDashboardTeam);
+  app.get('/dashboard/promote', requireWebAuth, getDashboardPromote);
+  app.get('/dashboard/activity-log', requireWebAuth, getDashboardActivityLog);
 
-  // Legacy Dashboard redirects (for backward compatibility)
+  // Legacy redirects for backward compatibility
   app.get('/startup-dashboard', requireWebAuth, (req, res) =>
     res.redirect('/dashboard')
+  );
+
+  app.get('/enterprise-dashboard', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard')
+  );
+
+  app.get('/enterprise-dashboard/overview', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/overview')
+  );
+
+  app.get('/enterprise-dashboard/projects', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/projects')
+  );
+
+  app.get('/enterprise-dashboard/analytics', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/analytics')
+  );
+
+  app.get('/enterprise-dashboard/users', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/team')
+  );
+
+  app.get('/enterprise-dashboard/activity-log', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/activity-log')
+  );
+
+  app.get('/corporate-dashboard', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard')
+  );
+
+  app.get('/corporate-dashboard/overview', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/overview')
+  );
+
+  app.get('/corporate-dashboard/projects', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/projects')
+  );
+
+  app.get('/corporate-dashboard/analytics', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/analytics')
+  );
+
+  app.get('/corporate-dashboard/users', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/team')
+  );
+
+  app.get('/corporate-dashboard/activity-log', requireWebAuth, (req, res) =>
+    res.redirect('/dashboard/activity-log')
   );
 
   app.get('/enterprise-dashboard', requireWebAuth, (req, res) =>

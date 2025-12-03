@@ -1,0 +1,275 @@
+
+<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <!-- Header -->
+    <div class="flex flex-col gap-4 lg:gap-6">
+      <div class="flex items-center justify-between">
+        <div class="grid gap-1">
+          <h1 class="font-heading text-3xl font-semibold text-foreground">
+            Idea Management
+          </h1>
+          <p class="text-lg text-muted-foreground">
+            Validate and develop ideas at all levels
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="btn btn-primary">
+            {{{icon 'plus' size='16'}}}
+            New Idea
+          </button>
+        </div>
+      </div>
+
+      <!-- Idea Stats Overview -->
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+          <div class="flex items-center justify-between px-3 py-1">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-sm font-medium text-muted-foreground">Total Ideas</h3>
+              <p class="text-2xl font-semibold text-foreground">{{ideasData.stats.total}}</p>
+            </div>
+            <div class="bg-primary/20 rounded-lg">
+              <div class="w-10 h-10 bg-primary/20 rounded-lg relative">
+                <div class="flex items-center justify-center w-9 h-9 bg-primary rounded-lg absolute top-0.5 left-0.5">
+                  {{{icon 'lightbulb' size="16" class='w-4 h-4 text-primary-foreground'}}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+          <div class="flex items-center justify-between px-3 py-1">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-sm font-medium text-muted-foreground">Validated</h3>
+              <p class="text-2xl font-semibold text-success">{{ideasData.stats.validated}}</p>
+            </div>
+            <div class="bg-success/20 rounded-lg">
+              <div class="w-10 h-10 bg-success/20 rounded-lg relative">
+                <div class="flex items-center justify-center w-9 h-9 bg-success rounded-lg absolute top-0.5 left-0.5">
+                  {{{icon 'check-circle' size="16" class='w-4 h-4 text-success-foreground'}}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+          <div class="flex items-center justify-between px-3 py-1">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-sm font-medium text-muted-foreground">In Progress</h3>
+              <p class="text-2xl font-semibold text-warning">{{ideasData.stats.inProgress}}</p>
+            </div>
+            <div class="bg-warning/20 rounded-lg">
+              <div class="w-10 h-10 bg-warning/20 rounded-lg relative">
+                <div class="flex items-center justify-center w-9 h-9 bg-warning rounded-lg absolute top-0.5 left-0.5">
+                  {{{icon 'clock' size="16" class='w-4 h-4 text-warning-foreground'}}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+          <div class="flex items-center justify-between px-3 py-1">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-sm font-medium text-muted-foreground">IP Protected</h3>
+              <p class="text-2xl font-semibold text-step-kpi">{{ipProtection.stats.approved}}</p>
+            </div>
+            <div class="bg-step-kpi/20 rounded-lg">
+              <div class="w-10 h-10 bg-step-kpi/20 rounded-lg relative">
+                <div class="flex items-center justify-center w-9 h-9 bg-step-kpi rounded-lg absolute top-0.5 left-0.5">
+                  {{{icon 'shield' size="16" class='w-4 h-4 text-step-kpi-foreground'}}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Recent Ideas -->
+        <div class="lg:col-span-2">
+          <div class="bg-card rounded-lg border border-border p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-xl font-semibold text-foreground">Recent Ideas</h2>
+              <button class="btn btn-ghost text-sm">
+                View All
+                {{{icon 'arrow-right' size='14'}}}
+              </button>
+            </div>
+            <div class="space-y-4">
+              {{#if ideasData.ideas.length}}
+                {{#each ideasData.ideas}}
+                <div class="flex items-center justify-between p-4 bg-muted/50 rounded-lg border border-border/50">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                      {{{icon 'lightbulb' size='20' class='text-primary'}}}
+                    </div>
+                    <div>
+                      <h3 class="font-medium text-foreground">{{title}}</h3>
+                      <p class="text-sm text-muted-foreground">{{description}}</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <span class="tag {{#if (eq status 'validated')}}tag-success{{else if (eq status 'in_progress')}}tag-warning{{else}}tag-secondary{{/if}}">
+                      {{status}}
+                    </span>
+                  </div>
+                </div>
+                {{/each}}
+              {{else}}
+                <div class="text-center py-8">
+                  <div class="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                    {{{icon 'lightbulb' size='24' class='text-muted-foreground'}}}
+                  </div>
+                  <h3 class="text-lg font-medium text-foreground mb-2">No ideas yet</h3>
+                  <p class="text-muted-foreground mb-4">Start developing your first idea</p>
+                  <button class="btn btn-primary">Create Idea</button>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+
+        <!-- Validation Progress & Customer Models -->
+        <div class="space-y-6">
+          <!-- Validation Progress -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <h2 class="text-xl font-semibold text-foreground mb-4">Validation Progress</h2>
+            <div class="space-y-4">
+              {{#each validationMetrics}}
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-foreground">{{label}}</span>
+                  <span class="text-sm text-{{color}} font-medium">{{value}}</span>
+                </div>
+                <div class="w-full bg-muted rounded-full h-2">
+                  <div class="bg-{{color}} h-2 rounded-full" style="width: {{value}}"></div>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+
+          <!-- Customer Models -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <h2 class="text-xl font-semibold text-foreground mb-4">Customer Models</h2>
+            <div class="space-y-3">
+              {{#if customerModels.length}}
+                {{#each customerModels}}
+                <div class="p-3 bg-muted/50 rounded-lg border border-border/50">
+                  <h4 class="font-medium text-foreground text-sm">{{name}}</h4>
+                  <p class="text-xs text-muted-foreground">{{segment}}</p>
+                </div>
+                {{/each}}
+              {{else}}
+                <div class="text-center py-4">
+                  <p class="text-sm text-muted-foreground">No customer models defined</p>
+                  <button class="btn btn-outline btn-sm mt-2">Add Customer Model</button>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Brand Identity & IP Protection -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Brand Identity -->
+        <div class="bg-card rounded-lg border border-border p-6">
+          <h2 class="text-xl font-semibold text-foreground mb-4">Brand Identity</h2>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-muted-foreground">Brand Name</span>
+              <span class="text-sm font-medium text-foreground">{{brandIdentity.name}}</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-muted-foreground">Tagline</span>
+              <span class="text-sm font-medium text-foreground">{{brandIdentity.tagline}}</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-muted-foreground">Brand Voice</span>
+              <span class="text-sm font-medium text-foreground">{{brandIdentity.voice}}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-full" style="background-color: {{brandIdentity.colors.primary}}"></div>
+              <span class="text-sm text-muted-foreground">Primary Color</span>
+            </div>
+          </div>
+          <button class="btn btn-outline w-full mt-4">Edit Brand Identity</button>
+        </div>
+
+        <!-- IP Protection -->
+        <div class="bg-card rounded-lg border border-border p-6">
+          <h2 class="text-xl font-semibold text-foreground mb-4">IP Protection</h2>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="text-center">
+              <div class="text-2xl font-bold text-step-kpi">{{ipProtection.stats.patents}}</div>
+              <p class="text-xs text-muted-foreground">Patents</p>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-step-revenue">{{ipProtection.stats.trademarks}}</div>
+              <p class="text-xs text-muted-foreground">Trademarks</p>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-step-streams">{{ipProtection.stats.copyrights}}</div>
+              <p class="text-xs text-muted-foreground">Copyrights</p>
+            </div>
+            <div class="text-center">
+              <div class="text-2xl font-bold text-warning">{{ipProtection.stats.pending}}</div>
+              <p class="text-xs text-muted-foreground">Pending</p>
+            </div>
+          </div>
+          <button class="btn btn-outline w-full">Manage IP Protection</button>
+        </div>
+      </div>
+
+      <!-- Enterprise/Corporate Specific Sections -->
+      {{#if features.enterprise}}
+      <div class="bg-card rounded-lg border border-border p-6">
+        <h2 class="text-xl font-semibold text-foreground mb-4">Enterprise Scaling</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-revenue mb-2">78%</div>
+            <p class="text-sm text-muted-foreground">Enterprise Fit Score</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-streams mb-2">65%</div>
+            <p class="text-sm text-muted-foreground">Scalability Rating</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-kpi mb-2">12</div>
+            <p class="text-sm text-muted-foreground">Solution Modules</p>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+
+      {{#if features.corporate}}
+      <div class="bg-card rounded-lg border border-border p-6">
+        <h2 class="text-xl font-semibold text-foreground mb-4">Innovation Oversight</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-kpi mb-2">82%</div>
+            <p class="text-sm text-muted-foreground">Portfolio Fit</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-cogs mb-2">88%</div>
+            <p class="text-sm text-muted-foreground">Strategy Alignment</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-revenue mb-2">15</div>
+            <p class="text-sm text-muted-foreground">Innovation Projects</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-streams mb-2">$5.2M</div>
+            <p class="text-sm text-muted-foreground">R&D Investment</p>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

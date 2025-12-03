@@ -1,0 +1,306 @@
+
+<div class="min-h-screen bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <!-- Header -->
+    <div class="flex flex-col gap-4 lg:gap-6">
+      <div class="flex items-center justify-between">
+        <div class="grid gap-1">
+          <h1 class="font-heading text-3xl font-semibold text-foreground">
+            Funding Management
+          </h1>
+          <p class="text-lg text-muted-foreground">
+            Plan funding strategies
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="btn btn-primary">
+            {{{icon 'plus' size='16'}}}
+            New Pitch
+          </button>
+        </div>
+      </div>
+
+      <!-- Funding Overview Cards -->
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+          <div class="flex items-center justify-between px-3 py-1">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-sm font-medium text-muted-foreground">Current Valuation</h3>
+              <p class="text-2xl font-semibold text-step-revenue">${{valuations.latest.valuation_amount}}</p>
+            </div>
+            <div class="bg-step-revenue/20 rounded-lg">
+              <div class="w-10 h-10 bg-step-revenue/20 rounded-lg relative">
+                <div class="flex items-center justify-center w-9 h-9 bg-step-revenue rounded-lg absolute top-0.5 left-0.5">
+                  {{{icon 'dollar-sign' size="16" class='w-4 h-4 text-step-revenue-foreground'}}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+          <div class="flex items-center justify-between px-3 py-1">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-sm font-medium text-muted-foreground">Total Raised</h3>
+              <p class="text-2xl font-semibold text-step-kpi">${{fundingRounds.stats.totalRaised}}</p>
+            </div>
+            <div class="bg-step-kpi/20 rounded-lg">
+              <div class="w-10 h-10 bg-step-kpi/20 rounded-lg relative">
+                <div class="flex items-center justify-center w-9 h-9 bg-step-kpi rounded-lg absolute top-0.5 left-0.5">
+                  {{{icon 'wallet' size="16" class='w-4 h-4 text-step-kpi-foreground'}}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+          <div class="flex items-center justify-between px-3 py-1">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-sm font-medium text-muted-foreground">Active Pitches</h3>
+              <p class="text-2xl font-semibold text-step-streams">{{investorPitches.stats.sent}}</p>
+            </div>
+            <div class="bg-step-streams/20 rounded-lg">
+              <div class="w-10 h-10 bg-step-streams/20 rounded-lg relative">
+                <div class="flex items-center justify-center w-9 h-9 bg-step-streams rounded-lg absolute top-0.5 left-0.5">
+                  {{{icon 'send' size="16" class='w-4 h-4 text-step-streams-foreground'}}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+          <div class="flex items-center justify-between px-3 py-1">
+            <div class="flex flex-col gap-1">
+              <h3 class="text-sm font-medium text-muted-foreground">Funding Target</h3>
+              <p class="text-2xl font-semibold text-step-cogs">${{capitalRaising.stats.totalTarget}}</p>
+            </div>
+            <div class="bg-step-cogs/20 rounded-lg">
+              <div class="w-10 h-10 bg-step-cogs/20 rounded-lg relative">
+                <div class="flex items-center justify-center w-9 h-9 bg-step-cogs rounded-lg absolute top-0.5 left-0.5">
+                  {{{icon 'target' size="16" class='w-4 h-4 text-step-cogs-foreground'}}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Investor Pitches & Valuations -->
+        <div class="space-y-6">
+          <!-- Investor Pitches -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-xl font-semibold text-foreground">Investor Pitches</h2>
+              <button class="btn btn-ghost text-sm">
+                New Pitch
+                {{{icon 'plus' size='14'}}}
+              </button>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div class="text-center p-3 bg-step-streams/10 rounded-lg">
+                <div class="text-lg font-bold text-step-streams">{{investorPitches.stats.total}}</div>
+                <p class="text-xs text-muted-foreground">Total Pitches</p>
+              </div>
+              <div class="text-center p-3 bg-step-streams/10 rounded-lg">
+                <div class="text-lg font-bold text-step-streams">{{investorPitches.stats.responded}}</div>
+                <p class="text-xs text-muted-foreground">Responses</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              {{#if investorPitches.pitches.length}}
+                {{#each investorPitches.pitches}}
+                <div class="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border/50">
+                  <div>
+                    <h4 class="font-medium text-foreground text-sm">{{investor_name}}</h4>
+                    <p class="text-xs text-muted-foreground">{{pitch_type}}</p>
+                  </div>
+                  <div class="text-right">
+                    <span class="tag {{#if (eq status 'responded')}}tag-success{{else if (eq status 'sent')}}tag-warning{{else}}tag-secondary{{/if}}">{{status}}</span>
+                  </div>
+                </div>
+                {{/each}}
+              {{else}}
+                <div class="text-center py-4">
+                  <p class="text-sm text-muted-foreground">No investor pitches yet</p>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+
+          <!-- Company Valuations -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-xl font-semibold text-foreground">Company Valuations</h2>
+              <button class="btn btn-ghost text-sm">
+                New Valuation
+                {{{icon 'plus' size='14'}}}
+              </button>
+            </div>
+            {{#if valuations.latest}}
+            <div class="mb-4">
+              <div class="text-center p-4 bg-step-revenue/10 rounded-lg">
+                <div class="text-2xl font-bold text-step-revenue mb-1">${{valuations.latest.valuation_amount}}</div>
+                <p class="text-sm text-muted-foreground">Latest Valuation</p>
+                <p class="text-xs text-muted-foreground">{{valuations.latest.valuation_date}}</p>
+              </div>
+            </div>
+            {{/if}}
+            <div class="space-y-3">
+              {{#if valuations.history.length}}
+                {{#each valuations.history}}
+                <div class="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border/50">
+                  <div>
+                    <h4 class="font-medium text-foreground text-sm">${{valuation_amount}}</h4>
+                    <p class="text-xs text-muted-foreground">{{valuation_method}}</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm text-muted-foreground">{{valuation_date}}</p>
+                  </div>
+                </div>
+                {{/each}}
+              {{else}}
+                <div class="text-center py-4">
+                  <p class="text-sm text-muted-foreground">No valuations recorded</p>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+
+        <!-- Capital Raising & Funding Rounds -->
+        <div class="space-y-6">
+          <!-- Capital Raising -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-xl font-semibold text-foreground">Capital Raising</h2>
+              <button class="btn btn-ghost text-sm">
+                New Round
+                {{{icon 'plus' size='14'}}}
+              </button>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div class="text-center p-3 bg-step-kpi/10 rounded-lg">
+                <div class="text-lg font-bold text-step-kpi">${{capitalRaising.stats.totalRaised}}</div>
+                <p class="text-xs text-muted-foreground">Raised</p>
+              </div>
+              <div class="text-center p-3 bg-step-kpi/10 rounded-lg">
+                <div class="text-lg font-bold text-step-kpi">{{capitalRaising.stats.activeRounds}}</div>
+                <p class="text-xs text-muted-foreground">Active Rounds</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              {{#if capitalRaising.rounds.length}}
+                {{#each capitalRaising.rounds}}
+                <div class="p-3 bg-muted/50 rounded-lg border border-border/50">
+                  <div class="flex items-center justify-between mb-2">
+                    <h4 class="font-medium text-foreground text-sm">{{round_name}}</h4>
+                    <span class="tag {{#if (eq status 'active')}}tag-success{{else}}tag-secondary{{/if}}">{{status}}</span>
+                  </div>
+                  <div class="flex items-center justify-between text-sm">
+                    <span class="text-muted-foreground">Target: ${{target_amount}}</span>
+                    <span class="text-success font-medium">Raised: ${{amount_raised}}</span>
+                  </div>
+                </div>
+                {{/each}}
+              {{else}}
+                <div class="text-center py-4">
+                  <p class="text-sm text-muted-foreground">No capital raising rounds</p>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+
+          <!-- Funding Rounds History -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-xl font-semibold text-foreground">Funding Rounds</h2>
+              <button class="btn btn-ghost text-sm">
+                View All
+                {{{icon 'arrow-right' size='14'}}}
+              </button>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div class="text-center p-3 bg-step-cogs/10 rounded-lg">
+                <div class="text-lg font-bold text-step-cogs">{{fundingRounds.stats.totalRounds}}</div>
+                <p class="text-xs text-muted-foreground">Total Rounds</p>
+              </div>
+              <div class="text-center p-3 bg-step-cogs/10 rounded-lg">
+                <div class="text-lg font-bold text-step-cogs">${{fundingRounds.stats.avgRoundSize}}</div>
+                <p class="text-xs text-muted-foreground">Avg Round Size</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              {{#if fundingRounds.rounds.length}}
+                {{#each fundingRounds.rounds}}
+                <div class="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border/50">
+                  <div>
+                    <h4 class="font-medium text-foreground text-sm">{{round_type}}</h4>
+                    <p class="text-xs text-muted-foreground">{{round_date}}</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-medium text-success">${{amount_raised}}</p>
+                    <p class="text-xs text-muted-foreground">{{investors_count}} investors</p>
+                  </div>
+                </div>
+                {{/each}}
+              {{else}}
+                <div class="text-center py-4">
+                  <p class="text-sm text-muted-foreground">No funding rounds recorded</p>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enterprise/Corporate Specific Sections -->
+      {{#if features.enterprise}}
+      <div class="bg-card rounded-lg border border-border p-6">
+        <h2 class="text-xl font-semibold text-foreground mb-4">Venture Capital</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-revenue mb-2">$25M</div>
+            <p class="text-sm text-muted-foreground">VC Funding Raised</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-streams mb-2">12</div>
+            <p class="text-sm text-muted-foreground">VC Partners</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-kpi mb-2">3.2x</div>
+            <p class="text-sm text-muted-foreground">Growth Multiple</p>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+
+      {{#if features.corporate}}
+      <div class="bg-card rounded-lg border border-border p-6">
+        <h2 class="text-xl font-semibold text-foreground mb-4">IPO Planning & Portfolio Management</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-kpi mb-2">$500M</div>
+            <p class="text-sm text-muted-foreground">IPO Valuation Target</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-revenue mb-2">Q2 2025</div>
+            <p class="text-sm text-muted-foreground">Expected IPO Date</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-cogs mb-2">8</div>
+            <p class="text-sm text-muted-foreground">Portfolio Companies</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-streams mb-2">$2.1B</div>
+            <p class="text-sm text-muted-foreground">Assets Under Management</p>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

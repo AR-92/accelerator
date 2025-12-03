@@ -207,19 +207,23 @@
     --color-input: hsl(var(--input));
     --color-ring: hsl(var(--ring));
     --color-step-kpi: hsl(var(--step-kpi));
+    --color-step-kpi-foreground: hsl(var(--step-kpi-foreground));
     --color-step-kpi-muted: hsl(var(--step-kpi-muted));
     --color-step-kpi-muted-foreground: hsl(var(--step-kpi-muted-foreground));
     --color-step-revenue: hsl(var(--step-revenue));
+    --color-step-revenue-foreground: hsl(var(--step-revenue-foreground));
     --color-step-revenue-muted: hsl(var(--step-revenue-muted));
     --color-step-revenue-muted-foreground: hsl(
     var(--step-revenue-muted-foreground)
   );
     --color-step-streams: hsl(var(--step-streams));
+    --color-step-streams-foreground: hsl(var(--step-streams-foreground));
     --color-step-streams-muted: hsl(var(--step-streams-muted));
     --color-step-streams-muted-foreground: hsl(
     var(--step-streams-muted-foreground)
   );
     --color-step-cogs: hsl(var(--step-cogs));
+    --color-step-cogs-foreground: hsl(var(--step-cogs-foreground));
     --color-step-cogs-muted: hsl(var(--step-cogs-muted));
     --color-step-cogs-muted-foreground: hsl(var(--step-cogs-muted-foreground));
     --color-step-opex: hsl(var(--step-opex));
@@ -1281,6 +1285,12 @@
   .border-border {
     border-color: var(--color-border);
   }
+  .border-border\/50 {
+    border-color: color-mix(in srgb, hsl(var(--border)) 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-border) 50%, transparent);
+    }
+  }
   .border-destructive {
     border-color: var(--color-destructive);
   }
@@ -1659,11 +1669,35 @@
   .bg-step-cogs-muted {
     background-color: var(--color-step-cogs-muted);
   }
+  .bg-step-cogs\/10 {
+    background-color: color-mix(in srgb, hsl(var(--step-cogs)) 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-step-cogs) 10%, transparent);
+    }
+  }
+  .bg-step-cogs\/20 {
+    background-color: color-mix(in srgb, hsl(var(--step-cogs)) 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-step-cogs) 20%, transparent);
+    }
+  }
   .bg-step-kpi {
     background-color: var(--color-step-kpi);
   }
   .bg-step-kpi-muted {
     background-color: var(--color-step-kpi-muted);
+  }
+  .bg-step-kpi\/10 {
+    background-color: color-mix(in srgb, hsl(var(--step-kpi)) 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-step-kpi) 10%, transparent);
+    }
+  }
+  .bg-step-kpi\/20 {
+    background-color: color-mix(in srgb, hsl(var(--step-kpi)) 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-step-kpi) 20%, transparent);
+    }
   }
   .bg-step-opex {
     background-color: var(--color-step-opex);
@@ -1677,11 +1711,35 @@
   .bg-step-revenue-muted {
     background-color: var(--color-step-revenue-muted);
   }
+  .bg-step-revenue\/10 {
+    background-color: color-mix(in srgb, hsl(var(--step-revenue)) 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-step-revenue) 10%, transparent);
+    }
+  }
+  .bg-step-revenue\/20 {
+    background-color: color-mix(in srgb, hsl(var(--step-revenue)) 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-step-revenue) 20%, transparent);
+    }
+  }
   .bg-step-streams {
     background-color: var(--color-step-streams);
   }
   .bg-step-streams-muted {
     background-color: var(--color-step-streams-muted);
+  }
+  .bg-step-streams\/10 {
+    background-color: color-mix(in srgb, hsl(var(--step-streams)) 10%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-step-streams) 10%, transparent);
+    }
+  }
+  .bg-step-streams\/20 {
+    background-color: color-mix(in srgb, hsl(var(--step-streams)) 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-step-streams) 20%, transparent);
+    }
   }
   .bg-success {
     background-color: var(--color-success);
@@ -2026,6 +2084,9 @@
   }
   .pr-6 {
     padding-right: calc(var(--spacing) * 6);
+  }
+  .pr-10 {
+    padding-right: calc(var(--spacing) * 10);
   }
   .pb-2 {
     padding-bottom: calc(var(--spacing) * 2);
@@ -2386,11 +2447,17 @@
   .text-step-cogs {
     color: var(--color-step-cogs);
   }
+  .text-step-cogs-foreground {
+    color: var(--color-step-cogs-foreground);
+  }
   .text-step-cogs-muted-foreground {
     color: var(--color-step-cogs-muted-foreground);
   }
   .text-step-kpi {
     color: var(--color-step-kpi);
+  }
+  .text-step-kpi-foreground {
+    color: var(--color-step-kpi-foreground);
   }
   .text-step-kpi-muted-foreground {
     color: var(--color-step-kpi-muted-foreground);
@@ -2404,11 +2471,17 @@
   .text-step-revenue {
     color: var(--color-step-revenue);
   }
+  .text-step-revenue-foreground {
+    color: var(--color-step-revenue-foreground);
+  }
   .text-step-revenue-muted-foreground {
     color: var(--color-step-revenue-muted-foreground);
   }
   .text-step-streams {
     color: var(--color-step-streams);
+  }
+  .text-step-streams-foreground {
+    color: var(--color-step-streams-foreground);
   }
   .text-step-streams-muted-foreground {
     color: var(--color-step-streams-muted-foreground);
@@ -3609,6 +3682,11 @@
   .md\:opacity-100 {
     @media (width >= 48rem) {
       opacity: 100%;
+    }
+  }
+  .lg\:col-span-2 {
+    @media (width >= 64rem) {
+      grid-column: span 2 / span 2;
     }
   }
   .lg\:grid {
