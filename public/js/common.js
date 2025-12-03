@@ -125,6 +125,29 @@ function updateFilterNavActiveState() {
   }
 }
 
+// Load credit balance in navigation
+async function loadNavCreditBalance() {
+  try {
+    const response = await fetch('/api/credits/balance');
+    const data = await response.json();
+
+    if (data.success) {
+      const balanceElement = document.getElementById('nav-credit-balance');
+      if (balanceElement) {
+        balanceElement.textContent = `${data.balance || 0} Credits`;
+      }
+    }
+  } catch (error) {
+    console.error('Error loading nav balance:', error);
+  }
+}
+
 // Make functions globally available
 window.initFilterNavScroll = initFilterNavScroll;
 window.updateFilterNavActiveState = updateFilterNavActiveState;
+window.loadNavCreditBalance = loadNavCreditBalance;
+
+// Load credit balance on page load
+document.addEventListener('DOMContentLoaded', function () {
+  loadNavCreditBalance();
+});

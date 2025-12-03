@@ -4,6 +4,10 @@ import {
   csrfProtection,
   verifyCsrfToken,
 } from '../../middleware/security/csrf.js';
+import CreditManager from '../../utils/creditManager.js';
+
+// AI credit cost per request
+const AI_CREDIT_COST = 10;
 
 // Initialize OpenAI client configured for OpenRouter
 const openai = new OpenAI({
@@ -37,41 +41,84 @@ export default function aiRoutes(app) {
   app.post('/api/ai/auto-fill', authenticateUser, async (req, res) => {
     const { description } = req.body;
     try {
+      // Check if user has enough credits
+      const userId = req.user.id;
+      const hasCredits = await CreditManager.hasCredits(userId, AI_CREDIT_COST);
+      if (!hasCredits) {
+        return res.status(402).json({
+          error: 'Insufficient credits',
+          required: AI_CREDIT_COST,
+          balance: await CreditManager.getBalance(userId),
+        });
+      }
+
+      // Consume credits
+      await CreditManager.consumeCredits(
+        userId,
+        AI_CREDIT_COST,
+        'AI auto-fill generation',
+        'ai_auto_fill'
+      );
       const prompt = `Based on this project description: "${description}"
 
-Please generate a JSON object with exactly these fields:
-- title: A catchy, concise title (maximum 50 characters)
-- category: Choose one from: Technology, Healthcare, Education, Finance, Environment, Entertainment, Transportation, Food, Real Estate, Other
-- description: An enhanced, more detailed version of the original description
-- tags: An array of 3-5 relevant tags
+Generate the following information:
 
-Return ONLY the JSON object, no other text or explanation. Format: {"title": "...", "category": "...", "description": "...", "tags": ["tag1", "tag2", ...]}`;
+Title: A catchy, concise title (maximum 50 characters) that captures the essence of this project
+Category: Choose the most appropriate category from: Technology, Healthcare, Education, Finance, Environment, Entertainment, Transportation, Food, Real Estate, Other
+Description: Rewrite and enhance the description to be more detailed, professional, and engaging, while staying true to the original idea
+Tags: 3-5 highly relevant tags that best describe this project, separated by commas
+
+Format your response exactly like this:
+Title: [title here]
+Category: [category here]
+Description: [description here]
+Tags: [tag1, tag2, tag3]`;
 
       const aiResponse = await callAI(prompt, 500);
-      // Gemini returns text, try to parse as JSON
+      // Parse the text response
       let result;
       try {
-        // Clean the response by removing any markdown formatting or extra text
-        const cleanedResponse = aiResponse
-          .replace(/```json\s*/g, '')
-          .replace(/```\s*/g, '')
-          .trim();
-        result = JSON.parse(cleanedResponse);
+        const lines = aiResponse
+          .split('\n')
+          .map((line) => line.trim())
+          .filter((line) => line);
+        let title = '',
+          category = '',
+          description = '',
+          tags = [];
+
+        for (const line of lines) {
+          if (line.startsWith('Title:')) {
+            title = line.replace('Title:', '').trim();
+          } else if (line.startsWith('Category:')) {
+            category = line.replace('Category:', '').trim();
+          } else if (line.startsWith('Description:')) {
+            description = line.replace('Description:', '').trim();
+          } else if (line.startsWith('Tags:')) {
+            const tagsStr = line.replace('Tags:', '').trim();
+            tags = tagsStr
+              .split(',')
+              .map((tag) => tag.trim())
+              .filter((tag) => tag);
+          }
+        }
+
+        // Validate that we have all fields
+        if (!title || !category || !description || tags.length === 0) {
+          throw new Error('Incomplete response from AI');
+        }
+
+        result = { title, category, description, tags };
       } catch (parseError) {
-        console.warn('AI response not valid JSON:', aiResponse);
-        // If not valid JSON, create a fallback result
-        throw new Error('Invalid JSON response from AI');
+        console.warn('AI response parsing failed:', aiResponse);
+        // Use fallback
+        throw new Error('Failed to parse AI response');
       }
 
       res.json(result);
     } catch (error) {
       console.error('AI auto-fill error:', error);
-      // Fallback to dummy data
-      const title = `Enhanced: ${description.split('.')[0].substring(0, 50)}`;
-      const category = 'Technology';
-      const enhancedDescription = `${description} - This is an enhanced version with more details and structure.`;
-      const tags = ['innovation', 'technology', 'startup'];
-      res.json({ title, category, description: enhancedDescription, tags });
+      res.status(500).json({ error: 'AI generation failed' });
     }
   });
 
@@ -79,6 +126,24 @@ Return ONLY the JSON object, no other text or explanation. Format: {"title": "..
   app.post('/api/ai/improve', authenticateUser, async (req, res) => {
     const { description } = req.body;
     try {
+      // Check if user has enough credits
+      const userId = req.user.id;
+      const hasCredits = await CreditManager.hasCredits(userId, AI_CREDIT_COST);
+      if (!hasCredits) {
+        return res.status(402).json({
+          error: 'Insufficient credits',
+          required: AI_CREDIT_COST,
+          balance: await CreditManager.getBalance(userId),
+        });
+      }
+
+      // Consume credits
+      await CreditManager.consumeCredits(
+        userId,
+        AI_CREDIT_COST,
+        'AI description improvement',
+        'ai_improve'
+      );
       const prompt = `Rewrite this as a problem statement in paragraph form. Focus only on the problem, not solutions.
 
 Original: "${description}"
@@ -90,8 +155,7 @@ Keep it under 500 words. Return only the problem statement paragraph.`;
       res.json({ improved_description });
     } catch (error) {
       console.error('AI improve error:', error);
-      const improved_description = `${description} - This version is more polished, professional, and engaging.`;
-      res.json({ improved_description });
+      res.status(500).json({ error: 'AI improvement failed' });
     }
   });
 
@@ -99,6 +163,25 @@ Keep it under 500 words. Return only the problem statement paragraph.`;
   app.post('/api/ai/add-tags', authenticateUser, async (req, res) => {
     try {
       const { description } = req.body;
+
+      // Check if user has enough credits
+      const userId = req.user.id;
+      const hasCredits = await CreditManager.hasCredits(userId, AI_CREDIT_COST);
+      if (!hasCredits) {
+        return res.status(402).json({
+          error: 'Insufficient credits',
+          required: AI_CREDIT_COST,
+          balance: await CreditManager.getBalance(userId),
+        });
+      }
+
+      // Consume credits
+      await CreditManager.consumeCredits(
+        userId,
+        AI_CREDIT_COST,
+        'AI tag generation',
+        'ai_add_tags'
+      );
 
       const prompt = `Analyze this project description and suggest 3-5 relevant tags: "${description}"
 
@@ -129,8 +212,7 @@ No other text or explanation.`;
       res.json({ tags });
     } catch (error) {
       console.error('AI add tags error:', error);
-      const tags = ['innovation', 'technology', 'startup', 'AI'];
-      res.json({ tags });
+      res.status(500).json({ error: 'AI tag generation failed' });
     }
   });
 
@@ -138,6 +220,24 @@ No other text or explanation.`;
   app.post('/api/ai/add-category', authenticateUser, async (req, res) => {
     const { description } = req.body;
     try {
+      // Check if user has enough credits
+      const userId = req.user.id;
+      const hasCredits = await CreditManager.hasCredits(userId, AI_CREDIT_COST);
+      if (!hasCredits) {
+        return res.status(402).json({
+          error: 'Insufficient credits',
+          required: AI_CREDIT_COST,
+          balance: await CreditManager.getBalance(userId),
+        });
+      }
+
+      // Consume credits
+      await CreditManager.consumeCredits(
+        userId,
+        AI_CREDIT_COST,
+        'AI category suggestion',
+        'ai_add_category'
+      );
       const prompt = `Categorize this project based on its description: "${description}"
 
 Choose one category from: Technology, Healthcare, Education, Finance, Environment, Entertainment, Transportation, Food, Real Estate, Other
@@ -149,8 +249,7 @@ Return ONLY the category name, no other text or explanation.`;
       res.json({ category });
     } catch (error) {
       console.error('AI add category error:', error);
-      const category = 'Technology';
-      res.json({ category });
+      res.status(500).json({ error: 'AI category selection failed' });
     }
   });
 
@@ -158,6 +257,24 @@ Return ONLY the category name, no other text or explanation.`;
   app.post('/api/ai/suggest-title', authenticateUser, async (req, res) => {
     const { description } = req.body;
     try {
+      // Check if user has enough credits
+      const userId = req.user.id;
+      const hasCredits = await CreditManager.hasCredits(userId, AI_CREDIT_COST);
+      if (!hasCredits) {
+        return res.status(402).json({
+          error: 'Insufficient credits',
+          required: AI_CREDIT_COST,
+          balance: await CreditManager.getBalance(userId),
+        });
+      }
+
+      // Consume credits
+      await CreditManager.consumeCredits(
+        userId,
+        AI_CREDIT_COST,
+        'AI title suggestion',
+        'ai_suggest_title'
+      );
       const prompt = `Based on this project description: "${description}"
 
 Generate a catchy, concise title (maximum 50 characters) that captures the essence of this project.
@@ -176,6 +293,24 @@ Return ONLY the title text, no quotes or explanation.`;
   // Generate random idea
   app.post('/api/ai/random-idea', authenticateUser, async (req, res) => {
     try {
+      // Check if user has enough credits
+      const userId = req.user.id;
+      const hasCredits = await CreditManager.hasCredits(userId, AI_CREDIT_COST);
+      if (!hasCredits) {
+        return res.status(402).json({
+          error: 'Insufficient credits',
+          required: AI_CREDIT_COST,
+          balance: await CreditManager.getBalance(userId),
+        });
+      }
+
+      // Consume credits
+      await CreditManager.consumeCredits(
+        userId,
+        AI_CREDIT_COST,
+        'AI random idea generation',
+        'ai_random_idea'
+      );
       const prompt = `Generate a creative startup idea. Return a JSON object with exactly these fields: title, description, category, tags. No other text.`;
       const aiResponse = await callAI(prompt, 400);
 

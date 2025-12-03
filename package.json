@@ -9,6 +9,7 @@
     "start": "nodemon index.js",
     "dev": "concurrently \"npm run build-css\" \"npm run start\"",
     "fetch-openapi": "node db/fetch-openapi.js",
+    "seed-credits": "node scripts/seed-credits.js",
     "lint": "echo \"Linting not configured yet\" && exit 0",
     "format": "prettier --write ."
   },

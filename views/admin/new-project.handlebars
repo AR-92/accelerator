@@ -1,10 +1,10 @@
 <main class="flex flex-col w-full items-center justify-center">
 
-  {{#if showCreateCard}}
-  <div id="create-idea-section">
-    {{> create-idea-card showExplore=(eq ideas.length 0) hasIdeas=(gt ideas.length 0)}}
-  </div>
-  {{/if}}
+   {{#if showCreateCard}}
+   <div id="create-idea-section">
+     {{> create-idea-card showExplore=(eq ideas.length 0) hasIdeas=(gt ideas.length 0) populateIdea=populateIdea}}
+   </div>
+   {{/if}}
 
   <!-- Ideas Grid Section -->
    <div id="main-main-content">
@@ -269,6 +269,11 @@
         }
       });
     }
-  });
+   });
 
-</script>
+   // Handle populate idea button
+   window.redirectToPopulate = function(id) {
+     window.location.href = '/admin/other-pages/new-project?showCard=true&populate=' + id;
+   };
+
+ </script>

@@ -43,9 +43,41 @@
         <p class="text-sm text-muted-foreground mb-4">Configure security settings and privacy options.</p>
         <a href="/pages/settings/other" class="text-primary hover:underline text-sm font-medium">Security settings →</a>
       </div>
-    </div>
+     </div>
 
-    <!-- Quick Settings -->
+     <!-- Credits Section -->
+     <div class="space-y-6">
+       <div>
+         <h3 class="text-lg font-medium text-foreground">Credits</h3>
+         <p class="text-sm text-muted-foreground">Manage your credit balance and view transaction history.</p>
+       </div>
+
+       <div class="grid gap-4">
+         <div class="flex items-center justify-between p-4 border rounded-lg">
+           <div class="flex items-center gap-3">
+             {{{icon 'coins' size="20" class="w-5 h-5 text-primary"}}}
+             <div>
+               <p class="font-medium">Current Balance</p>
+               <p id="settings-credit-balance" class="text-sm text-muted-foreground">Loading...</p>
+             </div>
+           </div>
+           <a href="/pages/buy-credits" class="text-primary hover:underline">Buy Credits</a>
+         </div>
+
+         <div class="flex items-center justify-between p-4 border rounded-lg">
+           <div class="flex items-center gap-3">
+             {{{icon 'history' size="20" class="w-5 h-5 text-primary"}}}
+             <div>
+               <p class="font-medium">Transaction History</p>
+               <p class="text-sm text-muted-foreground">View your credit transactions</p>
+             </div>
+           </div>
+           <button onclick="showTransactionHistory()" class="text-primary hover:underline">View History</button>
+         </div>
+       </div>
+     </div>
+
+     <!-- Quick Settings -->
     <div class="rounded-md bg-card px-6 py-5 text-card-foreground">
       <h3 class="text-xl font-semibold text-foreground mb-4">Quick Settings</h3>
       <div class="space-y-4">
@@ -73,4 +105,6 @@
     </div>
   </div>
 </div>
+
+<script src="/js/settings.js"></script>
 </div>

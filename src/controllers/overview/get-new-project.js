@@ -9,6 +9,39 @@ export const getNewProject = async (req, res) => {
     const filter = req.query.filter || 'all-projects';
     const showCard = req.query.showCard === 'true';
 
+    let populateIdea = null;
+    if (req.query.populate) {
+      const { data: idea, error: ideaError } = await databaseService.supabase
+        .from('ideas')
+        .select('*')
+        .eq('id', req.query.populate)
+        .single();
+      if (!ideaError && idea) {
+        let tags = [];
+        if (idea.tags) {
+          if (Array.isArray(idea.tags)) {
+            tags = idea.tags;
+          } else if (typeof idea.tags === 'string') {
+            try {
+              tags = JSON.parse(idea.tags);
+            } catch {
+              tags = idea.tags
+                .split(',')
+                .map((t) => t.trim())
+                .filter((t) => t);
+            }
+          }
+        }
+        populateIdea = {
+          id: idea.id,
+          name: idea.title || 'Untitled Idea',
+          description: idea.description || '',
+          category: idea.type,
+          tags: tags,
+        };
+      }
+    }
+
     // Build query based on filter
     let query = databaseService.supabase.from('ideas').select('*');
 
@@ -65,6 +98,31 @@ export const getNewProject = async (req, res) => {
       throw error;
     }
 
+    // Fetch all ideas for sidebar
+    let allIdeasQuery = databaseService.supabase
+      .from('ideas')
+      .select('id, title');
+    if (userId) {
+      allIdeasQuery = allIdeasQuery.eq('user_id', userId);
+    }
+    const { data: allIdeas, error: allIdeasError } = await allIdeasQuery.order(
+      'created_at',
+      { ascending: false }
+    );
+
+    if (allIdeasError) {
+      logger.error('Error fetching all ideas:', allIdeasError);
+    }
+
+    // Truncate titles to 12 characters for sidebar display
+    const truncatedAllIdeas = (allIdeas || []).map((idea) => ({
+      id: idea.id,
+      title:
+        idea.title && idea.title.length > 12
+          ? idea.title.substring(0, 23)
+          : idea.title || 'Untitled',
+    }));
+
     // Transform ideas data for template
     const transformedIdeas = (ideas || []).map((idea) => ({
       id: idea.id,
@@ -79,7 +137,9 @@ export const getNewProject = async (req, res) => {
     }));
 
     const showCreateCard =
-      showCard || (filter === 'all-projects' && transformedIdeas.length === 0);
+      showCard ||
+      !!populateIdea ||
+      (filter === 'all-projects' && transformedIdeas.length === 0);
 
     const overviewFilterLinks = [
       {
@@ -135,8 +195,10 @@ export const getNewProject = async (req, res) => {
         currentPage: 'New Project',
         filterLinks: overviewFilterLinks,
         ideas: transformedIdeas,
+        allIdeas: truncatedAllIdeas,
         showCreateCard,
         filter,
+        populateIdea,
       });
     }
   } catch (error) {
@@ -144,6 +206,8 @@ export const getNewProject = async (req, res) => {
 
     const filter = req.query.filter || 'all-projects';
     const showCard = req.query.showCard === 'true';
+
+    const populateIdea = null;
 
     const showCreateCard = showCard || filter === 'all-projects';
 
@@ -201,8 +265,10 @@ export const getNewProject = async (req, res) => {
         currentPage: 'New Project',
         filterLinks: overviewFilterLinks,
         ideas: [], // Empty array on error
+        allIdeas: [],
         showCreateCard,
         filter,
+        populateIdea: null,
       });
     }
   }

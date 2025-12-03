@@ -192,10 +192,10 @@
             <div class="flex flex-wrap gap-1">
               <span
                 class="inline-flex items-center gap-1 px-2 py-1 bg-secondary/5 text-secondary-foreground border border-secondary/40 text-xs rounded-full focus:outline-none focus:bg-accent">
-                <i contenteditable="true" id="title">Untitled</i> {{{icon 'edit' size="12" class='w-3 h-3'}}}</span>
+                 <i contenteditable="true" id="title">{{#if populateIdea.name}}{{populateIdea.name}}{{else}}Untitled{{/if}}</i> {{{icon 'edit' size="12" class='w-3 h-3'}}}</span>
               <span
                 class="inline-flex items-center gap-1 px-2 py-1 bg-secondary/5 text-secondary-foreground border border-secondary/40 text-xs rounded-full focus:outline-none focus:bg-accent">
-                <i contenteditable="true" id="category">Category</i> {{{icon 'edit' size="12" class='w-3 h-3'}}}</span>
+                 <i contenteditable="true" id="category">{{#if populateIdea.category}}{{populateIdea.category}}{{else}}Category{{/if}}</i> {{{icon 'edit' size="12" class='w-3 h-3'}}}</span>
             </div>
           </div>
 
@@ -203,10 +203,10 @@
           <div class=" pl-4 pr-2 relative">
             <label for="assistant-prompt" class="sr-only">Describe your
               project requirements</label>
-            <textarea id="assistant-prompt" name="prompt" placeholder="Describe your project requirements..."
-              aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
-              class="flex w-full rounded-md border-0 bg-transparent p-0 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-              required=""></textarea>
+             <textarea id="assistant-prompt" name="prompt" placeholder="Describe your project requirements..."
+               aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
+               class="flex w-full rounded-md border-0 bg-transparent p-0 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+               required="">{{#if populateIdea}}{{populateIdea.description}}{{/if}}</textarea>
             <p id="prompt-help" class="sr-only">Enter your project
               description or requirements</p>
           </div>
@@ -307,6 +307,11 @@
 </div>
 
 <script>
+  window.populateIdea = {{{json populateIdea}}};
+  console.log('populateIdea set:', window.populateIdea);
+</script>
+
+<script>
   document.addEventListener('DOMContentLoaded', () => {
     console.log('DOMContentLoaded fired for create-idea-card');
     // Initialize form elements
@@ -343,6 +348,11 @@
 
     descriptionTextarea.addEventListener('input', updateCharCounter);
     updateCharCounter();
+
+    // Ensure textarea height is adjusted for pre-filled content
+    setTimeout(() => {
+      autoExpandTextarea();
+    }, 0);
 
     // Toast helper
     function showToastMessage(message, type) {
@@ -387,13 +397,24 @@
 
     // Tag management functions
     function addTag(tagText) {
-      if (!tagText.trim()) return;
+      console.log('addTag called with:', tagText);
+      if (typeof tagText === 'object') {
+        tagText = tagText.name || tagText.value || tagText.toString();
+      }
+      if (!tagText || !tagText.trim()) {
+        console.log('Tag text is empty or invalid, skipping');
+        return;
+      }
       const tagSpan = document.createElement('span');
       tagSpan.className = 'inline-flex items-center gap-1 px-2 py-0.5 bg-secondary/5 text-secondary-foreground border border-secondary/40 text-xs rounded-full tag-lskjsdb';
       tagSpan.innerHTML = `<span contenteditable="true">${tagText}</span> <button class="text-muted-foreground hover:text-destructive p-0">×</button>`;
       const addMoreBtn = tagsContainer.querySelector('[class*="bg-success/5"]');
+      console.log('addMoreBtn found:', addMoreBtn);
       if (addMoreBtn) {
         addMoreBtn.after(tagSpan);
+        console.log('Tag span added');
+      } else {
+        console.log('addMoreBtn not found, tag not added');
       }
       tagSpan.querySelector('button').addEventListener('click', function () {
         tagSpan.remove();
@@ -419,6 +440,18 @@
         showToastMessage(`${count} tags removed`, 'success');
         updateRemoveAllVisibility();
       }
+    }
+
+    // Populate tags if populateIdea
+    console.log('Checking populateIdea for tags:', window.populateIdea);
+    if (window.populateIdea && window.populateIdea.tags) {
+      console.log('Tags found:', window.populateIdea.tags);
+      window.populateIdea.tags.forEach(tag => {
+        console.log('Adding tag:', tag);
+        addTag(tag);
+      });
+    } else {
+      console.log('No tags to populate');
     }
 
     // AI button handlers
@@ -559,24 +592,13 @@
         if (result.error) {
           showToastMessage('AI error: ' + result.error, 'error');
         } else {
-          const currentTitle = titleSpan.textContent.trim();
-          if (!currentTitle || currentTitle === 'Untitled') {
-            titleSpan.innerHTML = result.title || '';
-          }
-          const currentCategory = categorySpan.textContent.trim();
-          if (!currentCategory || currentCategory === 'Category') {
-            categorySpan.innerHTML = result.category || '';
-          }
-          if (descriptionTextarea.value.length < 100) {
-            descriptionTextarea.value = result.description || '';
-            updateCharCounter();
-          }
-          const currentTags = document.querySelectorAll('.tag-lskjsdb').length;
-          if (currentTags === 0) {
-            removeAllTags();
-            if (result.tags) {
-              addTagsFromArray(result.tags);
-            }
+          titleSpan.innerHTML = result.title || '';
+          categorySpan.innerHTML = result.category || '';
+          descriptionTextarea.value = result.description || '';
+          updateCharCounter();
+          removeAllTags();
+          if (result.tags) {
+            addTagsFromArray(result.tags);
           }
           showToastMessage('Form auto filled successfully', 'success');
         }

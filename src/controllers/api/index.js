@@ -14,6 +14,12 @@ import mainRoutes from './overview/get-main.js';
 // AI API routes
 import aiRoutes from './ai.js';
 
+// Credit API routes
+import creditRoutes from './credits.js';
+
+// Billing API routes
+import billingRoutes from './billing.js';
+
 // API routes setup
 export default function apiRoutes(app) {
   // Admin API routes
@@ -28,4 +34,10 @@ export default function apiRoutes(app) {
 
   // AI API routes
   aiRoutes(app);
+
+  // Credit API routes
+  creditRoutes(app);
+
+  // Billing API routes
+  billingRoutes(app);
 }

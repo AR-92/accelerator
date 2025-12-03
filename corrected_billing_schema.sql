@@ -1,0 +1,57 @@
+-- Subscription Plans Table
+CREATE TABLE IF NOT EXISTS public.subscription_plans (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  description TEXT,
+  price_monthly DECIMAL(10,2),
+  price_yearly DECIMAL(10,2),
+  credits_included INTEGER DEFAULT 0,
+  features JSONB,
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- User Subscriptions Table
+CREATE TABLE IF NOT EXISTS public.user_subscriptions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  plan_id UUID NOT NULL REFERENCES public.subscription_plans(id),
+  status VARCHAR(50) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'cancelled', 'expired', 'past_due')),
+  current_period_start TIMESTAMP WITH TIME ZONE NOT NULL,
+  current_period_end TIMESTAMP WITH TIME ZONE NOT NULL,
+  cancel_at_period_end BOOLEAN DEFAULT false,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Billing History Table
+CREATE TABLE IF NOT EXISTS public.billing_history (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  subscription_id UUID REFERENCES public.user_subscriptions(id),
+  amount DECIMAL(10,2) NOT NULL,
+  currency VARCHAR(3) DEFAULT 'USD',
+  status VARCHAR(50) NOT NULL DEFAULT 'paid' CHECK (status IN ('paid', 'pending', 'failed', 'refunded')),
+  billing_period_start TIMESTAMP WITH TIME ZONE,
+  billing_period_end TIMESTAMP WITH TIME ZONE,
+  invoice_number VARCHAR(100) UNIQUE,
+  payment_method VARCHAR(100),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Enable RLS
+ALTER TABLE public.subscription_plans ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_subscriptions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.billing_history ENABLE ROW LEVEL SECURITY;
+
+-- Create policies
+CREATE POLICY "Subscription plans are viewable by everyone" ON public.subscription_plans FOR SELECT USING (true);
+CREATE POLICY "Users can view their own subscriptions" ON public.user_subscriptions FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can view their own billing history" ON public.billing_history FOR SELECT USING (auth.uid() = user_id);
+
+-- Insert sample data using JSON format
+INSERT INTO public.subscription_plans (name, description, price_monthly, price_yearly, credits_included, features) VALUES
+('Starter', 'Perfect for getting started', 9.99, 99.99, 100, '["Up to 3 projects", "Basic analytics", "Email support"]'::jsonb),
+('Pro', 'For growing businesses', 29.99, 299.99, 500, '["Unlimited projects", "Advanced analytics", "Priority support", "Team collaboration"]'::jsonb),
+('Enterprise', 'For large organizations', NULL, NULL, 2000, '["Everything in Pro", "Custom integrations", "Dedicated support", "SLA guarantee"]'::jsonb);

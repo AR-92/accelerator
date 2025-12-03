@@ -56,6 +56,7 @@ class DatabaseService {
 
   async read(table, id = null, filters = {}) {
     try {
+      console.log(`Reading from ${table}, id: ${id}, filters:`, filters);
       let query = this.supabase.from(table).select('*');
 
       if (id) {
@@ -68,10 +69,11 @@ class DatabaseService {
       });
 
       const { data, error } = await query;
+      console.log(`Query result: data length ${data?.length}, error:`, error);
       if (error) throw error;
       return data;
     } catch (error) {
-      logger.error(`Error reading from ${table}:`, error);
+      console.error(`Error reading from ${table}:`, error);
       throw error;
     }
   }

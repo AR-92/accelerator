@@ -562,6 +562,14 @@ export default function adminRoutes(app) {
       section: 'billing',
     });
   });
+  // Test credits page (no auth required)
+  app.get('/test-credits', (req, res) => {
+    res.render('test-credits', {
+      layout: false,
+      title: 'Test Buy Credits',
+    });
+  });
+
   app.get('/pages/buy-credits', requireWebAuth, (req, res) => {
     const filterLinks = [
       {
