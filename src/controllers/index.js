@@ -44,6 +44,8 @@ import { getDashboardFund } from './dashboard/fund.js';
 import { getDashboardTeam } from './dashboard/team.js';
 import { getDashboardPromote } from './dashboard/promote.js';
 import { getDashboardActivityLog } from './dashboard/activity-log.js';
+import { getDashboardEnterprise } from './dashboard/enterprise.js';
+import { getDashboardCorporate } from './dashboard/corporate.js';
 
 import { requireAuth, checkAuth } from '../middleware/auth/index.js';
 
@@ -503,6 +505,8 @@ export default function adminRoutes(app) {
   app.get('/dashboard/team', requireWebAuth, getDashboardTeam);
   app.get('/dashboard/promote', requireWebAuth, getDashboardPromote);
   app.get('/dashboard/activity-log', requireWebAuth, getDashboardActivityLog);
+  app.get('/dashboard/enterprise', requireWebAuth, getDashboardEnterprise);
+  app.get('/dashboard/corporate', requireWebAuth, getDashboardCorporate);
 
   // Legacy redirects for backward compatibility
   app.get('/startup-dashboard', requireWebAuth, (req, res) =>
@@ -510,7 +514,7 @@ export default function adminRoutes(app) {
   );
 
   app.get('/enterprise-dashboard', requireWebAuth, (req, res) =>
-    res.redirect('/dashboard')
+    res.redirect('/dashboard/enterprise')
   );
 
   app.get('/enterprise-dashboard/overview', requireWebAuth, (req, res) =>
@@ -534,7 +538,7 @@ export default function adminRoutes(app) {
   );
 
   app.get('/corporate-dashboard', requireWebAuth, (req, res) =>
-    res.redirect('/dashboard')
+    res.redirect('/dashboard/corporate')
   );
 
   app.get('/corporate-dashboard/overview', requireWebAuth, (req, res) =>
