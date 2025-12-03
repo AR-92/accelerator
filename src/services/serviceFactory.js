@@ -108,6 +108,28 @@ export const serviceFactory = {
       if (error) throw error;
       return data;
     },
+
+    publishIdea: async (id) => {
+      const { data, error } = await databaseService.supabase
+        .from('ideas')
+        .update({ status: 'published' })
+        .eq('id', id)
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+
+    unpublishIdea: async (id) => {
+      const { data, error } = await databaseService.supabase
+        .from('ideas')
+        .update({ status: 'draft' })
+        .eq('id', id)
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
   }),
   getActivityService: () => {
     const getActivityStats = async (filters = {}) => {

@@ -195,6 +195,31 @@ export default function adminRoutes(app) {
   app.get('/admin/collaborate', requireWebAuth, getCollaborate);
   app.get('/admin/new-project', requireWebAuth, getNewProject);
   app.get('/admin/explore-ideas', requireWebAuth, getExploreIdeas);
+
+  app.post('/admin/ideas/:id/publish', requireWebAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const ideaService = serviceFactory.getIdeaService();
+      const updatedIdea = await ideaService.publishIdea(id);
+      res.json({ success: true, idea: updatedIdea });
+    } catch (error) {
+      console.error('Error publishing idea:', error);
+      res.status(500).json({ error: 'Failed to publish idea' });
+    }
+  });
+
+  app.post('/admin/ideas/:id/unpublish', requireWebAuth, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const ideaService = serviceFactory.getIdeaService();
+      const updatedIdea = await ideaService.unpublishIdea(id);
+      res.json({ success: true, idea: updatedIdea });
+    } catch (error) {
+      console.error('Error unpublishing idea:', error);
+      res.status(500).json({ error: 'Failed to unpublish idea' });
+    }
+  });
+
   app.get('/projects/all-projects', requireWebAuth, getAllProjects);
   app.get('/projects/idea-model', (req, res) => {
     const steps = [
