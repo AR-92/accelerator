@@ -160,7 +160,13 @@
                 {{#each systemActivities.activities}}
                 <div class="flex items-start gap-3 p-3 {{#if (eq severity 'critical')}}bg-destructive/10{{else if (eq severity 'warning')}}bg-warning/10{{else}}bg-muted/50{{/if}} rounded-lg border border-border/50">
                   <div class="w-8 h-8 {{#if (eq severity 'critical')}}bg-destructive/20{{else if (eq severity 'warning')}}bg-warning/20{{else}}bg-step-kpi/20{{/if}} rounded-full flex items-center justify-center flex-shrink-0">
-                    {{{icon 'activity' size='14' class='{{#if (eq severity 'critical')}}text-destructive{{else if (eq severity 'warning')}}text-warning{{else}}text-step-kpi{{/if}}'}}}
+                     {{#if (eq severity 'critical')}}
+                       {{{icon 'activity' size='14' class='text-destructive'}}}
+                     {{else if (eq severity 'warning')}}
+                       {{{icon 'activity' size='14' class='text-warning'}}}
+                     {{else}}
+                       {{{icon 'activity' size='14' class='text-step-kpi'}}}
+                     {{/if}}
                   </div>
                   <div class="flex-1 min-w-0">
                     <p class="text-sm font-medium text-foreground">{{message}}</p>
