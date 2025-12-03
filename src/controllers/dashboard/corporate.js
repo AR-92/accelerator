@@ -102,6 +102,63 @@ export const getDashboardCorporate = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading dashboard corporate:', error);
+    const filterLinks = [
+      {
+        id: 'overview-link',
+        href: '/dashboard/overview',
+        text: 'Overview',
+        icon: 'layout-dashboard',
+      },
+      {
+        id: 'idea-link',
+        href: '/dashboard/idea',
+        text: 'Idea Management',
+        icon: 'lightbulb',
+      },
+      {
+        id: 'business-link',
+        href: '/dashboard/business',
+        text: 'Business',
+        icon: 'briefcase',
+      },
+      {
+        id: 'financial-link',
+        href: '/dashboard/financial',
+        text: 'Financial',
+        icon: 'dollar-sign',
+      },
+      {
+        id: 'marketing-link',
+        href: '/dashboard/marketing',
+        text: 'Marketing',
+        icon: 'megaphone',
+      },
+      {
+        id: 'fund-link',
+        href: '/dashboard/fund',
+        text: 'Funding',
+        icon: 'wallet',
+      },
+      {
+        id: 'team-link',
+        href: '/dashboard/team',
+        text: 'Team',
+        icon: 'users',
+      },
+      {
+        id: 'promote-link',
+        href: '/dashboard/promote',
+        text: 'Promotion',
+        icon: 'presentation',
+      },
+      {
+        id: 'activity-log-link',
+        href: '/dashboard/activity-log',
+        text: 'Activity Log',
+        icon: 'activity',
+      },
+    ];
+
     res.render('dashboard/corporate', {
       title: 'Corporate Dashboard',
       currentSection: 'dashboard',
@@ -113,7 +170,7 @@ export const getDashboardCorporate = async (req, res) => {
       trendingIndicators: [],
       analytics: getDefaultAnalytics(),
       features: getRoleBasedFeatures(req.user?.role || 'startup'),
-      filterLinks: [],
+      filterLinks,
       lastUpdated: new Date().toLocaleString(),
     });
   }

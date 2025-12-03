@@ -85,6 +85,25 @@ export const getDashboardIdea = async (req, res) => {
       },
     ];
 
+    // Add role-based links
+    if (userRole === 'enterprise' || userRole === 'corporate') {
+      filterLinks.push({
+        id: 'enterprise-link',
+        href: '/dashboard/enterprise',
+        text: 'Enterprise',
+        icon: 'building',
+      });
+    }
+
+    if (userRole === 'corporate') {
+      filterLinks.push({
+        id: 'corporate-link',
+        href: '/dashboard/corporate',
+        text: 'Corporate',
+        icon: 'building-2',
+      });
+    }
+
     res.render('dashboard/idea', {
       title: 'Idea Management',
       currentSection: 'dashboard',
@@ -159,6 +178,26 @@ export const getDashboardIdea = async (req, res) => {
         icon: 'activity',
       },
     ];
+
+    // Add role-based links
+    const errorUserRole = req.user?.role || 'startup';
+    if (errorUserRole === 'enterprise' || errorUserRole === 'corporate') {
+      filterLinks.push({
+        id: 'enterprise-link',
+        href: '/dashboard/enterprise',
+        text: 'Enterprise',
+        icon: 'building',
+      });
+    }
+
+    if (errorUserRole === 'corporate') {
+      filterLinks.push({
+        id: 'corporate-link',
+        href: '/dashboard/corporate',
+        text: 'Corporate',
+        icon: 'building-2',
+      });
+    }
 
     res.render('dashboard/idea', {
       title: 'Idea Management',
