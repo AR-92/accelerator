@@ -77,6 +77,7 @@ export const getDashboardActivityLog = async (req, res) => {
     ];
 
     res.render('dashboard/activity-log', {
+      layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Activity Log',
       currentSection: 'dashboard',
       currentPage: 'activity-log',
@@ -151,6 +152,7 @@ export const getDashboardActivityLog = async (req, res) => {
     ];
 
     res.render('dashboard/activity-log', {
+      layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Activity Log',
       currentSection: 'dashboard',
       currentPage: 'activity-log',

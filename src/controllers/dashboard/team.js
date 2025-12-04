@@ -77,6 +77,7 @@ export const getDashboardTeam = async (req, res) => {
     ];
 
     res.render('dashboard/team', {
+      layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Team Management',
       currentSection: 'dashboard',
       currentPage: 'team',
@@ -151,6 +152,7 @@ export const getDashboardTeam = async (req, res) => {
     ];
 
     res.render('dashboard/team', {
+      layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Team Management',
       currentSection: 'dashboard',
       currentPage: 'team',

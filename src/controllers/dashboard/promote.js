@@ -77,6 +77,7 @@ export const getDashboardPromote = async (req, res) => {
     ];
 
     res.render('dashboard/promote', {
+      layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Promotion Management',
       currentSection: 'dashboard',
       currentPage: 'promote',
@@ -151,6 +152,7 @@ export const getDashboardPromote = async (req, res) => {
     ];
 
     res.render('dashboard/promote', {
+      layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Promotion Management',
       currentSection: 'dashboard',
       currentPage: 'promote',

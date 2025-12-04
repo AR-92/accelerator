@@ -24,6 +24,11 @@ export const formatDate = (date, format = 'short') => {
         hour: '2-digit',
         minute: '2-digit',
       });
+    case 'time':
+      return d.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
     case 'short':
     default:
       return d.toLocaleDateString('en-US', {

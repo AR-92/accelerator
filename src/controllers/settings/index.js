@@ -26,8 +26,8 @@ export const getSettings = async (req, res) => {
       currentSection: 'settings',
       currentPage: 'Overview',
       settingsCategories,
-      activeCategory: 'account',
-      layout: req.headers['hx-request'] ? false : 'main',
+      activeCategory: 'overview',
+      layout: req.headers['hx-request'] ? false : 'settings',
     });
   } catch (error) {
     logger.error('Error loading settings page:', error);

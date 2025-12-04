@@ -1,0 +1,370 @@
+<div class="max-w-7xl mx-auto p-4 sm:p-6">
+  <!-- Hero Section -->
+  <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-8 mb-8 border border-primary/20">
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent"></div>
+    <div class="relative text-center">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
+        {{{icon 'trophy' size="32" class="text-primary"}}}
+      </div>
+      <h1 class="text-4xl font-bold text-foreground mb-4 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+        Voting & Rewards
+      </h1>
+      <p class="text-muted-foreground text-lg max-w-2xl mx-auto">
+        Track your ideas' performance and rewards from voting. See how your innovations are being recognized by the community.
+      </p>
+    </div>
+  </div>
+
+  <!-- Summary Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="group relative bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-6 text-center hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 hover:-translate-y-1">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      <div class="relative">
+        <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-full mb-3 group-hover:scale-110 transition-transform">
+          {{{icon 'vote' size="24" class="text-primary"}}}
+        </div>
+        <div class="text-3xl font-bold text-primary mb-1">{{totalVotes}}</div>
+        <div class="text-sm text-muted-foreground font-medium">Total Votes Cast</div>
+      </div>
+    </div>
+    <div class="group relative bg-gradient-to-br from-success/5 to-success/10 border border-success/20 rounded-xl p-6 text-center hover:shadow-lg hover:shadow-success/10 transition-all duration-300 hover:-translate-y-1">
+      <div class="absolute inset-0 bg-gradient-to-br from-success/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      <div class="relative">
+        <div class="inline-flex items-center justify-center w-12 h-12 bg-success/10 rounded-full mb-3 group-hover:scale-110 transition-transform">
+          {{{icon 'gift' size="24" class="text-success"}}}
+        </div>
+        <div class="text-3xl font-bold text-success mb-1">{{totalRewards}}</div>
+        <div class="text-sm text-muted-foreground font-medium">Rewards Earned</div>
+      </div>
+    </div>
+    <div class="group relative bg-gradient-to-br from-info/5 to-info/10 border border-info/20 rounded-xl p-6 text-center hover:shadow-lg hover:shadow-info/10 transition-all duration-300 hover:-translate-y-1">
+      <div class="absolute inset-0 bg-gradient-to-br from-info/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      <div class="relative">
+        <div class="inline-flex items-center justify-center w-12 h-12 bg-info/10 rounded-full mb-3 group-hover:scale-110 transition-transform">
+          {{{icon 'coins' size="24" class="text-info"}}}
+        </div>
+        <div class="text-3xl font-bold text-info mb-1">{{currentCredits}}</div>
+        <div class="text-sm text-muted-foreground font-medium">Current Credits</div>
+      </div>
+    </div>
+    <div class="group relative bg-gradient-to-br from-warning/5 to-warning/10 border border-warning/20 rounded-xl p-6 text-center hover:shadow-lg hover:shadow-warning/10 transition-all duration-300 hover:-translate-y-1">
+      <div class="absolute inset-0 bg-gradient-to-br from-warning/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      <div class="relative">
+        <div class="inline-flex items-center justify-center w-12 h-12 bg-warning/10 rounded-full mb-3 group-hover:scale-110 transition-transform">
+          {{{icon 'star' size="24" class="text-warning"}}}
+        </div>
+        <div class="text-3xl font-bold text-warning mb-1">{{overallRating}}</div>
+        <div class="text-sm text-muted-foreground font-medium">Overall Rating</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- My Ideas Stats -->
+  <div class="bg-card border border-input/80 rounded-xl p-6 mb-6 shadow-sm">
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-primary/10 rounded-lg">
+          {{{icon 'lightbulb' size="20" class="text-primary"}}}
+        </div>
+        <h2 class="text-xl font-semibold text-foreground">My Ideas Performance</h2>
+      </div>
+      <div class="flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+        {{{icon 'bar-chart-3' size="14"}}}
+        {{ideas.length}} ideas
+      </div>
+    </div>
+    {{#if ideas}}
+    <div class="overflow-x-auto rounded-lg border border-input/50">
+      <table id="ideas-table" class="w-full text-sm">
+        <thead>
+          <tr class="bg-gradient-to-r from-muted/50 to-muted/30 border-b border-input/50">
+            <th class="text-left py-4 px-6 cursor-pointer hover:bg-muted/70 transition-colors rounded-tl-lg" onclick="sortTable(0)">
+              <div class="flex items-center gap-2 font-semibold text-foreground">
+                {{{icon 'lightbulb' size="16" class="text-primary"}}}
+                Idea Title
+                <span class="text-xs opacity-60">▼</span>
+              </div>
+            </th>
+            <th class="text-center py-4 px-6 cursor-pointer hover:bg-muted/70 transition-colors" onclick="sortTable(1)">
+              <div class="flex items-center justify-center gap-1 font-semibold text-foreground">
+                {{{icon 'heart' size="16" class="text-red-500"}}}
+                <span class="hidden sm:inline">Favorites</span>
+                <span class="text-xs opacity-60">▼</span>
+              </div>
+            </th>
+            <th class="text-center py-4 px-6 cursor-pointer hover:bg-muted/70 transition-colors" onclick="sortTable(2)">
+              <div class="flex items-center justify-center gap-1 font-semibold text-foreground">
+                {{{icon 'thumbs-up' size="16" class="text-blue-500"}}}
+                <span class="hidden sm:inline">Likes</span>
+                <span class="text-xs opacity-60">▼</span>
+              </div>
+            </th>
+            <th class="text-center py-4 px-6 cursor-pointer hover:bg-muted/70 transition-colors" onclick="sortTable(3)">
+              <div class="flex items-center justify-center gap-1 font-semibold text-foreground">
+                {{{icon 'copy' size="16" class="text-green-500"}}}
+                <span class="hidden sm:inline">Copies</span>
+                <span class="text-xs opacity-60">▼</span>
+              </div>
+            </th>
+            <th class="text-center py-4 px-6 cursor-pointer hover:bg-muted/70 transition-colors" onclick="sortTable(4)">
+              <div class="flex items-center justify-center gap-1 font-semibold text-foreground">
+                {{{icon 'eye' size="16" class="text-gray-500"}}}
+                <span class="hidden sm:inline">Views</span>
+                <span class="text-xs opacity-60">▼</span>
+              </div>
+            </th>
+            <th class="text-center py-4 px-6 cursor-pointer hover:bg-muted/70 transition-colors rounded-tr-lg" onclick="sortTable(5)">
+              <div class="flex items-center justify-center gap-1 font-semibold text-foreground">
+                {{{icon 'star' size="16" class="text-yellow-500"}}}
+                <span class="hidden sm:inline">Rating</span>
+                <span class="text-xs opacity-60">▼</span>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody id="ideas-tbody">
+          {{#each ideas}}
+          <tr class="border-b border-input/30 hover:bg-gradient-to-r hover:from-primary/5 hover:to-transparent transition-all duration-200 group">
+            <td class="py-4 px-6 font-medium text-foreground group-hover:text-primary transition-colors">{{title}}</td>
+            <td class="text-center py-4 px-6">
+              <div class="inline-flex items-center gap-2 px-3 py-1 bg-destructive/10 text-destructive rounded-full text-sm font-medium">
+                {{{icon 'heart' size="14" class="text-destructive"}}}
+                {{favorites}}
+              </div>
+            </td>
+            <td class="text-center py-4 px-6">
+              <div class="inline-flex items-center gap-2 px-3 py-1 bg-info/10 text-info rounded-full text-sm font-medium">
+                {{{icon 'thumbs-up' size="14" class="text-info"}}}
+                {{likes}}
+              </div>
+            </td>
+            <td class="text-center py-4 px-6">
+              <div class="inline-flex items-center gap-2 px-3 py-1 bg-success/10 text-success rounded-full text-sm font-medium">
+                {{{icon 'copy' size="14" class="text-success"}}}
+                {{copies}}
+              </div>
+            </td>
+            <td class="text-center py-4 px-6">
+              <div class="inline-flex items-center gap-2 px-3 py-1 bg-muted text-muted-foreground rounded-full text-sm font-medium">
+                {{{icon 'eye' size="14" class="text-muted-foreground"}}}
+                {{views}}
+              </div>
+            </td>
+            <td class="text-center py-4 px-6">
+              <div class="inline-flex items-center gap-2 px-3 py-1 bg-warning/10 text-warning rounded-full text-sm font-medium">
+                {{#if (gt rating 0)}}
+                  {{{icon 'star' size="14" class="text-warning"}}}
+                {{/if}}
+                {{rating}}
+              </div>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex items-center justify-between mt-6">
+      <div class="text-sm text-muted-foreground">
+        Showing <span id="showing-start">1</span> to <span id="showing-end">{{ideas.length}}</span> of {{ideas.length}} ideas
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="prev-page" class="px-3 py-1 text-sm bg-muted hover:bg-muted/80 rounded-md disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+          {{{icon 'chevron-left' size="14"}}}
+          Previous
+        </button>
+        <div class="flex gap-1">
+          <button class="px-3 py-1 text-sm bg-primary text-primary-foreground rounded-md">1</button>
+        </div>
+        <button id="next-page" class="px-3 py-1 text-sm bg-muted hover:bg-muted/80 rounded-md disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+          Next
+          {{{icon 'chevron-right' size="14"}}}
+        </button>
+      </div>
+    </div>
+
+    {{else}}
+    <div class="text-center py-12">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-muted/50 rounded-full mb-4">
+        {{{icon 'lightbulb' size="40" class="text-muted-foreground"}}}
+      </div>
+      <p class="text-muted-foreground text-lg font-medium mb-2">No ideas found</p>
+      <p class="text-sm text-muted-foreground">Create your first idea to see performance stats!</p>
+    </div>
+    {{/if}}
+  </div>
+
+  <!-- Voting History & Rewards -->
+  <div class="bg-card border border-input/80 rounded-xl p-6 shadow-sm">
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-primary/10 rounded-lg">
+          {{{icon 'history' size="20" class="text-primary"}}}
+        </div>
+        <h2 class="text-xl font-semibold text-foreground">Voting History & Rewards</h2>
+      </div>
+      <div class="flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+        {{{icon 'vote' size="14"}}}
+        {{votes.length}} votes
+      </div>
+    </div>
+    {{#if votes}}
+    <div class="space-y-4">
+      {{#each votes}}
+      <div class="group flex items-center justify-between p-5 bg-gradient-to-r from-muted/20 to-muted/10 rounded-xl hover:from-primary/5 hover:to-primary/10 transition-all duration-300 border border-input/30 hover:border-primary/20 hover:shadow-md cursor-pointer" onclick="window.location.href='/projects/{{idea_id}}'">
+        <div class="flex items-center gap-4 flex-1">
+          <div class="flex-shrink-0 p-3 bg-primary/10 rounded-full group-hover:bg-primary/20 transition-colors">
+            {{{icon 'vote' size="20" class="text-primary"}}}
+          </div>
+          <div class="flex-1">
+            <div class="font-semibold text-foreground group-hover:text-primary transition-colors flex items-center gap-2">
+              {{idea_title}}
+              <span class="text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded-full">ID: {{idea_id}}</span>
+            </div>
+            <div class="text-sm text-muted-foreground flex items-center gap-4 mt-1">
+              <span class="flex items-center gap-1">
+                {{{icon 'calendar' size="12"}}}
+                {{formatDate created_at}}
+              </span>
+              <span class="flex items-center gap-1">
+                {{{icon 'clock' size="12"}}}
+                {{formatDate created_at 'time'}}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-success/10 to-success/20 text-success rounded-full text-sm font-semibold border border-success/20">
+            {{{icon 'plus' size="14" class="text-success"}}}
+            {{reward_earned}} Credits
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <div class="text-center py-12">
+      <div class="inline-flex items-center justify-center w-20 h-20 bg-muted/50 rounded-full mb-4">
+        {{{icon 'vote' size="40" class="text-muted-foreground"}}}
+      </div>
+      <p class="text-muted-foreground text-lg font-medium mb-2">No voting history</p>
+      <p class="text-sm text-muted-foreground">Start voting on ideas to earn rewards and track your activity!</p>
+    </div>
+    {{/if}}
+  </div>
+
+  <script>
+    let sortDirections = Array(6).fill(true); // true = ascending
+    let currentPage = 1;
+    const itemsPerPage = 5;
+    let allRows = [];
+
+    function sortTable(columnIndex) {
+      const table = document.getElementById('ideas-table');
+      const tbody = table.querySelector('tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+
+      const isAscending = sortDirections[columnIndex];
+      sortDirections[columnIndex] = !isAscending;
+
+      rows.sort((a, b) => {
+        const aVal = a.cells[columnIndex].textContent.trim();
+        const bVal = b.cells[columnIndex].textContent.trim();
+
+        let aNum = parseFloat(aVal);
+        let bNum = parseFloat(bVal);
+
+        if (isNaN(aNum) || isNaN(bNum)) {
+          // String comparison
+          return isAscending ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+        } else {
+          // Numeric comparison
+          return isAscending ? aNum - bNum : bNum - aNum;
+        }
+      });
+
+      // Update header arrows
+      const headers = table.querySelectorAll('th span:last-child');
+      headers.forEach((span, i) => {
+        if (i === columnIndex) {
+          span.textContent = isAscending ? '▲' : '▼';
+        } else {
+          span.textContent = '▼';
+          sortDirections[i] = true;
+        }
+      });
+
+      // Store sorted rows and update pagination
+      allRows = rows;
+      currentPage = 1;
+      updatePagination();
+    }
+
+    function updatePagination() {
+      const tbody = document.getElementById('ideas-tbody');
+      const totalItems = allRows.length;
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+
+      // Clear current rows
+      tbody.innerHTML = '';
+
+      // Add visible rows
+      for (let i = startIndex; i < endIndex; i++) {
+        tbody.appendChild(allRows[i]);
+      }
+
+      // Update pagination info
+      document.getElementById('showing-start').textContent = totalItems > 0 ? startIndex + 1 : 0;
+      document.getElementById('showing-end').textContent = endIndex;
+
+      // Update buttons
+      const prevBtn = document.getElementById('prev-page');
+      const nextBtn = document.getElementById('next-page');
+
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+
+      // Update page buttons (simplified for demo)
+      const pageButtons = document.querySelector('.flex.gap-1');
+      pageButtons.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.className = `px-3 py-1 text-sm rounded-md ${i === currentPage ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'}`;
+        btn.textContent = i;
+        btn.onclick = () => goToPage(i);
+        pageButtons.appendChild(btn);
+      }
+    }
+
+    function goToPage(page) {
+      currentPage = page;
+      updatePagination();
+    }
+
+    // Initialize pagination on load
+    document.addEventListener('DOMContentLoaded', function() {
+      const tbody = document.getElementById('ideas-tbody');
+      allRows = Array.from(tbody.querySelectorAll('tr'));
+      updatePagination();
+    });
+
+    // Previous/Next buttons
+    document.getElementById('prev-page').addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        updatePagination();
+      }
+    });
+
+    document.getElementById('next-page').addEventListener('click', () => {
+      const totalPages = Math.ceil(allRows.length / itemsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        updatePagination();
+      }
+    });
+  </script>
+</div>

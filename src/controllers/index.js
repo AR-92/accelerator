@@ -29,8 +29,6 @@ import { getDashboard } from './overview/get-dashboard.js';
 import { getNewProject } from './overview/get-new-project.js';
 import { getProjectDetail } from './projects/get-project-detail.js';
 
-import { getHelp } from './help/index.js';
-import { getLearn } from './learn/index.js';
 import { getSettings as getSettingsPage } from './settings/index.js';
 import { getBilling } from './billing/index.js';
 import { serviceFactory } from '../services/serviceFactory.js';
@@ -48,6 +46,8 @@ import { getDashboardActivityLog } from './dashboard/activity-log.js';
 import { getDashboardEnterprise } from './dashboard/enterprise.js';
 import { getDashboardCorporate } from './dashboard/corporate.js';
 
+import { getVotingReward } from './voting-reward/index.js';
+
 import { requireAuth, checkAuth } from '../middleware/auth/index.js';
 
 // Re-export for backward compatibility
@@ -64,6 +64,8 @@ export { postLogout };
 export { getDashboard };
 export { getNewProject };
 export { getProjectDetail };
+
+export { getVotingReward };
 
 import { requireWebAuth } from '../middleware/auth/index.js';
 
@@ -487,12 +489,6 @@ export default function adminRoutes(app) {
   app.get('/admin/other-pages/dashboard', requireWebAuth, getDashboard);
   app.get('/admin/other-pages/new-project', requireWebAuth, getNewProject);
 
-  // Help pages
-  app.get('/pages/help', requireWebAuth, getHelp);
-
-  // Learn pages
-  app.get('/pages/learn', requireWebAuth, getLearn);
-
   // Settings pages
   app.get('/pages/settings', requireWebAuth, getSettingsPage);
 
@@ -513,6 +509,9 @@ export default function adminRoutes(app) {
   app.get('/dashboard/activity-log', requireWebAuth, getDashboardActivityLog);
   app.get('/dashboard/enterprise', requireWebAuth, getDashboardEnterprise);
   app.get('/dashboard/corporate', requireWebAuth, getDashboardCorporate);
+
+  // Voting & Rewards page
+  app.get('/voting-reward', requireWebAuth, getVotingReward);
 
   // Legacy redirects for backward compatibility
   app.get('/startup-dashboard', requireWebAuth, (req, res) =>
@@ -694,12 +693,12 @@ export default function adminRoutes(app) {
       { value: 'preferences', label: 'Preferences', icon: 'sliders' },
     ];
     res.render('settings/profile', {
-      layout: 'main',
+      layout: req.headers['hx-request'] ? false : 'settings',
       title: 'Profile Settings',
       currentSection: 'settings',
       currentPage: 'Account',
       settingsCategories,
-      activeCategory: 'account',
+      activeCategory: 'profile',
     });
   });
   app.get('/pages/settings/billing', requireWebAuth, (req, res) => {
@@ -720,7 +719,7 @@ export default function adminRoutes(app) {
       { value: 'preferences', label: 'Preferences', icon: 'sliders' },
     ];
     res.render('settings/billing', {
-      layout: 'main',
+      layout: req.headers['hx-request'] ? false : 'settings',
       title: 'Billing Settings',
       currentSection: 'settings',
       currentPage: 'Billing',
@@ -746,7 +745,7 @@ export default function adminRoutes(app) {
       { value: 'preferences', label: 'Preferences', icon: 'sliders' },
     ];
     res.render('settings/other', {
-      layout: 'main',
+      layout: req.headers['hx-request'] ? false : 'settings',
       title: 'Security & Privacy',
       currentSection: 'settings',
       currentPage: 'Security & Privacy',
@@ -760,16 +759,6 @@ export default function adminRoutes(app) {
     res.redirect('/admin/other-pages/new-project?filter=portfolio');
   });
 
-  // Collaborate coming soon page
-  app.get('/collaborate', requireWebAuth, (req, res) => {
-    res.render('collaborate', {
-      layout: 'main',
-      title: 'Collaborate - Coming Soon',
-      section: 'collaborate',
-      currentSection: 'collaborate',
-      currentPage: 'Collaborate',
-    });
-  });
   app.get('/usecase-from-user', requireWebAuth, (req, res) => {
     res.render('usecase-from-user', {
       layout: 'main',

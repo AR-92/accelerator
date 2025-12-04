@@ -13,40 +13,25 @@
         {{> sidebar-item href="/admin/other-pages/new-project?filter=explore" title="Explore" text="Explore"
         spanClass="font-medium
         sidebar-text" icon='search' }}
-        {{> sidebar-item href="/pages/help" title="Help" text="Help" spanClass="font-medium sidebar-text"
-        icon='help-circle' }}
-        {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text"
-        icon='book-open' }}
+
         {{> sidebar-item href="/pages/settings" title="Settings" text="Settings" spanClass="font-medium sidebar-text"
         icon='settings' }}
         {{> sidebar-item href="/pages/billing" title="Billing" text="Billing" spanClass="font-medium sidebar-text"
         icon='credit-card' }}
       </ul>
 
-      {{#if (eq currentSection 'dashboard')}}
-      <ul class="space-y-1">
-        {{> sidebar-item href="/admin/other-pages/new-project?showCard=true" title="New Project" text="New Project"
-        spanClass="font-medium sidebar-text" icon='plus' }}
-        {{> sidebar-item href="/admin/other-pages/new-project?filter=explore" title="Explore Ideas" text="Explore Ideas"
-        spanClass="font-medium sidebar-text" icon='search' }}
-        {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text"
-        icon='book-open' }}
-      </ul>
-      {{/if}}
+       {{#if (eq currentSection 'dashboard')}}
+       <ul class="space-y-1">
+         {{> sidebar-item href="/admin/other-pages/new-project?showCard=true" title="New Project" text="New Project"
+         spanClass="font-medium sidebar-text" icon='plus' }}
+         {{> sidebar-item href="/admin/other-pages/new-project?filter=explore" title="Explore Ideas" text="Explore Ideas"
+         spanClass="font-medium sidebar-text" icon='search' }}
+       </ul>
+       {{/if}}
 
-      {{#if (eq currentSection 'help')}}
-      <ul class="space-y-1">
-        {{> sidebar-item href="/pages/help" title="Help" text="Help" spanClass="font-medium sidebar-text"
-        icon='help-circle' }}
-      </ul>
-      {{/if}}
 
-      {{#if (eq currentSection 'learn')}}
-      <ul class="space-y-1">
-        {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text"
-        icon='book-open' }}
-      </ul>
-      {{/if}}
+
+
 
       {{#if (eq currentSection 'settings')}}
       <ul class="space-y-1">

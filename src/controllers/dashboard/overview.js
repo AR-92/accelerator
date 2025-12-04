@@ -102,6 +102,7 @@ export const getDashboardOverview = async (req, res) => {
     }
 
     res.render('dashboard/overview', {
+      layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Dashboard Overview',
       currentSection: 'dashboard',
       currentPage: 'overview',
@@ -196,6 +197,7 @@ export const getDashboardOverview = async (req, res) => {
     }
 
     res.render('dashboard/overview', {
+      layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Dashboard Overview',
       currentSection: 'dashboard',
       currentPage: 'overview',

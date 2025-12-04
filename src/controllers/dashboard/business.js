@@ -89,6 +89,7 @@ export const getDashboardBusiness = async (req, res) => {
     ];
 
     res.render('dashboard/business', {
+      layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Business Management',
       currentSection: 'dashboard',
       currentPage: 'business',
@@ -165,6 +166,7 @@ export const getDashboardBusiness = async (req, res) => {
     ];
 
     res.render('dashboard/business', {
+      layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Business Management',
       currentSection: 'dashboard',
       currentPage: 'business',

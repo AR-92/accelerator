@@ -64,15 +64,7 @@
 </head>
 
 <body class="h-full overflow-hidden">
-    <!-- Auth loading screen -->
-    <div id="auth-loading" class="fixed inset-0 bg-background z-50 flex items-center justify-center">
-        <div class="text-center">
-            <div class="animate-spin rounded-md h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-            <p class="text-muted-foreground">Checking authentication...</p>
-            <p class="text-sm text-muted-foreground mt-2">If this takes too long, <button onclick="forceLogout()"
-                    class="underline hover:text-foreground">click here to logout</button></p>
-        </div>
-    </div>
+    {{> auth-loading}}
 
     <!-- Main content (hidden initially) -->
     <div id="main-content" class="h-screen hidden flex flex-col">
@@ -627,7 +619,7 @@
 
                 // Fallback: show main content after 10 seconds if auth check doesn't complete
                 setTimeout(() => {
-                    if (authLoading && mainContent && !mainContent.classList.contains('hidden')) {
+                    if (authLoading && mainContent && mainContent.classList.contains('hidden')) {
 
                         authLoading.classList.add('hidden');
                         mainContent.classList.remove('hidden');
@@ -693,9 +685,9 @@
 
                 if (result.authenticated && result.user) {
                     const user = result.user;
-                    const userNameElements = document.querySelectorAll('#user-name');
-                    const userEmailElements = document.querySelectorAll('#user-email');
-                    const userAvatarElements = document.querySelectorAll('#user-avatar');
+                    const userNameElements = document.querySelectorAll('.user-name');
+                    const userEmailElements = document.querySelectorAll('.user-email');
+                    const userAvatarElements = document.querySelectorAll('.user-avatar');
 
                     // Get display name from user metadata or email
                     let displayName = user.email;
@@ -727,9 +719,9 @@
                     });
 
                     // Update all user avatar elements
-                    userAvatarElements.forEach(el => {
-                        el.textContent = initials;
-                    });
+                    // userAvatarElements.forEach(el => {
+                    //     el.textContent = initials;
+                    // });
                 }
             } catch (error) {
                 console.error('Error loading user data:', error);

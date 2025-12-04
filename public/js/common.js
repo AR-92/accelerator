@@ -175,24 +175,29 @@ async function loadCurrentPlan() {
       if (sidebarPlan) sidebarPlan.textContent = planName;
 
       // Update navbar dropdown
-      const navPlanName = document.getElementById('nav-current-plan-name');
-      const navPlanDetails = document.getElementById(
-        'nav-current-plan-details'
+      const navPlanNameElements = document.querySelectorAll(
+        '.nav-current-plan-name'
       );
-      if (navPlanName) navPlanName.textContent = planName;
-      if (navPlanDetails) navPlanDetails.textContent = planDetails;
+      const navPlanDetailsElements = document.querySelectorAll(
+        '.nav-current-plan-details'
+      );
+      navPlanNameElements.forEach((el) => (el.textContent = planName));
+      navPlanDetailsElements.forEach((el) => (el.textContent = planDetails));
     } else {
       // No subscription, show free plan
       const sidebarPlan = document.getElementById('sidebar-current-plan');
       if (sidebarPlan) sidebarPlan.textContent = 'Free Plan';
 
-      const navPlanName = document.getElementById('nav-current-plan-name');
-      const navPlanDetails = document.getElementById(
-        'nav-current-plan-details'
+      const navPlanNameElements = document.querySelectorAll(
+        '.nav-current-plan-name'
       );
-      if (navPlanName) navPlanName.textContent = 'Free Plan';
-      if (navPlanDetails)
-        navPlanDetails.textContent = 'Upgrade for more features';
+      const navPlanDetailsElements = document.querySelectorAll(
+        '.nav-current-plan-details'
+      );
+      navPlanNameElements.forEach((el) => (el.textContent = 'Free Plan'));
+      navPlanDetailsElements.forEach(
+        (el) => (el.textContent = 'Upgrade for more features')
+      );
     }
   } catch (error) {
     console.error('Error loading current plan:', error);
@@ -200,11 +205,16 @@ async function loadCurrentPlan() {
     const sidebarPlan = document.getElementById('sidebar-current-plan');
     if (sidebarPlan) sidebarPlan.textContent = 'Free Plan';
 
-    const navPlanName = document.getElementById('nav-current-plan-name');
-    const navPlanDetails = document.getElementById('nav-current-plan-details');
-    if (navPlanName) navPlanName.textContent = 'Free Plan';
-    if (navPlanDetails)
-      navPlanDetails.textContent = 'Upgrade for more features';
+    const navPlanNameElements = document.querySelectorAll(
+      '.nav-current-plan-name'
+    );
+    const navPlanDetailsElements = document.querySelectorAll(
+      '.nav-current-plan-details'
+    );
+    navPlanNameElements.forEach((el) => (el.textContent = 'Free Plan'));
+    navPlanDetailsElements.forEach(
+      (el) => (el.textContent = 'Upgrade for more features')
+    );
   }
 }
 
