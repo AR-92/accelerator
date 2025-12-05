@@ -26,8 +26,8 @@
   },
   "homepage": "https://github.com/AR-92/accelerator#readme",
   "dependencies": {
-    "openai": "^4.0.0",
     "@supabase/supabase-js": "^2.84.0",
+    "chart.js": "^4.5.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
@@ -38,6 +38,7 @@
     "helmet": "^8.1.0",
     "lucide-static": "^0.555.0",
     "multer": "^2.0.2",
+    "openai": "^4.0.0",
     "winston": "^3.18.3"
   },
   "devDependencies": {

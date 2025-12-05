@@ -11,6 +11,7 @@ export const securityHeaders = helmet({
         'https://fonts.googleapis.com',
         'https://fonts.gstatic.com',
         'https://cdn.jsdelivr.net',
+        'https://unpkg.com',
       ],
       styleSrc: [
         "'self'",

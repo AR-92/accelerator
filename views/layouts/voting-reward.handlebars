@@ -25,11 +25,13 @@
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="/js/supabase-cookie-storage.js"></script>
     <script src="/js/theme.js"></script>
-     <script src="/js/common.js"></script>
-     <script src="/js/settings.js"></script>
-     <script src="/js/upload.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/upload.js"></script>
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Chart.js -->
+    <script src="https://unpkg.com/chart.js@4.4.0/dist/chart.umd.js"></script>
     <script type="text/hyperscript">
          def updateThemeIcon()
            set isDark to document.documentElement.classList.contains('dark')
@@ -58,15 +60,10 @@
     <!-- Main content (hidden initially) - VOTING REWARD LAYOUT -->
     <div id="main-content" class="h-screen hidden flex flex-col">
         {{> nav}}
-        <main class="flex-1 p-2 sm:p-4 overflow-auto">
+        <main class="flex-1 p-2 p-6 sm:p-4 overflow-auto">
             {{{body}}}
         </main>
     </div>
-
-    <!-- Transaction History Modal -->
-    {{> transaction-history}}
-
-
 
     <!-- Client-side auth check for UI - server handles actual route protection -->
     <script>

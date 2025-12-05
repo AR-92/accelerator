@@ -114,6 +114,9 @@ export const handlebarsHelpers = {
   json: function (context) {
     return JSON.stringify(context);
   },
+  'JSON.stringify': function (context) {
+    return JSON.stringify(context);
+  },
   array: function (...args) {
     return args.slice(0, -1);
   },

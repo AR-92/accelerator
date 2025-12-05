@@ -20,6 +20,14 @@ export const getSettings = async (req, res) => {
       { value: 'integrations', label: 'Integrations', icon: 'link' },
       { value: 'preferences', label: 'Preferences', icon: 'sliders' },
     ];
+    const userProfile = {
+      name: 'John Doe',
+      avatar: '/images/avatar.png',
+      level: 5,
+      joinDate: '2023-01-15',
+      totalContributions: 10,
+      reputation: 1250,
+    };
     res.render('settings/index', {
       title: 'Settings',
       description: 'Application settings and preferences',
@@ -28,6 +36,7 @@ export const getSettings = async (req, res) => {
       settingsCategories,
       activeCategory: 'overview',
       layout: req.headers['hx-request'] ? false : 'settings',
+      userProfile,
     });
   } catch (error) {
     logger.error('Error loading settings page:', error);
