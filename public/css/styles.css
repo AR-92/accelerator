@@ -842,6 +842,18 @@
     }
   }
 
+  @media (min-width: 1280px) {
+    .masonry-container {
+      column-count: 4;
+    }
+  }
+
+  @media (min-width: 1536px) {
+    .masonry-container {
+      column-count: 5;
+    }
+  }
+
   .masonry-container > * {
     break-inside: avoid;
     margin-bottom: 1.5rem;

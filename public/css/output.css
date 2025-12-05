@@ -1031,9 +1031,6 @@
   .flex-col {
     flex-direction: column;
   }
-  .flex-row {
-    flex-direction: row;
-  }
   .flex-wrap {
     flex-wrap: wrap;
   }
@@ -6415,6 +6412,18 @@
     .masonry-container {
       -moz-column-count: 3;
            column-count: 3;
+    }
+  }
+  @media (min-width: 1280px) {
+    .masonry-container {
+      -moz-column-count: 4;
+           column-count: 4;
+    }
+  }
+  @media (min-width: 1536px) {
+    .masonry-container {
+      -moz-column-count: 5;
+           column-count: 5;
     }
   }
   .masonry-container > * {
