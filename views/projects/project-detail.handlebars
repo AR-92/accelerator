@@ -40,7 +40,7 @@
       </div>
 
       <!-- Quick Stats -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
         <div class="bg-card border border-border rounded-lg p-4 shadow-sm">
           <div class="flex items-center gap-2 mb-2">
             {{icon "bar-chart-3" class="text-primary" size=20}}
@@ -64,6 +64,22 @@
           </div>
           <p class="text-2xl font-bold text-foreground">{{#if project.team}}{{project.team.length}}{{else}}0{{/if}}</p>
           <p class="text-xs text-muted-foreground">Members</p>
+        </div>
+        <div class="bg-card border border-border rounded-lg p-4 shadow-sm">
+          <div class="flex items-center gap-2 mb-2">
+            {{icon "eye" class="text-purple-500" size=20}}
+            <span class="text-sm font-medium text-foreground">Views</span>
+          </div>
+          <p class="text-2xl font-bold text-foreground">{{project.views}}</p>
+          <p class="text-xs text-muted-foreground">Total</p>
+        </div>
+        <div class="bg-card border border-border rounded-lg p-4 shadow-sm">
+          <div class="flex items-center gap-2 mb-2">
+            {{icon "star" class="text-yellow-500" size=20}}
+            <span class="text-sm font-medium text-foreground">Rating</span>
+          </div>
+          <p class="text-2xl font-bold text-foreground">{{project.rating}}</p>
+          <p class="text-xs text-muted-foreground">Average</p>
         </div>
         <div class="bg-card border border-border rounded-lg p-4 shadow-sm">
           <div class="flex items-center gap-2 mb-2">
