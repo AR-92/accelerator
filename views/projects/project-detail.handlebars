@@ -36,6 +36,16 @@
             {{icon "clock" class="text-muted-foreground" size=14}}
             <span class="text-sm text-muted-foreground" id="creation-time">Created {{project.created_at}}</span>
           </div>
+          {{#if project.tags}}
+          <div class="flex items-center gap-2">
+            {{icon "tag" class="text-muted-foreground" size=14}}
+            <div class="flex gap-1">
+              {{#each project.tags}}
+              <span class="px-2 py-0.5 bg-secondary/10 text-secondary-foreground text-xs rounded-full">{{this}}</span>
+              {{/each}}
+            </div>
+          </div>
+          {{/if}}
         </div>
       </div>
 
