@@ -36,12 +36,6 @@
             {{icon "clock" class="text-muted-foreground" size=14}}
             <span class="text-sm text-muted-foreground" id="creation-time">Created {{project.created_at}}</span>
           </div>
-          <div class="flex items-center gap-2">
-            {{icon "tag" class="text-muted-foreground" size=14}}
-            <div class="tags-next-to-time flex gap-1">
-              <!-- Tags will be populated by JavaScript -->
-            </div>
-          </div>
         </div>
       </div>
 
@@ -434,10 +428,6 @@
  </main>
 
  <script>
-   window.projectTags = {{{json project.tags}}};
- </script>
-
- <script>
    document.addEventListener('DOMContentLoaded', function() {
      const timeSpan = document.getElementById('creation-time');
      if (timeSpan) {
@@ -449,22 +439,6 @@
            month: 'short',
            day: 'numeric'
          });
-       }
-     }
-
-     // Handle tags if they are stored as JSON string
-     const tagsContainer = document.querySelector('.tags-next-to-time');
-     if (tagsContainer && window.projectTags) {
-       let tags = window.projectTags;
-       if (typeof tags === 'string') {
-         try {
-           tags = JSON.parse(tags);
-         } catch (e) {
-           tags = [];
-         }
-       }
-       if (Array.isArray(tags) && tags.length > 0) {
-         tagsContainer.innerHTML = '<div class="flex gap-1">' + tags.map(tag => `<span class="px-3 py-1 bg-secondary/20 text-secondary-foreground text-sm rounded-full font-medium">${tag}</span>`).join('') + '</div>';
        }
      }
    });
