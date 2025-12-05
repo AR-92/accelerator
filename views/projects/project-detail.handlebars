@@ -1,46 +1,6 @@
 <main class="flex w-full flex-col p-4 mx-auto max-w-7xl">
-    <!-- Header -->
-    <header class="w-full mb-12">
-      <div class="bg-card border border-border rounded-lg p-6 shadow-sm mb-8">
-        <div class="flex items-center gap-3 mb-4">
-          {{icon "briefcase" class="text-primary" size=32}}
-          <h1 class="text-3xl font-semibold text-foreground">
-            {{project.name}}
-          </h1>
-        </div>
-        <p class="text-muted-foreground text-base ml-11 mb-4">
-          {{project.description}}
-        </p>
-        <div class="flex flex-wrap items-center gap-4 ml-11 mb-4">
-          {{#if project.category}}
-          <div class="flex items-center gap-2">
-            {{icon "folder" class="text-muted-foreground" size=14}}
-            <span class="text-sm text-muted-foreground">{{project.category}}</span>
-          </div>
-          {{/if}}
-          {{#if project.tags}}
-          <div class="flex items-center gap-2">
-            {{icon "tag" class="text-muted-foreground" size=14}}
-            {{#each project.tags}}
-            <span class="px-2 py-0.5 bg-secondary/10 text-secondary-foreground text-xs rounded-full">{{this}}</span>
-            {{/each}}
-          </div>
-          {{/if}}
-        </div>
-        <div class="flex items-center gap-6 ml-11">
-          <div class="flex items-center gap-2">
-            <div class="w-2 h-2 bg-primary rounded-full"></div>
-            <span class="text-sm text-muted-foreground">Active Project</span>
-          </div>
-          <div class="flex items-center gap-2">
-            {{icon "clock" class="text-muted-foreground" size=14}}
-            <span class="text-sm text-muted-foreground" id="creation-time">Created {{project.created_at}}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick Stats -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+    <!-- Quick Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
         <div class="bg-card border border-border rounded-lg p-4 shadow-sm">
           <div class="flex items-center gap-2 mb-2">
             {{icon "bar-chart-3" class="text-primary" size=20}}
@@ -88,6 +48,46 @@
           </div>
           <p class="text-2xl font-bold text-foreground">{{#if project.idea_model}}14{{else}}0{{/if}}{{#if project.business_model}}+14{{/if}}{{#if project.financial_model}}+14{{/if}}{{#if project.funding_model}}+14{{/if}}{{#if project.legal_model}}+14{{/if}}{{#if project.marketing_model}}+14{{/if}}{{#if project.team_model}}+14{{/if}}%</p>
           <p class="text-xs text-muted-foreground">Overall</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="w-full mb-12">
+      <div class="bg-card border border-border rounded-lg p-6 shadow-sm mb-8">
+        <div class="flex items-center gap-3 mb-4">
+          {{icon "briefcase" class="text-primary" size=32}}
+          <h1 class="text-3xl font-semibold text-foreground">
+            {{project.name}}
+          </h1>
+        </div>
+        <p class="text-muted-foreground text-base ml-11 mb-4">
+          {{project.description}}
+        </p>
+        <div class="flex flex-wrap items-center gap-4 ml-11 mb-4">
+          {{#if project.category}}
+          <div class="flex items-center gap-2">
+            {{icon "folder" class="text-muted-foreground" size=14}}
+            <span class="text-sm text-muted-foreground">{{project.category}}</span>
+          </div>
+          {{/if}}
+          {{#if project.tags}}
+          <div class="flex items-center gap-2">
+            {{icon "tag" class="text-muted-foreground" size=14}}
+            {{#each project.tags}}
+            <span class="px-2 py-0.5 bg-secondary/10 text-secondary-foreground text-xs rounded-full">{{this}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+        </div>
+        <div class="flex items-center gap-6 ml-11">
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-primary rounded-full"></div>
+            <span class="text-sm text-muted-foreground">Active Project</span>
+          </div>
+          <div class="flex items-center gap-2">
+            {{icon "clock" class="text-muted-foreground" size=14}}
+            <span class="text-sm text-muted-foreground" id="creation-time">Created {{project.created_at}}</span>
+          </div>
         </div>
       </div>
     </header>
