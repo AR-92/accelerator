@@ -80,7 +80,7 @@ export const getDashboardFinancial = async (req, res) => {
     res.render('dashboard/financial', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Financial Management',
-      currentSection: 'dashboard',
+      currentSection: 'home',
       currentPage: 'financial',
       user,
       userRole,
@@ -156,7 +156,7 @@ export const getDashboardFinancial = async (req, res) => {
     res.render('dashboard/financial', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Financial Management',
-      currentSection: 'dashboard',
+      currentSection: 'home',
       currentPage: 'financial',
       user: req.user,
       userRole: req.user?.role || 'startup',

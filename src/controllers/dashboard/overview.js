@@ -104,7 +104,7 @@ export const getDashboardOverview = async (req, res) => {
     res.render('dashboard/overview', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Dashboard Overview',
-      currentSection: 'dashboard',
+      currentSection: 'home',
       currentPage: 'overview',
       user,
       userRole,
@@ -115,6 +115,7 @@ export const getDashboardOverview = async (req, res) => {
       features,
       filterLinks,
       lastUpdated: new Date().toLocaleString(),
+      showSearch: true,
     });
   } catch (error) {
     logger.error('Error loading dashboard overview:', error);
@@ -199,7 +200,7 @@ export const getDashboardOverview = async (req, res) => {
     res.render('dashboard/overview', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Dashboard Overview',
-      currentSection: 'dashboard',
+      currentSection: 'home',
       currentPage: 'overview',
       user: req.user,
       userRole: req.user?.role || 'startup',
@@ -210,6 +211,7 @@ export const getDashboardOverview = async (req, res) => {
       features: getRoleBasedFeatures(req.user?.role || 'startup'),
       filterLinks,
       lastUpdated: new Date().toLocaleString(),
+      showSearch: true,
     });
   }
 };

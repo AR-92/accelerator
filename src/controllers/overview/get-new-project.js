@@ -191,7 +191,7 @@ export const getNewProject = async (req, res) => {
         title: 'New Project',
         description: 'Create a new project',
         section: 'main',
-        currentSection: 'main',
+        currentSection: filter === 'portfolio' ? 'portfolio' : 'main',
         currentPage: 'New Project',
         filterLinks: overviewFilterLinks,
         ideas: transformedIdeas,

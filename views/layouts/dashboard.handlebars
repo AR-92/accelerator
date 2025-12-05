@@ -295,23 +295,49 @@
             }
         }
 
-        // Mobile sidebar functionality
-        function openMobileSidebar() {
-            const sidebar = document.getElementById('mobile-sidebar');
+        // Mobile sidebar functions
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('mobile-sidebar-overlay');
-            if (sidebar && overlay) {
-                sidebar.classList.remove('hidden');
-                overlay.classList.add('hidden');
+
+            if (!sidebar || !overlay) {
+                console.error('Sidebar or overlay elements not found');
+                return;
+            }
+
+            const isOpen = sidebar.classList.contains('translate-x-0') && sidebar.classList.contains('opacity-100');
+
+            if (isOpen) {
+                closeMobileSidebar();
+            } else {
+                sidebar.classList.remove('opacity-0');
+                sidebar.classList.add('opacity-100');
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+                sidebar.classList.remove('pointer-events-none');
+                sidebar.classList.add('pointer-events-auto');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent background scroll
             }
         }
 
         function closeMobileSidebar() {
-            const sidebar = document.getElementById('mobile-sidebar');
+            const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('mobile-sidebar-overlay');
-            if (sidebar && overlay) {
-                sidebar.classList.add('hidden');
-                overlay.classList.add('hidden');
+
+            if (!sidebar || !overlay) {
+                console.error('Sidebar or overlay elements not found');
+                return;
             }
+
+            sidebar.classList.remove('opacity-100');
+            sidebar.classList.add('opacity-0');
+            sidebar.classList.remove('translate-x-0');
+            sidebar.classList.add('-translate-x-full');
+            sidebar.classList.remove('pointer-events-auto');
+            sidebar.classList.add('pointer-events-none');
+            overlay.classList.add('hidden');
+            document.body.style.overflow = ''; // Restore scroll
         }
 
         // Initialize theme on page load

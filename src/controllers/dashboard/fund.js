@@ -79,7 +79,7 @@ export const getDashboardFund = async (req, res) => {
     res.render('dashboard/fund', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Funding Management',
-      currentSection: 'dashboard',
+      currentSection: 'home',
       currentPage: 'fund',
       user,
       userRole,
@@ -154,7 +154,7 @@ export const getDashboardFund = async (req, res) => {
     res.render('dashboard/fund', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Funding Management',
-      currentSection: 'dashboard',
+      currentSection: 'home',
       currentPage: 'fund',
       user: req.user,
       userRole: req.user?.role || 'startup',

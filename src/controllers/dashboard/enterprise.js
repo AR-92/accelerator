@@ -99,7 +99,7 @@ export const getDashboardEnterprise = async (req, res) => {
     res.render('dashboard/enterprise', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Enterprise Dashboard',
-      currentSection: 'dashboard',
+      currentSection: 'home',
       currentPage: 'enterprise',
       user,
       userRole,
@@ -184,7 +184,7 @@ export const getDashboardEnterprise = async (req, res) => {
     res.render('dashboard/enterprise', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Enterprise Dashboard',
-      currentSection: 'dashboard',
+      currentSection: 'home',
       currentPage: 'enterprise',
       user: req.user,
       userRole: req.user?.role || 'startup',

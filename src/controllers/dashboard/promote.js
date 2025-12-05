@@ -79,7 +79,7 @@ export const getDashboardPromote = async (req, res) => {
     res.render('dashboard/promote', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Promotion Management',
-      currentSection: 'dashboard',
+      currentSection: 'home',
       currentPage: 'promote',
       user,
       userRole,
@@ -154,7 +154,7 @@ export const getDashboardPromote = async (req, res) => {
     res.render('dashboard/promote', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Promotion Management',
-      currentSection: 'dashboard',
+      currentSection: 'home',
       currentPage: 'promote',
       user: req.user,
       userRole: req.user?.role || 'startup',

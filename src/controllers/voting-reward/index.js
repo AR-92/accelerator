@@ -395,6 +395,7 @@ export const getVotingReward = async (req, res) => {
       userProfile,
       advancedAnalytics,
       creditsGiven,
+      showSearch: true,
     });
   } catch (error) {
     console.error('Error loading voting reward page:', error);

@@ -20,14 +20,14 @@
         icon='credit-card' }}
       </ul>
 
-       {{#if (eq currentSection 'dashboard')}}
-       <ul class="space-y-1">
-         {{> sidebar-item href="/admin/other-pages/new-project?showCard=true" title="New Project" text="New Project"
-         spanClass="font-medium sidebar-text" icon='plus' }}
-         {{> sidebar-item href="/admin/other-pages/new-project?filter=explore" title="Explore Ideas" text="Explore Ideas"
-         spanClass="font-medium sidebar-text" icon='search' }}
-       </ul>
-       {{/if}}
+      {{#if (eq currentSection 'dashboard')}}
+      <ul class="space-y-1">
+        {{> sidebar-item href="/admin/other-pages/new-project?showCard=true" title="New Project" text="New Project"
+        spanClass="font-medium sidebar-text" icon='plus' }}
+        {{> sidebar-item href="/admin/other-pages/new-project?filter=explore" title="Explore Ideas" text="Explore Ideas"
+        spanClass="font-medium sidebar-text" icon='search' }}
+      </ul>
+      {{/if}}
 
 
 
@@ -73,7 +73,8 @@
         spanClass="font-medium sidebar-text" icon='user' }}
         {{> sidebar-item href="/admin/other-pages/settings" title="Settings" text="Settings" spanClass="font-medium
         sidebar-text" icon='settings' }}
-        {{> sidebar-item href="/admin/other-pages/user-management" title="User Management" text="User Management" spanClass="font-medium
+        {{> sidebar-item href="/admin/other-pages/user-management" title="User Management" text="User Management"
+        spanClass="font-medium
         sidebar-text" icon='users' }}
       </ul>
       {{/if}}
@@ -92,8 +93,7 @@
         spanClass="font-medium sidebar-text" icon='plus' }}
         {{> sidebar-item href="/admin/other-pages/new-project?filter=explore" title="Explore Ideas" text="Explore Ideas"
         spanClass="font-medium sidebar-text" icon='search' }}
-        {{> sidebar-item href="/pages/learn" title="Learn" text="Learn" spanClass="font-medium sidebar-text"
-        icon='book-open' }}
+
       </ul>
       {{#if allIdeas}}
       <div class="mt-4">
@@ -106,7 +106,7 @@
           {{#each allIdeas}}
           <li>
             <a href="/projects/{{this.id}}" title="{{this.title}}"
-              class="flex items-center px-3 py-1 text-sm text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
+              class="flex items-center px-3 py-1 rounded-md text-sm text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
               {{{icon 'file-text' size="16" class='w-4 h-4 mr-3'}}}
               <span class="text-xs sidebar-text">{{this.title}}</span>
             </a>
@@ -146,7 +146,7 @@
         {{#each rowActions}}
         <li>
           <a href="{{link}}"
-            class="flex items-center px-3 py-2 text-sm text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
+            class="flex items-center px-3 py-2 rounded-md text-sm text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
             {{{icon icon size="16" class='w-4 h-4 mr-3'}}}
             <span class="font-medium sidebar-text">{{text}}</span>
           </a>

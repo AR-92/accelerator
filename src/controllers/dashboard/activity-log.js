@@ -79,7 +79,7 @@ export const getDashboardActivityLog = async (req, res) => {
     res.render('dashboard/activity-log', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Activity Log',
-      currentSection: 'dashboard',
+      currentSection: 'home',
       currentPage: 'activity-log',
       user,
       userRole,
@@ -154,7 +154,7 @@ export const getDashboardActivityLog = async (req, res) => {
     res.render('dashboard/activity-log', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Activity Log',
-      currentSection: 'dashboard',
+      currentSection: 'home',
       currentPage: 'activity-log',
       user: req.user,
       userRole: req.user?.role || 'startup',

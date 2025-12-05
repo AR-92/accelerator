@@ -193,8 +193,7 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             if (!sidebar) return;
-            const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
-            const isCollapsed = collapsedFooter && collapsedFooter.style.display !== 'none';
+            const isCollapsed = sidebar.style.width === '66px';
 
             if (isCollapsed) {
                 sidebar.style.width = '224px';

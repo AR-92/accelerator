@@ -37,6 +37,7 @@ export const getSettings = async (req, res) => {
       activeCategory: 'overview',
       layout: req.headers['hx-request'] ? false : 'settings',
       userProfile,
+      showSearch: true,
     });
   } catch (error) {
     logger.error('Error loading settings page:', error);
