@@ -705,12 +705,13 @@
         });
 
         if (response.ok) {
+          const data = await response.json();
           if (typeof showToast !== 'undefined') {
             showToast('Idea created successfully!', 'success');
           }
           // Success - redirect after a short delay to show toast
           setTimeout(() => {
-            window.location.href = '/admin/other-pages/new-project?success=created';
+            window.location.href = `/projects/${data.idea.id}`;
           }, 1000);
         } else {
           const errorData = await response.json();
