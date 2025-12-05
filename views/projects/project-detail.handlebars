@@ -34,7 +34,7 @@
           </div>
           <div class="flex items-center gap-2">
             {{icon "clock" class="text-muted-foreground" size=14}}
-            <span class="text-sm text-muted-foreground">Created {{project.created_at}}</span>
+            <span class="text-sm text-muted-foreground" id="creation-time">Created {{project.created_at}}</span>
           </div>
         </div>
       </div>
@@ -425,4 +425,21 @@
         Back to All Projects
       </a>
     </section>
-</main>
+ </main>
+
+ <script>
+   document.addEventListener('DOMContentLoaded', function() {
+     const timeSpan = document.getElementById('creation-time');
+     if (timeSpan) {
+       const text = timeSpan.textContent.replace('Created ', '');
+       const date = new Date(text);
+       if (!isNaN(date.getTime())) {
+         timeSpan.textContent = 'Created ' + date.toLocaleDateString('en-US', {
+           year: 'numeric',
+           month: 'short',
+           day: 'numeric'
+         });
+       }
+     }
+   });
+ </script>
