@@ -11,6 +11,22 @@
         <p class="text-muted-foreground text-base ml-11 mb-4">
           {{project.description}}
         </p>
+        <div class="flex flex-wrap items-center gap-4 ml-11 mb-4">
+          {{#if project.category}}
+          <div class="flex items-center gap-2">
+            {{icon "folder" class="text-muted-foreground" size=14}}
+            <span class="text-sm text-muted-foreground">{{project.category}}</span>
+          </div>
+          {{/if}}
+          {{#if project.tags}}
+          <div class="flex items-center gap-2">
+            {{icon "tag" class="text-muted-foreground" size=14}}
+            {{#each project.tags}}
+            <span class="px-2 py-0.5 bg-secondary/10 text-secondary-foreground text-xs rounded-full">{{this}}</span>
+            {{/each}}
+          </div>
+          {{/if}}
+        </div>
         <div class="flex items-center gap-6 ml-11">
           <div class="flex items-center gap-2">
             <div class="w-2 h-2 bg-primary rounded-full"></div>
