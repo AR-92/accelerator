@@ -25,13 +25,13 @@
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="/js/supabase-cookie-storage.js"></script>
     <script src="/js/theme.js"></script>
-     <script src="/js/common.js"></script>
-     <script src="/js/settings.js"></script>
-     <script src="/js/upload.js"></script>
-     <!-- Animate.css -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-     <!-- Chart.js -->
-     <script src="https://unpkg.com/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/upload.js"></script>
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Chart.js -->
+    <script src="https://unpkg.com/chart.js@4.4.0/dist/chart.umd.js"></script>
     <script type="text/hyperscript">
          def updateThemeIcon()
            set isDark to document.documentElement.classList.contains('dark')
@@ -80,142 +80,15 @@
         </div>
     </div>
 
-     <!-- Mobile sidebar overlay -->
-     <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 hidden" onclick="closeMobileSidebar()"></div>
+    <!-- Mobile sidebar overlay -->
+    <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 hidden"
+        onclick="closeMobileSidebar()"></div>
 
-     <!-- Transaction History Modal -->
-     {{> transaction-history}}
+    <!-- Transaction History Modal -->
+    {{> transaction-history}}
 
     <!-- JavaScript Section -->
     <script>
-        // Toggle action menu dropdown - consistent signature using button element
-        function toggleActionMenu(button) {
-            const entity = button.getAttribute('data-entity');
-            const id = button.getAttribute('data-id');
-
-            if (!entity || !id || !button) {
-                console.error('Invalid parameters for toggleActionMenu');
-                return;
-            }
-
-            const menu = document.getElementById(`actionMenu-${entity}-${id}`);
-            if (!menu) {
-                console.error(`Dropdown not found: actionMenu-${entity}-${id}`);
-                return;
-            }
-
-            const allMenus = document.querySelectorAll('[id^="actionMenu-"]');
-
-            // Close all other menus
-            allMenus.forEach(m => {
-                if (m !== menu) {
-                    m.style.display = 'none';
-                }
-            });
-
-            // Toggle current menu
-            if (menu.style.display === 'none' || menu.style.display === '') {
-                // Show menu to get dimensions
-                menu.style.display = 'block';
-                menu.style.position = 'fixed';
-                menu.style.zIndex = '9999';
-                menu.style.visibility = 'hidden';
-
-                // Force reflow to get accurate dimensions
-                menu.offsetWidth;
-
-                // Position the menu next to the button
-                const rect = button.getBoundingClientRect();
-                const menuWidth = menu.offsetWidth;
-                const menuHeight = menu.offsetHeight;
-
-                // Position below the button, aligned to the right
-                let top = rect.bottom + window.scrollY + 5;
-                let left = rect.right + window.scrollX - menuWidth;
-
-                // If it would go off-screen to the left, position to the right of button
-                if (left < 0) {
-                    left = rect.right + window.scrollX;
-                }
-
-                // If it would go off-screen to the bottom, position above button
-                if (top + menuHeight > window.scrollY + window.innerHeight) {
-                    top = rect.top + window.scrollY - menuHeight - 5;
-                }
-
-                // Apply final position
-                menu.style.top = `${top}px`;
-                menu.style.left = `${left}px`;
-                menu.style.visibility = 'visible';
-            } else {
-                menu.style.display = 'none';
-            }
-        }
-
-        // Toggle user menu dropdown
-        function toggleUserMenu() {
-            const menu = document.getElementById('admin-user-dropdown');
-            const isHidden = menu.classList.contains('hidden');
-            if (isHidden) {
-                menu.classList.remove('hidden');
-                setTimeout(() => menu.classList.remove('opacity-0', 'invisible'), 10);
-            } else {
-                menu.classList.add('opacity-0', 'invisible');
-                setTimeout(() => menu.classList.add('hidden'), 200);
-            }
-        }
-
-        // Toggle grid menu dropdown
-        function toggleGridMenu() {
-            const menu = document.getElementById('grid-dropdown');
-            const isHidden = menu.classList.contains('hidden');
-            if (isHidden) {
-                menu.classList.remove('hidden');
-                setTimeout(() => menu.classList.remove('opacity-0', 'invisible'), 10);
-            } else {
-                menu.classList.add('opacity-0', 'invisible');
-                setTimeout(() => menu.classList.add('hidden'), 200);
-            }
-        }
-
-        // Toggle footer dropdown
-        function toggleFooterDropdown() {
-            const menu = document.getElementById('footer-dropdown-menu');
-            const isHidden = menu.classList.contains('hidden');
-            if (isHidden) {
-                menu.classList.remove('hidden');
-                setTimeout(() => menu.classList.remove('opacity-0', 'invisible'), 10);
-            } else {
-                menu.classList.add('opacity-0', 'invisible');
-                setTimeout(() => menu.classList.add('hidden'), 200);
-            }
-        }
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function (event) {
-            if (!event.target.closest('.relative') && !event.target.closest('#admin-user-menu') && !event.target.closest('#grid-menu') && !event.target.closest('[id^="actionMenu-"]') && !event.target.closest('button[onclick*="toggleActionMenu"]') && !event.target.closest('#footer-dropdown-trigger') && !event.target.closest('#footer-dropdown-menu')) {
-                // Close action menus
-                document.querySelectorAll('[id^="actionMenu-"]').forEach(menu => {
-                    menu.style.display = 'none';
-                });
-                // Close other dropdowns
-                document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                    if (!menu.id.startsWith('actionMenu-')) {
-                        menu.classList.add('hidden');
-                    }
-                });
-                const userMenu = document.getElementById('admin-user-dropdown');
-                userMenu.classList.add('opacity-0', 'invisible');
-                setTimeout(() => userMenu.classList.add('hidden'), 200);
-                const gridMenu = document.getElementById('grid-dropdown');
-                gridMenu.classList.add('opacity-0', 'invisible');
-                setTimeout(() => gridMenu.classList.add('hidden'), 200);
-                // Close footer dropdown
-                const footerMenu = document.getElementById('footer-dropdown-menu');
-                footerMenu.classList.add('opacity-0', 'invisible');
-                setTimeout(() => footerMenu.classList.add('hidden'), 200);
-            }
-        });
 
         // Handle checkbox selection for bulk actions
         document.addEventListener('change', function (event) {

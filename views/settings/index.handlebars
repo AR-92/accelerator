@@ -1,12 +1,21 @@
 <div class="flex flex-col gap-4 lg:gap-6 mt-6">
   <div class="flex items-center justify-between">
-    <div class="grid gap-1">
-      <h1 class="font-heading text-3xl font-semibold text-foreground">
-        Settings
-      </h1>
-      <p class="text-lg text-muted-foreground">
-        Manage your account preferences and configuration
-      </p>
+    <div class="flex gap-4">
+      <div>
+        <img src="{{userProfile.avatar}}" alt="Avatar"
+          class="w-12 h-12 rounded-full border-2 border-border object-cover">
+      </div>
+      <div>
+
+        <h1 class="font-heading text-3xl font-semibold text-foreground">
+          {{userProfile.name}}'s Settings
+        </h1>
+        <p class="text-sm text-muted-foreground">Level {{userProfile.level}} • Joined {{formatDate
+          userProfile.joinDate 'long'}}</p>
+        <p class="text-lg text-muted-foreground">
+          Manage your account preferences and configuration
+        </p>
+      </div>
     </div>
     <div class="flex items-center gap-2">
       <button class="btn btn-primary">
@@ -20,7 +29,7 @@
   <div class="grid grid-cols-4 gap-4">
 
     <!-- Account Status -->
-    <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+    <div class="rounded-lg  px-4 py-6 text-card-foreground shadow-sm border border-border">
       <div class="flex items-center justify-between px-3 py-1">
         <div class="flex flex-col gap-1">
           <h3 class="text-sm font-medium text-muted-foreground">Account Status</h3>
@@ -44,7 +53,7 @@
     </div>
 
     <!-- Current Plan -->
-    <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+    <div class="rounded-lg  px-4 py-6 text-card-foreground shadow-sm border border-border">
       <div class="flex items-center justify-between px-3 py-1">
         <div class="flex flex-col gap-1">
           <h3 class="text-sm font-medium text-muted-foreground">Current Plan</h3>
@@ -68,7 +77,7 @@
     </div>
 
     <!-- Credits Balance -->
-    <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+    <div class="rounded-lg  px-4 py-6 text-card-foreground shadow-sm border border-border">
       <div class="flex items-center justify-between px-3 py-1">
         <div class="flex flex-col gap-1">
           <h3 class="text-sm font-medium text-muted-foreground">Credits Balance</h3>
@@ -92,7 +101,7 @@
     </div>
 
     <!-- Security Status -->
-    <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+    <div class="rounded-lg  px-4 py-6 text-card-foreground shadow-sm border border-border">
       <div class="flex items-center justify-between px-3 py-1">
         <div class="flex flex-col gap-1">
           <h3 class="text-sm font-medium text-muted-foreground">Security Status</h3>
@@ -115,27 +124,10 @@
       </p>
     </div>
   </div>
-  <!-- User Profile Summary -->
-  <div class="bg-card rounded-lg border border-border p-4">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <img src="{{userProfile.avatar}}" alt="Avatar"
-          class="w-12 h-12 rounded-full border-2 border-border object-cover">
-        <div>
-          <h3 class="text-lg font-semibold text-foreground">{{userProfile.name}}</h3>
-          <p class="text-sm text-muted-foreground">Level {{userProfile.level}} • Joined {{formatDate
-            userProfile.joinDate 'long'}}</p>
-        </div>
-      </div>
-      <button class="px-3 py-1 bg-primary text-primary-foreground rounded hover:bg-primary/90 text-sm">
-        {{{icon 'edit' size="14" class="mr-1"}}}
-        Edit
-      </button>
-    </div>
-  </div>
+
   <div class="grid grid-cols-2 gap-4">
     <!-- Profile Settings -->
-    <div class="bg-card border border-border rounded-lg p-6 mb-6">
+    <div class=" border border-border rounded-lg p-6 mb-6">
       <div class="flex items-center gap-3 mb-6">
         <div class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
           {{{icon 'user' size="16" class='w-4 h-4 text-primary'}}}
@@ -182,7 +174,7 @@
       </form>
     </div>
     <!-- Security & Privacy Section -->
-    <div class="bg-card border border-border rounded-lg p-6 mb-6">
+    <div class=" border border-border rounded-lg p-6 mb-6">
       <div class="flex items-center gap-3 mb-6">
         <div class="w-8 h-8 bg-success/10 rounded-lg flex items-center justify-center">
           {{{icon 'shield' size="16" class='w-4 h-4 text-success'}}}
@@ -269,7 +261,7 @@
       </div>
     </div>
   </div>
-  <div class="bg-card border border-border rounded-lg p-6 mb-6 grid gap-4  grid-cols-4">
+  <div class=" border border-border rounded-lg p-6 mb-6 grid gap-4  grid-cols-4">
     <!-- Buy Credits Section -->
     <div class=" col-span-3">
       <div class="flex items-center gap-3 mb-6">
@@ -297,7 +289,7 @@
       <!-- Billing history will be loaded dynamically -->
     </div>
   </div>
-  <div class="bg-card border border-border rounded-lg p-6 mb-6 grid gap-4  grid-cols-4">
+  <div class=" border border-border rounded-lg p-6 mb-6 grid gap-4  grid-cols-4">
     <div class="flex flex-col col-span-3 gap-4">
       <!-- Upgrade Plan Section -->
       <div class="">
@@ -401,7 +393,7 @@
       </div>
 
       <!-- Credits Section -->
-      <div class="bg-card border border-border rounded-lg p-6 mb-6">
+      <div class=" border border-border rounded-lg p-6 mb-6">
         <div class="flex items-center gap-3 mb-6">
           <div class="w-8 h-8 bg-amber-500/10 rounded-lg flex items-center justify-center">
             {{{icon 'coins' size="16" class='w-4 h-4 text-amber-600'}}}
@@ -440,7 +432,7 @@
       </div>
 
       <!-- Quick Settings -->
-      <div class="bg-card border border-border rounded-lg p-6 mb-6">
+      <div class=" border border-border rounded-lg p-6 mb-6">
         <div class="flex items-center gap-3 mb-6">
           <div class="w-8 h-8 bg-purple-500/10 rounded-lg flex items-center justify-center">
             {{{icon 'zap' size="16" class='w-4 h-4 text-purple-600'}}}

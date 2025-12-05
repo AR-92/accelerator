@@ -292,50 +292,6 @@
             }
         }
 
-        // Toggle action menu dropdown - consistent signature using button element
-        function toggleActionMenu(button) {
-            const entity = button.getAttribute('data-entity');
-            const id = button.getAttribute('data-id');
-
-            if (!entity || !id || !button) {
-                console.error('Invalid parameters for toggleActionMenu');
-                return;
-            }
-
-            const menu = document.getElementById(`actionMenu-${entity}-${id}`);
-            if (!menu) {
-                console.error(`Dropdown not found: actionMenu-${entity}-${id}`);
-                return;
-            }
-
-            // Close other open menus
-            document.querySelectorAll('[id^="actionMenu-"]').forEach(otherMenu => {
-                if (otherMenu !== menu && otherMenu.classList.contains('block')) {
-                    otherMenu.classList.remove('block');
-                    otherMenu.classList.add('hidden');
-                }
-            });
-
-            // Toggle current menu
-            if (menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-                menu.classList.add('block');
-            } else {
-                menu.classList.remove('block');
-                menu.classList.add('hidden');
-            }
-        }
-
-        // Close action menu when clicking outside
-        document.addEventListener('click', function (event) {
-            if (!event.target.closest('[data-entity]') && !event.target.closest('[id^="actionMenu-"]')) {
-                document.querySelectorAll('[id^="actionMenu-"]').forEach(menu => {
-                    menu.classList.remove('block');
-                    menu.classList.add('hidden');
-                });
-            }
-        });
-
         // Mobile sidebar functionality
         function openMobileSidebar() {
             const sidebar = document.getElementById('mobile-sidebar');
