@@ -661,6 +661,9 @@
   .ml-9 {
     margin-left: calc(var(--spacing) * 9);
   }
+  .ml-11 {
+    margin-left: calc(var(--spacing) * 11);
+  }
   .ml-auto {
     margin-left: auto;
   }
@@ -675,6 +678,12 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+  }
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
   }
   .block {
     display: block;
@@ -1366,6 +1375,9 @@
   }
   .border-muted {
     border-color: var(--color-muted);
+  }
+  .border-muted-foreground {
+    border-color: var(--color-muted-foreground);
   }
   .border-orange-200 {
     border-color: var(--color-orange-200);

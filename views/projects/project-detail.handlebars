@@ -1,238 +1,396 @@
 <main class="flex w-full flex-col p-4 mx-auto max-w-7xl">
-   <!-- Header -->
-   <header class="w-full mb-20">
-     <div class="flex items-center gap-3 mb-2">
-       {{icon "briefcase" class="text-muted-foreground" size=24}}
-       <h1 class="text-2xl text-foreground">
-         {{project.name}}
-       </h1>
-     </div>
-     <p class="text-muted-foreground text-sm ml-9">
-       {{project.description}}
-     </p>
-   </header>
+    <!-- Header -->
+    <header class="w-full mb-12">
+      <div class="bg-card border border-border rounded-lg p-6 shadow-sm mb-8">
+        <div class="flex items-center gap-3 mb-4">
+          {{icon "briefcase" class="text-primary" size=32}}
+          <h1 class="text-3xl font-semibold text-foreground">
+            {{project.name}}
+          </h1>
+        </div>
+        <p class="text-muted-foreground text-base ml-11 mb-4">
+          {{project.description}}
+        </p>
+        <div class="flex items-center gap-6 ml-11">
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-primary rounded-full"></div>
+            <span class="text-sm text-muted-foreground">Active Project</span>
+          </div>
+          <div class="flex items-center gap-2">
+            {{icon "calendar" class="text-muted-foreground" size=14}}
+            <span class="text-sm text-muted-foreground">Created recently</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-card border border-border rounded-lg p-4 shadow-sm">
+          <div class="flex items-center gap-2 mb-2">
+            {{icon "bar-chart-3" class="text-primary" size=20}}
+            <span class="text-sm font-medium text-foreground">Models</span>
+          </div>
+          <p class="text-2xl font-bold text-foreground">{{#if project.idea_model}}1{{else}}0{{/if}}{{#if project.business_model}}+1{{/if}}{{#if project.financial_model}}+1{{/if}}{{#if project.funding_model}}+1{{/if}}{{#if project.legal_model}}+1{{/if}}{{#if project.marketing_model}}+1{{/if}}{{#if project.team_model}}+1{{/if}} / 7</p>
+          <p class="text-xs text-muted-foreground">Completed</p>
+        </div>
+        <div class="bg-card border border-border rounded-lg p-4 shadow-sm">
+          <div class="flex items-center gap-2 mb-2">
+            {{icon "check-square" class="text-success" size=20}}
+            <span class="text-sm font-medium text-foreground">Tasks</span>
+          </div>
+          <p class="text-2xl font-bold text-foreground">{{#if project.tasks}}{{project.tasks.length}}{{else}}0{{/if}}</p>
+          <p class="text-xs text-muted-foreground">Total</p>
+        </div>
+        <div class="bg-card border border-border rounded-lg p-4 shadow-sm">
+          <div class="flex items-center gap-2 mb-2">
+            {{icon "users" class="text-info" size=20}}
+            <span class="text-sm font-medium text-foreground">Team</span>
+          </div>
+          <p class="text-2xl font-bold text-foreground">{{#if project.team}}{{project.team.length}}{{else}}0{{/if}}</p>
+          <p class="text-xs text-muted-foreground">Members</p>
+        </div>
+        <div class="bg-card border border-border rounded-lg p-4 shadow-sm">
+          <div class="flex items-center gap-2 mb-2">
+            {{icon "trending-up" class="text-warning" size=20}}
+            <span class="text-sm font-medium text-foreground">Progress</span>
+          </div>
+          <p class="text-2xl font-bold text-foreground">{{#if project.idea_model}}14{{else}}0{{/if}}{{#if project.business_model}}+14{{/if}}{{#if project.financial_model}}+14{{/if}}{{#if project.funding_model}}+14{{/if}}{{#if project.legal_model}}+14{{/if}}{{#if project.marketing_model}}+14{{/if}}{{#if project.team_model}}+14{{/if}}%</p>
+          <p class="text-xs text-muted-foreground">Overall</p>
+        </div>
+      </div>
+    </header>
 
 
 
 
 
-   <!-- Project Models Section -->
-   <section class="mb-20">
-     <div class="flex items-center gap-2 mb-10">
-       {{icon "bar-chart-3" class="text-muted-foreground" size=20}}
-       <h2 class="text-lg text-foreground">Project Models</h2>
-     </div>
-     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
-       <!-- Idea Model -->
-       <div class="p-4">
-         <div class="flex items-center gap-2 mb-3">
-           {{icon "lightbulb" class="text-muted-foreground" size=16}}
-           <h3 class="text-base text-foreground">Idea Model</h3>
-         </div>
-         {{#if project.idea_model}}
-         <p class="text-muted-foreground text-sm">{{project.idea_model}}</p>
-         {{else}}
-         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
-         <a href="/projects/idea-model" class="text-primary text-sm mt-1 inline-block">
-           Define Model →
-         </a>
-         {{/if}}
-       </div>
+    <!-- Project Models Section -->
+    <section class="mb-20">
+      <div class="flex items-center gap-2 mb-10">
+        {{icon "bar-chart-3" class="text-primary" size=24}}
+        <h2 class="text-xl font-semibold text-foreground">Project Models</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <!-- Idea Model -->
+        <div class="bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 {{#if project.idea_model}}hover:animate-rainbow-shadow{{/if}}">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              {{icon "lightbulb" class="{{#if project.idea_model}}text-success{{else}}text-muted-foreground{{/if}}" size=20}}
+              <h3 class="text-lg font-medium text-foreground">Idea Model</h3>
+            </div>
+            {{#if project.idea_model}}
+            {{icon "check-circle" class="text-success" size=20}}
+            {{/if}}
+          </div>
+          {{#if project.idea_model}}
+          <p class="text-muted-foreground text-sm mb-4 line-clamp-3">{{project.idea_model}}</p>
+          <div class="flex items-center gap-2">
+            <div class="w-full bg-muted rounded-full h-2">
+              <div class="bg-success h-2 rounded-full" style="width: 100%"></div>
+            </div>
+            <span class="text-xs text-success font-medium">100%</span>
+          </div>
+          {{else}}
+          <p class="text-muted-foreground text-sm mb-4 italic">Not defined yet</p>
+          <a href="/projects/idea-model" class="inline-flex items-center gap-2 text-primary text-sm font-medium hover:text-primary/80 transition-colors">
+            {{icon "plus" size=14}}
+            Define Model
+          </a>
+          {{/if}}
+        </div>
 
-       <!-- Business Model -->
-       <div class="p-4">
-         <div class="flex items-center gap-2 mb-3">
-           {{icon "building-2" class="text-muted-foreground" size=16}}
-           <h3 class="text-base text-foreground">Business Model</h3>
-         </div>
-         {{#if project.business_model}}
-         <p class="text-muted-foreground text-sm">{{project.business_model}}</p>
-         {{else}}
-         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
-         <a href="/projects/business-model" class="text-primary text-sm mt-1 inline-block">
-           Define Model →
-         </a>
-         {{/if}}
-       </div>
+        <!-- Business Model -->
+        <div class="bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 {{#if project.business_model}}hover:animate-rainbow-shadow{{/if}}">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              {{icon "building-2" class="{{#if project.business_model}}text-success{{else}}text-muted-foreground{{/if}}" size=20}}
+              <h3 class="text-lg font-medium text-foreground">Business Model</h3>
+            </div>
+            {{#if project.business_model}}
+            {{icon "check-circle" class="text-success" size=20}}
+            {{/if}}
+          </div>
+          {{#if project.business_model}}
+          <p class="text-muted-foreground text-sm mb-4 line-clamp-3">{{project.business_model}}</p>
+          <div class="flex items-center gap-2">
+            <div class="w-full bg-muted rounded-full h-2">
+              <div class="bg-success h-2 rounded-full" style="width: 100%"></div>
+            </div>
+            <span class="text-xs text-success font-medium">100%</span>
+          </div>
+          {{else}}
+          <p class="text-muted-foreground text-sm mb-4 italic">Not defined yet</p>
+          <a href="/projects/business-model" class="inline-flex items-center gap-2 text-primary text-sm font-medium hover:text-primary/80 transition-colors">
+            {{icon "plus" size=14}}
+            Define Model
+          </a>
+          {{/if}}
+        </div>
 
-       <!-- Financial Model -->
-       <div class="p-4">
-         <div class="flex items-center gap-2 mb-3">
-           {{icon "dollar-sign" class="text-muted-foreground" size=16}}
-           <h3 class="text-base text-foreground">Financial Model</h3>
-         </div>
-         {{#if project.financial_model}}
-         <p class="text-muted-foreground text-sm">{{project.financial_model}}</p>
-         {{else}}
-         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
-         <a href="/projects/financial-model" class="text-primary text-sm mt-1 inline-block">
-           Define Model →
-         </a>
-         {{/if}}
-       </div>
+        <!-- Financial Model -->
+        <div class="bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 {{#if project.financial_model}}hover:animate-rainbow-shadow{{/if}}">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              {{icon "dollar-sign" class="{{#if project.financial_model}}text-success{{else}}text-muted-foreground{{/if}}" size=20}}
+              <h3 class="text-lg font-medium text-foreground">Financial Model</h3>
+            </div>
+            {{#if project.financial_model}}
+            {{icon "check-circle" class="text-success" size=20}}
+            {{/if}}
+          </div>
+          {{#if project.financial_model}}
+          <p class="text-muted-foreground text-sm mb-4 line-clamp-3">{{project.financial_model}}</p>
+          <div class="flex items-center gap-2">
+            <div class="w-full bg-muted rounded-full h-2">
+              <div class="bg-success h-2 rounded-full" style="width: 100%"></div>
+            </div>
+            <span class="text-xs text-success font-medium">100%</span>
+          </div>
+          {{else}}
+          <p class="text-muted-foreground text-sm mb-4 italic">Not defined yet</p>
+          <a href="/projects/financial-model" class="inline-flex items-center gap-2 text-primary text-sm font-medium hover:text-primary/80 transition-colors">
+            {{icon "plus" size=14}}
+            Define Model
+          </a>
+          {{/if}}
+        </div>
 
-       <!-- Funding Model -->
-       <div class="p-4">
-         <div class="flex items-center gap-2 mb-3">
-           {{icon "wallet" class="text-muted-foreground" size=16}}
-           <h3 class="text-base text-foreground">Funding Model</h3>
-         </div>
-         {{#if project.funding_model}}
-         <p class="text-muted-foreground text-sm">{{project.funding_model}}</p>
-         {{else}}
-         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
-         <a href="/projects/funding-model" class="text-primary text-sm mt-1 inline-block">
-           Define Model →
-         </a>
-         {{/if}}
-       </div>
+        <!-- Funding Model -->
+        <div class="bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 {{#if project.funding_model}}hover:animate-rainbow-shadow{{/if}}">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              {{icon "wallet" class="{{#if project.funding_model}}text-success{{else}}text-muted-foreground{{/if}}" size=20}}
+              <h3 class="text-lg font-medium text-foreground">Funding Model</h3>
+            </div>
+            {{#if project.funding_model}}
+            {{icon "check-circle" class="text-success" size=20}}
+            {{/if}}
+          </div>
+          {{#if project.funding_model}}
+          <p class="text-muted-foreground text-sm mb-4 line-clamp-3">{{project.funding_model}}</p>
+          <div class="flex items-center gap-2">
+            <div class="w-full bg-muted rounded-full h-2">
+              <div class="bg-success h-2 rounded-full" style="width: 100%"></div>
+            </div>
+            <span class="text-xs text-success font-medium">100%</span>
+          </div>
+          {{else}}
+          <p class="text-muted-foreground text-sm mb-4 italic">Not defined yet</p>
+          <a href="/projects/funding-model" class="inline-flex items-center gap-2 text-primary text-sm font-medium hover:text-primary/80 transition-colors">
+            {{icon "plus" size=14}}
+            Define Model
+          </a>
+          {{/if}}
+        </div>
 
-       <!-- Legal Model -->
-       <div class="p-4">
-         <div class="flex items-center gap-2 mb-3">
-           {{icon "file-text" class="text-muted-foreground" size=16}}
-           <h3 class="text-base text-foreground">Legal Model</h3>
-         </div>
-         {{#if project.legal_model}}
-         <p class="text-muted-foreground text-sm">{{project.legal_model}}</p>
-         {{else}}
-         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
-         <a href="/projects/legal-model" class="text-primary text-sm mt-1 inline-block">
-           Define Model →
-         </a>
-         {{/if}}
-       </div>
+        <!-- Legal Model -->
+        <div class="bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 {{#if project.legal_model}}hover:animate-rainbow-shadow{{/if}}">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              {{icon "file-text" class="{{#if project.legal_model}}text-success{{else}}text-muted-foreground{{/if}}" size=20}}
+              <h3 class="text-lg font-medium text-foreground">Legal Model</h3>
+            </div>
+            {{#if project.legal_model}}
+            {{icon "check-circle" class="text-success" size=20}}
+            {{/if}}
+          </div>
+          {{#if project.legal_model}}
+          <p class="text-muted-foreground text-sm mb-4 line-clamp-3">{{project.legal_model}}</p>
+          <div class="flex items-center gap-2">
+            <div class="w-full bg-muted rounded-full h-2">
+              <div class="bg-success h-2 rounded-full" style="width: 100%"></div>
+            </div>
+            <span class="text-xs text-success font-medium">100%</span>
+          </div>
+          {{else}}
+          <p class="text-muted-foreground text-sm mb-4 italic">Not defined yet</p>
+          <a href="/projects/legal-model" class="inline-flex items-center gap-2 text-primary text-sm font-medium hover:text-primary/80 transition-colors">
+            {{icon "plus" size=14}}
+            Define Model
+          </a>
+          {{/if}}
+        </div>
 
-       <!-- Marketing Model -->
-       <div class="p-4">
-         <div class="flex items-center gap-2 mb-3">
-           {{icon "megaphone" class="text-muted-foreground" size=16}}
-           <h3 class="text-base text-foreground">Marketing Model</h3>
-         </div>
-         {{#if project.marketing_model}}
-         <p class="text-muted-foreground text-sm">{{project.marketing_model}}</p>
-         {{else}}
-         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
-         <a href="/projects/marketing-model" class="text-primary text-sm mt-1 inline-block">
-           Define Model →
-         </a>
-         {{/if}}
-       </div>
+        <!-- Marketing Model -->
+        <div class="bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 {{#if project.marketing_model}}hover:animate-rainbow-shadow{{/if}}">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              {{icon "megaphone" class="{{#if project.marketing_model}}text-success{{else}}text-muted-foreground{{/if}}" size=20}}
+              <h3 class="text-lg font-medium text-foreground">Marketing Model</h3>
+            </div>
+            {{#if project.marketing_model}}
+            {{icon "check-circle" class="text-success" size=20}}
+            {{/if}}
+          </div>
+          {{#if project.marketing_model}}
+          <p class="text-muted-foreground text-sm mb-4 line-clamp-3">{{project.marketing_model}}</p>
+          <div class="flex items-center gap-2">
+            <div class="w-full bg-muted rounded-full h-2">
+              <div class="bg-success h-2 rounded-full" style="width: 100%"></div>
+            </div>
+            <span class="text-xs text-success font-medium">100%</span>
+          </div>
+          {{else}}
+          <p class="text-muted-foreground text-sm mb-4 italic">Not defined yet</p>
+          <a href="/projects/marketing-model" class="inline-flex items-center gap-2 text-primary text-sm font-medium hover:text-primary/80 transition-colors">
+            {{icon "plus" size=14}}
+            Define Model
+          </a>
+          {{/if}}
+        </div>
 
-       <!-- Team Model -->
-       <div class="p-4">
-         <div class="flex items-center gap-2 mb-3">
-           {{icon "users" class="text-muted-foreground" size=16}}
-           <h3 class="text-base text-foreground">Team Model</h3>
-         </div>
-         {{#if project.team_model}}
-         <p class="text-muted-foreground text-sm">{{project.team_model}}</p>
-         {{else}}
-         <p class="text-muted-foreground text-sm italic">Not defined yet</p>
-         <a href="/projects/team-model" class="text-primary text-sm mt-1 inline-block">
-           Define Model →
-         </a>
-         {{/if}}
-       </div>
+        <!-- Team Model -->
+        <div class="bg-card border border-border rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow duration-300 {{#if project.team_model}}hover:animate-rainbow-shadow{{/if}}">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              {{icon "users" class="{{#if project.team_model}}text-success{{else}}text-muted-foreground{{/if}}" size=20}}
+              <h3 class="text-lg font-medium text-foreground">Team Model</h3>
+            </div>
+            {{#if project.team_model}}
+            {{icon "check-circle" class="text-success" size=20}}
+            {{/if}}
+          </div>
+          {{#if project.team_model}}
+          <p class="text-muted-foreground text-sm mb-4 line-clamp-3">{{project.team_model}}</p>
+          <div class="flex items-center gap-2">
+            <div class="w-full bg-muted rounded-full h-2">
+              <div class="bg-success h-2 rounded-full" style="width: 100%"></div>
+            </div>
+            <span class="text-xs text-success font-medium">100%</span>
+          </div>
+          {{else}}
+          <p class="text-muted-foreground text-sm mb-4 italic">Not defined yet</p>
+          <a href="/projects/team-model" class="inline-flex items-center gap-2 text-primary text-sm font-medium hover:text-primary/80 transition-colors">
+            {{icon "plus" size=14}}
+            Define Model
+          </a>
+          {{/if}}
+        </div>
      </div>
    </section>
 
-   <!-- Reports Section -->
-   <section class="mb-20">
-     <div class="flex items-center gap-2 mb-10">
-       {{icon "file-bar-chart" class="text-muted-foreground" size=20}}
-       <h2 class="text-lg text-foreground">Reports</h2>
-     </div>
-     <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-       <!-- Pitch Deck -->
-       <div class="p-4">
-         <div class="flex items-center gap-2 mb-3">
-           {{icon "presentation" class="text-muted-foreground" size=16}}
-           <h3 class="text-base text-foreground">Pitch Deck</h3>
-         </div>
-         <p class="text-muted-foreground text-sm italic">Coming soon</p>
-       </div>
+    <!-- Reports Section -->
+    <section class="mb-20">
+      <div class="flex items-center gap-2 mb-10">
+        {{icon "file-bar-chart" class="text-primary" size=24}}
+        <h2 class="text-xl font-semibold text-foreground">Reports</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Pitch Deck -->
+        <div class="bg-card border border-border rounded-lg p-6 shadow-sm opacity-60">
+          <div class="flex items-center gap-3 mb-4">
+            {{icon "presentation" class="text-muted-foreground" size=20}}
+            <h3 class="text-lg font-medium text-foreground">Pitch Deck</h3>
+          </div>
+          <p class="text-muted-foreground text-sm mb-4 italic">Coming soon</p>
+          <div class="flex items-center gap-2">
+            <div class="w-full bg-muted rounded-full h-2">
+              <div class="bg-muted-foreground h-2 rounded-full" style="width: 0%"></div>
+            </div>
+            <span class="text-xs text-muted-foreground font-medium">0%</span>
+          </div>
+        </div>
 
-       <!-- Business Plan -->
-       <div class="p-4">
-         <div class="flex items-center gap-2 mb-3">
-           {{icon "clipboard-list" class="text-muted-foreground" size=16}}
-           <h3 class="text-base text-foreground">Business Plan</h3>
-         </div>
-         <p class="text-muted-foreground text-sm italic">Coming soon</p>
-       </div>
+        <!-- Business Plan -->
+        <div class="bg-card border border-border rounded-lg p-6 shadow-sm opacity-60">
+          <div class="flex items-center gap-3 mb-4">
+            {{icon "clipboard-list" class="text-muted-foreground" size=20}}
+            <h3 class="text-lg font-medium text-foreground">Business Plan</h3>
+          </div>
+          <p class="text-muted-foreground text-sm mb-4 italic">Coming soon</p>
+          <div class="flex items-center gap-2">
+            <div class="w-full bg-muted rounded-full h-2">
+              <div class="bg-muted-foreground h-2 rounded-full" style="width: 0%"></div>
+            </div>
+            <span class="text-xs text-muted-foreground font-medium">0%</span>
+          </div>
+        </div>
 
-       <!-- Valuation -->
-       <div class="p-4">
-         <div class="flex items-center gap-2 mb-3">
-           {{icon "trending-up" class="text-muted-foreground" size=16}}
-           <h3 class="text-base text-foreground">Valuation</h3>
-         </div>
-         <p class="text-muted-foreground text-sm italic">Coming soon</p>
-       </div>
-     </div>
-   </section>
+        <!-- Valuation -->
+        <div class="bg-card border border-border rounded-lg p-6 shadow-sm opacity-60">
+          <div class="flex items-center gap-3 mb-4">
+            {{icon "trending-up" class="text-muted-foreground" size=20}}
+            <h3 class="text-lg font-medium text-foreground">Valuation</h3>
+          </div>
+          <p class="text-muted-foreground text-sm mb-4 italic">Coming soon</p>
+          <div class="flex items-center gap-2">
+            <div class="w-full bg-muted rounded-full h-2">
+              <div class="bg-muted-foreground h-2 rounded-full" style="width: 0%"></div>
+            </div>
+            <span class="text-xs text-muted-foreground font-medium">0%</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-   <!-- Tasks Section -->
-   {{#if project.tasks}}
-   <section class="mb-20">
-     <div class="flex items-center gap-2 mb-8">
-       {{icon "check-square" class="text-muted-foreground" size=20}}
-       <h2 class="text-lg text-foreground">Tasks</h2>
-     </div>
-     <div class="space-y-4">
-       {{#each project.tasks}}
-       <div class="flex items-center justify-between">
-         <div class="flex items-center gap-3">
-           <input type="checkbox" {{#if this.completed}}checked{{/if}} disabled class="rounded">
-           <span class="text-sm {{#if this.completed}}line-through text-muted-foreground{{/if}}">{{this.title}}</span>
-         </div>
-         <div class="flex items-center gap-2">
-           {{#if (eq this.priority 'high')}}
-           {{icon "alert-triangle" class="text-destructive" size=12}}
-           {{else if (eq this.priority 'medium')}}
-           {{icon "alert-circle" class="text-warning" size=12}}
-           {{else}}
-           {{icon "check-circle" class="text-success" size=12}}
-           {{/if}}
-           <span class="text-xs {{#if (eq this.priority 'high')}}text-destructive{{else if (eq this.priority 'medium')}}text-warning{{else}}text-success{{/if}}">
-             {{this.priority}}
-           </span>
-         </div>
-       </div>
-       {{/each}}
-     </div>
-   </section>
-   {{/if}}
+    <!-- Tasks Section -->
+    {{#if project.tasks}}
+    <section class="mb-20">
+      <div class="flex items-center gap-2 mb-8">
+        {{icon "check-square" class="text-primary" size=24}}
+        <h2 class="text-xl font-semibold text-foreground">Tasks</h2>
+      </div>
+      <div class="bg-card border border-border rounded-lg p-6 shadow-sm">
+        <div class="space-y-4">
+          {{#each project.tasks}}
+          <div class="flex items-center justify-between p-3 rounded-md {{#if this.completed}}bg-success/10{{else}}bg-muted/50{{/if}} transition-colors">
+            <div class="flex items-center gap-3">
+              <input type="checkbox" {{#if this.completed}}checked{{/if}} disabled class="rounded border-2 {{#if this.completed}}bg-success border-success{{else}}border-muted-foreground{{/if}}">
+              <span class="text-sm {{#if this.completed}}line-through text-muted-foreground{{else}}text-foreground{{/if}}">{{this.title}}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              {{#if (eq this.priority 'high')}}
+              {{icon "alert-triangle" class="text-destructive" size=16}}
+              {{else if (eq this.priority 'medium')}}
+              {{icon "alert-circle" class="text-warning" size=16}}
+              {{else}}
+              {{icon "check-circle" class="text-success" size=16}}
+              {{/if}}
+              <span class="text-xs font-medium {{#if (eq this.priority 'high')}}text-destructive{{else if (eq this.priority 'medium')}}text-warning{{else}}text-success{{/if}}">
+                {{this.priority}}
+              </span>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </section>
+    {{/if}}
 
-   <!-- Team Section -->
-   {{#if project.team}}
-   <section class="mb-20">
-     <div class="flex items-center gap-2 mb-8">
-       {{icon "user-check" class="text-muted-foreground" size=20}}
-       <h2 class="text-lg text-foreground">Team Members</h2>
-     </div>
-     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-       {{#each project.team}}
-       <div class="flex items-center gap-3">
-         <div class="w-8 h-8 bg-muted rounded-full flex items-center justify-center">
-           <span class="text-foreground text-sm">{{this.name.charAt 0}}</span>
-         </div>
-         <div>
-           <p class="text-sm">{{this.name}}</p>
-           <p class="text-xs text-muted-foreground">{{this.email}}</p>
-         </div>
-       </div>
-       {{/each}}
-     </div>
-   </section>
-   {{/if}}
+    <!-- Team Section -->
+    {{#if project.team}}
+    <section class="mb-20">
+      <div class="flex items-center gap-2 mb-8">
+        {{icon "user-check" class="text-primary" size=24}}
+        <h2 class="text-xl font-semibold text-foreground">Team Members</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {{#each project.team}}
+        <div class="bg-card border border-border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+              <span class="text-primary text-lg font-semibold">{{this.name.charAt 0}}</span>
+            </div>
+            <div class="flex-1">
+              <p class="text-sm font-medium text-foreground">{{this.name}}</p>
+              <p class="text-xs text-muted-foreground">{{this.email}}</p>
+              <div class="flex items-center gap-1 mt-1">
+                {{icon "mail" class="text-muted-foreground" size=12}}
+                <span class="text-xs text-muted-foreground">Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </section>
+    {{/if}}
 
-   <!-- Back to All Projects -->
-   <section class="mt-20">
-     <a href="/projects/all-projects" class="inline-flex items-center gap-2 text-primary text-sm">
-       {{icon "arrow-left" size=16}}
-       Back to All Projects
-     </a>
-   </section>
+    <!-- Back to All Projects -->
+    <section class="mt-20">
+      <a href="/projects/all-projects" class="inline-flex items-center gap-2 text-primary text-sm font-medium hover:text-primary/80 transition-colors">
+        {{icon "arrow-left" size=16}}
+        Back to All Projects
+      </a>
+    </section>
 </main>
