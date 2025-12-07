@@ -4,12 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-css": "npx postcss ./public/css/styles.css -o ./public/css/output.css --watch",
-    "build": "npx postcss ./public/css/styles.css -o ./public/css/output.css",
-    "start": "nodemon index.js",
-    "dev": "concurrently \"npm run build-css\" \"npm run start\"",
-    "fetch-openapi": "node db/fetch-openapi.js",
-    "seed-credits": "node scripts/seed-credits.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "build-css": "npx postcss-cli public/css/input.css -o public/css/output.css",
+    "watch-css": "npx postcss-cli public/css/input.css -o public/css/output.css --watch",
     "lint": "echo \"Linting not configured yet\" && exit 0",
     "format": "prettier --write ."
   },
@@ -27,29 +25,20 @@
   "homepage": "https://github.com/AR-92/accelerator#readme",
   "dependencies": {
     "@supabase/supabase-js": "^2.84.0",
-    "chart.js": "^4.5.1",
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0",
+    "express": "^4.19.2",
     "express-handlebars": "^8.0.4",
-    "express-rate-limit": "^8.2.1",
-    "express-validator": "^7.3.1",
-    "helmet": "^8.1.0",
-    "lucide-static": "^0.555.0",
-    "multer": "^2.0.2",
-    "openai": "^4.0.0",
-    "winston": "^3.18.3"
+    "express-session": "^1.18.2",
+    "lucide-static": "^0.556.0",
+    "memorystore": "^1.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
     "autoprefixer": "^10.4.22",
-    "concurrently": "^9.2.1",
     "nodemon": "^3.1.11",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
     "prettier": "^3.6.2",
-    "tailwindcss": "^4.1.17",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss": "^4.1.17"
   }
 }

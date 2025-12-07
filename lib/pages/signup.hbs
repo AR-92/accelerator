@@ -1,0 +1,120 @@
+<div
+  class="min-h-screen flex items-center justify-center bg-base-100 py-12 px-4 sm:px-6 lg:px-8"
+>
+  <div class="max-w-md w-full space-y-8">
+    <div>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-base-content">
+        Create your account
+      </h2>
+      <p class="mt-2 text-center text-sm text-neutral">
+        Or
+        <a
+          href="/auth/login"
+          class="font-medium text-primary hover:text-primary-600"
+        >
+          sign in to existing account
+        </a>
+      </p>
+    </div>
+
+    {{#if error}}
+      <div class="alert alert-error">
+        {{error}}
+      </div>
+    {{/if}}
+
+    <form
+      hx-post="/auth/signup"
+      hx-target="#auth-response"
+      hx-swap="innerHTML"
+      class="mt-8 space-y-6"
+    >
+      <input type="hidden" name="_csrf" value="{{csrf}}" />
+
+      <div class="space-y-4">
+        <div>
+          <label
+            for="firstName"
+            class="block text-sm font-medium text-base-content"
+          >First Name</label>
+          <input
+            id="firstName"
+            name="firstName"
+            type="text"
+            required
+            class="input"
+            placeholder="First Name"
+          />
+        </div>
+        <div>
+          <label
+            for="lastName"
+            class="block text-sm font-medium text-base-content"
+          >Last Name</label>
+          <input
+            id="lastName"
+            name="lastName"
+            type="text"
+            required
+            class="input"
+            placeholder="Last Name"
+          />
+        </div>
+        <div>
+          <label
+            for="email"
+            class="block text-sm font-medium text-base-content"
+          >Email address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            class="input"
+            placeholder="Email address"
+          />
+        </div>
+        <div>
+          <label
+            for="password"
+            class="block text-sm font-medium text-base-content"
+          >Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            class="input"
+            placeholder="Password"
+          />
+        </div>
+      </div>
+
+      <div class="flex items-center">
+        <input
+          id="terms"
+          name="terms"
+          type="checkbox"
+          required
+          class="h-4 w-4 text-primary focus:ring-primary border-base-300 rounded"
+        />
+        <label for="terms" class="ml-2 block text-sm text-base-content">
+          I agree to the
+          <a href="/terms" class="text-primary hover:text-primary-600">Terms and
+            Conditions</a>
+        </label>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-primary w-full">
+          <span class="loading mr-2">
+            {{{icon "loader" class="animate-spin h-5 w-5"}}}
+          </span>
+          <span class="normal">Create account</span>
+        </button>
+      </div>
+    </form>
+
+    <div id="auth-response"></div>
+  </div>
+</div>

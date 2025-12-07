@@ -1,0 +1,25 @@
+<nav class="bg-base-100 shadow-sm border-b border-base-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <div class="flex items-center">
+        <a href="/" class="text-xl font-bold text-base-content">Accelerator</a>
+      </div>
+
+       <div class="flex items-center space-x-4">
+         {{>darkmode}}
+         {{#if user}}
+         <span class="text-neutral">Welcome,
+           {{user.user_metadata.firstName}}!</span>
+         <button hx-post="/auth/logout"
+           class="text-neutral hover:text-base-content px-3 py-2 rounded-md text-sm font-medium">
+           Logout
+         </button>
+         {{else}}
+         <a href="/auth/login"
+           class="text-neutral hover:text-base-content px-3 py-2 rounded-md text-sm font-medium">Login</a>
+         <a href="/auth/signup" class="btn btn-primary">Sign Up</a>
+         {{/if}}
+       </div>
+    </div>
+  </div>
+</nav>

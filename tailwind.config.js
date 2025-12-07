@@ -1,24 +1,36 @@
-// tailwind.config.js (minimal for a .handlebars project on Tailwind v4)
+/** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    './views/**/*.handlebars',
-    './src/**/*.{html,handlebars}',
-    './public/**/*.html',
-  ],
-  safelist: ['animate-rainbow-shadow', 'hover:animate-rainbow-shadow'],
-  // keep theme minimal — colors & other tokens live in CSS @theme
+  content: ["./lib/**/*.{js,hbs}"],
+  darkMode: "class",
   theme: {
     extend: {
-      fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
-      },
-      borderRadius: {
-        card: '32px',
-      },
-      boxShadow: {
-        subtle: '0 1px 2px rgb(0 0 0 / 0.05)',
+      colors: {
+        primary: {
+          50: "hsl(290 64% 95%)",
+          100: "hsl(290 64% 90%)",
+          200: "hsl(290 64% 80%)",
+          300: "hsl(290 64% 70%)",
+          400: "hsl(290 64% 60%)",
+          500: "hsl(290 64% 43%)",
+          600: "hsl(290 64% 35%)",
+          700: "hsl(290 64% 28%)",
+          800: "hsl(290 64% 20%)",
+          900: "hsl(290 64% 10%)",
+        },
+        secondary: "hsl(260 64% 43%)",
+        accent: "hsl(110 64% 43%)",
+        neutral: "hsl(290 10% 50%)",
+        base: {
+          100: "hsl(0 0% 100%)",
+          200: "hsl(290 10% 95%)",
+          300: "hsl(290 10% 90%)",
+        },
+        info: "hsl(217 91% 60%)",
+        success: "hsl(142 76% 36%)",
+        warning: "hsl(38 92% 50%)",
+        error: "hsl(0 84% 60%)",
       },
     },
   },
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+  plugins: [],
 };

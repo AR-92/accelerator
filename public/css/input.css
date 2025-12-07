@@ -1,0 +1,520 @@
+@import "tailwindcss";
+
+@theme {
+  /* Primary Palette (Purple) */
+  --color-primary-50: hsl(290 64% 95%);
+  --color-primary-100: hsl(290 64% 90%);
+  --color-primary-200: hsl(290 64% 80%);
+  --color-primary-300: hsl(290 64% 70%);
+  --color-primary-400: hsl(290 64% 60%);
+  --color-primary: hsl(290 64% 43%);
+  --color-primary-600: hsl(290 64% 35%);
+  --color-primary-700: hsl(290 64% 28%);
+  --color-primary-800: hsl(290 64% 20%);
+  --color-primary-900: hsl(290 64% 10%);
+  --color-primary-content: hsl(290 64% 95%);
+
+  /* Secondary (Analogous Purple-Blue) */
+  --color-secondary: hsl(260 64% 43%);
+  --color-secondary-content: hsl(260 64% 95%);
+
+  /* Accent (Complementary Green) */
+  --color-accent: hsl(110 64% 43%);
+  --color-accent-content: hsl(110 64% 95%);
+
+  /* Neutral (Grays based on primary lightness) */
+  --color-neutral: hsl(290 10% 50%);
+  --color-neutral-content: hsl(290 10% 95%);
+
+  /* Base (Whites/Blacks) */
+  --color-base-100: hsl(0 0% 100%);
+  --color-base-200: hsl(290 10% 95%);
+  --color-base-300: hsl(290 10% 90%);
+  --color-base-content: hsl(290 10% 10%);
+
+  /* Additional */
+  --color-input: var(--color-base-300);
+  --color-muted-foreground: var(--color-neutral);
+  --color-ring: var(--color-primary);
+  --color-muted: var(--color-base-200);
+  --color-foreground: var(--color-base-content);
+
+  /* Semantic */
+  --color-info: hsl(217 91% 60%);
+  --color-info-content: hsl(217 91% 95%);
+  --color-success: hsl(142 76% 36%);
+  --color-success-content: hsl(142 76% 95%);
+  --color-warning: hsl(38 92% 50%);
+  --color-warning-content: hsl(38 92% 95%);
+  --color-error: hsl(0 84% 60%);
+  --color-error-content: hsl(0 84% 95%);
+}
+
+.dark {
+  /* Primary Palette (Darker Purple) */
+  --color-primary-50: hsl(290 64% 10%);
+  --color-primary-100: hsl(290 64% 15%);
+  --color-primary-200: hsl(290 64% 25%);
+  --color-primary-300: hsl(290 64% 35%);
+  --color-primary-400: hsl(290 64% 45%);
+  --color-primary: hsl(290 64% 55%);
+  --color-primary-600: hsl(290 64% 65%);
+  --color-primary-700: hsl(290 64% 75%);
+  --color-primary-800: hsl(290 64% 85%);
+  --color-primary-900: hsl(290 64% 95%);
+  --color-primary-content: hsl(290 64% 10%);
+
+  /* Secondary (Analogous Purple-Blue, darker) */
+  --color-secondary: hsl(260 64% 55%);
+  --color-secondary-content: hsl(260 64% 10%);
+
+  /* Accent (Complementary Green, darker) */
+  --color-accent: hsl(110 64% 55%);
+  --color-accent-content: hsl(110 64% 10%);
+
+  /* Neutral (Grays, inverted) */
+  --color-neutral: hsl(290 10% 70%);
+  --color-neutral-content: hsl(290 10% 10%);
+
+  /* Base (Inverted) */
+  --color-base-100: hsl(290 10% 10%);
+  --color-base-200: hsl(290 10% 15%);
+  --color-base-300: hsl(290 10% 20%);
+  --color-base-content: hsl(290 10% 90%);
+
+  /* Additional */
+  --color-input: var(--color-base-300);
+  --color-muted-foreground: var(--color-neutral);
+  --color-ring: var(--color-primary);
+  --color-muted: var(--color-base-200);
+  --color-foreground: var(--color-base-content);
+
+  /* Semantic (Adjusted for dark) */
+  --color-info: hsl(217 91% 65%);
+  --color-info-content: hsl(217 91% 10%);
+  --color-success: hsl(142 76% 45%);
+  --color-success-content: hsl(142 76% 10%);
+  --color-warning: hsl(38 92% 55%);
+  --color-warning-content: hsl(38 92% 10%);
+  --color-error: hsl(0 84% 65%);
+  --color-error-content: hsl(0 84% 10%);
+}
+
+@layer components {
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md border border-transparent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-content hover:bg-primary-600 focus:ring-primary-400;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-content hover:bg-secondary/90 focus:ring-secondary;
+  }
+
+  .btn-accent {
+    @apply bg-accent text-accent-content hover:bg-accent/90 focus:ring-accent;
+  }
+
+  .btn-neutral {
+    @apply bg-neutral text-neutral-content hover:bg-neutral/90 focus:ring-neutral;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-base-content hover:bg-base-200 focus:ring-base-content;
+  }
+
+  .btn-outline {
+    @apply border-current bg-transparent text-current hover:bg-current focus:ring-current;
+  }
+
+  .btn-outline.btn-primary {
+    @apply border-primary text-primary hover:bg-primary hover:text-white;
+  }
+
+  .btn-outline.btn-secondary {
+    @apply border-secondary text-secondary hover:bg-secondary hover:text-white;
+  }
+
+  .btn-outline.btn-accent {
+    @apply border-accent text-accent hover:bg-accent hover:text-white;
+  }
+
+  .btn-outline.btn-neutral {
+    @apply border-neutral text-neutral hover:bg-neutral hover:text-white;
+  }
+
+  .btn-outline.btn-info {
+    @apply border-info text-info hover:bg-info hover:text-white;
+  }
+
+  .btn-outline.btn-success {
+    @apply border-success text-success hover:bg-success hover:text-white;
+  }
+
+  .btn-outline.btn-warning {
+    @apply border-warning text-warning hover:bg-warning hover:text-white;
+  }
+
+  .btn-outline.btn-error {
+    @apply border-error text-error hover:bg-error hover:text-white;
+  }
+
+  .btn-info {
+    @apply bg-info text-info-content hover:bg-info/80 focus:ring-info;
+  }
+
+  .btn-success {
+    @apply bg-success text-success-content hover:bg-success/90 focus:ring-success;
+  }
+
+  .btn-warning {
+    @apply bg-warning text-warning-content hover:bg-warning/90 focus:ring-warning;
+  }
+
+  .btn-error {
+    @apply bg-error text-error-content hover:bg-error/90 focus:ring-error;
+  }
+
+  .btn:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-base;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+
+  .btn-xs {
+    @apply px-2 py-1 text-xs;
+  }
+
+  /* Inputs */
+  .input {
+    @apply block w-full px-3 py-2 border border-base-300 rounded-md shadow-sm placeholder-base-content/50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-primary;
+  }
+
+  .input:disabled {
+    @apply bg-base-200 cursor-not-allowed;
+  }
+
+  .input-error {
+    @apply border-error focus:ring-error focus:border-error;
+  }
+
+  .textarea {
+    @apply block w-full px-3 py-2 border border-base-300 rounded-md shadow-sm placeholder-base-content/50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-primary resize-none;
+  }
+
+  .select {
+    @apply block w-full px-3 py-2 border border-base-300 rounded-md shadow-sm placeholder-base-content/50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-primary;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-base-100 rounded-lg shadow-md overflow-hidden;
+  }
+
+  .card-body {
+    @apply p-6;
+  }
+
+  .card-title {
+    @apply text-xl font-semibold text-base-content mb-2;
+  }
+
+  .card-actions {
+    @apply flex justify-end space-x-2 mt-4;
+  }
+
+  /* Alerts */
+  .alert {
+    @apply p-4 rounded-md;
+  }
+
+  .alert-info {
+    @apply bg-info/10 text-info border border-info/20;
+  }
+
+  .alert-success {
+    @apply bg-success/10 text-success border border-success/20;
+  }
+
+  .alert-warning {
+    @apply bg-warning/10 text-warning border border-warning/20;
+  }
+
+  .alert-error {
+    @apply bg-error/10 text-error border border-error/20;
+  }
+
+  /* Badges */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply bg-primary-100 text-primary-800;
+  }
+
+  .badge-secondary {
+    @apply bg-secondary/10 text-secondary;
+  }
+
+  .badge-accent {
+    @apply bg-accent/10 text-accent;
+  }
+
+  .badge-neutral {
+    @apply bg-neutral/10 text-neutral;
+  }
+
+  .badge-info {
+    @apply bg-info/10 text-info;
+  }
+
+  .badge-success {
+    @apply bg-success/10 text-success;
+  }
+
+  .badge-warning {
+    @apply bg-warning/10 text-warning;
+  }
+
+  .badge-error {
+    @apply bg-error/10 text-error;
+  }
+
+  /* Text utilities */
+  .text-primary {
+    @apply text-primary;
+  }
+
+  .text-primary-50 {
+    @apply text-primary-50;
+  }
+
+  .text-primary-100 {
+    @apply text-primary-100;
+  }
+
+  .text-primary-200 {
+    @apply text-primary-200;
+  }
+
+  .text-primary-300 {
+    @apply text-primary-300;
+  }
+
+  .text-primary-400 {
+    @apply text-primary-400;
+  }
+
+  .text-primary-600 {
+    @apply text-primary-600;
+  }
+
+  .text-primary-700 {
+    @apply text-primary-700;
+  }
+
+  .text-primary-800 {
+    @apply text-primary-800;
+  }
+
+  .text-primary-900 {
+    @apply text-primary-900;
+  }
+
+  .text-secondary {
+    @apply text-secondary;
+  }
+
+  .text-accent {
+    @apply text-accent;
+  }
+
+  .text-neutral {
+    @apply text-neutral;
+  }
+
+  .text-info {
+    @apply text-info;
+  }
+
+  .text-success {
+    @apply text-success;
+  }
+
+  .text-warning {
+    @apply text-warning;
+  }
+
+  .text-error {
+    @apply text-error;
+  }
+
+  /* Background utilities */
+  .bg-primary {
+    @apply bg-primary;
+  }
+
+  .bg-primary-50 {
+    @apply bg-primary-50;
+  }
+
+  .bg-primary-100 {
+    @apply bg-primary-100;
+  }
+
+  .bg-primary-200 {
+    @apply bg-primary-200;
+  }
+
+  .bg-primary-300 {
+    @apply bg-primary-300;
+  }
+
+  .bg-primary-400 {
+    @apply bg-primary-400;
+  }
+
+  .bg-primary-600 {
+    @apply bg-primary-600;
+  }
+
+  .bg-primary-700 {
+    @apply bg-primary-700;
+  }
+
+  .bg-primary-800 {
+    @apply bg-primary-800;
+  }
+
+  .bg-primary-900 {
+    @apply bg-primary-900;
+  }
+
+  .bg-secondary {
+    @apply bg-secondary;
+  }
+
+  .bg-accent {
+    @apply bg-accent;
+  }
+
+  .bg-neutral {
+    @apply bg-neutral;
+  }
+
+  .bg-base-100 {
+    @apply bg-base-100;
+  }
+
+  .bg-base-200 {
+    @apply bg-base-200;
+  }
+
+  .bg-base-300 {
+    @apply bg-base-300;
+  }
+
+  /* Additional utilities */
+  .text-muted-foreground {
+    color: var(--color-muted-foreground);
+  }
+
+  .text-foreground {
+    color: var(--color-foreground);
+  }
+
+  .bg-muted {
+    background-color: var(--color-muted);
+  }
+
+  .border-input {
+    border-color: var(--color-input);
+  }
+
+  .ring-ring {
+    --tw-ring-color: var(--color-ring);
+  }
+
+  /* Toast styles */
+  .toast {
+    @apply p-4 rounded-md shadow-lg mb-2 text-white font-medium;
+    min-width: 300px;
+    transition: opacity 0.3s ease-in;
+  }
+
+  .toast.fade-out {
+    opacity: 0;
+  }
+
+  .toast-success {
+    @apply bg-green-500;
+  }
+
+  .toast-error {
+    @apply bg-red-500;
+  }
+
+  .toast-info {
+    @apply bg-blue-500;
+  }
+
+  .toast-warning {
+    @apply bg-yellow-500 text-black;
+  }
+
+  .toast-confirm {
+    @apply bg-gray-700 text-white;
+  }
+
+  .toast.fade-out {
+    animation: slideOut 0.3s ease-in forwards;
+  }
+
+  .toast-success {
+    @apply bg-green-500;
+  }
+
+  .toast-error {
+    @apply bg-red-500;
+  }
+
+  .toast-info {
+    @apply bg-blue-500;
+  }
+
+  .toast-warning {
+    @apply bg-yellow-500 text-black;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+}
