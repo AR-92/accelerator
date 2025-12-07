@@ -281,7 +281,7 @@ export const getSystemConfig = async (req, res) => {
       },
     };
 
-    res.render('pages/admin/system/config', {
+    res.render('admin/other-pages/system-config', {
       title: 'System Configuration',
       currentPage: 'system-config',
       currentSection: 'system',
@@ -289,7 +289,7 @@ export const getSystemConfig = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading system config:', error);
-    res.render('pages/admin/system/config', {
+    res.render('admin/other-pages/system-config', {
       title: 'System Configuration',
       currentPage: 'system-config',
       currentSection: 'system',

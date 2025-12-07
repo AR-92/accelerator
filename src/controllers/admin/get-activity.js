@@ -78,7 +78,7 @@ export const getActivity = async (req, res) => {
     };
 
     try {
-      res.render('pages/admin/system/activity', {
+      res.render('admin/other-pages/activity', {
         title: 'Activity Management',
         currentPage: 'activity',
         currentSection: 'system',
@@ -92,7 +92,7 @@ export const getActivity = async (req, res) => {
           status: filters.status,
           category: filters.category,
         },
-        currentUrl: '/admin/activity',
+        currentUrl: '/admin/other-pages/activity',
         lastUpdated: new Date().toLocaleString(),
       });
       console.log('Activity page rendered successfully');
@@ -102,7 +102,7 @@ export const getActivity = async (req, res) => {
     }
   } catch (error) {
     logger.error('Error loading activity logs:', error);
-    res.render('pages/admin/system/activity', {
+    res.render('admin/other-pages/activity', {
       title: 'Activity Log',
       currentPage: 'activity',
       currentSection: 'system',

@@ -191,7 +191,7 @@ export const getSystemLogs = async (req, res) => {
       },
     };
 
-    res.render('pages/admin/system/logs', {
+    res.render('admin/other-pages/system-logs', {
       title: 'System Logs Analytics',
       currentPage: 'system-logs',
       currentSection: 'system',
@@ -208,7 +208,7 @@ export const getSystemLogs = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading system logs:', error);
-    res.render('pages/admin/system/logs', {
+    res.render('admin/other-pages/system-logs', {
       title: 'System Logs',
       currentPage: 'system-logs',
       currentSection: 'system',

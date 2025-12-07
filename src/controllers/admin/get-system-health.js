@@ -10,7 +10,7 @@ export const getSystemHealth = async (req, res) => {
     const systemHealthService = serviceFactory.getSystemHealthService();
     const systemMetrics = await systemHealthService.getSystemMetrics();
 
-    res.render('pages/admin/system/health', {
+    res.render('admin/other-pages/system-health', {
       title: 'System Health',
       currentPage: 'system-health',
       currentSection: 'system',
@@ -19,7 +19,7 @@ export const getSystemHealth = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading system health:', error);
-    res.render('pages/admin/system/health', {
+    res.render('admin/other-pages/system-health', {
       title: 'System Health',
       currentPage: 'system-health',
       currentSection: 'system',

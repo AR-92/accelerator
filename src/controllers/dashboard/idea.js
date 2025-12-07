@@ -104,7 +104,7 @@ export const getDashboardIdea = async (req, res) => {
       });
     }
 
-    res.render('pages/dashboard/idea', {
+    res.render('dashboard/idea', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Idea Management',
       currentSection: 'home',
@@ -200,7 +200,7 @@ export const getDashboardIdea = async (req, res) => {
       });
     }
 
-    res.render('pages/dashboard/idea', {
+    res.render('dashboard/idea', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Idea Management',
       currentSection: 'home',

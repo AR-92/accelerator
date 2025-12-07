@@ -8,6 +8,9 @@ export const getDashboard = async (req, res) => {
 
     // Fetch all stats in parallel
     const [
+      { count: totalTodos },
+      { count: completedTodos },
+      { count: pendingTodos },
       { count: totalUsers },
       { count: activeUsers },
       { count: pendingUsers },
@@ -21,6 +24,17 @@ export const getDashboard = async (req, res) => {
       { count: activeCollaborations },
       { count: archivedCollaborations },
     ] = await Promise.all([
+      databaseService.supabase
+        .from('todos')
+        .select('*', { count: 'exact', head: true }),
+      databaseService.supabase
+        .from('todos')
+        .select('*', { count: 'exact', head: true })
+        .eq('completed', true),
+      databaseService.supabase
+        .from('todos')
+        .select('*', { count: 'exact', head: true })
+        .eq('completed', false),
       databaseService.supabase
         .from('accounts')
         .select('*', { count: 'exact', head: true }),
@@ -68,6 +82,23 @@ export const getDashboard = async (req, res) => {
     ]);
 
     const statsGrid = [
+      {
+        icon: 'clipboard-list',
+        title: 'Todos',
+        items: [
+          { label: 'Total', value: totalTodos || 0 },
+          {
+            label: 'Completed',
+            value: completedTodos || 0,
+            color: 'text-step-revenue',
+          },
+          {
+            label: 'Pending',
+            value: pendingTodos || 0,
+            color: 'text-step-cogs',
+          },
+        ],
+      },
       {
         icon: 'users',
         title: 'Accounts',
@@ -208,7 +239,7 @@ export const getDashboard = async (req, res) => {
       },
     ];
 
-    res.render('pages/admin/overview', {
+    res.render('admin/overview-page', {
       title: 'Dashboard Overview',
       description: 'Overview of core system components and user management',
       section: 'main',
@@ -235,7 +266,7 @@ export const getDashboard = async (req, res) => {
       },
     ];
 
-    res.render('pages/admin/overview', {
+    res.render('admin/overview-page', {
       title: 'Dashboard Overview',
       description: 'Overview of core system components and user management',
       section: 'main',

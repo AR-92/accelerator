@@ -1,6 +1,5 @@
 import logger from '../../utils/logger.js';
 import { databaseService } from '../../services/index.js';
-import { ServerDataService } from '../../services/serverDataService.js';
 
 // New Project Page
 export const getNewProject = async (req, res) => {
@@ -89,7 +88,7 @@ export const getNewProject = async (req, res) => {
       }
     }
 
-    // Fetch ideas from database with optimized query
+    // Fetch ideas from database
     const { data: ideas, error } = await query
       .order('created_at', { ascending: false })
       .limit(12); // Limit to 12 ideas like in the hardcoded version
@@ -99,11 +98,10 @@ export const getNewProject = async (req, res) => {
       throw error;
     }
 
-    // Fetch all ideas for sidebar with optimized query (limit for performance)
+    // Fetch all ideas for sidebar
     let allIdeasQuery = databaseService.supabase
       .from('ideas')
-      .select('id, title')
-      .limit(20); // Reduced limit for better performance
+      .select('id, title');
     if (userId) {
       allIdeasQuery = allIdeasQuery.eq('user_id', userId);
     }
@@ -146,35 +144,35 @@ export const getNewProject = async (req, res) => {
     const overviewFilterLinks = [
       {
         id: 'favorites-link',
-        href: '/admin/new-project?filter=favorites',
+        href: '/admin/other-pages/new-project?filter=favorites',
         text: 'Favorites',
         icon: 'heart',
         active: filter === 'favorites',
       },
       {
         id: 'recent-link',
-        href: '/admin/new-project?filter=recent',
+        href: '/admin/other-pages/new-project?filter=recent',
         text: 'Recent',
         icon: 'clock',
         active: filter === 'recent',
       },
       {
         id: 'publish-link',
-        href: '/admin/new-project?filter=publish',
+        href: '/admin/other-pages/new-project?filter=publish',
         text: 'Publish',
         icon: 'send',
         active: filter === 'publish',
       },
       {
         id: 'unpublish-link',
-        href: '/admin/new-project?filter=unpublish',
+        href: '/admin/other-pages/new-project?filter=unpublish',
         text: 'Unpublish',
         icon: 'eye-off',
         active: filter === 'unpublish',
       },
       {
         id: 'archive-link',
-        href: '/admin/new-project?filter=archive',
+        href: '/admin/other-pages/new-project?filter=archive',
         text: 'Archive',
         icon: 'archive',
         active: filter === 'archive',
@@ -189,13 +187,7 @@ export const getNewProject = async (req, res) => {
         layout: false, // Don't use layout for HTMX requests
       });
     } else {
-      // Fetch user and credits data for nav
-      const dashboardData = await ServerDataService.getUserDashboardData(
-        req.user.id,
-        'startup'
-      );
-
-      res.render('pages/admin/projects', {
+      res.render('admin/new-project', {
         title: 'New Project',
         description: 'Create a new project',
         section: 'main',
@@ -207,8 +199,6 @@ export const getNewProject = async (req, res) => {
         showCreateCard,
         filter,
         populateIdea,
-        user: req.user,
-        credits: dashboardData.credits,
       });
     }
   } catch (error) {
@@ -224,35 +214,35 @@ export const getNewProject = async (req, res) => {
     const overviewFilterLinks = [
       {
         id: 'favorites-link',
-        href: '/admin/new-project?filter=favorites',
+        href: '/admin/other-pages/new-project?filter=favorites',
         text: 'Favorites',
         icon: 'heart',
         active: filter === 'favorites',
       },
       {
         id: 'recent-link',
-        href: '/admin/new-project?filter=recent',
+        href: '/admin/other-pages/new-project?filter=recent',
         text: 'Recent',
         icon: 'clock',
         active: filter === 'recent',
       },
       {
         id: 'publish-link',
-        href: '/admin/new-project?filter=publish',
+        href: '/admin/other-pages/new-project?filter=publish',
         text: 'Publish',
         icon: 'send',
         active: filter === 'publish',
       },
       {
         id: 'unpublish-link',
-        href: '/admin/new-project?filter=unpublish',
+        href: '/admin/other-pages/new-project?filter=unpublish',
         text: 'Unpublish',
         icon: 'eye-off',
         active: filter === 'unpublish',
       },
       {
         id: 'archive-link',
-        href: '/admin/new-project?filter=archive',
+        href: '/admin/other-pages/new-project?filter=archive',
         text: 'Archive',
         icon: 'archive',
         active: filter === 'archive',
@@ -267,7 +257,7 @@ export const getNewProject = async (req, res) => {
         layout: false, // Don't use layout for HTMX requests
       });
     } else {
-      res.render('pages/admin/projects', {
+      res.render('admin/new-project', {
         title: 'New Project',
         description: 'Create a new project',
         section: 'main',

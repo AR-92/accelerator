@@ -44,7 +44,7 @@ export const getNotifications = async (req, res) => {
     const actions = [
       {
         type: 'link',
-        url: '/admin/notifications',
+        url: '/admin/other-pages/notifications',
         label: 'View Details',
         icon: '<svg class="w-4 h-4 mr-3 lucide lucide-eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"></path><circle cx="12" cy="12" r="3"></circle></svg>',
       },
@@ -175,7 +175,7 @@ export const getNotifications = async (req, res) => {
       },
     };
 
-    res.render('pages/admin/system/notifications', {
+    res.render('admin/other-pages/notifications', {
       title: 'Notifications Management',
       currentPage: 'notifications',
       currentSection: 'system',
@@ -189,7 +189,7 @@ export const getNotifications = async (req, res) => {
       bulkActions,
       pagination,
       query: { search: '', status: '' },
-      currentUrl: '/admin/notifications',
+      currentUrl: '/admin/other-pages/notifications',
       colspan,
       notifications: mappedNotifications,
       notificationStats,
@@ -199,7 +199,7 @@ export const getNotifications = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading notifications:', error);
-    res.render('pages/admin/system/notifications', {
+    res.render('admin/other-pages/notifications', {
       title: 'Notifications',
       currentPage: 'notifications',
       currentSection: 'system',

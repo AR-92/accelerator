@@ -1,6 +1,5 @@
 import logger from '../../utils/logger.js';
 import { databaseService } from '../../services/index.js';
-import { ServerDataService } from '../../services/serverDataService.js';
 
 // Dashboard Overview
 export const getDashboardOverview = async (req, res) => {
@@ -8,19 +7,21 @@ export const getDashboardOverview = async (req, res) => {
     logger.info('Dashboard overview accessed');
 
     const user = req.user;
-    const userRole = user?.role || 'startup';
-    const isHtmx = req.headers['hx-request'];
+    const userRole = user?.role || 'startup'; // Default to startup if no role
 
-    // Fetch all dashboard data using ServerDataService
-    const dashboardData = await ServerDataService.getUserDashboardData(
-      user.id,
-      userRole
-    );
-
-    // Fetch additional data for full dashboard
+    // Fetch metrics based on user role
     const metrics = await getDashboardMetrics(userRole);
+
+    // Fetch recent projects
+    const recentProjects = await getRecentProjects(user);
+
+    // Fetch trending indicators
     const trendingIndicators = await getTrendingIndicators(userRole);
+
+    // Fetch analytics data
     const analytics = await getAnalyticsData(userRole);
+
+    // Role-based feature visibility
     const features = getRoleBasedFeatures(userRole);
 
     const filterLinks = [
@@ -100,26 +101,21 @@ export const getDashboardOverview = async (req, res) => {
       });
     }
 
-    res.render('pages/dashboard/overview', {
-      layout: isHtmx ? false : 'dashboard',
+    res.render('dashboard/overview', {
+      layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Dashboard Overview',
       currentSection: 'home',
       currentPage: 'overview',
       user,
       userRole,
-      isHtmx,
       metrics,
-      recentProjects: dashboardData.projects,
-      recentIdeas: dashboardData.ideas,
+      recentProjects,
       trendingIndicators,
       analytics,
       features,
       filterLinks,
       lastUpdated: new Date().toLocaleString(),
       showSearch: true,
-      credits: dashboardData.credits,
-      billing: dashboardData.billing,
-      plan: dashboardData.billing?.plan,
     });
   } catch (error) {
     logger.error('Error loading dashboard overview:', error);
@@ -201,14 +197,13 @@ export const getDashboardOverview = async (req, res) => {
       });
     }
 
-    res.render('pages/dashboard/overview', {
+    res.render('dashboard/overview', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Dashboard Overview',
       currentSection: 'home',
       currentPage: 'overview',
       user: req.user,
       userRole: req.user?.role || 'startup',
-      currentCredits: dashboardData.credits,
       metrics: getDefaultMetrics(),
       recentProjects: [],
       trendingIndicators: [],

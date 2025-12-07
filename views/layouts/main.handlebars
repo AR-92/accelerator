@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="icon" type="image/svg+xml" href="/images/favcon.svg">
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -110,33 +110,31 @@
     <!-- CSRF Token -->
     <input type="hidden" name="_csrf" value="{{csrfToken}}" />
 
-    {{> features/auth/auth-loading}}
+    {{> auth-loading}}
 
-    <!-- Main content (hidden initially) -->
-    <div id="main-content" class="h-screen hidden flex flex-col">
-        {{> layout/nav}}
-        {{> base/filter-nav}}
-        <div class="flex flex-1 min-h-0">
-            {{> layout/sidebar user=user credits=currentCredits}}
-            <main id="{{@root.section}}-main-content" class="flex-1 p-2 sm:p-4 overflow-auto">
-                {{{body}}}
-            </main>
-        </div>
-    </div>
+     <!-- Main content (hidden initially) -->
+     <div id="main-content" class="h-screen hidden flex flex-col">
+         {{> nav}}
+         {{> filter-nav}}
+         <div class="flex flex-1 min-h-0">
+             {{> sidebar user=user credits=currentCredits}}
+             <main id="{{@root.section}}-main-content" class="flex-1 p-2 sm:p-4 overflow-auto">
+                 {{{body}}}
+             </main>
+         </div>
+     </div>
 
-    <!-- Mobile sidebar overlay -->
-    <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 hidden"
-        onclick="closeMobileSidebar()"></div>
+     <!-- Mobile sidebar overlay -->
+     <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 hidden"
+         onclick="closeMobileSidebar()"></div>
 
-    <!-- Transaction History Modal -->
-    {{> features/billing/transaction-history}}
-
-
+     <!-- Transaction History Modal -->
+     {{> transaction-history}}
 
 
 
-    <!-- Toast notifications -->
-    {{> base/toast}}
+     <!-- Toast notifications -->
+     {{> toast}}
 
 </body>
 

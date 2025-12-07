@@ -55,7 +55,7 @@ export const getUserManagement = async (req, res) => {
       },
     ];
 
-    res.render('pages/admin/users', {
+    res.render('admin/user-management', {
       title: 'User Management',
       description: 'Manage user accounts, roles, and permissions',
       section: 'main',
@@ -68,7 +68,7 @@ export const getUserManagement = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading user management:', error);
-    res.render('pages/admin/users', {
+    res.render('admin/user-management', {
       title: 'User Management',
       description: 'Manage user accounts, roles, and permissions',
       section: 'main',

@@ -77,7 +77,7 @@ export const getDashboardMarketing = async (req, res) => {
       },
     ];
 
-    res.render('pages/dashboard/marketing', {
+    res.render('dashboard/marketing', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Marketing Management',
       currentSection: 'home',
@@ -153,7 +153,7 @@ export const getDashboardMarketing = async (req, res) => {
       },
     ];
 
-    res.render('pages/dashboard/marketing', {
+    res.render('dashboard/marketing', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Marketing Management',
       currentSection: 'home',

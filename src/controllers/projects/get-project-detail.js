@@ -22,7 +22,12 @@ export const getProjectDetail = async (req, res) => {
       });
     }
 
-    // Fetch related data (team members, etc.)
+    // Fetch related data (tasks, team members, etc.)
+    const { data: tasks } = await databaseService.supabase
+      .from('todos')
+      .select('*')
+      .eq('project_id', id);
+
     const { data: team } = await databaseService.supabase
       .from('accounts')
       .select('id, name, email')
@@ -51,6 +56,12 @@ export const getProjectDetail = async (req, res) => {
       pitch_deck: project.pitch_deck,
       team_model: project.team_model,
       valuation: project.valuation,
+      tasks: (tasks || []).map((task) => ({
+        id: task.id,
+        title: task.title,
+        completed: task.completed,
+        priority: task.priority,
+      })),
       team: team || [],
     };
 
@@ -76,7 +87,7 @@ export const getProjectDetail = async (req, res) => {
       },
     ];
 
-    res.render('pages/projects/detail', {
+    res.render('projects/project-detail', {
       title: projectData.name,
       description: `Details for ${projectData.name}`,
       section: 'main',

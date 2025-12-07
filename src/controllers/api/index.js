@@ -20,9 +20,6 @@ import creditRoutes from './credits.js';
 // Billing API routes
 import billingRoutes from './billing.js';
 
-// HTMX API routes
-import htmxRoutes from './htmx-routes.js';
-
 // API routes setup
 export default function apiRoutes(app) {
   // Admin API routes
@@ -43,7 +40,4 @@ export default function apiRoutes(app) {
 
   // Billing API routes
   billingRoutes(app);
-
-  // HTMX API routes
-  htmxRoutes(app);
 }

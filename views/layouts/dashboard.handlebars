@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="icon" type="image/svg+xml" href="/images/favcon.svg">
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -45,12 +45,12 @@
     <!-- CSRF Token -->
     <input type="hidden" name="_csrf" value="{{csrfToken}}" />
 
-          {{> features/auth/auth-loading}}
+          {{> auth-loading}}
 
     <!-- Main content (hidden initially) -->
      <div id="main-content" class="h-screen hidden flex flex-col">
-          {{> layout/nav user=user credits=credits}}
-          {{> base/filter-nav}}
+          {{> nav user=user credits=credits}}
+          {{> filter-nav}}
         <div class="flex flex-1 min-h-0">
             <main id="dashboard-main-content" class="flex-1 overflow-auto bg-background">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -65,7 +65,7 @@
         onclick="closeMobileSidebar()"></div>
 
     <!-- Transaction History Modal -->
-    {{> features/billing/transaction-history}}
+    {{> transaction-history}}
 
 </body>
 
