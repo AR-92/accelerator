@@ -16,8 +16,40 @@ class DatabaseService {
     // Use Supabase
     this.supabase = createClient(supabaseUrl, supabaseKey);
     logger.info('Using Supabase database connection');
+  }
 
-    this.tableName = 'todos'; // Default table, can be overridden
+  // Generic CRUD operations
+  async create(table, data) {
+    try {
+      logger.debug(`Creating record in Supabase table ${table}:`, data);
+      const { data: result, error } = await this.supabase
+        .from(table)
+        .insert([data])
+        .select()
+        .single();
+
+      if (error) {
+        logger.error(`Failed to create record in Supabase table ${table}:`, {
+          code: error.code,
+          message: error.message,
+          details: error.details,
+          data,
+        });
+        throw error;
+      }
+      logger.debug(
+        `Created record in Supabase table ${table} with ID: ${result?.id}`
+      );
+      return result;
+    } catch (error) {
+      logger.error(`Error creating record in ${table}:`, {
+        message: error.message,
+        stack: error.stack,
+        table,
+        data,
+      });
+      throw error;
+    }
   }
 
   // Generic CRUD operations
@@ -56,7 +88,6 @@ class DatabaseService {
 
   async read(table, id = null, filters = {}) {
     try {
-      console.log(`Reading from ${table}, id: ${id}, filters:`, filters);
       let query = this.supabase.from(table).select('*');
 
       if (id) {
@@ -69,11 +100,10 @@ class DatabaseService {
       });
 
       const { data, error } = await query;
-      console.log(`Query result: data length ${data?.length}, error:`, error);
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error(`Error reading from ${table}:`, error);
+      logger.error(`Error reading from ${table}:`, error);
       throw error;
     }
   }
@@ -107,121 +137,77 @@ class DatabaseService {
     }
   }
 
-  // Todo-specific methods (since we're using this for todos)
-  async getAllTodos() {
+  // Upsert user setting
+  async upsertUserSetting(userId, category, key, value, type = 'string') {
     try {
-      logger.debug('Fetching all todos from Supabase...');
+      logger.debug(
+        `Upserting user setting: ${userId}, ${category}, ${key}, ${value}, ${type}`
+      );
       const { data, error } = await this.supabase
-        .from('todos')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        logger.error('Failed to fetch todos from Supabase:', {
-          code: error.code,
-          message: error.message,
-          details: error.details,
-        });
-        throw error;
-      }
-      logger.debug(`Successfully fetched ${data.length} todos from Supabase`);
-      return data;
-    } catch (error) {
-      logger.error('Error fetching todos:', {
-        message: error.message,
-        stack: error.stack,
-      });
-      throw error;
-    }
-  }
-
-  async createTodo(title, description = null) {
-    try {
-      logger.debug(`Creating todo in Supabase: "${title}"`);
-      const { data, error } = await this.supabase
-        .from('todos')
-        .insert([{ title, description, completed: false }])
+        .from('user_settings')
+        .upsert(
+          {
+            user_id: userId,
+            category,
+            key,
+            value: String(value),
+            type,
+            updated_at: new Date().toISOString(),
+          },
+          {
+            onConflict: 'user_id,category,key',
+          }
+        )
         .select()
         .single();
 
       if (error) {
-        logger.error('Failed to create todo in Supabase:', {
-          code: error.code,
-          message: error.message,
-          details: error.details,
-          title,
-          description,
-        });
+        logger.error(`Supabase error upserting user setting:`, error);
         throw error;
       }
-      logger.info(`Created todo in Supabase with ID: ${data.id}`);
+
+      logger.debug(`Successfully upserted user setting:`, data);
       return data;
     } catch (error) {
-      logger.error('Error creating todo:', {
-        message: error.message,
-        stack: error.stack,
-        title,
-        description,
-      });
+      logger.error(`Error upserting user setting:`, error);
       throw error;
     }
   }
 
-  async updateTodo(id, updates) {
+  // Get user setting
+  async getUserSetting(userId, category, key) {
     try {
-      logger.debug(`Updating todo ${id} in Supabase:`, updates);
+      logger.debug(`Getting user setting: ${userId}, ${category}, ${key}`);
       const { data, error } = await this.supabase
-        .from('todos')
-        .update({ ...updates, updated_at: new Date().toISOString() })
-        .eq('id', id)
-        .select()
+        .from('user_settings')
+        .select('value, type')
+        .eq('user_id', userId)
+        .eq('category', category)
+        .eq('key', key)
         .single();
 
-      if (error) {
-        logger.error('Failed to update todo in Supabase:', {
-          code: error.code,
-          message: error.message,
-          details: error.details,
-          id,
-          updates,
-        });
+      if (error && error.code !== 'PGRST116') {
+        logger.error(`Supabase error getting user setting:`, error);
         throw error;
       }
-      logger.info(`Updated todo ${id} in Supabase`);
-      return data;
-    } catch (error) {
-      logger.error('Error updating todo:', {
-        message: error.message,
-        stack: error.stack,
-        id,
-        updates,
-      });
-      throw error;
-    }
-  }
 
-  async deleteTodo(id) {
-    try {
-      logger.debug(`Deleting todo ${id} from Supabase`);
-      const { error } = await this.supabase.from('todos').delete().eq('id', id);
-
-      if (error) {
-        logger.error('Failed to delete todo from Supabase:', {
-          code: error.code,
-          message: error.message,
-          details: error.details,
-          id,
-        });
-        throw error;
+      if (!data) {
+        logger.debug(
+          `No user setting found for ${userId}, ${category}, ${key}`
+        );
+        return null;
       }
-      logger.info(`Deleted todo ${id} from Supabase`);
-      return true;
+
+      let parsedValue = data.value;
+      if (data.type === 'boolean') parsedValue = Boolean(data.value);
+      else if (data.type === 'number') parsedValue = Number(data.value);
+      else if (data.type === 'array' || data.type === 'object')
+        parsedValue = JSON.parse(data.value);
+
+      logger.debug(`Retrieved user setting: ${parsedValue}`);
+      return parsedValue;
     } catch (error) {
-      logger.error('Error deleting todo:', {
-        message: error.message,
-        stack: error.stack,
-        id,
-      });
+      logger.error(`Error getting user setting:`, error);
       throw error;
     }
   }

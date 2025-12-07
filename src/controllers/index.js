@@ -23,7 +23,6 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import express from 'express';
-import { createClient } from '@supabase/supabase-js';
 
 import { getDashboard } from './overview/get-dashboard.js';
 import { getNewProject } from './overview/get-new-project.js';
@@ -46,9 +45,9 @@ import { getDashboardActivityLog } from './dashboard/activity-log.js';
 import { getDashboardEnterprise } from './dashboard/enterprise.js';
 import { getDashboardCorporate } from './dashboard/corporate.js';
 
-import { getVotingReward } from './voting-reward/index.js';
+import { getVotingReward } from './voting/index.js';
 
-import { requireAuth, checkAuth } from '../middleware/auth/index.js';
+import { authenticateUser, requireAuth } from '../middleware/auth/index.js';
 
 // Re-export for backward compatibility
 
@@ -67,7 +66,7 @@ export { getProjectDetail };
 
 export { getVotingReward };
 
-import { requireWebAuth } from '../middleware/auth/index.js';
+// Using requireAuth for web routes (requires authentication)
 
 // File upload configuration
 const uploadsDir = path.join(process.cwd(), 'uploads');
@@ -130,27 +129,24 @@ const upload = multer({
 
 // Admin routes setup
 export default function adminRoutes(app) {
-  // Root route - redirect to unified dashboard overview
-  app.get('/', requireWebAuth, (req, res) => {
-    res.redirect('/dashboard');
+  // Root route - redirect to new project page
+  app.get('/', requireAuth, (req, res) => {
+    res.redirect('/admin/new-project?showCard=true');
   });
 
   // Main pages (server-side auth protection)
-  app.get('/admin/profile-settings', requireWebAuth, getProfileSettings);
-  app.get('/admin/settings', requireWebAuth, getSettings);
-  app.get('/admin/system-health', requireWebAuth, getSystemHealth);
-  app.get('/admin/system-config', requireWebAuth, getSystemConfig);
-  app.get('/admin/system-logs', requireWebAuth, getSystemLogs);
-  app.get('/admin/notifications', requireWebAuth, getNotifications);
+  app.get('/admin/profile-settings', requireAuth, getProfileSettings);
+  app.get('/admin/settings', requireAuth, getSettings);
+  app.get('/admin/system-health', requireAuth, getSystemHealth);
+  app.get('/admin/system-config', requireAuth, getSystemConfig);
+  app.get('/admin/system-logs', requireAuth, getSystemLogs);
+  app.get('/admin/notifications', requireAuth, getNotifications);
 
-  app.get('/admin/activity', requireWebAuth, getActivity);
-  app.post('/admin/logout', postLogout);
+  app.get('/admin/activity', requireAuth, getActivity);
+  app.get('/admin/dashboard', requireAuth, getDashboard);
+  app.get('/admin/new-project', requireAuth, getNewProject);
 
-  // Overview pages (server-side auth protection)
-  app.get('/admin/dashboard', requireWebAuth, getDashboard);
-  app.get('/admin/new-project', requireWebAuth, getNewProject);
-
-  app.post('/admin/ideas/:id/publish', requireWebAuth, async (req, res) => {
+  app.post('/admin/ideas/:id/publish', requireAuth, async (req, res) => {
     try {
       const { id } = req.params;
       const ideaService = serviceFactory.getIdeaService();
@@ -162,7 +158,7 @@ export default function adminRoutes(app) {
     }
   });
 
-  app.post('/admin/ideas/:id/unpublish', requireWebAuth, async (req, res) => {
+  app.post('/admin/ideas/:id/unpublish', requireAuth, async (req, res) => {
     try {
       const { id } = req.params;
       const ideaService = serviceFactory.getIdeaService();
@@ -174,7 +170,7 @@ export default function adminRoutes(app) {
     }
   });
 
-  app.post('/admin/ideas/:id/favorite', requireWebAuth, async (req, res) => {
+  app.post('/admin/ideas/:id/favorite', requireAuth, async (req, res) => {
     try {
       const { id } = req.params;
       const ideaService = serviceFactory.getIdeaService();
@@ -186,7 +182,7 @@ export default function adminRoutes(app) {
     }
   });
 
-  app.post('/admin/ideas/:id/unfavorite', requireWebAuth, async (req, res) => {
+  app.post('/admin/ideas/:id/unfavorite', requireAuth, async (req, res) => {
     try {
       const { id } = req.params;
       const ideaService = serviceFactory.getIdeaService();
@@ -198,7 +194,7 @@ export default function adminRoutes(app) {
     }
   });
 
-  app.post('/admin/ideas/:id/archive', requireWebAuth, async (req, res) => {
+  app.post('/admin/ideas/:id/archive', requireAuth, async (req, res) => {
     try {
       const { id } = req.params;
       const ideaService = serviceFactory.getIdeaService();
@@ -210,7 +206,7 @@ export default function adminRoutes(app) {
     }
   });
 
-  app.post('/admin/ideas/:id/unarchive', requireWebAuth, async (req, res) => {
+  app.post('/admin/ideas/:id/unarchive', requireAuth, async (req, res) => {
     try {
       const { id } = req.params;
       const ideaService = serviceFactory.getIdeaService();
@@ -222,7 +218,7 @@ export default function adminRoutes(app) {
     }
   });
 
-  app.delete('/admin/ideas/:id', requireWebAuth, async (req, res) => {
+  app.delete('/admin/ideas/:id', requireAuth, async (req, res) => {
     try {
       const { id } = req.params;
       const ideaService = serviceFactory.getIdeaService();
@@ -292,7 +288,7 @@ export default function adminRoutes(app) {
       },
     ];
 
-    res.render('projects/idea-model', {
+    res.render('pages/projects/models/idea-model', {
       layout: 'main',
       title: 'Idea Generation Model',
       section: 'main',
@@ -372,243 +368,184 @@ export default function adminRoutes(app) {
       ],
     });
   });
-  app.get('/projects/business-model', requireWebAuth, (req, res) => {
-    res.render('projects/business-model', {
-      layout: 'main',
-      title: 'Business Model Canvas',
-      section: 'main',
-      currentSection: 'main',
-      currentPage: 'Business Model',
+  app.get('/projects/business-model', requireAuth, (req, res) => {
+    res.render('pages/projects/models/business-model', {
+      title: 'Business Model',
     });
   });
-  app.get('/projects/business-plan', requireWebAuth, (req, res) => {
-    res.render('projects/business-plan', {
-      layout: 'main',
+  app.get('/projects/business-plan', requireAuth, (req, res) => {
+    res.render('pages/projects/models/business-plan', {
       title: 'Business Plan',
-      section: 'main',
-      currentSection: 'main',
-      currentPage: 'Business Plan',
     });
   });
-  app.get('/projects/financial-model', requireWebAuth, (req, res) => {
-    res.render('projects/financial-model', {
-      layout: 'main',
+  app.get('/projects/financial-model', requireAuth, (req, res) => {
+    res.render('pages/projects/models/financial-model', {
       title: 'Financial Model',
-      section: 'main',
-      currentSection: 'main',
-      currentPage: 'Financial Model',
     });
   });
-  app.get('/projects/funding-model', requireWebAuth, (req, res) => {
-    res.render('projects/funding-model', {
-      layout: 'main',
+  app.get('/projects/funding-model', requireAuth, (req, res) => {
+    res.render('pages/projects/models/funding-model', {
       title: 'Funding Model',
-      section: 'main',
-      currentSection: 'main',
-      currentPage: 'Funding Model',
     });
   });
-  app.get('/projects/legal-model', requireWebAuth, (req, res) => {
-    res.render('projects/legal-model', {
-      layout: 'main',
-      title: 'Legal Model',
-      section: 'main',
-      currentSection: 'main',
-      currentPage: 'Legal Model',
-    });
+  app.get('/projects/legal-model', requireAuth, (req, res) => {
+    res.render('pages/projects/models/legal-model', { title: 'Legal Model' });
   });
-  app.get('/projects/marketing-model', requireWebAuth, (req, res) => {
-    res.render('projects/marketing-model', {
-      layout: 'main',
+  app.get('/projects/marketing-model', requireAuth, (req, res) => {
+    res.render('pages/projects/models/marketing-model', {
       title: 'Marketing Model',
-      section: 'main',
-      currentSection: 'main',
-      currentPage: 'Marketing Model',
     });
   });
-  app.get('/projects/pitch-deck', requireWebAuth, (req, res) => {
-    res.render('projects/pitch-deck', {
-      layout: 'main',
-      title: 'Pitch Deck',
-      section: 'main',
-      currentSection: 'main',
-      currentPage: 'Pitch Deck',
-    });
+  app.get('/projects/pitch-deck', requireAuth, (req, res) => {
+    res.render('pages/projects/models/pitch-deck', { title: 'Pitch Deck' });
   });
-  app.get('/projects/team-model', requireWebAuth, (req, res) => {
-    res.render('projects/team-model', {
-      layout: 'main',
-      title: 'Team Model',
-      section: 'main',
-      currentSection: 'main',
-      currentPage: 'Team Model',
-    });
+  app.get('/projects/team-model', requireAuth, (req, res) => {
+    res.render('pages/projects/models/team-model', { title: 'Team Model' });
   });
-  app.get('/projects/valuation', requireWebAuth, (req, res) => {
-    res.render('projects/valuation', {
-      layout: 'main',
-      title: 'Valuation',
-      section: 'main',
-      currentSection: 'main',
-      currentPage: 'Valuation',
-    });
+  app.get('/projects/valuation', requireAuth, (req, res) => {
+    res.render('pages/projects/models/valuation', { title: 'Valuation' });
   });
-  app.get('/projects/:id', requireWebAuth, getProjectDetail);
-  app.get(
-    '/admin/other-pages/profile-settings',
-    requireWebAuth,
-    getProfileSettings
-  );
-  app.post(
-    '/admin/other-pages/profile-settings',
-    requireWebAuth,
-    postProfileSettings
-  );
-  app.get('/admin/other-pages/settings', requireWebAuth, getSettings);
-  app.post('/admin/other-pages/settings', requireWebAuth, postSettings);
-  app.get('/admin/other-pages/system-health', requireWebAuth, getSystemHealth);
-  app.get('/admin/other-pages/system-config', requireWebAuth, getSystemConfig);
-  app.get('/admin/other-pages/system-logs', requireWebAuth, getSystemLogs);
-  app.get('/admin/other-pages/notifications', requireWebAuth, getNotifications);
-  app.get('/admin/other-pages/activity', requireWebAuth, getActivity);
-  app.get(
-    '/admin/other-pages/user-management',
-    requireWebAuth,
-    getUserManagement
-  );
-  app.get(
-    '/admin/other-pages/activity/export/csv',
-    requireWebAuth,
-    exportActivityCSV
-  );
-  app.get(
-    '/admin/other-pages/activity/export/json',
-    requireWebAuth,
-    exportActivityJSON
-  );
-  app.get('/admin/other-pages/dashboard', requireWebAuth, getDashboard);
-  app.get('/admin/other-pages/new-project', requireWebAuth, getNewProject);
+  app.get('/projects/:id', requireAuth, getProjectDetail);
+  app.get('/admin/profile-settings', requireAuth, getProfileSettings);
+  app.post('/admin/profile-settings', requireAuth, postProfileSettings);
+  app.get('/admin/settings', requireAuth, getSettings);
+  app.post('/admin/settings', requireAuth, postSettings);
+  app.get('/admin/system-health', requireAuth, getSystemHealth);
+  app.get('/admin/system-config', requireAuth, getSystemConfig);
+  app.get('/admin/system-logs', requireAuth, getSystemLogs);
+  app.get('/admin/notifications', requireAuth, getNotifications);
+  app.get('/admin/activity', requireAuth, getActivity);
+  app.get('/admin/user-management', requireAuth, getUserManagement);
+  app.get('/admin/activity/export/csv', requireAuth, exportActivityCSV);
+  app.get('/admin/activity/export/json', requireAuth, exportActivityJSON);
+  app.get('/admin/dashboard', requireAuth, getDashboard);
+  app.get('/admin/new-project', requireAuth, csrfProtection, getNewProject);
+
+  // User settings
+  app.get('/settings', requireAuth, getSettingsPage);
 
   // Settings pages
-  app.get('/pages/settings', requireWebAuth, getSettingsPage);
+  // app.get('/pages/settings', requireAuth, getSettingsPage); // Removed duplicate
 
-  // Billing pages
-  app.get('/pages/billing', requireWebAuth, getBilling);
+  // app.get('/pages/billing', requireAuth, getBilling); // Duplicate of /billing
 
   // Unified Dashboard pages
   // Dashboard routes
-  app.get('/dashboard', requireWebAuth, getDashboardMain);
-  app.get('/dashboard/overview', requireWebAuth, getDashboardOverview);
-  app.get('/dashboard/idea', requireWebAuth, getDashboardIdea);
-  app.get('/dashboard/business', requireWebAuth, getDashboardBusiness);
-  app.get('/dashboard/financial', requireWebAuth, getDashboardFinancial);
-  app.get('/dashboard/marketing', requireWebAuth, getDashboardMarketing);
-  app.get('/dashboard/fund', requireWebAuth, getDashboardFund);
-  app.get('/dashboard/team', requireWebAuth, getDashboardTeam);
-  app.get('/dashboard/promote', requireWebAuth, getDashboardPromote);
-  app.get('/dashboard/activity-log', requireWebAuth, getDashboardActivityLog);
-  app.get('/dashboard/enterprise', requireWebAuth, getDashboardEnterprise);
-  app.get('/dashboard/corporate', requireWebAuth, getDashboardCorporate);
+  app.get('/dashboard', requireAuth, getDashboardMain);
+  app.get('/dashboard/overview', requireAuth, getDashboardOverview);
+  app.get('/dashboard/idea', requireAuth, getDashboardIdea);
+  app.get('/dashboard/business', requireAuth, getDashboardBusiness);
+  app.get('/dashboard/financial', requireAuth, getDashboardFinancial);
+  app.get('/dashboard/marketing', requireAuth, getDashboardMarketing);
+  app.get('/dashboard/fund', requireAuth, getDashboardFund);
+  app.get('/dashboard/team', requireAuth, getDashboardTeam);
+  app.get('/dashboard/promote', requireAuth, getDashboardPromote);
+  app.get('/dashboard/activity-log', requireAuth, getDashboardActivityLog);
+  app.get('/dashboard/enterprise', requireAuth, getDashboardEnterprise);
+  app.get('/dashboard/corporate', requireAuth, getDashboardCorporate);
 
   // Voting & Rewards page
-  app.get('/voting-reward', requireWebAuth, getVotingReward);
+  app.get('/voting', requireAuth, getVotingReward);
 
   // Legacy redirects for backward compatibility
-  app.get('/startup-dashboard', requireWebAuth, (req, res) =>
+  app.get('/startup-dashboard', requireAuth, (req, res) =>
     res.redirect('/dashboard')
   );
 
-  app.get('/enterprise-dashboard', requireWebAuth, (req, res) =>
+  app.get('/enterprise-dashboard', requireAuth, (req, res) =>
     res.redirect('/dashboard/enterprise')
   );
 
-  app.get('/enterprise-dashboard/overview', requireWebAuth, (req, res) =>
+  app.get('/enterprise-dashboard/overview', requireAuth, (req, res) =>
     res.redirect('/dashboard/overview')
   );
 
-  app.get('/enterprise-dashboard/projects', requireWebAuth, (req, res) =>
+  app.get('/enterprise-dashboard/projects', requireAuth, (req, res) =>
     res.redirect('/dashboard/projects')
   );
 
-  app.get('/enterprise-dashboard/analytics', requireWebAuth, (req, res) =>
+  app.get('/enterprise-dashboard/analytics', requireAuth, (req, res) =>
     res.redirect('/dashboard/analytics')
   );
 
-  app.get('/enterprise-dashboard/users', requireWebAuth, (req, res) =>
+  app.get('/enterprise-dashboard/users', requireAuth, (req, res) =>
     res.redirect('/dashboard/team')
   );
 
-  app.get('/enterprise-dashboard/activity-log', requireWebAuth, (req, res) =>
+  app.get('/enterprise-dashboard/activity-log', requireAuth, (req, res) =>
     res.redirect('/dashboard/activity-log')
   );
 
-  app.get('/corporate-dashboard', requireWebAuth, (req, res) =>
+  app.get('/corporate-dashboard', requireAuth, (req, res) =>
     res.redirect('/dashboard/corporate')
   );
 
-  app.get('/corporate-dashboard/overview', requireWebAuth, (req, res) =>
+  app.get('/corporate-dashboard/overview', requireAuth, (req, res) =>
     res.redirect('/dashboard/overview')
   );
 
-  app.get('/corporate-dashboard/projects', requireWebAuth, (req, res) =>
+  app.get('/corporate-dashboard/projects', requireAuth, (req, res) =>
     res.redirect('/dashboard/projects')
   );
 
-  app.get('/corporate-dashboard/analytics', requireWebAuth, (req, res) =>
+  app.get('/corporate-dashboard/analytics', requireAuth, (req, res) =>
     res.redirect('/dashboard/analytics')
   );
 
-  app.get('/corporate-dashboard/users', requireWebAuth, (req, res) =>
+  app.get('/corporate-dashboard/users', requireAuth, (req, res) =>
     res.redirect('/dashboard/team')
   );
 
-  app.get('/corporate-dashboard/activity-log', requireWebAuth, (req, res) =>
+  app.get('/corporate-dashboard/activity-log', requireAuth, (req, res) =>
     res.redirect('/dashboard/activity-log')
   );
 
-  app.get('/enterprise-dashboard', requireWebAuth, (req, res) =>
+  app.get('/enterprise-dashboard', requireAuth, (req, res) =>
     res.redirect('/dashboard')
   );
-  app.get('/enterprise-dashboard/overview', requireWebAuth, (req, res) =>
+  app.get('/enterprise-dashboard/overview', requireAuth, (req, res) =>
     res.redirect('/dashboard/overview')
   );
-  app.get('/enterprise-dashboard/projects', requireWebAuth, (req, res) =>
+  app.get('/enterprise-dashboard/projects', requireAuth, (req, res) =>
     res.redirect('/dashboard/projects')
   );
-  app.get('/enterprise-dashboard/analytics', requireWebAuth, (req, res) =>
+  app.get('/enterprise-dashboard/analytics', requireAuth, (req, res) =>
     res.redirect('/dashboard/analytics')
   );
-  app.get('/enterprise-dashboard/users', requireWebAuth, (req, res) =>
+  app.get('/enterprise-dashboard/users', requireAuth, (req, res) =>
     res.redirect('/dashboard/team')
   );
-  app.get('/enterprise-dashboard/activity-log', requireWebAuth, (req, res) =>
+  app.get('/enterprise-dashboard/activity-log', requireAuth, (req, res) =>
     res.redirect('/dashboard/activity')
   );
 
-  app.get('/corporate-dashboard', requireWebAuth, (req, res) =>
+  app.get('/corporate-dashboard', requireAuth, (req, res) =>
     res.redirect('/dashboard')
   );
-  app.get('/corporate-dashboard/overview', requireWebAuth, (req, res) =>
+  app.get('/corporate-dashboard/overview', requireAuth, (req, res) =>
     res.redirect('/dashboard/overview')
   );
-  app.get('/corporate-dashboard/projects', requireWebAuth, (req, res) =>
+  app.get('/corporate-dashboard/projects', requireAuth, (req, res) =>
     res.redirect('/dashboard/projects')
   );
-  app.get('/corporate-dashboard/analytics', requireWebAuth, (req, res) =>
+  app.get('/corporate-dashboard/analytics', requireAuth, (req, res) =>
     res.redirect('/dashboard/analytics')
   );
-  app.get('/corporate-dashboard/users', requireWebAuth, (req, res) =>
+  app.get('/corporate-dashboard/users', requireAuth, (req, res) =>
     res.redirect('/dashboard/team')
   );
-  app.get('/corporate-dashboard/activity-log', requireWebAuth, (req, res) =>
+  app.get('/corporate-dashboard/activity-log', requireAuth, (req, res) =>
     res.redirect('/dashboard/activity')
   );
 
   // Additional pages
-  app.get('/pages/terms', requireWebAuth, (req, res) => {
-    res.render('terms', { layout: 'main', title: 'Terms and Conditions' });
+  app.get('/pages/terms', (req, res) => {
+    res.render('pages/shared/terms', {
+      layout: 'main',
+      title: 'Terms and Conditions',
+    });
   });
-  app.get('/pages/core/upgrade-plan', requireWebAuth, (req, res) => {
+  app.get('/pages/core/upgrade-plan', requireAuth, (req, res) => {
     const filterLinks = [
       {
         id: 'billing-link',
@@ -629,7 +566,7 @@ export default function adminRoutes(app) {
         icon: 'star',
       },
     ];
-    res.render('upgrade-plan', {
+    res.render('pages/billing/upgrade-plan', {
       layout: 'main',
       title: 'Upgrade Plan',
       currentSection: 'billing',
@@ -640,13 +577,13 @@ export default function adminRoutes(app) {
   });
   // Test credits page (no auth required)
   app.get('/test-credits', (req, res) => {
-    res.render('test-credits', {
+    res.render('pages/shared/test-credits', {
       layout: false,
       title: 'Test Buy Credits',
     });
   });
 
-  app.get('/pages/buy-credits', requireWebAuth, (req, res) => {
+  app.get('/pages/buy-credits', requireAuth, (req, res) => {
     const filterLinks = [
       {
         id: 'billing-link',
@@ -667,7 +604,7 @@ export default function adminRoutes(app) {
         icon: 'star',
       },
     ];
-    res.render('buy-credits', {
+    res.render('pages/billing/buy-credits', {
       layout: 'main',
       title: 'Buy Credits',
       filterLinks,
@@ -675,7 +612,7 @@ export default function adminRoutes(app) {
       currentPage: 'Buy Credits',
     });
   });
-  app.get('/pages/settings/profile', requireWebAuth, (req, res) => {
+  app.get('/settings/profile', requireAuth, (req, res) => {
     const settingsCategories = [
       { value: 'account', label: 'Account', icon: 'user' },
       { value: 'privacy', label: 'Privacy', icon: 'shield' },
@@ -692,7 +629,7 @@ export default function adminRoutes(app) {
       { value: 'integrations', label: 'Integrations', icon: 'link' },
       { value: 'preferences', label: 'Preferences', icon: 'sliders' },
     ];
-    res.render('settings/profile', {
+    res.render('pages/settings/profile', {
       layout: req.headers['hx-request'] ? false : 'settings',
       title: 'Profile Settings',
       currentSection: 'settings',
@@ -701,7 +638,7 @@ export default function adminRoutes(app) {
       activeCategory: 'profile',
     });
   });
-  app.get('/pages/settings/billing', requireWebAuth, (req, res) => {
+  app.get('/settings/billing', requireAuth, (req, res) => {
     const settingsCategories = [
       { value: 'account', label: 'Account', icon: 'user' },
       { value: 'privacy', label: 'Privacy', icon: 'shield' },
@@ -718,7 +655,7 @@ export default function adminRoutes(app) {
       { value: 'integrations', label: 'Integrations', icon: 'link' },
       { value: 'preferences', label: 'Preferences', icon: 'sliders' },
     ];
-    res.render('settings/billing', {
+    res.render('components/features/billing/billing-settings', {
       layout: req.headers['hx-request'] ? false : 'settings',
       title: 'Billing Settings',
       currentSection: 'settings',
@@ -727,7 +664,7 @@ export default function adminRoutes(app) {
       activeCategory: 'billing',
     });
   });
-  app.get('/pages/settings/other', requireWebAuth, (req, res) => {
+  app.get('/settings/other', requireAuth, (req, res) => {
     const settingsCategories = [
       { value: 'account', label: 'Account', icon: 'user' },
       { value: 'privacy', label: 'Privacy', icon: 'shield' },
@@ -744,7 +681,7 @@ export default function adminRoutes(app) {
       { value: 'integrations', label: 'Integrations', icon: 'link' },
       { value: 'preferences', label: 'Preferences', icon: 'sliders' },
     ];
-    res.render('settings/other', {
+    res.render('pages/settings/other', {
       layout: req.headers['hx-request'] ? false : 'settings',
       title: 'Security & Privacy',
       currentSection: 'settings',
@@ -755,86 +692,24 @@ export default function adminRoutes(app) {
   });
 
   // Portfolio page - redirect to new project with portfolio filter
-  app.get('/portfolio', requireWebAuth, (req, res) => {
-    res.redirect('/admin/other-pages/new-project?filter=portfolio');
+  app.get('/portfolio', requireAuth, (req, res) => {
+    res.redirect('/admin/new-project?filter=portfolio');
   });
 
-  app.get('/usecase-from-user', requireWebAuth, (req, res) => {
-    res.render('usecase-from-user', {
+  app.get('/usecase-from-user', requireAuth, (req, res) => {
+    res.render('pages/ai/usecase-from-user', {
       layout: 'main',
       title: 'User-Generated Use Cases',
     });
   });
   app.post(
     '/projects/new',
-    requireWebAuth,
+    authenticateUser,
     csrfProtection,
     async (req, res) => {
       try {
-        // Extract and validate user from cookies (since requireWebAuth doesn't set req.user for HTML requests)
-        const cookies = req.headers.cookie;
-        if (!cookies) {
-          return res.redirect('/auth/login?error=auth_required');
-        }
-
-        // Extract project ID from config
-        const supabaseUrl = process.env.SUPABASE_URL;
-        const projectMatch = supabaseUrl.match(/https:\/\/(.+)\.supabase\.co/);
-        const projectId = projectMatch ? projectMatch[1] : null;
-
-        if (!projectId) {
-          console.error(
-            'Could not extract Supabase project ID from URL:',
-            supabaseUrl
-          );
-          return res.redirect('/auth/login?error=config_error');
-        }
-
-        // Extract access token from cookies
-        const cookiePairs = cookies.split(';');
-        let accessToken = null;
-
-        for (const cookiePair of cookiePairs) {
-          const [name, value] = cookiePair.trim().split('=');
-          if (name.includes(`sb-${projectId}-auth-token`)) {
-            try {
-              accessToken = decodeURIComponent(value);
-              break;
-            } catch (e) {
-              console.warn('Failed to decode auth token cookie:', e.message);
-            }
-          }
-          if (name === 'sb-access-token') {
-            try {
-              accessToken = decodeURIComponent(value);
-              break;
-            } catch (e) {
-              console.warn(
-                'Failed to decode custom auth token cookie:',
-                e.message
-              );
-            }
-          }
-        }
-
-        if (!accessToken) {
-          return res.redirect('/auth/login?error=no_token');
-        }
-
-        // Validate token and get user
-        const supabase = createClient(
-          process.env.SUPABASE_URL,
-          process.env.SUPABASE_KEY
-        );
-        const { data, error } = await supabase.auth.getUser(accessToken);
-
-        if (error || !data || !data.user) {
-          console.warn('Invalid or expired Supabase token:', error?.message);
-
-          return res.redirect('/auth/login?error=invalid_token');
-        }
-
-        const userId = data.user.id;
+        // User is already authenticated via middleware
+        const userId = req.user.id;
 
         // Extract form data
         const description = req.body.prompt;
@@ -889,14 +764,21 @@ export default function adminRoutes(app) {
         // Create the idea using the service
         const createdIdea = await ideaService.createIdea(ideaData);
 
-        // Check if request expects JSON (AJAX) or HTML redirect
-        if (
+        // Handle different response types
+        if (req.headers['hx-request']) {
+          // HTMX request - return project component
+          res.render('project-item', {
+            layout: false,
+            project: createdIdea,
+          });
+        } else if (
           req.headers.accept &&
           req.headers.accept.includes('application/json')
         ) {
+          // JSON API request
           res.json({ success: true, idea: createdIdea });
         } else {
-          // Redirect to project detail page
+          // Regular form submission - redirect
           res.redirect(`/projects/${createdIdea.id}`);
         }
       } catch (error) {
@@ -917,7 +799,7 @@ export default function adminRoutes(app) {
   );
 
   // File upload routes
-  app.post('/api/upload', requireWebAuth, upload.single('file'), (req, res) => {
+  app.post('/api/upload', requireAuth, upload.single('file'), (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({ error: 'No file uploaded' });
@@ -944,7 +826,7 @@ export default function adminRoutes(app) {
 
   app.post(
     '/api/upload-multiple',
-    requireWebAuth,
+    requireAuth,
     upload.array('files', 10),
     (req, res) => {
       try {

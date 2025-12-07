@@ -154,7 +154,6 @@ export const runDatabaseHealthCheck = async (req, res) => {
       'business_plan',
       'rewards',
       'votes',
-      'todos',
       'notifications',
       'activity_logs',
     ];
@@ -188,7 +187,7 @@ export const runDatabaseHealthCheck = async (req, res) => {
     try {
       const startTime = Date.now();
       const { data, error } = await databaseService.supabase
-        .from('todos')
+        .from('accounts')
         .select('*')
         .limit(10);
 
@@ -349,7 +348,7 @@ export const runDiagnostics = async (req, res) => {
     // Test 5: Database connectivity
     try {
       const { data, error } = await databaseService.supabase
-        .from('todos')
+        .from('accounts')
         .select('count', { count: 'exact', head: true });
 
       results.push({

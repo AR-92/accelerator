@@ -130,93 +130,13 @@ function updateFilterNavActiveState() {
   }
 }
 
-// Load credit balance in navigation
-async function loadNavCreditBalance() {
-  try {
-    const response = await fetch('/api/credits/balance', {
-      credentials: 'include',
-    });
-    const data = await response.json();
-
-    if (data.success) {
-      const balanceElement = document.getElementById('nav-credit-balance');
-      if (balanceElement) {
-        balanceElement.textContent = `${data.balance || 0} Credits`;
-      }
-    }
-  } catch (error) {
-    console.error('Error loading nav balance:', error);
-  }
-}
+// Credit balance loaded server-side via HTMX
 
 // Make functions globally available
 window.initFilterNavScroll = initFilterNavScroll;
 window.updateFilterNavActiveState = updateFilterNavActiveState;
-window.loadNavCreditBalance = loadNavCreditBalance;
-window.loadCurrentPlan = loadCurrentPlan;
 
-// Load current plan details
-async function loadCurrentPlan() {
-  try {
-    const response = await fetch('/api/billing/subscription', {
-      credentials: 'include',
-    });
-    const data = await response.json();
-
-    if (data.success && data.subscription) {
-      const plan = data.subscription.plan;
-      const planName = plan ? `${plan.name} Plan` : 'Free Plan';
-      const planDetails = plan
-        ? `$${plan.price_monthly}/month`
-        : 'Upgrade for more features';
-
-      // Update sidebar footer
-      const sidebarPlan = document.getElementById('sidebar-current-plan');
-      if (sidebarPlan) sidebarPlan.textContent = planName;
-
-      // Update navbar dropdown
-      const navPlanNameElements = document.querySelectorAll(
-        '.nav-current-plan-name'
-      );
-      const navPlanDetailsElements = document.querySelectorAll(
-        '.nav-current-plan-details'
-      );
-      navPlanNameElements.forEach((el) => (el.textContent = planName));
-      navPlanDetailsElements.forEach((el) => (el.textContent = planDetails));
-    } else {
-      // No subscription, show free plan
-      const sidebarPlan = document.getElementById('sidebar-current-plan');
-      if (sidebarPlan) sidebarPlan.textContent = 'Free Plan';
-
-      const navPlanNameElements = document.querySelectorAll(
-        '.nav-current-plan-name'
-      );
-      const navPlanDetailsElements = document.querySelectorAll(
-        '.nav-current-plan-details'
-      );
-      navPlanNameElements.forEach((el) => (el.textContent = 'Free Plan'));
-      navPlanDetailsElements.forEach(
-        (el) => (el.textContent = 'Upgrade for more features')
-      );
-    }
-  } catch (error) {
-    console.error('Error loading current plan:', error);
-    // Fallback to free plan
-    const sidebarPlan = document.getElementById('sidebar-current-plan');
-    if (sidebarPlan) sidebarPlan.textContent = 'Free Plan';
-
-    const navPlanNameElements = document.querySelectorAll(
-      '.nav-current-plan-name'
-    );
-    const navPlanDetailsElements = document.querySelectorAll(
-      '.nav-current-plan-details'
-    );
-    navPlanNameElements.forEach((el) => (el.textContent = 'Free Plan'));
-    navPlanDetailsElements.forEach(
-      (el) => (el.textContent = 'Upgrade for more features')
-    );
-  }
-}
+// Plan details loaded server-side
 
 // Toggle user menu dropdown
 function toggleUserMenu() {
@@ -254,13 +174,11 @@ function toggleActionMenu(button) {
   const id = button.getAttribute('data-id');
 
   if (!entity || !id || !button) {
-    console.error('Invalid parameters for toggleActionMenu');
     return;
   }
 
   const menu = document.getElementById(`actionMenu-${entity}-${id}`);
   if (!menu) {
-    console.error(`Dropdown not found: actionMenu-${entity}-${id}`);
     return;
   }
 
@@ -340,15 +258,9 @@ document.addEventListener('click', function (event) {
 // Make functions globally available
 window.initFilterNavScroll = initFilterNavScroll;
 window.updateFilterNavActiveState = updateFilterNavActiveState;
-window.loadNavCreditBalance = loadNavCreditBalance;
-window.loadCurrentPlan = loadCurrentPlan;
 window.toggleUserMenu = toggleUserMenu;
 window.toggleGridMenu = toggleGridMenu;
 window.toggleActionMenu = toggleActionMenu;
 window.toggleFooterDropdown = toggleFooterDropdown;
 
-// Load credit balance on page load
-document.addEventListener('DOMContentLoaded', function () {
-  loadNavCreditBalance();
-  loadCurrentPlan();
-});
+// All data loaded server-side

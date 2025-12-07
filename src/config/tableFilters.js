@@ -34,25 +34,6 @@ const tableFilters = {
     ],
   },
 
-  todos: {
-    searchableFields: ['title', 'description'],
-    statusField: 'completed',
-    statusOptions: [
-      {
-        value: 'pending',
-        label: 'Pending',
-        filter: 'completed.eq.false',
-        icon: 'clock',
-      },
-      {
-        value: 'completed',
-        label: 'Completed',
-        filter: 'completed.eq.true',
-        icon: 'check-circle',
-      },
-    ],
-  },
-
   content: {
     searchableFields: ['title', 'description'],
     statusField: 'status',

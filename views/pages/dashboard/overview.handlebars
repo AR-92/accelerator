@@ -1,0 +1,184 @@
+<div class="flex flex-col gap-4 lg:gap-6 mt-6">
+      <div class="flex items-center justify-between">
+        <div class="grid gap-1">
+           <h1 class="font-heading text-3xl font-semibold text-foreground">
+             Dashboard Overview
+           </h1>
+           <p class="text-lg text-muted-foreground">
+             Monitor progress and key metrics across all scales
+           </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="btn btn-primary">
+            {{{icon 'plus' size='16'}}}
+            New Project
+          </button>
+        </div>
+      </div>
+
+        <!-- Key Metrics Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {{#each metrics}}
+          <div class="bg-card rounded-lg border border-border p-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-medium text-muted-foreground">{{title}}</p>
+                <p class="text-2xl font-bold text-foreground">{{value}}</p>
+              </div>
+              <div class="bg-{{color}}/20 rounded-lg">
+                <div class="w-10 h-10 bg-{{color}}/20 rounded-lg relative">
+                  <div class="flex items-center justify-center w-9 h-9 bg-{{color}} rounded-lg absolute top-0.5 left-0.5">
+                    {{{icon icon size="16" class='w-4 h-4 text-{{color}}-foreground'}}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="flex items-center gap-1 text-sm font-medium text-muted-foreground mt-2">
+              {{{icon 'trending-up' size="16" class='w-5 h-4'}}}
+              <span class="text-{{#if (eq changeType 'positive')}}success{{else if (eq changeType 'negative')}}destructive{{else}}muted-foreground{{/if}}">{{change}}</span>
+              Since last month
+            </p>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Recent Projects -->
+        <div class="lg:col-span-2">
+          <div class="bg-card rounded-lg border border-border p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-xl font-semibold text-foreground">Recent Projects</h2>
+              <button class="btn btn-ghost text-sm">
+                View All
+                {{{icon 'arrow-right' size='14'}}}
+              </button>
+            </div>
+              {{> features/projects/project-list projects=recentProjects}}
+          </div>
+        </div>
+
+        <!-- Trending Indicators & Analytics -->
+        <div class="space-y-6">
+          <!-- Trending Indicators -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <h2 class="text-xl font-semibold text-foreground mb-4">Trending Indicators</h2>
+            <div class="space-y-3">
+              {{#each trendingIndicators}}
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-foreground">{{label}}</span>
+                <div class="flex items-center gap-2">
+                  {{#if (eq trend 'up')}}
+                    {{{icon 'trending-up' size='14' class='text-success'}}}
+                  {{else if (eq trend 'down')}}
+                    {{{icon 'trending-down' size='14' class='text-destructive'}}}
+                  {{else}}
+                    {{{icon 'minus' size='14' class='text-muted-foreground'}}}
+                  {{/if}}
+                  <span class="text-sm font-medium text-{{color}}">{{value}}</span>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+
+          <!-- Analytics Summary -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <h2 class="text-xl font-semibold text-foreground mb-4">Analytics Summary</h2>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-muted-foreground">Project Creation</span>
+                <span class="text-sm font-medium text-foreground">{{analytics.projectCreation.current}}</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-muted-foreground">Idea Validation</span>
+                <span class="text-sm font-medium text-foreground">{{analytics.ideaValidation.current}}</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-muted-foreground">Team Productivity</span>
+                <span class="text-sm font-medium text-foreground">{{analytics.teamProductivity.current}}%</span>
+              </div>
+              {{#if features.enterprise}}
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-muted-foreground">Portfolio Performance</span>
+                <span class="text-sm font-medium text-step-revenue">{{analytics.portfolioPerformance.current}}%</span>
+              </div>
+              {{/if}}
+              {{#if features.corporate}}
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-muted-foreground">Governance Score</span>
+                <span class="text-sm font-medium text-step-kpi">{{analytics.governanceScore.current}}%</span>
+              </div>
+              {{/if}}
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <h2 class="text-xl font-semibold text-foreground mb-4">Quick Actions</h2>
+            <div class="grid grid-cols-2 gap-3">
+              <button class="btn btn-outline w-full justify-start">
+                {{{icon 'plus' size='14'}}}
+                New Idea
+              </button>
+              <button class="btn btn-outline w-full justify-start">
+                {{{icon 'users' size='14'}}}
+                Add Team
+              </button>
+              <button class="btn btn-outline w-full justify-start">
+                {{{icon 'dollar-sign' size='14'}}}
+                Funding
+              </button>
+              <button class="btn btn-outline w-full justify-start">
+                {{{icon 'bar-chart' size='14'}}}
+                Analytics
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enterprise/Corporate Specific Sections -->
+      {{#if features.enterprise}}
+      <div class="bg-card rounded-lg border border-border p-6">
+        <h2 class="text-xl font-semibold text-foreground mb-4">Enterprise Analytics</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-revenue mb-2">{{analytics.enterpriseMetrics.current}}%</div>
+            <p class="text-sm text-muted-foreground">Enterprise Adoption Rate</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-kpi mb-2">{{analytics.portfolioPerformance.current}}%</div>
+            <p class="text-sm text-muted-foreground">Portfolio Performance</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-streams mb-2">24</div>
+            <p class="text-sm text-muted-foreground">Active Contracts</p>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+
+      {{#if features.corporate}}
+      <div class="bg-card rounded-lg border border-border p-6">
+        <h2 class="text-xl font-semibold text-foreground mb-4">Corporate Governance</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-kpi mb-2">{{analytics.governanceScore.current}}%</div>
+            <p class="text-sm text-muted-foreground">Governance Score</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-revenue mb-2">{{analytics.consolidatedReporting.current}}%</div>
+            <p class="text-sm text-muted-foreground">Reporting Compliance</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-cogs mb-2">12</div>
+            <p class="text-sm text-muted-foreground">Board Meetings</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-step-streams mb-2">8</div>
+            <p class="text-sm text-muted-foreground">Subsidiaries</p>
+          </div>
+        </div>
+      {{/if}}

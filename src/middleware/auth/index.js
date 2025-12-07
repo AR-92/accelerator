@@ -1,61 +1,106 @@
 import { createClient } from '@supabase/supabase-js';
 import config from '../../config/index.js';
 import logger from '../../utils/logger.js';
+import { databaseService } from '../../services/index.js';
 
-// Create Supabase client for server-side auth verification
-const supabase = createClient(config.supabase.url, config.supabase.key);
+// Create Supabase client for server-side auth verification with timeout
+const supabase = createClient(config.supabase.url, config.supabase.key, {
+  auth: {
+    autoRefreshToken: false, // Disable auto-refresh for performance
+  },
+  global: {
+    timeout: 5000, // 5 second timeout
+  },
+});
+
+// Auth caching to reduce Supabase API calls
+const authCache = new Map();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 /**
- * Middleware to verify Supabase JWT token and attach user to request
- * This should be used for API routes
- * Checks both Authorization header and cookies
+ * Extract auth token from request (headers or cookies)
  */
-export const authenticateUser = async (req, res, next) => {
-  try {
-    let token = null;
+const extractToken = (req) => {
+  // First, check Authorization header
+  const authHeader = req.headers.authorization;
+  if (authHeader?.startsWith('Bearer ')) {
+    return authHeader.substring(7);
+  }
 
-    // First, check Authorization header
-    const authHeader = req.headers.authorization;
-    if (authHeader?.startsWith('Bearer ')) {
-      token = authHeader.substring(7);
-    }
+  // If no header token, check cookies
+  const cookies = req.headers.cookie;
+  if (cookies) {
+    const supabaseUrl = config.supabase.url;
+    const projectMatch = supabaseUrl.match(/https:\/\/(.+)\.supabase\.co/);
+    const projectId = projectMatch ? projectMatch[1] : null;
 
-    // If no header token, check cookies
-    if (!token) {
-      const cookies = req.headers.cookie;
-      if (cookies) {
-        // Extract project ID from config
-        const supabaseUrl = config.supabase.url;
-        const projectMatch = supabaseUrl.match(/https:\/\/(.+)\.supabase\.co/);
-        const projectId = projectMatch ? projectMatch[1] : null;
-
-        if (projectId) {
-          const cookiePairs = cookies.split(';');
-          for (const cookiePair of cookiePairs) {
-            const [name, value] = cookiePair.trim().split('=');
-            if (name.includes(`sb-${projectId}-auth-token`)) {
-              try {
-                token = decodeURIComponent(value);
-                break;
-              } catch (e) {
-                logger.warn('Failed to decode auth token cookie:', e.message);
-              }
-            }
-            if (name === 'sb-access-token') {
-              try {
-                token = decodeURIComponent(value);
-                break;
-              } catch (e) {
-                logger.warn(
-                  'Failed to decode custom auth token cookie:',
-                  e.message
-                );
-              }
-            }
+    if (projectId) {
+      const cookiePairs = cookies.split(';');
+      for (const cookiePair of cookiePairs) {
+        const [name, value] = cookiePair.trim().split('=');
+        if (
+          name.includes(`sb-${projectId}-auth-token`) ||
+          name === 'sb-access-token'
+        ) {
+          try {
+            return decodeURIComponent(value);
+          } catch (e) {
+            logger.warn('Failed to decode auth token cookie:', e.message);
           }
         }
       }
     }
+  }
+
+  return null;
+};
+
+/**
+ * Validate token with Supabase and return user
+ */
+const validateToken = async (token) => {
+  try {
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser(token);
+    if (error || !user) {
+      logger.warn('Invalid auth token:', error?.message);
+      return null;
+    }
+    return user;
+  } catch (error) {
+    logger.error('Token validation error:', error);
+    return null;
+  }
+};
+
+/**
+ * Cached token validation to reduce Supabase API calls
+ */
+const cachedValidateToken = async (token) => {
+  if (!token) return null;
+
+  const cacheKey = token.substring(0, 16); // Use partial token as cache key
+  const cached = authCache.get(cacheKey);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.user;
+  }
+
+  const user = await validateToken(token);
+  if (user) {
+    authCache.set(cacheKey, { user, timestamp: Date.now() });
+  }
+  return user;
+};
+
+/**
+ * Middleware to verify Supabase JWT token and attach user to request
+ * This should be used for API routes that require authentication
+ */
+export const authenticateUser = async (req, res, next) => {
+  try {
+    const token = extractToken(req);
 
     if (!token) {
       logger.debug('No auth token provided');
@@ -64,18 +109,11 @@ export const authenticateUser = async (req, res, next) => {
         .json({ error: 'No authentication token provided' });
     }
 
-    // Verify the JWT token with Supabase
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser(token);
-
-    if (error || !user) {
-      logger.warn('Invalid auth token:', error?.message);
+    const user = await cachedValidateToken(token);
+    if (!user) {
       return res.status(401).json({ error: 'Invalid authentication token' });
     }
 
-    // Attach user to request object
     req.user = user;
     logger.debug(`Authenticated user: ${user.id}`);
     next();
@@ -86,174 +124,90 @@ export const authenticateUser = async (req, res, next) => {
 };
 
 /**
- * Optional middleware - redirects to login if not authenticated
- * Useful for web routes that require auth
- * Since the original design used client-side auth checks,
- * we'll implement a more appropriate server-side check
+ * Middleware for web routes that require authentication
+ * Redirects to login if not authenticated
  */
-export const requireAuth = (req, res, next) => {
-  // Check if this is an API request vs web route
-  if (req.path.startsWith('/api/')) {
-    // For API requests, require authentication header
-    const authHeader = req.headers.authorization;
-    const token = authHeader?.startsWith('Bearer ')
-      ? authHeader.substring(7)
-      : null;
-
-    if (!token) {
-      return res.status(401).json({ error: 'Authentication required' });
-    }
-
-    // If we have a token, we'll validate it in the next step
-    next();
-  } else {
-    // For web routes, we'll allow the request to go through
-    // The actual auth check happens client-side in the browser
-    // We can still attach user info if available
-    next();
-  }
-};
-
-/**
- * Middleware for web routes - redirects to login if no session
- * Works with Supabase auth, but uses a more flexible approach for web pages
- */
-export const requireWebAuth = async (req, res, next) => {
+export const requireAuth = async (req, res, next) => {
   try {
-    // Check if this is a browser request that expects HTML
-    const wantsHtml =
-      req.headers.accept && req.headers.accept.includes('text/html');
-
-    // Always try to authenticate by checking cookies
-    const cookies = req.headers.cookie;
-    let accessToken = null;
-
-    if (cookies) {
-      // Look for Supabase auth cookies - they contain the project ID in the URL
-      // Extract project ID from config
-      const supabaseUrl = config.supabase.url;
-      if (!supabaseUrl) {
-        logger.error('Supabase URL not configured');
-        if (!wantsHtml) {
-          return res
-            .status(401)
-            .json({ error: 'Authentication configuration error' });
-        }
-      } else {
-        // Extract the project ID from the Supabase URL (first part before '.supabase.co')
-        const projectMatch = supabaseUrl.match(/https:\/\/(.+)\.supabase\.co/);
-        const projectId = projectMatch ? projectMatch[1] : null;
-
-        if (!projectId) {
-          logger.error(
-            'Could not extract Supabase project ID from URL:',
-            supabaseUrl
-          );
-          if (!wantsHtml) {
-            return res
-              .status(401)
-              .json({ error: 'Authentication configuration error' });
-          }
-        } else {
-          // Look for the auth token cookie with the specific project ID
-          const cookiePairs = cookies.split(';');
-
-          for (const cookiePair of cookiePairs) {
-            const [name, value] = cookiePair.trim().split('=');
-            // Check for Supabase token cookie format: sb-[project-id]-auth-token
-            if (name.includes(`sb-${projectId}-auth-token`)) {
-              try {
-                // The value is URL-encoded, decode it
-                accessToken = decodeURIComponent(value);
-                break;
-              } catch (e) {
-                logger.warn('Failed to decode auth token cookie:', e.message);
-              }
-            }
-            // Also check for our custom cookie
-            if (name === 'sb-access-token') {
-              try {
-                accessToken = decodeURIComponent(value);
-                break;
-              } catch (e) {
-                logger.warn(
-                  'Failed to decode custom auth token cookie:',
-                  e.message
-                );
-              }
-            }
-          }
-        }
-      }
+    const token = extractToken(req);
+    if (!token) {
+      console.log('requireAuth: No token found for path:', req.path);
+      return res.redirect('/auth/login');
     }
 
-    // If we have a token, validate it
-    if (accessToken) {
-      try {
-        const { data, error } = await supabase.auth.getUser(accessToken);
-        if (!error && data && data.user) {
-          // Authentication successful, attach user to request
-          req.user = data.user;
-          logger.debug(`Authenticated user: ${data.user.id}`);
-        } else {
-          logger.warn('Invalid or expired Supabase token:', error?.message);
-        }
-      } catch (tokenError) {
-        logger.error('Token validation error:', tokenError.message);
-      }
+    const authUser = await cachedValidateToken(token);
+    if (!authUser) {
+      console.log('requireAuth: Invalid token for path:', req.path);
+      return res.redirect('/auth/login');
     }
 
-    // For API requests, require authentication
-    if (!wantsHtml) {
-      if (!req.user) {
-        return res.status(401).json({ error: 'Authentication required' });
-      }
-      next();
-      return;
+    // User is authenticated
+    req.user = {
+      ...authUser,
+      // Ensure user_metadata exists with fallback values
+      user_metadata: authUser.user_metadata || {},
+      // Add display name fallback
+      firstName:
+        authUser.user_metadata?.firstName ||
+        authUser.email?.split('@')[0] ||
+        'User',
+      lastName: authUser.user_metadata?.lastName || '',
+    };
+
+    // Fetch user settings for template rendering
+    try {
+      const theme = await databaseService.getUserSetting(
+        req.user.id,
+        'appearance',
+        'theme'
+      );
+      res.locals.userTheme = theme || 'light';
+      logger.debug(
+        `Loaded theme for user ${req.user.id}: ${res.locals.userTheme}`
+      );
+    } catch (error) {
+      logger.error(`Failed to load user theme for ${req.user.id}:`, error);
+      res.locals.userTheme = 'light'; // Fallback
     }
 
-    // For HTML requests, proceed regardless (client-side JS will handle redirects if needed)
-    next();
+    logger.debug(`Authenticated user: ${req.user.id}`);
+    return next();
   } catch (error) {
-    logger.error('Web auth middleware error:', error);
-    if (!wantsHtml) {
-      return res.status(401).json({ error: 'Authentication failed' });
-    }
-    next(); // For HTML, continue even on error
+    console.log('requireAuth: Error for path:', req.path, error.message);
+    logger.error('Require auth middleware error:', error);
+    return res.redirect('/auth/login');
   }
 };
 
 /**
- * Middleware to check if user is authenticated (doesn't fail if not)
- * Useful for conditional rendering
+ * Middleware for web routes - checks auth and attaches user if available
+ * Does not fail if not authenticated (for conditional rendering)
  */
 export const checkAuth = async (req, res, next) => {
   try {
-    // Try to get session from cookies or headers
-    const authHeader = req.headers.authorization;
-    const token = authHeader?.startsWith('Bearer ')
-      ? authHeader.substring(7)
-      : null;
-
-    // If no auth header, try to get session from Supabase
-    if (!token) {
-      // For web requests, we should check if there's a session
-      // This is a server-side check that mirrors the client-side Supabase session
-      // For now, we'll allow the request to continue and let the session be validated elsewhere
-      // In a real world scenario, we'd have server-side session management
-      req.user = null; // No user identified via server-side check
-    } else {
-      // Validate the token if provided
-      const {
-        data: { user },
-        error,
-      } = await supabase.auth.getUser(token);
-      if (!error && user) {
-        req.user = user;
-        logger.debug(`User authenticated: ${user.id}`);
+    const token = extractToken(req);
+    if (token) {
+      const authUser = await cachedValidateToken(token);
+      if (authUser) {
+        // For now, use Supabase auth user data directly
+        // TODO: Implement proper user profile system
+        req.user = {
+          ...authUser,
+          // Ensure user_metadata exists with fallback values
+          user_metadata: authUser.user_metadata || {},
+          // Add display name fallback
+          firstName:
+            authUser.user_metadata?.firstName ||
+            authUser.email?.split('@')[0] ||
+            'User',
+          lastName: authUser.user_metadata?.lastName || '',
+        };
+        logger.debug(`Authenticated user: ${req.user.id}`);
       } else {
         req.user = null;
       }
+    } else {
+      req.user = null;
     }
     next();
   } catch (error) {
@@ -265,6 +219,7 @@ export const checkAuth = async (req, res, next) => {
 
 export default {
   authenticateUser,
-  requireAuth,
   checkAuth,
+  requireAuth,
+  cachedValidateToken,
 };

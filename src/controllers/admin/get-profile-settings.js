@@ -142,7 +142,7 @@ export const getProfileSettings = async (req, res) => {
     // Get active category from query param or default to 'all'
     const activeCategory = req.query.category || 'all';
 
-    res.render('admin/other-pages/profile-settings', {
+    res.render('pages/admin/system/profile-settings', {
       title: 'Profile Settings',
       currentPage: 'profile-settings',
       currentSection: 'main',
@@ -152,7 +152,7 @@ export const getProfileSettings = async (req, res) => {
     });
   } catch (error) {
     logger.error('Error loading profile settings:', error);
-    res.render('admin/other-pages/profile-settings', {
+    res.render('pages/admin/system/profile-settings', {
       title: 'Profile Settings',
       currentPage: 'profile-settings',
       currentSection: 'main',
@@ -247,11 +247,11 @@ export const postProfileSettings = async (req, res) => {
     // Redirect back with success message
     if (req.session)
       req.session.successMessage = 'Profile settings saved successfully!';
-    res.redirect('/admin/other-pages/profile-settings');
+    res.redirect('/admin/profile-settings');
   } catch (error) {
     logger.error('Error saving profile settings:', error);
     if (req.session)
       req.session.errorMessage = 'Failed to save profile settings.';
-    res.redirect('/admin/other-pages/profile-settings');
+    res.redirect('/admin/profile-settings');
   }
 };

@@ -1,9 +1,6 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
-import {
-  authenticateUser,
-  requireAuth,
-} from '../../../middleware/auth/index.js';
+import { authenticateUser } from '../../../middleware/auth/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
 
 // Main API

@@ -77,7 +77,7 @@ export const getDashboardFinancial = async (req, res) => {
       },
     ];
 
-    res.render('dashboard/financial', {
+    res.render('pages/dashboard/financial', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Financial Management',
       currentSection: 'home',
@@ -153,7 +153,7 @@ export const getDashboardFinancial = async (req, res) => {
       },
     ];
 
-    res.render('dashboard/financial', {
+    res.render('pages/dashboard/financial', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Financial Management',
       currentSection: 'home',

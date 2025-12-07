@@ -1,9 +1,19 @@
 import logger from '../../utils/logger.js';
+import { ServerDataService } from '../../services/serverDataService.js';
 
 // Placeholder for settings-related controllers
 export const getSettings = async (req, res) => {
   try {
     logger.info('Settings page accessed');
+
+    const user = req.user;
+    if (!user) {
+      return res.redirect('/auth/login');
+    }
+
+    // Fetch real user data
+    const userCredits = await ServerDataService.getUserCredits(user.id);
+
     const settingsCategories = [
       { value: 'account', label: 'Account', icon: 'user' },
       { value: 'privacy', label: 'Privacy', icon: 'shield' },
@@ -21,14 +31,17 @@ export const getSettings = async (req, res) => {
       { value: 'preferences', label: 'Preferences', icon: 'sliders' },
     ];
     const userProfile = {
-      name: 'John Doe',
-      avatar: '/images/avatar.png',
-      level: 5,
-      joinDate: '2023-01-15',
-      totalContributions: 10,
-      reputation: 1250,
+      name:
+        `${user.firstName} ${user.lastName}`.trim() ||
+        user.email?.split('@')[0] ||
+        'User',
+      avatar: user.user_metadata?.avatar || '/images/avatar.png',
+      level: user.user_metadata?.level || 1,
+      joinDate: user.created_at || new Date().toISOString().split('T')[0],
+      totalContributions: 10, // This could be calculated from actual data
+      reputation: userCredits?.reputation || 0,
     };
-    res.render('settings/index', {
+    res.render('pages/settings/index', {
       title: 'Settings',
       description: 'Application settings and preferences',
       currentSection: 'settings',
@@ -36,6 +49,8 @@ export const getSettings = async (req, res) => {
       settingsCategories,
       activeCategory: 'overview',
       layout: req.headers['hx-request'] ? false : 'settings',
+      user: user,
+      currentCredits: userCredits?.balance || 0,
       userProfile,
       showSearch: true,
     });

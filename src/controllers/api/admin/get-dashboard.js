@@ -9,7 +9,6 @@ export const getDashboard = async (req, res) => {
       { count: usersCount, error: usersError },
       { count: ideasCount, error: ideasError },
       { count: projectsCount, error: projectsError },
-      { count: todosCount, error: todosError },
     ] = await Promise.all([
       databaseService.supabase
         .from('users')
@@ -20,21 +19,16 @@ export const getDashboard = async (req, res) => {
       databaseService.supabase
         .from('projects')
         .select('*', { count: 'exact', head: true }),
-      databaseService.supabase
-        .from('todos')
-        .select('*', { count: 'exact', head: true }),
     ]);
 
     if (usersError) throw usersError;
     if (ideasError) throw ideasError;
     if (projectsError) throw projectsError;
-    if (todosError) throw todosError;
 
     const stats = {
       users: usersCount || 0,
       ideas: ideasCount || 0,
       projects: projectsCount || 0,
-      todos: todosCount || 0,
     };
 
     logger.info('Fetched dashboard stats');
@@ -82,19 +76,7 @@ export const getDashboard = async (req, res) => {
               </div>
             </div>
           </div>
-          <div class="bg-card rounded-lg shadow p-6">
-            <div class="flex items-center">
-              <div class="p-2 bg-warning/10 rounded-lg">
-                <svg class="w-6 h-6 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
-                </svg>
-              </div>
-              <div class="ml-4">
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Todos</p>
-                <p class="text-2xl font-semibold text-gray-900 dark:text-white">${stats.todos}</p>
-              </div>
-            </div>
-          </div>
+
         </div>
       `;
       res.send(statsHtml);

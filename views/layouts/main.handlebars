@@ -9,71 +9,115 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/output.css">
-    <!-- Supabase configuration -->
-    {{#if supabaseUrl}}
-    <meta name="supabase-url" content="{{supabaseUrl}}">
-    {{/if}}
-    {{#if supabaseKey}}
-    <meta name="supabase-key" content="{{supabaseKey}}">
-    {{/if}}
-    <!-- HTMX -->
-    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-    <!-- Hyperscript -->
-    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-    <!-- Supabase -->
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    <script src="/js/supabase-cookie-storage.js"></script>
-    <script src="/js/theme.js"></script>
+     <link rel="stylesheet" href="/css/output.css">
+      <!-- HTMX -->
+     <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
+     <script>
+       // HTMX configuration for optimal performance
+       document.addEventListener('DOMContentLoaded', function() {
+         if (typeof htmx !== 'undefined') {
+           // Performance optimizations
+           htmx.config.globalViewTransitions = true;
+           htmx.config.useTemplateFragments = true;
+           htmx.config.globalViewTransitions = true;
+           htmx.config.refreshOnHistoryMiss = false;
+           htmx.config.requestClass = 'htmx-request';
+
+           // Add loading indicators
+           document.body.addEventListener('htmx:beforeRequest', function(evt) {
+             const target = evt.target;
+             if (target && !target.classList.contains('no-loading')) {
+               target.style.opacity = '0.7';
+               const indicator = target.querySelector('.htmx-indicator');
+               if (indicator) indicator.style.display = 'inline';
+             }
+           });
+
+           document.body.addEventListener('htmx:afterRequest', function(evt) {
+             const target = evt.target;
+             if (target) {
+               target.style.opacity = '1';
+               const indicator = target.querySelector('.htmx-indicator');
+               if (indicator) indicator.style.display = 'none';
+             }
+           });
+
+           // Handle HTMX errors
+           document.body.addEventListener('htmx:responseError', function(evt) {
+             console.error('HTMX Error:', evt.detail);
+             // Show user-friendly error message
+             const target = evt.target;
+             if (target) {
+               target.innerHTML = '<div class="text-red-500 p-4">Failed to load content. Please try again.</div>';
+             }
+           });
+
+           // Custom events for cache invalidation
+            document.addEventListener('projectCreated', function() {
+              // Clear project-related caches
+              htmx.ajax('POST', '/htmx/cache/clear', { target: 'body' });
+            });
+         }
+       });
+     </script>
+
+      <!-- Supabase removed - using server-side auth only -->
+
     <script src="/js/common.js"></script>
-    <script src="/js/settings.js"></script>
-    <script src="/js/upload.js"></script>
+
+    <script src="/js/layout.js"></script>
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!-- Chart.js -->
     <script src="https://unpkg.com/chart.js@4.4.0/dist/chart.umd.js"></script>
-    <script type="text/hyperscript">
-         def updateThemeIcon()
-           set isDark to document.documentElement.classList.contains('dark')
-           set moonSvg to '{{{icon "moon" size="16" class="h-4 w-4"}}}'
-           set sunSvg to '{{{icon "sun" size="16" class="h-4 w-4"}}}'
-           set iconElement to document.querySelector('#theme-toggle-icon')
-           if iconElement
-             if isDark
-               set iconElement.innerHTML to moonSvg
-             else
-               set iconElement.innerHTML to sunSvg
-             end
-           end
-         end
+    <script>
+      // Set initial theme from server
+      document.documentElement.classList.toggle('dark', '{{userTheme}}' === 'dark');
 
-            -- Load theme from localStorage on load and update icon
-            on load from document
-              initializeTheme()
-              initializeSidebar()
-              highlightSidebarLink()
-              initFilterNavScroll()
-              updateFilterNavActiveState()
-            end
+      // Initialize theme icons
+      const isDark = '{{userTheme}}' === 'dark';
+      const sunIcon = document.querySelector('#theme-icon .sun-icon');
+      const moonIcon = document.querySelector('#theme-icon .moon-icon');
+      if (sunIcon && moonIcon) {
+        if (isDark) {
+          sunIcon.classList.add('hidden');
+          moonIcon.classList.remove('hidden');
+        } else {
+          moonIcon.classList.add('hidden');
+          sunIcon.classList.remove('hidden');
+        }
+      }
+    </script>
+     <script>
+       // Initialize UI components on page load
+       document.addEventListener('DOMContentLoaded', () => {
+         initializeSidebar();
+         highlightSidebarLink();
+         initFilterNavScroll();
+         updateFilterNavActiveState();
+       });
 
-            -- Update sidebar highlight and filter nav after HTMX swaps
-            on htmx:afterSwap from document
-              highlightSidebarLink()
-              initFilterNavScroll()
-              updateFilterNavActiveState()
-            end
+       // Update UI after HTMX content swaps
+       document.addEventListener('htmx:afterSwap', () => {
+         highlightSidebarLink();
+         initFilterNavScroll();
+         updateFilterNavActiveState();
+       });
      </script>
 </head>
 
 <body class="h-full overflow-hidden">
-    {{> auth-loading}}
+    <!-- CSRF Token -->
+    <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+
+    {{> features/auth/auth-loading}}
 
     <!-- Main content (hidden initially) -->
     <div id="main-content" class="h-screen hidden flex flex-col">
-        {{> nav}}
-        {{> filter-nav}}
+        {{> layout/nav}}
+        {{> base/filter-nav}}
         <div class="flex flex-1 min-h-0">
-            {{> sidebar}}
+            {{> layout/sidebar user=user credits=currentCredits}}
             <main id="{{@root.section}}-main-content" class="flex-1 p-2 sm:p-4 overflow-auto">
                 {{{body}}}
             </main>
@@ -85,577 +129,14 @@
         onclick="closeMobileSidebar()"></div>
 
     <!-- Transaction History Modal -->
-    {{> transaction-history}}
+    {{> features/billing/transaction-history}}
 
-    <!-- JavaScript Section -->
-    <script>
 
-        // Handle checkbox selection for bulk actions
-        document.addEventListener('change', function (event) {
-            if (event.target.classList.contains('todoCheckbox') || event.target.id === 'selectAll') {
-                const checkboxes = document.querySelectorAll('.todoCheckbox');
-                const selectedCheckboxes = document.querySelectorAll('.todoCheckbox:checked');
-                const bulkActions = document.getElementById('bulkActions');
-                const selectedCount = document.getElementById('selectedCount');
 
-                if (event.target.id === 'selectAll') {
-                    checkboxes.forEach(cb => cb.checked = event.target.checked);
-                }
 
-                const count = selectedCheckboxes.length;
-                selectedCount.textContent = `${count} todo${count !== 1 ? 's' : ''} selected`;
-
-                if (count > 0) {
-                    bulkActions.style.display = 'block';
-                } else {
-                    bulkActions.style.display = 'none';
-                }
-
-                // Enable/disable bulk action buttons
-                const bulkCompleteBtn = document.getElementById('bulkCompleteBtn');
-                const bulkPendingBtn = document.getElementById('bulkPendingBtn');
-                const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
-
-                bulkCompleteBtn.disabled = count === 0;
-                bulkPendingBtn.disabled = count === 0;
-                bulkDeleteBtn.disabled = count === 0;
-            }
-        });
-
-        // Bulk actions
-        function bulkMarkComplete() {
-            const selectedIds = Array.from(document.querySelectorAll('.todoCheckbox:checked')).map(cb => cb.value);
-            if (selectedIds.length === 0) return;
-
-            selectedIds.forEach(id => {
-                htmx.ajax('PUT', `/api/todos/${id}?completed=true`, {
-                    target: `#todo-row-${id}`,
-                    swap: 'outerHTML'
-                });
-            });
-        }
-
-        function bulkMarkPending() {
-            const selectedIds = Array.from(document.querySelectorAll('.todoCheckbox:checked')).map(cb => cb.value);
-            if (selectedIds.length === 0) return;
-
-            selectedIds.forEach(id => {
-                htmx.ajax('PUT', `/api/todos/${id}?completed=false`, {
-                    target: `#todo-row-${id}`,
-                    swap: 'outerHTML'
-                });
-            });
-        }
-
-        function bulkDelete() {
-            const selectedIds = Array.from(document.querySelectorAll('.todoCheckbox:checked')).map(cb => cb.value);
-            if (selectedIds.length === 0) return;
-
-            if (confirm(`Are you sure you want to delete ${selectedIds.length} todo${selectedIds.length !== 1 ? 's' : ''}?`)) {
-                selectedIds.forEach(id => {
-                    htmx.ajax('DELETE', `/api/todos/${id}`, {
-                        target: `#todo-row-${id}`,
-                        swap: 'outerHTML'
-                    });
-                });
-            }
-        }
-
-        // Individual actions
-        function editTodo(id) {
-            // This would open an edit modal or navigate to edit page
-            window.location.href = `/todos/${id}/edit`;
-        }
-
-        function toggleStatus(id, status) {
-            const completed = status === 'completed';
-            htmx.ajax('PUT', `/api/todos/${id}?completed=${completed}`, {
-                target: `#todo-row-${id}`,
-                swap: 'outerHTML'
-            });
-        }
-
-        function deleteTodo(id, title) {
-            if (confirm(`Are you sure you want to delete "${title}"?`)) {
-                htmx.ajax('DELETE', `/api/todos/${id}`, {
-                    target: `#todo-row-${id}`,
-                    swap: 'outerHTML'
-                });
-            }
-        }
-
-        // Create todo modal (placeholder)
-        function openCreateTodoModal() {
-            // This would open a modal for creating todos
-        }
-
-        // Sidebar toggle functionality
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            if (!sidebar) return;
-            const isCollapsed = sidebar.style.width === '66px';
-
-            if (isCollapsed) {
-                sidebar.style.width = '224px';
-                document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'flex');
-                // Restore normal padding and margins for expanded state
-                document.querySelectorAll('#sidebar nav a').forEach(link => {
-                    link.classList.remove('px-1', 'justify-center');
-                    link.classList.add('px-3');
-                });
-                document.querySelectorAll('#sidebar nav svg').forEach(icon => {
-                    icon.classList.add('mr-3');
-                });
-                // Show expanded footer, hide collapsed footer
-                const expandedFooter = document.getElementById('sidebar-footer-expanded');
-                const expandedButton = document.getElementById('sidebar-footer-expanded-button');
-                const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
-                if (expandedFooter) {
-                    expandedFooter.style.display = 'flex';
-                }
-                if (expandedButton) {
-                    expandedButton.style.display = 'block';
-                }
-                if (collapsedFooter) {
-                    collapsedFooter.style.display = 'none';
-                }
-            } else {
-                sidebar.style.width = '66px';
-                document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'none');
-                // Adjust padding for collapsed state and remove margins
-                document.querySelectorAll('#sidebar nav a').forEach(link => {
-                    link.classList.remove('px-3');
-                    link.classList.add('px-1', 'justify-center');
-                });
-                document.querySelectorAll('#sidebar nav svg').forEach(icon => {
-                    icon.classList.remove('mr-3');
-                });
-                // Show collapsed footer, hide expanded footer
-                const expandedFooter = document.getElementById('sidebar-footer-expanded');
-                const expandedButton = document.getElementById('sidebar-footer-expanded-button');
-                const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
-                if (expandedFooter) expandedFooter.style.display = 'none';
-                if (expandedButton) expandedButton.style.display = 'none';
-                if (collapsedFooter) collapsedFooter.style.display = 'flex';
-            }
-
-            // Save state to localStorage
-            localStorage.setItem('sidebarCollapsed', !isCollapsed);
-        }
-
-        // Initialize sidebar state on load
-        function initializeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
-
-            if (isCollapsed) {
-                sidebar.style.width = '66px';
-                document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'none');
-                // Apply collapsed padding and remove margins
-                document.querySelectorAll('#sidebar nav a').forEach(link => {
-                    link.classList.remove('px-3');
-                    link.classList.add('px-1', 'justify-center');
-                });
-                document.querySelectorAll('#sidebar nav svg').forEach(icon => {
-                    icon.classList.remove('mr-3');
-                });
-                // Show collapsed footer, hide expanded footer
-                const expandedFooter = document.getElementById('sidebar-footer-expanded');
-                const expandedButton = document.getElementById('sidebar-footer-expanded-button');
-                const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
-                if (expandedFooter) expandedFooter.style.display = 'none';
-                if (expandedButton) expandedButton.style.display = 'none';
-                if (collapsedFooter) collapsedFooter.style.display = 'flex';
-            } else {
-                sidebar.style.width = '224px';
-                document.querySelectorAll('.sidebar-text').forEach(el => el.style.display = 'flex');
-                // Show expanded footer, hide collapsed footer
-                const expandedFooter = document.getElementById('sidebar-footer-expanded');
-                const expandedButton = document.getElementById('sidebar-footer-expanded-button');
-                const collapsedFooter = document.getElementById('sidebar-footer-collapsed');
-                if (expandedFooter) expandedFooter.style.display = 'flex';
-                if (expandedButton) expandedButton.style.display = 'block';
-                if (collapsedFooter) collapsedFooter.style.display = 'none';
-            }
-        }
-
-        // Sidebar toggle for both desktop and mobile
-        function toggleSidebarOrMobile() {
-            if (window.innerWidth < 768) {
-                toggleMobileSidebar();
-            } else {
-                toggleSidebar();
-            }
-        }
-
-        // Mobile sidebar functions
-        function toggleMobileSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('mobile-sidebar-overlay');
-
-            if (!sidebar || !overlay) {
-                console.error('Sidebar or overlay elements not found');
-                return;
-            }
-
-            const isOpen = sidebar.classList.contains('translate-x-0') && sidebar.classList.contains('opacity-100');
-
-            if (isOpen) {
-                closeMobileSidebar();
-            } else {
-                sidebar.classList.remove('opacity-0');
-                sidebar.classList.add('opacity-100');
-                sidebar.classList.remove('-translate-x-full');
-                sidebar.classList.add('translate-x-0');
-                sidebar.classList.remove('pointer-events-none');
-                sidebar.classList.add('pointer-events-auto');
-                overlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden'; // Prevent background scroll
-            }
-        }
-
-        function closeMobileSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('mobile-sidebar-overlay');
-
-            if (!sidebar || !overlay) {
-                console.error('Sidebar or overlay elements not found');
-                return;
-            }
-
-            sidebar.classList.remove('opacity-100');
-            sidebar.classList.add('opacity-0');
-            sidebar.classList.remove('translate-x-0');
-            sidebar.classList.add('-translate-x-full');
-            sidebar.classList.remove('pointer-events-auto');
-            sidebar.classList.add('pointer-events-none');
-            overlay.classList.add('hidden');
-            document.body.style.overflow = ''; // Restore scroll
-        }
-
-
-
-        // Highlight current sidebar link
-        function highlightSidebarLink() {
-            const currentPath = window.location.pathname;
-            const sidebarLinks = document.querySelectorAll('#sidebar a');
-            sidebarLinks.forEach(link => {
-                link.classList.remove('bg-accent', 'text-foreground', 'font-bold');
-                link.classList.add('text-muted-foreground');
-                if (link.getAttribute('href') === currentPath) {
-                    link.classList.add('bg-accent', 'text-foreground', 'font-bold');
-                    link.classList.remove('text-muted-foreground');
-                }
-            });
-        }
-
-
-
-        // Force logout function for stuck authentication (global scope)
-        function forceLogout() {
-            // Clear any cached data as fallback but preserve theme
-            if (typeof localStorage !== 'undefined') {
-                const savedTheme = localStorage.getItem('theme');
-                const sidebarCollapsed = localStorage.getItem('sidebarCollapsed');
-                localStorage.clear();
-                if (savedTheme) localStorage.setItem('theme', savedTheme);
-                if (sidebarCollapsed) localStorage.setItem('sidebarCollapsed', sidebarCollapsed);
-            }
-            if (typeof sessionStorage !== 'undefined') {
-                sessionStorage.clear();
-            }
-
-            // Clear cookies by setting them to expire
-            const cookies = document.cookie.split(';');
-            for (let cookie of cookies) {
-                const [name] = cookie.trim().split('=');
-                document.cookie = `${name}=; path=/; max-age=0`;
-            }
-
-            // Redirect to login
-            window.location.href = '/auth';
-        }
-
-    </script>
-
-    <!-- Client-side auth check for UI - server handles actual route protection -->
-    <script>
-        // Initialize Supabase client
-        let supabase = null;
-        function initSupabase() {
-            if (window.supabase && !supabase) {
-                // Extract Supabase config from environment variables or meta tags
-                const supabaseUrl = document.querySelector('meta[name="supabase-url"]')?.content || '{{{supabaseUrl}}}';
-                const supabaseKey = document.querySelector('meta[name="supabase-key"]')?.content || '{{{supabaseKey}}}';
-
-
-
-                if (supabaseUrl && supabaseKey) {
-                    try {
-                        // Use cookie storage for SSR compatibility
-                        const cookieStorage = new window.CookieStorage();
-                        supabase = window.supabase.createClient(supabaseUrl, supabaseKey, {
-                            auth: {
-                                storage: cookieStorage,
-                                autoRefreshToken: true,
-                                persistSession: true
-                            }
-                        });
-
-                    } catch (error) {
-                        console.error('Dashboard: Failed to create Supabase client:', error);
-                    }
-                } else {
-                    console.error('Dashboard: Missing Supabase configuration');
-                }
-            }
-        }
-
-        // Check auth state and display appropriate UI
-        document.addEventListener('DOMContentLoaded', async () => {
-            const authLoading = document.getElementById('auth-loading');
-            const mainContent = document.getElementById('main-content');
-
-            try {
-                // Check auth state with retry logic (similar to login page)
-                let authCheckAttempts = 0;
-                const maxAuthCheckAttempts = 5;
-                let redirecting = false; // Prevent multiple redirects
-
-                const checkAuthStatus = async () => {
-                    authCheckAttempts++;
-
-
-                    // Ensure Supabase is initialized
-                    if (window.supabase && !supabase) {
-                        initSupabase();
-
-                    }
-
-                    // First try server-side session check (works with server-side login)
-                    try {
-
-                        const serverResponse = await fetch('/auth/session', {
-                            method: 'GET',
-                            credentials: 'include'  // Include cookies for session validation
-                        });
-
-                        const serverResult = await serverResponse.json();
-
-
-                        if (serverResult.authenticated) {
-                            // Server says we're authenticated, continue
-
-                            return;
-                        }
-                    } catch (e) {
-
-                    }
-
-                    // Server says not authenticated, check Supabase client-side
-                    if (window.supabase && supabase) {
-                        try {
-
-                            // Try to get current session
-                            const { data: { session }, error } = await supabase.auth.getSession();
-
-
-                            if (!error && session && session.user) {
-                                // Session found, continue
-
-                                return;
-                            }
-                        } catch (e) {
-
-                        }
-                    } else {
-
-                    }
-
-                    // If we get here, not authenticated
-                    if (authCheckAttempts < maxAuthCheckAttempts) {
-                        // Try again after a longer delay
-
-                        setTimeout(checkAuthStatus, 500);
-                    } else {
-                        // Max attempts reached, redirect to auth
-                        if (!redirecting) {
-
-                            redirecting = true;
-                            window.location.href = '/auth';
-                        }
-                    }
-                };
-
-                // Start the auth check with longer initial delay
-
-                setTimeout(checkAuthStatus, 1000);
-
-                // Fallback: show main content after 10 seconds if auth check doesn't complete
-                setTimeout(() => {
-                    if (authLoading && mainContent && mainContent.classList.contains('hidden')) {
-
-                        authLoading.classList.add('hidden');
-                        mainContent.classList.remove('hidden');
-                    }
-                }, 10000);
-
-                // We have a valid session, continue to load main content
-                authLoading.classList.add('hidden');
-                mainContent.classList.remove('hidden');
-
-                // Load user data for navbar
-                loadUserData();
-            } catch (error) {
-                console.error('Auth check error:', error);
-                // If auth check fails, redirect to login as fallback
-                window.location.href = '/auth';
-                return;
-            }
-
-            // Simple activity tracking
-            let lastActivity = Date.now();
-            const ACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes
-
-            // Update last activity
-            function updateActivity() {
-                lastActivity = Date.now();
-            }
-
-            // Set up activity listeners
-            const events = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
-            events.forEach(event => {
-                document.addEventListener(event, updateActivity, true);
-            });
-
-            // Check for session timeout (disabled for now)
-            /*
-            setInterval(() => {
-                const now = Date.now();
-                if (now - lastActivity > ACTIVITY_TIMEOUT) {
-                    // Show timeout message and redirect to login
-                    if (typeof showToast !== 'undefined') {
-                        showToast('Your session has expired due to inactivity. Please log in again.', 'info');
-                    }
-                    window.location.href = '/auth';
-                }
-            }, 60 * 1000); // Check every minute
-            */
-
-            // Initialize UI components
-            initFilterNavScroll(); // Initialize filter nav scroll
-            updateFilterNavActiveState(); // Update filter nav active state
-        });
-
-        // Fetch and display user data in navbar
-        async function loadUserData() {
-            try {
-                const response = await fetch('/auth/session', {
-                    method: 'GET',
-                    credentials: 'include'
-                });
-
-                const result = await response.json();
-
-                if (result.authenticated && result.user) {
-                    const user = result.user;
-                    const userNameElements = document.querySelectorAll('.user-name');
-                    const userEmailElements = document.querySelectorAll('.user-email');
-                    const userAvatarElements = document.querySelectorAll('.user-avatar');
-
-                    // Get display name from user metadata or email
-                    let displayName = user.email;
-                    if (user.user_metadata) {
-                        const firstName = user.user_metadata.firstName || user.user_metadata.first_name;
-                        const lastName = user.user_metadata.lastName || user.user_metadata.last_name;
-                        if (firstName && lastName) {
-                            displayName = `${firstName} ${lastName}`;
-                        } else if (firstName) {
-                            displayName = firstName;
-                        }
-                    }
-
-                    // Get initials for avatar
-                    const getInitials = (name) => {
-                        return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-                    };
-
-                    const initials = getInitials(displayName);
-
-                    // Update all user name elements
-                    userNameElements.forEach(el => {
-                        el.textContent = displayName;
-                    });
-
-                    // Update all user email elements
-                    userEmailElements.forEach(el => {
-                        el.textContent = user.email;
-                    });
-
-                    // Update all user avatar elements
-                    // userAvatarElements.forEach(el => {
-                    //     el.textContent = initials;
-                    // });
-                }
-            } catch (error) {
-                console.error('Error loading user data:', error);
-            }
-        }
-
-        // Logout function - performs both client and server logout
-        async function handleLogout() {
-            try {
-                // First, try to logout from Supabase client-side
-                if (window.supabase && supabase) {
-                    await supabase.auth.signOut();
-                }
-
-                // Then call the server-side logout endpoint
-                await fetch('/auth/logout', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-Token': document.querySelector('input[name="_csrf"]')?.value || ''
-                    },
-                    credentials: 'include'
-                });
-
-                // Finally redirect to auth page
-                window.location.href = '/auth';
-            } catch (error) {
-                console.error('Logout error:', error);
-                // Even if logout fails, redirect to auth page
-                window.location.href = '/auth';
-            }
-        }
-
-        // Force logout function
-        function forceLogout() {
-            window.location.href = '/auth';
-        }
-
-        // Collapsible content toggle
-        document.addEventListener('click', function (e) {
-            if (e.target.closest('[data-collapsible="true"]')) {
-                const target = e.target.closest('[data-collapsible="true"]');
-                const contentId = target.getAttribute('data-target');
-                const content = document.getElementById(contentId);
-                if (content) {
-                    content.classList.toggle('hidden');
-                    // Toggle chevron icons
-                    const collapsed = target.querySelector('.chevron-collapsed');
-                    const expanded = target.querySelector('.chevron-expanded');
-                    if (collapsed && expanded) {
-                        collapsed.classList.toggle('hidden');
-                        expanded.classList.toggle('hidden');
-                    }
-                }
-            }
-        });
-    </script>
 
     <!-- Toast notifications -->
-    {{> toast}}
+    {{> base/toast}}
 
 </body>
 

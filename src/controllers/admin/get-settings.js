@@ -294,7 +294,7 @@ export const getSettings = async (req, res) => {
     // Get active category from query param or default to 'all'
     const activeCategory = req.query.category || 'all';
 
-    res.render('admin/other-pages/settings', {
+    res.render('pages/admin/system/settings', {
       title: 'Admin Settings',
       currentPage: 'settings',
       currentSection: 'system',
@@ -311,7 +311,7 @@ export const getSettings = async (req, res) => {
     }
   } catch (error) {
     logger.error('Error loading admin settings:', error);
-    res.render('admin/other-pages/settings', {
+    res.render('pages/admin/system/settings', {
       title: 'Admin Settings',
       currentPage: 'settings',
       currentSection: 'system',
@@ -522,10 +522,10 @@ export const postSettings = async (req, res) => {
     // Redirect back with success message
     if (req.session)
       req.session.successMessage = 'Settings saved successfully!';
-    res.redirect('/admin/other-pages/settings');
+    res.redirect('/admin/settings');
   } catch (error) {
     logger.error('Error saving settings:', error);
     if (req.session) req.session.errorMessage = 'Failed to save settings.';
-    res.redirect('/admin/other-pages/settings');
+    res.redirect('/admin/settings');
   }
 };

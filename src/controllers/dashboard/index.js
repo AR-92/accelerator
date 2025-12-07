@@ -8,8 +8,8 @@ export const getDashboardMain = async (req, res) => {
       return res.redirect('/auth/login');
     }
 
-    // Redirect to new project page
-    res.redirect('/admin/other-pages/new-project?showCard=true');
+    // Redirect to dashboard overview
+    res.redirect('/dashboard/overview');
   } catch (error) {
     console.error('Error redirecting to dashboard:', error);
     res.status(500).render('error', {

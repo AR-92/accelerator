@@ -86,7 +86,7 @@ export const getDashboardCorporate = async (req, res) => {
       },
     ];
 
-    res.render('dashboard/corporate', {
+    res.render('pages/dashboard/corporate', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Corporate Dashboard',
       currentSection: 'home',
@@ -160,7 +160,7 @@ export const getDashboardCorporate = async (req, res) => {
       },
     ];
 
-    res.render('dashboard/corporate', {
+    res.render('pages/dashboard/corporate', {
       layout: req.headers['hx-request'] ? false : 'dashboard',
       title: 'Corporate Dashboard',
       currentSection: 'home',

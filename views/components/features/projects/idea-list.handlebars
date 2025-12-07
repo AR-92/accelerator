@@ -1,0 +1,16 @@
+{{!-- HTMX Idea List Component --}}
+{{#if ideas}}
+  {{#each ideas}}
+    <div class="idea-item p-4 border border-input/80 rounded-md mb-4">
+      <h3 class="font-medium text-foreground">{{name}}</h3>
+      <p class="text-sm text-muted-foreground mt-1">{{description}}</p>
+      <div class="mt-2 text-xs text-muted-foreground">
+        Created: {{formatDate created_at}}
+      </div>
+    </div>
+  {{/each}}
+{{else}}
+  <div class="text-center py-8 text-muted-foreground">
+    <p>No ideas found</p>
+  </div>
+{{/if}}

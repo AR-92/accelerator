@@ -2,17 +2,6 @@
 <html lang="en">
 
 <head>
-  <script>
-    // Apply theme immediately to prevent flash
-    try {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark') {
-        document.documentElement.classList.add('dark');
-      }
-    } catch (e) {
-      console.error('Error applying theme:', e);
-    }
-  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{title}}</title>
@@ -20,52 +9,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="preload" href="/css/output.css" as="style">
   <link rel="stylesheet" href="/css/output.css">
-  <!-- Supabase configuration -->
-  {{#if supabaseUrl}}
-  <meta name="supabase-url" content="{{supabaseUrl}}">
-  {{/if}}
-  {{#if supabaseKey}}
-  <meta name="supabase-key" content="{{supabaseKey}}">
-  {{/if}}
-  <!-- Animate.css -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <!-- HTMX -->
-  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-  <!-- Hyperscript -->
-  <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-  <!-- Supabase -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-   <script src="/js/supabase-cookie-storage.js"></script>
-   <script src="/js/theme.js"></script>
-   <script>
-     // Set Supabase config globally for auth pages
-     window.supabaseUrl = document.querySelector('meta[name="supabase-url"]')?.content;
-     window.supabaseKey = document.querySelector('meta[name="supabase-key"]')?.content;
-   </script>
-
+  <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
 </head>
 
 <body>
-  <!-- Theme Toggle Button -->
-  <button id="theme-toggle"
-    class="fixed top-2 right-2 z-50 text-muted-foreground hover:text-primary rounded-full p-2 cursor-pointer font-medium bg-card border border-input/80 shadow-sm"
-    onclick="toggleTheme()">
-    <span id="theme-icon">{{{icon 'sun-dim' size="16" class='h-4 w-4'}}}</span>
-  </button>
-
   {{{body}}}
-
-  <!-- JavaScript Section -->
-  <script>
-
-  </script>
-
-  <!-- Filter functionality -->
-  <script src="/js/filters.js"></script>
-
   <!-- Toast notifications -->
-  {{> toast}}
+  {{> base/toast}}
 </body>
 
 </html>

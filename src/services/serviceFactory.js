@@ -697,7 +697,6 @@ export const serviceFactory = {
               'business_plan',
               'rewards',
               'votes',
-              'todos',
               'notifications',
               'activity_logs',
             ];
@@ -822,22 +821,6 @@ export const serviceFactory = {
           100
         );
         const responseTimeHistory = generateHistoricalData(responseTime, 0.3);
-
-        // Debug logging for chart data
-        console.log('Generated chart data:', {
-          cpuHistory: {
-            dataLength: cpuHistory.data.length,
-            sampleData: cpuHistory.data.slice(0, 3),
-          },
-          memoryHistory: {
-            dataLength: memoryHistory.data.length,
-            sampleData: memoryHistory.data.slice(0, 3),
-          },
-          responseTimeHistory: {
-            dataLength: responseTimeHistory.data.length,
-            sampleData: responseTimeHistory.data.slice(0, 3),
-          },
-        });
 
         return {
           // System Info

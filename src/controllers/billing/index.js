@@ -24,7 +24,7 @@ export const getBilling = async (req, res) => {
         icon: 'star',
       },
     ];
-    res.render('billing/index', {
+    res.render('components/features/billing/billing-page', {
       title: 'Billing',
       description: 'Manage your billing and subscriptions',
       currentSection: 'billing',

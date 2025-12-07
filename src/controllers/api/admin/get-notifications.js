@@ -1,11 +1,7 @@
 import logger from '../../../utils/logger.js';
 import { databaseService } from '../../../services/index.js';
 import { serviceFactory } from '../../../services/serviceFactory.js';
-import {
-  validateNotificationCreation,
-  validateNotificationUpdate,
-  validateNotificationDeletion,
-} from '../../../middleware/validation/index.js';
+
 import { formatDate } from '../../../helpers/format/index.js';
 import { isHtmxRequest } from '../../../helpers/http/index.js';
 
@@ -188,186 +184,174 @@ export const getNotification = async (req, res) => {
 };
 
 // Create new notification
-export const createNotification = [
-  validateNotificationCreation,
-  async (req, res) => {
-    try {
-      const notificationData = req.body;
-      const notificationService = serviceFactory.getNotificationService();
-      const notification =
-        await notificationService.createNotification(notificationData);
+export const createNotification = async (req, res) => {
+  try {
+    const notificationData = req.body;
+    const notificationService = serviceFactory.getNotificationService();
+    const notification =
+      await notificationService.createNotification(notificationData);
 
-      logger.info(`Created notification with ID: ${notification.id}`);
+    logger.info(`Created notification with ID: ${notification.id}`);
 
-      if (isHtmxRequest(req)) {
-        res.send(`
-            <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
-             <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-success/10 text-success border-success/20">
-              <div class="flex items-start gap-3">
-                <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <div class="flex-1">Notification "${notification.title}" created successfully!</div>
-              </div>
+    if (isHtmxRequest(req)) {
+      res.send(`
+          <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+           <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-success/10 text-success border-success/20">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="flex-1">Notification created successfully!</div>
             </div>
           </div>
-          <script>
-            setTimeout(() => document.querySelector('.fixed').remove(), 5000);
-            htmx.trigger('#notificationsTableContainer', 'notificationCreated');
-          </script>
-        `);
-      } else {
-        res.status(201).json({ success: true, data: notification });
-      }
-    } catch (error) {
-      logger.error('Error creating notification:', error);
-      if (isHtmxRequest(req)) {
-        res.status(500).send(`
-            <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
-             <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-destructive/10 text-destructive border-destructive/20">
-              <div class="flex items-start gap-3">
-                <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <div class="flex-1">Failed to create notification: ${error.message}</div>
-              </div>
-            </div>
-          </div>
-        `);
-      } else {
-        res.status(500).json({ success: false, error: error.message });
-      }
+        </div>
+      `);
+    } else {
+      res.json({ success: true, notification });
     }
-  },
-];
+  } catch (error) {
+    logger.error('Error creating notification:', error);
+
+    if (isHtmxRequest(req)) {
+      res.send(`
+        <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+          <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-destructive/10 text-destructive border-destructive/20">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <div class="flex-1">Failed to create notification: ${error.message}</div>
+            </div>
+          </div>
+        </div>
+      `);
+    } else {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+};
 
 // Update notification
-export const updateNotification = [
-  validateNotificationUpdate,
-  async (req, res) => {
-    try {
-      const { id } = req.params;
-      const updates = req.body;
+export const updateNotification = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
 
-      const notificationService = serviceFactory.getNotificationService();
-      const notification = await notificationService.updateNotification(
-        id,
-        updates
-      );
+    const notificationService = serviceFactory.getNotificationService();
+    const notification = await notificationService.updateNotification(
+      id,
+      updates
+    );
 
-      if (!notification) {
-        return res
-          .status(404)
-          .json({ success: false, error: 'Notification not found' });
-      }
-
-      logger.info(`Updated notification with ID: ${id}`);
-
-      if (isHtmxRequest(req)) {
-        res.send(`
-            <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
-             <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-success/10 text-success border-success/20">
-              <div class="flex items-start gap-3">
-                <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                </svg>
-                <div class="flex-1">Notification "${notification.title}" updated successfully!</div>
-              </div>
-            </div>
-          </div>
-          <script>
-            setTimeout(() => document.querySelector('.fixed').remove(), 5000);
-            htmx.trigger('#notificationsTableContainer', 'notificationUpdated');
-          </script>
-        `);
-      } else {
-        res.json({ success: true, data: notification });
-      }
-    } catch (error) {
-      logger.error('Error updating notification:', error);
-      if (isHtmxRequest(req)) {
-        res.status(500).send(`
-            <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
-             <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-destructive/10 text-destructive border-destructive/20">
-              <div class="flex items-start gap-3">
-                <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-              <div class="flex-1">Failed to update notification: ${error.message}</div>
-            </div>
-          </div>
-        `);
-      } else {
-        res.status(500).json({ success: false, error: error.message });
-      }
+    if (!notification) {
+      return res
+        .status(404)
+        .json({ success: false, error: 'Notification not found' });
     }
-  },
-];
+
+    logger.info(`Updated notification with ID: ${id}`);
+
+    if (isHtmxRequest(req)) {
+      res.send(`
+          <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+           <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-success/10 text-success border-success/20">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+              <div class="flex-1">Notification "${notification.title}" updated successfully!</div>
+            </div>
+          </div>
+        </div>
+        <script>
+          setTimeout(() => document.querySelector('.fixed').remove(), 5000);
+          htmx.trigger('#notificationsTableContainer', 'notificationUpdated');
+        </script>
+      `);
+    } else {
+      res.json({ success: true, data: notification });
+    }
+  } catch (error) {
+    logger.error('Error updating notification:', error);
+    if (isHtmxRequest(req)) {
+      res.status(500).send(`
+          <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+           <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-destructive/10 text-destructive border-destructive/20">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <div class="flex-1">Failed to update notification: ${error.message}</div>
+        </div>
+      </div>
+    `);
+    } else {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+};
 
 // Delete notification
-export const deleteNotification = [
-  validateNotificationDeletion,
-  async (req, res) => {
-    try {
-      const { id } = req.params;
+export const deleteNotification = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-      const notificationService = serviceFactory.getNotificationService();
-      const existingNotification =
-        await notificationService.getNotificationById(id);
+    const notificationService = serviceFactory.getNotificationService();
+    const existingNotification =
+      await notificationService.getNotificationById(id);
 
-      if (!existingNotification) {
-        return res
-          .status(404)
-          .json({ success: false, error: 'Notification not found' });
-      }
-
-      await notificationService.deleteNotification(id);
-
-      logger.info(`Deleted notification with ID: ${id}`);
-
-      if (isHtmxRequest(req)) {
-        res.send(`
-            <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
-             <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-muted text-foreground border-input/80">
-              <div class="flex items-start gap-3">
-                <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                </svg>
-                <div class="flex-1">Notification "${existingNotification.title}" has been deleted!</div>
-              </div>
-            </div>
-          </div>
-          <script>
-            setTimeout(() => document.querySelector('.fixed').remove(), 5000);
-            htmx.trigger('#notificationsTableContainer', 'notificationDeleted');
-          </script>
-        `);
-      } else {
-        res.json({
-          success: true,
-          message: 'Notification deleted successfully',
-        });
-      }
-    } catch (error) {
-      logger.error('Error deleting notification:', error);
-      if (isHtmxRequest(req)) {
-        res.status(500).send(`
-            <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
-             <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-destructive/10 text-destructive border-destructive/20">
-              <div class="flex items-start gap-3">
-                <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-              <div class="flex-1">Failed to delete notification: ${error.message}</div>
-            </div>
-          </div>
-        `);
-      } else {
-        res.status(500).json({ success: false, error: error.message });
-      }
+    if (!existingNotification) {
+      return res
+        .status(404)
+        .json({ success: false, error: 'Notification not found' });
     }
-  },
-];
+
+    await notificationService.deleteNotification(id);
+
+    logger.info(`Deleted notification with ID: ${id}`);
+
+    if (isHtmxRequest(req)) {
+      res.send(`
+          <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+           <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-muted text-foreground border-input/80">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+              <div class="flex-1">Notification "${existingNotification.title}" has been deleted!</div>
+            </div>
+          </div>
+        </div>
+        <script>
+          setTimeout(() => document.querySelector('.fixed').remove(), 5000);
+          htmx.trigger('#notificationsTableContainer', 'notificationDeleted');
+        </script>
+      `);
+    } else {
+      res.json({
+        success: true,
+        message: 'Notification deleted successfully',
+      });
+    }
+  } catch (error) {
+    logger.error('Error deleting notification:', error);
+    if (isHtmxRequest(req)) {
+      res.status(500).send(`
+          <div class="fixed top-4 right-4 z-50 max-w-sm w-full">
+           <div class="relative w-full rounded-lg border px-4 py-3 text-sm bg-destructive/10 text-destructive border-destructive/20">
+            <div class="flex items-start gap-3">
+              <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <div class="flex-1">Failed to delete notification: ${error.message}</div>
+        </div>
+      </div>
+    `);
+    } else {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+};
 
 // Helper function to generate pagination HTML
 const generatePaginationHtml = (page, limit, total, query) => {
@@ -417,7 +401,7 @@ const generatePaginationHtml = (page, limit, total, query) => {
 export default function notificationsRoutes(app) {
   app.get('/api/notifications', getNotifications);
   app.get('/api/notifications/:id', getNotification);
-  app.post('/api/notifications', ...createNotification);
-  app.put('/api/notifications/:id', ...updateNotification);
-  app.delete('/api/notifications/:id', ...deleteNotification);
+  app.post('/api/notifications', createNotification);
+  app.put('/api/notifications/:id', updateNotification);
+  app.delete('/api/notifications/:id', deleteNotification);
 }

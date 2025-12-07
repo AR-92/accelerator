@@ -1,0 +1,22 @@
+{{!-- HTMX Project Item Component --}}
+<div class="project-item bg-card border border-input/80 rounded-lg p-4 hover:shadow-md transition-shadow">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+        {{{icon 'folder-open' size='20' class='text-primary'}}}
+      </div>
+      <div>
+        <h3 class="font-medium text-foreground">{{title}}</h3>
+        {{#if description}}
+        <p class="text-sm text-muted-foreground">{{description}}</p>
+        {{/if}}
+      </div>
+    </div>
+    <div class="text-right">
+      <p class="text-sm text-muted-foreground">{{formatDate created_at "relative"}}</p>
+      <span class="px-2 py-1 text-xs rounded-full bg-primary/10 text-primary">
+        {{status}}
+      </span>
+    </div>
+  </div>
+</div>

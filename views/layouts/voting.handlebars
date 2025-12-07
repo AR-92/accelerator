@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="icon" type="image/svg+xml" href="/images/favcon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="/css/output.css">
+      <!-- HTMX -->
+     <script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
+
+       <!-- Supabase removed - using server-side auth only -->
+    <script>
+      // Set initial theme from server
+      document.documentElement.classList.toggle('dark', '{{userTheme}}' === 'dark');
+    </script>
+
+    <script src="/js/common.js"></script>
+
+    <script src="/js/layout.js"></script>
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Chart.js -->
+    <script src="https://unpkg.com/chart.js@4.4.0/dist/chart.umd.js"></script>
+
+</head>
+
+<body class="h-full overflow-hidden">
+    <!-- CSRF Token -->
+    <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+
+    {{> features/auth/auth-loading}}
+
+    <!-- Main content (hidden initially) - VOTING REWARD LAYOUT -->
+    <div id="main-content" class="h-screen hidden flex flex-col">
+        {{> layout/nav user=user credits=currentCredits}}
+        <main class="flex-1 p-2 p-6 sm:p-4 overflow-auto">
+            {{{body}}}
+        </main>
+    </div>
+
+
+
+    <!-- Toast notifications -->
+    {{> base/toast}}
+
+</body>
+
+</html>

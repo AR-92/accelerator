@@ -1,0 +1,15 @@
+{{!-- HTMX Billing Info Component --}}
+<div class="billing-info flex items-center justify-between text-sm flex-1"
+     {{#if user}}
+     hx-get="/htmx/user/billing"
+      hx-trigger="billing-updated"
+     hx-swap="innerHTML"
+     hx-target="this"
+     {{/if}}>
+  <span class="truncate text-xs text-muted-foreground self-center flex-1 nav-current-plan-name">
+    {{#if user}}{{#if plan}}{{plan.name}} Plan{{else}}Free Plan{{/if}}{{else}}Free Plan{{/if}}
+  </span>
+  <span class="truncate text-xs text-muted-foreground self-center nav-current-plan-details">
+    {{#if user}}{{#if plan}}${{plan.price_monthly}}/month{{else}}Upgrade for more features{{/if}}{{else}}Upgrade for more features{{/if}}
+  </span>
+</div>
