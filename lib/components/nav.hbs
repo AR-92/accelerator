@@ -1,25 +1,344 @@
-<nav class="bg-base-100 shadow-sm border-b border-base-300">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-16">
-      <div class="flex items-center">
-        <a href="/" class="text-xl font-bold text-base-content">Accelerator</a>
-      </div>
+<nav class="bg-base-100 text-foreground px-2 sm:px-4 border-b border-input flex items-center justify-between min-h-12">
+  <div class="flex items-center gap-2 sm:gap-4">
+    <div class="h-6 w-6 ml-1 mr-4 sm:mr-6 text-primary"><svg xmlns="http://www.w3.org/2000/svg" width="33" height="36"
+        viewBox="0 0 33 36" fill="none" class="h-full w-full">
+        <path
+          d="M31.6035 7.28044C31.1951 7.03803 30.7235 7.06833 30.3421 7.35872L26.4519 10.3182C25.9036 10.7348 25.5764 11.4317 25.5764 12.1868V21.1636C25.5764 24.2695 23.7757 26.9638 21.1966 27.7138L6.895 31.8726V14.5099C6.895 11.7171 8.5129 9.29549 10.8326 8.62128L31.4004 2.64179C31.9126 2.4928 32.2714 1.9701 32.2714 1.37165C32.2714 1.01561 32.1405 0.672189 31.9149 0.424727C31.687 0.177265 31.3823 0.0510083 31.0777 0.0611088L27.8352 0.177265C26.7972 0.215142 25.7615 0.3818 24.7551 0.674714L7.27635 5.75527C3.11314 6.9648 0.206787 11.2853 0.206787 16.2598V32.8423C0.206787 33.7033 0.716752 34.4508 1.44785 34.6629L5.68553 35.8876C5.8164 35.9255 5.95405 35.9457 6.09169 35.9457C6.22934 35.9457 6.36698 35.9255 6.49786 35.8876L24.8792 30.5444C29.2342 29.2793 32.2759 24.7594 32.2759 19.5526V8.52785C32.2759 8.00263 32.0209 7.52538 31.6103 7.28297L31.6035 7.28044Z"
+          fill="currentColor"></path>
+      </svg></div>
 
-       <div class="flex items-center space-x-4">
-         {{>darkmode}}
-         {{#if user}}
-         <span class="text-neutral">Welcome,
-           {{user.user_metadata.firstName}}!</span>
-         <button hx-post="/auth/logout"
-           class="text-neutral hover:text-base-content px-3 py-2 rounded-md text-sm font-medium">
-           Logout
-         </button>
-         {{else}}
-         <a href="/auth/login"
-           class="text-neutral hover:text-base-content px-3 py-2 rounded-md text-sm font-medium">Login</a>
-         <a href="/auth/signup" class="btn btn-primary">Sign Up</a>
-         {{/if}}
-       </div>
+    <div class="hidden md:flex items-center gap-2 sm:gap-4">
+      <div class="flex flex-col items-center justify-center group">
+        <div class="border-t-4 border-primary w-6 rounded-md opacity-0 group-hover:opacity-100"></div>
+        <a href="/new-idea"
+          class="text-muted-foreground font-medium text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">
+          <span class="nav-text">Projects</span>
+        </a>
+      </div>
+      <div class="flex flex-col items-center justify-center group">
+        <div class="border-t-4 border-primary w-6 rounded-md opacity-0 group-hover:opacity-100"></div>
+        <a href="/dashboard"
+          class="text-muted-foreground font-medium text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">
+          <span class="nav-text">Dashboard</span>
+        </a>
+      </div>
+      <div class="flex flex-col items-center justify-center group">
+        <div class="border-t-4 border-primary w-6 rounded-md opacity-0 group-hover:opacity-100"></div>
+        <a href="/portfolio"
+          class="text-muted-foreground font-medium text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium">
+          <span class="nav-text">Portfolio</span>
+        </a>
+      </div>
+      <div class="flex flex-col items-center justify-center group">
+        <div class="border-t-4 border-primary w-6 rounded-md opacity-0 group-hover:opacity-100"></div>
+        <a href="/voting-reward"
+          class="text-muted-foreground font-medium text-sm leading-[2.7] group-hover:text-foreground hover:text-foreground group-hover:font-medium hover:font-medium focus:outline-none">
+          <span class="nav-text">Voting &amp; Rewards</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center">
+    <div class="h-12 w-px bg-border"></div>
+    <div class="self-center">
+      <label class="relative block">
+        <span class="sr-only">Search</span>
+        <input
+          class="max-w-36 pl-3 sm:pl-4 pr-3 sm:pr-4 py-1.5 rounded-md placeholder:text-xs sm:placeholder:text-sm text-foreground bg-transparent focus:outline-none border-0"
+          placeholder="Search here..." aria-label="Search" id="navSearchInput" name="search" value="">
+      </label>
+    </div>
+    <!-- Credit Balance -->
+    <div class="hidden md:flex items-center gap-2 px-3 py-2 ml-4">
+
+      <svg class="lucide lucide-coins w-5 h-5 text-primary" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <circle cx="8" cy="8" r="6"></circle>
+        <path d="M18.09 10.37A6 6 0 1 1 10.34 18"></path>
+        <path d="M7 6h1v4"></path>
+        <path d="m16.71 13.88.7.71-2.82 2.82"></path>
+      </svg>
+
+      <span id="nav-credit-balance" class="text-sm font-medium">1010 Credits</span>
+    </div>
+
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle"
+      class="ml-4 self-center w-6 h-6 text-muted-foreground hover:text-primary rounded-full cursor-pointer font-medium border-0"
+      onclick="toggleTheme()">
+      <span id="theme-icon-light">{{{icon "sun" class="h-5 w-5"}}}</span>
+      <span id="theme-icon-dark" class="hidden">{{{icon
+        "moon"
+        class="h-5 w-5"
+        }}}</span>
+    </button>
+
+    <!-- Grid Menu -->
+    <div class="relative self-center" id="grid-menu">
+      <button onclick="toggleGridMenu()"
+        class="ml-4 text-muted-foreground hover:text-primary rounded-full p-2 cursor-pointer font-medium border-0">
+
+        <svg class="lucide lucide-grip w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="12" cy="5" r="1"></circle>
+          <circle cx="19" cy="5" r="1"></circle>
+          <circle cx="5" cy="5" r="1"></circle>
+          <circle cx="12" cy="12" r="1"></circle>
+          <circle cx="19" cy="12" r="1"></circle>
+          <circle cx="5" cy="12" r="1"></circle>
+          <circle cx="12" cy="19" r="1"></circle>
+          <circle cx="19" cy="19" r="1"></circle>
+          <circle cx="5" cy="19" r="1"></circle>
+        </svg>
+
+      </button>
+
+      <!-- Grid Dropdown -->
+      <div
+        class="absolute right-0 mt-2 w-[200px] bg-popover backdrop-blur-sm border border-input/80 rounded-md shadow-xl z-30 transition-all duration-200 opacity-0 invisible hidden"
+        id="grid-dropdown">
+        <div class="p-1">
+          <div class="px-2 py-1 text-sm font-medium text-muted-foreground">Quick Access</div>
+          <div class="bg-border -mx-1 my-1 h-px"></div>
+          <div role="group" class="p-1">
+            <a href="#"
+              class="relative flex cursor-default select-none items-center rounded-sm px-2 py-2 text-sm outline-none transition-colors hover:bg-primary-100 hover:text-primary-900">
+
+              <div class="flex flex-col">
+                <span class="flex"><svg width="24" height="27" viewBox="0 0 33 36" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4">
+                    <path
+                      d="M31.6035 7.28044C31.1951 7.03803 30.7235 7.06833 30.3421 7.35872L26.4519 10.3182C25.9036 10.7348 25.5764 11.4317 25.5764 12.1868V21.1636C25.5764 24.2695 23.7757 26.9638 21.1966 27.7138L6.895 31.8726V14.5099C6.895 11.7171 8.5129 9.29549 10.8326 8.62128L31.4004 2.64179C31.9126 2.4928 32.2714 1.9701 32.2714 1.37165C32.2714 1.01561 32.1405 0.672189 31.9149 0.424727C31.687 0.177265 31.3823 0.0510083 31.0777 0.0611088L27.8352 0.177265C26.7972 0.215142 25.7615 0.3818 24.7551 0.674714L7.27635 5.75527C3.11314 6.9648 0.206787 11.2853 0.206787 16.2598V32.8423C0.206787 33.7033 0.716752 34.4508 1.44785 34.6629L5.68553 35.8876C5.8164 35.9255 5.95405 35.9457 6.09169 35.9457C6.22934 35.9457 6.36698 35.9255 6.49786 35.8876L24.8792 30.5444C29.2342 29.2793 32.2759 24.7594 32.2759 19.5526V8.52785C32.2759 8.00263 32.0209 7.52538 31.6103 7.28297L31.6035 7.28044Z"
+                      fill="#9E28B5"></path>
+                  </svg>Accelerator</span>
+                <span class="text-xs text-muted-foreground">Main dashboard overview</span>
+              </div>
+            </a>
+            <div class="bg-border -mx-1 my-1 h-px"></div>
+            <a href="#"
+              class="relative flex cursor-default select-none items-center rounded-sm px-2 py-2 text-sm outline-none transition-colors hover:bg-primary-100 hover:text-primary-900">
+
+              <div class="flex flex-col">
+                <span class="flex"><svg width="24" height="27" viewBox="0 0 33 36" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4">
+                    <path
+                      d="M31.6035 7.28044C31.1951 7.03803 30.7235 7.06833 30.3421 7.35872L26.4519 10.3182C25.9036 10.7348 25.5764 11.4317 25.5764 12.1868V21.1636C25.5764 24.2695 23.7757 26.9638 21.1966 27.7138L6.895 31.8726V14.5099C6.895 11.7171 8.5129 9.29549 10.8326 8.62128L31.4004 2.64179C31.9126 2.4928 32.2714 1.9701 32.2714 1.37165C32.2714 1.01561 32.1405 0.672189 31.9149 0.424727C31.687 0.177265 31.3823 0.0510083 31.0777 0.0611088L27.8352 0.177265C26.7972 0.215142 25.7615 0.3818 24.7551 0.674714L7.27635 5.75527C3.11314 6.9648 0.206787 11.2853 0.206787 16.2598V32.8423C0.206787 33.7033 0.716752 34.4508 1.44785 34.6629L5.68553 35.8876C5.8164 35.9255 5.95405 35.9457 6.09169 35.9457C6.22934 35.9457 6.36698 35.9255 6.49786 35.8876L24.8792 30.5444C29.2342 29.2793 32.2759 24.7594 32.2759 19.5526V8.52785C32.2759 8.00263 32.0209 7.52538 31.6103 7.28297L31.6035 7.28044Z"
+                      fill="#FFFF00"></path>
+                  </svg>Studio</span>
+                <span class="text-xs text-muted-foreground">Idea generation and design</span>
+              </div>
+            </a>
+            <div class="bg-border -mx-1 my-1 h-px"></div>
+            <a href="#"
+              class="relative flex cursor-default select-none items-center rounded-sm px-2 py-2 text-sm outline-none transition-colors hover:bg-primary-100 hover:text-primary-900">
+
+              <div class="flex flex-col">
+                <span class="flex"><svg width="24" height="27" viewBox="0 0 33 36" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4">
+                    <path
+                      d="M31.6035 7.28044C31.1951 7.03803 30.7235 7.06833 30.3421 7.35872L26.4519 10.3182C25.9036 10.7348 25.5764 11.4317 25.5764 12.1868V21.1636C25.5764 24.2695 23.7757 26.9638 21.1966 27.7138L6.895 31.8726V14.5099C6.895 11.7171 8.5129 9.29549 10.8326 8.62128L31.4004 2.64179C31.9126 2.4928 32.2714 1.9701 32.2714 1.37165C32.2714 1.01561 32.1405 0.672189 31.9149 0.424727C31.687 0.177265 31.3823 0.0510083 31.0777 0.0611088L27.8352 0.177265C26.7972 0.215142 25.7615 0.3818 24.7551 0.674714L7.27635 5.75527C3.11314 6.9648 0.206787 11.2853 0.206787 16.2598V32.8423C0.206787 33.7033 0.716752 34.4508 1.44785 34.6629L5.68553 35.8876C5.8164 35.9255 5.95405 35.9457 6.09169 35.9457C6.22934 35.9457 6.36698 35.9255 6.49786 35.8876L24.8792 30.5444C29.2342 29.2793 32.2759 24.7594 32.2759 19.5526V8.52785C32.2759 8.00263 32.0209 7.52538 31.6103 7.28297L31.6035 7.28044Z"
+                      fill="#32CD32"></path>
+                  </svg>Venture</span>
+                <span class="text-xs text-muted-foreground">Startup management tools</span>
+              </div>
+            </a>
+            <div class="bg-border -mx-1 my-1 h-px"></div>
+            <a href="#"
+              class="relative flex cursor-default select-none items-center rounded-sm px-2 py-2 text-sm outline-none transition-colors hover:bg-primary-100 hover:text-primary-900">
+
+              <div class="flex flex-col">
+                <span class="flex"><svg width="24" height="27" viewBox="0 0 33 36" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4">
+                    <path
+                      d="M31.6035 7.28044C31.1951 7.03803 30.7235 7.06833 30.3421 7.35872L26.4519 10.3182C25.9036 10.7348 25.5764 11.4317 25.5764 12.1868V21.1636C25.5764 24.2695 23.7757 26.9638 21.1966 27.7138L6.895 31.8726V14.5099C6.895 11.7171 8.5129 9.29549 10.8326 8.62128L31.4004 2.64179C31.9126 2.4928 32.2714 1.9701 32.2714 1.37165C32.2714 1.01561 32.1405 0.672189 31.9149 0.424727C31.687 0.177265 31.3823 0.0510083 31.0777 0.0611088L27.8352 0.177265C26.7972 0.215142 25.7615 0.3818 24.7551 0.674714L7.27635 5.75527C3.11314 6.9648 0.206787 11.2853 0.206787 16.2598V32.8423C0.206787 33.7033 0.716752 34.4508 1.44785 34.6629L5.68553 35.8876C5.8164 35.9255 5.95405 35.9457 6.09169 35.9457C6.22934 35.9457 6.36698 35.9255 6.49786 35.8876L24.8792 30.5444C29.2342 29.2793 32.2759 24.7594 32.2759 19.5526V8.52785C32.2759 8.00263 32.0209 7.52538 31.6103 7.28297L31.6035 7.28044Z"
+                      fill="#87CEEB"></path>
+                  </svg>Services</span>
+                <span class="text-xs text-muted-foreground">Team collaboration platform</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- User Menu -->
+    <div class="relative self-center" id="admin-user-menu">
+      <button onclick="toggleUserMenu()"
+        class="flex items-center gap-3 h-10 px-3 rounded-md transition-all duration-200 hover:text-primary cursor-pointer border-0"
+        id="admin-user-menu-button">
+        <img src="/images/avatar.png" class="h-6 w-6 rounded-full object-cover shrink-0 user-avatar" alt="User Avatar">
+
+        <div
+          class="flex items-center justify-center w-5 h-5 rounded-md hover:bg-muted/50 transition-colors duration-200"
+          id="admin-user-menu-arrow">
+
+
+          <svg class="lucide lucide-chevron-down w-3 h-3 text-muted-foreground" xmlns="http://www.w3.org/2000/svg"
+            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+
+
+        </div>
+      </button>
+
+      <!-- User Dropdown -->
+      <div
+        class="absolute right-0 mt-2 w-64 bg-base-100 border border-input rounded-md shadow-lg z-30 transition-all duration-200 opacity-0 invisible hidden"
+        id="admin-user-dropdown">
+        <div class="p-2">
+
+          <!-- User profile section -->
+          {{> user-info-link}}
+
+
+
+
+
+
+          <!-- Upgrade Package -->
+          <a href="/upgrade-package"
+            class="w-full relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-2 text-sm text-left outline-none transition-colors hover:bg-primary-100 hover:text-primary-900">
+
+            {{{icon "arrow-up-circle" class="h-4 w-4 shrink-0"}}}
+
+            Upgrade Package
+          </a>
+
+          <!-- Buy Credits -->
+          <a href="/buy-credits"
+            class="w-full relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-2 text-sm text-left outline-none transition-colors hover:bg-primary-100 hover:text-primary-900">
+
+            {{{icon "coins" class="h-4 w-4 shrink-0"}}}
+
+            Buy Credits
+          </a>
+
+          <!-- Billing -->
+          <a href="/billing"
+            class="w-full relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-2 text-sm text-left outline-none transition-colors hover:bg-primary-100 hover:text-primary-900">
+
+            {{{icon "credit-card" class="h-4 w-4 shrink-0"}}}
+
+            Billing
+          </a>
+
+          <!-- Add Payment Method -->
+          <a href="/add-payment-method"
+            class="w-full relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-2 text-sm text-left outline-none transition-colors hover:bg-primary-100 hover:text-primary-900">
+
+            {{{icon "plus-circle" class="h-4 w-4 shrink-0"}}}
+
+            Add Payment Method
+          </a>
+
+          <!-- Notifications -->
+          <a href="/notification"
+            class="w-full relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-2 text-sm text-left outline-none transition-colors hover:bg-primary-100 hover:text-primary-900">
+
+            {{{icon "bell" class="h-4 w-4 shrink-0"}}}
+
+            Notifications
+          </a>
+
+          <!-- User Activity -->
+          <a href="/user-activity"
+            class="w-full relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-2 text-sm text-left outline-none transition-colors hover:bg-primary-100 hover:text-primary-900">
+
+            {{{icon "activity" class="h-4 w-4 shrink-0"}}}
+
+            User Activity
+          </a>
+
+          <!-- Separator -->
+          <div class="border-t border-input -mx-1 my-1"></div>
+
+
+
+
+          <!-- Log out item -->
+          <a hx-post="/auth/logout"
+            class="w-full relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-2 text-sm text-left outline-none transition-colors text-error hover:bg-error/10">
+
+            <svg class="lucide lucide-log-out h-4 w-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="16"
+              height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="m16 17 5-5-5-5"></path>
+              <path d="M21 12H9"></path>
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            </svg>
+
+            Log out
+          </a>
+
+
+        </div>
+      </div>
     </div>
   </div>
 </nav>
+
+<script>
+  function toggleGridMenu() {
+    const dropdown = document.getElementById('grid-dropdown');
+    if (dropdown) {
+      dropdown.classList.toggle('opacity-0');
+      dropdown.classList.toggle('invisible');
+      dropdown.classList.toggle('hidden');
+    }
+  }
+
+  function toggleUserMenu() {
+    const dropdown = document.getElementById('admin-user-dropdown');
+    if (dropdown) {
+      dropdown.classList.toggle('opacity-0');
+      dropdown.classList.toggle('invisible');
+      dropdown.classList.toggle('hidden');
+    }
+  }
+
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', function (event) {
+    const gridMenu = document.getElementById('grid-menu');
+    const gridDropdown = document.getElementById('grid-dropdown');
+    const userMenu = document.getElementById('admin-user-menu');
+    const userDropdown = document.getElementById('admin-user-dropdown');
+
+    if (gridMenu && !gridMenu.contains(event.target)) {
+      gridDropdown?.classList.add('opacity-0', 'invisible', 'hidden');
+    }
+
+    if (userMenu && !userMenu.contains(event.target)) {
+      userDropdown?.classList.add('opacity-0', 'invisible', 'hidden');
+    }
+  });
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    html.classList.toggle('dark'); const isDark = html.classList.contains('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updateThemeIcon(isDark);
+  } function updateThemeIcon(isDark) {
+    const lightIcon
+      = document.getElementById('theme-icon-light'); const darkIcon =
+        document.getElementById('theme-icon-dark'); if (lightIcon && darkIcon) {
+          if
+            (isDark) {
+            lightIcon.classList.add('hidden');
+            darkIcon.classList.remove('hidden');
+          } else {
+            darkIcon.classList.add('hidden'); lightIcon.classList.remove('hidden');
+          }
+        }
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme =
+      localStorage.getItem('theme'); const systemPrefersDark =
+        window.matchMedia('(prefers-color-scheme: dark)').matches; const theme =
+          savedTheme || (systemPrefersDark ? 'dark' : 'light'); const isDark = theme ===
+            'dark'; if (isDark) { document.documentElement.classList.add('dark'); }
+    updateThemeIcon(isDark);
+  });
+</script>

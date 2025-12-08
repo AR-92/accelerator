@@ -1,0 +1,193 @@
+<main id="user-activity-main-content" class="flex-1 overflow-auto bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div class="flex flex-col gap-4 lg:gap-6 mt-6">
+      <div class="flex items-center justify-between">
+        <div class="grid gap-1">
+          <h1 class="font-heading text-3xl font-semibold text-foreground">
+            User Activity
+          </h1>
+          <p class="text-lg text-muted-foreground">
+            Track your recent actions and account activity
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="px-4 py-2 text-sm font-medium border border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground rounded-md transition-colors">
+            Export Activity
+          </button>
+        </div>
+      </div>
+
+      <!-- Activity Filters -->
+      <div class="flex flex-wrap gap-2">
+        <button class="px-3 py-1.5 text-sm font-medium bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors">All</button>
+        <button class="px-3 py-1.5 text-sm font-medium border border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground rounded-md transition-colors">Logins</button>
+        <button class="px-3 py-1.5 text-sm font-medium border border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground rounded-md transition-colors">Projects</button>
+        <button class="px-3 py-1.5 text-sm font-medium border border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground rounded-md transition-colors">Ideas</button>
+        <button class="px-3 py-1.5 text-sm font-medium border border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground rounded-md transition-colors">Payments</button>
+      </div>
+
+      <!-- Activity Timeline -->
+      <div class="relative">
+        <!-- Timeline line -->
+        <div class="absolute left-6 top-0 bottom-0 w-0.5 bg-border"></div>
+
+        <!-- Today -->
+        <div class="mb-8">
+          <div class="flex items-center gap-4 mb-4">
+            {{{icon "clock" class="w-5 h-5 text-primary z-10"}}}
+            <h2 class="text-lg font-semibold text-foreground">Today</h2>
+            <span class="text-sm text-muted-foreground">December 8, 2025</span>
+          </div>
+
+          <div class="ml-12 space-y-4">
+            <div class="bg-card rounded-lg border border-border p-4">
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0">
+                  <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
+                    {{{icon "log-in" class="text-primary"}}}
+                  </div>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-medium text-foreground">Logged in to account</h3>
+                    <span class="text-xs text-muted-foreground">14:30</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground mt-1">
+                    Successful login from Chrome on Windows
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Yesterday -->
+        <div class="mb-8">
+          <div class="flex items-center gap-4 mb-4">
+            {{{icon "clock" class="w-5 h-5 text-success z-10"}}}
+            <h2 class="text-lg font-semibold text-foreground">Yesterday</h2>
+            <span class="text-sm text-muted-foreground">December 7, 2025</span>
+          </div>
+
+          <div class="ml-12 space-y-4">
+            <div class="bg-card rounded-lg border border-border p-4">
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0">
+                  <div class="w-10 h-10 bg-success/20 rounded-full flex items-center justify-center">
+                    {{{icon "plus" class="text-success"}}}
+                  </div>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-medium text-foreground">Created new idea</h3>
+                    <span class="text-xs text-muted-foreground">09:15</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground mt-1">
+                    Added "AI Accelerator" idea to your portfolio
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- December 4, 2025 -->
+        <div class="mb-8">
+          <div class="flex items-center gap-4 mb-4">
+            {{{icon "clock" class="w-5 h-5 text-info z-10"}}}
+            <h2 class="text-lg font-semibold text-foreground">December 4, 2025</h2>
+            <span class="text-sm text-muted-foreground">3 days ago</span>
+          </div>
+
+          <div class="ml-12 space-y-4">
+            <div class="bg-card rounded-lg border border-border p-4">
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0">
+                  <div class="w-10 h-10 bg-info/20 rounded-full flex items-center justify-center">
+                    {{{icon "edit" class="text-info"}}}
+                  </div>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-medium text-foreground">Updated project details</h3>
+                    <span class="text-xs text-muted-foreground">16:45</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground mt-1">
+                    Modified description and added team members to "Startup Launch" project
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- November 30, 2025 -->
+        <div class="mb-8">
+          <div class="flex items-center gap-4 mb-4">
+            {{{icon "clock" class="w-5 h-5 text-warning z-10"}}}
+            <h2 class="text-lg font-semibold text-foreground">November 30, 2025</h2>
+            <span class="text-sm text-muted-foreground">1 week ago</span>
+          </div>
+
+          <div class="ml-12 space-y-4">
+            <div class="bg-card rounded-lg border border-border p-4">
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0">
+                  <div class="w-10 h-10 bg-warning/20 rounded-full flex items-center justify-center">
+                    {{{icon "credit-card" class="text-warning"}}}
+                  </div>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-medium text-foreground">Purchased credits</h3>
+                    <span class="text-xs text-muted-foreground">11:20</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground mt-1">
+                    Bought 1000 credits for $9.99
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- November 24, 2025 -->
+        <div class="mb-8">
+          <div class="flex items-center gap-4 mb-4">
+            {{{icon "clock" class="w-5 h-5 text-secondary z-10"}}}
+            <h2 class="text-lg font-semibold text-foreground">November 24, 2025</h2>
+            <span class="text-sm text-muted-foreground">2 weeks ago</span>
+          </div>
+
+          <div class="ml-12 space-y-4">
+            <div class="bg-card rounded-lg border border-border p-4">
+              <div class="flex items-start gap-4">
+                <div class="flex-shrink-0">
+                  <div class="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center">
+                    {{{icon "users" class="text-secondary"}}}
+                  </div>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-medium text-foreground">Joined team</h3>
+                    <span class="text-xs text-muted-foreground">14:10</span>
+                  </div>
+                  <p class="text-sm text-muted-foreground mt-1">
+                    Became a member of "Innovation Hub" team
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Load More -->
+      <div class="text-center py-4">
+        <button class="px-4 py-2 text-sm font-medium border border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground rounded-md transition-colors">
+          Load More Activity
+        </button>
+      </div>
+    </div>
+  </div>
+</main>

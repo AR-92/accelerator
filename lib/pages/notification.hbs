@@ -1,0 +1,147 @@
+<main id="notification-main-content" class="flex-1 overflow-auto bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div class="flex flex-col gap-4 lg:gap-6 mt-6">
+      <div class="flex items-center justify-between">
+        <div class="grid gap-1">
+          <h1 class="font-heading text-3xl font-semibold text-foreground">
+            Notifications
+          </h1>
+          <p class="text-lg text-muted-foreground">
+            Stay updated with the latest alerts and messages
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="btn btn-outline">
+            Mark All as Read
+          </button>
+        </div>
+      </div>
+
+      <!-- Notification List -->
+      <div class="space-y-4">
+        <div class="bg-card rounded-lg border border-border p-4">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+              <div class="w-10 h-10 bg-success/20 rounded-full flex items-center justify-center">
+                <svg class="lucide lucide-check-circle text-success" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <h3 class="text-sm font-medium text-foreground">Project Approved</h3>
+                <span class="text-xs text-muted-foreground">2 hours ago</span>
+              </div>
+              <p class="text-sm text-muted-foreground mt-1">
+                Your project "AI Accelerator" has been approved and is now live.
+              </p>
+            </div>
+            <button class="text-muted-foreground hover:text-foreground">
+              <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6L6 18"></path>
+                <path d="M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-card rounded-lg border border-border p-4">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+              <div class="w-10 h-10 bg-warning/20 rounded-full flex items-center justify-center">
+                <svg class="lucide lucide-alert-triangle text-warning" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                  <line x1="12" y1="9" x2="12" y2="13"></line>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+              </div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <h3 class="text-sm font-medium text-foreground">Payment Required</h3>
+                <span class="text-xs text-muted-foreground">1 day ago</span>
+              </div>
+              <p class="text-sm text-muted-foreground mt-1">
+                Your subscription is expiring soon. Please update your payment method.
+              </p>
+            </div>
+            <button class="text-muted-foreground hover:text-foreground">
+              <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6L6 18"></path>
+                <path d="M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-card rounded-lg border border-border p-4">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+              <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
+                <svg class="lucide lucide-users text-primary" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                  <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                </svg>
+              </div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <h3 class="text-sm font-medium text-foreground">New Team Member</h3>
+                <span class="text-xs text-muted-foreground">3 days ago</span>
+              </div>
+              <p class="text-sm text-muted-foreground mt-1">
+                John Doe has joined your team and is now collaborating on projects.
+              </p>
+            </div>
+            <button class="text-muted-foreground hover:text-foreground">
+              <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6L6 18"></path>
+                <path d="M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-card rounded-lg border border-border p-4">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+              <div class="w-10 h-10 bg-info/20 rounded-full flex items-center justify-center">
+                <svg class="lucide lucide-info text-info" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 16v-4"></path>
+                  <path d="M12 8h.01"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <h3 class="text-sm font-medium text-foreground">System Update</h3>
+                <span class="text-xs text-muted-foreground">1 week ago</span>
+              </div>
+              <p class="text-sm text-muted-foreground mt-1">
+                We've improved performance and added new features. Check out the changelog.
+              </p>
+            </div>
+            <button class="text-muted-foreground hover:text-foreground">
+              <svg class="lucide lucide-x" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6L6 18"></path>
+                <path d="M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Load More -->
+      <div class="text-center py-4">
+        <button class="btn btn-outline">
+          Load More Notifications
+        </button>
+      </div>
+    </div>
+  </div>
+</main>

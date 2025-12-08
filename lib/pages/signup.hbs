@@ -1,120 +1,432 @@
-<div
-  class="min-h-screen flex items-center justify-center bg-base-100 py-12 px-4 sm:px-6 lg:px-8"
->
-  <div class="max-w-md w-full space-y-8">
-    <div>
-      <h2 class="mt-6 text-center text-3xl font-extrabold text-base-content">
-        Create your account
-      </h2>
-      <p class="mt-2 text-center text-sm text-neutral">
-        Or
-        <a
-          href="/auth/login"
-          class="font-medium text-primary hover:text-primary-600"
-        >
-          sign in to existing account
-        </a>
-      </p>
-    </div>
-
-    {{#if error}}
-      <div class="alert alert-error">
-        {{error}}
-      </div>
-    {{/if}}
-
-    <form
-      hx-post="/auth/signup"
-      hx-target="#auth-response"
-      hx-swap="innerHTML"
-      class="mt-8 space-y-6"
-    >
-      <input type="hidden" name="_csrf" value="{{csrf}}" />
-
-      <div class="space-y-4">
-        <div>
-          <label
-            for="firstName"
-            class="block text-sm font-medium text-base-content"
-          >First Name</label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            required
-            class="input"
-            placeholder="First Name"
-          />
-        </div>
-        <div>
-          <label
-            for="lastName"
-            class="block text-sm font-medium text-base-content"
-          >Last Name</label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            required
-            class="input"
-            placeholder="Last Name"
-          />
-        </div>
-        <div>
-          <label
-            for="email"
-            class="block text-sm font-medium text-base-content"
-          >Email address</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            class="input"
-            placeholder="Email address"
-          />
-        </div>
-        <div>
-          <label
-            for="password"
-            class="block text-sm font-medium text-base-content"
-          >Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            required
-            class="input"
-            placeholder="Password"
-          />
-        </div>
-      </div>
-
-      <div class="flex items-center">
-        <input
-          id="terms"
-          name="terms"
-          type="checkbox"
-          required
-          class="h-4 w-4 text-primary focus:ring-primary border-base-300 rounded"
-        />
-        <label for="terms" class="ml-2 block text-sm text-base-content">
-          I agree to the
-          <a href="/terms" class="text-primary hover:text-primary-600">Terms and
-            Conditions</a>
-        </label>
-      </div>
-
-      <div>
-        <button type="submit" class="btn btn-primary w-full">
-          <span class="loading mr-2">
-            {{{icon "loader" class="animate-spin h-5 w-5"}}}
-          </span>
-          <span class="normal">Create account</span>
-        </button>
-      </div>
-    </form>
-
-    <div id="auth-response"></div>
+<!-- Background (component) -->
+<div class="aura-background-component top-0 w-full h-screen -z-10 fixed" data-alpha-mask="80" style="
+        mask-image: linear-gradient(
+          transparent,
+          black 0%,
+          black 80%,
+          transparent
+        );
+      ">
+  <div class="aura-background-component top-0 w-full -z-10 absolute h-full">
+    <div data-us-project="FixNvEwvWwbu3QX9qC3F" class="absolute w-full h-full left-0 top-0 -z-10"
+      style="filter: hue-rotate(110deg) blur(20px) brightness(0.2)"></div>
+    <script type="text/javascript">
+      !(function () {
+        if (!window.UnicornStudio) {
+          window.UnicornStudio = { isInitialized: !1 };
+          var i = document.createElement("script");
+          ((i.src =
+            "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js"),
+            (i.onload = function () {
+              window.UnicornStudio.isInitialized ||
+                (UnicornStudio.init(),
+                  (window.UnicornStudio.isInitialized = !0));
+            }),
+            (document.head || document.body).appendChild(i));
+        }
+      })();
+    </script>
   </div>
 </div>
+
+<style>
+  :root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --glow-color: rgba(158, 40, 181, 0.4);
+    --grid-color: rgba(0, 0, 0, 0.03);
+    --border-color: #d1d5db;
+    --btn-bg: #ffffff;
+    --btn-text: #000000;
+    --btn-border: #d1d5db;
+  }
+
+  .dark {
+    --bg-color: #030303;
+    --text-color: #ffffff;
+    --glow-color: rgba(158, 40, 181, 0.4);
+    --grid-color: rgba(255, 255, 255, 0.03);
+    --border-color: #1a1818;
+    --btn-bg: #030303;
+    --btn-text: #ffffff;
+    --btn-border: #1a1818;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 25px var(--glow-color);
+  }
+
+  .grid-bg {
+    background-size: 100px 200px;
+    background-image:
+      linear-gradient(to right,
+        var(--grid-color) 1px,
+        transparent 1px),
+      linear-gradient(to bottom,
+        var(--grid-color) 1px,
+        transparent 1px);
+    mask-image: radial-gradient(circle at center,
+        black 40%,
+        transparent 100%);
+  }
+
+  .monotone-logo {
+    filter: grayscale(100%) brightness(150%) contrast(0.5);
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+
+  .monotone-logo:hover {
+    opacity: 1;
+    filter: grayscale(100%) brightness(200%);
+  }
+
+  .beam-line {
+    stroke-dasharray: 80 1000;
+    stroke-linecap: round;
+  }
+
+  /* Custom Keyframes for SVG Sonar */
+  @keyframes sonar-wave {
+    0% {
+      r: 10px;
+      opacity: 0.8;
+      stroke-width: 1px;
+    }
+
+    100% {
+      r: 80px;
+      opacity: 0;
+      stroke-width: 0px;
+    }
+  }
+
+  .animate-sonar {
+    animation: sonar-wave 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  .delay-1000 {
+    animation-delay: 1s;
+  }
+
+  .delay-2000 {
+    animation-delay: 2s;
+  }
+
+  /* Shiny CTA Button CSS */
+  @property --gradient-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  @property --gradient-angle-offset {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  @property --gradient-percent {
+    syntax: "<percentage>";
+    initial-value: 20%;
+    inherits: false;
+  }
+
+  @property --gradient-shine {
+    syntax: "<color>";
+    initial-value: #9e28b5;
+    inherits: false;
+  }
+
+  .shiny-cta {
+    --gradient-angle: 0deg;
+    --gradient-angle-offset: 0deg;
+    --gradient-percent: 20%;
+    --gradient-shine: #9e28b5;
+    --shadow-size: 2px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 9999px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    line-height: 1.2;
+    font-weight: 500;
+    color: var(--btn-text);
+    background:
+      linear-gradient(var(--btn-bg), var(--btn-bg)) padding-box,
+      conic-gradient(from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+        transparent 0%,
+        #9e28b5 5%,
+        var(--gradient-shine) 15%,
+        #9e28b5 30%,
+        transparent 40%,
+        transparent 100%) border-box;
+    border: 2px solid transparent;
+    box-shadow: inset 0 0 0 1px var(--btn-border);
+    outline: none;
+    transition:
+      --gradient-angle-offset 800ms cubic-bezier(0.25, 1, 0.5, 1),
+      --gradient-percent 800ms cubic-bezier(0.25, 1, 0.5, 1),
+      --gradient-shine 800ms cubic-bezier(0.25, 1, 0.5, 1),
+      box-shadow 0.3s;
+    cursor: pointer;
+    isolation: isolate;
+    outline-offset: 4px;
+    font-family: "Inter", "Helvetica Neue", sans-serif;
+    z-index: 0;
+    animation: border-spin 2.5s linear infinite;
+    width: 200px;
+    margin: 0 auto;
+  }
+
+  @keyframes border-spin {
+    to {
+      --gradient-angle: 360deg;
+    }
+  }
+
+  .shiny-cta:active {
+    transform: translateY(1px);
+  }
+
+  .shiny-cta::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    --size: calc(100% - 6px);
+    --position: 2px;
+    --space: 4px;
+    width: var(--size);
+    height: var(--size);
+    background: radial-gradient(circle at var(--position) var(--position),
+        white 0.5px,
+        transparent 0) padding-box;
+    background-size: var(--space) var(--space);
+    background-repeat: space;
+    mask-image: conic-gradient(from calc(var(--gradient-angle) + 45deg),
+        black,
+        transparent 10% 90%,
+        black);
+    border-radius: inherit;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .shiny-cta::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(-50deg, transparent, #9e28b5, transparent);
+    mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+    opacity: 0.6;
+    animation: shimmer 4s linear infinite;
+    animation-play-state: running;
+  }
+
+  .shiny-cta span {
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+  }
+
+  .shiny-cta span::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    --size: calc(100% + 1rem);
+    width: var(--size);
+    height: var(--size);
+    box-shadow: inset 0 -1ex 2rem 4px #9e28b5;
+    opacity: 0;
+    border-radius: inherit;
+    transition: opacity 800ms cubic-bezier(0.25, 1, 0.5, 1);
+    animation: breathe 4.5s linear infinite;
+  }
+
+  @keyframes shimmer {
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  @keyframes breathe {
+
+    0%,
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+  }
+
+  /* Shared Border Gradient for Secondary Button */
+  [style*="--border-gradient"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: var(--border-radius-before, inherit);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    background: var(--border-gradient);
+    pointer-events: none;
+  }
+</style>
+
+<div class="w-full min-h-screen flex flex-col lg:flex-row items-center justify-center lg:gap-8 grid-bg">
+  <div class="flex items-center">
+    <div class="flex flex-col items-center justify-center h-full gap-6 w-[350px] mx-auto">
+      <div class="grid gap-2 text-center">
+        <h1 class="text-3xl font-bold text-foreground text-glow text-center">Sign Up</h1>
+        <p class="text-balance text-muted-foreground">
+          Create your account to get started
+        </p>
+      </div>
+
+      {{#if error}}
+        <div class="alert alert-error">
+          {{error}}
+        </div>
+      {{/if}}
+
+      <form hx-post="/auth/signup" hx-target="#auth-response" hx-swap="innerHTML"
+        hx-on:htmx:before-request="showSpinner()" hx-on:htmx:after-request="hideSpinner()" class="grid gap-4 text-center">
+        <input type="hidden" name="_csrf" value="{{csrf}}" />
+
+        <div class="grid gap-2 text-left">
+          <label
+            class="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            for="firstName"
+          >
+            First Name
+          </label>
+          <input
+            type="text"
+            name="firstName"
+            class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            id="firstName"
+            placeholder="First Name"
+            required=""
+          />
+        </div>
+        <div class="grid gap-2 text-left">
+          <label
+            class="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            for="lastName"
+          >
+            Last Name
+          </label>
+          <input
+            type="text"
+            name="lastName"
+            class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            id="lastName"
+            placeholder="Last Name"
+            required=""
+          />
+        </div>
+        <div class="grid gap-2 text-left">
+          <label
+            class="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            for="email"
+          >
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            id="email"
+            placeholder="m@example.com"
+            required=""
+          />
+        </div>
+        <div class="grid gap-2 text-left">
+          <label
+            class="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            for="password"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm text-foreground shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            id="password"
+            placeholder="Enter your password"
+            required=""
+          />
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <input
+            class="h-4 w-4 rounded border border-input/80"
+            id="terms"
+            name="terms"
+            type="checkbox"
+            required
+          />
+          <label
+            class="text-sm font-medium leading-none text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            for="terms"
+          >
+            I agree to the
+            <a href="/terms" class="text-primary hover:text-primary-600 focus:outline-none monotone-logo">Terms and Conditions</a>
+          </label>
+        </div>
+
+        <div class="w-full">
+          <button type="submit" id="signup-button" class="shiny-cta text-center" style="padding: 0.5rem 1rem; width: 200px; margin: 0 auto;">
+            <span>
+              <span id="signup-text">Sign Up</span>
+              <span id="signup-spinner" class="ml-2">{{{icon
+                "loader-2"
+                class="animate-spin h-4 w-4"
+              }}}</span>
+            </span>
+          </button>
+        </div>
+
+      </form>
+
+      <div class="mt-4 text-center text-sm text-muted-foreground">
+        Already have an account?
+        <a class="underline text-muted-foreground hover:text-foreground focus:outline-none monotone-logo"
+          href="/auth/login">Sign in</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="relative w-[400px] h-[200px] rounded-md overflow-hidden"
+    style="background-image: url('/images/accelerator_logo.svg'); background-size: contain; background-position: center; background-repeat: no-repeat;">
+
+  </div>
+
+</div>
+
+<div id="auth-response"></div>
