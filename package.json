@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "concurrently \"npm run watch-css\" \"nodemon index.js\"",
-    "build-css": "npx postcss-cli public/css/input.css -o public/css/output.css",
-    "watch-css": "npx postcss-cli public/css/input.css -o public/css/output.css --watch",
+    "build-css": "npx @tailwindcss/cli -i public/css/input.css -o public/css/output.css",
+    "watch-css": "npx @tailwindcss/cli -i public/css/input.css -o public/css/output.css --watch",
     "lint": "echo \"Linting not configured yet\" && exit 0",
     "format": "prettier --write ."
   },
@@ -30,7 +30,9 @@
     "express-handlebars": "^8.0.4",
     "express-session": "^1.18.2",
     "lucide-static": "^0.556.0",
-    "memorystore": "^1.6.7"
+    "memorystore": "^1.6.7",
+    "node-fetch": "^3.3.2",
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",

@@ -1,6 +1,6 @@
 <div id="sidebar"
-    class="w-56 h-[calc(100vh-3.1rem)] transition-all duration-300 border border-input/80 fixed md:relative inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 opacity-0 md:opacity-100 pointer-events-none md:pointer-events-auto flex flex-col"
-    style="width: 224px;">
+    class="h-[calc(100vh-3.1rem)] bg-card transition-all duration-300 border border-input/80 fixed md:relative inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0   pointer-events-none md:pointer-events-auto flex flex-col"
+    style="width: 300px;">
     <div class="flex-1 overflow-y-auto">
         <nav class="px-3 py-3 text-sm">
             <ul class="space-y-1">
@@ -64,9 +64,10 @@
                     All Projects
                 </h3>
                 <ul class="space-y-1">
+                    {{#each projects}}
                     <li>
-                        <a href="/projects/5c95dc1f-0111-4c48-b47c-979cd665a717" title="Low Success Rate: Diagn"
-                            class="flex items-center px-3 py-1 text-sm text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
+                        <a href="/idea-detail?ideaId={{id}}" title="{{title}}"
+                            class="flex items-center px-3 py-1 text-sm text-muted-foreground rounded-md hover:bg-primary/10 hover:text-primary transition-colors">
 
                             <svg class="lucide lucide-file-text w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg"
                                 width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -80,67 +81,10 @@
                                 <path d="M16 17H8"></path>
                             </svg>
 
-                            <span class="text-xs sidebar-text" style="display: flex;">Low Success Rate: Diagn</span>
+                            <span class="text-xs sidebar-text" style="display: flex;">{{title}}</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="/projects/7aac0a0c-7924-4368-aebd-3440bea260dd" title="Symbiotic Stories"
-                            class="flex items-center px-3 py-1 text-sm text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
-
-                            <svg class="lucide lucide-file-text w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg"
-                                width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path
-                                    d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z">
-                                </path>
-                                <path d="M14 2v5a1 1 0 0 0 1 1h5"></path>
-                                <path d="M10 9H8"></path>
-                                <path d="M16 13H8"></path>
-                                <path d="M16 17H8"></path>
-                            </svg>
-
-                            <span class="text-xs sidebar-text" style="display: flex;">Symbiotic Stories</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/projects/d73a1c73-a727-4180-b4e1-87dbfb4e0a44" title="Symbiotic Spaces"
-                            class="flex items-center px-3 py-1 text-sm text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
-
-                            <svg class="lucide lucide-file-text w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg"
-                                width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path
-                                    d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z">
-                                </path>
-                                <path d="M14 2v5a1 1 0 0 0 1 1h5"></path>
-                                <path d="M10 9H8"></path>
-                                <path d="M16 13H8"></path>
-                                <path d="M16 17H8"></path>
-                            </svg>
-
-                            <span class="text-xs sidebar-text" style="display: flex;">Symbiotic Spaces</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/projects/e5151b8e-8deb-48f6-b2ce-390c5b04122a" title="Green Energy: Scaling S"
-                            class="flex items-center px-3 py-1 text-sm text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors">
-
-                            <svg class="lucide lucide-file-text w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg"
-                                width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path
-                                    d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z">
-                                </path>
-                                <path d="M14 2v5a1 1 0 0 0 1 1h5"></path>
-                                <path d="M10 9H8"></path>
-                                <path d="M16 13H8"></path>
-                                <path d="M16 17H8"></path>
-                            </svg>
-
-                            <span class="text-xs sidebar-text" style="display: flex;">Green Energy: Scaling S</span>
-                        </a>
-                    </li>
-
+                    {{/each}}
                 </ul>
             </div>
         </nav>

@@ -86,19 +86,15 @@
               === 'dark'; if (isDark) {
                 document.documentElement.classList.add('dark');
               } updateThemeIcon(isDark);
-    }); function showToast(message, type = 'info') {
-      const container = document.getElementById('toast-container'); if
-        (!container) return; const toast = document.createElement('div');
-      toast.className = `toast toast-${type}`; toast.textContent = message;
-      container.appendChild(toast); setTimeout(() => {
-        toast.classList.add('fade-out'); setTimeout(() => toast.remove(), 300);
-      },
-        3000);
-    }
+    });
+    // Use the enhanced toast system from public/js/toast.js
+    // The showToast function is already defined in toast.js
   </script>
-  <div id="toast-container" class="fixed top-4 right-4 z-50"></div>
+  <div id="toast-container" style="position: fixed; top: 5rem; right: 27rem; z-index: 9999; width: 400px; height: auto; pointer-events: none;"></div>
 
   {{#if scripts}}{{scripts}}{{/if}}
+
+  <script src="/js/toast.js"></script>
 
   {{#if flash.success}}
   {{#each flash.success}}

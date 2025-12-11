@@ -60,7 +60,7 @@
         <path d="m16.71 13.88.7.71-2.82 2.82"></path>
       </svg>
 
-      <span id="nav-credit-balance" class="text-sm font-medium">1010 Credits</span>
+      <span id="nav-credit-balance" class="text-sm font-medium"></span>
     </div>
 
     <!-- Theme Toggle Button -->
@@ -333,6 +333,35 @@
           }
         }
   }
+  // Load credit balance function
+  window.loadNavCreditBalance = async function () {
+    try {
+      const response = await fetch('/api/credits', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin'
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const creditElement = document.getElementById('nav-credit-balance');
+        if (creditElement) {
+          creditElement.textContent = `${data.balance} Credits`;
+        }
+      } else if (response.status === 401) {
+        // User not authenticated, hide credits or show login
+        const creditElement = document.getElementById('nav-credit-balance');
+        if (creditElement) {
+          creditElement.style.display = 'none';
+        }
+      }
+    } catch (error) {
+      console.error('Error loading credit balance:', error);
+    }
+  };
+
   document.addEventListener('DOMContentLoaded', () => {
     const savedTheme =
       localStorage.getItem('theme'); const systemPrefersDark =
@@ -340,5 +369,8 @@
           savedTheme || (systemPrefersDark ? 'dark' : 'light'); const isDark = theme ===
             'dark'; if (isDark) { document.documentElement.classList.add('dark'); }
     updateThemeIcon(isDark);
+
+    // Load credit balance on page load
+    loadNavCreditBalance();
   });
 </script>

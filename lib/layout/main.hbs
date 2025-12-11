@@ -17,6 +17,16 @@
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <link rel="stylesheet" href="/css/output.css">
     <style>
+        :root {
+            --grid-color: rgba(0, 0, 0, 0.03);
+        }
+
+        .dark {
+            --grid-color: rgba(255, 255, 255, 0.03);
+        }
+
+
+
         .htmx-request {
             opacity: 0.8;
         }
@@ -36,33 +46,27 @@
     {{#if styles}}{{styles}}{{/if}}
 </head>
 
-<body class="{{bodyClass}} bg-base-100 min-h-screen">
+<body class="{{bodyClass}} bg-base-100 min-h-screen grid-bg">
     {{> nav}}
 
     <main class="">
         {{{body}}}
     </main>
 
-    <div id="toast-container" class="fixed top-4 right-4 z-50"></div>
+    <div id="toast-container"
+        style="position: fixed; top: 5rem; right: 27rem; z-index: 9999; width: 400px; height: auto; pointer-events: none;">
+    </div>
 
     {{#if scripts}}{{scripts}}{{/if}}
 
+    <script src="/js/toast.js"></script>
     <script>
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toast-container');
-            if (!container) return;
+        // Enhanced toast system is now loaded
 
-            const toast = document.createElement('div');
-            toast.className = `toast toast-${type}`;
-            toast.textContent = message;
-            container.appendChild(toast);
-
-            setTimeout(() => {
-                toast.classList.add('fade-out');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
+        // Global function for populating new-idea form from existing ideas
+        window.redirectToPopulate = function(ideaId) {
+            window.location.href = `/new-idea?populate=${ideaId}`;
+        };
     </script>
 
     {{#if flash.success}}
