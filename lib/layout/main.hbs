@@ -49,7 +49,7 @@
 <body class="{{bodyClass}} bg-base-100 min-h-screen grid-bg">
     {{> nav}}
 
-    <main class="">
+    <main class="main-content">
         {{{body}}}
     </main>
 
@@ -64,7 +64,7 @@
         // Enhanced toast system is now loaded
 
         // Global function for populating new-idea form from existing ideas
-        window.redirectToPopulate = function(ideaId) {
+        window.redirectToPopulate = function (ideaId) {
             window.location.href = `/new-idea?populate=${ideaId}`;
         };
     </script>

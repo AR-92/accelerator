@@ -1,0 +1,834 @@
+{{> progress-bar activeReport=activeReport}}
+
+<!-- Report Header -->
+<div class="bg-gradient-to-r from-primary/10 to-secondary/10 border-b border-border">
+    <div class="px-6 py-12">
+        <div class="text-center">
+            <div class="inline-flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                    {{{ icon 'building-2' class='w-6 h-6 text-primary-foreground' }}}
+                </div>
+                <div>
+                    <h1 class="text-4xl font-bold text-foreground">ProjectFlow Inc.</h1>
+                    <p class="text-lg text-muted-foreground">Business Plan 2024</p>
+                </div>
+            </div>
+            <p class="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                Comprehensive business plan for ProjectFlow, a cloud-based project management platform designed
+                specifically for small businesses seeking simplicity and efficiency.
+            </p>
+            <div class="flex items-center justify-center gap-6 mt-6 text-sm text-muted-foreground">
+                <span>Prepared: December 2024</span>
+                <span>•</span>
+                <span>Confidential</span>
+                <span>•</span>
+                <span>Version 1.0</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Table of Contents -->
+<div class="px-6 py-8">
+    <div class="bg-card rounded-lg border border-border p-6">
+        <h2 class="text-2xl font-bold text-foreground mb-4 flex items-center gap-2">
+            {{{ icon 'list' class='w-6 h-6 text-primary' }}}
+            Table of Contents
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-2">
+                <a href="#executive-summary" class="block text-primary hover:text-primary/80 transition-colors">1.
+                    Executive Summary</a>
+                <a href="#company-description" class="block text-foreground hover:text-primary transition-colors">2.
+                    Company Description</a>
+                <a href="#market-analysis" class="block text-foreground hover:text-primary transition-colors">3. Market
+                    Analysis</a>
+                <a href="#organization-management" class="block text-foreground hover:text-primary transition-colors">4.
+                    Organization & Management</a>
+                <a href="#products-services" class="block text-foreground hover:text-primary transition-colors">5.
+                    Products & Services</a>
+            </div>
+            <div class="space-y-2">
+                <a href="#marketing-sales" class="block text-foreground hover:text-primary transition-colors">6.
+                    Marketing & Sales Strategy</a>
+                <a href="#funding-request" class="block text-foreground hover:text-primary transition-colors">7. Funding
+                    Request</a>
+                <a href="#financial-projections" class="block text-foreground hover:text-primary transition-colors">8.
+                    Financial Projections</a>
+                <a href="#appendix" class="block text-foreground hover:text-primary transition-colors">9. Appendix</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Report Content -->
+<div class="px-6 pb-12 space-y-8">
+
+    <!-- Executive Summary -->
+    <section id="executive-summary" class="bg-card rounded-lg border border-border overflow-hidden">
+        <div class="bg-primary/5 px-6 py-4 border-b border-border">
+            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
+                <span
+                    class="bg-primary text-primary-foreground rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">1</span>
+                Executive Summary
+            </h2>
+        </div>
+        <div class="p-6 space-y-6">
+            <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-6 border border-primary/20">
+                <h3 class="text-xl font-semibold text-foreground mb-3">Business Opportunity</h3>
+                <p class="text-muted-foreground leading-relaxed">
+                    ProjectFlow is a cloud-based project management platform designed specifically for small businesses
+                    (5-50 employees) that struggle with inefficient project management tools. Our solution combines the
+                    simplicity of kanban boards with powerful automation features, offering 80% simpler workflows at 50%
+                    lower cost than enterprise alternatives.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-muted/50 rounded-lg p-4 text-center">
+                    <div class="text-2xl font-bold text-primary mb-1">$2.5M</div>
+                    <div class="text-sm text-muted-foreground">Year 1 Revenue</div>
+                </div>
+                <div class="bg-muted/50 rounded-lg p-4 text-center">
+                    <div class="text-2xl font-bold text-primary mb-1">15%</div>
+                    <div class="text-sm text-muted-foreground">Market Share (Year 3)</div>
+                </div>
+                <div class="bg-muted/50 rounded-lg p-4 text-center">
+                    <div class="text-2xl font-bold text-primary mb-1">$750K</div>
+                    <div class="text-sm text-muted-foreground">Funding Sought</div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold text-foreground mb-3">Mission Statement</h3>
+                <p class="text-muted-foreground leading-relaxed italic">
+                    "To empower small businesses with simple, intelligent project management tools that drive
+                    efficiency, collaboration, and growth without the complexity and high costs of enterprise
+                    solutions."
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold text-foreground mb-3">Key Objectives</h3>
+                <ul class="space-y-2 text-muted-foreground">
+                        <li class="flex items-start gap-2">
+                            {{{ icon 'check-circle' class='w-5 h-5 text-success mt-0.5 flex-shrink-0' }}}
+                            <span class="text-foreground">Achieve $2.5M in annual recurring revenue by end of Year 3</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            {{{ icon 'check-circle' class='w-5 h-5 text-success mt-0.5 flex-shrink-0' }}}
+                            <span class="text-foreground">Secure 10,000 active users across 50+ countries</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            {{{ icon 'check-circle' class='w-5 h-5 text-success mt-0.5 flex-shrink-0' }}}
+                            <span class="text-foreground">Establish strategic partnerships with accounting and consulting
+                                firms</span>
+                        </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Description -->
+    <section id="company-description" class="bg-card rounded-lg border border-border overflow-hidden">
+        <div class="bg-secondary/5 px-6 py-4 border-b border-border">
+            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
+                <span
+                    class="bg-secondary text-secondary-foreground rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">2</span>
+                Company Description
+            </h2>
+        </div>
+        <div class="p-6 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-3">Business Overview</h3>
+                    <p class="text-muted-foreground leading-relaxed mb-4">
+                        ProjectFlow Inc. is a Delaware C-Corporation founded in 2023, headquartered in San Francisco,
+                        California. We develop and operate a SaaS platform that revolutionizes project management for
+                        small businesses through intelligent automation and user-centric design.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-sm text-muted-foreground">Founded:</span>
+                            <span class="text-sm font-medium text-foreground">January 2023</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm text-muted-foreground">Location:</span>
+                            <span class="text-sm font-medium text-foreground">San Francisco, CA</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm text-muted-foreground">Legal Structure:</span>
+                            <span class="text-sm font-medium text-foreground">C-Corporation</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm text-muted-foreground">Employees:</span>
+                            <span class="text-sm font-medium text-foreground">12 (Current)</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-3">Core Values</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                {{{ icon 'heart' class='w-4 h-4 text-primary' }}}
+                            </div>
+                            <div>
+                                <div class="font-medium text-foreground">User-Centric</div>
+                                <div class="text-sm text-muted-foreground">Every decision prioritizes user needs and
+                                    experience</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-8 h-8 bg-secondary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                {{{ icon 'lightbulb' class='w-4 h-4 text-secondary' }}}
+                            </div>
+                            <div>
+                                <div class="font-medium text-foreground">Innovation</div>
+                                <div class="text-sm text-muted-foreground">Constantly pushing boundaries with AI and
+                                    automation</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                {{{ icon 'shield' class='w-4 h-4 text-accent' }}}
+                            </div>
+                            <div>
+                                <div class="font-medium text-foreground">Trust & Security</div>
+                                <div class="text-sm text-muted-foreground">Enterprise-grade security for small business
+                                    peace of mind</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Analysis -->
+    <section id="market-analysis" class="bg-card rounded-lg border border-border overflow-hidden">
+        <div class="bg-accent/5 px-6 py-4 border-b border-border">
+            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
+                <span
+                    class="bg-accent text-accent-foreground rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">3</span>
+                Market Analysis
+            </h2>
+        </div>
+        <div class="p-6 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-4">Industry Overview</h3>
+                    <div class="space-y-4">
+                        <div class="bg-muted/30 rounded-lg p-4">
+                            <div class="text-2xl font-bold text-primary mb-1">$50B</div>
+                            <div class="text-sm text-muted-foreground">Global Project Management Software Market (2024)
+                            </div>
+                        </div>
+                        <div class="bg-muted/30 rounded-lg p-4">
+                            <div class="text-2xl font-bold text-primary mb-1">12.5%</div>
+                            <div class="text-sm text-muted-foreground">CAGR (2024-2029)</div>
+                        </div>
+                    </div>
+                    <p class="text-muted-foreground leading-relaxed mt-4">
+                        The project management software market is experiencing rapid growth driven by digital
+                        transformation initiatives across industries. Small businesses represent a significant
+                        underserved segment, with most solutions designed for enterprise needs.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-4">Target Market</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                            <span class="font-medium text-foreground">Small Businesses (5-50 employees)</span>
+                            <span class="text-primary font-semibold">65%</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                            <span class="font-medium text-foreground">Freelancers & Consultants</span>
+                            <span class="text-primary font-semibold">20%</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                            <span class="font-medium text-foreground">Startups (pre-seed to Series A)</span>
+                            <span class="text-primary font-semibold">15%</span>
+                        </div>
+                    </div>
+                    <p class="text-muted-foreground leading-relaxed mt-4">
+                        Our target market consists of 15.2 million small businesses in the US alone, with significant
+                        international expansion potential in Europe and Asia-Pacific regions.
+                    </p>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold text-foreground mb-4">Competitive Analysis</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse border border-border rounded-lg">
+                        <thead>
+                            <tr class="bg-muted/50">
+                                <th class="border border-border px-4 py-3 text-left font-semibold text-foreground">
+                                    Competitor</th>
+                                <th class="border border-border px-4 py-3 text-left font-semibold text-foreground">
+                                    Strengths</th>
+                                <th class="border border-border px-4 py-3 text-left font-semibold text-foreground">
+                                    Weaknesses</th>
+                                <th class="border border-border px-4 py-3 text-left font-semibold text-foreground">
+                                    Pricing</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-border px-4 py-3 font-medium text-foreground">Trello</td>
+                                <td class="border border-border px-4 py-3 text-sm text-foreground">Simple interface,
+                                    visual kanban</td>
+                                <td class="border border-border px-4 py-3 text-sm text-foreground">Limited automation,
+                                    basic reporting</td>
+                                <td class="border border-border px-4 py-3 text-sm text-foreground">$17.50/user/month
+                                </td>
+                            </tr>
+                            <tr class="bg-muted/20">
+                                <td class="border border-border px-4 py-3 font-medium text-foreground">Asana</td>
+                                <td class="border border-border px-4 py-3 text-sm text-foreground">Task management,
+                                    timelines</td>
+                                <td class="border border-border px-4 py-3 text-sm text-foreground">Complex for small
+                                    teams</td>
+                                <td class="border border-border px-4 py-3 text-sm text-foreground">$24.99/user/month
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border border-border px-4 py-3 font-medium text-foreground">Monday.com</td>
+                                <td class="border border-border px-4 py-3 text-sm text-foreground">Highly customizable
+                                </td>
+                                <td class="border border-border px-4 py-3 text-sm text-foreground">Steep learning curve
+                                </td>
+                                <td class="border border-border px-4 py-3 text-sm text-foreground">$16/user/month</td>
+                            </tr>
+                            <tr class="bg-muted/20">
+                                <td class="border border-border px-4 py-3 font-medium text-primary font-semibold">
+                                    ProjectFlow</td>
+                                <td class="border border-border px-4 py-3 text-sm text-primary">AI-powered simplicity
+                                </td>
+                                <td class="border border-border px-4 py-3 text-sm text-primary">New entrant</td>
+                                <td class="border border-border px-4 py-3 text-sm text-primary">$9.99/user/month</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Organization & Management -->
+    <section id="organization-management" class="bg-card rounded-lg border border-border overflow-hidden">
+        <div class="bg-primary/5 px-6 py-4 border-b border-border">
+            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
+                <span
+                    class="bg-primary text-primary-foreground rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">4</span>
+                Organization & Management
+            </h2>
+        </div>
+        <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        {{{ icon 'user' class='w-8 h-8 text-primary' }}}
+                    </div>
+                    <h3 class="font-semibold text-foreground">Sarah Chen</h3>
+                    <p class="text-sm text-primary font-medium">CEO & Co-Founder</p>
+                    <p class="text-xs text-muted-foreground mt-2">Former Product Manager at Google, MBA Stanford</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        {{{ icon 'code' class='w-8 h-8 text-secondary' }}}
+                    </div>
+                    <h3 class="font-semibold text-foreground">Marcus Rodriguez</h3>
+                    <p class="text-sm text-secondary font-medium">CTO & Co-Founder</p>
+                    <p class="text-xs text-muted-foreground mt-2">Ex-Engineering Lead at Stripe, MS Computer Science MIT
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        {{{ icon 'trending-up' class='w-8 h-8 text-accent' }}}
+                    </div>
+                    <h3 class="font-semibold text-foreground">Jennifer Park</h3>
+                    <p class="text-sm text-accent font-medium">Head of Product</p>
+                    <p class="text-xs text-muted-foreground mt-2">Former PM at Slack, BS Product Design RISD</p>
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <h3 class="text-lg font-semibold text-foreground mb-4">Advisory Board</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-muted/30 rounded-lg p-4">
+                        <h4 class="font-semibold text-foreground">Dr. Emily Watson</h4>
+                        <p class="text-sm text-primary">AI Ethics & Product Strategy</p>
+                        <p class="text-xs text-muted-foreground mt-1">Former VP of Product at Salesforce, PhD Stanford
+                        </p>
+                    </div>
+                    <div class="bg-muted/30 rounded-lg p-4">
+                        <h4 class="font-semibold text-foreground">Michael Chen</h4>
+                        <p class="text-sm text-primary">Go-to-Market Strategy</p>
+                        <p class="text-xs text-muted-foreground mt-1">Ex-CRO at HubSpot, 20+ years in SaaS</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products & Services -->
+    <section id="products-services" class="bg-card rounded-lg border border-border overflow-hidden">
+        <div class="bg-secondary/5 px-6 py-4 border-b border-border">
+            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
+                <span
+                    class="bg-secondary text-secondary-foreground rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">5</span>
+                Products & Services
+            </h2>
+        </div>
+        <div class="p-6 space-y-6">
+            <div class="bg-gradient-to-r from-secondary/10 to-primary/10 rounded-lg p-6 border border-secondary/20">
+                <h3 class="text-xl font-semibold text-foreground mb-3">ProjectFlow Platform</h3>
+                <p class="text-muted-foreground leading-relaxed mb-4">
+                    A comprehensive project management solution that combines intuitive design with powerful AI-driven
+                    automation, specifically engineered for small business workflows.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="font-semibold text-foreground mb-2">Core Features</h4>
+                        <ul class="space-y-1 text-sm text-muted-foreground">
+                            <li class="text-foreground">• Intelligent task categorization</li>
+                            <li class="text-foreground">• Automated workflow suggestions</li>
+                            <li class="text-foreground">• Real-time collaboration tools</li>
+                            <li class="text-foreground">• Custom dashboard analytics</li>
+                            <li class="text-foreground">• Mobile-responsive design</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-foreground mb-2">Technical Specifications</h4>
+                        <ul class="space-y-1 text-sm text-muted-foreground">
+                            <li class="text-foreground">• Cloud-native architecture</li>
+                            <li class="text-foreground">• 99.9% uptime SLA</li>
+                            <li class="text-foreground">• SOC 2 Type II compliant</li>
+                            <li class="text-foreground">• GDPR & CCPA compliant</li>
+                            <li class="text-foreground">• API-first design</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold text-foreground mb-4">Pricing Structure</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-card border border-border rounded-lg p-4 text-center">
+                        <h4 class="font-semibold text-foreground mb-2">Starter</h4>
+                        <div class="text-3xl font-bold text-primary mb-1">$9.99</div>
+                        <div class="text-sm text-muted-foreground mb-3">per user/month</div>
+                        <ul class="text-xs text-muted-foreground space-y-1">
+                            <li class="text-foreground">Up to 10 projects</li>
+                            <li class="text-foreground">Basic automation</li>
+                            <li class="text-foreground">Email support</li>
+                        </ul>
+                    </div>
+                    <div class="bg-primary/5 border-2 border-primary rounded-lg p-4 text-center">
+                        <div
+                            class="inline-flex items-center gap-1 bg-primary text-primary-foreground px-2 py-1.5 rounded-full text-xs font-medium mb-2">
+                            {{{ icon 'star' class='w-3 h-3' }}}
+                            Most Popular
+                        </div>
+                        <h4 class="font-semibold text-foreground mb-2">Professional</h4>
+                        <div class="text-3xl font-bold text-primary mb-1">$19.99</div>
+                        <div class="text-sm text-muted-foreground mb-3">per user/month</div>
+                        <ul class="text-xs text-muted-foreground space-y-1">
+                            <li class="text-foreground">Unlimited projects</li>
+                            <li class="text-foreground">Advanced AI features</li>
+                            <li class="text-foreground">Priority support</li>
+                        </ul>
+                    </div>
+                    <div class="bg-card border border-border rounded-lg p-4 text-center">
+                        <h4 class="font-semibold text-foreground mb-2">Enterprise</h4>
+                        <div class="text-3xl font-bold text-primary mb-1">$39.99</div>
+                        <div class="text-sm text-muted-foreground mb-3">per user/month</div>
+                        <ul class="text-xs text-muted-foreground space-y-1">
+                            <li class="text-foreground">Custom integrations</li>
+                            <li class="text-foreground">Dedicated success manager</li>
+                            <li class="text-foreground">24/7 phone support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marketing & Sales Strategy -->
+    <section id="marketing-sales" class="bg-card rounded-lg border border-border overflow-hidden">
+        <div class="bg-accent/5 px-6 py-4 border-b border-border">
+            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
+                <span
+                    class="bg-accent text-accent-foreground rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">6</span>
+                Marketing & Sales Strategy
+            </h2>
+        </div>
+        <div class="p-6 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-4">Marketing Channels</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                {{{ icon 'search' class='w-5 h-5 text-primary' }}}
+                            </div>
+                            <div>
+                                <div class="font-medium text-foreground">Content Marketing</div>
+                                <div class="text-sm text-muted-foreground">SEO-optimized blog posts, whitepapers, and
+                                    case studies targeting small business pain points</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                {{{ icon 'users' class='w-5 h-5 text-secondary' }}}
+                            </div>
+                            <div>
+                                <div class="font-medium text-foreground">Social Media</div>
+                                <div class="text-sm text-muted-foreground">LinkedIn thought leadership and Twitter
+                                    engagement with small business communities</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div
+                                class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                                {{{ icon 'handshake' class='w-5 h-5 text-accent' }}}
+                            </div>
+                            <div>
+                                <div class="font-medium text-foreground">Partnerships</div>
+                                <div class="text-sm text-muted-foreground">Strategic alliances with accounting firms,
+                                    business consultants, and industry associations</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-foreground mb-4">Sales Strategy</h3>
+                    <div class="space-y-4">
+                        <div class="bg-muted/30 rounded-lg p-4">
+                            <h4 class="font-medium text-foreground mb-2">Direct Sales</h4>
+                            <p class="text-sm text-muted-foreground">Enterprise-focused sales team targeting mid-sized
+                                businesses with custom solutions</p>
+                        </div>
+                        <div class="bg-muted/30 rounded-lg p-4">
+                            <h4 class="font-medium text-foreground mb-2">Channel Partners</h4>
+                            <p class="text-sm text-muted-foreground">Reseller partnerships with technology consultants
+                                and system integrators</p>
+                        </div>
+                        <div class="bg-muted/30 rounded-lg p-4">
+                            <h4 class="font-medium text-foreground mb-2">Self-Service</h4>
+                            <p class="text-sm text-muted-foreground">Frictionless online purchasing with free trials and
+                                transparent pricing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Funding Request -->
+    <section id="funding-request" class="bg-card rounded-lg border border-border overflow-hidden">
+        <div class="bg-primary/5 px-6 py-4 border-b border-border">
+            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
+                <span
+                    class="bg-primary text-primary-foreground rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">7</span>
+                Funding Request
+            </h2>
+        </div>
+        <div class="p-6 space-y-6">
+            <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-lg p-6 border border-primary/20">
+                <div class="text-center mb-6">
+                    <div class="text-4xl font-bold text-primary mb-2">$750,000</div>
+                    <div class="text-lg text-muted-foreground">Series A Funding Request</div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-primary mb-1">$450K</div>
+                        <div class="text-sm text-muted-foreground">Product Development</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-primary mb-1">$200K</div>
+                        <div class="text-sm text-muted-foreground">Marketing & Sales</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-primary mb-1">$100K</div>
+                        <div class="text-sm text-muted-foreground">Working Capital</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold text-foreground mb-4">Use of Funds</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                            {{{ icon 'code' class='w-6 h-6 text-primary' }}}
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-foreground">Product Development (60%)</h4>
+                            <p class="text-sm text-muted-foreground">AI algorithm improvements, mobile app development,
+                                and advanced integrations</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-semibold text-primary">$450,000</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center">
+                            {{{ icon 'trending-up' class='w-6 h-6 text-secondary' }}}
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-foreground">Marketing & Sales (27%)</h4>
+                            <p class="text-sm text-muted-foreground">Content marketing, paid advertising, and sales team
+                                expansion</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-semibold text-primary">$200,000</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center">
+                            {{{ icon 'building' class='w-6 h-6 text-accent' }}}
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-foreground">Working Capital (13%)</h4>
+                            <p class="text-sm text-muted-foreground">Operational expenses and cash flow management</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-semibold text-primary">$100,000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-muted/30 rounded-lg p-4">
+                <h3 class="text-lg font-semibold text-foreground mb-3">Exit Strategy</h3>
+                <p class="text-muted-foreground leading-relaxed">
+                    We anticipate an acquisition by a major enterprise software company within 5-7 years, with a
+                    projected exit valuation of $50-100M based on our growth trajectory and market position.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial Projections -->
+    <section id="financial-projections" class="bg-card rounded-lg border border-border overflow-hidden">
+        <div class="bg-secondary/5 px-6 py-4 border-b border-border">
+            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
+                <span
+                    class="bg-secondary text-secondary-foreground rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">8</span>
+                Financial Projections
+            </h2>
+        </div>
+        <div class="p-6 space-y-6">
+            <div class="bg-muted/30 rounded-lg p-4">
+                <h3 class="text-lg font-semibold text-foreground mb-4">Key Assumptions</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <ul class="space-y-2 text-sm text-muted-foreground">
+                        <li>• Monthly recurring revenue growth: 15% MoM</li>
+                        <li>• Customer acquisition cost: $150</li>
+                        <li>• Customer lifetime value: $2,400</li>
+                        <li>• Churn rate: 5% annually</li>
+                    </ul>
+                    <ul class="space-y-2 text-sm text-muted-foreground">
+                        <li>• Gross margins: 75%</li>
+                        <li>• Sales and marketing: 35% of revenue</li>
+                        <li>• R&D investment: 25% of revenue</li>
+                        <li>• Operating expenses: 45% of revenue</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold text-foreground mb-4">Revenue Projections</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse border border-border rounded-lg">
+                        <thead>
+                            <tr class="bg-muted/50">
+                                <th class="border border-border px-4 py-3 text-left font-semibold text-foreground">
+                                    Metric</th>
+                                <th class="border border-border px-4 py-3 text-center font-semibold text-foreground">
+                                    Year 1</th>
+                                <th class="border border-border px-4 py-3 text-center font-semibold text-foreground">
+                                    Year 2</th>
+                                <th class="border border-border px-4 py-3 text-center font-semibold text-foreground">
+                                    Year 3</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-border px-4 py-3 font-medium text-foreground">Monthly Recurring
+                                    Revenue</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$125K</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$450K</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$1.2M</td>
+                            </tr>
+                            <tr class="bg-muted/20">
+                                <td class="border border-border px-4 py-3 font-medium text-foreground">Annual Recurring
+                                    Revenue</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$1.5M</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$5.4M</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$14.4M</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-border px-4 py-3 font-medium text-foreground">Total Customers
+                                </td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">1,200</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">4,500</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">12,000</td>
+                            </tr>
+                            <tr class="bg-muted/20">
+                                <td class="border border-border px-4 py-3 font-medium text-foreground">Average Revenue
+                                    Per User</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$125</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$120</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$120</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-semibold text-foreground mb-4">Profit & Loss Summary</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse border border-border rounded-lg">
+                        <thead>
+                            <tr class="bg-muted/50">
+                                <th class="border border-border px-4 py-3 text-left font-semibold text-foreground">
+                                    Category</th>
+                                <th class="border border-border px-4 py-3 text-center font-semibold text-foreground">
+                                    Year 1</th>
+                                <th class="border border-border px-4 py-3 text-center font-semibold text-foreground">
+                                    Year 2</th>
+                                <th class="border border-border px-4 py-3 text-center font-semibold text-foreground">
+                                    Year 3</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-border px-4 py-3 font-medium text-foreground">Revenue</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$1.5M</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$5.4M</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$14.4M</td>
+                            </tr>
+                            <tr class="bg-muted/20">
+                                <td class="border border-border px-4 py-3 font-medium text-foreground">Cost of Goods
+                                    Sold</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$375K</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$1.35M</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$3.6M</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-border px-4 py-3 font-medium text-foreground">Gross Profit</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$1.125M</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$4.05M</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$10.8M</td>
+                            </tr>
+                            <tr class="bg-muted/20">
+                                <td class="border border-border px-4 py-3 font-medium text-foreground">Operating
+                                    Expenses</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$900K</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$2.7M</td>
+                                <td class="border border-border px-4 py-3 text-center text-foreground">$6.48M</td>
+                            </tr>
+                            <tr class="bg-primary/5">
+                                <td class="border border-border px-4 py-3 font-semibold text-primary">Net Profit</td>
+                                <td class="border border-border px-4 py-3 text-center font-semibold text-primary">$225K
+                                </td>
+                                <td class="border border-border px-4 py-3 text-center font-semibold text-primary">$1.35M
+                                </td>
+                                <td class="border border-border px-4 py-3 text-center font-semibold text-primary">$4.32M
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appendix -->
+    <section id="appendix" class="bg-card rounded-lg border border-border overflow-hidden">
+        <div class="bg-accent/5 px-6 py-4 border-b border-border">
+            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
+                <span
+                    class="bg-accent text-accent-foreground rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">9</span>
+                Appendix
+            </h2>
+        </div>
+        <div class="p-6 space-y-6">
+            <div>
+                <h3 class="text-lg font-semibold text-foreground mb-4">Supporting Documents</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-muted/30 rounded-lg p-4">
+                        <h4 class="font-semibold text-foreground mb-2">Technical Specifications</h4>
+                        <p class="text-sm text-muted-foreground mb-3">Detailed technical architecture, API
+                            documentation, and security protocols</p>
+                        <div class="flex items-center gap-2 text-xs text-primary">
+                            {{{ icon 'file-text' class='w-4 h-4' }}}
+                            Available upon request
+                        </div>
+                    </div>
+                    <div class="bg-muted/30 rounded-lg p-4">
+                        <h4 class="font-semibold text-foreground mb-2">Market Research Data</h4>
+                        <p class="text-sm text-muted-foreground mb-3">Comprehensive market analysis, competitor
+                            intelligence, and customer surveys</p>
+                        <div class="flex items-center gap-2 text-xs text-primary">
+                            {{{ icon 'file-text' class='w-4 h-4' }}}
+                            Available upon request
+                        </div>
+                    </div>
+                    <div class="bg-muted/30 rounded-lg p-4">
+                        <h4 class="font-semibold text-foreground mb-2">Financial Models</h4>
+                        <p class="text-sm text-muted-foreground mb-3">Detailed financial projections, sensitivity
+                            analysis, and valuation models</p>
+                        <div class="flex items-center gap-2 text-xs text-primary">
+                            {{{ icon 'file-text' class='w-4 h-4' }}}
+                            Available upon request
+                        </div>
+                    </div>
+                    <div class="bg-muted/30 rounded-lg p-4">
+                        <h4 class="font-semibold text-foreground mb-2">Legal Documents</h4>
+                        <p class="text-sm text-muted-foreground mb-3">IP assignments, non-disclosure agreements, and
+                            incorporation documents</p>
+                        <div class="flex items-center gap-2 text-xs text-primary">
+                            {{{ icon 'file-text' class='w-4 h-4' }}}
+                            Available upon request
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg p-6 border border-primary/20">
+                <h3 class="text-lg font-semibold text-foreground mb-3">Contact Information</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="font-medium text-foreground mb-2">ProjectFlow Inc.</h4>
+                        <p class="text-sm text-muted-foreground">123 Innovation Drive<br>San Francisco, CA 94105</p>
+                    </div>
+                    <div>
+                        <h4 class="font-medium text-foreground mb-2">Sarah Chen, CEO</h4>
+                        <p class="text-sm text-muted-foreground">sarah@projectflow.com<br>(555) 123-4567</p>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-border">
+                    <p class="text-sm text-muted-foreground italic">
+                        This business plan is confidential and contains proprietary information. It may not be
+                        reproduced or distributed without prior written consent from ProjectFlow Inc.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<div class=" h-[300px]"></div>
+
+{{> floating-form}}

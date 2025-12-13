@@ -1,10 +1,4 @@
-<div class="flex flex-col ">
-    <!-- Header -->
-    <header class="w-full flex flex-col items-center gap-2 mb-2">
-        <h1 class="text-4xl font-sans font-light text-foreground mb-2">
-            What problem are you trying to solve?
-        </h1>
-    </header>
+<div class="flex flex-col border border-border rounded-md bg-card">
 
     <!-- Form / Input area -->
     <style>
@@ -14,6 +8,111 @@
 
         .new-project-form:hover {
             animation: rainbow-shadow 20s infinite linear;
+        }
+
+        /* Semantic message styles */
+        .message {
+            position: relative;
+            padding: 12px 16px;
+            border-radius: 18px;
+            word-wrap: break-word;
+            line-height: 1.4;
+            font-size: 14px;
+        }
+
+        /* User message (right side) */
+        .message--user {
+            margin-left: auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 18px 18px 4px 18px;
+        }
+
+
+
+        /* AI message (left side) */
+        .message--ai {
+            margin-right: auto;
+            max-width: 75%;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+            border-radius: 18px 18px 18px 4px;
+        }
+
+
+
+
+
+
+
+        /* Timestamp styles */
+        .message-timestamp {
+            font-size: 11px;
+            color: hsl(var(--muted-foreground, 215.4 16.3% 46.9%));
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        .message-timestamp--user {
+            text-align: right;
+        }
+
+        .message-timestamp--ai {
+            text-align: left;
+        }
+
+        /* Message group container */
+        .message-group {
+            margin-bottom: 16px;
+        }
+
+        .message-group--user {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 16px;
+        }
+
+        .message-group--ai {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 16px;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            align-items: center;
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: hsl(var(--muted-foreground, 215.4 16.3% 46.9%));
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes typing {
+
+            0%,
+            80%,
+            100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+
+            40% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         @keyframes rainbow-shadow {
@@ -110,31 +209,31 @@
             }
 
             57.5% {
-                box-shadow: 0 0 70px 55px rgba(0, 224, 255, 0.15);
+                box-shadow: 0 0 70px 55px rgba(224, 0, 255, 0.15);
             }
 
             60% {
-                box-shadow: 0 0 70px 55px rgba(0, 192, 255, 0.15);
+                box-shadow: 0 0 70px 55px rgba(192, 0, 255, 0.15);
             }
 
             62.5% {
-                box-shadow: 0 0 70px 55px rgba(0, 160, 255, 0.15);
+                box-shadow: 0 0 70px 55px rgba(160, 0, 255, 0.15);
             }
 
             65% {
-                box-shadow: 0 0 70px 55px rgba(0, 128, 255, 0.15);
+                box-shadow: 0 0 70px 55px rgba(128, 0, 255, 0.15);
             }
 
             67.5% {
-                box-shadow: 0 0 70px 55px rgba(0, 96, 255, 0.15);
+                box-shadow: 0 0 70px 55px rgba(96, 0, 255, 0.15);
             }
 
             70% {
-                box-shadow: 0 0 70px 55px rgba(0, 64, 255, 0.15);
+                box-shadow: 0 0 70px 55px rgba(64, 0, 255, 0.15);
             }
 
             72.5% {
-                box-shadow: 0 0 70px 55px rgba(0, 32, 255, 0.15);
+                box-shadow: 0 0 70px 55px rgba(32, 0, 255, 0.15);
             }
 
             75% {
@@ -189,13 +288,12 @@
 
         <div class="flex flex-col w-full">
             <div class="">
-                <div
-                    class="new-project-form flex flex-col gap-2 rounded-2xl relative py-2 border border-border bg-background shadow-sm">
+                <div class=" flex flex-col gap-2 rounded-2xl relative py-2  ">
                     <!-- Title wrapper -->
                     <div class="pl-4 pr-2">
                         <div class="flex flex-wrap gap-1">
                             <span
-                                class="inline-flex items-center gap-1 px-2 py-1 bg-muted text-muted-foreground border border-border text-xs rounded-full focus:outline-none focus:bg-accent">
+                                class="inline-flex items-center gap-1 px-2 py-1 bg-muted text-muted-foreground  text-xs rounded-full focus:outline-none focus:bg-accent">
                                 <i contenteditable="true" id="title" class="text-foreground">Untitled</i>
                                 <svg class="lucide lucide-square-pen w-3 h-3" xmlns="http://www.w3.org/2000/svg"
                                     width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -221,6 +319,14 @@
                                 </svg>
                             </span>
                         </div>
+                    </div>
+
+                    <!-- Question wrapper -->
+                    <div class="pl-4 pr-2">
+                        <span
+                            class="inline-flex items-center gap-1 px-2 py-1 bg-primary text-primary-foreground text-xs rounded-full">
+                            <span class="text-foreground font-semibold">What problem does your project solve?</span>
+                        </span>
                     </div>
 
                     <!-- Description wrapper -->
@@ -390,6 +496,21 @@
                                     Idea with AI</span>
                             </button>
 
+                            <!-- Chat with AI about Requirements -->
+                            <button type="button" aria-label="Chat with AI about Requirements"
+                                title="Chat with AI about Requirements"
+                                class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
+
+                                <svg class="lucide lucide-message-circle w-4 h-4" xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+
+                                <span class="hidden group-hover:inline transition-all duration-200">Chat
+                                    with AI</span>
+                            </button>
+
                             <!-- Reset form -->
                             <button type="button" aria-label="Reset form" title="Reset form"
                                 class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
@@ -429,6 +550,47 @@
             </div>
         </div>
     </form>
+
+    <!-- Chat Interface (appears below toolbar when Chat button is clicked) -->
+    <div id="chat-container"
+        class="hidden my-6 max-w-[900px] mx-auto border-t border-border bg-background shadow-sm overflow-hidden"
+        role="log" aria-live="polite" aria-label="AI chat conversation">
+        <!-- Chat Messages -->
+        <div id="chat-messages" class="max-h-96 overflow-y-auto p-4" role="log" aria-live="polite">
+            <div class="text-center text-muted-foreground text-sm py-4">
+                Start a conversation about your project requirements. The AI will help you refine and improve them.
+            </div>
+        </div>
+
+        <!-- Chat Input -->
+        <div class="border-t border-border p-4">
+            <div class="flex gap-2">
+                <textarea id="chat-input"
+                    placeholder="Ask about your requirements, suggest improvements, or get advice..."
+                    class="flex-1 min-h-[44px] max-h-32 resize-none focus-visible:border-0 bg-transparent px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:ring-0"
+                    rows="1"></textarea>
+                <button id="send-chat" type="button"
+                    class="inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground  hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled>
+                    <svg class="lucide lucide-send w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M22 2L11 13"></path>
+                        <path d="M22 2L15 22 11 13 2 9 22 2z"></path>
+                    </svg>
+
+                    <span class="hidden group-hover:inline transition-all duration-200">Send</span>
+                </button>
+            </div>
+            <div class="flex justify-between items-center mt-2">
+                <span id="chat-char-counter" class="text-xs text-muted-foreground">0 / 1000</span>
+                <button id="clear-chat"
+                    class="text-xs text-muted-foreground hover:text-destructive transition-colors duration-200">
+                    Clear Chat
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -1062,6 +1224,216 @@
                         <span class="hidden group-hover:inline transition-all duration-200">Create Project</span>
                     `;
                 }
+            }
+        });
+
+        // Chat functionality
+        let chatHistory = [];
+        let isChatOpen = false;
+
+        const chatBtn = document.querySelector('[aria-label="Chat with AI about Requirements"]');
+        const chatContainer = document.getElementById('chat-container');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendChatBtn = document.getElementById('send-chat');
+        const clearChatBtn = document.getElementById('clear-chat');
+        const chatCharCounter = document.getElementById('chat-char-counter');
+
+        // Toggle chat visibility
+        chatBtn.addEventListener('click', () => {
+            isChatOpen = !isChatOpen;
+            chatContainer.classList.toggle('hidden', !isChatOpen);
+
+            if (isChatOpen && chatHistory.length === 0) {
+                // Load chat history from localStorage if available
+                const savedChat = localStorage.getItem('accelerator-chat-history');
+                if (savedChat) {
+                    try {
+                        chatHistory = JSON.parse(savedChat);
+                        renderChatMessages();
+                    } catch (e) {
+                        console.error('Failed to load chat history:', e);
+                    }
+                }
+            }
+        });
+
+        // Auto-resize chat input
+        function autoResizeChatInput() {
+            chatInput.style.height = 'auto';
+            chatInput.style.height = Math.min(chatInput.scrollHeight, 128) + 'px';
+        }
+
+        // Update chat character counter
+        function updateChatCharCounter() {
+            const length = chatInput.value.length;
+            chatCharCounter.textContent = `${length} / 1000`;
+            sendChatBtn.disabled = length === 0 || length > 1000;
+            autoResizeChatInput();
+        }
+
+        chatInput.addEventListener('input', updateChatCharCounter);
+        updateChatCharCounter();
+
+        // Render chat messages
+        function renderChatMessages() {
+            chatMessages.innerHTML = '';
+
+            if (chatHistory.length === 0) {
+                chatMessages.innerHTML = `
+                    <div class="text-center text-muted-foreground text-sm py-4" role="status" aria-live="polite">
+                        Start a conversation about your project requirements. The AI will help you refine and improve them.
+                    </div>
+                `;
+                return;
+            }
+
+            chatHistory.forEach(message => {
+                const messageGroup = document.createElement('article');
+                messageGroup.className = `message-group message-group--${message.role}`;
+
+                // Add timestamp
+                const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const isoTimestamp = new Date().toISOString();
+
+                if (message.role === 'user') {
+                    // User message (right side)
+                    messageGroup.innerHTML = `
+                        <div class="flex flex-col items-end">
+                            <div class="message message--user bg-primary text-primary-foreground">
+                                ${message.content.replace(/\n/g, '<br>')}
+                            </div>
+                            <time class="message-timestamp message-timestamp--user" datetime="${isoTimestamp}">${timestamp}</time>
+                        </div>
+                    `;
+                } else {
+                    // AI message (left side)
+                    messageGroup.innerHTML = `
+                        <div class="flex flex-col">
+                            <div class="message message--ai bg-muted text-muted-foreground border border-border">
+                                ${message.content.replace(/\n/g, '<br>')}
+                            </div>
+                            <time class="message-timestamp message-timestamp--ai" datetime="${isoTimestamp}">${timestamp}</time>
+                        </div>
+                    `;
+                }
+
+                chatMessages.appendChild(messageGroup);
+            });
+
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Send chat message
+        async function sendChatMessage() {
+            const message = chatInput.value.trim();
+            if (!message || message.length > 1000) return;
+
+            // Add user message to history
+            chatHistory.push({ role: 'user', content: message });
+            renderChatMessages();
+
+            // Clear input
+            chatInput.value = '';
+            updateChatCharCounter();
+
+            // Get current form context
+            const currentTitle = titleSpan.textContent.trim();
+            const currentCategory = categorySpan.textContent.trim();
+            const currentDescription = descriptionTextarea.value.trim();
+            const currentTags = Array.from(document.querySelectorAll('.tag-lskjsdb span[contenteditable]'))
+                .map(span => span.textContent.trim())
+                .filter(tag => tag);
+
+            const context = [
+                currentTitle && `Title: ${currentTitle}`,
+                currentCategory && `Category: ${currentCategory}`,
+                currentDescription && `Description: ${currentDescription}`,
+                currentTags.length > 0 && `Tags: ${currentTags.join(', ')}`
+            ].filter(Boolean).join('\n');
+
+            // Show loading state
+            sendChatBtn.disabled = true;
+            setButtonLoading(chatBtn, true);
+
+            const loadingMessageDiv = document.createElement('article');
+            loadingMessageDiv.className = 'message-group message-group--ai';
+            loadingMessageDiv.innerHTML = `
+                <div class="flex flex-col">
+                    <div class="message message--ai bg-muted text-muted-foreground border border-border">
+                        <div class="typing-indicator" aria-label="AI is typing">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(loadingMessageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const response = await fetch('/api/ai/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        messages: chatHistory,
+                        context: context
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Add AI response to history
+                    chatHistory.push({ role: 'assistant', content: data.response });
+                    renderChatMessages();
+
+                    // Save to localStorage
+                    localStorage.setItem('accelerator-chat-history', JSON.stringify(chatHistory));
+
+                    showToastMessage('Message sent successfully', 'success');
+                    showToastMessage('10 credits deducted for AI chat', 'warning');
+                    if (typeof window.loadNavCreditBalance === 'function') {
+                        window.loadNavCreditBalance();
+                    }
+                } else {
+                    showToastMessage('AI chat error: ' + (data.error || 'Unknown error'), 'error');
+                    // Remove loading message
+                    loadingMessageDiv.remove();
+                }
+            } catch (error) {
+                console.error('Chat error:', error);
+                showToastMessage('Network error. Please try again.', 'error');
+                // Remove loading message
+                loadingMessageDiv.remove();
+            } finally {
+                sendChatBtn.disabled = false;
+                setButtonLoading(chatBtn, false);
+            }
+        }
+
+        // Send message on button click
+        sendChatBtn.addEventListener('click', sendChatMessage);
+
+        // Send message on Enter (but allow Shift+Enter for new lines)
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendChatMessage();
+            }
+        });
+
+        // Clear chat
+        clearChatBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear the chat history?')) {
+                chatHistory = [];
+                localStorage.removeItem('accelerator-chat-history');
+                renderChatMessages();
+                showToastMessage('Chat cleared', 'info');
             }
         });
     });

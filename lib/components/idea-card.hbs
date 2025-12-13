@@ -1,0 +1,78 @@
+<a class="flex relative flex-col gap-1 items-start p-4 mb-4 cursor-pointer group-item-btns overflow-hidden border rounded-md border-border bg-card hover:shadow-lg dark:hover:shadow-primary focus:outline-none"
+    href="/idea-detail?ideaId={{id}}" draggable="false"
+    data-id="{{id}}" data-status="{{status}}" data-type="{{category}}"
+    data-favorite="{{is_favorite}}">
+    <button onclick="redirectToPopulate('{{id}}'); return false;"
+        class="absolute top-2 right-2 text-muted-foreground hover:text-primary cursor-pointer">
+
+        {{{icon 'copy' class='w-4 h-4'}}}
+
+    </button>
+    <div class="w-full">
+        <span
+            class="text-ellipsis break-words line-clamp-2 text-sm text-foreground font-medium">{{title}}</span>
+    </div>
+
+    <div class="flex items-center gap-1.5 mb-1">
+        <div class="text-muted-foreground text-[13px] leading-[18px] truncate">
+        </div>
+    </div>
+
+    <div class="text-xs text-foreground dark:text-muted-foreground mb-2 line-clamp-2">
+        {{description}}</div>
+
+    <div class="flex flex-wrap gap-1 mb-2">
+        {{#each tags}}
+        <span
+            class="px-2 py-0.5 bg-secondary/10 text-foreground text-xs rounded-md border border-secondary/40">{{this}}</span>
+        {{/each}}
+    </div>
+
+    <div
+        class="flex items-center justify-between w-full mt-auto pt-2 border-t border-border">
+        <div class="flex items-center">
+
+            <div class="flex">
+
+                 {{{icon 'star' class=(concat 'w-3.5 h-3.5 ' (cond (gt rating 0) 'fill-yellow-400 text-yellow-400' 'text-muted-foreground')) fill=(cond (gt rating 0) 'currentColor' 'none') stroke='currentColor'}}}
+
+
+                 {{{icon 'star' class=(concat 'w-3.5 h-3.5 ' (cond (gt rating 1) 'fill-yellow-400 text-yellow-400' 'text-muted-foreground')) fill=(cond (gt rating 1) 'currentColor' 'none') stroke='currentColor'}}}
+
+
+                 {{{icon 'star' class=(concat 'w-3.5 h-3.5 ' (cond (gt rating 2) 'fill-yellow-400 text-yellow-400' 'text-muted-foreground')) fill=(cond (gt rating 2) 'currentColor' 'none') stroke='currentColor'}}}
+
+
+                 {{{icon 'star' class=(concat 'w-3.5 h-3.5 ' (cond (gt rating 3) 'fill-yellow-400 text-yellow-400' 'text-muted-foreground')) fill=(cond (gt rating 3) 'currentColor' 'none') stroke='currentColor'}}}
+
+
+                 {{{icon 'star' class=(concat 'w-3.5 h-3.5 ' (cond (gt rating 4) 'fill-yellow-400 text-yellow-400' 'text-muted-foreground')) fill=(cond (gt rating 4) 'currentColor' 'none') stroke='currentColor'}}}
+
+            </div>
+
+
+        </div>
+
+        <div class="flex space-x-2">
+            <button
+                class="text-muted-foreground hover:text-orange-500 rounded-full hover:bg-primary-100 hover:text-primary-900 unpublish-btn">
+
+                 {{{icon 'eye-off' class='w-4 h-4'}}}
+
+            </button>
+
+            <button
+                class="text-muted-foreground rounded-full hover:text-green-500 {{#if is_favorite}}fill-red-500 text-red-500{{else}}{{/if}}">
+
+                 {{{icon 'heart' class='w-4 h-4' fill=(cond is_favorite 'currentColor' 'none') stroke='currentColor'}}}
+
+            </button>
+            <button
+                class="text-muted-foreground hover:text-red-500 rounded-full hover:bg-primary-100 hover:text-primary-900 archive-btn">
+
+                 {{{icon 'archive' class='w-4 h-4'}}}
+
+            </button>
+        </div>
+    </div>
+</a>
