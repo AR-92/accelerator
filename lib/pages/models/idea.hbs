@@ -5,23 +5,33 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
 
 <!-- Mixed Progress Bar and Pills Navigation -->
 <div class="flex justify-center mb-6">
-    <div class="relative w-full max-w-md mx-auto">
+    <div class="relative w-full max-w-[900px]">
         <!-- Progress Bar Background -->
         <div class="absolute top-1/2 left-0 right-0 h-1 bg-muted rounded-full transform -translate-y-1/2"></div>
         <!-- Progress Bar Fill -->
-        <div class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"
+        <div id="progress-fill"
+            class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"
             style="width: 25%"></div>
 
         <!-- Pills Overlay -->
         <div class="relative flex justify-between items-center">
-            <span class="step-pill px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10"
-                data-section="overview">1. Overview</span>
-            <span class="step-pill px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="details">2.</span>
-            <span class="step-pill px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="analysis">3.</span>
-            <span class="step-pill px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="validation">4.</span>
+            <span
+                class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10"
+                data-section="executive-summary">Executive Summary</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="problem-analysis">2.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="solution-overview">3.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="market-analysis">4.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="product-concept">5.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="go-to-market-strategy">6.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="brand-strategy">7.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="intellectual-property-protection">8.</span>
         </div>
     </div>
 </div>
@@ -34,12 +44,16 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
 <script>
     // Pill text variations for idea model sections
     const pillFullTexts = [
-        '1. Overview',
-        '2. Details',
-        '3. Analysis',
-        '4. Validation'
+        '1. Executive Summary',
+        '2. Problem Analysis',
+        '3. Solution Overview',
+        '4. Market Analysis',
+        '5. Product Concept',
+        '6. Go-to-Market Strategy',
+        '7. Brand Strategy',
+        '8. Intellectual Property Protection'
     ];
-    const pillNumbers = ['1.', '2.', '3.', '4.'];
+    const pillNumbers = ['1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.'];
 
     function addHoverListeners() {
         document.querySelectorAll('.step-pill').forEach((pill, index) => {
@@ -58,6 +72,24 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
 
     // Initialize on load
     document.addEventListener('DOMContentLoaded', () => {
-        addHoverListeners();
+    const activeStep = {{#if activeStep}}{{activeStep}}{{else}}1{{/if}};
+    const progressBar = document.getElementById('progress-fill');
+    const width = (activeStep / 8) * 100 + '%';
+    progressBar.style.width = width;
+
+    // Set active pill
+    document.querySelectorAll('.step-pill').forEach((pill, index) => {
+        pill.classList.remove('bg-primary', 'text-primary-foreground');
+        pill.classList.add('bg-muted', 'text-muted-foreground');
+        if (index + 1 === activeStep) {
+            pill.classList.remove('bg-muted', 'text-muted-foreground');
+            pill.classList.add('bg-primary', 'text-primary-foreground');
+            pill.textContent = pillFullTexts[index];
+        } else {
+            pill.textContent = pillNumbers[index];
+        }
+    });
+
+    addHoverListeners();
     });
 </script>

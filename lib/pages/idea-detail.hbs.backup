@@ -189,74 +189,60 @@
 <!-- Stages Progress Bar -->
 <div class="progress-bar w-1/2  mx-auto my-6">
     <div class="flex items-center justify-between flex-wrap">
-        <!-- Step 1: Idea (active) -->
-        <div class="group flex flex-col items-center">
-            <div class="w-4 h-4 rounded-full bg-primary"></div>
-            <span class="text-primary text-xs mt-2 group-hover:text-primary">Idea</span>
-        </div>
-        <!-- Connecting line -->
-        <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
-        <!-- Step 2: Business (inactive) -->
-        <div class="group flex flex-col items-center">
-            <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
-            <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Business</span>
-        </div>
-        <!-- Connecting line -->
-        <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
-        <!-- Step 3: Financial (inactive) -->
-        <div class="group flex flex-col items-center">
-            <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
-            <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Financial</span>
-        </div>
-        <!-- Connecting line -->
-        <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
-        <!-- Step 4: Funding (inactive) -->
-        <div class="group flex flex-col items-center">
-            <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
-            <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Funding</span>
-        </div>
-        <!-- Connecting line -->
-        <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
-        <!-- Step 5: Legal (inactive) -->
-        <div class="group flex flex-col items-center">
-            <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
-            <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Legal</span>
-        </div>
-        <!-- Connecting line -->
-        <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
-        <!-- Step 6: Team (inactive) -->
-        <div class="group flex flex-col items-center">
-            <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
-            <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Team</span>
-        </div>
-        <!-- Connecting line -->
-        <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
-        <!-- Step 7: Marketing (inactive) -->
-        <div class="group flex flex-col items-center">
-            <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
-            <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Marketing</span>
-        </div>
-        <!-- Connecting line -->
-        <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
-        <!-- Step 8: Pitch Deck (inactive) -->
-        <div class="group flex flex-col items-center">
-            <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
-            <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Pitch Deck</span>
-        </div>
-        <!-- Connecting line -->
-        <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
-        <!-- Step 9: Business Plan (inactive) -->
-        <div class="group flex flex-col items-center">
-            <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
-            <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Business Plan</span>
-        </div>
-        <!-- Connecting line -->
-        <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
-        <!-- Step 10: Valuation (inactive) -->
-        <div class="group flex flex-col items-center">
-            <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
-            <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Valuation</span>
-        </div>
+         <!-- Step 1: Executive Summary (active) -->
+         <div class="group flex flex-col items-center">
+             <div class="w-4 h-4 rounded-full bg-primary"></div>
+             <span class="text-primary text-xs mt-2 group-hover:text-primary">Executive Summary</span>
+         </div>
+         <!-- Connecting line -->
+         <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
+         <!-- Step 2: Problem Analysis (inactive) -->
+         <div class="group flex flex-col items-center">
+             <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
+             <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Problem Analysis</span>
+         </div>
+         <!-- Connecting line -->
+         <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
+         <!-- Step 3: Solution Overview (inactive) -->
+         <div class="group flex flex-col items-center">
+             <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
+             <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Solution Overview</span>
+         </div>
+         <!-- Connecting line -->
+         <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
+         <!-- Step 4: Market Analysis (inactive) -->
+         <div class="group flex flex-col items-center">
+             <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
+             <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Market Analysis</span>
+         </div>
+         <!-- Connecting line -->
+         <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
+         <!-- Step 5: Product Concept (inactive) -->
+         <div class="group flex flex-col items-center">
+             <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
+             <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Product Concept</span>
+         </div>
+         <!-- Connecting line -->
+         <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
+         <!-- Step 6: Go-to-Market Strategy (inactive) -->
+         <div class="group flex flex-col items-center">
+             <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
+             <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Go-to-Market Strategy</span>
+         </div>
+         <!-- Connecting line -->
+         <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
+         <!-- Step 7: Brand Strategy (inactive) -->
+         <div class="group flex flex-col items-center">
+             <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
+             <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Brand Strategy</span>
+         </div>
+         <!-- Connecting line -->
+         <div class="flex-1 h-0.5 bg-border mx-2 hidden sm:block -mt-6"></div>
+         <!-- Step 8: Intellectual Property Protection (inactive) -->
+         <div class="group flex flex-col items-center">
+             <div class="w-4 h-4 rounded-full bg-muted group-hover:bg-primary"></div>
+             <span class="text-muted-foreground text-xs mt-2 group-hover:text-primary">Intellectual Property Protection</span>
+         </div>
     </div>
 </div>
 
@@ -1720,7 +1706,7 @@
                     //     percentPosition: true,
                     //     transitionDuration: 0
                     //});
-                    console.log('Masonry items:', masonry.items.length, 'Columns:', masonry.cols);
+                    // console.log('Masonry items:', masonry.items.length, 'Columns:', masonry.cols);
 
                 } else {
                     console.error('Error loading idea:', idea.error);

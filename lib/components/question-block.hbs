@@ -1,0 +1,1162 @@
+<div class="flex flex-col border border-border rounded-md bg-card">
+
+
+    <form id="{{id}}-new-project-form" class="flex m-auto max-w-[900px] min-w-[900px] flex-col gap-1 w-full" method="post"
+        action="/projects/new">
+        <!-- CSRF Token (Important for security) -->
+        <input type="hidden" name="_csrf" value="">
+
+        <div class="flex flex-col w-full">
+            <div class="">
+                <div class=" flex flex-col gap-2 rounded-2xl relative py-2  ">
+                    <!-- Title wrapper -->
+                    <div class="pl-4 pr-2">
+                        <div class="flex flex-wrap gap-1">
+                            <span
+                                class="inline-flex items-center gap-1 px-2 py-1 bg-muted text-muted-foreground  text-xs rounded-full focus:outline-none focus:bg-accent">
+                                <i contenteditable="true" id="{{id}}-title" class="text-foreground">Untitled</i>
+                                <svg class="lucide lucide-square-pen w-3 h-3" xmlns="http://www.w3.org/2000/svg"
+                                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7">
+                                    </path>
+                                    <path
+                                        d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <span
+                                class="inline-flex items-center gap-1 px-2 py-1 bg-muted text-muted-foreground border border-border text-xs rounded-full focus:outline-none focus:bg-accent">
+                                 <i contenteditable="true" id="{{id}}-category">Category</i>
+                                <svg class="lucide lucide-square-pen w-3 h-3" xmlns="http://www.w3.org/2000/svg"
+                                    width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7">
+                                    </path>
+                                    <path
+                                        d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z">
+                                    </path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Question wrapper -->
+                    <div class="pl-4 pr-2">
+                        <span
+                            class="inline-flex items-center gap-1 px-2 py-1 bg-primary text-primary-foreground text-xs rounded-full">
+                            <span class="text-foreground font-semibold">{{step}}. {{question}}</span>
+                        </span>
+                    </div>
+
+                    <!-- Description wrapper -->
+                    <div class=" pl-4 pr-2 relative">
+                        <label for="assistant-prompt" class="sr-only">Describe your
+                            project requirements</label>
+                        <textarea id="{{id}}-assistant-prompt" name="prompt"
+                            placeholder="Describe your project requirements..."
+                            aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
+                            class="flex w-full rounded-md border-0 bg-transparent p-0 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                            required=""
+                            style="min-height: 2.5rem; resize: none; overflow: hidden; height: 49px;"></textarea>
+                        <p id="prompt-help" class="sr-only">Enter your project
+                            description or requirements</p>
+                    </div>
+
+                    <!-- Tags wrapper -->
+                    <div class="pl-4 pr-2">
+                        <div id="{{id}}-tagslist" class="flex flex-wrap gap-1">
+
+                            <!-- Add more -->
+                             <span id="{{id}}-addOneTag" class="inline-flex items-center gap-1 px-2 py-0.5
+                      bg-success/5
+                      text-success
+                       border border-success/40 cursor-pointer
+                    text-xs rounded-full">
+
+                                <svg class="lucide lucide-plus w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="12"
+                                    height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14"></path>
+                                    <path d="M12 5v14"></path>
+                                </svg>
+                                Add more
+                            </span>
+
+                            <!-- Remove all -->
+                             <span id="{{id}}-removeAllTags" class="inline-flex items-center gap-1 px-2 py-0.5
+                      bg-destructive/10
+                      text-destructive
+                       border border-destructive/40
+                     text-xs rounded-full cursor-pointer" style="display: none;">
+
+                                <svg class="lucide lucide-trash w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="12"
+                                    height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                                    <path d="M3 6h18"></path>
+                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                                Remove all
+                            </span>
+
+                        </div>
+                    </div>
+
+
+                    <!-- toolbar -->
+                    <div class="px-3 flex gap-2 items-center">
+                        <div class="flex gap-2 items-center flex-shrink-0">
+                            <!-- Generate title with AI -->
+                            <button type="button" aria-label="Generate title with AI" title="Generate title with AI"
+                                class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
+
+                                <svg class="lucide lucide-type w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 4v16"></path>
+                                    <path d="M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2"></path>
+                                    <path d="M9 20h6"></path>
+                                </svg>
+
+                                <span class="hidden group-hover:inline transition-all duration-200">Generate
+                                    Title with AI</span>
+                            </button>
+
+                            <!-- Add category with AI -->
+                            <button type="button" aria-label="Add category with AI" title="Add category with AI"
+                                class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
+
+                                <svg class="lucide lucide-folder w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z">
+                                    </path>
+                                </svg>
+
+                                <span class="hidden group-hover:inline transition-all duration-200">Add
+                                    Category with AI</span>
+                            </button>
+
+                            <!-- Improve with AI -->
+                            <button type="button" aria-label="Improve with AI" title="Improve with AI"
+                                class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
+
+                                <svg class="lucide lucide-lightbulb w-4 h-4" xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5">
+                                    </path>
+                                    <path d="M9 18h6"></path>
+                                    <path d="M10 22h4"></path>
+                                </svg>
+
+                                <span class="hidden group-hover:inline transition-all duration-200">Improve
+                                    Description with AI</span>
+                            </button>
+
+                            <!-- Add tags with AI -->
+                            <button type="button" aria-label="Add tags with AI" title="Add tags with AI"
+                                class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
+
+                                <svg class="lucide lucide-tag w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z">
+                                    </path>
+                                    <circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle>
+                                </svg>
+
+                                <span class="hidden group-hover:inline transition-all duration-200">Add
+                                    Tags with AI</span>
+                            </button>
+
+                            <!-- Auto fill with AI -->
+                            <button type="button" aria-label="Auto fill with AI" title="Auto fill with AI"
+                                class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
+
+                                <svg class="lucide lucide-wand-sparkles w-4 h-4" xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72">
+                                    </path>
+                                    <path d="m14 7 3 3"></path>
+                                    <path d="M5 6v4"></path>
+                                    <path d="M19 14v4"></path>
+                                    <path d="M10 2v2"></path>
+                                    <path d="M7 8H3"></path>
+                                    <path d="M21 16h-4"></path>
+                                    <path d="M11 3H9"></path>
+                                </svg>
+
+                                <span class="hidden group-hover:inline transition-all duration-200">Auto
+                                    Fill with AI</span>
+                            </button>
+
+                            <!-- Generate random idea -->
+                            <button type="button" aria-label="Generate random idea" title="Generate random idea"
+                                class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
+
+                                <svg class="lucide lucide-shuffle w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m18 14 4 4-4 4"></path>
+                                    <path d="m18 2 4 4-4 4"></path>
+                                    <path d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22">
+                                    </path>
+                                    <path d="M2 6h1.972a4 4 0 0 1 3.6 2.2"></path>
+                                    <path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45"></path>
+                                </svg>
+
+                                <span class="hidden group-hover:inline transition-all duration-200">Random
+                                    Idea with AI</span>
+                            </button>
+
+                            <!-- Chat with AI about Requirements -->
+                            <button type="button" aria-label="Chat with AI about Requirements"
+                                title="Chat with AI about Requirements"
+                                class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
+
+                                <svg class="lucide lucide-message-circle w-4 h-4" xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+
+                                <span class="hidden group-hover:inline transition-all duration-200">Chat
+                                    with AI</span>
+                            </button>
+
+                            <!-- Reset form -->
+                            <button type="button" aria-label="Reset form" title="Reset form"
+                                class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
+
+                                <svg class="lucide lucide-rotate-ccw w-4 h-4" xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                                    <path d="M3 3v5h5"></path>
+                                </svg>
+
+                                <span class="hidden group-hover:inline transition-all duration-200">Reset
+                                    Form</span>
+                            </button>
+                        </div>
+
+                        <!-- Submit button on the right -->
+                        <div class="min-w-0 flex gap-2 ml-auto flex-shrink items-center">
+                             <span id="{{id}}-char-counter" class="text-xs text-red-500/60 mr-2" aria-live="polite">Characters:
+                                0 / 2000</span>
+                            <button type="submit" aria-label="Create project" title="Create project"
+                                class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
+
+                                <svg class="lucide lucide-plus w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14"></path>
+                                    <path d="M12 5v14"></path>
+                                </svg>
+
+                                <span class="hidden group-hover:inline transition-all duration-200">Create
+                                    Project</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Chat Interface (appears below toolbar when Chat button is clicked) -->
+    <div id="{{id}}-chat-container"
+        class="hidden my-6 max-w-[900px] mx-auto border-t border-border bg-background shadow-sm overflow-hidden"
+        role="log" aria-live="polite" aria-label="AI chat conversation">
+        <!-- Chat Messages -->
+        <div id="{{id}}-chat-messages" class="max-h-96 overflow-y-auto p-4" role="log" aria-live="polite">
+            <div class="text-center text-muted-foreground text-sm py-4">
+                Start a conversation about your project requirements. The AI will help you refine and improve them.
+            </div>
+        </div>
+
+        <!-- Chat Input -->
+        <div class="border-t border-border p-4">
+            <div class="flex gap-2">
+                <textarea id="{{id}}-chat-input"
+                    placeholder="Ask about your requirements, suggest improvements, or get advice..."
+                    class="flex-1 min-h-[44px] max-h-32 resize-none focus-visible:border-0 bg-transparent px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:ring-0"
+                    rows="1"></textarea>
+                <button id="{{id}}-send-chat" type="button"
+                    class="inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground  hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled>
+                    <svg class="lucide lucide-send w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M22 2L11 13"></path>
+                        <path d="M22 2L15 22 11 13 2 9 22 2z"></path>
+                    </svg>
+
+                    <span class="hidden group-hover:inline transition-all duration-200">Send</span>
+                </button>
+            </div>
+            <div class="flex justify-between items-center mt-2">
+                <span id="{{id}}-chat-char-counter" class="text-xs text-muted-foreground">0 / 1000</span>
+                <button id="{{id}}-clear-chat"
+                    class="text-xs text-muted-foreground hover:text-destructive transition-colors duration-200">
+                    Clear Chat
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.populateIdea = '{{{json populateIdea }}}';
+    console.log('populateIdea set:', window.populateIdea);
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOMContentLoaded fired for create-idea-card');
+        // Initialize form elements
+        const form = document.getElementById('{{id}}-new-project-form');
+        const titleSpan = document.getElementById('{{id}}-title');
+        const categorySpan = document.getElementById('{{id}}-category'); // Second contenteditable
+        const descriptionTextarea = document.getElementById('{{id}}-assistant-prompt');
+        const tagsContainer = document.getElementById('{{id}}-tagslist');
+        const submitButton = form.querySelector('button[type="submit"]');
+
+        // Auto-expand textarea
+        function autoExpandTextarea() {
+            descriptionTextarea.style.height = 'auto';
+            descriptionTextarea.style.height = descriptionTextarea.scrollHeight + 'px';
+        }
+
+        // Character counter
+        function updateCharCounter() {
+            const length = descriptionTextarea.value.length;
+            const counter = document.getElementById('{{id}}-char-counter');
+            counter.textContent = `Characters: ${length} / 2000`;
+            if (length < 100 || length > 2000) {
+                counter.className = 'text-xs text-red-500/60 mr-2';
+            } else {
+                counter.className = 'text-xs text-green-500/60 mr-2';
+            }
+            autoExpandTextarea();
+        }
+
+        // Initialize textarea height
+        descriptionTextarea.style.minHeight = '2.5rem'; // Match the rows="2" initial height
+        descriptionTextarea.style.resize = 'none'; // Prevent manual resizing
+        descriptionTextarea.style.overflow = 'hidden'; // Hide scrollbar
+
+        descriptionTextarea.addEventListener('input', updateCharCounter);
+        updateCharCounter();
+
+        // Ensure textarea height is adjusted for pre-filled content
+        setTimeout(() => {
+            autoExpandTextarea();
+        }, 0);
+
+        // Toast helper - now defined below
+
+        const addOneTagBtn = document.getElementById('{{id}}-addOneTag');
+        if (addOneTagBtn) {
+            addOneTagBtn.addEventListener('click', function (e) {
+                const tagSpan = document.createElement('span');
+                tagSpan.className = 'inline-flex items-center gap-1 px-2 py-0.5 bg-secondary/5 text-secondary-foreground border border-secondary/40 text-xs rounded-full tag-{{id}}';
+                tagSpan.innerHTML = `<span contenteditable="true">Click and type to edit</span> <button class="text-muted-foreground hover:text-destructive p-0">×</button>`;
+                const addMoreBtn = tagsContainer.querySelector('[class*="bg-success/5"]');
+                if (addMoreBtn) {
+                    addMoreBtn.after(tagSpan);
+                }
+                tagSpan.querySelector('button').addEventListener('click', function () {
+                    tagSpan.remove();
+                    showToastMessage('Tag removed', 'success');
+                    updateRemoveAllVisibility();
+                });
+                showToastMessage('Tag added successfully', 'success');
+                updateRemoveAllVisibility();
+            });
+        }
+
+        const removeAllTagsBtn = document.getElementById('{{id}}-removeAllTags');
+        removeAllTagsBtn.style.display = 'none';
+
+        function updateRemoveAllVisibility() {
+            const tagCount = document.querySelectorAll('.tag-{{id}}').length;
+            removeAllTagsBtn.style.display = tagCount > 1 ? 'inline-flex' : 'none';
+        }
+
+        removeAllTagsBtn.addEventListener('click', function (e) {
+            removeAllTags();
+        });
+
+        // Tag management functions
+        function addTag(tagText) {
+            console.log('addTag called with:', tagText);
+            if (typeof tagText === 'object') {
+                tagText = tagText.name || tagText.value || tagText.toString();
+            }
+            if (!tagText || !tagText.trim()) {
+                console.log('Tag text is empty or invalid, skipping');
+                return;
+            }
+            const tagSpan = document.createElement('span');
+            tagSpan.className = 'inline-flex items-center gap-1 px-2 py-0.5 bg-secondary/5 text-secondary-foreground border border-secondary/40 text-xs rounded-full tag-{{id}}';
+            tagSpan.innerHTML = `<span contenteditable="true">${tagText}</span> <button class="text-muted-foreground hover:text-destructive p-0">×</button>`;
+            const addMoreBtn = tagsContainer.querySelector('[class*="bg-success/5"]');
+            console.log('addMoreBtn found:', addMoreBtn);
+            if (addMoreBtn) {
+                addMoreBtn.after(tagSpan);
+                console.log('Tag span added');
+            } else {
+                console.log('addMoreBtn not found, tag not added');
+            }
+            tagSpan.querySelector('button').addEventListener('click', function () {
+                tagSpan.remove();
+                showToastMessage('Tag removed', 'success');
+                updateRemoveAllVisibility();
+            });
+            updateRemoveAllVisibility();
+        }
+
+        function addTagsFromArray(tagsArray) {
+            if (Array.isArray(tagsArray)) {
+                tagsArray.forEach(tag => addTag(tag));
+            }
+        }
+
+        function removeAllTags() {
+            const tagElements = document.querySelectorAll('.tag-{{id}}');
+            const count = tagElements.length;
+            if (count === 0) {
+                showToastMessage('No tags to remove', 'warning');
+            } else {
+                tagElements.forEach(tag => tag.remove());
+                showToastMessage(`${count} tags removed`, 'success');
+                updateRemoveAllVisibility();
+            }
+        }
+
+        // Populate form fields if populateIdea exists
+        console.log('Checking populateIdea:', window.populateIdea);
+        if (window.populateIdea) {
+            console.log('Populating form with idea data:', window.populateIdea);
+
+            // Populate title
+            if (window.populateIdea.title) {
+                titleSpan.innerHTML = window.populateIdea.title;
+            }
+
+            // Populate category
+            if (window.populateIdea.category) {
+                categorySpan.innerHTML = window.populateIdea.category;
+            }
+
+            // Populate description
+            if (window.populateIdea.description) {
+                descriptionTextarea.value = window.populateIdea.description;
+                updateCharCounter();
+            }
+
+            // Populate tags
+            if (window.populateIdea.tags && Array.isArray(window.populateIdea.tags)) {
+                window.populateIdea.tags.forEach(tag => {
+                    console.log('Adding tag:', tag);
+                    addTag(tag);
+                });
+            }
+        } else {
+            console.log('No populateIdea data found');
+        }
+
+        // AI button handlers
+        async function callAIApi(endpoint, data) {
+            try {
+                const response = await fetch(`/api/ai/${endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                return await response.json();
+            } catch (error) {
+                console.error('AI API error:', error);
+                return { error: 'Network error' };
+            }
+        }
+
+        // Enhanced toast function that waits for toast system
+        function showToastMessage(message, type) {
+            // Try multiple ways to show toast
+            if (typeof window.showToast === 'function') {
+                return window.showToast(message, type);
+            } else if (typeof window.showSuccessToast === 'function' && type === 'success') {
+                return window.showSuccessToast('Success', message);
+            } else if (typeof window.showErrorToast === 'function' && type === 'error') {
+                return window.showErrorToast('Error', message);
+            } else if (typeof window.showWarningToast === 'function' && type === 'warning') {
+                return window.showWarningToast('Warning', message);
+            } else if (typeof window.showInfoToast === 'function' && type === 'info') {
+                return window.showInfoToast('Info', message);
+            } else {
+                // Fallback: try to find toast container and create simple toast
+                const container = document.getElementById('toast-container');
+                if (container) {
+                    const toast = document.createElement('div');
+                    toast.className = `toast toast-${type} p-4 rounded-lg border shadow-lg max-w-sm bg-white text-black border-gray-200`;
+                    toast.textContent = message;
+                    container.appendChild(toast);
+                    setTimeout(() => toast.remove(), 5000);
+                }
+            }
+        }
+
+        // Helper function to set button loading state
+        function setButtonLoading(button, loading) {
+            if (!button) return;
+
+            const icon = button.querySelector('svg');
+            const textSpan = button.querySelector('span');
+
+            if (loading) {
+                button.disabled = true;
+                button.classList.add('cursor-not-allowed', 'bg-warning/20', 'border-warning/50');
+
+                // Replace icon with loading spinner
+                if (icon) {
+                    icon.outerHTML = `
+                        <svg class="lucide lucide-loader w-4 h-4 animate-spin text-warning" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                        </svg>
+                    `;
+                }
+
+                // Show processing text
+                if (textSpan) {
+                    textSpan.textContent = 'Processing...';
+                    textSpan.classList.remove('hidden', 'group-hover:inline');
+                    textSpan.classList.add('inline', 'text-warning');
+                }
+            } else {
+                button.disabled = false;
+                button.classList.remove('cursor-not-allowed', 'bg-warning/20', 'border-warning/50');
+
+                // Restore original icon
+                const spinner = button.querySelector('.animate-spin');
+                if (spinner) {
+                    const ariaLabel = button.getAttribute('aria-label');
+                    let originalIcon = '';
+
+                    if (ariaLabel.includes('title')) {
+                        originalIcon = `<svg class="lucide lucide-type w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"></path><path d="M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2"></path><path d="M9 20h6"></path></svg>`;
+                    } else if (ariaLabel.includes('category')) {
+                        originalIcon = `<svg class="lucide lucide-folder w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path></svg>`;
+                    } else if (ariaLabel.includes('Improve')) {
+                        originalIcon = `<svg class="lucide lucide-lightbulb w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>`;
+                    } else if (ariaLabel.includes('tags')) {
+                        originalIcon = `<svg class="lucide lucide-tag w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"></path><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>`;
+                    } else if (ariaLabel.includes('Auto fill')) {
+                        originalIcon = `<svg class="lucide lucide-wand-sparkles w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"></path><path d="m14 7 3 3"></path><path d="M5 6v4"></path><path d="M19 14v4"></path><path d="M10 2v2"></path><path d="M7 8H3"></path><path d="M21 16h-4"></path><path d="M11 3H9"></path></svg>`;
+                    } else if (ariaLabel.includes('random')) {
+                        originalIcon = `<svg class="lucide lucide-shuffle w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 14 4 4-4 4"></path><path d="m18 2 4 4-4 4"></path><path d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22"></path><path d="M2 6h1.972a4 4 0 0 1 3.6 2.2"></path><path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45"></path></svg>`;
+                    }
+
+                    spinner.outerHTML = originalIcon;
+                }
+
+                // Reset text to original state and restore hover behavior
+                if (textSpan) {
+                    // Reset to original text based on button type
+                    const ariaLabel = button.getAttribute('aria-label');
+                    if (ariaLabel.includes('title')) {
+                        textSpan.textContent = 'Generate Title with AI';
+                    } else if (ariaLabel.includes('category')) {
+                        textSpan.textContent = 'Add Category with AI';
+                    } else if (ariaLabel.includes('Improve')) {
+                        textSpan.textContent = 'Improve Description with AI';
+                    } else if (ariaLabel.includes('tags')) {
+                        textSpan.textContent = 'Add Tags with AI';
+                    } else if (ariaLabel.includes('Auto fill')) {
+                        textSpan.textContent = 'Auto Fill with AI';
+                    } else if (ariaLabel.includes('random')) {
+                        textSpan.textContent = 'Random Idea with AI';
+                    }
+
+                    // Restore original classes for hover behavior
+                    textSpan.classList.remove('inline', 'text-warning');
+                    textSpan.classList.add('hidden', 'group-hover:inline');
+                }
+            }
+        }
+
+
+        // Generate random idea
+        const randomIdeaBtn = form.querySelector('[aria-label="Generate random idea"]');
+        console.log('Random idea button found:', randomIdeaBtn);
+        randomIdeaBtn.addEventListener('click', async function (e) {
+            e.preventDefault();
+
+            setButtonLoading(randomIdeaBtn, true);
+
+            try {
+                const result = await callAIApi('random-idea', {});
+                if (result.error) {
+                    showToastMessage('AI error: ' + result.error, 'error');
+                } else {
+                    titleSpan.innerHTML = result.title || '';
+                    categorySpan.innerHTML = result.category || '';
+                    descriptionTextarea.value = result.description || '';
+                    updateCharCounter();
+                    removeAllTags();
+                    if (result.tags) {
+                        addTagsFromArray(result.tags);
+                    }
+                    if (result.title) addTag(result.title);
+                    if (result.category) addTag(result.category);
+                    showToastMessage('Random idea generated successfully', 'success');
+                    showToastMessage('10 credits deducted for AI usage', 'warning');
+                    if (typeof window.loadNavCreditBalance === 'function') {
+                        window.loadNavCreditBalance();
+                    }
+                }
+            } catch (error) {
+                console.error('Random idea error:', error);
+                showToastMessage('Network error. Please try again.', 'error');
+            } finally {
+                setButtonLoading(randomIdeaBtn, false);
+            }
+        });
+
+        // Generate title with AI
+        const generateTitleBtn = form.querySelector('[aria-label="Generate title with AI"]');
+        if (generateTitleBtn) {
+            generateTitleBtn.addEventListener('click', async function (e) {
+                e.preventDefault();
+                const description = descriptionTextarea.value;
+                if (!description.trim()) {
+                    showToastMessage('Please enter a description first', 'warning');
+                    return;
+                }
+                setButtonLoading(generateTitleBtn, true);
+                try {
+                    showToastMessage('Generating title with AI...', 'info');
+                    const result = await callAIApi('suggest-title', { description });
+                    if (result.error) {
+                        showToastMessage('AI error: ' + result.error, 'error');
+                    } else {
+                        titleSpan.innerHTML = result.title || '';
+                        showToastMessage('Title generated successfully', 'success');
+                        showToastMessage('10 credits deducted for AI usage', 'warning');
+                        if (typeof window.loadNavCreditBalance === 'function') {
+                            window.loadNavCreditBalance();
+                        }
+                    }
+                } catch (error) {
+                    console.error('Generate title error:', error);
+                    showToastMessage('Network error. Please try again.', 'error');
+                } finally {
+                    setButtonLoading(generateTitleBtn, false);
+                }
+            });
+        }
+
+        // Add category with AI
+        const addCategoryBtn = form.querySelector('[aria-label="Add category with AI"]');
+        if (addCategoryBtn) {
+            addCategoryBtn.addEventListener('click', async function (e) {
+                e.preventDefault();
+                const description = descriptionTextarea.value;
+                if (!description.trim()) {
+                    showToastMessage('Please enter a description first', 'warning');
+                    return;
+                }
+                setButtonLoading(addCategoryBtn, true);
+                try {
+                    showToastMessage('Categorizing with AI...', 'info');
+                    const result = await callAIApi('add-category', { description });
+                    if (result.error) {
+                        showToastMessage('AI error: ' + result.error, 'error');
+                    } else {
+                        categorySpan.innerHTML = result.category || '';
+                        showToastMessage('Category set successfully', 'success');
+                        showToastMessage('10 credits deducted for AI usage', 'warning');
+                        if (typeof window.loadNavCreditBalance === 'function') {
+                            window.loadNavCreditBalance();
+                        }
+                    }
+                } catch (error) {
+                    console.error('Add category error:', error);
+                    showToastMessage('Network error. Please try again.', 'error');
+                } finally {
+                    setButtonLoading(addCategoryBtn, false);
+                }
+            });
+        }
+
+        // Add tags with AI
+        const addTagsBtn = form.querySelector('[aria-label="Add tags with AI"]');
+        if (addTagsBtn) {
+            addTagsBtn.addEventListener('click', async function (e) {
+                e.preventDefault();
+                const description = descriptionTextarea.value;
+                if (!description.trim()) {
+                    showToastMessage('Please enter a description first', 'warning');
+                    return;
+                }
+                setButtonLoading(addTagsBtn, true);
+                try {
+                    showToastMessage('Generating tags with AI...', 'info');
+                    const result = await callAIApi('add-tags', { description });
+                    if (result.error) {
+                        showToastMessage('AI error: ' + result.error, 'error');
+                    } else if (result.tags) {
+                        addTagsFromArray(result.tags);
+                        showToastMessage(`${result.tags.length} tags added successfully`, 'success');
+                        showToastMessage('10 credits deducted for AI usage', 'warning');
+                        if (typeof window.loadNavCreditBalance === 'function') {
+                            window.loadNavCreditBalance();
+                        }
+                    }
+                } catch (error) {
+                    console.error('Add tags error:', error);
+                    showToastMessage('Network error. Please try again.', 'error');
+                } finally {
+                    setButtonLoading(addTagsBtn, false);
+                }
+            });
+        }
+
+        // Reset form
+        const resetFormBtn = form.querySelector('[aria-label="Reset form"]');
+        if (resetFormBtn) {
+            resetFormBtn.addEventListener('click', function (e) {
+                titleSpan.innerHTML = 'Untitled';
+                categorySpan.innerHTML = 'Category';
+                descriptionTextarea.value = '';
+                removeAllTags();
+                updateCharCounter();
+                showToastMessage('Form reset successfully', 'info');
+            });
+        }
+
+        // Auto fill with AI
+        const autoFillBtn = form.querySelector('[aria-label="Auto fill with AI"]');
+        if (autoFillBtn) {
+            autoFillBtn.addEventListener('click', async function (e) {
+                e.preventDefault();
+                const currentDescription = descriptionTextarea.value.trim();
+                if (!currentDescription) {
+                    showToastMessage('Please enter a description first', 'warning');
+                    return;
+                }
+                setButtonLoading(autoFillBtn, true);
+                try {
+                    showToastMessage('Auto filling with AI...', 'info');
+                    const result = await callAIApi('auto-fill', { description: currentDescription });
+                    if (result.error) {
+                        showToastMessage('AI error: ' + result.error, 'error');
+                    } else {
+                        const currentTitle = titleSpan.textContent.trim();
+                        const currentCategory = categorySpan.textContent.trim();
+                        const currentTags = Array.from(document.querySelectorAll('.tag-{{id}} span[contenteditable]')).map(span => span.textContent.trim()).filter(tag => tag);
+
+                        let filledCount = 0;
+
+                        // Fill title if missing or default
+                        if (!currentTitle || currentTitle === 'Untitled') {
+                            titleSpan.innerHTML = result.title || '';
+                            filledCount++;
+                        }
+
+                        // Fill category if missing or default
+                        if (!currentCategory || currentCategory === 'Category') {
+                            categorySpan.innerHTML = result.category || '';
+                            filledCount++;
+                        }
+
+                        // Fill description if too small or missing
+                        if (!currentDescription || currentDescription.length < 100) {
+                            descriptionTextarea.value = result.description || '';
+                            updateCharCounter();
+                            filledCount++;
+                        }
+
+                        // Fill tags if none exist
+                        if (currentTags.length === 0) {
+                            if (result.tags && result.tags.length > 0) {
+                                addTagsFromArray(result.tags);
+                                filledCount++;
+                            } else {
+                                // If auto-fill didn't provide tags, try add-tags API
+                                try {
+                                    const tagsResult = await callAIApi('add-tags', { description: currentDescription });
+                                    if (tagsResult.tags && tagsResult.tags.length > 0) {
+                                        addTagsFromArray(tagsResult.tags);
+                                        filledCount++;
+                                        showToastMessage('10 credits deducted for additional AI usage', 'warning');
+                                    }
+                                } catch (tagsError) {
+                                    console.error('Add tags error:', tagsError);
+                                }
+                            }
+                        }
+
+                        if (filledCount > 0) {
+                            showToastMessage('Form auto filled successfully', 'success');
+                            showToastMessage('10 credits deducted for AI usage', 'warning');
+                            if (typeof window.loadNavCreditBalance === 'function') {
+                                window.loadNavCreditBalance();
+                            }
+                        } else {
+                            showToastMessage('All fields are already complete', 'info');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Auto fill error:', error);
+                    showToastMessage('Network error. Please try again.', 'error');
+                } finally {
+                    setButtonLoading(autoFillBtn, false);
+                }
+            });
+        }
+
+        // Improve with AI
+        const improveBtn = form.querySelector('[aria-label="Improve with AI"]');
+        if (improveBtn) {
+            improveBtn.addEventListener('click', async function (e) {
+                e.preventDefault();
+                const description = descriptionTextarea.value;
+                if (!description.trim()) {
+                    showToastMessage('Please enter a description first', 'warning');
+                    return;
+                }
+                setButtonLoading(improveBtn, true);
+                try {
+                    showToastMessage('Improving description with AI...', 'info');
+                    const result = await callAIApi('improve', { description });
+                    if (result.error) {
+                        showToastMessage('AI error: ' + result.error, 'error');
+                    } else {
+                        descriptionTextarea.value = result.improved_description;
+                        updateCharCounter();
+                        showToastMessage('Description improved successfully', 'success');
+                        showToastMessage('10 credits deducted for AI usage', 'warning');
+                        if (typeof window.loadNavCreditBalance === 'function') {
+                            window.loadNavCreditBalance();
+                        }
+                    }
+                } catch (error) {
+                    console.error('Improve description error:', error);
+                    showToastMessage('Network error. Please try again.', 'error');
+                } finally {
+                    setButtonLoading(improveBtn, false);
+                }
+            });
+        }
+
+        // Form submission
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Client-side validation
+            if (!descriptionTextarea.value.trim()) {
+                if (typeof showToast !== 'undefined') {
+                    showToast('Please enter a project description', 'warning');
+                }
+                return;
+            }
+            const descLength = descriptionTextarea.value.length;
+            if (descLength < 100 || descLength > 2000) {
+                if (typeof showToast !== 'undefined') {
+                    showToast('Description must be between 100 and 2000 characters', 'warning');
+                }
+                return;
+            }
+
+            // Collect form data
+            const title = titleSpan.textContent.trim() || 'Untitled';
+            const category = categorySpan.textContent.trim() || 'Category';
+            const description = descriptionTextarea.value;
+            const tags = Array.from(document.querySelectorAll('.tag-{{id}} span[contenteditable]')).map(span => span.textContent.trim()).filter(tag => tag);
+
+            // Show loading state
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span>Creating...</span>';
+
+            if (typeof showToast !== 'undefined') {
+                showToast('Creating your idea...', 'info');
+            }
+
+            let success = false;
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        _csrf: document.querySelector('input[name="_csrf"]').value,
+                        prompt: description,
+                        title,
+                        category,
+                        tags: JSON.stringify(tags)
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    success = true;
+                    if (typeof showToast !== 'undefined') {
+                        showToast('Idea created successfully!', 'success');
+                    }
+                    // Success - redirect to idea detail page after a short delay to show toast
+                    setTimeout(() => {
+                        window.location.href = `/idea-detail?ideaId=${data.idea_id}`;
+                    }, 1000);
+                } else {
+                    const errorData = await response.json();
+                    if (typeof showToast !== 'undefined') {
+                        showToast('Error: ' + (errorData.error || 'Failed to create project'), 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                if (typeof showToast !== 'undefined') {
+                    showToast('Network error. Please try again.', 'error');
+                }
+            } finally {
+                // Reset loading state only if not already handled in success case
+                if (!success) {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = `
+                        <svg class="lucide lucide-plus w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14"></path>
+                            <path d="M12 5v14"></path>
+                        </svg>
+                        <span class="hidden group-hover:inline transition-all duration-200">Create Project</span>
+                    `;
+                }
+            }
+        });
+
+        // Chat functionality
+        let chatHistory = [];
+        let isChatOpen = false;
+
+        const chatBtn = form.querySelector('[aria-label="Chat with AI about Requirements"]');
+        const chatContainer = document.getElementById('{{id}}-chat-container');
+        const chatMessages = document.getElementById('{{id}}-chat-messages');
+        const chatInput = document.getElementById('{{id}}-chat-input');
+        const sendChatBtn = document.getElementById('{{id}}-send-chat');
+        const clearChatBtn = document.getElementById('{{id}}-clear-chat');
+        const chatCharCounter = document.getElementById('{{id}}-chat-char-counter');
+
+        // Toggle chat visibility
+        chatBtn.addEventListener('click', () => {
+            isChatOpen = !isChatOpen;
+            chatContainer.classList.toggle('hidden', !isChatOpen);
+
+            if (isChatOpen && chatHistory.length === 0) {
+                // Load chat history from localStorage if available
+                const savedChat = localStorage.getItem('accelerator-chat-history-{{id}}');
+                if (savedChat) {
+                    try {
+                        chatHistory = JSON.parse(savedChat);
+                        renderChatMessages();
+                    } catch (e) {
+                        console.error('Failed to load chat history:', e);
+                    }
+                }
+            }
+        });
+
+        // Auto-resize chat input
+        function autoResizeChatInput() {
+            chatInput.style.height = 'auto';
+            chatInput.style.height = Math.min(chatInput.scrollHeight, 128) + 'px';
+        }
+
+        // Update chat character counter
+        function updateChatCharCounter() {
+            const length = chatInput.value.length;
+            chatCharCounter.textContent = `${length} / 1000`;
+            sendChatBtn.disabled = length === 0 || length > 1000;
+            autoResizeChatInput();
+        }
+
+        chatInput.addEventListener('input', updateChatCharCounter);
+        updateChatCharCounter();
+
+        // Render chat messages
+        function renderChatMessages() {
+            chatMessages.innerHTML = '';
+
+            if (chatHistory.length === 0) {
+                chatMessages.innerHTML = `
+                    <div class="text-center text-muted-foreground text-sm py-4" role="status" aria-live="polite">
+                        Start a conversation about your project requirements. The AI will help you refine and improve them.
+                    </div>
+                `;
+                return;
+            }
+
+            chatHistory.forEach(message => {
+                const messageGroup = document.createElement('article');
+                messageGroup.className = `message-group message-group--${message.role}`;
+
+                // Add timestamp
+                const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const isoTimestamp = new Date().toISOString();
+
+                if (message.role === 'user') {
+                    // User message (right side)
+                    messageGroup.innerHTML = `
+                        <div class="flex flex-col items-end">
+                            <div class="message message--user bg-primary text-primary-foreground">
+                                ${message.content.replace(/\n/g, '<br>')}
+                            </div>
+                            <time class="message-timestamp message-timestamp--user" datetime="${isoTimestamp}">${timestamp}</time>
+                        </div>
+                    `;
+                } else {
+                    // AI message (left side)
+                    messageGroup.innerHTML = `
+                        <div class="flex flex-col">
+                            <div class="message message--ai bg-muted text-muted-foreground border border-border">
+                                ${message.content.replace(/\n/g, '<br>')}
+                            </div>
+                            <time class="message-timestamp message-timestamp--ai" datetime="${isoTimestamp}">${timestamp}</time>
+                        </div>
+                    `;
+                }
+
+                chatMessages.appendChild(messageGroup);
+            });
+
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Send chat message
+        async function sendChatMessage() {
+            const message = chatInput.value.trim();
+            if (!message || message.length > 1000) return;
+
+            // Add user message to history
+            chatHistory.push({ role: 'user', content: message });
+            renderChatMessages();
+
+            // Clear input
+            chatInput.value = '';
+            updateChatCharCounter();
+
+            // Get current form context
+            const currentTitle = titleSpan.textContent.trim();
+            const currentCategory = categorySpan.textContent.trim();
+            const currentDescription = descriptionTextarea.value.trim();
+            const currentTags = Array.from(document.querySelectorAll('.tag-{{id}} span[contenteditable]'))
+                .map(span => span.textContent.trim())
+                .filter(tag => tag);
+
+            const context = [
+                currentTitle && `Title: ${currentTitle}`,
+                currentCategory && `Category: ${currentCategory}`,
+                currentDescription && `Description: ${currentDescription}`,
+                currentTags.length > 0 && `Tags: ${currentTags.join(', ')}`
+            ].filter(Boolean).join('\n');
+
+            // Show loading state
+            sendChatBtn.disabled = true;
+            setButtonLoading(chatBtn, true);
+
+            const loadingMessageDiv = document.createElement('article');
+            loadingMessageDiv.className = 'message-group message-group--ai';
+            loadingMessageDiv.innerHTML = `
+                <div class="flex flex-col">
+                    <div class="message message--ai bg-muted text-muted-foreground border border-border">
+                        <div class="typing-indicator" aria-label="AI is typing">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(loadingMessageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const response = await fetch('/api/ai/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        messages: chatHistory,
+                        context: context
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Add AI response to history
+                    chatHistory.push({ role: 'assistant', content: data.response });
+                    renderChatMessages();
+
+                    // Save to localStorage
+                    localStorage.setItem('accelerator-chat-history-{{id}}', JSON.stringify(chatHistory));
+
+                    showToastMessage('Message sent successfully', 'success');
+                    showToastMessage('10 credits deducted for AI chat', 'warning');
+                    if (typeof window.loadNavCreditBalance === 'function') {
+                        window.loadNavCreditBalance();
+                    }
+                } else {
+                    showToastMessage('AI chat error: ' + (data.error || 'Unknown error'), 'error');
+                    // Remove loading message
+                    loadingMessageDiv.remove();
+                }
+            } catch (error) {
+                console.error('Chat error:', error);
+                showToastMessage('Network error. Please try again.', 'error');
+                // Remove loading message
+                loadingMessageDiv.remove();
+            } finally {
+                sendChatBtn.disabled = false;
+                setButtonLoading(chatBtn, false);
+            }
+        }
+
+        // Send message on button click
+        sendChatBtn.addEventListener('click', sendChatMessage);
+
+        // Send message on Enter (but allow Shift+Enter for new lines)
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendChatMessage();
+            }
+        });
+
+        // Clear chat
+        clearChatBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear the chat history?')) {
+                chatHistory = [];
+                localStorage.removeItem('accelerator-chat-history-{{id}}');
+                renderChatMessages();
+                showToastMessage('Chat cleared', 'info');
+            }
+        });
+    });
+
+
+</script>
