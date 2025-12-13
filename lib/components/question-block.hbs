@@ -509,7 +509,7 @@
                 const container = document.getElementById('toast-container');
                 if (container) {
                     const toast = document.createElement('div');
-                    toast.className = `toast toast-${type} p-4 rounded-lg border shadow-lg max-w-sm bg-white text-black border-gray-200`;
+                    toast.className = `toast toast-${type} p-4 rounded-lg border shadow-lg max-w-sm bg-card text-card-foreground border-border`;
                     toast.textContent = message;
                     container.appendChild(toast);
                     setTimeout(() => toast.remove(), 5000);
