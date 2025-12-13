@@ -37,7 +37,217 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
 </div>
 
 <main class="flex flex-col mx-auto items-center justify-center">
-    {{> report-section}}
+    <div class="sections-container">
+        <!-- Executive Summary Section -->
+        <div id="executive-summary" class="section mb-6">
+            <h2 class="text-xl font-semibold mb-4">Executive Summary</h2>
+            <p class="text-muted-foreground mb-6">Provide a high-level overview of your idea.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="executive-summary-q1" step="1" question="What is the executive summary of your idea?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the idea model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem Analysis Section -->
+        <div id="problem-analysis" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Problem Analysis</h2>
+            <p class="text-muted-foreground mb-6">Identify and analyze the problem your idea addresses.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="problem-analysis-q1" step="2" question="What problem does your idea solve?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="problem-analysis-q2" step="3" question="Who is affected by this problem?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the idea model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Solution Overview Section -->
+        <div id="solution-overview" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Solution Overview</h2>
+            <p class="text-muted-foreground mb-6">Describe how your idea solves the problem.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="solution-overview-q1" step="4" question="Describe your proposed solution."}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="solution-overview-q2" step="5" question="How does your solution work?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the idea model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Analysis Section -->
+        <div id="market-analysis" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Market Analysis</h2>
+            <p class="text-muted-foreground mb-6">Analyze the market opportunity for your idea.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="market-analysis-q1" step="6" question="Who is your target audience?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="market-analysis-q2" step="7" question="What is the market size and potential?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the idea model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Concept Section -->
+        <div id="product-concept" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Product Concept</h2>
+            <p class="text-muted-foreground mb-6">Define your product and its unique features.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="product-concept-q1" step="8" question="What are the key features of your product?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="product-concept-q2" step="9" question="How is your product different from competitors?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the idea model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Go-to-Market Strategy Section -->
+        <div id="go-to-market-strategy" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Go-to-Market Strategy</h2>
+            <p class="text-muted-foreground mb-6">Outline how you will launch and sell your product.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="go-to-market-strategy-q1" step="10" question="How will you launch your product?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="go-to-market-strategy-q2" step="11" question="What is your pricing strategy?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the idea model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brand Strategy Section -->
+        <div id="brand-strategy" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Brand Strategy</h2>
+            <p class="text-muted-foreground mb-6">Develop your brand identity and awareness plan.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="brand-strategy-q1" step="12" question="What is your brand identity?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="brand-strategy-q2" step="13" question="How will you build brand awareness?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the idea model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intellectual Property Protection Section -->
+        <div id="intellectual-property-protection" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Intellectual Property Protection</h2>
+            <p class="text-muted-foreground mb-6">Identify and protect your intellectual property.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="intellectual-property-protection-q1" step="14" question="What IP do you need to protect?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="intellectual-property-protection-q2" step="15" question="Have you filed any patents or trademarks?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed the entire idea model." buttonText="Complete Idea Model"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <div class=" h-[300px]"></div>
 
@@ -70,25 +280,73 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
         });
     }
 
+    // Function to show section and update UI
+    function showSection(sectionIndex) {
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(sec => {
+            sec.style.display = 'none';
+        });
+        // Show target section
+        const sectionIds = [
+            'executive-summary',
+            'problem-analysis',
+            'solution-overview',
+            'market-analysis',
+            'product-concept',
+            'go-to-market-strategy',
+            'brand-strategy',
+            'intellectual-property-protection'
+        ];
+        const targetSection = document.getElementById(sectionIds[sectionIndex]);
+        if (targetSection) {
+            targetSection.style.display = 'block';
+        }
+
+        // Update progress bar
+        const progressBar = document.getElementById('progress-fill');
+        const width = ((sectionIndex + 1) / 8) * 100 + '%';
+        progressBar.style.width = width;
+
+        // Update pills
+        document.querySelectorAll('.step-pill').forEach((pill, index) => {
+            pill.classList.remove('bg-primary', 'text-primary-foreground');
+            pill.classList.add('bg-muted', 'text-muted-foreground');
+            if (index === sectionIndex) {
+                pill.classList.remove('bg-muted', 'text-muted-foreground');
+                pill.classList.add('bg-primary', 'text-primary-foreground');
+                pill.textContent = pillFullTexts[index];
+            } else {
+                pill.textContent = pillNumbers[index];
+            }
+        });
+    }
+
+    // Add click listeners to pills
+    document.querySelectorAll('.step-pill').forEach((pill, index) => {
+        pill.addEventListener('click', () => {
+            showSection(index);
+        });
+    });
+
+    // Add click listeners to move next buttons
+    document.querySelectorAll('.move-next-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const currentSection = btn.closest('.section');
+            const sectionIds = ['executive-summary', 'problem-analysis', 'solution-overview', 'market-analysis', 'product-concept', 'go-to-market-strategy', 'brand-strategy', 'intellectual-property-protection'];
+            const currentIndex = sectionIds.indexOf(currentSection.id);
+            if (currentIndex < 7) {
+                showSection(currentIndex + 1);
+            } else {
+                // Last section
+                alert('Idea model completed!');
+            }
+        });
+    });
+
     // Initialize on load
     document.addEventListener('DOMContentLoaded', () => {
     const activeStep = {{#if activeStep}}{{activeStep}}{{else}}1{{/if}};
-    const progressBar = document.getElementById('progress-fill');
-    const width = (activeStep / 8) * 100 + '%';
-    progressBar.style.width = width;
-
-    // Set active pill
-    document.querySelectorAll('.step-pill').forEach((pill, index) => {
-        pill.classList.remove('bg-primary', 'text-primary-foreground');
-        pill.classList.add('bg-muted', 'text-muted-foreground');
-        if (index + 1 === activeStep) {
-            pill.classList.remove('bg-muted', 'text-muted-foreground');
-            pill.classList.add('bg-primary', 'text-primary-foreground');
-            pill.textContent = pillFullTexts[index];
-        } else {
-            pill.textContent = pillNumbers[index];
-        }
-    });
+    showSection(activeStep - 1); // activeStep is 1-based, index is 0-based
 
     addHoverListeners();
     });

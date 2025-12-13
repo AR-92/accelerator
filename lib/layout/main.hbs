@@ -67,6 +67,16 @@
         window.redirectToPopulate = function (ideaId) {
             window.location.href = `/new-idea?populate=${ideaId}`;
         };
+
+        // Event delegation for populate buttons
+        document.addEventListener('click', function(e) {
+            const button = e.target.closest('[data-populate-id]');
+            if (button) {
+                e.preventDefault();
+                const id = button.dataset.populateId;
+                redirectToPopulate(id);
+            }
+        });
     </script>
 
     {{#if flash.success}}

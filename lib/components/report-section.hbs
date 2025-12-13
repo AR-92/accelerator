@@ -3,6 +3,12 @@
 <div class="relative">
     <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
     <div class="flex items-start gap-4 mb-6">
+        <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">0</div>
+        <div class="flex-1">
+            {{>question-block id="step0" step="0" question="What is the executive summary of your project?"}}
+        </div>
+    </div>
+    <div class="flex items-start gap-4 mb-6">
         <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
         <div class="flex-1">
             {{>question-block id="step1" step="1" question="What is the core problem your project solves?"}}

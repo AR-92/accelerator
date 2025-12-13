@@ -1,5 +1,353 @@
 {{> progress-bar activeStep=activeStep}}
-{{> model-header title="Legal Model Report" description="Comprehensive legal development and validation overview" ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
-<main class="flex flex-col mx-auto items-center justify-center"></main>
+
+{{> model-header title="Legal Model Report" description="Comprehensive legal framework and compliance overview"
+ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
+
+<!-- Mixed Progress Bar and Pills Navigation -->
+<div class="flex justify-center mb-6">
+    <div class="relative w-full max-w-[900px]">
+        <!-- Progress Bar Background -->
+        <div class="absolute top-1/2 left-0 right-0 h-1 bg-muted rounded-full transform -translate-y-1/2"></div>
+        <!-- Progress Bar Fill -->
+        <div id="progress-fill"
+            class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"
+            style="width: 25%"></div>
+
+        <!-- Pills Overlay -->
+        <div class="relative flex justify-between items-center">
+            <span
+                class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10"
+                data-section="legal-structure">Legal Structure</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="incorporation">2.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="contracts">3.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="intellectual-property">4.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="compliance">5.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="employment-law">6.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="tax-compliance">7.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="legal-risks">8.</span>
+        </div>
+    </div>
+</div>
+
+<main class="flex flex-col mx-auto items-center justify-center">
+    <div class="sections-container">
+        <!-- Legal Structure Section -->
+        <div id="legal-structure" class="section mb-6">
+            <h2 class="text-xl font-semibold mb-4">Legal Structure</h2>
+            <p class="text-muted-foreground mb-6">Choose the right legal entity for your business.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="legal-structure-q1" step="1" question="What legal structure suits your business?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the legal model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Incorporation Section -->
+        <div id="incorporation" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Incorporation</h2>
+            <p class="text-muted-foreground mb-6">Register your business legally.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="incorporation-q1" step="2" question="What is your business name?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="incorporation-q2" step="3" question="Have you filed incorporation documents?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the legal model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contracts Section -->
+        <div id="contracts" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Contracts</h2>
+            <p class="text-muted-foreground mb-6">Draft and manage legal agreements.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="contracts-q1" step="4" question="What contracts do you need?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="contracts-q2" step="5" question="How will you ensure contract compliance?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the legal model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intellectual Property Section -->
+        <div id="intellectual-property" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Intellectual Property</h2>
+            <p class="text-muted-foreground mb-6">Protect your ideas and creations.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="intellectual-property-q1" step="6" question="What IP assets do you have?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="intellectual-property-q2" step="7" question="How will you protect your IP?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the legal model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Compliance Section -->
+        <div id="compliance" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Compliance</h2>
+            <p class="text-muted-foreground mb-6">Ensure adherence to laws and regulations.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="compliance-q1" step="8" question="What regulations apply to your business?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="compliance-q2" step="9" question="How will you maintain compliance?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the legal model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employment Law Section -->
+        <div id="employment-law" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Employment Law</h2>
+            <p class="text-muted-foreground mb-6">Handle hiring and employee relations legally.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="employment-law-q1" step="10" question="What employment laws apply?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="employment-law-q2" step="11" question="How will you manage employee contracts?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the legal model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tax Compliance Section -->
+        <div id="tax-compliance" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Tax Compliance</h2>
+            <p class="text-muted-foreground mb-6">Understand and comply with tax obligations.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="tax-compliance-q1" step="12" question="What taxes do you need to pay?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="tax-compliance-q2" step="13" question="How will you file your taxes?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the legal model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Legal Risks Section -->
+        <div id="legal-risks" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Legal Risks</h2>
+            <p class="text-muted-foreground mb-6">Identify and mitigate legal risks.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="legal-risks-q1" step="14" question="What are potential legal risks?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="legal-risks-q2" step="15" question="How will you mitigate these risks?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed the entire legal model." buttonText="Complete Legal Model"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 <div class=" h-[300px]"></div>
-{{> floating-form steps=steps}}
+
+<script>
+    // Pill text variations for legal model sections
+    const pillFullTexts = [
+        '1. Legal Structure',
+        '2. Incorporation',
+        '3. Contracts',
+        '4. Intellectual Property',
+        '5. Compliance',
+        '6. Employment Law',
+        '7. Tax Compliance',
+        '8. Legal Risks'
+    ];
+    const pillNumbers = ['1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.'];
+
+    function addHoverListeners() {
+        document.querySelectorAll('.step-pill').forEach((pill, index) => {
+            pill.addEventListener('mouseenter', () => {
+                if (!pill.classList.contains('bg-primary')) {
+                    pill.textContent = pillFullTexts[index];
+                }
+            });
+            pill.addEventListener('mouseleave', () => {
+                if (!pill.classList.contains('bg-primary')) {
+                    pill.textContent = pillNumbers[index];
+                }
+            });
+        });
+    }
+
+    // Function to show section and update UI
+    function showSection(sectionIndex) {
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(sec => {
+            sec.style.display = 'none';
+        });
+        // Show target section
+        const sectionIds = [
+            'legal-structure',
+            'incorporation',
+            'contracts',
+            'intellectual-property',
+            'compliance',
+            'employment-law',
+            'tax-compliance',
+            'legal-risks'
+        ];
+        const targetSection = document.getElementById(sectionIds[sectionIndex]);
+        if (targetSection) {
+            targetSection.style.display = 'block';
+        }
+
+        // Update progress bar
+        const progressBar = document.getElementById('progress-fill');
+        const width = ((sectionIndex + 1) / 8) * 100 + '%';
+        progressBar.style.width = width;
+
+        // Update pills
+        document.querySelectorAll('.step-pill').forEach((pill, index) => {
+            pill.classList.remove('bg-primary', 'text-primary-foreground');
+            pill.classList.add('bg-muted', 'text-muted-foreground');
+            if (index === sectionIndex) {
+                pill.classList.remove('bg-muted', 'text-muted-foreground');
+                pill.classList.add('bg-primary', 'text-primary-foreground');
+                pill.textContent = pillFullTexts[index];
+            } else {
+                pill.textContent = pillNumbers[index];
+            }
+        });
+    }
+
+    // Add click listeners to pills
+    document.querySelectorAll('.step-pill').forEach((pill, index) => {
+        pill.addEventListener('click', () => {
+            showSection(index);
+        });
+    });
+
+    // Add click listeners to move next buttons
+    document.querySelectorAll('.move-next-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const currentSection = btn.closest('.section');
+            const sectionIds = ['legal-structure', 'incorporation', 'contracts', 'intellectual-property', 'compliance', 'employment-law', 'tax-compliance', 'legal-risks'];
+            const currentIndex = sectionIds.indexOf(currentSection.id);
+            if (currentIndex < 7) {
+                showSection(currentIndex + 1);
+            } else {
+                // Last section
+                alert('Legal model completed!');
+            }
+        });
+    });
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+    const activeStep = {{#if activeStep}}{{activeStep}}{{else}}1{{/if}};
+    showSection(activeStep - 1); // activeStep is 1-based, index is 0-based
+
+    addHoverListeners();
+    });
+</script>

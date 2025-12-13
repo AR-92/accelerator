@@ -1,5 +1,353 @@
 {{> progress-bar activeStep=activeStep}}
-{{> model-header title="Business Model Report" description="Comprehensive business development and validation overview" ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
-<main class="flex flex-col mx-auto items-center justify-center"></main>
+
+{{> model-header title="Business Model Report" description="Comprehensive business development and validation overview"
+ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
+
+<!-- Mixed Progress Bar and Pills Navigation -->
+<div class="flex justify-center mb-6">
+    <div class="relative w-full max-w-[900px]">
+        <!-- Progress Bar Background -->
+        <div class="absolute top-1/2 left-0 right-0 h-1 bg-muted rounded-full transform -translate-y-1/2"></div>
+        <!-- Progress Bar Fill -->
+        <div id="progress-fill"
+            class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"
+            style="width: 25%"></div>
+
+        <!-- Pills Overlay -->
+        <div class="relative flex justify-between items-center">
+            <span
+                class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10"
+                data-section="business-overview">Business Overview</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="value-proposition">2.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="market-opportunity">3.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="competitive-landscape">4.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="revenue-model">5.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="operations-plan">6.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="financial-projections">7.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="risk-management">8.</span>
+        </div>
+    </div>
+</div>
+
+<main class="flex flex-col mx-auto items-center justify-center">
+    <div class="sections-container">
+        <!-- Business Overview Section -->
+        <div id="business-overview" class="section mb-6">
+            <h2 class="text-xl font-semibold mb-4">Business Overview</h2>
+            <p class="text-muted-foreground mb-6">Provide a high-level overview of your business.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="business-overview-q1" step="1" question="What is your business idea?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the business model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Value Proposition Section -->
+        <div id="value-proposition" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Value Proposition</h2>
+            <p class="text-muted-foreground mb-6">Define what makes your business unique.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="value-proposition-q1" step="2" question="What problem does your business solve?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="value-proposition-q2" step="3" question="What is your unique value proposition?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the business model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Opportunity Section -->
+        <div id="market-opportunity" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Market Opportunity</h2>
+            <p class="text-muted-foreground mb-6">Analyze the market potential for your business.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="market-opportunity-q1" step="4" question="Who is your target market?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="market-opportunity-q2" step="5" question="What is the size of your market?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the business model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Competitive Landscape Section -->
+        <div id="competitive-landscape" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Competitive Landscape</h2>
+            <p class="text-muted-foreground mb-6">Identify your competitors and your competitive advantage.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="competitive-landscape-q1" step="6" question="Who are your main competitors?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="competitive-landscape-q2" step="7" question="What is your competitive advantage?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the business model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue Model Section -->
+        <div id="revenue-model" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Revenue Model</h2>
+            <p class="text-muted-foreground mb-6">Describe how your business will generate revenue.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="revenue-model-q1" step="8" question="What is your primary revenue stream?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="revenue-model-q2" step="9" question="How will you price your products/services?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the business model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operations Plan Section -->
+        <div id="operations-plan" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Operations Plan</h2>
+            <p class="text-muted-foreground mb-6">Outline how your business will operate day-to-day.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="operations-plan-q1" step="10" question="What are your key operational processes?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="operations-plan-q2" step="11" question="What resources do you need to operate?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the business model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Projections Section -->
+        <div id="financial-projections" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Financial Projections</h2>
+            <p class="text-muted-foreground mb-6">Project your financial performance.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="financial-projections-q1" step="12" question="What are your startup costs?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="financial-projections-q2" step="13" question="What are your projected revenues?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the business model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Management Section -->
+        <div id="risk-management" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Risk Management</h2>
+            <p class="text-muted-foreground mb-6">Identify and plan for potential risks.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="risk-management-q1" step="14" question="What are the main risks to your business?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="risk-management-q2" step="15" question="How will you mitigate these risks?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed the entire business model." buttonText="Complete Business Model"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 <div class=" h-[300px]"></div>
-{{> floating-form steps=steps}}
+
+<script>
+    // Pill text variations for business model sections
+    const pillFullTexts = [
+        '1. Business Overview',
+        '2. Value Proposition',
+        '3. Market Opportunity',
+        '4. Competitive Landscape',
+        '5. Revenue Model',
+        '6. Operations Plan',
+        '7. Financial Projections',
+        '8. Risk Management'
+    ];
+    const pillNumbers = ['1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.'];
+
+    function addHoverListeners() {
+        document.querySelectorAll('.step-pill').forEach((pill, index) => {
+            pill.addEventListener('mouseenter', () => {
+                if (!pill.classList.contains('bg-primary')) {
+                    pill.textContent = pillFullTexts[index];
+                }
+            });
+            pill.addEventListener('mouseleave', () => {
+                if (!pill.classList.contains('bg-primary')) {
+                    pill.textContent = pillNumbers[index];
+                }
+            });
+        });
+    }
+
+    // Function to show section and update UI
+    function showSection(sectionIndex) {
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(sec => {
+            sec.style.display = 'none';
+        });
+        // Show target section
+        const sectionIds = [
+            'business-overview',
+            'value-proposition',
+            'market-opportunity',
+            'competitive-landscape',
+            'revenue-model',
+            'operations-plan',
+            'financial-projections',
+            'risk-management'
+        ];
+        const targetSection = document.getElementById(sectionIds[sectionIndex]);
+        if (targetSection) {
+            targetSection.style.display = 'block';
+        }
+
+        // Update progress bar
+        const progressBar = document.getElementById('progress-fill');
+        const width = ((sectionIndex + 1) / 8) * 100 + '%';
+        progressBar.style.width = width;
+
+        // Update pills
+        document.querySelectorAll('.step-pill').forEach((pill, index) => {
+            pill.classList.remove('bg-primary', 'text-primary-foreground');
+            pill.classList.add('bg-muted', 'text-muted-foreground');
+            if (index === sectionIndex) {
+                pill.classList.remove('bg-muted', 'text-muted-foreground');
+                pill.classList.add('bg-primary', 'text-primary-foreground');
+                pill.textContent = pillFullTexts[index];
+            } else {
+                pill.textContent = pillNumbers[index];
+            }
+        });
+    }
+
+    // Add click listeners to pills
+    document.querySelectorAll('.step-pill').forEach((pill, index) => {
+        pill.addEventListener('click', () => {
+            showSection(index);
+        });
+    });
+
+    // Add click listeners to move next buttons
+    document.querySelectorAll('.move-next-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const currentSection = btn.closest('.section');
+            const sectionIds = ['business-overview', 'value-proposition', 'market-opportunity', 'competitive-landscape', 'revenue-model', 'operations-plan', 'financial-projections', 'risk-management'];
+            const currentIndex = sectionIds.indexOf(currentSection.id);
+            if (currentIndex < 7) {
+                showSection(currentIndex + 1);
+            } else {
+                // Last section
+                alert('Business model completed!');
+            }
+        });
+    });
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+    const activeStep = {{#if activeStep}}{{activeStep}}{{else}}1{{/if}};
+    showSection(activeStep - 1); // activeStep is 1-based, index is 0-based
+
+    addHoverListeners();
+    });
+</script>

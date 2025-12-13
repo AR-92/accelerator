@@ -1,5 +1,353 @@
 {{> progress-bar activeStep=activeStep}}
-{{> model-header title="Funding Model Report" description="Comprehensive funding development and validation overview" ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
-<main class="flex flex-col mx-auto items-center justify-center"></main>
+
+{{> model-header title="Funding Model Report" description="Comprehensive funding strategy and investment overview"
+ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
+
+<!-- Mixed Progress Bar and Pills Navigation -->
+<div class="flex justify-center mb-6">
+    <div class="relative w-full max-w-[900px]">
+        <!-- Progress Bar Background -->
+        <div class="absolute top-1/2 left-0 right-0 h-1 bg-muted rounded-full transform -translate-y-1/2"></div>
+        <!-- Progress Bar Fill -->
+        <div id="progress-fill"
+            class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"
+            style="width: 25%"></div>
+
+        <!-- Pills Overlay -->
+        <div class="relative flex justify-between items-center">
+            <span
+                class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10"
+                data-section="funding-overview">Funding Overview</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="bootstrapping">2.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="angel-investors">3.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="venture-capital">4.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="crowdfunding">5.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="loans">6.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="grants">7.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="exit-strategy">8.</span>
+        </div>
+    </div>
+</div>
+
+<main class="flex flex-col mx-auto items-center justify-center">
+    <div class="sections-container">
+        <!-- Funding Overview Section -->
+        <div id="funding-overview" class="section mb-6">
+            <h2 class="text-xl font-semibold mb-4">Funding Overview</h2>
+            <p class="text-muted-foreground mb-6">Summarize your funding needs and strategy.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="funding-overview-q1" step="1" question="How much funding do you need?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the funding model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrapping Section -->
+        <div id="bootstrapping" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Bootstrapping</h2>
+            <p class="text-muted-foreground mb-6">Explore self-funding options.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="bootstrapping-q1" step="2" question="What personal funds do you have?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="bootstrapping-q2" step="3" question="How will you minimize expenses?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the funding model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Angel Investors Section -->
+        <div id="angel-investors" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Angel Investors</h2>
+            <p class="text-muted-foreground mb-6">Plan for angel investor funding.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="angel-investors-q1" step="4" question="Who are potential angel investors?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="angel-investors-q2" step="5" question="What equity will you offer?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the funding model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Venture Capital Section -->
+        <div id="venture-capital" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Venture Capital</h2>
+            <p class="text-muted-foreground mb-6">Consider venture capital options.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="venture-capital-q1" step="6" question="Which VCs are you targeting?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="venture-capital-q2" step="7" question="What is your pitch deck like?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the funding model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crowdfunding Section -->
+        <div id="crowdfunding" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Crowdfunding</h2>
+            <p class="text-muted-foreground mb-6">Plan your crowdfunding campaign.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="crowdfunding-q1" step="8" question="Which platform will you use?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="crowdfunding-q2" step="9" question="What rewards will you offer?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the funding model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loans Section -->
+        <div id="loans" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Loans</h2>
+            <p class="text-muted-foreground mb-6">Explore loan options.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="loans-q1" step="10" question="What type of loan do you need?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="loans-q2" step="11" question="What is your repayment plan?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the funding model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grants Section -->
+        <div id="grants" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Grants</h2>
+            <p class="text-muted-foreground mb-6">Apply for grants and subsidies.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="grants-q1" step="12" question="Which grants are you eligible for?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="grants-q2" step="13" question="What is your grant application strategy?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the funding model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exit Strategy Section -->
+        <div id="exit-strategy" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Exit Strategy</h2>
+            <p class="text-muted-foreground mb-6">Plan for investor exit.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="exit-strategy-q1" step="14" question="What is your exit strategy?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="exit-strategy-q2" step="15" question="When do you plan to exit?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed the entire funding model." buttonText="Complete Funding Model"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 <div class=" h-[300px]"></div>
-{{> floating-form steps=steps}}
+
+<script>
+    // Pill text variations for funding model sections
+    const pillFullTexts = [
+        '1. Funding Overview',
+        '2. Bootstrapping',
+        '3. Angel Investors',
+        '4. Venture Capital',
+        '5. Crowdfunding',
+        '6. Loans',
+        '7. Grants',
+        '8. Exit Strategy'
+    ];
+    const pillNumbers = ['1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.'];
+
+    function addHoverListeners() {
+        document.querySelectorAll('.step-pill').forEach((pill, index) => {
+            pill.addEventListener('mouseenter', () => {
+                if (!pill.classList.contains('bg-primary')) {
+                    pill.textContent = pillFullTexts[index];
+                }
+            });
+            pill.addEventListener('mouseleave', () => {
+                if (!pill.classList.contains('bg-primary')) {
+                    pill.textContent = pillNumbers[index];
+                }
+            });
+        });
+    }
+
+    // Function to show section and update UI
+    function showSection(sectionIndex) {
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(sec => {
+            sec.style.display = 'none';
+        });
+        // Show target section
+        const sectionIds = [
+            'funding-overview',
+            'bootstrapping',
+            'angel-investors',
+            'venture-capital',
+            'crowdfunding',
+            'loans',
+            'grants',
+            'exit-strategy'
+        ];
+        const targetSection = document.getElementById(sectionIds[sectionIndex]);
+        if (targetSection) {
+            targetSection.style.display = 'block';
+        }
+
+        // Update progress bar
+        const progressBar = document.getElementById('progress-fill');
+        const width = ((sectionIndex + 1) / 8) * 100 + '%';
+        progressBar.style.width = width;
+
+        // Update pills
+        document.querySelectorAll('.step-pill').forEach((pill, index) => {
+            pill.classList.remove('bg-primary', 'text-primary-foreground');
+            pill.classList.add('bg-muted', 'text-muted-foreground');
+            if (index === sectionIndex) {
+                pill.classList.remove('bg-muted', 'text-muted-foreground');
+                pill.classList.add('bg-primary', 'text-primary-foreground');
+                pill.textContent = pillFullTexts[index];
+            } else {
+                pill.textContent = pillNumbers[index];
+            }
+        });
+    }
+
+    // Add click listeners to pills
+    document.querySelectorAll('.step-pill').forEach((pill, index) => {
+        pill.addEventListener('click', () => {
+            showSection(index);
+        });
+    });
+
+    // Add click listeners to move next buttons
+    document.querySelectorAll('.move-next-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const currentSection = btn.closest('.section');
+            const sectionIds = ['funding-overview', 'bootstrapping', 'angel-investors', 'venture-capital', 'crowdfunding', 'loans', 'grants', 'exit-strategy'];
+            const currentIndex = sectionIds.indexOf(currentSection.id);
+            if (currentIndex < 7) {
+                showSection(currentIndex + 1);
+            } else {
+                // Last section
+                alert('Funding model completed!');
+            }
+        });
+    });
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+    const activeStep = {{#if activeStep}}{{activeStep}}{{else}}1{{/if}};
+    showSection(activeStep - 1); // activeStep is 1-based, index is 0-based
+
+    addHoverListeners();
+    });
+</script>

@@ -2,7 +2,7 @@
     href="/idea-detail?ideaId={{id}}" draggable="false"
     data-id="{{id}}" data-status="{{status}}" data-type="{{category}}"
     data-favorite="{{is_favorite}}">
-    <button onclick="redirectToPopulate('{{id}}'); return false;"
+    <button data-populate-id="{{id}}"
         class="absolute top-2 right-2 text-muted-foreground hover:text-primary cursor-pointer">
 
         {{{icon 'copy' class='w-4 h-4'}}}

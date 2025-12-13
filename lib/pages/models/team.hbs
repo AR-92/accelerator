@@ -1,5 +1,353 @@
 {{> progress-bar activeStep=activeStep}}
-{{> model-header title="Team Model Report" description="Comprehensive team development and validation overview" ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
-<main class="flex flex-col mx-auto items-center justify-center"></main>
+
+{{> model-header title="Team Model Report" description="Comprehensive team building and management overview"
+ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
+
+<!-- Mixed Progress Bar and Pills Navigation -->
+<div class="flex justify-center mb-6">
+    <div class="relative w-full max-w-[900px]">
+        <!-- Progress Bar Background -->
+        <div class="absolute top-1/2 left-0 right-0 h-1 bg-muted rounded-full transform -translate-y-1/2"></div>
+        <!-- Progress Bar Fill -->
+        <div id="progress-fill"
+            class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"
+            style="width: 25%"></div>
+
+        <!-- Pills Overlay -->
+        <div class="relative flex justify-between items-center">
+            <span
+                class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10"
+                data-section="team-structure">Team Structure</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="roles-responsibilities">2.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="recruitment">3.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="onboarding">4.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="team-culture">5.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="performance-management">6.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="compensation">7.</span>
+            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
+                data-section="team-development">8.</span>
+        </div>
+    </div>
+</div>
+
+<main class="flex flex-col mx-auto items-center justify-center">
+    <div class="sections-container">
+        <!-- Team Structure Section -->
+        <div id="team-structure" class="section mb-6">
+            <h2 class="text-xl font-semibold mb-4">Team Structure</h2>
+            <p class="text-muted-foreground mb-6">Define your organizational hierarchy.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="team-structure-q1" step="1" question="What is your team structure?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the team model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roles and Responsibilities Section -->
+        <div id="roles-responsibilities" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Roles and Responsibilities</h2>
+            <p class="text-muted-foreground mb-6">Outline job roles and duties.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="roles-responsibilities-q1" step="2" question="What are the key roles?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="roles-responsibilities-q2" step="3" question="What are their responsibilities?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the team model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recruitment Section -->
+        <div id="recruitment" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Recruitment</h2>
+            <p class="text-muted-foreground mb-6">Plan your hiring strategy.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="recruitment-q1" step="4" question="How will you find candidates?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="recruitment-q2" step="5" question="What are your hiring criteria?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the team model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onboarding Section -->
+        <div id="onboarding" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Onboarding</h2>
+            <p class="text-muted-foreground mb-6">Develop a process for new hires.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="onboarding-q1" step="6" question="What is your onboarding process?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="onboarding-q2" step="7" question="How long does it take?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the team model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Culture Section -->
+        <div id="team-culture" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Team Culture</h2>
+            <p class="text-muted-foreground mb-6">Foster a positive work environment.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="team-culture-q1" step="8" question="What is your company culture?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="team-culture-q2" step="9" question="How will you maintain it?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the team model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Management Section -->
+        <div id="performance-management" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Performance Management</h2>
+            <p class="text-muted-foreground mb-6">Monitor and improve employee performance.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="performance-management-q1" step="10" question="How will you evaluate performance?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="performance-management-q2" step="11" question="What feedback mechanisms will you use?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the team model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Compensation Section -->
+        <div id="compensation" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Compensation</h2>
+            <p class="text-muted-foreground mb-6">Design fair pay and benefits.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="compensation-q1" step="12" question="What is your compensation structure?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="compensation-q2" step="13" question="What benefits will you offer?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the team model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Development Section -->
+        <div id="team-development" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4">Team Development</h2>
+            <p class="text-muted-foreground mb-6">Invest in employee growth.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
+                    <div class="flex-1">
+                        {{> question-block id="team-development-q1" step="14" question="What training will you provide?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 mb-6">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                    <div class="flex-1">
+                        {{> question-block id="team-development-q2" step="15" question="How will you support career growth?"}}
+                    </div>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed the entire team model." buttonText="Complete Team Model"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 <div class=" h-[300px]"></div>
-{{> floating-form steps=steps}}
+
+<script>
+    // Pill text variations for team model sections
+    const pillFullTexts = [
+        '1. Team Structure',
+        '2. Roles and Responsibilities',
+        '3. Recruitment',
+        '4. Onboarding',
+        '5. Team Culture',
+        '6. Performance Management',
+        '7. Compensation',
+        '8. Team Development'
+    ];
+    const pillNumbers = ['1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.'];
+
+    function addHoverListeners() {
+        document.querySelectorAll('.step-pill').forEach((pill, index) => {
+            pill.addEventListener('mouseenter', () => {
+                if (!pill.classList.contains('bg-primary')) {
+                    pill.textContent = pillFullTexts[index];
+                }
+            });
+            pill.addEventListener('mouseleave', () => {
+                if (!pill.classList.contains('bg-primary')) {
+                    pill.textContent = pillNumbers[index];
+                }
+            });
+        });
+    }
+
+    // Function to show section and update UI
+    function showSection(sectionIndex) {
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(sec => {
+            sec.style.display = 'none';
+        });
+        // Show target section
+        const sectionIds = [
+            'team-structure',
+            'roles-responsibilities',
+            'recruitment',
+            'onboarding',
+            'team-culture',
+            'performance-management',
+            'compensation',
+            'team-development'
+        ];
+        const targetSection = document.getElementById(sectionIds[sectionIndex]);
+        if (targetSection) {
+            targetSection.style.display = 'block';
+        }
+
+        // Update progress bar
+        const progressBar = document.getElementById('progress-fill');
+        const width = ((sectionIndex + 1) / 8) * 100 + '%';
+        progressBar.style.width = width;
+
+        // Update pills
+        document.querySelectorAll('.step-pill').forEach((pill, index) => {
+            pill.classList.remove('bg-primary', 'text-primary-foreground');
+            pill.classList.add('bg-muted', 'text-muted-foreground');
+            if (index === sectionIndex) {
+                pill.classList.remove('bg-muted', 'text-muted-foreground');
+                pill.classList.add('bg-primary', 'text-primary-foreground');
+                pill.textContent = pillFullTexts[index];
+            } else {
+                pill.textContent = pillNumbers[index];
+            }
+        });
+    }
+
+    // Add click listeners to pills
+    document.querySelectorAll('.step-pill').forEach((pill, index) => {
+        pill.addEventListener('click', () => {
+            showSection(index);
+        });
+    });
+
+    // Add click listeners to move next buttons
+    document.querySelectorAll('.move-next-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const currentSection = btn.closest('.section');
+            const sectionIds = ['team-structure', 'roles-responsibilities', 'recruitment', 'onboarding', 'team-culture', 'performance-management', 'compensation', 'team-development'];
+            const currentIndex = sectionIds.indexOf(currentSection.id);
+            if (currentIndex < 7) {
+                showSection(currentIndex + 1);
+            } else {
+                // Last section
+                alert('Team model completed!');
+            }
+        });
+    });
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+    const activeStep = {{#if activeStep}}{{activeStep}}{{else}}1{{/if}};
+    showSection(activeStep - 1); // activeStep is 1-based, index is 0-based
+
+    addHoverListeners();
+    });
+</script>
