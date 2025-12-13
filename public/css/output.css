@@ -26,9 +26,7 @@
     --color-green-400: oklch(79.2% 0.209 151.711);
     --color-green-500: oklch(72.3% 0.219 149.579);
     --color-green-600: oklch(62.7% 0.194 149.214);
-    --color-green-700: oklch(52.7% 0.154 150.069);
     --color-green-800: oklch(44.8% 0.119 151.328);
-    --color-green-900: oklch(39.3% 0.095 152.535);
     --color-emerald-400: oklch(76.5% 0.177 163.223);
     --color-emerald-500: oklch(69.6% 0.17 162.48);
     --color-blue-50: oklch(97% 0.014 254.604);
@@ -370,6 +368,15 @@
   .top-1\/2 {
     top: calc(1/2 * 100%);
   }
+  .top-1\/3 {
+    top: calc(1/3 * 100%);
+  }
+  .top-1\/4 {
+    top: calc(1/4 * 100%);
+  }
+  .top-1\/5 {
+    top: calc(1/5 * 100%);
+  }
   .top-2 {
     top: calc(var(--spacing) * 2);
   }
@@ -379,14 +386,29 @@
   .top-6 {
     top: calc(var(--spacing) * 6);
   }
+  .top-\[-10px\] {
+    top: -10px;
+  }
+  .top-\[-40px\] {
+    top: -40px;
+  }
   .top-\[3\.1rem\] {
     top: 3.1rem;
   }
   .top-\[20\%\] {
     top: 20%;
   }
+  .top-\[20px\] {
+    top: 20px;
+  }
   .top-\[50\%\] {
     top: 50%;
+  }
+  .top-\[50px\] {
+    top: 50px;
+  }
+  .top-\[120px\] {
+    top: 120px;
   }
   .-right-1 {
     right: calc(var(--spacing) * -1);
@@ -537,6 +559,9 @@
   }
   .my-6 {
     margin-block: calc(var(--spacing) * 6);
+  }
+  .-mt-2 {
+    margin-top: calc(var(--spacing) * -2);
   }
   .-mt-6 {
     margin-top: calc(var(--spacing) * -6);
@@ -1330,6 +1355,9 @@
   }
   .self-start {
     align-self: flex-start;
+  }
+  .justify-self-end {
+    justify-self: flex-end;
   }
   .truncate {
     overflow: hidden;
