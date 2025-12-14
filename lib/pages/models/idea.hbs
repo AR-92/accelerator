@@ -290,6 +290,11 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
 <div class=" h-[300px]"></div>
 
 <script>
+    window.populateIdea = JSON.parse('{{{populateIdeaJson}}}');
+    console.log('populateIdea set for idea model:', window.populateIdea);
+</script>
+
+<script>
     // Pill text variations for idea model sections
     const pillFullTexts = [
         '1. Executive Summary',
