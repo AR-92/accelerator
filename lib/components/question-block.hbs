@@ -49,19 +49,24 @@
                         </span>
                     </div>
 
-                    <!-- Description wrapper -->
-                    <div class=" pl-4 pr-2 relative">
-                        <label for="assistant-prompt" class="sr-only">Describe your
-                            project requirements</label>
-                        <textarea id="{{id}}-assistant-prompt" name="prompt"
-                            placeholder="Describe your project requirements..."
-                            aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
-                            class="flex w-full rounded-md border-0 bg-transparent p-0 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                            required=""
-                            style="min-height: 2.5rem; resize: none; overflow: hidden; height: 49px;"></textarea>
-                        <p id="prompt-help" class="sr-only">Enter your project
-                            description or requirements</p>
-                    </div>
+                     <!-- Token estimate -->
+                     <div class="pl-4 pr-2">
+                         <span id="{{id}}-token-estimate" class="text-xs text-muted-foreground">Estimated tokens: 0</span>
+                     </div>
+
+                     <!-- Description wrapper -->
+                     <div class=" pl-4 pr-2 relative">
+                         <label for="assistant-prompt" class="sr-only">Describe your
+                             project requirements</label>
+                         <textarea id="{{id}}-assistant-prompt" name="prompt"
+                             placeholder="Describe your project requirements..."
+                             aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
+                             class="flex w-full rounded-md border-0 bg-transparent p-0 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                             required=""
+                             style="min-height: 2.5rem; resize: none; overflow: hidden; height: 49px;"></textarea>
+                         <p id="prompt-help" class="sr-only">Enter your project
+                             description or requirements</p>
+                     </div>
 
                     <!-- Tags wrapper -->
                     <div class="pl-4 pr-2">
@@ -273,7 +278,7 @@
 
      <!-- Chat Interface (appears below toolbar when Chat button is clicked) -->
      <div id="{{id}}-chat-container"
-         class="hidden border border-border bg-card rounded-lg overflow-hidden"
+         class="hidden border-t border-border bg-card rounded-md overflow-hidden"
          role="log" aria-live="polite" aria-label="AI chat conversation">
         <!-- Chat Messages -->
         <div id="{{id}}-chat-messages" class="max-h-96 overflow-y-auto p-6 space-y-4" role="log" aria-live="polite">
@@ -448,6 +453,13 @@
             descriptionTextarea.style.height = descriptionTextarea.scrollHeight + 'px';
         }
 
+        // Token estimate
+        function updateTokenEstimate() {
+            const chars = descriptionTextarea.value.length;
+            const tokens = Math.ceil(chars / 4);
+            document.getElementById('{{id}}-token-estimate').textContent = `Estimated tokens: ${tokens}`;
+        }
+
         // Character counter
         function updateCharCounter() {
             const length = descriptionTextarea.value.length;
@@ -458,6 +470,7 @@
             } else {
                 counter.className = 'text-xs text-green-500/60 mr-2';
             }
+            updateTokenEstimate();
             autoExpandTextarea();
         }
 
@@ -468,6 +481,7 @@
 
         descriptionTextarea.addEventListener('input', updateCharCounter);
         updateCharCounter();
+        updateTokenEstimate();
 
         // Ensure textarea height is adjusted for pre-filled content
         setTimeout(() => {
