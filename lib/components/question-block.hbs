@@ -49,9 +49,9 @@
                         </span>
                     </div>
 
-                     <!-- Token estimate -->
+                     <!-- Credit estimate -->
                      <div class="pl-4 pr-2">
-                         <span id="{{id}}-token-estimate" class="text-xs text-muted-foreground">Estimated tokens: 0</span>
+                         <span id="{{id}}-credit-estimate" class="text-xs text-muted-foreground">Estimated credits: 10</span>
                      </div>
 
                      <!-- Description wrapper -->
@@ -453,13 +453,6 @@
             descriptionTextarea.style.height = descriptionTextarea.scrollHeight + 'px';
         }
 
-        // Token estimate
-        function updateTokenEstimate() {
-            const chars = descriptionTextarea.value.length;
-            const tokens = Math.ceil(chars / 4);
-            document.getElementById('{{id}}-token-estimate').textContent = `Estimated tokens: ${tokens}`;
-        }
-
         // Character counter
         function updateCharCounter() {
             const length = descriptionTextarea.value.length;
@@ -470,7 +463,6 @@
             } else {
                 counter.className = 'text-xs text-green-500/60 mr-2';
             }
-            updateTokenEstimate();
             autoExpandTextarea();
         }
 
@@ -481,7 +473,6 @@
 
         descriptionTextarea.addEventListener('input', updateCharCounter);
         updateCharCounter();
-        updateTokenEstimate();
 
         // Ensure textarea height is adjusted for pre-filled content
         setTimeout(() => {
