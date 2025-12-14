@@ -5,15 +5,15 @@
             {{>idea-creation}}
 
             <!-- Ideas Grid Section -->
-            <div class="mt-8">
-                <div class="my-6">
+            <div class="mt-8 mx-20">
                     <div class="columns-1 sm:columns-1 md:columns-2 lg:columns-3 column-gap-6 relative">
                         {{#each ideas}}
                         {{> idea-card .}}
                         {{/each}}
                     </div>
-                </div>
             </div>
         </div>
     </main>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

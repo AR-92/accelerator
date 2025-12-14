@@ -16,7 +16,7 @@ router.get("/models/business", requireAuth, async (req, res) => {
     });
   }
 
-  let populateIdeaJson = null;
+  let populateIdeaJson = "null";
   if (req.query.ideaId) {
     const { data: idea, error } = await supabase
       .from("ideas")
@@ -78,7 +78,7 @@ router.get("/models/business", requireAuth, async (req, res) => {
   let ideaTitle = null;
   let ideaCategory = null;
   let ideaTags = null;
-  if (req.query.ideaId && populateIdeaJson !== null) {
+  if (req.query.ideaId && populateIdeaJson !== "null") {
     try {
       const ideaData = JSON.parse(
         populateIdeaJson
@@ -97,7 +97,7 @@ router.get("/models/business", requireAuth, async (req, res) => {
 
   // Create executive summary text for the question block (only description)
   let executiveSummaryText = "";
-  if (req.query.ideaId && populateIdeaJson !== null) {
+  if (req.query.ideaId && populateIdeaJson !== "null") {
     try {
       const ideaData = JSON.parse(
         populateIdeaJson
@@ -185,7 +185,7 @@ router.get("/models/financial", requireAuth, async (req, res) => {
     });
   }
 
-  let populateIdeaJson = null;
+  let populateIdeaJson = "null";
   if (req.query.ideaId) {
     const { data: idea, error } = await supabase
       .from("ideas")
@@ -247,7 +247,7 @@ router.get("/models/financial", requireAuth, async (req, res) => {
   let ideaTitle = null;
   let ideaCategory = null;
   let ideaTags = null;
-  if (req.query.ideaId && populateIdeaJson !== null) {
+  if (req.query.ideaId && populateIdeaJson !== "null") {
     try {
       const ideaData = JSON.parse(
         populateIdeaJson
@@ -266,7 +266,7 @@ router.get("/models/financial", requireAuth, async (req, res) => {
 
   // Create executive summary text for the question block (only description)
   let executiveSummaryText = "";
-  if (req.query.ideaId && populateIdeaJson !== null) {
+  if (req.query.ideaId && populateIdeaJson !== "null") {
     try {
       const ideaData = JSON.parse(
         populateIdeaJson
@@ -343,7 +343,7 @@ router.get("/models/legal", requireAuth, async (req, res) => {
     });
   }
 
-  let populateIdeaJson = null;
+  let populateIdeaJson = "null";
   if (req.query.ideaId) {
     const { data: idea, error } = await supabase
       .from("ideas")
@@ -405,7 +405,7 @@ router.get("/models/legal", requireAuth, async (req, res) => {
   let ideaTitle = null;
   let ideaCategory = null;
   let ideaTags = null;
-  if (req.query.ideaId && populateIdeaJson !== null) {
+  if (req.query.ideaId && populateIdeaJson !== "null") {
     try {
       const ideaData = JSON.parse(
         populateIdeaJson
@@ -424,7 +424,7 @@ router.get("/models/legal", requireAuth, async (req, res) => {
 
   // Create executive summary text for the question block (only description)
   let executiveSummaryText = "";
-  if (req.query.ideaId && populateIdeaJson !== null) {
+  if (req.query.ideaId && populateIdeaJson !== "null") {
     try {
       const ideaData = JSON.parse(
         populateIdeaJson
@@ -501,7 +501,7 @@ router.get("/models/marketing", requireAuth, async (req, res) => {
     });
   }
 
-  let populateIdeaJson = null;
+  let populateIdeaJson = "null";
   if (req.query.ideaId) {
     const { data: idea, error } = await supabase
       .from("ideas")
@@ -563,7 +563,7 @@ router.get("/models/marketing", requireAuth, async (req, res) => {
   let ideaTitle = null;
   let ideaCategory = null;
   let ideaTags = null;
-  if (req.query.ideaId && populateIdeaJson !== null) {
+  if (req.query.ideaId && populateIdeaJson !== "null") {
     try {
       const ideaData = JSON.parse(
         populateIdeaJson
@@ -582,7 +582,7 @@ router.get("/models/marketing", requireAuth, async (req, res) => {
 
   // Create executive summary text for the question block (only description)
   let executiveSummaryText = "";
-  if (req.query.ideaId && populateIdeaJson !== null) {
+  if (req.query.ideaId && populateIdeaJson !== "null") {
     try {
       const ideaData = JSON.parse(
         populateIdeaJson
@@ -670,7 +670,7 @@ router.get("/models/team", requireAuth, async (req, res) => {
     });
   }
 
-  let populateIdeaJson = null;
+  let populateIdeaJson = "null";
   if (req.query.ideaId) {
     const { data: idea, error } = await supabase
       .from("ideas")
@@ -732,7 +732,7 @@ router.get("/models/team", requireAuth, async (req, res) => {
   let ideaTitle = null;
   let ideaCategory = null;
   let ideaTags = null;
-  if (req.query.ideaId && populateIdeaJson !== null) {
+  if (req.query.ideaId && populateIdeaJson !== "null") {
     try {
       const ideaData = JSON.parse(
         populateIdeaJson
@@ -751,7 +751,7 @@ router.get("/models/team", requireAuth, async (req, res) => {
 
   // Create executive summary text for the question block (only description)
   let executiveSummaryText = "";
-  if (req.query.ideaId && populateIdeaJson !== null) {
+  if (req.query.ideaId && populateIdeaJson !== "null") {
     try {
       const ideaData = JSON.parse(
         populateIdeaJson
@@ -835,7 +835,7 @@ router.get("/models/funding", requireAuth, async (req, res) => {
     });
   }
 
-  let populateIdeaJson = null;
+  let populateIdeaJson = "null";
   if (req.query.ideaId) {
     const { data: idea, error } = await supabase
       .from("ideas")
@@ -897,7 +897,7 @@ router.get("/models/funding", requireAuth, async (req, res) => {
   let ideaTitle = null;
   let ideaCategory = null;
   let ideaTags = null;
-  if (req.query.ideaId && populateIdeaJson !== null) {
+  if (req.query.ideaId && populateIdeaJson !== "null") {
     try {
       const ideaData = JSON.parse(
         populateIdeaJson
@@ -916,7 +916,7 @@ router.get("/models/funding", requireAuth, async (req, res) => {
 
   // Create executive summary text for the question block (only description)
   let executiveSummaryText = "";
-  if (req.query.ideaId && populateIdeaJson !== null) {
+  if (req.query.ideaId && populateIdeaJson !== "null") {
     try {
       const ideaData = JSON.parse(
         populateIdeaJson

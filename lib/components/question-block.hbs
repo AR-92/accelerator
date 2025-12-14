@@ -18,19 +18,20 @@
                           <span id="{{id}}-credit-estimate" class="inline-flex items-center px-2 py-1 bg-warning/5 text-warning border border-warning/20 text-xs font-semibold rounded-full">Estimated credits: 10</span>
                      </div>
 
-                     <!-- Description wrapper -->
-                     <div class=" pl-4 pr-2 relative">
-                         <label for="assistant-prompt" class="sr-only">Describe your
-                             project requirements</label>
-                          <textarea id="{{id}}-assistant-prompt" name="prompt"
-                              placeholder="Describe your project requirements..."
-                              aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
-                              class="flex w-full rounded-md border-0 bg-transparent p-0 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                              required=""
-                              style="min-height: 2.5rem; resize: none; overflow: hidden; height: 49px;">{{description}}</textarea>
-                         <p id="prompt-help" class="sr-only">Enter your project
-                             description or requirements</p>
-                     </div>
+                      <!-- Description wrapper -->
+                      <div class=" pl-4 pr-2 relative">
+                          <label for="assistant-prompt" class="sr-only">Describe your
+                              project requirements</label>
+                           <div id="{{id}}-assistant-prompt-display" class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground min-h-[6rem] cursor-pointer whitespace-pre-wrap overflow-visible" style="display: none; white-space: pre-wrap; word-wrap: break-word; height: auto;"></div>
+                           <textarea id="{{id}}-assistant-prompt" name="prompt"
+                                placeholder="Describe your project requirements... (Markdown supported)"
+                                aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
+                                class="flex w-full rounded-md border-0 bg-transparent p-3 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-mono leading-relaxed"
+                                required=""
+                                style="min-height: 6rem; resize: vertical; overflow: auto; height: auto; line-height: 1.6;">{{description}}</textarea>
+                          <p id="prompt-help" class="sr-only">Enter your project
+                              description or requirements</p>
+                      </div>
 
 
 
@@ -134,10 +135,10 @@
         </div>
     </form>
 
-     <!-- Chat Interface (appears below toolbar when Chat button is clicked) -->
-     <div id="{{id}}-chat-container"
-         class="hidden border-t border-border bg-card rounded-md overflow-hidden"
-         role="log" aria-live="polite" aria-label="AI chat conversation">
+      <!-- Chat Interface (appears below toolbar when Chat button is clicked) -->
+      <div id="{{id}}-chat-container"
+          class="hidden border-t border-border bg-card rounded-md overflow-hidden max-w-[900px]"
+          role="log" aria-live="polite" aria-label="AI chat conversation">
         <!-- Chat Messages -->
         <div id="{{id}}-chat-messages" class="max-h-96 overflow-y-auto p-6 space-y-4" role="log" aria-live="polite">
             <div class="text-center text-muted-foreground text-sm py-8 px-4 bg-muted/30 rounded-lg border border-dashed border-border">
@@ -291,7 +292,17 @@
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
+    // Wait for marked to load
+    window.waitForMarked = function(callback) {
+        if (typeof marked !== 'undefined') {
+            callback();
+        } else {
+            setTimeout(() => window.waitForMarked(callback), 100);
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         console.log('DOMContentLoaded fired for create-idea-card');
         // Initialize form elements
@@ -299,10 +310,16 @@
         const descriptionTextarea = document.getElementById('{{id}}-assistant-prompt');
         const submitButton = form.querySelector('button[type="submit"]');
 
-        // Auto-expand textarea
+        // Auto-expand textarea to show full content
         function autoExpandTextarea() {
+            // Reset height to auto to get natural height
             descriptionTextarea.style.height = 'auto';
+            // Set height to scrollHeight to show full content
             descriptionTextarea.style.height = descriptionTextarea.scrollHeight + 'px';
+            // Ensure minimum height for better UX
+            if (descriptionTextarea.scrollHeight < 96) { // 6rem = 96px
+                descriptionTextarea.style.height = '6rem';
+            }
         }
 
         // Character counter
@@ -319,23 +336,79 @@
         }
 
         // Initialize textarea height
-        descriptionTextarea.style.minHeight = '2.5rem'; // Match the rows="2" initial height
-        descriptionTextarea.style.resize = 'none'; // Prevent manual resizing
-        descriptionTextarea.style.overflow = 'hidden'; // Hide scrollbar
+        descriptionTextarea.style.minHeight = '6rem'; // Better minimum height for Markdown editing
+        descriptionTextarea.style.resize = 'vertical'; // Allow vertical resizing
+        descriptionTextarea.style.overflow = 'auto'; // Show scrollbar when needed
 
         descriptionTextarea.addEventListener('input', updateCharCounter);
+        descriptionTextarea.addEventListener('input', autoExpandTextarea);
 
-        // Populate with description parameter if provided
-        {{#if description}}
-        descriptionTextarea.value = '{{description}}';
-        {{/if}}
+        // Handle display/edit mode toggle
+        const displayDiv = document.getElementById('{{id}}-assistant-prompt-display');
 
-        updateCharCounter();
+        // Function to render Markdown to display div
+        function renderToDisplay() {
+            const content = descriptionTextarea.value;
+            if (content.trim()) {
+                waitForMarked(() => {
+                    displayDiv.innerHTML = marked.parse(content);
+                    displayDiv.style.display = 'block';
+                    descriptionTextarea.style.display = 'none';
+                    // Small delay to ensure DOM is updated before measuring
+                    setTimeout(autoExpandDisplayDiv, 10);
+                });
+            } else {
+                // If no content, keep in edit mode
+                displayDiv.style.display = 'none';
+                descriptionTextarea.style.display = 'block';
+            }
+        }
 
-        // Ensure textarea height is adjusted for pre-filled content
-        setTimeout(() => {
-            autoExpandTextarea();
-        }, 0);
+        // Function to switch to edit mode
+        function switchToEdit() {
+            displayDiv.style.display = 'none';
+            descriptionTextarea.style.display = 'block';
+            // Auto-expand to show full content
+            setTimeout(autoExpandTextarea, 10);
+            descriptionTextarea.focus();
+        }
+
+        // Click display div to edit
+        displayDiv.addEventListener('click', switchToEdit);
+
+        // Blur textarea to render
+        descriptionTextarea.addEventListener('blur', () => {
+            if (descriptionTextarea.value.trim()) {
+                renderToDisplay();
+            }
+        });
+
+        // Auto-expand display div
+        function autoExpandDisplayDiv() {
+            // Reset height to auto to get natural height
+            displayDiv.style.height = 'auto';
+            // Set height to scrollHeight to show full content
+            displayDiv.style.height = displayDiv.scrollHeight + 'px';
+            // Ensure minimum height for better UX
+            if (displayDiv.scrollHeight < 96) { // 6rem = 96px
+                displayDiv.style.height = '6rem';
+            }
+        }
+
+        // Initialize: if textarea has content, render it; otherwise ensure textarea is properly sized
+        if (descriptionTextarea.value.trim()) {
+            // Small delay to ensure all content is loaded
+            setTimeout(() => {
+                renderToDisplay();
+            }, 50);
+        } else {
+            // Ensure textarea has proper initial height even when empty
+            setTimeout(autoExpandTextarea, 10);
+        }
+
+
+
+
 
         // Toast helper - now defined below
 
@@ -460,6 +533,11 @@
         if (resetFormBtn) {
             resetFormBtn.addEventListener('click', function (e) {
                 descriptionTextarea.value = '';
+                descriptionTextarea.dataset.originalContent = '';
+                const displayDiv = document.getElementById('{{id}}-assistant-prompt-display');
+                displayDiv.innerHTML = '';
+                displayDiv.style.display = 'none';
+                descriptionTextarea.style.display = 'block';
                 updateCharCounter();
                 showToastMessage('Form reset successfully', 'info');
             });
@@ -486,7 +564,15 @@
                     if (result.error) {
                         showToastMessage('AI error: ' + result.error, 'error');
                     } else {
+                        descriptionTextarea.dataset.originalContent = result.generated_content;
                         descriptionTextarea.value = result.generated_content;
+                        waitForMarked(() => {
+                            const displayDivGen = document.getElementById('{{id}}-assistant-prompt-display');
+                            displayDivGen.innerHTML = marked.parse(result.generated_content);
+                            displayDivGen.style.display = 'block';
+                            descriptionTextarea.style.display = 'none';
+                            autoExpandDisplayDiv();
+                        });
                         updateCharCounter();
                         showToastMessage('Description generated successfully', 'success');
                         showToastMessage('10 credits deducted for AI usage', 'warning');
@@ -705,7 +791,7 @@
                     messageGroup.innerHTML = `
                         <div class="flex flex-col space-y-1">
                             <div class="message message--ai bg-muted text-foreground px-4 py-3 rounded-2xl rounded-bl-md max-w-[80%] shadow-sm border border-border/50">
-                                ${message.content.replace(/\n/g, '<br>')}
+                                ${marked.parse(message.content)}
                             </div>
                             <time class="message-timestamp message-timestamp--ai text-xs text-muted-foreground" datetime="${isoTimestamp}">${timestamp}</time>
                         </div>

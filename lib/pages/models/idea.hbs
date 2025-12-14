@@ -291,8 +291,18 @@
 </main>
 <div class=" h-[300px]"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-    window.populateIdea = JSON.parse('{{{populateIdeaJson}}}');
+    // Wait for marked to load
+    window.waitForMarked = function(callback) {
+        if (typeof marked !== 'undefined') {
+            callback();
+        } else {
+            setTimeout(() => window.waitForMarked(callback), 100);
+        }
+    }
+
+    window.populateIdea = {{{populateIdeaJson}}};
     console.log('populateIdea set for idea model:', window.populateIdea);
 </script>
 
@@ -390,9 +400,11 @@
 
     // Initialize on load
     document.addEventListener('DOMContentLoaded', () => {
-    const activeStep = {{#if activeStep}}{{activeStep}}{{else}}1{{/if}};
-    showSection(activeStep - 1); // activeStep is 1-based, index is 0-based
+    const activeStep = 0; // Default to first section (0-based index)
+    showSection(activeStep);
 
     addHoverListeners();
     });
+</script>
+</script>
 </script>

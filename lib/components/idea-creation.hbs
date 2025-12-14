@@ -227,6 +227,7 @@
                     <div class=" pl-4 pr-2 relative">
                         <label for="assistant-prompt" class="sr-only">Describe your
                             project requirements</label>
+                        <div id="assistant-prompt-display" class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground min-h-[2.5rem] cursor-pointer whitespace-pre-wrap" style="display: none;"></div>
                         <textarea id="assistant-prompt" name="prompt"
                             placeholder="Describe your project requirements..."
                             aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
@@ -431,7 +432,18 @@
     </form>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
+    // Wait for marked to load
+    window.waitForMarked = function(callback) {
+        if (typeof marked !== 'undefined') {
+            callback();
+        } else {
+            setTimeout(() => window.waitForMarked(callback), 100);
+        }
+    }
+
     window.populateIdea = JSON.parse('{{{populateIdeaJson}}}');
     console.log('populateIdea set:', window.populateIdea);
 </script>
@@ -592,6 +604,30 @@
             console.log('No populateIdea data found');
         }
 
+        // Add click-to-edit functionality for the description field
+        waitForMarked(() => {
+            const displayDivEdit = document.getElementById('assistant-prompt-display');
+            displayDivEdit.addEventListener('click', function() {
+                if (this.style.display === 'block') {
+                    // Switch to edit mode
+                    this.style.display = 'none';
+                    descriptionTextarea.style.display = 'block';
+                    descriptionTextarea.focus();
+                }
+            });
+
+            descriptionTextarea.addEventListener('blur', function() {
+                // Switch back to display mode when losing focus
+                const content = this.value;
+                this.dataset.originalContent = content;
+                waitForMarked(() => {
+                    displayDivEdit.innerHTML = marked.parse(content);
+                    displayDivEdit.style.display = 'block';
+                    this.style.display = 'none';
+                });
+            });
+        });
+
         // AI button handlers
         async function callAIApi(endpoint, data) {
             try {
@@ -717,6 +753,8 @@
         // Generate random idea
         const randomIdeaBtn = document.querySelector('[aria-label="Generate random idea"]');
         console.log('Random idea button found:', randomIdeaBtn);
+
+        waitForMarked(() => {
         randomIdeaBtn.addEventListener('click', async function (e) {
             e.preventDefault();
 
@@ -727,16 +765,23 @@
                 if (result.error) {
                     showToastMessage('AI error: ' + result.error, 'error');
                 } else {
-                    titleSpan.innerHTML = result.title || '';
-                    categorySpan.innerHTML = result.category || '';
-                    descriptionTextarea.value = result.description || '';
-                    updateCharCounter();
-                    removeAllTags();
-                    if (result.tags) {
-                        addTagsFromArray(result.tags);
-                    }
-                    if (result.title) addTag(result.title);
-                    if (result.category) addTag(result.category);
+                        titleSpan.innerHTML = result.title || '';
+                        categorySpan.innerHTML = result.category || '';
+                            waitForMarked(() => {
+                                descriptionTextarea.dataset.originalContent = result.description || '';
+                                descriptionTextarea.value = result.description || '';
+                                const displayDivFill = document.getElementById('assistant-prompt-display');
+                                displayDivFill.innerHTML = marked.parse(result.description || '');
+                                displayDivFill.style.display = 'block';
+                                descriptionTextarea.style.display = 'none';
+                            });
+                        updateCharCounter();
+                        removeAllTags();
+                        if (result.tags) {
+                            addTagsFromArray(result.tags);
+                        }
+                        if (result.title) addTag(result.title);
+                        if (result.category) addTag(result.category);
                     showToastMessage('Random idea generated successfully', 'success');
                     showToastMessage('10 credits deducted for AI usage', 'warning');
                     if (typeof window.loadNavCreditBalance === 'function') {
@@ -851,13 +896,15 @@
         }
 
         // Reset form
-        const resetFormBtn = document.querySelector('[aria-label="Reset form"]');
+        const resetFormBtn = form.querySelector('[aria-label="Reset form"]');
         if (resetFormBtn) {
             resetFormBtn.addEventListener('click', function (e) {
-                titleSpan.innerHTML = 'Untitled';
-                categorySpan.innerHTML = 'Category';
                 descriptionTextarea.value = '';
-                removeAllTags();
+                descriptionTextarea.dataset.originalContent = '';
+                const displayDiv = document.getElementById('assistant-prompt-display');
+                displayDiv.innerHTML = '';
+                displayDiv.style.display = 'none';
+                descriptionTextarea.style.display = 'block';
                 updateCharCounter();
                 showToastMessage('Form reset successfully', 'info');
             });
@@ -900,7 +947,17 @@
 
                         // Fill description if too small or missing
                         if (!currentDescription || currentDescription.length < 100) {
-                            descriptionTextarea.value = result.description || '';
+        const randomIdeaBtn = document.querySelector('[aria-label="Generate random idea"]');
+        console.log('Random idea button found:', randomIdeaBtn);
+
+        waitForMarked(() => {
+                                descriptionTextarea.dataset.originalContent = result.description || '';
+                                descriptionTextarea.value = result.description || '';
+                                const displayDivFill = document.getElementById('assistant-prompt-display');
+                                displayDivFill.innerHTML = marked.parse(result.description || '');
+                                displayDivFill.style.display = 'block';
+                                descriptionTextarea.style.display = 'none';
+                            });
                             updateCharCounter();
                             filledCount++;
                         }
@@ -961,8 +1018,15 @@
                     if (result.error) {
                         showToastMessage('AI error: ' + result.error, 'error');
                     } else {
-                        descriptionTextarea.value = result.improved_description;
-                        updateCharCounter();
+                        waitForMarked(() => {
+                            descriptionTextarea.dataset.originalContent = result.improved_description;
+                            descriptionTextarea.value = result.improved_description;
+                            const displayDivImprove = document.getElementById('assistant-prompt-display');
+                            displayDivImprove.innerHTML = marked.parse(result.improved_description);
+                            displayDivImprove.style.display = 'block';
+                            descriptionTextarea.style.display = 'none';
+                        });
+                    updateCharCounter();
                         showToastMessage('Description improved successfully', 'success');
                         showToastMessage('10 credits deducted for AI usage', 'warning');
                         if (typeof window.loadNavCreditBalance === 'function') {
@@ -1039,11 +1103,13 @@
                     setTimeout(() => {
                         window.location.href = `/models/idea?ideaId=${data.idea_id}`;
                     }, 1000);
-                } else {
-                    const errorData = await response.json();
-                    if (typeof showToast !== 'undefined') {
-                        showToast('Error: ' + (errorData.error || 'Failed to create project'), 'error');
-                    }
+            } else {
+                const description = descriptionTextarea.value;
+                const form = document.getElementById('new-project-form');
+                if (!description.trim()) {
+                    showToastMessage('Please enter a description first', 'warning');
+                    return;
+                }
                 }
             } catch (error) {
                 console.error('Submission error:', error);
@@ -1065,6 +1131,6 @@
             }
         });
     });
-
-
+});
+</script>
 </script>
