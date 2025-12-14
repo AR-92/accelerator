@@ -54,7 +54,7 @@
                              </button>
 
                               <!-- Auto Fill with AI -->
-                               <button type="button" aria-label="Auto Fill with AI" title="Auto Fill with AI" data-question="{{question}}"
+                               <button type="button" aria-label="Auto Fill with AI" title="Auto Fill with AI" data-question="{{question}}" data-section="{{section}}"
                                    class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
 
                                   <svg class="lucide lucide-sparkles w-4 h-4" xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@
                                </button>
 
                               <!-- Improve with AI -->
-                               <button type="button" aria-label="Improve with AI" title="Improve with AI"
+                               <button type="button" aria-label="Improve with AI" title="Improve with AI" data-section="{{section}}"
                                    class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
 
                                   <svg class="lucide lucide-wand-sparkles w-4 h-4" xmlns="http://www.w3.org/2000/svg"
@@ -114,17 +114,18 @@
                         <div class="min-w-0 flex gap-2 ml-auto flex-shrink items-center">
                              <span id="{{id}}-char-counter" class="text-xs text-red-500/60 mr-2" aria-live="polite">Characters:
                                 0 / 2000</span>
-                             <button type="submit" aria-label="Save it" title="Save it"
+                             <button type="submit" aria-label="Save" title="Save"
                                  class="rounded-full border border-border inline-flex items-center justify-center gap-1 cursor-pointer text-xs text-muted-foreground hover:bg-primary-100 hover:text-primary-900 px-2 py-1 shrink-0 transition-all duration-300 group">
 
-                                 <svg class="lucide lucide-plus w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16"
-                                     height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                     stroke-linecap="round" stroke-linejoin="round">
-                                     <path d="M5 12h14"></path>
-                                     <path d="M12 5v14"></path>
-                                 </svg>
+                                  <svg class="lucide lucide-save w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16"
+                                      height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                      stroke-linecap="round" stroke-linejoin="round">
+                                      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                      <path d="M17 21v-8H7v8"></path>
+                                      <path d="M7 3v5h8"></path>
+                                  </svg>
 
-                                 <span class="inline transition-all duration-200">Save it</span>
+                                 <span class="inline transition-all duration-200">Save</span>
                              </button>
                         </div>
                     </div>
@@ -472,6 +473,7 @@
             autoFillBtn.addEventListener('click', async function (e) {
                 e.preventDefault();
                 const question = autoFillBtn.dataset.question;
+                const section = autoFillBtn.dataset.section;
                 if (!question.trim()) {
                     showToastMessage('No question available for AI generation', 'warning');
                     return;
@@ -479,7 +481,8 @@
                 setButtonLoading(autoFillBtn, true);
                 try {
                     showToastMessage('Generating description with AI...', 'info');
-                    const result = await callAIApi('generate', { question });
+                    const endpoint = section ? `generate/idea/${section}` : 'generate';
+                    const result = await callAIApi(endpoint, { question });
                     if (result.error) {
                         showToastMessage('AI error: ' + result.error, 'error');
                     } else {
@@ -506,6 +509,7 @@
             improveBtn.addEventListener('click', async function (e) {
                 e.preventDefault();
                 const description = descriptionTextarea.value;
+                const section = improveBtn.dataset.section;
                 if (!description.trim()) {
                     showToastMessage('Please enter a description first', 'warning');
                     return;
@@ -513,7 +517,8 @@
                 setButtonLoading(improveBtn, true);
                 try {
                     showToastMessage('Improving description with AI...', 'info');
-                    const result = await callAIApi('improve', { description });
+                    const endpoint = section ? `improve/idea/${section}` : 'improve';
+                    const result = await callAIApi(endpoint, { description });
                     if (result.error) {
                         showToastMessage('AI error: ' + result.error, 'error');
                     } else {
@@ -605,11 +610,12 @@
                 if (!success) {
                     submitButton.disabled = false;
                     submitButton.innerHTML = `
-                        <svg class="lucide lucide-plus w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M5 12h14"></path>
-                            <path d="M12 5v14"></path>
+                        <svg class="lucide lucide-save w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                            <path d="M17 21v-8H7v8"></path>
+                            <path d="M7 3v5h8"></path>
                         </svg>
-                        <span class="inline transition-all duration-200">Save it</span>
+                        <span class="inline transition-all duration-200">Save</span>
                     `;
                 }
             }
