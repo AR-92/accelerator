@@ -1,7 +1,7 @@
-{{> progress-bar activeStep=activeStep}}
+{{> progress-bar activeStep=activeStep ideaId=ideaId}}
 
-{{> model-header title="Idea Model Report" description="Comprehensive idea development and validation overview"
-ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
+{{> model-header title=pageTitle description="Comprehensive idea development and validation overview"
+ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ideaCategory tags=ideaTags}}
 
 <!-- Mixed Progress Bar and Pills Navigation -->
 <div class="flex justify-center mb-6">
@@ -40,14 +40,16 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes"}}
     <div class="sections-container">
         <!-- Executive Summary Section -->
         <div id="executive-summary" class="section mb-6">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Executive Summary</h2>
+            <h2 class="text-xl font-semibold mb-4 text-foreground">
+                Executive Summary
+            </h2>
             <p class="text-muted-foreground mb-6">Provide a high-level overview of your idea.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                 <div class="flex items-start gap-4 mb-6">
                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                     <div class="flex-1">
-                        {{> question-block id="executive-summary-q1" step="1" question="What is the executive summary of your idea?"}}
+                        {{> question-block id="executive-summary-q1" step="1" question="What is the executive summary of your idea?" description=executiveSummaryText}}
                     </div>
                 </div>
                 <div class="flex items-start gap-4">

@@ -11,7 +11,7 @@
         <!-- Steps Overlay -->
         <div class="relative flex items-center justify-between w-full">
             <!-- Step 1: Idea -->
-            <a href="/models/idea" class="group flex flex-col items-left z-10">
+            <a href="/models/idea{{#if ideaId}}?ideaId={{ideaId}}{{/if}}" class="group flex flex-col items-left z-10">
                 <div
                     class="w-4 h-4 rounded-full {{#if (eq activeStep 'idea')}}bg-primary{{else}}{{#if (eq activeStep 'business')}}bg-primary{{else}}{{#if (eq activeStep 'financial')}}bg-primary{{else}}{{#if (eq activeStep 'funding')}}bg-primary{{else}}{{#if (eq activeStep 'marketing')}}bg-primary{{else}}{{#if (eq activeStep 'team')}}bg-primary{{else}}{{#if (eq activeStep 'legal')}}bg-primary{{else}}bg-muted{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}} group-hover:bg-primary">
                 </div>
@@ -19,7 +19,7 @@
                 class="{{#if (eq activeStep 'idea')}}text-primary{{else}}text-muted-foreground{{/if}} text-xs mt-2 group-hover:text-primary">Idea</span>
             </a>
             <!-- Step 2: Business -->
-            <a href="/models/business" class="group flex flex-col items-center z-10">
+            <a href="/models/business{{#if ideaId}}?ideaId={{ideaId}}{{/if}}" class="group flex flex-col items-center z-10">
                 <div
                     class="w-4 h-4 rounded-full {{#if (eq activeStep 'business')}}bg-primary{{else}}{{#if (eq activeStep 'financial')}}bg-primary{{else}}{{#if (eq activeStep 'funding')}}bg-primary{{else}}{{#if (eq activeStep 'marketing')}}bg-primary{{else}}{{#if (eq activeStep 'team')}}bg-primary{{else}}{{#if (eq activeStep 'legal')}}bg-primary{{else}}bg-muted{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}} group-hover:bg-primary">
                 </div>
@@ -27,7 +27,7 @@
                     class="{{#if (eq activeStep 'business')}}text-primary{{else}}text-muted-foreground{{/if}} text-xs mt-2 group-hover:text-primary">Business</span>
             </a>
             <!-- Step 3: Financial -->
-            <a href="/models/financial" class="group flex flex-col items-center z-10">
+            <a href="/models/financial{{#if ideaId}}?ideaId={{ideaId}}{{/if}}" class="group flex flex-col items-center z-10">
                 <div
                     class="w-4 h-4 rounded-full {{#if (eq activeStep 'financial')}}bg-primary{{else}}{{#if (eq activeStep 'funding')}}bg-primary{{else}}{{#if (eq activeStep 'marketing')}}bg-primary{{else}}{{#if (eq activeStep 'team')}}bg-primary{{else}}{{#if (eq activeStep 'legal')}}bg-primary{{else}}bg-muted{{/if}}{{/if}}{{/if}}{{/if}}{{/if}} group-hover:bg-primary">
                 </div>
@@ -35,7 +35,7 @@
                     class="{{#if (eq activeStep 'financial')}}text-primary{{else}}text-muted-foreground{{/if}} text-xs mt-2 group-hover:text-primary">Financial</span>
             </a>
             <!-- Step 4: Funding -->
-            <a href="/models/funding" class="group flex flex-col items-center z-10">
+            <a href="/models/funding{{#if ideaId}}?ideaId={{ideaId}}{{/if}}" class="group flex flex-col items-center z-10">
                 <div
                     class="w-4 h-4 rounded-full {{#if (eq activeStep 'funding')}}bg-primary{{else}}{{#if (eq activeStep 'marketing')}}bg-primary{{else}}{{#if (eq activeStep 'team')}}bg-primary{{else}}{{#if (eq activeStep 'legal')}}bg-primary{{else}}bg-muted{{/if}}{{/if}}{{/if}}{{/if}} group-hover:bg-primary">
                 </div>
@@ -43,7 +43,7 @@
                     class="{{#if (eq activeStep 'funding')}}text-primary{{else}}text-muted-foreground{{/if}} text-xs mt-2 group-hover:text-primary">Funding</span>
             </a>
             <!-- Step 5: Marketing -->
-            <a href="/models/marketing" class="group flex flex-col items-center z-10">
+            <a href="/models/marketing{{#if ideaId}}?ideaId={{ideaId}}{{/if}}" class="group flex flex-col items-center z-10">
                 <div
                     class="w-4 h-4 rounded-full {{#if (eq activeStep 'marketing')}}bg-primary{{else}}{{#if (eq activeStep 'team')}}bg-primary{{else}}{{#if (eq activeStep 'legal')}}bg-primary{{else}}bg-muted{{/if}}{{/if}}{{/if}} group-hover:bg-primary">
                 </div>
@@ -51,7 +51,7 @@
                     class="{{#if (eq activeStep 'marketing')}}text-primary{{else}}text-muted-foreground{{/if}} text-xs mt-2 group-hover:text-primary">Marketing</span>
             </a>
             <!-- Step 6: Team -->
-            <a href="/models/team" class="group flex flex-col items-center z-10">
+            <a href="/models/team{{#if ideaId}}?ideaId={{ideaId}}{{/if}}" class="group flex flex-col items-center z-10">
                 <div
                     class="w-4 h-4 rounded-full {{#if (eq activeStep 'team')}}bg-primary{{else}}{{#if (eq activeStep 'legal')}}bg-primary{{else}}bg-muted{{/if}}{{/if}} group-hover:bg-primary">
                 </div>
@@ -59,7 +59,7 @@
                     class="{{#if (eq activeStep 'team')}}text-primary{{else}}text-muted-foreground{{/if}} text-xs mt-2 group-hover:text-primary">Team</span>
             </a>
             <!-- Step 7: Legal -->
-            <a href="/models/legal" class="group flex flex-col items-center z-10" >
+            <a href="/models/legal{{#if ideaId}}?ideaId={{ideaId}}{{/if}}" class="group flex flex-col items-center z-10" >
                 <div
                     class="w-4 h-4 rounded-full {{#if (eq activeStep 'legal')}}bg-primary{{else}}bg-muted{{/if}} group-hover:bg-primary" style="align-self: flex-end;">
                 </div>

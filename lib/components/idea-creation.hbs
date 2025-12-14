@@ -1037,7 +1037,7 @@
                     }
                     // Success - redirect to idea detail page after a short delay to show toast
                     setTimeout(() => {
-                        window.location.href = `/idea-detail?ideaId=${data.idea_id}`;
+                        window.location.href = `/models/idea?ideaId=${data.idea_id}`;
                     }, 1000);
                 } else {
                     const errorData = await response.json();

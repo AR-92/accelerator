@@ -1,4 +1,4 @@
-{{> progress-steps}}
+{{> progress-steps ideaId=ideaId}}
 
 
 <!-- Back Button -->
@@ -9,17 +9,17 @@
         <span>Back</span>
     </a>
     <div class="flex flex-grow justify-center gap-4">
-        <a href="/reports/pitch-deck"
+        <a href="/reports/pitch-deck{{#if ideaId}}?ideaId={{ideaId}}{{/if}}"
             class="inline-flex items-center gap-2 {{#if (eq activeReport 'pitch-deck')}}text-primary{{else}}text-muted-foreground{{/if}} hover:text-foreground transition-colors">
             {{{ icon 'presentation' class='w-4 h-4' }}}
             <span>Pitch Deck</span>
         </a>
-        <a href="/reports/business-plan"
+        <a href="/reports/business-plan{{#if ideaId}}?ideaId={{ideaId}}{{/if}}"
             class="inline-flex items-center gap-2 {{#if (eq activeReport 'business-plan')}}text-primary{{else}}text-muted-foreground{{/if}} hover:text-foreground transition-colors">
             {{{ icon 'file-text' class='w-4 h-4' }}}
             <span>Business Plan</span>
         </a>
-        <a href="/reports/valuation"
+        <a href="/reports/valuation{{#if ideaId}}?ideaId={{ideaId}}{{/if}}"
             class="inline-flex items-center gap-2 {{#if (eq activeReport 'valuation')}}text-primary{{else}}text-muted-foreground{{/if}} hover:text-foreground transition-colors">
             {{{ icon 'calculator' class='w-4 h-4' }}}
             <span>Valuation</span>
