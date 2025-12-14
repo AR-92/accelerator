@@ -2,13 +2,13 @@
 
 
 <!-- Back Button -->
-<div id="back-button" class="flex mx-auto px-6 py-4 w-[900px] justify-center gap-4 text-xs">
+<div id="back-button" class="flex mx-auto  py-4 max-w-[900px] gap-4 text-xs">
     <a href="/new-idea"
-        class="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+        class="inline-flex  items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
         {{{ icon 'arrow-left' class='w-4 h-4' }}}
         <span>Back</span>
     </a>
-    <div class="flex gap-4">
+    <div class="flex flex-grow justify-center gap-4">
         <a href="/reports/pitch-deck"
             class="inline-flex items-center gap-2 {{#if (eq activeReport 'pitch-deck')}}text-primary{{else}}text-muted-foreground{{/if}} hover:text-foreground transition-colors">
             {{{ icon 'presentation' class='w-4 h-4' }}}
