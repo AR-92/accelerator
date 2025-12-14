@@ -3738,6 +3738,16 @@
       }
     }
   }
+  .hover\:bg-success\/10 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: color-mix(in srgb, hsl(142 76% 36%) 10%, transparent);
+        @supports (color: color-mix(in lab, red, red)) {
+          background-color: color-mix(in oklab, var(--color-success) 10%, transparent);
+        }
+      }
+    }
+  }
   .hover\:bg-white\/5 {
     &:hover {
       @media (hover: hover) {
@@ -4465,11 +4475,27 @@
       }
     }
   }
+  .dark\:border-success\/40 {
+    @media (prefers-color-scheme: dark) {
+      border-color: color-mix(in srgb, hsl(142 76% 36%) 40%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        border-color: color-mix(in oklab, var(--color-success) 40%, transparent);
+      }
+    }
+  }
   .dark\:bg-primary\/10 {
     @media (prefers-color-scheme: dark) {
       background-color: color-mix(in srgb, hsl(290 64% 43%) 10%, transparent);
       @supports (color: color-mix(in lab, red, red)) {
         background-color: color-mix(in oklab, var(--color-primary) 10%, transparent);
+      }
+    }
+  }
+  .dark\:bg-success\/10 {
+    @media (prefers-color-scheme: dark) {
+      background-color: color-mix(in srgb, hsl(142 76% 36%) 10%, transparent);
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, var(--color-success) 10%, transparent);
       }
     }
   }
