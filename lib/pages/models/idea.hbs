@@ -1,9 +1,10 @@
 {{> progress-bar activeStep=activeStep ideaId=ideaId}}
 
+
 {{> model-header title=pageTitle description="Comprehensive idea development and validation overview"
  ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ideaCategory tags=ideaTags}}
 
-{{> model-progress sections=sections labels=labels shortLabels=shortLabels positions=positions activeSection=activeSection}}
+{{> model-progress}}
 
 <main class="flex flex-col mx-auto items-center justify-center">
     <div class="sections-container">
@@ -282,6 +283,3 @@
     console.log('populateIdea set for idea model:', window.populateIdea);
 </script>
 
-
-</script>
-</script>
