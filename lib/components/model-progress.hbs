@@ -21,8 +21,8 @@
 
 <script>
     // Pill text variations
-    const pillFullTexts = {{{json labels}}};
-    const pillNumbers = {{{json shortLabels}}};
+    const pillFullTexts = ["0. Executive Summary", "1. Problem Validation", "2. Solution Development", "3. Customer Model", "4. Branding", "5. IP Protection"];
+    const pillNumbers = ["0.", "1.", "2.", "3.", "4.", "5."];
 
     function addHoverListeners() {
         document.querySelectorAll('.step-pill').forEach((pill, index) => {
@@ -46,7 +46,7 @@
             sec.style.display = 'none';
         });
         // Show target section
-        const sections = {{{json sections}}};
+        const sections = ["executive-summary", "problem-validation", "solution-development", "customer-model", "branding", "ip-protection"];
         const targetSection = document.getElementById(sections[sectionIndex]);
         if (targetSection) {
             targetSection.style.display = 'block';
@@ -86,7 +86,7 @@
     document.querySelectorAll('.move-next-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const currentSection = btn.closest('.section');
-            const sections = {{{json sections}}};
+            const sections = ["executive-summary", "problem-validation", "solution-development", "customer-model", "branding", "ip-protection"];
             const currentIndex = sections.indexOf(currentSection.id);
             if (currentIndex < sections.length - 1) {
                 showSection(currentIndex + 1);
@@ -99,7 +99,7 @@
 
     // Initialize on load
     document.addEventListener('DOMContentLoaded', () => {
-        const activeSection = {{{activeSection}}};
+        const activeSection = 0;
         showSection(activeSection);
         addHoverListeners();
     });
