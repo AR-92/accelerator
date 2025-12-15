@@ -2798,9 +2798,6 @@
   .whitespace-nowrap {
     white-space: nowrap;
   }
-  .whitespace-pre-wrap {
-    white-space: pre-wrap;
-  }
   .text-\[\#030303\] {
     color: #030303;
   }
@@ -3227,10 +3224,6 @@
   .duration-1000 {
     --tw-duration: 1000ms;
     transition-duration: 1000ms;
-  }
-  .ease-in-out {
-    --tw-ease: var(--ease-in-out);
-    transition-timing-function: var(--ease-in-out);
   }
   .ease-out {
     --tw-ease: var(--ease-out);
@@ -4057,15 +4050,6 @@
   .disabled\:opacity-50 {
     &:disabled {
       opacity: 50%;
-    }
-  }
-  .disabled\:hover\:text-muted-foreground {
-    &:disabled {
-      &:hover {
-        @media (hover: hover) {
-          color: var(--color-muted-foreground);
-        }
-      }
     }
   }
   .max-md\:pb-\[64px\] {
