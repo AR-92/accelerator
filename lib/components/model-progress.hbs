@@ -9,11 +9,10 @@
             style="width: 0%"></div>
 
         <!-- Pills Overlay -->
-        <div class="relative">
+        <div class="relative flex justify-between items-center">
             {{#each sections}}
             <span
-                class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10 absolute top-0"
-                style="left: {{lookup ../positions @index}}%; transform: translateX(-50%) translateY(-50%); white-space: nowrap;"
+                class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10"
                 data-section="{{this}}">{{lookup ../labels @index}}</span>
             {{/each}}
         </div>
