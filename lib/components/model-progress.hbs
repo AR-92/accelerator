@@ -1,0 +1,107 @@
+<!-- Mixed Progress Bar and Pills Navigation -->
+<div class="flex justify-center mb-6">
+    <div class="relative w-full max-w-[900px]">
+        <!-- Progress Bar Background -->
+        <div class="absolute top-1/2 left-0 right-0 h-1 bg-muted rounded-full transform -translate-y-1/2"></div>
+        <!-- Progress Bar Fill -->
+        <div id="progress-fill"
+            class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"
+            style="width: 0%"></div>
+
+        <!-- Pills Overlay -->
+        <div class="relative">
+            {{#each sections}}
+            <span
+                class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10 absolute top-0"
+                style="left: {{lookup ../positions @index}}%; transform: translateX(-50%) translateY(-50%); white-space: nowrap;"
+                data-section="{{this}}">{{lookup ../labels @index}}</span>
+            {{/each}}
+        </div>
+    </div>
+</div>
+
+<script>
+    // Pill text variations
+    const pillFullTexts = {{{json labels}}};
+    const pillNumbers = {{{json shortLabels}}};
+
+    function addHoverListeners() {
+        document.querySelectorAll('.step-pill').forEach((pill, index) => {
+            pill.addEventListener('mouseenter', () => {
+                if (!pill.classList.contains('bg-primary')) {
+                    pill.textContent = pillFullTexts[index];
+                }
+            });
+            pill.addEventListener('mouseleave', () => {
+                if (!pill.classList.contains('bg-primary')) {
+                    pill.textContent = pillNumbers[index];
+                }
+            });
+        });
+    }
+
+    // Function to show section and update UI
+    function showSection(sectionIndex) {
+        // Hide all sections
+        document.querySelectorAll('.section').forEach(sec => {
+            sec.style.display = 'none';
+        });
+        // Show target section
+        const sections = {{{json sections}}};
+        const targetSection = document.getElementById(sections[sectionIndex]);
+        if (targetSection) {
+            targetSection.style.display = 'block';
+        }
+
+        // Update progress bar
+        const progressBar = document.getElementById('progress-fill');
+        const width = ((sectionIndex) / (sections.length - 1)) * 100 + '%';
+        progressBar.style.width = width;
+
+        // Update pills
+        document.querySelectorAll('.step-pill').forEach((pill, index) => {
+            if (index < sectionIndex) {
+                pill.classList.remove('bg-muted', 'text-muted-foreground');
+                pill.classList.add('bg-primary', 'text-primary-foreground');
+                pill.textContent = pillNumbers[index];
+            } else if (index === sectionIndex) {
+                pill.classList.remove('bg-muted', 'text-muted-foreground');
+                pill.classList.add('bg-primary', 'text-primary-foreground');
+                pill.textContent = pillFullTexts[index];
+            } else {
+                pill.classList.remove('bg-primary', 'text-primary-foreground');
+                pill.classList.add('bg-muted', 'text-muted-foreground');
+                pill.textContent = pillNumbers[index];
+            }
+        });
+    }
+
+    // Add click listeners to pills
+    document.querySelectorAll('.step-pill').forEach((pill, index) => {
+        pill.addEventListener('click', () => {
+            showSection(index);
+        });
+    });
+
+    // Add click listeners to move next buttons
+    document.querySelectorAll('.move-next-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const currentSection = btn.closest('.section');
+            const sections = {{{json sections}}};
+            const currentIndex = sections.indexOf(currentSection.id);
+            if (currentIndex < sections.length - 1) {
+                showSection(currentIndex + 1);
+            } else {
+                // Last section
+                alert('Model completed!');
+            }
+        });
+    });
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+        const activeSection = {{{activeSection}}};
+        showSection(activeSection);
+        addHoverListeners();
+    });
+</script>
