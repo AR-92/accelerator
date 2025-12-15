@@ -10,8 +10,7 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
         <div class="absolute top-1/2 left-0 right-0 h-1 bg-muted rounded-full transform -translate-y-1/2"></div>
         <!-- Progress Bar Fill -->
         <div id="progress-fill"
-            class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"
-            style="width: 14.28%"></div>
+            class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"></div>
 
         <!-- Pills Overlay -->
         <div class="relative flex justify-between items-center">
@@ -415,7 +414,7 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
 
     // Initialize on load
     document.addEventListener('DOMContentLoaded', () => {
-    const activeStep = {{#if activeStep}}{{activeStep}}{{else}}1{{/if}};
+    const activeStep = 1;
     showSection(activeStep - 1); // activeStep is 1-based, index is 0-based
 
     addHoverListeners();

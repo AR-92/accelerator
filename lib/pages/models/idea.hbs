@@ -358,7 +358,7 @@
 
         // Update progress bar
         const progressBar = document.getElementById('progress-fill');
-        const width = ((sectionIndex + 1) / 5) * 100 + '%';
+        const width = ((sectionIndex + 1) / 6) * 100 + '%';
         progressBar.style.width = width;
 
         // Update pills
@@ -399,8 +399,8 @@
 
     // Initialize on load
     document.addEventListener('DOMContentLoaded', () => {
-    const activeStep = 0; // Default to first section (0-based index)
-    showSection(activeStep);
+    const activeStep = 1;
+    showSection(activeStep - 1); // activeStep is 1-based, index is 0-based
 
     addHoverListeners();
     });

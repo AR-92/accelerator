@@ -230,7 +230,7 @@
                 return;
             }
             const tagSpan = document.createElement('span');
-            tagSpan.className = 'inline-flex items-center gap-1 px-2 py-0.5 bg-secondary/5 text-secondary-foreground border border-secondary/40 text-xs rounded-full floating-tag-lskjsdb';
+            tagSpan.className = 'inline-flex items-center gap-1 px-2 py-0.5 bg-muted text-muted-foreground border border-muted text-xs rounded-full floating-tag-lskjsdb';
             tagSpan.innerHTML = `<span contenteditable="true">${tagText}</span> <button class="text-muted-foreground hover:text-destructive p-0">×</button>`;
             const addMoreBtn = floatingTagsContainer.querySelector('[class*="bg-success/5"]');
             if (addMoreBtn) {

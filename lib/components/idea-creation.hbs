@@ -181,6 +181,50 @@
                 box-shadow: 0 0 70px 55px rgba(255, 0, 0, 0.15);
             }
         }
+
+        /* Markdown content styling */
+        .markdown-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .markdown-content h1, .markdown-content h2, .markdown-content h3 {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        .markdown-content h1 { font-size: 1.5em; }
+        .markdown-content h2 { font-size: 1.25em; }
+        .markdown-content h3 { font-size: 1.1em; }
+        .markdown-content ul, .markdown-content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        .markdown-content li {
+            margin-bottom: 0.25rem;
+        }
+        .markdown-content blockquote {
+            border-left: 4px solid #ccc;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        .markdown-content code {
+            background-color: #f4f4f4;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .markdown-content pre {
+            background-color: #f4f4f4;
+            padding: 1rem;
+            border-radius: 3px;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        .markdown-content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
     </style>
     <form id="new-project-form" class="flex m-auto max-w-[900px] min-w-[900px] flex-col gap-1 w-full" method="post"
         action="/projects/new">
@@ -227,13 +271,13 @@
                     <div class=" pl-4 pr-2 relative">
                         <label for="assistant-prompt" class="sr-only">Describe your
                             project requirements</label>
-                        <div id="assistant-prompt-display" class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground min-h-[2.5rem] cursor-pointer whitespace-pre-wrap" style="display: none;"></div>
-                        <textarea id="assistant-prompt" name="prompt"
-                            placeholder="Describe your project requirements..."
-                            aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
-                            class="flex w-full rounded-md border-0 bg-transparent p-0 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                            required=""
-                            style="min-height: 2.5rem; resize: none; overflow: hidden; height: 49px;"></textarea>
+                        <div id="assistant-prompt-display" class="w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground min-h-[2.5rem] cursor-pointer overflow-visible markdown-content" style="display: none;"></div>
+                         <textarea id="assistant-prompt" name="prompt"
+                             placeholder="Describe your project requirements..."
+                             aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
+                             class="flex w-full rounded-md border-0 bg-transparent p-0 pt-[1px] text-base text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                             required=""
+                                                           style="min-height: 2.5rem; resize: none; overflow: hidden;"></textarea>
                         <p id="prompt-help" class="sr-only">Enter your project
                             description or requirements</p>
                     </div>
@@ -497,7 +541,7 @@
         if (addOneTagBtn) {
             addOneTagBtn.addEventListener('click', function (e) {
                 const tagSpan = document.createElement('span');
-                tagSpan.className = 'inline-flex items-center gap-1 px-2 py-0.5 bg-secondary/5 text-secondary-foreground border border-secondary/40 text-xs rounded-full tag-lskjsdb';
+                tagSpan.className = 'inline-flex items-center gap-1 px-2 py-0.5 bg-muted text-muted-foreground border border-muted text-xs rounded-full tag-lskjsdb';
                 tagSpan.innerHTML = `<span contenteditable="true">Click and type to edit</span> <button class="text-muted-foreground hover:text-destructive p-0">×</button>`;
                 const addMoreBtn = tagsContainer.querySelector('[class*="bg-success/5"]');
                 if (addMoreBtn) {
@@ -536,7 +580,7 @@
                 return;
             }
             const tagSpan = document.createElement('span');
-            tagSpan.className = 'inline-flex items-center gap-1 px-2 py-0.5 bg-secondary/5 text-secondary-foreground border border-secondary/40 text-xs rounded-full tag-lskjsdb';
+            tagSpan.className = 'inline-flex items-center gap-1 px-2 py-0.5 bg-muted text-muted-foreground border border-muted text-xs rounded-full tag-lskjsdb';
             tagSpan.innerHTML = `<span contenteditable="true">${tagText}</span> <button class="text-muted-foreground hover:text-destructive p-0">×</button>`;
             const addMoreBtn = tagsContainer.querySelector('[class*="bg-success/5"]');
             console.log('addMoreBtn found:', addMoreBtn);
@@ -613,6 +657,7 @@
                     this.style.display = 'none';
                     descriptionTextarea.style.display = 'block';
                     descriptionTextarea.focus();
+                    autoExpandTextarea();
                 }
             });
 
@@ -621,7 +666,8 @@
                 const content = this.value;
                 this.dataset.originalContent = content;
                 waitForMarked(() => {
-                    displayDivEdit.innerHTML = marked.parse(content);
+                    const processedContent = content.replace(/\n/g, '\n\n');
+                    displayDivEdit.innerHTML = marked.parse(processedContent, { breaks: true });
                     displayDivEdit.style.display = 'block';
                     this.style.display = 'none';
                 });
@@ -771,7 +817,8 @@
                                 descriptionTextarea.dataset.originalContent = result.description || '';
                                 descriptionTextarea.value = result.description || '';
                                 const displayDivFill = document.getElementById('assistant-prompt-display');
-                                displayDivFill.innerHTML = marked.parse(result.description || '');
+                                const processedContent = (result.description || '').replace(/\n/g, '\n\n');
+                                displayDivFill.innerHTML = marked.parse(processedContent, { breaks: true });
                                 displayDivFill.style.display = 'block';
                                 descriptionTextarea.style.display = 'none';
                             });
@@ -954,7 +1001,8 @@
                                 descriptionTextarea.dataset.originalContent = result.description || '';
                                 descriptionTextarea.value = result.description || '';
                                 const displayDivFill = document.getElementById('assistant-prompt-display');
-                                displayDivFill.innerHTML = marked.parse(result.description || '');
+                                const processedContent = (result.description || '').replace(/\n/g, '\n\n');
+                                displayDivFill.innerHTML = marked.parse(processedContent, { breaks: true });
                                 displayDivFill.style.display = 'block';
                                 descriptionTextarea.style.display = 'none';
                             });
@@ -1022,7 +1070,8 @@
                             descriptionTextarea.dataset.originalContent = result.improved_description;
                             descriptionTextarea.value = result.improved_description;
                             const displayDivImprove = document.getElementById('assistant-prompt-display');
-                            displayDivImprove.innerHTML = marked.parse(result.improved_description);
+                            const processedContent = result.improved_description.replace(/\n/g, '\n\n');
+                            displayDivImprove.innerHTML = marked.parse(processedContent, { breaks: true });
                             displayDivImprove.style.display = 'block';
                             descriptionTextarea.style.display = 'none';
                         });

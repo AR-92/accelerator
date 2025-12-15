@@ -1,4 +1,4 @@
-<div class="flex flex-col border border-border rounded-full bg-card question-card" id="{{id}}-question-card" data-expanded="{{#if expanded}}{{expanded}}{{else}}false{{/if}}">
+<div class="flex flex-col border border-border rounded-full bg-card question-card" id="{{id}}-question-card" data-expanded="true">
 
 
     <form id="{{id}}-new-project-form" class="flex m-auto max-w-[900px] min-w-[900px] flex-col gap-1 w-full" method="post"
@@ -21,19 +21,19 @@
                            <span id="{{id}}-credit-estimate" class="inline-flex items-center px-2 py-1 bg-warning/5 text-warning border border-warning/20 text-xs font-semibold rounded-full">Estimated credits: 10</span>
                       </div>
 
-                       <!-- Expandable Content -->
-                       <div id="{{id}}-expandable-content" class="expandable-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0; opacity: 0;">
+                        <!-- Expandable Content -->
+                        <div id="{{id}}-expandable-content" class="expandable-content overflow-hidden flex flex-col" style="display: none;">
                            <!-- Description wrapper -->
                            <div class=" pl-4 pr-2 relative mt-4">
                                <label for="assistant-prompt" class="sr-only">Describe your
                                    project requirements</label>
-                                <div id="{{id}}-assistant-prompt-display" class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground min-h-[6rem] cursor-pointer whitespace-pre-wrap overflow-visible" style="display: none; white-space: pre-wrap; word-wrap: break-word; height: auto;"></div>
-                                 <textarea id="{{id}}-assistant-prompt" name="prompt"
-                                      placeholder="{{placeholder}}"
-                                      aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
-                                     class="flex w-full rounded-md border-0 bg-transparent p-3 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-mono leading-relaxed"
-                                     required=""
-                                     style="min-height: 6rem; resize: vertical; overflow: auto; height: auto; line-height: 1.6;">{{description}}</textarea>
+                                 <div id="{{id}}-assistant-prompt-display" class="w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground min-h-[6rem] cursor-pointer overflow-hidden markdown-content" style="display: none; word-wrap: break-word;"></div>
+                                  <textarea id="{{id}}-assistant-prompt" name="prompt"
+                                       placeholder="{{placeholder}}"
+                                       aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
+                                      class="flex w-full rounded-md border-0 bg-transparent p-3 pt-[1px] text-base text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-mono leading-relaxed"
+                                      required=""
+                                      style="min-height: 6rem; resize: vertical; overflow: auto; height: auto; line-height: 1.6;">{{description}}</textarea>
                                <p id="prompt-help" class="sr-only">Enter your project
                                    description or requirements</p>
                            </div>
@@ -150,32 +150,17 @@
 
         <!-- Chat Input -->
         <div class="border-t border-border bg-muted/20 p-4">
-            <div class="flex gap-3 items-end">
-                <div class="flex-1 relative">
-                    <textarea id="{{id}}-chat-input"
-                        placeholder="Ask about your requirements, suggest improvements, or get advice..."
-                        class="w-full min-h-[44px] max-h-32 resize-none rounded-lg border border-border bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:outline-none transition-all duration-200"
-                        rows="1"></textarea>
-                </div>
-                <button id="{{id}}-send-chat" type="button"
-                    class="inline-flex items-center justify-center gap-2 cursor-pointer text-sm text-muted-foreground hover:text-primary hover:bg-primary/10 px-4 py-2 rounded-lg border border-border bg-background transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-background disabled:hover:text-muted-foreground"
-                    disabled>
-                    <svg class="lucide lucide-send w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M22 2L11 13"></path>
-                        <path d="M22 2L15 22 11 13 2 9 22 2z"></path>
-                    </svg>
-                    <span class="inline transition-all duration-200">Send</span>
-                </button>
-            </div>
-            <div class="flex justify-between items-center mt-3">
-                <span id="{{id}}-chat-char-counter" class="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">0 / 1000</span>
-                <button id="{{id}}-clear-chat"
-                    class="text-xs text-muted-foreground hover:text-destructive hover:bg-destructive/10 px-2 py-1 rounded transition-all duration-200">
-                    🗑️ Clear Chat
-                </button>
-            </div>
+             <div class="flex gap-3 items-end">
+                 <div class="flex-1 relative">
+                     <textarea id="{{id}}-chat-input"
+                         placeholder="Ask about your requirements, suggest improvements, or get advice..."
+                         class="w-full min-h-[44px] max-h-32 resize-none rounded-lg border border-border bg-background px-4 py-3 text-sm placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:outline-none transition-all duration-200"
+                         rows="1" style="overflow: hidden;"></textarea>
+                 </div>
+             </div>
+             <div class="flex justify-between items-center mt-3">
+                 <span id="{{id}}-chat-char-counter" class="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">0 / 1000</span>
+             </div>
         </div>
     </div>
 </div>
@@ -192,9 +177,7 @@
           background-color: rgba(0, 0, 0, 0.02);
       }
 
-      .expandable-content {
-          transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-      }
+
 
       #{{id}}-expand-icon {
           transition: transform 0.3s ease;
@@ -304,16 +287,61 @@
           --gradient-angle-offset: 180deg;
       }
 
-      @keyframes border-spin {
-          to {
-              --gradient-angle: 360deg;
-          }
-      }
- </style>
+       @keyframes border-spin {
+           to {
+               --gradient-angle: 360deg;
+           }
+       }
+
+       /* Markdown content styling */
+       .markdown-content p {
+           margin-bottom: 1rem;
+           line-height: 1.6;
+       }
+       .markdown-content h1, .markdown-content h2, .markdown-content h3 {
+           font-weight: bold;
+           margin-bottom: 0.5rem;
+           line-height: 1.4;
+       }
+       .markdown-content h1 { font-size: 1.5em; }
+       .markdown-content h2 { font-size: 1.25em; }
+       .markdown-content h3 { font-size: 1.1em; }
+       .markdown-content ul, .markdown-content ol {
+           margin-bottom: 1rem;
+           padding-left: 1.5rem;
+       }
+       .markdown-content li {
+           margin-bottom: 0.25rem;
+       }
+       .markdown-content blockquote {
+           border-left: 4px solid #ccc;
+           padding-left: 1rem;
+           margin-bottom: 1rem;
+           font-style: italic;
+       }
+       .markdown-content code {
+           background-color: #f4f4f4;
+           padding: 0.2em 0.4em;
+           border-radius: 3px;
+           font-family: monospace;
+       }
+       .markdown-content pre {
+           background-color: #f4f4f4;
+           padding: 1rem;
+           border-radius: 3px;
+           overflow-x: auto;
+           margin-bottom: 1rem;
+       }
+       .markdown-content pre code {
+           background-color: transparent;
+           padding: 0;
+       }
+  </style>
 
 
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
 <script>
     // Wait for marked to load
     window.waitForMarked = function(callback) {
@@ -327,6 +355,11 @@
     document.addEventListener('DOMContentLoaded', () => {
         console.log('DOMContentLoaded fired for create-idea-card');
 
+        // Customize marked renderer to avoid <pre> for code blocks
+        const renderer = new marked.Renderer();
+        renderer.codeblock = (code, lang) => `<p><code>${code}</code></p>`;
+        // marked.setOptions({ renderer }); // Not needed if passing to parse
+
         // Initialize collapsible functionality
         const toggleBtn = document.querySelector('#{{id}}-question-card .question-toggle');
         const expandableContent = document.getElementById('{{id}}-expandable-content');
@@ -339,16 +372,14 @@
             const initialExpanded = toggleBtn.dataset.expanded === 'true';
             if (initialExpanded) {
                 // Expand
-                expandableContent.style.maxHeight = expandableContent.scrollHeight + 'px';
-                expandableContent.style.opacity = '1';
+                expandableContent.style.display = 'block';
                 expandIcon.style.transform = 'rotate(90deg)';
                 questionCard.classList.remove('rounded-full');
                 questionCard.classList.add('rounded-md');
                 toggleBtn.setAttribute('aria-expanded', 'true');
             } else {
                 // Collapse
-                expandableContent.style.maxHeight = '0';
-                expandableContent.style.opacity = '0';
+                expandableContent.style.display = 'none';
                 expandIcon.style.transform = 'rotate(0deg)';
                 questionCard.classList.remove('rounded-md');
                 questionCard.classList.add('rounded-full');
@@ -360,17 +391,20 @@
 
                 if (isExpanded) {
                     // Collapse
-                    expandableContent.style.maxHeight = '0';
-                    expandableContent.style.opacity = '0';
+                    expandableContent.style.display = 'none';
                     expandIcon.style.transform = 'rotate(0deg)';
                     questionCard.classList.remove('rounded-md');
                     questionCard.classList.add('rounded-full');
                     toggleBtn.dataset.expanded = 'false';
                     toggleBtn.setAttribute('aria-expanded', 'false');
+                    // Also collapse chat if open
+                    if (isChatOpen) {
+                        isChatOpen = false;
+                        chatContainer.classList.add('hidden');
+                    }
                 } else {
                     // Expand
-                    expandableContent.style.maxHeight = expandableContent.scrollHeight + 'px';
-                    expandableContent.style.opacity = '1';
+                    expandableContent.style.display = 'block';
                     expandIcon.style.transform = 'rotate(90deg)';
                     questionCard.classList.remove('rounded-full');
                     questionCard.classList.add('rounded-md');
@@ -380,7 +414,7 @@
             });
 
             // Set initial ARIA attributes
-            toggleBtn.setAttribute('aria-expanded', 'false');
+            toggleBtn.setAttribute('aria-expanded', initialExpanded ? 'true' : 'false');
             toggleBtn.setAttribute('role', 'button');
             toggleBtn.setAttribute('tabindex', '0');
         }
@@ -426,16 +460,29 @@
         // Handle display/edit mode toggle
         const displayDiv = document.getElementById('{{id}}-assistant-prompt-display');
 
-        // Function to render Markdown to display div
+        // Function to render markdown to display div
         function renderToDisplay() {
             const content = descriptionTextarea.value;
             if (content.trim()) {
                 waitForMarked(() => {
-                    displayDiv.innerHTML = marked.parse(content);
-                    displayDiv.style.display = 'block';
-                    descriptionTextarea.style.display = 'none';
-                    // Small delay to ensure DOM is updated before measuring
-                    setTimeout(autoExpandDisplayDiv, 10);
+                    try {
+                        console.log('Content:', content);
+                        // Clean content: remove leading/trailing whitespace on each line
+                        const cleanedContent = content.replace(/^\s+/gm, '').replace(/\s+$/gm, '');
+                        console.log('Cleaned Content:', cleanedContent);
+                        const parsed = marked.parse(cleanedContent, { renderer, breaks: true });
+                        console.log('Parsed HTML:', parsed);
+                        displayDiv.innerHTML = DOMPurify.sanitize(parsed);
+                        displayDiv.style.display = 'block';
+                        descriptionTextarea.style.display = 'none';
+                        autoExpandDisplayDiv();
+                    } catch (error) {
+                        console.error('Markdown parsing failed:', error);
+                        displayDiv.textContent = content; // Fallback
+                        displayDiv.style.display = 'block';
+                        descriptionTextarea.style.display = 'none';
+                        autoExpandDisplayDiv();
+                    }
                 });
             } else {
                 // If no content, keep in edit mode
@@ -449,7 +496,9 @@
             displayDiv.style.display = 'none';
             descriptionTextarea.style.display = 'block';
             // Auto-expand to show full content
-            setTimeout(autoExpandTextarea, 10);
+            setTimeout(() => {
+                autoExpandTextarea();
+            }, 10);
             descriptionTextarea.focus();
         }
 
@@ -467,12 +516,6 @@
         function autoExpandDisplayDiv() {
             // Reset height to auto to get natural height
             displayDiv.style.height = 'auto';
-            // Set height to scrollHeight to show full content
-            displayDiv.style.height = displayDiv.scrollHeight + 'px';
-            // Ensure minimum height for better UX
-            if (displayDiv.scrollHeight < 96) { // 6rem = 96px
-                displayDiv.style.height = '6rem';
-            }
         }
 
         // Initialize: if textarea has content, render it; otherwise ensure textarea is properly sized
@@ -573,11 +616,13 @@
                     const ariaLabel = button.getAttribute('aria-label');
                     let originalIcon = '';
 
-                    if (ariaLabel.includes('Improve')) {
-                        originalIcon = `<svg class="lucide lucide-wand-sparkles w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"></path><path d="m14 7 3 3"></path><path d="M5 6v4"></path><path d="M19 14v4"></path><path d="M10 2v2"></path><path d="M7 8H3"></path><path d="M21 16h-4"></path><path d="M11 3H9"></path></svg>`;
-                    } else if (ariaLabel.includes('Auto Fill')) {
-                        originalIcon = `<svg class="lucide lucide-sparkles w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 0 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>`;
-                    }
+                     if (ariaLabel.includes('Improve')) {
+                         originalIcon = `<svg class="lucide lucide-wand-sparkles w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"></path><path d="m14 7 3 3"></path><path d="M5 6v4"></path><path d="M19 14v4"></path><path d="M10 2v2"></path><path d="M7 8H3"></path><path d="M21 16h-4"></path><path d="M11 3H9"></path></svg>`;
+                     } else if (ariaLabel.includes('Auto Fill')) {
+                         originalIcon = `<svg class="lucide lucide-sparkles w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 0 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>`;
+                     } else if (ariaLabel.includes('Chat with AI')) {
+                         originalIcon = `<svg class="lucide lucide-message-circle w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>`;
+                     }
 
                     spinner.outerHTML = originalIcon;
                 }
@@ -590,6 +635,12 @@
                         textSpan.textContent = 'Improve Description with AI';
                     } else if (ariaLabel.includes('Auto Fill')) {
                         textSpan.textContent = 'Auto Fill with AI';
+                     } else if (ariaLabel.includes('Chat with AI')) {
+                        textSpan.textContent = 'Chat with AI';
+                        // Keep text always visible for chat button
+                        textSpan.classList.remove('hidden', 'group-hover:inline', 'text-warning');
+                        textSpan.classList.add('inline');
+                        return; // Skip the general reset
                     }
 
                     // Restore original classes for hover behavior
@@ -647,11 +698,21 @@
                         descriptionTextarea.dataset.originalContent = result.generated_content;
                         descriptionTextarea.value = result.generated_content;
                         waitForMarked(() => {
-                            const displayDivGen = document.getElementById('{{id}}-assistant-prompt-display');
-                            displayDivGen.innerHTML = marked.parse(result.generated_content);
-                            displayDivGen.style.display = 'block';
-                            descriptionTextarea.style.display = 'none';
-                            autoExpandDisplayDiv();
+                            try {
+                                const cleanedContent = result.generated_content.replace(/^\s+/gm, '').replace(/\s+$/gm, '');
+                                const displayDivGen = document.getElementById('{{id}}-assistant-prompt-display');
+                                displayDivGen.innerHTML = DOMPurify.sanitize(marked.parse(cleanedContent, { renderer, breaks: true }));
+                                displayDivGen.style.display = 'block';
+                                descriptionTextarea.style.display = 'none';
+                                autoExpandDisplayDiv();
+                            } catch (error) {
+                                console.error('Markdown parsing failed:', error);
+                                const displayDivGen = document.getElementById('{{id}}-assistant-prompt-display');
+                                displayDivGen.textContent = result.generated_content; // Fallback
+                                displayDivGen.style.display = 'block';
+                                descriptionTextarea.style.display = 'none';
+                                autoExpandDisplayDiv();
+                            }
                         });
                         updateCharCounter();
                         showToastMessage('Description generated successfully', 'success');
@@ -795,28 +856,17 @@
         const chatContainer = document.getElementById('{{id}}-chat-container');
         const chatMessages = document.getElementById('{{id}}-chat-messages');
         const chatInput = document.getElementById('{{id}}-chat-input');
-        const sendChatBtn = document.getElementById('{{id}}-send-chat');
-        const clearChatBtn = document.getElementById('{{id}}-clear-chat');
         const chatCharCounter = document.getElementById('{{id}}-chat-char-counter');
 
          // Toggle chat visibility
-         chatBtn.addEventListener('click', () => {
-             isChatOpen = !isChatOpen;
-             chatContainer.classList.toggle('hidden', !isChatOpen);
+          chatBtn.addEventListener('click', () => {
+              isChatOpen = !isChatOpen;
+              chatContainer.classList.toggle('hidden', !isChatOpen);
 
-             if (isChatOpen && chatHistory.length === 0) {
-                 // Load chat history from localStorage if available
-                 const savedChat = localStorage.getItem('accelerator-chat-history-{{id}}');
-                 if (savedChat) {
-                     try {
-                         chatHistory = JSON.parse(savedChat);
-                         renderChatMessages();
-                     } catch (e) {
-                         console.error('Failed to load chat history:', e);
-                     }
-                 }
-             }
-         });
+              if (isChatOpen && chatHistory.length === 0) {
+                  renderChatMessages();
+              }
+          });
 
         // Auto-resize chat input
         function autoResizeChatInput() {
@@ -828,7 +878,6 @@
         function updateChatCharCounter() {
             const length = chatInput.value.length;
             chatCharCounter.textContent = `${length} / 1000`;
-            sendChatBtn.disabled = length === 0 || length > 1000;
             autoResizeChatInput();
         }
 
@@ -842,7 +891,7 @@
             if (chatHistory.length === 0) {
                 chatMessages.innerHTML = `
                     <div class="text-center text-muted-foreground text-sm py-8 px-4 bg-muted/30 rounded-lg border border-dashed border-border" role="status" aria-live="polite">
-                        💬 Start a conversation about your project requirements. The AI will help you refine and improve them.
+                        💬 Chat with AI to get help refining your project requirements. (Temporary - not saved)
                     </div>
                 `;
                 return;
@@ -870,9 +919,9 @@
                     // AI message (left side)
                     messageGroup.innerHTML = `
                         <div class="flex flex-col space-y-1">
-                            <div class="message message--ai bg-muted text-foreground px-4 py-3 rounded-2xl rounded-bl-md max-w-[80%] shadow-sm border border-border/50">
-                                ${marked.parse(message.content)}
-                            </div>
+                             <div class="message message--ai bg-muted text-foreground px-4 py-3 rounded-2xl rounded-bl-md max-w-[80%] shadow-sm border border-border/50">
+                                 ${DOMPurify.sanitize(marked.parse(message.content, { renderer, breaks: true }))}
+                             </div>
                             <time class="message-timestamp message-timestamp--ai text-xs text-muted-foreground" datetime="${isoTimestamp}">${timestamp}</time>
                         </div>
                     `;
@@ -904,7 +953,6 @@
             const context = currentDescription ? `Description: ${currentDescription}` : '';
 
             // Show loading state
-            sendChatBtn.disabled = true;
             setButtonLoading(chatBtn, true);
 
             const loadingMessageDiv = document.createElement('article');
@@ -942,9 +990,6 @@
                     chatHistory.push({ role: 'assistant', content: data.response });
                     renderChatMessages();
 
-                    // Save to localStorage
-                    localStorage.setItem('accelerator-chat-history-{{id}}', JSON.stringify(chatHistory));
-
                     showToastMessage('Message sent successfully', 'success');
                     showToastMessage('10 credits deducted for AI chat', 'warning');
                     if (typeof window.loadNavCreditBalance === 'function') {
@@ -961,13 +1006,11 @@
                 // Remove loading message
                 loadingMessageDiv.remove();
             } finally {
-                sendChatBtn.disabled = false;
                 setButtonLoading(chatBtn, false);
             }
         }
 
-        // Send message on button click
-        sendChatBtn.addEventListener('click', sendChatMessage);
+
 
         // Send message on Enter (but allow Shift+Enter for new lines)
         chatInput.addEventListener('keydown', (e) => {
@@ -979,9 +1022,8 @@
 
         // Clear chat
         clearChatBtn.addEventListener('click', () => {
-            if (confirm('Are you sure you want to clear the chat history?')) {
+            if (confirm('Are you sure you want to clear the chat?')) {
                 chatHistory = [];
-                localStorage.removeItem('accelerator-chat-history-{{id}}');
                 renderChatMessages();
                 showToastMessage('Chat cleared', 'info');
             }
