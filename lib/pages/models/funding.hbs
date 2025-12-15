@@ -11,43 +11,43 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
         <!-- Progress Bar Fill -->
         <div id="progress-fill"
             class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"
-            style="width: 25%"></div>
+            style="width: 20%"></div>
 
         <!-- Pills Overlay -->
         <div class="relative flex justify-between items-center">
             <span
                 class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10"
-                data-section="funding-overview">Funding Overview</span>
+                data-section="funding-goal">1. Funding Goal</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="bootstrapping">2.</span>
+                data-section="funding-allocation">2.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="angel-investors">3.</span>
+                data-section="revenue-model">3.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="venture-capital">4.</span>
+                data-section="investor-roi">4.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="crowdfunding">5.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="loans">6.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="grants">7.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="exit-strategy">8.</span>
+                data-section="cap-table">5.</span>
         </div>
     </div>
 </div>
 
 <main class="flex flex-col mx-auto items-center justify-center">
     <div class="sections-container">
-        <!-- Funding Overview Section -->
-        <div id="funding-overview" class="section mb-6">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Funding Overview</h2>
-            <p class="text-muted-foreground mb-6">Summarize your funding needs and strategy.</p>
+        <!-- Funding Goal Section -->
+        <div id="funding-goal" class="section mb-6">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Funding Goal</h2>
+            <p class="text-muted-foreground mb-6">Determine your funding requirements.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="funding-overview-q1" step="1" question="How much funding do you need?"}}
+                          {{> question-block id="funding-goal-q1" step="1" question="How much total funding are you seeking?" placeholder="This section determines your funding requirements. Specify total funding amount with stage-based ranges. AI can recommend appropriate amounts. Use this section for fundraising planning. Chat with AI to understand funding amounts or get stage-appropriate guidance."}}
+                     </div>
+                 </div>
+                 <div class="flex items-start gap-4 mb-6">
+                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                     <div class="flex-1">
+                          {{> question-block id="funding-goal-q2" step="2" question="What type of funding are you targeting?" placeholder="This section specifies funding types. Choose equity, debt, grant, or crowdfunding based on your needs. AI can suggest optimal funding types. Use this section for funding strategy. Chat with AI to learn about funding types or get recommendation help."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -62,22 +62,16 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Bootstrapping Section -->
-        <div id="bootstrapping" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Bootstrapping</h2>
-            <p class="text-muted-foreground mb-6">Explore self-funding options.</p>
+        <!-- Funding Allocation Section -->
+        <div id="funding-allocation" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Funding Allocation</h2>
+            <p class="text-muted-foreground mb-6">Plan how to use your funds.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="bootstrapping-q1" step="2" question="What personal funds do you have?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="bootstrapping-q2" step="3" question="How will you minimize expenses?"}}
+                          {{> question-block id="funding-allocation-q1" step="3" question="How will the funding be allocated?" placeholder="This section plans funding allocation. Break down how funds will be used across product, marketing, hiring, operations. AI can suggest recommended allocations. Use this section for budget planning. Chat with AI to learn allocation strategies or get industry benchmarks."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -92,22 +86,28 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Angel Investors Section -->
-        <div id="angel-investors" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Angel Investors</h2>
-            <p class="text-muted-foreground mb-6">Plan for angel investor funding.</p>
+        <!-- Revenue Model Section -->
+        <div id="revenue-model" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Revenue Model</h2>
+            <p class="text-muted-foreground mb-6">Define your revenue strategy.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="angel-investors-q1" step="4" question="Who are potential angel investors?"}}
+                          {{> question-block id="revenue-model-q1" step="4" question="What are your revenue streams?" placeholder="This section details your revenue streams. List subscription, commission, licensing, hardware sales, services, ads. AI can help identify revenue opportunities. Use this section for investor presentations. Chat with AI to explore revenue diversification or get monetization ideas."}}
                      </div>
                  </div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
                      <div class="flex-1">
-                         {{> question-block id="angel-investors-q2" step="5" question="What equity will you offer?"}}
+                          {{> question-block id="revenue-model-q2" step="5" question="How do you price your product?" placeholder="This section defines your pricing strategy. Choose monthly subscription, per user, tiered plans, usage-based, or custom pricing. AI can recommend pricing models. Use this section for pricing strategy. Chat with AI to learn pricing strategies or get competitive pricing analysis."}}
+                     </div>
+                 </div>
+                 <div class="flex items-start gap-4 mb-6">
+                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                     <div class="flex-1">
+                          {{> question-block id="revenue-model-q3" step="6" question="What is your market size?" placeholder="This section estimates your market size. AI can automatically calculate TAM/SAM/SOM if unknown. Use this section for market opportunity assessment. Chat with AI to understand market sizing or get calculation assistance."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -122,22 +122,22 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Venture Capital Section -->
-        <div id="venture-capital" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Venture Capital</h2>
-            <p class="text-muted-foreground mb-6">Consider venture capital options.</p>
+        <!-- Investor ROI Section -->
+        <div id="investor-roi" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Investor ROI</h2>
+            <p class="text-muted-foreground mb-6">Calculate returns for investors.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="venture-capital-q1" step="6" question="Which VCs are you targeting?"}}
+                          {{> question-block id="investor-roi-q1" step="7" question="What valuation are you targeting?" placeholder="This section sets your target valuation. AI can recommend valuations based on revenue multiples. Use this section for investor negotiations. Chat with AI to learn valuation methods or get industry comparisons."}}
                      </div>
                  </div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
                      <div class="flex-1">
-                         {{> question-block id="venture-capital-q2" step="7" question="What is your pitch deck like?"}}
+                          {{> question-block id="investor-roi-q2" step="8" question="What is your preferred exit method?" placeholder="This section defines your exit strategy. Choose acquisition, IPO, strategic merger, or secondary sale. AI can recommend based on your business. Use this section for investor ROI planning. Chat with AI to understand exit options or get exit strategy advice."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -152,112 +152,22 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Crowdfunding Section -->
-        <div id="crowdfunding" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Crowdfunding</h2>
-            <p class="text-muted-foreground mb-6">Plan your crowdfunding campaign.</p>
+        <!-- Cap Table Section -->
+        <div id="cap-table" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Cap Table</h2>
+            <p class="text-muted-foreground mb-6">Outline ownership structure.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="crowdfunding-q1" step="8" question="Which platform will you use?"}}
+                          {{> question-block id="cap-table-q1" step="9" question="Confirm your future funding rounds." placeholder="This section plans future funding rounds. Choose seed to Series A, pre-seed to seed, or custom schedules. AI can suggest appropriate rounds. Use this section for dilution planning. Chat with AI to learn funding round structures or get sequencing advice."}}
                      </div>
                  </div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
                      <div class="flex-1">
-                         {{> question-block id="crowdfunding-q2" step="9" question="What rewards will you offer?"}}
-                     </div>
-                 </div>
-                <div class="flex items-start gap-4">
-                    <div class="w-8 h-8  rounded-full flex items-center justify-center text-sm font-bold relative z-10">    <svg class="lucide lucide-check-circle w-8 h-8 text-success" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22,4 12,14.01 9,11.01"></polyline>
-    </svg></div>
-                    <div class="flex-1">
-                        {{> move-next-block message="You have successfully completed this section of the funding model." buttonText="Move to Next Section"}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Loans Section -->
-        <div id="loans" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Loans</h2>
-            <p class="text-muted-foreground mb-6">Explore loan options.</p>
-            <div class="relative">
-                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
-                     <div class="flex-1">
-                         {{> question-block id="loans-q1" step="10" question="What type of loan do you need?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="loans-q2" step="11" question="What is your repayment plan?"}}
-                     </div>
-                 </div>
-                <div class="flex items-start gap-4">
-                    <div class="w-8 h-8  rounded-full flex items-center justify-center text-sm font-bold relative z-10">    <svg class="lucide lucide-check-circle w-8 h-8 text-success" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22,4 12,14.01 9,11.01"></polyline>
-    </svg></div>
-                    <div class="flex-1">
-                        {{> move-next-block message="You have successfully completed this section of the funding model." buttonText="Move to Next Section"}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Grants Section -->
-        <div id="grants" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Grants</h2>
-            <p class="text-muted-foreground mb-6">Apply for grants and subsidies.</p>
-            <div class="relative">
-                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
-                     <div class="flex-1">
-                         {{> question-block id="grants-q1" step="12" question="Which grants are you eligible for?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="grants-q2" step="13" question="What is your grant application strategy?"}}
-                     </div>
-                 </div>
-                <div class="flex items-start gap-4">
-                    <div class="w-8 h-8  rounded-full flex items-center justify-center text-sm font-bold relative z-10">    <svg class="lucide lucide-check-circle w-8 h-8 text-success" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22,4 12,14.01 9,11.01"></polyline>
-    </svg></div>
-                    <div class="flex-1">
-                        {{> move-next-block message="You have successfully completed this section of the funding model." buttonText="Move to Next Section"}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Exit Strategy Section -->
-        <div id="exit-strategy" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Exit Strategy</h2>
-            <p class="text-muted-foreground mb-6">Plan for investor exit.</p>
-            <div class="relative">
-                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
-                     <div class="flex-1">
-                         {{> question-block id="exit-strategy-q1" step="14" question="What is your exit strategy?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="exit-strategy-q2" step="15" question="When do you plan to exit?"}}
+                          {{> question-block id="cap-table-q2" step="10" question="Provide details for your cap table." placeholder="This section builds your capitalization table. Provide founder ownership, investor ownership, option pool percentages. AI can suggest default structures. Use this section for equity management. Chat with AI to understand cap tables or get structure recommendations."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -278,16 +188,13 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
 <script>
     // Pill text variations for funding model sections
     const pillFullTexts = [
-        '1. Funding Overview',
-        '2. Bootstrapping',
-        '3. Angel Investors',
-        '4. Venture Capital',
-        '5. Crowdfunding',
-        '6. Loans',
-        '7. Grants',
-        '8. Exit Strategy'
+        '1. Funding Goal',
+        '2. Funding Allocation',
+        '3. Revenue Model',
+        '4. Investor ROI',
+        '5. Cap Table'
     ];
-    const pillNumbers = ['1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.'];
+    const pillNumbers = ['1.', '2.', '3.', '4.', '5.'];
 
     function addHoverListeners() {
         document.querySelectorAll('.step-pill').forEach((pill, index) => {
@@ -312,14 +219,11 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
         });
         // Show target section
         const sectionIds = [
-            'funding-overview',
-            'bootstrapping',
-            'angel-investors',
-            'venture-capital',
-            'crowdfunding',
-            'loans',
-            'grants',
-            'exit-strategy'
+            'funding-goal',
+            'funding-allocation',
+            'revenue-model',
+            'investor-roi',
+            'cap-table'
         ];
         const targetSection = document.getElementById(sectionIds[sectionIndex]);
         if (targetSection) {
@@ -328,7 +232,7 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
 
         // Update progress bar
         const progressBar = document.getElementById('progress-fill');
-        const width = ((sectionIndex + 1) / 8) * 100 + '%';
+        const width = ((sectionIndex + 1) / 5) * 100 + '%';
         progressBar.style.width = width;
 
         // Update pills
@@ -356,9 +260,9 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
     document.querySelectorAll('.move-next-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const currentSection = btn.closest('.section');
-            const sectionIds = ['funding-overview', 'bootstrapping', 'angel-investors', 'venture-capital', 'crowdfunding', 'loans', 'grants', 'exit-strategy'];
+            const sectionIds = ['funding-goal', 'funding-allocation', 'revenue-model', 'investor-roi', 'cap-table'];
             const currentIndex = sectionIds.indexOf(currentSection.id);
-            if (currentIndex < 7) {
+            if (currentIndex < 4) {
                 showSection(currentIndex + 1);
             } else {
                 // Last section

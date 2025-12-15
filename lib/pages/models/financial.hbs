@@ -11,43 +11,43 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
         <!-- Progress Bar Fill -->
         <div id="progress-fill"
             class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"
-            style="width: 25%"></div>
+            style="width: 12.5%"></div>
 
         <!-- Pills Overlay -->
         <div class="relative flex justify-between items-center">
             <span
                 class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10"
-                data-section="financial-overview">Financial Overview</span>
+                data-section="kpi-collection">1. KPI Collection</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="income-statement">2.</span>
+                data-section="revenue-assumptions">2.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="balance-sheet">3.</span>
+                data-section="revenue-streams">3.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="cash-flow">4.</span>
+                data-section="cogs">4.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="break-even-analysis">5.</span>
+                data-section="opex">5.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="funding-requirements">6.</span>
+                data-section="capex">6.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="financial-ratios">7.</span>
+                data-section="financial-statements">7.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="financial-risks">8.</span>
+                data-section="financial-ratios">8.</span>
         </div>
     </div>
 </div>
 
 <main class="flex flex-col mx-auto items-center justify-center">
     <div class="sections-container">
-        <!-- Financial Overview Section -->
-        <div id="financial-overview" class="section mb-6">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Financial Overview</h2>
-            <p class="text-muted-foreground mb-6">Provide a summary of your financial situation.</p>
+        <!-- KPI Collection Section -->
+        <div id="kpi-collection" class="section mb-6">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">KPI Collection</h2>
+            <p class="text-muted-foreground mb-6">Track your key performance indicators.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="financial-overview-q1" step="1" question="What is your current financial status?"}}
+                          {{> question-block id="kpi-collection-q1" step="1" question="What KPIs do you track or plan to track?" placeholder="This section tracks your key performance indicators. List KPIs like CAC, LTV, Gross Margin, Churn Rate, Monthly Active Users, Conversion Rate, ARPU. AI can suggest relevant KPIs for your business. Use this section for performance measurement. Chat with AI to learn about KPIs or get industry-specific recommendations."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -62,22 +62,16 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Income Statement Section -->
-        <div id="income-statement" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Income Statement</h2>
-            <p class="text-muted-foreground mb-6">Detail your revenues and expenses.</p>
+        <!-- Revenue Assumptions Section -->
+        <div id="revenue-assumptions" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Revenue Assumptions</h2>
+            <p class="text-muted-foreground mb-6">Define your revenue expectations.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="income-statement-q1" step="2" question="What are your projected revenues?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="income-statement-q2" step="3" question="What are your main expenses?"}}
+                          {{> question-block id="revenue-assumptions-q1" step="2" question="What are your revenue expectations?" placeholder="This section defines your revenue expectations. Provide monthly or yearly revenue estimates, with ranges for different stages. AI can propose ranges based on similar startups. Use this section for revenue planning. Chat with AI to understand revenue expectations or get benchmarking help."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -92,22 +86,16 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Balance Sheet Section -->
-        <div id="balance-sheet" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Balance Sheet</h2>
-            <p class="text-muted-foreground mb-6">Outline your assets, liabilities, and equity.</p>
+        <!-- Revenue Streams Section -->
+        <div id="revenue-streams" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Revenue Streams</h2>
+            <p class="text-muted-foreground mb-6">Identify your sources of income.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="balance-sheet-q1" step="4" question="What are your assets?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="balance-sheet-q2" step="5" question="What are your liabilities?"}}
+                          {{> question-block id="revenue-streams-q1" step="3" question="List your revenue streams." placeholder="This section lists your revenue streams. Include subscription, transaction fees, licensing, professional services, hardware sales, API usage. AI can suggest additional revenue streams. Use this section for monetization strategy. Chat with AI to explore revenue models or get diversification ideas."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -122,22 +110,16 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Cash Flow Section -->
-        <div id="cash-flow" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Cash Flow</h2>
-            <p class="text-muted-foreground mb-6">Track your cash inflows and outflows.</p>
+        <!-- COGS Section -->
+        <div id="cogs" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">COGS</h2>
+            <p class="text-muted-foreground mb-6">Calculate your cost of goods sold.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="cash-flow-q1" step="6" question="What are your cash inflows?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="cash-flow-q2" step="7" question="What are your cash outflows?"}}
+                          {{> question-block id="cogs-q1" step="4" question="What are your monthly COGS?" placeholder="This section identifies your Cost of Goods Sold. Include cloud hosting, delivery costs, support staff, payment gateway fees, software licenses. AI can help calculate typical COGS ranges. Use this section for cost analysis. Chat with AI to learn about COGS calculation or get industry benchmarks."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -152,22 +134,16 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Break-Even Analysis Section -->
-        <div id="break-even-analysis" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Break-Even Analysis</h2>
-            <p class="text-muted-foreground mb-6">Determine when you'll break even.</p>
+        <!-- Opex Section -->
+        <div id="opex" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Opex</h2>
+            <p class="text-muted-foreground mb-6">Account for your operating expenses.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="break-even-analysis-q1" step="8" question="What is your break-even point?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="break-even-analysis-q2" step="9" question="How long will it take to reach break-even?"}}
+                          {{> question-block id="opex-q1" step="5" question="What are your Opex categories?" placeholder="This section captures your Operating Expenses. Include salaries, marketing, office rent, software subscriptions, legal, travel, R&D. AI can recommend standard benchmarks. Use this section for expense planning. Chat with AI to understand Opex categories or get cost optimization tips."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -182,22 +158,40 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Funding Requirements Section -->
-        <div id="funding-requirements" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Funding Requirements</h2>
-            <p class="text-muted-foreground mb-6">Specify how much funding you need.</p>
+        <!-- Capex Section -->
+        <div id="capex" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Capex</h2>
+            <p class="text-muted-foreground mb-6">Plan for capital expenditures.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="funding-requirements-q1" step="10" question="How much funding do you need?"}}
+                          {{> question-block id="capex-q1" step="6" question="What are your capital expenditures?" placeholder="This section identifies capital expenditures. Include equipment, servers, vehicles, machinery, or one-time system builds. AI can suggest Capex options. Use this section for investment planning. Chat with AI to learn about Capex vs Opex or get investment planning help."}}
                      </div>
                  </div>
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8  rounded-full flex items-center justify-center text-sm font-bold relative z-10">    <svg class="lucide lucide-check-circle w-8 h-8 text-success" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22,4 12,14.01 9,11.01"></polyline>
+    </svg></div>
+                    <div class="flex-1">
+                        {{> move-next-block message="You have successfully completed this section of the financial model." buttonText="Move to Next Section"}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Statements Section -->
+        <div id="financial-statements" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Financial Statements</h2>
+            <p class="text-muted-foreground mb-6">Generate comprehensive financial reports.</p>
+            <div class="relative">
+                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="funding-requirements-q2" step="11" question="How will you use the funds?"}}
+                          {{> question-block id="financial-statements-q1" step="7" question="What formatting do you want for financial statements?" placeholder="This section generates your financial statements. Choose monthly, quarterly, yearly, or 3-5 year projections. AI will compute based on your inputs. Use this section for financial reporting. Chat with AI to understand financial statements or get formatting recommendations."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -215,49 +209,13 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
         <!-- Financial Ratios Section -->
         <div id="financial-ratios" class="section mb-6" style="display: none;">
             <h2 class="text-xl font-semibold mb-4 text-foreground">Financial Ratios</h2>
-            <p class="text-muted-foreground mb-6">Calculate key financial ratios.</p>
+            <p class="text-muted-foreground mb-6">Analyze key financial metrics.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="financial-ratios-q1" step="12" question="What is your profit margin?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="financial-ratios-q2" step="13" question="What is your return on investment?"}}
-                     </div>
-                 </div>
-                <div class="flex items-start gap-4">
-                    <div class="w-8 h-8  rounded-full flex items-center justify-center text-sm font-bold relative z-10">    <svg class="lucide lucide-check-circle w-8 h-8 text-success" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22,4 12,14.01 9,11.01"></polyline>
-    </svg></div>
-                    <div class="flex-1">
-                        {{> move-next-block message="You have successfully completed this section of the financial model." buttonText="Move to Next Section"}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Financial Risks Section -->
-        <div id="financial-risks" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Financial Risks</h2>
-            <p class="text-muted-foreground mb-6">Identify financial risks and mitigation strategies.</p>
-            <div class="relative">
-                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
-                     <div class="flex-1">
-                         {{> question-block id="financial-risks-q1" step="14" question="What are the financial risks?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="financial-risks-q2" step="15" question="How will you mitigate these risks?"}}
+                          {{> question-block id="financial-ratios-q1" step="8" question="Which financial ratios do you want calculated?" placeholder="This section calculates major financial ratios. Includes profitability, efficiency, liquidity, and growth ratios. AI will compute all major ratios. Use this section for financial analysis. Chat with AI to learn about financial ratios or get interpretation help."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -278,14 +236,14 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
 <script>
     // Pill text variations for financial model sections
     const pillFullTexts = [
-        '1. Financial Overview',
-        '2. Income Statement',
-        '3. Balance Sheet',
-        '4. Cash Flow',
-        '5. Break-Even Analysis',
-        '6. Funding Requirements',
-        '7. Financial Ratios',
-        '8. Financial Risks'
+        '1. KPI Collection',
+        '2. Revenue Assumptions',
+        '3. Revenue Streams',
+        '4. COGS',
+        '5. Opex',
+        '6. Capex',
+        '7. Financial Statements',
+        '8. Financial Ratios'
     ];
     const pillNumbers = ['1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.'];
 
@@ -312,14 +270,14 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
         });
         // Show target section
         const sectionIds = [
-            'financial-overview',
-            'income-statement',
-            'balance-sheet',
-            'cash-flow',
-            'break-even-analysis',
-            'funding-requirements',
-            'financial-ratios',
-            'financial-risks'
+            'kpi-collection',
+            'revenue-assumptions',
+            'revenue-streams',
+            'cogs',
+            'opex',
+            'capex',
+            'financial-statements',
+            'financial-ratios'
         ];
         const targetSection = document.getElementById(sectionIds[sectionIndex]);
         if (targetSection) {
@@ -356,7 +314,7 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
     document.querySelectorAll('.move-next-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const currentSection = btn.closest('.section');
-            const sectionIds = ['financial-overview', 'income-statement', 'balance-sheet', 'cash-flow', 'break-even-analysis', 'funding-requirements', 'financial-ratios', 'financial-risks'];
+            const sectionIds = ['kpi-collection', 'revenue-assumptions', 'revenue-streams', 'cogs', 'opex', 'capex', 'financial-statements', 'financial-ratios'];
             const currentIndex = sectionIds.indexOf(currentSection.id);
             if (currentIndex < 7) {
                 showSection(currentIndex + 1);

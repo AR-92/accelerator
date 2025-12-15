@@ -11,43 +11,61 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
         <!-- Progress Bar Fill -->
         <div id="progress-fill"
             class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"
-            style="width: 25%"></div>
+            style="width: 20%"></div>
 
         <!-- Pills Overlay -->
         <div class="relative flex justify-between items-center">
             <span
                 class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10"
-                data-section="team-structure">Team Structure</span>
+                data-section="team-overview">1. Team Overview</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="roles-responsibilities">2.</span>
+                data-section="team-roles-responsibilities">2.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="recruitment">3.</span>
+                data-section="skills-matrix">3.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="onboarding">4.</span>
+                data-section="hiring-plan">4.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="team-culture">5.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="performance-management">6.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="compensation">7.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="team-development">8.</span>
+                data-section="compensation-equity">5.</span>
         </div>
     </div>
 </div>
 
 <main class="flex flex-col mx-auto items-center justify-center">
     <div class="sections-container">
-        <!-- Team Structure Section -->
-        <div id="team-structure" class="section mb-6">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Team Structure</h2>
-            <p class="text-muted-foreground mb-6">Define your organizational hierarchy.</p>
+        <!-- Team Overview Section -->
+        <div id="team-overview" class="section mb-6">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Team Overview</h2>
+            <p class="text-muted-foreground mb-6">Assess your current team composition.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="team-structure-q1" step="1" question="What is your team structure?"}}
+                          {{> question-block id="team-overview-q1" step="1" question="How many founders are in your team?" placeholder="This section counts your founders. Include all co-founders in the founding team. AI can help with founder dynamics. Use this section for team foundation. Chat with AI to understand founder roles or get team structure advice."}}
+                     </div>
+                 </div>
+                 <div class="flex items-start gap-4 mb-6">
+                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                     <div class="flex-1">
+                          {{> question-block id="team-overview-q2" step="2" question="How many employees do you have?" placeholder="This section counts your employees. Exclude founders from this count. AI can help with staffing needs. Use this section for headcount planning. Chat with AI to understand team sizing or get growth recommendations."}}
+                     </div>
+                 </div>
+                 <div class="flex items-start gap-4 mb-6">
+                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
+                     <div class="flex-1">
+                          {{> question-block id="team-overview-q3" step="3" question="What is your team structure?" placeholder="This section describes team organization. Specify hierarchical, flat, or other structures. AI can suggest optimal structures. Use this section for organizational design. Chat with AI to learn team structures or get design recommendations."}}
+                     </div>
+                 </div>
+                 <div class="flex items-start gap-4 mb-6">
+                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">4</div>
+                     <div class="flex-1">
+                          {{> question-block id="team-overview-q4" step="4" question="How ready is your team to execute?" placeholder="This section assesses team readiness. Rate low to high ability to execute business plans. AI can help identify gaps. Use this section for capability evaluation. Chat with AI to understand team readiness or get improvement suggestions."}}
+                     </div>
+                 </div>
+                 <div class="flex items-start gap-4 mb-6">
+                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">5</div>
+                     <div class="flex-1">
+                          {{> question-block id="team-overview-q5" step="5" question="What is your working model?" placeholder="This section defines working arrangements. Specify office, remote, or hybrid models. AI can help with work model decisions. Use this section for operational setup. Chat with AI to understand work models or get productivity advice."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -62,22 +80,22 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Roles and Responsibilities Section -->
-        <div id="roles-responsibilities" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Roles and Responsibilities</h2>
-            <p class="text-muted-foreground mb-6">Outline job roles and duties.</p>
+        <!-- Team Roles & Responsibilities Section -->
+        <div id="team-roles-responsibilities" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Team Roles & Responsibilities</h2>
+            <p class="text-muted-foreground mb-6">Define roles and duties.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="roles-responsibilities-q1" step="2" question="What are the key roles?"}}
+                          {{> question-block id="team-roles-responsibilities-q1" step="6" question="Define key team roles and responsibilities." placeholder="This section defines team roles. List key positions and their main responsibilities. AI can suggest role structures. Use this section for job descriptions. Chat with AI to understand team roles or get role definition help."}}
                      </div>
                  </div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
                      <div class="flex-1">
-                         {{> question-block id="roles-responsibilities-q2" step="3" question="What are their responsibilities?"}}
+                          {{> question-block id="team-roles-responsibilities-q2" step="7" question="List key roles and their responsibilities." placeholder="This section details role responsibilities. Provide comprehensive duties for each position. AI can help refine descriptions. Use this section for accountability. Chat with AI to improve role definitions or get responsibility clarification."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -92,22 +110,16 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Recruitment Section -->
-        <div id="recruitment" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Recruitment</h2>
-            <p class="text-muted-foreground mb-6">Plan your hiring strategy.</p>
+        <!-- Skills Matrix Section -->
+        <div id="skills-matrix" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Skills Matrix</h2>
+            <p class="text-muted-foreground mb-6">Evaluate team competencies.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="recruitment-q1" step="4" question="How will you find candidates?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="recruitment-q2" step="5" question="What are your hiring criteria?"}}
+                          {{> question-block id="skills-matrix-q1" step="8" question="Assess your team's skills." placeholder="This section evaluates team skills. Map technical, soft, and business skills across team members. AI can help create skill matrices. Use this section for capability assessment. Chat with AI to understand skills assessment or get matrix creation help."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -122,22 +134,16 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Onboarding Section -->
-        <div id="onboarding" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Onboarding</h2>
-            <p class="text-muted-foreground mb-6">Develop a process for new hires.</p>
+        <!-- Hiring Plan Section -->
+        <div id="hiring-plan" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Hiring Plan</h2>
+            <p class="text-muted-foreground mb-6">Plan future recruitment.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="onboarding-q1" step="6" question="What is your onboarding process?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="onboarding-q2" step="7" question="How long does it take?"}}
+                          {{> question-block id="hiring-plan-q1" step="9" question="What is your hiring plan?" placeholder="This section outlines hiring strategy. Plan recruitment based on skill gaps and growth needs. AI can suggest hiring timelines. Use this section for talent acquisition. Chat with AI to learn hiring strategies or get plan development help."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -152,112 +158,16 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Team Culture Section -->
-        <div id="team-culture" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Team Culture</h2>
-            <p class="text-muted-foreground mb-6">Foster a positive work environment.</p>
+        <!-- Compensation & Equity Section -->
+        <div id="compensation-equity" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Compensation & Equity</h2>
+            <p class="text-muted-foreground mb-6">Design pay and ownership structure.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="team-culture-q1" step="8" question="What is your company culture?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="team-culture-q2" step="9" question="How will you maintain it?"}}
-                     </div>
-                 </div>
-                <div class="flex items-start gap-4">
-                    <div class="w-8 h-8  rounded-full flex items-center justify-center text-sm font-bold relative z-10">    <svg class="lucide lucide-check-circle w-8 h-8 text-success" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22,4 12,14.01 9,11.01"></polyline>
-    </svg></div>
-                    <div class="flex-1">
-                        {{> move-next-block message="You have successfully completed this section of the team model." buttonText="Move to Next Section"}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Performance Management Section -->
-        <div id="performance-management" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Performance Management</h2>
-            <p class="text-muted-foreground mb-6">Monitor and improve employee performance.</p>
-            <div class="relative">
-                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
-                     <div class="flex-1">
-                         {{> question-block id="performance-management-q1" step="10" question="How will you evaluate performance?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="performance-management-q2" step="11" question="What feedback mechanisms will you use?"}}
-                     </div>
-                 </div>
-                <div class="flex items-start gap-4">
-                    <div class="w-8 h-8  rounded-full flex items-center justify-center text-sm font-bold relative z-10">    <svg class="lucide lucide-check-circle w-8 h-8 text-success" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22,4 12,14.01 9,11.01"></polyline>
-    </svg></div>
-                    <div class="flex-1">
-                        {{> move-next-block message="You have successfully completed this section of the team model." buttonText="Move to Next Section"}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Compensation Section -->
-        <div id="compensation" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Compensation</h2>
-            <p class="text-muted-foreground mb-6">Design fair pay and benefits.</p>
-            <div class="relative">
-                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
-                     <div class="flex-1">
-                         {{> question-block id="compensation-q1" step="12" question="What is your compensation structure?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="compensation-q2" step="13" question="What benefits will you offer?"}}
-                     </div>
-                 </div>
-                <div class="flex items-start gap-4">
-                    <div class="w-8 h-8  rounded-full flex items-center justify-center text-sm font-bold relative z-10">    <svg class="lucide lucide-check-circle w-8 h-8 text-success" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22,4 12,14.01 9,11.01"></polyline>
-    </svg></div>
-                    <div class="flex-1">
-                        {{> move-next-block message="You have successfully completed this section of the team model." buttonText="Move to Next Section"}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Team Development Section -->
-        <div id="team-development" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Team Development</h2>
-            <p class="text-muted-foreground mb-6">Invest in employee growth.</p>
-            <div class="relative">
-                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
-                     <div class="flex-1">
-                         {{> question-block id="team-development-q1" step="14" question="What training will you provide?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="team-development-q2" step="15" question="How will you support career growth?"}}
+                          {{> question-block id="compensation-equity-q1" step="10" question="Describe your compensation and equity structure." placeholder="This section designs compensation. Include salaries, equity bands, and overall structure. AI can recommend fair ranges. Use this section for competitive pay. Chat with AI to understand compensation or get equity structure advice."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -278,16 +188,13 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
 <script>
     // Pill text variations for team model sections
     const pillFullTexts = [
-        '1. Team Structure',
-        '2. Roles and Responsibilities',
-        '3. Recruitment',
-        '4. Onboarding',
-        '5. Team Culture',
-        '6. Performance Management',
-        '7. Compensation',
-        '8. Team Development'
+        '1. Team Overview',
+        '2. Team Roles & Responsibilities',
+        '3. Skills Matrix',
+        '4. Hiring Plan',
+        '5. Compensation & Equity'
     ];
-    const pillNumbers = ['1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.'];
+    const pillNumbers = ['1.', '2.', '3.', '4.', '5.'];
 
     function addHoverListeners() {
         document.querySelectorAll('.step-pill').forEach((pill, index) => {
@@ -312,14 +219,11 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
         });
         // Show target section
         const sectionIds = [
-            'team-structure',
-            'roles-responsibilities',
-            'recruitment',
-            'onboarding',
-            'team-culture',
-            'performance-management',
-            'compensation',
-            'team-development'
+            'team-overview',
+            'team-roles-responsibilities',
+            'skills-matrix',
+            'hiring-plan',
+            'compensation-equity'
         ];
         const targetSection = document.getElementById(sectionIds[sectionIndex]);
         if (targetSection) {
@@ -328,7 +232,7 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
 
         // Update progress bar
         const progressBar = document.getElementById('progress-fill');
-        const width = ((sectionIndex + 1) / 8) * 100 + '%';
+        const width = ((sectionIndex + 1) / 5) * 100 + '%';
         progressBar.style.width = width;
 
         // Update pills
@@ -356,9 +260,9 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
     document.querySelectorAll('.move-next-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const currentSection = btn.closest('.section');
-            const sectionIds = ['team-structure', 'roles-responsibilities', 'recruitment', 'onboarding', 'team-culture', 'performance-management', 'compensation', 'team-development'];
+            const sectionIds = ['team-overview', 'team-roles-responsibilities', 'skills-matrix', 'hiring-plan', 'compensation-equity'];
             const currentIndex = sectionIds.indexOf(currentSection.id);
-            if (currentIndex < 7) {
+            if (currentIndex < 4) {
                 showSection(currentIndex + 1);
             } else {
                 // Last section

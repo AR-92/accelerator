@@ -1,4 +1,4 @@
-<div class="flex flex-col border border-border rounded-md bg-card">
+<div class="flex flex-col border border-border rounded-full bg-card question-card" id="{{id}}-question-card" data-expanded="{{#if expanded}}{{expanded}}{{else}}false{{/if}}">
 
 
     <form id="{{id}}-new-project-form" class="flex m-auto max-w-[900px] min-w-[900px] flex-col gap-1 w-full" method="post"
@@ -9,35 +9,37 @@
         <div class="flex flex-col w-full">
             <div class="">
                 <div class=" flex flex-col gap-2 rounded-2xl relative py-2  ">
-                     <!-- Question and credit estimate wrapper -->
-                     <div class="pl-4 pr-2 flex justify-between items-center">
-                          <span
-                              class="inline-flex items-center gap-1 px-2 py-1 bg-primary/5 text-primary border border-primary/20 text-xs rounded-full">
-                              <span class="text-primary font-semibold">{{step}}. {{question}}</span>
-                          </span>
-                          <span id="{{id}}-credit-estimate" class="inline-flex items-center px-2 py-1 bg-warning/5 text-warning border border-warning/20 text-xs font-semibold rounded-full">Estimated credits: 10</span>
-                     </div>
-
-                      <!-- Description wrapper -->
-                      <div class=" pl-4 pr-2 relative">
-                          <label for="assistant-prompt" class="sr-only">Describe your
-                              project requirements</label>
-                           <div id="{{id}}-assistant-prompt-display" class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground min-h-[6rem] cursor-pointer whitespace-pre-wrap overflow-visible" style="display: none; white-space: pre-wrap; word-wrap: break-word; height: auto;"></div>
-                           <textarea id="{{id}}-assistant-prompt" name="prompt"
-                                placeholder="Describe your project requirements... (Markdown supported)"
-                                aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
-                                class="flex w-full rounded-md border-0 bg-transparent p-3 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-mono leading-relaxed"
-                                required=""
-                                style="min-height: 6rem; resize: vertical; overflow: auto; height: auto; line-height: 1.6;">{{description}}</textarea>
-                          <p id="prompt-help" class="sr-only">Enter your project
-                              description or requirements</p>
+                      <!-- Question and credit estimate wrapper -->
+                      <div class="pl-4 pr-2 flex justify-between items-center cursor-pointer question-toggle" data-expanded="false">
+                           <span
+                               class="inline-flex items-center gap-2 px-2 py-1 bg-primary/5 text-primary border border-primary/20 text-xs rounded-full hover:bg-primary/10 transition-colors">
+                               <svg id="{{id}}-expand-icon" class="w-3 h-3 text-primary transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                               </svg>
+                               <span class="text-primary font-semibold">{{step}}. {{question}}</span>
+                           </span>
+                           <span id="{{id}}-credit-estimate" class="inline-flex items-center px-2 py-1 bg-warning/5 text-warning border border-warning/20 text-xs font-semibold rounded-full">Estimated credits: 10</span>
                       </div>
 
+                       <!-- Expandable Content -->
+                       <div id="{{id}}-expandable-content" class="expandable-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0; opacity: 0;">
+                           <!-- Description wrapper -->
+                           <div class=" pl-4 pr-2 relative mt-4">
+                               <label for="assistant-prompt" class="sr-only">Describe your
+                                   project requirements</label>
+                                <div id="{{id}}-assistant-prompt-display" class="flex w-full rounded-md border border-input bg-background px-3 py-2 text-base text-foreground min-h-[6rem] cursor-pointer whitespace-pre-wrap overflow-visible" style="display: none; white-space: pre-wrap; word-wrap: break-word; height: auto;"></div>
+                                 <textarea id="{{id}}-assistant-prompt" name="prompt"
+                                      placeholder="{{placeholder}}"
+                                      aria-label="Describe your project requirements" aria-describedby="prompt-help char-counter"
+                                     class="flex w-full rounded-md border-0 bg-transparent p-3 pt-[1px] text-base placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 font-mono leading-relaxed"
+                                     required=""
+                                     style="min-height: 6rem; resize: vertical; overflow: auto; height: auto; line-height: 1.6;">{{description}}</textarea>
+                               <p id="prompt-help" class="sr-only">Enter your project
+                                   description or requirements</p>
+                           </div>
 
-
-
-                    <!-- toolbar -->
-                    <div class="px-3 flex gap-2 items-center">
+                         <!-- toolbar -->
+                         <div class="px-3 flex gap-2 items-center mt-4">
                          <div class="flex gap-2 items-center flex-shrink-0">
                               <!-- Chat with AI about Requirements -->
                               <button type="button" aria-label="Chat with AI about Requirements"
@@ -128,17 +130,17 @@
 
                                  <span class="inline transition-all duration-200">Save</span>
                              </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+             </div>
+         </div>
+     </div>
+     </div> <!-- End expandable-content -->
+ </div>
+         </div>
 
-      <!-- Chat Interface (appears below toolbar when Chat button is clicked) -->
-      <div id="{{id}}-chat-container"
-          class="hidden border-t border-border bg-card rounded-md overflow-hidden max-w-[900px]"
-          role="log" aria-live="polite" aria-label="AI chat conversation">
+         <!-- Chat Interface (appears below toolbar when Chat button is clicked) -->
+         <div id="{{id}}-chat-container"
+             class="hidden border-t border-border bg-card rounded-md overflow-hidden max-w-[900px] mt-4"
+             role="log" aria-live="polite" aria-label="AI chat conversation">
         <!-- Chat Messages -->
         <div id="{{id}}-chat-messages" class="max-h-96 overflow-y-auto p-6 space-y-4" role="log" aria-live="polite">
             <div class="text-center text-muted-foreground text-sm py-8 px-4 bg-muted/30 rounded-lg border border-dashed border-border">
@@ -178,8 +180,27 @@
     </div>
 </div>
 
- <style>
-     /* Chat message styling */
+    </form>
+
+  <style>
+      /* Collapsible functionality */
+      .question-toggle {
+          transition: background-color 0.2s ease;
+      }
+
+      .question-toggle:hover {
+          background-color: rgba(0, 0, 0, 0.02);
+      }
+
+      .expandable-content {
+          transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+      }
+
+      #{{id}}-expand-icon {
+          transition: transform 0.3s ease;
+      }
+
+      /* Chat message styling */
      .message {
          word-wrap: break-word;
          line-height: 1.5;
@@ -305,6 +326,65 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         console.log('DOMContentLoaded fired for create-idea-card');
+
+        // Initialize collapsible functionality
+        const toggleBtn = document.querySelector('#{{id}}-question-card .question-toggle');
+        const expandableContent = document.getElementById('{{id}}-expandable-content');
+        const expandIcon = document.getElementById('{{id}}-expand-icon');
+
+        const questionCard = document.getElementById('{{id}}-question-card');
+
+        if (toggleBtn && expandableContent && expandIcon && questionCard) {
+            // Initialize based on data-expanded
+            const initialExpanded = toggleBtn.dataset.expanded === 'true';
+            if (initialExpanded) {
+                // Expand
+                expandableContent.style.maxHeight = expandableContent.scrollHeight + 'px';
+                expandableContent.style.opacity = '1';
+                expandIcon.style.transform = 'rotate(90deg)';
+                questionCard.classList.remove('rounded-full');
+                questionCard.classList.add('rounded-md');
+                toggleBtn.setAttribute('aria-expanded', 'true');
+            } else {
+                // Collapse
+                expandableContent.style.maxHeight = '0';
+                expandableContent.style.opacity = '0';
+                expandIcon.style.transform = 'rotate(0deg)';
+                questionCard.classList.remove('rounded-md');
+                questionCard.classList.add('rounded-full');
+                toggleBtn.setAttribute('aria-expanded', 'false');
+            }
+
+            toggleBtn.addEventListener('click', () => {
+                const isExpanded = toggleBtn.dataset.expanded === 'true';
+
+                if (isExpanded) {
+                    // Collapse
+                    expandableContent.style.maxHeight = '0';
+                    expandableContent.style.opacity = '0';
+                    expandIcon.style.transform = 'rotate(0deg)';
+                    questionCard.classList.remove('rounded-md');
+                    questionCard.classList.add('rounded-full');
+                    toggleBtn.dataset.expanded = 'false';
+                    toggleBtn.setAttribute('aria-expanded', 'false');
+                } else {
+                    // Expand
+                    expandableContent.style.maxHeight = expandableContent.scrollHeight + 'px';
+                    expandableContent.style.opacity = '1';
+                    expandIcon.style.transform = 'rotate(90deg)';
+                    questionCard.classList.remove('rounded-full');
+                    questionCard.classList.add('rounded-md');
+                    toggleBtn.dataset.expanded = 'true';
+                    toggleBtn.setAttribute('aria-expanded', 'true');
+                }
+            });
+
+            // Set initial ARIA attributes
+            toggleBtn.setAttribute('aria-expanded', 'false');
+            toggleBtn.setAttribute('role', 'button');
+            toggleBtn.setAttribute('tabindex', '0');
+        }
+
         // Initialize form elements
         const form = document.getElementById('{{id}}-new-project-form');
         const descriptionTextarea = document.getElementById('{{id}}-assistant-prompt');

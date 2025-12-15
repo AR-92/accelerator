@@ -11,103 +11,49 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
         <!-- Progress Bar Fill -->
         <div id="progress-fill"
             class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"
-            style="width: 25%"></div>
+            style="width: 20%"></div>
 
         <!-- Pills Overlay -->
         <div class="relative flex justify-between items-center">
             <span
                 class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10"
-                data-section="legal-structure">Legal Structure</span>
+                data-section="company-structure">1. Company Structure</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="incorporation">2.</span>
+                data-section="intellectual-property">2.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="contracts">3.</span>
+                data-section="contracts-agreements">3.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="intellectual-property">4.</span>
+                data-section="compliance-regulations">4.</span>
             <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="compliance">5.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="employment-law">6.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="tax-compliance">7.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="legal-risks">8.</span>
+                data-section="cap-table-equity">5.</span>
         </div>
     </div>
 </div>
 
 <main class="flex flex-col mx-auto items-center justify-center">
     <div class="sections-container">
-        <!-- Legal Structure Section -->
-        <div id="legal-structure" class="section mb-6">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Legal Structure</h2>
-            <p class="text-muted-foreground mb-6">Choose the right legal entity for your business.</p>
+        <!-- Company Structure Section -->
+        <div id="company-structure" class="section mb-6">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Company Structure</h2>
+            <p class="text-muted-foreground mb-6">Establish your legal foundation.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="legal-structure-q1" step="1" question="What legal structure suits your business?"}}
-                     </div>
-                 </div>
-                <div class="flex items-start gap-4">
-                    <div class="w-8 h-8  rounded-full flex items-center justify-center text-sm font-bold relative z-10">    <svg class="lucide lucide-check-circle w-8 h-8 text-success" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22,4 12,14.01 9,11.01"></polyline>
-    </svg></div>
-                    <div class="flex-1">
-                        {{> move-next-block message="You have successfully completed this section of the legal model." buttonText="Move to Next Section"}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Incorporation Section -->
-        <div id="incorporation" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Incorporation</h2>
-            <p class="text-muted-foreground mb-6">Register your business legally.</p>
-            <div class="relative">
-                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
-                     <div class="flex-1">
-                         {{> question-block id="incorporation-q1" step="2" question="What is your business name?"}}
+                          {{> question-block id="company-structure-q1" step="1" question="What is your company name?" placeholder="This section establishes your company basics. Provide name with industry-based suggestions if unsure. AI can help brainstorm names. Use this section for legal foundation. Chat with AI to generate company names or learn naming considerations."}}
                      </div>
                  </div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
                      <div class="flex-1">
-                         {{> question-block id="incorporation-q2" step="3" question="Have you filed incorporation documents?"}}
-                     </div>
-                 </div>
-                <div class="flex items-start gap-4">
-                    <div class="w-8 h-8  rounded-full flex items-center justify-center text-sm font-bold relative z-10">    <svg class="lucide lucide-check-circle w-8 h-8 text-success" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22,4 12,14.01 9,11.01"></polyline>
-    </svg></div>
-                    <div class="flex-1">
-                        {{> move-next-block message="You have successfully completed this section of the legal model." buttonText="Move to Next Section"}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Contracts Section -->
-        <div id="contracts" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Contracts</h2>
-            <p class="text-muted-foreground mb-6">Draft and manage legal agreements.</p>
-            <div class="relative">
-                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
-                     <div class="flex-1">
-                         {{> question-block id="contracts-q1" step="4" question="What contracts do you need?"}}
+                          {{> question-block id="company-structure-q2" step="2" question="What legal structure are you using?" placeholder="This section defines your legal structure. Choose LLC, sole proprietorship, or other forms with flexibility considerations. AI can recommend based on stage. Use this section for business entity setup. Chat with AI to understand legal structures or get recommendation help."}}
                      </div>
                  </div>
                  <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
                      <div class="flex-1">
-                         {{> question-block id="contracts-q2" step="5" question="How will you ensure contract compliance?"}}
+                          {{> question-block id="company-structure-q3" step="3" question="Do you have a registration number?" placeholder="This section confirms registration status. Provide Commercial Registration or Business Registration number if available. AI can guide registration process. Use this section for legal compliance. Chat with AI to learn registration requirements or get process assistance."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -125,19 +71,19 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
         <!-- Intellectual Property Section -->
         <div id="intellectual-property" class="section mb-6" style="display: none;">
             <h2 class="text-xl font-semibold mb-4 text-foreground">Intellectual Property</h2>
-            <p class="text-muted-foreground mb-6">Protect your ideas and creations.</p>
+            <p class="text-muted-foreground mb-6">Protect your innovations.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="intellectual-property-q1" step="6" question="What IP assets do you have?"}}
+                          {{> question-block id="intellectual-property-q1" step="4" question="What IP protections do you need?" placeholder="This section identifies needed IP protections. Consider trademarks, copyrights, patents, trade secrets with startup recommendations. AI can explain protection types. Use this section for IP strategy. Chat with AI to learn IP protections or get tailored recommendations."}}
                      </div>
                  </div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
                      <div class="flex-1">
-                         {{> question-block id="intellectual-property-q2" step="7" question="How will you protect your IP?"}}
+                          {{> question-block id="intellectual-property-q2" step="5" question="Do you have patentable technology?" placeholder="This section assesses patentable technology. Identify proprietary algorithms, AI models, hardware designs. AI can help evaluate patentability. Use this section for patent planning. Chat with AI to understand patent requirements or get patentability assessment."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -152,22 +98,16 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Compliance Section -->
-        <div id="compliance" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Compliance</h2>
-            <p class="text-muted-foreground mb-6">Ensure adherence to laws and regulations.</p>
+        <!-- Contracts & Agreements Section -->
+        <div id="contracts-agreements" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Contracts & Agreements</h2>
+            <p class="text-muted-foreground mb-6">Secure your business relationships.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="compliance-q1" step="8" question="What regulations apply to your business?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="compliance-q2" step="9" question="How will you maintain compliance?"}}
+                          {{> question-block id="contracts-agreements-q1" step="6" question="What contracts do you need?" placeholder="This section identifies necessary contracts. Include founder agreements, NDAs, employment contracts, SLAs, vendor agreements. AI can help draft templates. Use this section for legal relationships. Chat with AI to learn contract types or get drafting assistance."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -182,22 +122,16 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Employment Law Section -->
-        <div id="employment-law" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Employment Law</h2>
-            <p class="text-muted-foreground mb-6">Handle hiring and employee relations legally.</p>
+        <!-- Compliance & Regulations Section -->
+        <div id="compliance-regulations" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Compliance & Regulations</h2>
+            <p class="text-muted-foreground mb-6">Ensure regulatory adherence.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="employment-law-q1" step="10" question="What employment laws apply?"}}
-                     </div>
-                 </div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
-                     <div class="flex-1">
-                         {{> question-block id="employment-law-q2" step="11" question="How will you manage employee contracts?"}}
+                          {{> question-block id="compliance-regulations-q1" step="7" question="What compliance requirements apply?" placeholder="This section identifies compliance requirements. Include corporate compliance, data protection, cybersecurity, industry regulations. AI can recommend based on business. Use this section for regulatory adherence. Chat with AI to understand compliance or get requirement identification."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -212,52 +146,34 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
             </div>
         </div>
 
-        <!-- Tax Compliance Section -->
-        <div id="tax-compliance" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Tax Compliance</h2>
-            <p class="text-muted-foreground mb-6">Understand and comply with tax obligations.</p>
+        <!-- Cap Table & Equity Section -->
+        <div id="cap-table-equity" class="section mb-6" style="display: none;">
+            <h2 class="text-xl font-semibold mb-4 text-foreground">Cap Table & Equity</h2>
+            <p class="text-muted-foreground mb-6">Manage ownership and equity.</p>
             <div class="relative">
                 <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                      <div class="flex-1">
-                         {{> question-block id="tax-compliance-q1" step="12" question="What taxes do you need to pay?"}}
+                          {{> question-block id="cap-table-equity-q1" step="8" question="Describe your cap table structure." placeholder="This section describes cap table structure. Include founder ownership, ESOP pool, investor dilution planning. AI can generate downloadable tables. Use this section for equity management. Chat with AI to learn cap table basics or get structure recommendations."}}
                      </div>
                  </div>
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
                      <div class="flex-1">
-                         {{> question-block id="tax-compliance-q2" step="13" question="How will you file your taxes?"}}
-                     </div>
-                 </div>
-                <div class="flex items-start gap-4">
-                    <div class="w-8 h-8  rounded-full flex items-center justify-center text-sm font-bold relative z-10">    <svg class="lucide lucide-check-circle w-8 h-8 text-success" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-        <polyline points="22,4 12,14.01 9,11.01"></polyline>
-    </svg></div>
-                    <div class="flex-1">
-                        {{> move-next-block message="You have successfully completed this section of the legal model." buttonText="Move to Next Section"}}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Legal Risks Section -->
-        <div id="legal-risks" class="section mb-6" style="display: none;">
-            <h2 class="text-xl font-semibold mb-4 text-foreground">Legal Risks</h2>
-            <p class="text-muted-foreground mb-6">Identify and mitigate legal risks.</p>
-            <div class="relative">
-                <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
-                 <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
-                     <div class="flex-1">
-                         {{> question-block id="legal-risks-q1" step="14" question="What are potential legal risks?"}}
+                          {{> question-block id="cap-table-equity-q2" step="9" question="Do you want an employee stock option pool?" placeholder="This section considers employee stock options. Recommended at 5-15% for talent attraction and retention. AI can advise on pool sizing. Use this section for compensation planning. Chat with AI to understand ESOPs or get sizing recommendations."}}
                      </div>
                  </div>
                  <div class="flex items-start gap-4 mb-6">
-                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
+                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
                      <div class="flex-1">
-                         {{> question-block id="legal-risks-q2" step="15" question="How will you mitigate these risks?"}}
+                          {{> question-block id="cap-table-equity-q3" step="10" question="When do you expect an investment round?" placeholder="This section plans investment timing. Consider pre-seed, seed, Series A timing for cap table adjustments. AI can help with round sequencing. Use this section for fundraising timeline. Chat with AI to learn investment rounds or get timing advice."}}
+                     </div>
+                 </div>
+                 <div class="flex items-start gap-4 mb-6">
+                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">4</div>
+                     <div class="flex-1">
+                          {{> question-block id="cap-table-equity-q4" step="11" question="Do you want a downloadable cap table?" placeholder="This section offers downloadable cap table. AI can create Excel or PDF formats based on your inputs. Use this section for investor presentations. Chat with AI to understand cap table formats or get customization help."}}
                      </div>
                  </div>
                 <div class="flex items-start gap-4">
@@ -278,16 +194,13 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
 <script>
     // Pill text variations for legal model sections
     const pillFullTexts = [
-        '1. Legal Structure',
-        '2. Incorporation',
-        '3. Contracts',
-        '4. Intellectual Property',
-        '5. Compliance',
-        '6. Employment Law',
-        '7. Tax Compliance',
-        '8. Legal Risks'
+        '1. Company Structure',
+        '2. Intellectual Property',
+        '3. Contracts & Agreements',
+        '4. Compliance & Regulations',
+        '5. Cap Table & Equity'
     ];
-    const pillNumbers = ['1.', '2.', '3.', '4.', '5.', '6.', '7.', '8.'];
+    const pillNumbers = ['1.', '2.', '3.', '4.', '5.'];
 
     function addHoverListeners() {
         document.querySelectorAll('.step-pill').forEach((pill, index) => {
@@ -312,14 +225,11 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
         });
         // Show target section
         const sectionIds = [
-            'legal-structure',
-            'incorporation',
-            'contracts',
+            'company-structure',
             'intellectual-property',
-            'compliance',
-            'employment-law',
-            'tax-compliance',
-            'legal-risks'
+            'contracts-agreements',
+            'compliance-regulations',
+            'cap-table-equity'
         ];
         const targetSection = document.getElementById(sectionIds[sectionIndex]);
         if (targetSection) {
@@ -328,7 +238,7 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
 
         // Update progress bar
         const progressBar = document.getElementById('progress-fill');
-        const width = ((sectionIndex + 1) / 8) * 100 + '%';
+        const width = ((sectionIndex + 1) / 5) * 100 + '%';
         progressBar.style.width = width;
 
         // Update pills
@@ -356,9 +266,9 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
     document.querySelectorAll('.move-next-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const currentSection = btn.closest('.section');
-            const sectionIds = ['legal-structure', 'incorporation', 'contracts', 'intellectual-property', 'compliance', 'employment-law', 'tax-compliance', 'legal-risks'];
+            const sectionIds = ['company-structure', 'intellectual-property', 'contracts-agreements', 'compliance-regulations', 'cap-table-equity'];
             const currentIndex = sectionIds.indexOf(currentSection.id);
-            if (currentIndex < 7) {
+            if (currentIndex < 4) {
                 showSection(currentIndex + 1);
             } else {
                 // Last section
