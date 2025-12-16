@@ -353,7 +353,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOMContentLoaded fired for create-idea-card');
+
 
         // Customize marked renderer to avoid <pre> for code blocks
         const renderer = new marked.Renderer();
@@ -466,12 +466,12 @@
             if (content.trim()) {
                 waitForMarked(() => {
                     try {
-                        console.log('Content:', content);
+
                         // Clean content: remove leading/trailing whitespace on each line
                         const cleanedContent = content.replace(/^\s+/gm, '').replace(/\s+$/gm, '');
-                        console.log('Cleaned Content:', cleanedContent);
+
                         const parsed = marked.parse(cleanedContent, { renderer, breaks: true });
-                        console.log('Parsed HTML:', parsed);
+
                         displayDiv.innerHTML = DOMPurify.sanitize(parsed);
                         displayDiv.style.display = 'block';
                         descriptionTextarea.style.display = 'none';

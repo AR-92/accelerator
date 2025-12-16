@@ -53,44 +53,23 @@
         <div class="absolute top-1/2 left-0 right-0 h-1 bg-muted rounded-full transform -translate-y-1/2"></div>
         <!-- Progress Bar Fill -->
         <div id="progress-fill"
-            class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"
-            style="width: {{progressPercent}}%"></div>
+            class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"></div>
 
         <!-- Pills Overlay -->
-        <div class="relative">
-            <span
-                class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10 absolute top-0"
-                style="left: 0%; transform: translateX(-50%) translateY(-50%); white-space: nowrap;"
-                data-section="executive-summary">0. Executive Summary</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10 absolute top-0"
-                style="left: 20%; transform: translateX(-50%) translateY(-50%); white-space: nowrap;"
-                data-section="problem-validation">1.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10 absolute top-0"
-                style="left: 40%; transform: translateX(-50%) translateY(-50%); white-space: nowrap;"
-                data-section="solution-development">2.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10 absolute top-0"
-                style="left: 60%; transform: translateX(-50%) translateY(-50%); white-space: nowrap;"
-                data-section="customer-model">3.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10 absolute top-0"
-                style="left: 80%; transform: translateX(-50%) translateY(-50%); white-space: nowrap;"
-                data-section="branding">4.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10 absolute top-0"
-                style="left: 100%; transform: translateX(-50%) translateY(-50%); white-space: nowrap;"
-                data-section="ip-protection">5.</span>
+        <div class="relative progress-pills-container">
+            <!-- Pills will be generated dynamically by JS -->
         </div>
     </div>
 </div>
 <script>
-    // Pill text variations for idea model sections
-    const pillFullTexts = [
-        '0. Executive Summary',
-        '1. Problem Validation',
-        '2. Solution Development',
-        '3. Customer Model',
-        '4. Branding',
-        '5. IP Protection'
-    ];
-    const pillNumbers = ['0.', '1.', '2.', '3.', '4.', '5.'];
+    var data = {{{data}}}
+    // Data is already parsed as array
+    const parsedData = data;
+
+    // Derive dynamic arrays from data
+    const sectionIds = parsedData.map(item => item.id);
+    const pillFullTexts = parsedData.map(item => item.fullLabel);
+    const pillNumbers = parsedData.map(item => item.shortLabel);
 
     function addHoverListeners() {
         document.querySelectorAll('.step-pill').forEach((pill, index) => {
@@ -114,14 +93,6 @@
             sec.style.display = 'none';
         });
         // Show target section
-        const sectionIds = [
-            'executive-summary',
-            'problem-validation',
-            'solution-development',
-            'customer-model',
-            'branding',
-            'ip-protection'
-        ];
         const targetSection = document.getElementById(sectionIds[sectionIndex]);
         if (targetSection) {
             targetSection.style.display = 'block';
@@ -129,8 +100,11 @@
 
         // Update progress bar
         const progressBar = document.getElementById('progress-fill');
-        const width = ((sectionIndex) / 5) * 100 + '%';
+        const width = ((sectionIndex) / (parsedData.length - 1)) * 100 + '%';
         progressBar.style.width = width;
+
+        // Save to localStorage
+        localStorage.setItem('modelProgressSection', sectionIndex);
 
         // Update pills
         document.querySelectorAll('.step-pill').forEach((pill, index) => {
@@ -150,35 +124,43 @@
         });
     }
 
-    // Add click listeners to pills
-    document.querySelectorAll('.step-pill').forEach((pill, index) => {
-        pill.addEventListener('click', () => {
-            showSection(index);
-        });
-    });
-
-    // Add click listeners to move next buttons
-    document.querySelectorAll('.move-next-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const currentSection = btn.closest('.section');
-            const sectionIds = ['executive-summary', 'problem-validation', 'solution-development', 'customer-model', 'branding', 'ip-protection'];
-            const currentIndex = sectionIds.indexOf(currentSection.id);
-            if (currentIndex < 5) {
-                showSection(currentIndex + 1);
-            } else {
-                // Last section
-                alert('Idea model completed!');
-            }
-        });
-    });
-
     // Initialize on load
     document.addEventListener('DOMContentLoaded', () => {
-    const activeStep = 1;
-    showSection(activeStep - 1); // activeStep is 1-based, index is 0-based
+        // Generate pills dynamically
+        const pillsContainer = document.querySelector('.progress-pills-container');
+        parsedData.forEach((item, index) => {
+            const span = document.createElement('span');
+            span.className = `step-pill cursor-pointer px-3 py-1 ${index === 0 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'} text-xs rounded-full shadow-md z-10 absolute top-1/2`;
+            span.style.left = `${item.position}%`;
+            span.style.transform = 'translateX(-50%) translateY(-50%)';
+            span.style.whiteSpace = 'nowrap';
+            span.dataset.section = item.id;
+            span.textContent = index === 0 ? item.fullLabel : item.shortLabel;
+            pillsContainer.appendChild(span);
+        });
 
+        // Add click listeners to pills (after pills are created)
+        document.querySelectorAll('.step-pill').forEach((pill, index) => {
+            pill.addEventListener('click', () => {
+                showSection(index);
+            });
+        });
 
+        // Add click listeners to move next buttons
+        document.querySelectorAll('.move-next-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const currentSection = btn.closest('.section');
+                const currentIndex = sectionIds.indexOf(currentSection.id);
+                if (currentIndex < parsedData.length - 1) {
+                    showSection(currentIndex + 1);
+                } else {
+                    // Last section
+                    alert('Idea model completed!');
+                }
+            });
+        });
 
-    addHoverListeners();
+        showSection(0); // Always start with the first section
+        addHoverListeners();
     });
 </script>

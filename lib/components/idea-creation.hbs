@@ -489,12 +489,12 @@
     }
 
     window.populateIdea = JSON.parse('{{{populateIdeaJson}}}');
-    console.log('populateIdea set:', window.populateIdea);
+
 </script>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOMContentLoaded fired for create-idea-card');
+
         // Initialize form elements
         const form = document.getElementById('new-project-form');
         const titleSpan = document.getElementById('title');
@@ -571,24 +571,24 @@
 
         // Tag management functions
         function addTag(tagText) {
-            console.log('addTag called with:', tagText);
+
             if (typeof tagText === 'object') {
                 tagText = tagText.name || tagText.value || tagText.toString();
             }
             if (!tagText || !tagText.trim()) {
-                console.log('Tag text is empty or invalid, skipping');
+
                 return;
             }
             const tagSpan = document.createElement('span');
             tagSpan.className = 'inline-flex items-center gap-1 px-2 py-0.5 bg-muted text-muted-foreground border border-muted text-xs rounded-full tag-lskjsdb';
             tagSpan.innerHTML = `<span contenteditable="true">${tagText}</span> <button class="text-muted-foreground hover:text-destructive p-0">×</button>`;
             const addMoreBtn = tagsContainer.querySelector('[class*="bg-success/5"]');
-            console.log('addMoreBtn found:', addMoreBtn);
+
             if (addMoreBtn) {
                 addMoreBtn.after(tagSpan);
-                console.log('Tag span added');
+
             } else {
-                console.log('addMoreBtn not found, tag not added');
+
             }
             tagSpan.querySelector('button').addEventListener('click', function () {
                 tagSpan.remove();
@@ -617,9 +617,9 @@
         }
 
         // Populate form fields if populateIdea exists
-        console.log('Checking populateIdea:', window.populateIdea);
+
         if (window.populateIdea) {
-            console.log('Populating form with idea data:', window.populateIdea);
+
 
             // Populate title
             if (window.populateIdea.title) {
@@ -640,12 +640,12 @@
             // Populate tags
             if (window.populateIdea.tags && Array.isArray(window.populateIdea.tags)) {
                 window.populateIdea.tags.forEach(tag => {
-                    console.log('Adding tag:', tag);
+
                     addTag(tag);
                 });
             }
         } else {
-            console.log('No populateIdea data found');
+
         }
 
         // Add click-to-edit functionality for the description field
@@ -798,7 +798,6 @@
 
         // Generate random idea
         const randomIdeaBtn = document.querySelector('[aria-label="Generate random idea"]');
-        console.log('Random idea button found:', randomIdeaBtn);
 
         waitForMarked(() => {
         randomIdeaBtn.addEventListener('click', async function (e) {
@@ -995,7 +994,6 @@
                         // Fill description if too small or missing
                         if (!currentDescription || currentDescription.length < 100) {
         const randomIdeaBtn = document.querySelector('[aria-label="Generate random idea"]');
-        console.log('Random idea button found:', randomIdeaBtn);
 
         waitForMarked(() => {
                                 descriptionTextarea.dataset.originalContent = result.description || '';

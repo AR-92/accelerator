@@ -4,7 +4,44 @@
 {{> model-header title=pageTitle description="Comprehensive idea development and validation overview"
  ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ideaCategory tags=ideaTags}}
 
-{{> model-progress}}
+{{> model-progress data="[
+  {
+    id: 'executive-summary',
+    fullLabel: '0. Executive Summary',
+    shortLabel: '0.',
+    position: 0  
+  },
+  {
+    id: 'problem-validation',
+    fullLabel: '1. Problem Validation',
+    shortLabel: '1.',
+    position: 20
+  },
+  {
+    id: 'solution-development',
+    fullLabel: '2. Solution Development',
+    shortLabel: '2.',
+    position: 40
+  },
+  {
+    id: 'customer-model',
+    fullLabel: '3. Customer Model',
+    shortLabel: '3.',
+    position: 60
+  },
+  {
+    id: 'branding',
+    fullLabel: '4. Branding',
+    shortLabel: '4.',
+    position: 80
+  },
+  {
+    id: 'ip-protection',
+    fullLabel: '5. IP Protection',
+    shortLabel: '5.',
+    position: 100
+  }
+]" }}
 
 <main class="flex flex-col mx-auto items-center justify-center">
     <div class="sections-container">
@@ -280,6 +317,6 @@
     }
 
     window.populateIdea = {{{populateIdeaJson}}};
-    console.log('populateIdea set for idea model:', window.populateIdea);
+
 </script>
 

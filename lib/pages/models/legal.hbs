@@ -3,31 +3,38 @@
 {{> model-header title=pageTitle description="Comprehensive legal framework and compliance overview"
 ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ideaCategory tags=ideaTags}}
 
-<!-- Mixed Progress Bar and Pills Navigation -->
-<div class="flex justify-center mb-6">
-    <div class="relative w-full max-w-[900px]">
-        <!-- Progress Bar Background -->
-        <div class="absolute top-1/2 left-0 right-0 h-1 bg-muted rounded-full transform -translate-y-1/2"></div>
-        <!-- Progress Bar Fill -->
-        <div id="progress-fill"
-            class="absolute top-1/2 left-0 h-1 bg-primary rounded-full transform -translate-y-1/2 transition-all duration-300"></div>
-
-        <!-- Pills Overlay -->
-        <div class="relative flex justify-between items-center">
-            <span
-                class="step-pill cursor-pointer px-3 py-1 bg-primary text-primary-foreground text-xs rounded-full shadow-md z-10"
-                data-section="company-structure">1. Company Structure</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="intellectual-property">2.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="contracts-agreements">3.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="compliance-regulations">4.</span>
-            <span class="step-pill cursor-pointer px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full z-10"
-                data-section="cap-table-equity">5.</span>
-        </div>
-    </div>
-</div>
+{{> model-progress data='[
+  {
+    "id": "company-structure",
+    "fullLabel": "1. Company Structure",
+    "shortLabel": "1.",
+    "position": 0
+  },
+  {
+    "id": "intellectual-property",
+    "fullLabel": "2. Intellectual Property",
+    "shortLabel": "2.",
+    "position": 25
+  },
+  {
+    "id": "contracts-agreements",
+    "fullLabel": "3. Contracts & Agreements",
+    "shortLabel": "3.",
+    "position": 50
+  },
+  {
+    "id": "compliance-regulations",
+    "fullLabel": "4. Compliance & Regulations",
+    "shortLabel": "4.",
+    "position": 75
+  },
+  {
+    "id": "cap-table-equity",
+    "fullLabel": "5. Cap Table & Equity",
+    "shortLabel": "5.",
+    "position": 100
+  }
+]'}}
 
 <main class="flex flex-col mx-auto items-center justify-center">
     <div class="sections-container">
@@ -190,97 +197,3 @@ ratingStars="★★★★★" ratingValue="5.0" voteCount="0 votes" category=ide
 </main>
 <div class=" h-[300px]"></div>
 
-<script>
-    // Pill text variations for legal model sections
-    const pillFullTexts = [
-        '1. Company Structure',
-        '2. Intellectual Property',
-        '3. Contracts & Agreements',
-        '4. Compliance & Regulations',
-        '5. Cap Table & Equity'
-    ];
-    const pillNumbers = ['1.', '2.', '3.', '4.', '5.'];
-
-    function addHoverListeners() {
-        document.querySelectorAll('.step-pill').forEach((pill, index) => {
-            pill.addEventListener('mouseenter', () => {
-                if (!pill.classList.contains('bg-primary')) {
-                    pill.textContent = pillFullTexts[index];
-                }
-            });
-            pill.addEventListener('mouseleave', () => {
-                if (!pill.classList.contains('bg-primary')) {
-                    pill.textContent = pillNumbers[index];
-                }
-            });
-        });
-    }
-
-    // Function to show section and update UI
-    function showSection(sectionIndex) {
-        // Hide all sections
-        document.querySelectorAll('.section').forEach(sec => {
-            sec.style.display = 'none';
-        });
-        // Show target section
-        const sectionIds = [
-            'company-structure',
-            'intellectual-property',
-            'contracts-agreements',
-            'compliance-regulations',
-            'cap-table-equity'
-        ];
-        const targetSection = document.getElementById(sectionIds[sectionIndex]);
-        if (targetSection) {
-            targetSection.style.display = 'block';
-        }
-
-        // Update progress bar
-        const progressBar = document.getElementById('progress-fill');
-        const width = ((sectionIndex + 1) / 5) * 100 + '%';
-        progressBar.style.width = width;
-
-        // Update pills
-        document.querySelectorAll('.step-pill').forEach((pill, index) => {
-            pill.classList.remove('bg-primary', 'text-primary-foreground');
-            pill.classList.add('bg-muted', 'text-muted-foreground');
-            if (index === sectionIndex) {
-                pill.classList.remove('bg-muted', 'text-muted-foreground');
-                pill.classList.add('bg-primary', 'text-primary-foreground');
-                pill.textContent = pillFullTexts[index];
-            } else {
-                pill.textContent = pillNumbers[index];
-            }
-        });
-    }
-
-    // Add click listeners to pills
-    document.querySelectorAll('.step-pill').forEach((pill, index) => {
-        pill.addEventListener('click', () => {
-            showSection(index);
-        });
-    });
-
-    // Add click listeners to move next buttons
-    document.querySelectorAll('.move-next-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const currentSection = btn.closest('.section');
-            const sectionIds = ['company-structure', 'intellectual-property', 'contracts-agreements', 'compliance-regulations', 'cap-table-equity'];
-            const currentIndex = sectionIds.indexOf(currentSection.id);
-            if (currentIndex < 4) {
-                showSection(currentIndex + 1);
-            } else {
-                // Last section
-                alert('Legal model completed!');
-            }
-        });
-    });
-
-    // Initialize on load
-    document.addEventListener('DOMContentLoaded', () => {
-    const activeStep = 1;
-    showSection(activeStep - 1); // activeStep is 1-based, index is 0-based
-
-    addHoverListeners();
-    });
-</script>
