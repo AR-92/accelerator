@@ -1,1050 +1,124 @@
-{{> progress-bar activeReport=activeReport}}
+<div class="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto">
 
-<!-- Pitch Deck Header -->
-<div class="bg-gradient-to-br from-primary via-secondary to-accent text-white">
-    <div class="px-6 py-16">
-        <div class="text-center">
-            <div class="inline-flex items-center gap-4 mb-6">
-                <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                    {{{ icon 'presentation' class='w-8 h-8 text-white' }}}
-                </div>
-                <div>
-                    <h1 class="text-5xl font-bold mb-2">ProjectFlow</h1>
-                    <p class="text-xl opacity-90">Simple Project Management for Small Teams</p>
-                </div>
-            </div>
-            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 max-w-3xl mx-auto">
-                <p class="text-lg leading-relaxed">
-                    Revolutionizing project management with AI-powered simplicity. 80% easier than enterprise tools at
-                    50% of the cost.
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Navigation -->
-<div class="bg-card border-b border-border sticky top-0 z-10">
-    <div class="px-6 py-4">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                    {{{ icon 'presentation' class='w-4 h-4 text-primary-foreground' }}}
-                </div>
-                <span class="font-semibold text-foreground">ProjectFlow Pitch Deck</span>
-            </div>
-            <div class="flex items-center gap-4 text-sm text-muted-foreground">
-                <span>12 slides</span>
-                <span>•</span>
-                <span>5 min read</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Pitch Deck Slides -->
-<div class="px-6 py-8 space-y-12">
-
-    <!-- Slide 1: Problem -->
-    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-lg">
-        <div class="bg-gradient-to-r from-error to-error/80 text-white p-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        {{{ icon 'alert-triangle' class='w-6 h-6' }}}
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold">The Problem</h2>
-                        <p class="text-error-content/80">Small businesses struggle with complex project management</p>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <div class="text-3xl font-bold">1</div>
-                    <div class="text-sm opacity-75">of 12</div>
-                </div>
-            </div>
-        </div>
-        <div class="p-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-2xl font-bold text-foreground mb-6">Current Reality</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-start gap-3">
-                            <div class="w-8 h-8 bg-error/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                                {{{ icon 'x' class='w-4 h-4 text-error' }}}
-                            </div>
-                            <div>
-                                <div class="font-semibold text-foreground">Overwhelming Complexity</div>
-                                <div class="text-muted-foreground">Enterprise tools with 100+ features small teams never
-                                    use</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <div class="w-8 h-8 bg-error/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                                {{{ icon 'x' class='w-4 h-4 text-error' }}}
-                            </div>
-                            <div>
-                                <div class="font-semibold text-foreground">High Costs</div>
-                                <div class="text-muted-foreground">$25+/user/month for features they don't need</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <div class="w-8 h-8 bg-error/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                                {{{ icon 'x' class='w-4 h-4 text-error' }}}
-                            </div>
-                            <div>
-                                <div class="font-semibold text-foreground">Poor Adoption</div>
-                                <div class="text-muted-foreground">Teams abandon tools due to steep learning curves
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-muted/30 rounded-xl p-6">
-                    <div class="text-center mb-4">
-                        <div class="text-4xl font-bold text-error mb-2">67%</div>
-                        <div class="text-sm text-muted-foreground">of small businesses report project management
-                            challenges</div>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="flex justify-between text-sm">
-                            <span>Missed Deadlines</span>
-                            <span class="font-semibold text-foreground">45%</span>
-                        </div>
-                        <div class="w-full bg-muted rounded-full h-2">
-                            <div class="bg-error h-2 rounded-full" style="width: 45%"></div>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span>Poor Team Coordination</span>
-                            <span class="font-semibold text-foreground">52%</span>
-                        </div>
-                        <div class="w-full bg-muted rounded-full h-2">
-                            <div class="bg-error h-2 rounded-full" style="width: 52%"></div>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span>Tool Abandonment</span>
-                            <span class="font-semibold text-foreground">38%</span>
-                        </div>
-                        <div class="w-full bg-muted rounded-full h-2">
-                            <div class="bg-error h-2 rounded-full" style="width: 38%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 2: Solution -->
-    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-lg">
-        <div class="bg-gradient-to-r from-success to-success/80 text-white p-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        {{{ icon 'lightbulb' class='w-6 h-6' }}}
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold">The Solution</h2>
-                        <p class="text-success-content/80">AI-powered simplicity for small teams</p>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <div class="text-3xl font-bold">2</div>
-                    <div class="text-sm opacity-75">of 12</div>
-                </div>
-            </div>
-        </div>
-        <div class="p-8">
-            <div class="text-center mb-8">
-                <h3 class="text-3xl font-bold text-foreground mb-4">ProjectFlow</h3>
-                <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
-                    Simple project management that combines the ease of kanban boards with powerful AI automation,
-                    designed specifically for teams of 5-50 people.
-                </p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-success/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        {{{ icon 'brain' class='w-8 h-8 text-success' }}}
-                    </div>
-                    <h4 class="font-semibold text-foreground mb-2">AI-Powered</h4>
-                    <p class="text-sm text-muted-foreground">Intelligent task categorization and workflow suggestions
-                    </p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-info/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        {{{ icon 'zap' class='w-8 h-8 text-info' }}}
-                    </div>
-                    <h4 class="font-semibold text-foreground mb-2">Lightning Fast</h4>
-                    <p class="text-sm text-muted-foreground">Set up projects in under 5 minutes, no training required
-                    </p>
-                </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-accent/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        {{{ icon 'dollar-sign' class='w-8 h-8 text-accent' }}}
-                    </div>
-                    <h4 class="font-semibold text-foreground mb-2">Cost Effective</h4>
-                    <p class="text-sm text-muted-foreground">$9.99/user/month - 60% less than competitors</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 3: Market Opportunity -->
-    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-lg">
-        <div class="bg-gradient-to-r from-info to-info/80 text-white p-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        <svg class="lucide lucide-trending-up w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="23,6 13.5,15.5 8.5,10.5 1,18" />
-                            <polyline points="17,6 23,6 23,12" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold">Market Opportunity</h2>
-                        <p class="text-info-content/80">$50B market with massive small business potential</p>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <div class="text-3xl font-bold">3</div>
-                    <div class="text-sm opacity-75">of 12</div>
-                </div>
-            </div>
-        </div>
-        <div class="p-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-2xl font-bold text-foreground mb-6">Market Size</h3>
-                    <div class="space-y-6">
-                        <div class="bg-gradient-to-r from-info/10 to-info/20 rounded-xl p-6 border border-info/30">
-                            <div class="text-3xl font-bold text-info mb-2">$50B</div>
-                            <div class="text-info font-medium">Global Project Management Market (2024)</div>
-                            <div class="text-sm text-info mt-1">Growing at 12.5% CAGR</div>
-                        </div>
-                        <div
-                            class="bg-gradient-to-r from-success/10 to-success/20 rounded-xl p-6 border border-success/30">
-                            <div class="text-3xl font-bold text-success mb-2">$8B</div>
-                            <div class="text-success font-medium">Small Business Segment</div>
-                            <div class="text-sm text-success mt-1">Our target market - largely underserved</div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-2xl font-bold text-foreground mb-6">Our Addressable Market</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
-                            <span class="font-medium text-foreground">US Small Businesses (5-50 employees)</span>
-                            <span class="text-2xl font-bold text-info">6.1M</span>
-                        </div>
-                        <div class="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
-                            <span class="font-medium text-foreground">Freelancers & Consultants</span>
-                            <span class="text-2xl font-bold text-info">2.8M</span>
-                        </div>
-                        <div class="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
-                            <span class="font-medium text-foreground">Startups (pre-seed to Series A)</span>
-                            <span class="text-2xl font-bold text-info">1.2M</span>
-                        </div>
-                        <div
-                            class="bg-gradient-to-r from-info to-info/80 text-info-foreground p-4 rounded-lg text-center">
-                            <div class="text-2xl font-bold text-foreground mb-1">10.1M</div>
-                            <div class="text-sm opacity-90">Total Addressable Market</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 4: Product -->
-    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-lg">
-        <div class="bg-gradient-to-r from-accent to-accent/80 text-white p-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        <svg class="lucide lucide-package w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M11 21H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2Z" />
-                            <path d="M14 2v6h6" />
-                            <path d="M10.5 8.5L7.5 11.5" />
-                            <path d="M10.5 12.5L7.5 15.5" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold">Product</h2>
-                        <p class="text-accent-content/80">Simple yet powerful project management</p>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <div class="text-3xl font-bold">4</div>
-                    <div class="text-sm opacity-75">of 12</div>
-                </div>
-            </div>
-        </div>
-        <div class="p-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold text-foreground mb-4">Core Features</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-start gap-3">
-                            <div class="w-8 h-8 bg-accent/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                                {{{ icon 'kanban' class='w-4 h-4 text-accent' }}}
-                            </div>
-                            <div>
-                                <div class="font-semibold text-foreground">Visual Kanban Boards</div>
-                                <div class="text-sm text-muted-foreground">Drag-and-drop interface for intuitive task
-                                    management</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <div class="w-8 h-8 bg-accent/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                                {{{ icon 'brain' class='w-4 h-4 text-accent' }}}
-                            </div>
-                            <div>
-                                <div class="font-semibold text-foreground">AI Task Intelligence</div>
-                                <div class="text-sm text-muted-foreground">Automatically categorizes and prioritizes
-                                    tasks</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <div class="w-8 h-8 bg-accent/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                                {{{ icon 'users' class='w-4 h-4 text-accent' }}}
-                            </div>
-                            <div>
-                                <div class="font-semibold text-foreground">Team Collaboration</div>
-                                <div class="text-sm text-muted-foreground">Real-time updates and seamless communication
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <div class="w-8 h-8 bg-accent/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                                {{{ icon 'bar-chart' class='w-4 h-4 text-accent' }}}
-                            </div>
-                            <div>
-                                <div class="font-semibold text-foreground">Smart Analytics</div>
-                                <div class="text-sm text-muted-foreground">Project insights and performance metrics
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-muted/30 rounded-xl p-6">
-                    <h4 class="font-semibold text-foreground mb-4 text-center">User Journey</h4>
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div
-                                class="w-6 h-6 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-xs font-bold">
-                                1</div>
-                            <span class="text-sm text-foreground">Sign up in 2 minutes</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div
-                                class="w-6 h-6 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-xs font-bold">
-                                2</div>
-                            <span class="text-sm text-foreground">Create first project instantly</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div
-                                class="w-6 h-6 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-xs font-bold">
-                                3</div>
-                            <span class="text-sm text-foreground">Invite team members</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div
-                                class="w-6 h-6 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-xs font-bold">
-                                4</div>
-                            <span class="text-sm text-foreground">AI suggests optimal workflows</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div
-                                class="w-6 h-6 bg-accent text-accent-foreground rounded-full flex items-center justify-center text-xs font-bold">
-                                5</div>
-                            <span class="text-sm text-foreground">Track progress with smart analytics</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 5: Traction -->
-    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-lg">
-        <div class="bg-gradient-to-r from-warning to-warning/80 text-white p-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        <svg class="lucide lucide-rocket w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
-                            <path
-                                d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-                            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
-                            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold">Traction</h2>
-                        <p class="text-warning-content/80">Strong early momentum and validation</p>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <div class="text-3xl font-bold">5</div>
-                    <div class="text-sm opacity-75">of 12</div>
-                </div>
-            </div>
-        </div>
-        <div class="p-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-warning mb-2">2,400</div>
-                    <div class="text-sm text-muted-foreground">Beta Users</div>
-                    <div class="text-xs text-success font-medium mt-1">+180% MoM</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-warning mb-2">94%</div>
-                    <div class="text-sm text-muted-foreground">User Satisfaction</div>
-                    <div class="text-xs text-success font-medium mt-1">NPS: +72</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-warning mb-2">$125K</div>
-                    <div class="text-sm text-muted-foreground">Monthly Recurring Revenue</div>
-                    <div class="text-xs text-success font-medium mt-1">From beta program</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-3xl font-bold text-warning mb-2">87%</div>
-                    <div class="text-sm text-muted-foreground">Monthly Active Users</div>
-                    <div class="text-xs text-success font-medium mt-1">Retention rate</div>
-                </div>
-            </div>
-
-            <div class="bg-gradient-to-r from-warning/10 to-warning/20 rounded-xl p-6 border border-warning/30">
-                <h4 class="font-semibold text-foreground mb-4">Key Milestones</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 bg-success rounded-full flex items-center justify-center">
-                                {{{ icon 'check' class='w-3 h-3 text-white' }}}
-                            </div>
-                            <span class="text-sm text-foreground">Product-Market Fit Validation</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 bg-success rounded-full flex items-center justify-center">
-                                {{{ icon 'check' class='w-3 h-3 text-white' }}}
-                            </div>
-                            <span class="text-sm text-foreground">First Paying Customers</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 bg-success rounded-full flex items-center justify-center">
-                                {{{ icon 'check' class='w-3 h-3 text-white' }}}
-                            </div>
-                            <span class="text-sm text-foreground">Positive Unit Economics</span>
-                        </div>
-                    </div>
-                    <div class="space-y-3">
-                        <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 bg-warning rounded-full flex items-center justify-center">
-                                {{{ icon 'clock' class='w-3 h-3 text-white' }}}
-                            </div>
-                            <span class="text-sm text-foreground">Full Product Launch (Q2 2024)</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 bg-warning rounded-full flex items-center justify-center">
-                                {{{ icon 'clock' class='w-3 h-3 text-white' }}}
-                            </div>
-                            <span class="text-sm text-foreground">10,000 Users Milestone</span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <div class="w-6 h-6 bg-warning rounded-full flex items-center justify-center">
-                                {{{ icon 'clock' class='w-3 h-3 text-white' }}}
-                            </div>
-                            <span class="text-sm text-foreground">Break-Even Achievement</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 6: Business Model -->
-    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-lg">
-        <div class="bg-gradient-to-r from-secondary to-secondary/80 text-white p-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        {{{ icon 'dollar-sign' class='w-6 h-6' }}}
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold">Business Model</h2>
-                        <p class="text-secondary-content/80">SaaS subscription with clear path to profitability</p>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <div class="text-3xl font-bold">6</div>
-                    <div class="text-sm opacity-75">of 12</div>
-                </div>
-            </div>
-        </div>
-        <div class="p-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold text-foreground mb-4">Revenue Streams</h3>
-                    <div class="space-y-4">
-                        <div class="bg-gradient-to-r from-info/10 to-info/20 rounded-lg p-4 border border-info/30">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="font-semibold text-info">SaaS Subscriptions</span>
-                                <span class="text-info font-bold">85%</span>
-                            </div>
-                            <div class="text-sm text-info">Monthly/annual recurring revenue from user subscriptions
-                            </div>
-                            <div class="text-xs text-info mt-1">$9.99 - $39.99 per user/month</div>
-                        </div>
-                        <div class="bg-gradient-to-r from-info/10 to-info/20 rounded-lg p-4 border border-info/30">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="font-semibold text-info">Enterprise Plans</span>
-                                <span class="text-info font-bold">12%</span>
-                            </div>
-                            <div class="text-sm text-info">Custom solutions for larger organizations</div>
-                            <div class="text-xs text-info mt-1">Custom pricing based on team size</div>
-                        </div>
-                        <div
-                            class="bg-gradient-to-r from-accent/10 to-accent/20 rounded-lg p-4 border border-accent/30">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="font-semibold text-accent">Professional Services</span>
-                                <span class="text-accent font-bold">3%</span>
-                            </div>
-                            <div class="text-sm text-accent">Implementation, training, and consulting</div>
-                            <div class="text-xs text-accent mt-1">One-time and retainer fees</div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold text-foreground mb-4">Unit Economics</h3>
-                    <div class="bg-muted/30 rounded-lg p-6">
-                        <div class="space-y-4">
-                            <div class="flex justify-between">
-                                <span class="text-sm text-foreground">Customer Acquisition Cost</span>
-                                <span class="font-semibold text-foreground">$150</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-foreground">Average Revenue Per User</span>
-                                <span class="font-semibold text-foreground">$120/month</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-foreground">Customer Lifetime Value</span>
-                                <span class="font-semibold text-foreground">$2,400</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-foreground">Payback Period</span>
-                                <span class="font-semibold text-foreground">4 months</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-foreground">Gross Margins</span>
-                                <span class="font-semibold text-success">75%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 7: Competition -->
-    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-lg">
-        <div class="bg-gradient-to-r from-error to-error/80 text-white p-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        {{{ icon 'target' class='w-6 h-6' }}}
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold">Competition</h2>
-                        <p class="text-error-content/80">Clear differentiation in the small business segment</p>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <div class="text-3xl font-bold">7</div>
-                    <div class="text-sm opacity-75">of 12</div>
-                </div>
-            </div>
-        </div>
-        <div class="p-8">
-            <div class="overflow-x-auto">
-                <table class="w-full border-collapse border border-border rounded-lg">
-                    <thead>
-                        <tr class="bg-muted/50">
-                            <th class="border border-border px-4 py-3 text-left font-semibold text-foreground">Feature
-                            </th>
-                            <th class="border border-border px-4 py-3 text-center font-semibold text-foreground">
-                                ProjectFlow</th>
-                            <th class="border border-border px-4 py-3 text-center font-semibold text-foreground">Trello
-                            </th>
-                            <th class="border border-border px-4 py-3 text-center font-semibold text-foreground">Asana
-                            </th>
-                            <th class="border border-border px-4 py-3 text-center font-semibold text-foreground">Monday
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                             <td class="border border-border px-4 py-3 font-medium text-foreground">AI-Powered Task
-                                 Intelligence</td>
-                             <td class="border border-border px-4 py-3 text-center">
-                                 <div class="w-6 h-6 bg-success rounded-full flex items-center justify-center mx-auto">
-                                     {{{ icon 'check' class='w-3 h-3 text-white' }}}
-                                 </div>
-                             </td>
-                            <td class="border border-border px-4 py-3 text-center">
-                                <div class="w-6 h-6 bg-error rounded-full flex items-center justify-center mx-auto">
-                                    <svg class="lucide lucide-x w-3 h-3 text-white" xmlns="http://www.w3.org/2000/svg"
-                                        width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M18 6L6 18" />
-                                        <path d="M6 6l12 12" />
-                                    </svg>
-                                </div>
-                            </td>
-                            <td class="border border-border px-4 py-3 text-center">
-                                <div class="w-6 h-6 bg-error rounded-full flex items-center justify-center mx-auto">
-                                    <svg class="lucide lucide-x w-3 h-3 text-white" xmlns="http://www.w3.org/2000/svg"
-                                        width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M18 6L6 18" />
-                                        <path d="M6 6l12 12" />
-                                    </svg>
-                                </div>
-                            </td>
-                            <td class="border border-border px-4 py-3 text-center">
-                                <div class="w-6 h-6 bg-error rounded-full flex items-center justify-center mx-auto">
-                                    <svg class="lucide lucide-x w-3 h-3 text-white" xmlns="http://www.w3.org/2000/svg"
-                                        width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M18 6L6 18" />
-                                        <path d="M6 6l12 12" />
-                                    </svg>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="bg-muted/20">
-                             <td class="border border-border px-4 py-3 font-medium text-foreground">Designed for Small
-                                 Teams</td>
-                             <td class="border border-border px-4 py-3 text-center">
-                                 <div class="w-6 h-6 bg-success rounded-full flex items-center justify-center mx-auto">
-                                     {{{ icon 'check' class='w-3 h-3 text-white' }}}
-                                 </div>
-                             </td>
-                             <td class="border border-border px-4 py-3 text-center">
-                                 <div class="w-6 h-6 bg-success rounded-full flex items-center justify-center mx-auto">
-                                     {{{ icon 'check' class='w-3 h-3 text-white' }}}
-                                 </div>
-                             </td>
-                            <td class="border border-border px-4 py-3 text-center">
-                                <div class="w-6 h-6 bg-error rounded-full flex items-center justify-center mx-auto">
-                                    <svg class="lucide lucide-x w-3 h-3 text-white" xmlns="http://www.w3.org/2000/svg"
-                                        width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M18 6L6 18" />
-                                        <path d="M6 6l12 12" />
-                                    </svg>
-                                </div>
-                            </td>
-                            <td class="border border-border px-4 py-3 text-center">
-                                <div class="w-6 h-6 bg-error rounded-full flex items-center justify-center mx-auto">
-                                    <svg class="lucide lucide-x w-3 h-3 text-white" xmlns="http://www.w3.org/2000/svg"
-                                        width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M18 6L6 18" />
-                                        <path d="M6 6l12 12" />
-                                    </svg>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-border px-4 py-3 font-medium text-foreground">Setup Time</td>
-                            <td class="border border-border px-4 py-3 text-center text-success font-semibold">&lt; 5 min
-                            </td>
-                            <td class="border border-border px-4 py-3 text-center">15-30 min</td>
-                            <td class="border border-border px-4 py-3 text-center">30-60 min</td>
-                            <td class="border border-border px-4 py-3 text-center">45-90 min</td>
-                        </tr>
-                        <tr class="bg-muted/20">
-                            <td class="border border-border px-4 py-3 font-medium text-foreground">Pricing (per
-                                user/month)</td>
-                            <td class="border border-border px-4 py-3 text-center text-success font-semibold">$9.99</td>
-                            <td class="border border-border px-4 py-3 text-center">$17.50</td>
-                            <td class="border border-border px-4 py-3 text-center">$24.99</td>
-                            <td class="border border-border px-4 py-3 text-center">$16</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 8: Team -->
-    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-lg">
-        <div class="bg-gradient-to-r from-primary to-primary/80 text-white p-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        {{{ icon 'users' class='w-6 h-6' }}}
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold">Team</h2>
-                        <p class="text-primary-content/80">Experienced founders with proven track record</p>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <div class="text-3xl font-bold">8</div>
-                    <div class="text-sm opacity-75">of 12</div>
-                </div>
-            </div>
-        </div>
-        <div class="p-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        {{{ icon 'user' class='w-10 h-10 text-primary' }}}
-                    </div>
-                    <h3 class="text-lg font-bold text-foreground">Sarah Chen</h3>
-                    <p class="text-accent font-semibold">CEO & Co-Founder</p>
-                    <p class="text-sm text-muted-foreground mt-2">Former Product Manager at Google<br />MBA Stanford, 8+
-                        years in SaaS</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-info/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        {{{ icon 'code' class='w-10 h-10 text-info' }}}
-                    </div>
-                    <h3 class="text-lg font-bold text-foreground">Marcus Rodriguez</h3>
-                    <p class="text-info font-semibold">CTO & Co-Founder</p>
-                    <p class="text-sm text-muted-foreground mt-2">Ex-Engineering Lead at Stripe<br />MS Computer Science
-                        MIT, AI expert</p>
-                </div>
-                <div class="text-center">
-                    <div class="w-20 h-20 bg-warning/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        {{{ icon 'trending-up' class='w-10 h-10 text-warning' }}}
-                    </div>
-                    <h3 class="text-lg font-bold text-foreground">Jennifer Park</h3>
-                    <p class="text-warning font-semibold">Head of Product</p>
-                    <p class="text-sm text-muted-foreground mt-2">Former PM at Slack<br />BS Product Design RISD, UX
-                        expert</p>
-                </div>
-            </div>
-
-            <div class="mt-8 bg-gradient-to-r from-primary/10 to-primary/20 rounded-xl p-6 border border-primary/30">
-                <h4 class="font-semibold text-foreground mb-4 text-center">Advisory Board</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-card/50 rounded-lg p-4">
-                        <h5 class="font-semibold text-foreground">Dr. Emily Watson</h5>
-                        <p class="text-sm text-accent">AI Ethics & Product Strategy</p>
-                        <p class="text-xs text-muted-foreground mt-1">Former VP of Product at Salesforce, PhD Stanford
-                        </p>
-                    </div>
-                    <div class="bg-card/50 rounded-lg p-4">
-                        <h5 class="font-semibold text-foreground">Michael Chen</h5>
-                        <p class="text-sm text-accent">Go-to-Market Strategy</p>
-                        <p class="text-xs text-muted-foreground mt-1">Ex-CRO at HubSpot, 20+ years in SaaS</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 9: Financials -->
-    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-lg">
-        <div class="bg-gradient-to-r from-success to-success/80 text-white p-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        {{{ icon 'bar-chart' class='w-6 h-6' }}}
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold">Financials</h2>
-                        <p class="text-success-content/80">Clear path to profitability with strong unit economics</p>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <div class="text-3xl font-bold">9</div>
-                    <div class="text-sm opacity-75">of 12</div>
-                </div>
-            </div>
-        </div>
-        <div class="p-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold text-foreground mb-4">Revenue Projections</h3>
-                    <div class="space-y-4">
-                        <div class="bg-success/10 rounded-lg p-4 border border-success/30">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="font-medium text-success">Year 1 Revenue</span>
-                                <span class="text-2xl font-bold text-success">$1.5M</span>
-                            </div>
-                            <div class="text-sm text-success">From initial customer acquisition and beta program</div>
-                        </div>
-                        <div class="bg-info/10 rounded-lg p-4 border border-info/30">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="font-medium text-info">Year 2 Revenue</span>
-                                <span class="text-2xl font-bold text-info">$5.4M</span>
-                            </div>
-                            <div class="text-sm text-info">Scaling with expanded sales team and marketing</div>
-                        </div>
-                        <div class="bg-accent/10 rounded-lg p-4 border border-accent/30">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="font-medium text-accent">Year 3 Revenue</span>
-                                <span class="text-2xl font-bold text-accent">$14.4M</span>
-                            </div>
-                            <div class="text-sm text-accent">Market leadership position with 15% share</div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold text-foreground mb-4">Key Metrics</h3>
-                    <div class="bg-muted/30 rounded-lg p-6">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="text-center">
-                                <div class="text-2xl font-bold text-success">$150</div>
-                                <div class="text-xs text-muted-foreground">CAC</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-2xl font-bold text-success">$2,400</div>
-                                <div class="text-xs text-muted-foreground">LTV</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-2xl font-bold text-success">75%</div>
-                                <div class="text-xs text-muted-foreground">Gross Margin</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-2xl font-bold text-success">4 months</div>
-                                <div class="text-xs text-muted-foreground">Payback Period</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-8">
-                <h3 class="text-xl font-bold text-foreground mb-4">Profitability Timeline</h3>
-                <div class="bg-gradient-to-r from-success/10 to-success/20 rounded-xl p-6 border border-success/30">
-                    <div class="flex items-center justify-center space-x-8">
-                        <div class="text-center">
-                            <div class="w-12 h-12 bg-error rounded-full flex items-center justify-center mb-2">
-                                <span class="text-white font-bold">Y1</span>
-                            </div>
-                            <div class="text-sm text-muted-foreground">Pre-profit</div>
-                        </div>
-                        <div class="flex-1 h-0.5 bg-muted"></div>
-                        <div class="text-center">
-                            <div class="w-12 h-12 bg-warning rounded-full flex items-center justify-center mb-2">
-                                <span class="text-white font-bold">Y2</span>
-                            </div>
-                            <div class="text-sm text-muted-foreground">Break-even</div>
-                        </div>
-                        <div class="flex-1 h-0.5 bg-muted"></div>
-                        <div class="text-center">
-                            <div class="w-12 h-12 bg-success rounded-full flex items-center justify-center mb-2">
-                                <span class="text-white font-bold">Y3</span>
-                            </div>
-                            <div class="text-sm text-muted-foreground">$4.3M profit</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Slide 10: Ask -->
-    <div class="bg-card rounded-2xl border border-border overflow-hidden shadow-lg">
-        <div class="bg-gradient-to-r from-destructive to-destructive/80 text-white p-6">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        {{{ icon 'hand' class='w-6 h-6' }}}
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold">The Ask</h2>
-                        <p class="text-destructive-content/80">$750K for 20% equity</p>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <div class="text-3xl font-bold">10</div>
-                    <div class="text-sm opacity-75">of 12</div>
-                </div>
-            </div>
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center">
+          {{{ icon 'presentation' class='w-8 h-8 text-white' }}}
         </div>
         <div>
-            <h2 class="text-2xl font-bold">The Ask</h2>
-            <p class="text-error">$750K for 20% equity</p>
+          <h1 class="text-4xl font-bold text-gray-900">Pitch Deck Generator</h1>
+          <p class="text-xl text-gray-600 mt-2">Create compelling investor presentations with AI</p>
         </div>
-    </div>
-    <div class="text-right">
-        <div class="text-3xl font-bold">10</div>
-        <div class="text-sm opacity-75">of 12</div>
-    </div>
-</div>
-</div>
-<div class="p-8">
-    <div class="text-center mb-8">
-        <div
-            class="inline-flex items-center gap-4 bg-gradient-to-r from-error/10 to-error/20 rounded-2xl p-6 border border-error/30">
-            <div>
-                <div class="text-4xl font-bold text-error mb-1">$750,000</div>
-                <div class="text-sm text-error">Series A Investment</div>
-            </div>
-            <div class="w-px h-12 bg-error/30"></div>
-            <div>
-                <div class="text-4xl font-bold text-error mb-1">20%</div>
-                <div class="text-sm text-error">Equity Stake</div>
-            </div>
-        </div>
-    </div>
+      </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div class="bg-muted/30 rounded-lg p-4 text-center">
-            <div class="text-2xl font-bold text-error mb-2">$450K</div>
-            <div class="text-sm text-muted-foreground">Product Development</div>
-            <div class="text-xs text-muted-foreground mt-1">AI enhancements & mobile app</div>
+      <div class="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-2">Generate Your Pitch Deck</h2>
+          <p class="text-gray-600">Select an idea and let AI create an investor-ready pitch deck</p>
         </div>
-        <div class="bg-muted/30 rounded-lg p-4 text-center">
-            <div class="text-2xl font-bold text-error mb-2">$200K</div>
-            <div class="text-sm text-muted-foreground">Marketing & Sales</div>
-            <div class="text-xs text-muted-foreground mt-1">Customer acquisition & team expansion</div>
-        </div>
-        <div class="bg-muted/30 rounded-lg p-4 text-center">
-            <div class="text-2xl font-bold text-error mb-2">$100K</div>
-            <div class="text-sm text-muted-foreground">Working Capital</div>
-            <div class="text-xs text-muted-foreground mt-1">Operations & cash flow</div>
-        </div>
-    </div>
 
-    <div class="bg-gradient-to-r from-error/10 to-error/20 rounded-xl p-6 border border-error/30">
-        <h4 class="font-semibold text-foreground mb-4 text-center">Post-Money Valuation: $3.75M</h4>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <h5 class="font-medium text-foreground mb-2">Milestones with Investment</h5>
-                <ul class="space-y-1 text-sm text-muted-foreground">
-                    <li>• Full product launch (Q2 2024)</li>
-                    <li>• 10,000 paying customers (Year 2)</li>
-                    <li>• $5.4M ARR (Year 2)</li>
-                    <li>• Break-even profitability (Year 2)</li>
+        {{#if userIdeas.length}}
+        <form method="post" action="/reports/pitch-deck" class="space-y-6">
+          <input type="hidden" name="_csrf" value="{{csrf}}" />
+
+          <div>
+            <label for="ideaId" class="block text-sm font-medium text-gray-700 mb-2">
+              Select Idea *
+            </label>
+            <select id="ideaId" name="ideaId" required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+              <option value="">Choose an idea to generate pitch deck for...</option>
+              {{#each userIdeas}}
+              <option value="{{id}}">{{title}} {{#if completion_percentage}}({{completion_percentage}}% complete){{/if}}</option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+            <div class="flex items-start">
+              <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                {{{ icon 'presentation' class='w-4 h-4 text-purple-600' }}}
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold text-purple-900 mb-1">What's Included</h4>
+                <ul class="text-sm text-purple-800 space-y-1">
+                  <li>• Problem & Solution slides</li>
+                  <li>• Market opportunity analysis</li>
+                  <li>• Financial projections</li>
+                  <li>• Team & competitive advantages</li>
+                  <li>• Investment ask & use of funds</li>
                 </ul>
+              </div>
             </div>
-            <div>
-                <h5 class="font-medium text-foreground mb-2">Exit Strategy</h5>
-                <ul class="space-y-1 text-sm text-muted-foreground">
-                    <li>• Strategic acquisition by major SaaS company</li>
-                    <li>• Projected exit valuation: $50-100M</li>
-                    <li>• Timeline: 5-7 years</li>
-                    <li>• 10-25x return potential</li>
-                </ul>
+          </div>
+
+          <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <div class="flex items-center">
+              <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
+                {{{ icon 'zap' class='w-4 h-4 text-yellow-600' }}}
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold text-yellow-900">Cost: 50 Credits</h4>
+                <p class="text-sm text-yellow-800">Your current balance: <span class="font-semibold">{{userCredits}} credits</span></p>
+              </div>
             </div>
+          </div>
+
+          <div class="flex gap-4">
+            <button type="submit"
+              class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              {{#if (lt userCredits 50)}}disabled{{/if}}>
+              <span>Generate Pitch Deck</span>
+              {{#if (gte userCredits 50)}}
+                {{{ icon 'sparkles' class='w-5 h-5' }}}
+              {{/if}}
+            </button>
+          </div>
+        </form>
+        {{else}}
+        <div class="text-center py-8">
+          <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            {{{ icon 'lightbulb' class='w-8 h-8 text-gray-400' }}}
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">No Ideas Available</h3>
+          <p class="text-gray-600 mb-6">Create your first idea to generate pitch decks</p>
+          <a href="/new-idea" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center space-x-2">
+            {{{ icon 'plus' class='w-4 h-4' }}}
+            <span>Create Your First Idea</span>
+          </a>
         </div>
+        {{/if}}
+      </div>
     </div>
-</div>
-</div>
 
-<!-- Slide 11: Contact -->
-<div class="bg-card rounded-2xl border border-border overflow-hidden shadow-lg">
-    <div class="bg-gradient-to-r from-neutral to-neutral/80 text-white p-6">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        {{{ icon 'mail' class='w-6 h-6' }}}
-                    </div>
-                <div>
-                    <h2 class="text-2xl font-bold">Contact Us</h2>
-                    <p class="text-neutral-content/80">Let's build the future of project management together</p>
-                </div>
-            </div>
-            <div class="text-right">
-                <div class="text-3xl font-bold">11</div>
-                <div class="text-sm opacity-75">of 12</div>
-            </div>
+    <!-- Features -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+      <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+          {{{ icon 'target' class='w-6 h-6 text-blue-600' }}}
         </div>
-    </div>
-    <div class="p-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div>
-                <h3 class="text-2xl font-bold text-foreground mb-6">Get In Touch</h3>
-                <div class="space-y-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                            {{{ icon 'user' class='w-5 h-5 text-primary' }}}
-                        </div>
-                        <div>
-                            <div class="font-semibold text-foreground">Sarah Chen</div>
-                            <div class="text-sm text-muted-foreground">CEO & Co-Founder</div>
-                            <div class="text-sm text-primary">sarah@projectflow.com</div>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center">
-                            {{{ icon 'building' class='w-5 h-5 text-secondary' }}}
-                        </div>
-                        <div>
-                            <div class="font-semibold text-foreground">ProjectFlow Inc.</div>
-                            <div class="text-sm text-muted-foreground">123 Innovation Drive</div>
-                            <div class="text-sm text-muted-foreground">San Francisco, CA 94105</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <h3 class="text-2xl font-bold text-foreground mb-6">Follow Our Progress</h3>
-                <div class="space-y-3">
-                    <a href="#"
-                        class="flex items-center gap-3 p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
-                        <div class="w-8 h-8 bg-info rounded-lg flex items-center justify-center">
-                            {{{ icon 'twitter' class='w-4 h-4 text-white' }}}
-                        </div>
-                        <span class="font-medium text-foreground">@projectflow</span>
-                    </a>
-                    <a href="#"
-                        class="flex items-center gap-3 p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
-                        <div class="w-8 h-8 bg-info rounded-lg flex items-center justify-center">
-                            {{{ icon 'linkedin' class='w-4 h-4 text-white' }}}
-                        </div>
-                        <span class="font-medium text-foreground">ProjectFlow</span>
-                    </a>
-                    <a href="#"
-                        class="flex items-center gap-3 p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
-                        <div class="w-8 h-8 bg-success rounded-lg flex items-center justify-center">
-                            {{{ icon 'globe' class='w-4 h-4 text-white' }}}
-                        </div>
-                        <span class="font-medium text-foreground">projectflow.com</span>
-                    </a>
-                </div>
-            </div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Investor-Ready</h3>
+        <p class="text-gray-600 text-sm">Professional pitch decks that follow VC standards and best practices</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+          {{{ icon 'trending-up' class='w-6 h-6 text-green-600' }}}
         </div>
-    </div>
-</div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Data-Driven</h3>
+        <p class="text-gray-600 text-sm">Compelling metrics, market analysis, and financial projections</p>
+      </div>
 
-<!-- Slide 12: Thank You -->
-<div class="bg-card rounded-2xl border border-border overflow-hidden shadow-lg">
-    <div class="bg-gradient-to-br from-primary via-secondary to-accent text-white p-8">
-        <div class="text-center">
-            <div class="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                {{{ icon 'heart' class='w-10 h-10' }}}
-            </div>
-            <h2 class="text-4xl font-bold mb-4">Thank You</h2>
-            <p class="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-                We're excited about the opportunity to revolutionize project management for small businesses. Let's
-                build something amazing together.
-            </p>
-            <div class="flex items-center justify-center gap-4 text-sm opacity-75">
-                <span>12</span>
-                <span>•</span>
-                <span>Final Slide</span>
-            </div>
+      <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+          {{{ icon 'users' class='w-6 h-6 text-orange-600' }}}
         </div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Storytelling</h3>
+        <p class="text-gray-600 text-sm">Narrative-driven presentations that connect emotionally with investors</p>
+      </div>
     </div>
+
+  </div>
 </div>
-
-</div>
-
-
-<div class=" h-[300px]"></div>
-
-{{> floating-form}}

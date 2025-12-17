@@ -4,8 +4,8 @@
         <div class="flex flex-1">
             <div>
 
-                <span class="truncate font-medium user-name">Electro Electra</span>
-                <span class="truncate text-xs text-muted-foreground user-email">electro.electra@gmail.com</span>
+                <span class="truncate font-medium user-name">{{user.profile.name}}</span>
+                <span class="truncate text-xs text-muted-foreground user-email">{{user.email}}</span>
             </div>
 
             <svg class="lucide lucide-settings h-4 w-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="16"
@@ -20,9 +20,8 @@
         </div>
 
         <div class="flex items-center justify-between text-sm flex-1">
-            <span class="truncate text-xs text-muted-foreground self-center flex-1 nav-current-plan-name">Starter
-                Plan</span>
-            <span class="truncate text-xs text-muted-foreground self-center nav-current-plan-details">$9.99/month</span>
+            <span class="truncate text-xs text-muted-foreground self-center flex-1 nav-current-plan-name">{{capitalize user.profile.package_type}} Plan</span>
+            <span class="truncate text-xs text-muted-foreground self-center nav-current-plan-details">{{#if (eq user.profile.package_type "free")}}Free{{else}}${{user.profile.package_type}} /month{{/if}}</span>
         </div>
     </div>
 </a>

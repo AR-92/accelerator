@@ -33,3 +33,44 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+// Voting functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle star rating clicks
+    document.querySelectorAll('.star-btn').forEach(btn => {
+        btn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            e.stopPropagation(); // Prevent card click
+
+            const rating = parseInt(this.dataset.rating);
+            const ideaId = this.closest('.star-rating').dataset.ideaId;
+
+            try {
+                const response = await fetch('/api/votes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        idea_id: ideaId,
+                        rating: rating
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showToast('Vote submitted successfully!', 'success');
+                    // Reload page to show updated ratings
+                    setTimeout(() => window.location.reload(), 1000);
+                } else {
+                    showToast(data.error || 'Failed to submit vote', 'error');
+                }
+            } catch (error) {
+                console.error('Voting error:', error);
+                showToast('Failed to submit vote', 'error');
+            }
+        });
+    });
+});
+</script>

@@ -1,0 +1,165 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto">
+
+    <!-- Idea Header -->
+    <div class="bg-white rounded-2xl shadow-xl p-8 mb-8">
+      <div class="text-center">
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">{{idea.title}}</h1>
+        <p class="text-xl text-gray-600 mb-6">{{idea.description}}</p>
+
+        <!-- Rating Display -->
+        <div class="flex items-center justify-center space-x-4 mb-6">
+          <div class="flex items-center space-x-1">
+            {{#each (range 1 5)}}
+            <svg class="w-6 h-6 {{#if (gte ../idea.rating this)}}text-yellow-400{{else}}text-gray-300{{/if}}"
+                 fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            {{/each}}
+          </div>
+          <span class="text-lg font-semibold text-gray-900">{{idea.rating}}</span>
+          <span class="text-gray-600">({{idea.voteCount}} votes)</span>
+        </div>
+
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <p class="text-blue-800">
+            <strong>Private Idea:</strong> This idea has been shared with you for feedback.
+            Your vote will help the creator validate their concept.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voting Section -->
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Share Your Feedback</h2>
+
+      <div class="max-w-md mx-auto">
+        <form id="vote-form" class="space-y-6">
+          <input type="hidden" name="shareToken" value="{{shareToken}}" />
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-3 text-center">
+              How would you rate this idea?
+            </label>
+            <div class="flex justify-center space-x-2">
+              {{#each (range 1 5)}}
+              <label class="cursor-pointer">
+                <input type="radio" name="rating" value="{{this}}" class="sr-only peer" />
+                <div class="w-12 h-12 rounded-full border-2 border-gray-300 peer-checked:border-yellow-400 peer-checked:bg-yellow-50 flex items-center justify-center hover:border-yellow-300 transition-colors">
+                  <span class="text-lg font-semibold text-gray-700 peer-checked:text-yellow-600">{{this}}</span>
+                </div>
+              </label>
+              {{/each}}
+            </div>
+            <div class="flex justify-center space-x-8 mt-2 text-sm text-gray-600">
+              <span>Poor</span>
+              <span>Excellent</span>
+            </div>
+          </div>
+
+          <button type="submit" id="submit-vote-btn"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
+            <span>Submit Your Vote</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </button>
+        </form>
+
+        <div id="vote-result" class="mt-6 text-center hidden">
+          <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+            <svg class="w-8 h-8 text-green-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <h3 class="text-lg font-semibold text-green-900 mb-1">Vote Submitted!</h3>
+            <p class="text-green-800">Thank you for your feedback. The updated rating is now <strong id="new-rating"></strong> stars.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Handle vote form submission
+document.getElementById('vote-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+  const rating = formData.get('rating');
+  const shareToken = formData.get('shareToken');
+
+  if (!rating) {
+    alert('Please select a rating');
+    return;
+  }
+
+  const btn = document.getElementById('submit-vote-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-2"></div> Submitting...';
+
+  try {
+    const response = await fetch(`/api/shared-idea/${shareToken}/vote`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ rating: parseInt(rating) })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      document.getElementById('vote-form').style.display = 'none';
+      document.getElementById('vote-result').classList.remove('hidden');
+      document.getElementById('new-rating').textContent = data.newRating;
+
+      // Update the displayed rating
+      updateDisplayedRating(data.newRating, data.voteCount);
+    } else {
+      alert(data.error || 'Failed to submit vote');
+      btn.disabled = false;
+      btn.innerHTML = `
+        <span>Submit Your Vote</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      `;
+    }
+  } catch (error) {
+    console.error('Vote submission error:', error);
+    alert('Failed to submit vote');
+    btn.disabled = false;
+    btn.innerHTML = `
+      <span>Submit Your Vote</span>
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+    `;
+  }
+});
+
+function updateDisplayedRating(newRating, voteCount) {
+  // Update the rating stars
+  const stars = document.querySelectorAll('.rating-stars svg');
+  const numericRating = parseFloat(newRating);
+
+  stars.forEach((star, index) => {
+    if (index < Math.floor(numericRating)) {
+      star.className = 'w-6 h-6 text-yellow-400';
+    } else if (index < numericRating) {
+      star.className = 'w-6 h-6 text-yellow-400';
+    } else {
+      star.className = 'w-6 h-6 text-gray-300';
+    }
+  });
+
+  // Update the rating text
+  const ratingText = document.querySelector('.rating-text');
+  if (ratingText) {
+    ratingText.textContent = `${newRating} (${voteCount} votes)`;
+  }
+}
+</script>

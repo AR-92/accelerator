@@ -54,7 +54,7 @@
                  <div class="flex items-start gap-4 mb-6">
                      <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">0</div>
                      <div class="flex-1">
-                         {{> question-block id="executive-summary-q1" step="0" question="Provide an executive summary of your startup idea." placeholder="This section creates your executive summary. Write a concise overview of your idea, including the problem, solution, market opportunity, and unique value proposition. AI can help craft compelling summaries. Use this section for idea overview. Chat with AI to refine your executive summary or get writing assistance." description=executiveSummaryText form="false"}}
+                          {{> question-block id="executive-summary-q1" step="0" question="Provide an executive summary of your startup idea." placeholder="This section creates your executive summary. Write a concise overview of your idea, including the problem, solution, market opportunity, and unique value proposition. AI can help craft compelling summaries. Use this section for idea overview. Chat with AI to refine your executive summary or get writing assistance." description=executiveSummaryText form="false" modelType="idea" section="executive-summary" ideaId=ideaId modelType="idea" ideaId=ideaId}}
                      </div>
                  </div>
                  <div class="flex items-start gap-4">
@@ -82,25 +82,25 @@
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                   <div class="flex-1">
-                          {{> question-block id="problem-validation-q1" step="1" question="Describe the problem your startup addresses." placeholder="This section validates your problem. Detail the specific challenge, affected people, scale, and urgency. AI can help refine problem statements. Use this section for problem-solution fit. Chat with AI to craft compelling problem descriptions or learn problem validation."}}
+                          {{> question-block id="problem-validation-q1" step="1" question="Describe the problem your startup addresses." placeholder="This section validates your problem. Detail the specific challenge, affected people, scale, and urgency. AI can help refine problem statements. Use this section for problem-solution fit. Chat with AI to craft compelling problem descriptions or learn problem validation." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
                   <div class="flex-1">
-                          {{> question-block id="problem-validation-q2" step="2" question="Who is affected by this problem?" placeholder="This section identifies affected stakeholders. Describe demographics, characteristics, pain points, and impacts. AI can help develop customer personas. Use this section for target audience definition. Chat with AI to create detailed personas or understand stakeholder analysis."}}
+                          {{> question-block id="problem-validation-q2" step="2" question="Who is affected by this problem?" placeholder="This section identifies affected stakeholders. Describe demographics, characteristics, pain points, and impacts. AI can help develop customer personas. Use this section for target audience definition. Chat with AI to create detailed personas or understand stakeholder analysis." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
                   <div class="flex-1">
-                          {{> question-block id="problem-validation-q3" step="3" question="List your key assumptions." placeholder="This section lists key assumptions. Explain beliefs about problem, market, solution with evidence and risks. AI can help identify hidden assumptions. Use this section for validation planning. Chat with AI to learn assumption mapping or get validation strategies."}}
+                          {{> question-block id="problem-validation-q3" step="3" question="List your key assumptions." placeholder="This section lists key assumptions. Explain beliefs about problem, market, solution with evidence and risks. AI can help identify hidden assumptions. Use this section for validation planning. Chat with AI to learn assumption mapping or get validation strategies." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">4</div>
                   <div class="flex-1">
-                          {{> question-block id="problem-validation-q4" step="4" question="Describe existing solutions." placeholder="This section analyzes existing solutions. Include direct competitors and workarounds with strengths, weaknesses, pricing. AI can help research alternatives. Use this section for competitive analysis. Chat with AI to discover solutions or get competitive intelligence."}}
+                          {{> question-block id="problem-validation-q4" step="4" question="Describe existing solutions." placeholder="This section analyzes existing solutions. Include direct competitors and workarounds with strengths, weaknesses, pricing. AI can help research alternatives. Use this section for competitive analysis. Chat with AI to discover solutions or get competitive intelligence." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4">
@@ -125,13 +125,13 @@
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                   <div class="flex-1">
-                          {{> question-block id="solution-development-q1" step="5" question="Provide a title for your solution." placeholder="This section creates your solution title. Make it concise, descriptive, memorable, and benefit-focused. AI can help brainstorm compelling titles. Use this section for branding foundation. Chat with AI to generate title ideas or learn naming strategies."}}
+                          {{> question-block id="solution-development-q1" step="5" question="Provide a title for your solution." placeholder="This section creates your solution title. Make it concise, descriptive, memorable, and benefit-focused. AI can help brainstorm compelling titles. Use this section for branding foundation. Chat with AI to generate title ideas or learn naming strategies." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
                   <div class="flex-1">
-                          {{> question-block id="solution-development-q2" step="6" question="Describe your solution." placeholder="This section describes your solution comprehensively. Explain how it works, key features, problem-solving approach. AI can help refine technical descriptions. Use this section for product explanation. Chat with AI to improve solution descriptions or get clarity assistance."}}
+                          {{> question-block id="solution-development-q2" step="6" question="Describe your solution." placeholder="This section describes your solution comprehensively. Explain how it works, key features, problem-solving approach. AI can help refine technical descriptions. Use this section for product explanation. Chat with AI to improve solution descriptions or get clarity assistance." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4">
@@ -156,55 +156,55 @@
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                   <div class="flex-1">
-                          {{> question-block id="customer-model-q1" step="7" question="Define your ideal target customers." placeholder="This section defines ideal customers. Create detailed personas with demographics, psychographics, behaviors, needs. AI can help develop comprehensive personas. Use this section for customer understanding. Chat with AI to create personas or learn customer segmentation."}}
+                          {{> question-block id="customer-model-q1" step="7" question="Define your ideal target customers." placeholder="This section defines ideal customers. Create detailed personas with demographics, psychographics, behaviors, needs. AI can help develop comprehensive personas. Use this section for customer understanding. Chat with AI to create personas or learn customer segmentation." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
                   <div class="flex-1">
-                          {{> question-block id="customer-model-q2" step="8" question="Identify key success metrics." placeholder="This section identifies success KPIs. Include acquisition, retention, revenue, engagement, performance metrics. AI can suggest relevant KPIs. Use this section for measurement planning. Chat with AI to learn KPI selection or get metric recommendations."}}
+                          {{> question-block id="customer-model-q2" step="8" question="Identify key success metrics." placeholder="This section identifies success KPIs. Include acquisition, retention, revenue, engagement, performance metrics. AI can suggest relevant KPIs. Use this section for measurement planning. Chat with AI to learn KPI selection or get metric recommendations." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
                   <div class="flex-1">
-                          {{> question-block id="customer-model-q3" step="9" question="List your competitors." placeholder="This section lists direct and indirect competitors. Analyze market position, pricing, features, strengths, weaknesses. AI can help research competitors. Use this section for competitive positioning. Chat with AI to identify competitors or get analysis assistance."}}
+                          {{> question-block id="customer-model-q3" step="9" question="List your competitors." placeholder="This section lists direct and indirect competitors. Analyze market position, pricing, features, strengths, weaknesses. AI can help research competitors. Use this section for competitive positioning. Chat with AI to identify competitors or get analysis assistance." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">4</div>
                   <div class="flex-1">
-                          {{> question-block id="customer-model-q4" step="10" question="What is your unique value proposition?" placeholder="This section articulates your UVP. State what makes your offering different and better than competitors. AI can help craft compelling UVPs. Use this section for differentiation. Chat with AI to develop UVP statements or learn positioning strategies."}}
+                          {{> question-block id="customer-model-q4" step="10" question="What is your unique value proposition?" placeholder="This section articulates your UVP. State what makes your offering different and better than competitors. AI can help craft compelling UVPs. Use this section for differentiation. Chat with AI to develop UVP statements or learn positioning strategies." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">5</div>
                   <div class="flex-1">
-                          {{> question-block id="customer-model-q5" step="11" question="Describe your solution at a high level." placeholder="This section provides high-level solution description. Explain core concept and value delivery in simple terms. AI can help simplify complex ideas. Use this section for quick understanding. Chat with AI to refine high-level descriptions or get simplification help."}}
+                          {{> question-block id="customer-model-q5" step="11" question="Describe your solution at a high level." placeholder="This section provides high-level solution description. Explain core concept and value delivery in simple terms. AI can help simplify complex ideas. Use this section for quick understanding. Chat with AI to refine high-level descriptions or get simplification help." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">6</div>
                   <div class="flex-1">
-                          {{> question-block id="customer-model-q6" step="12" question="What is your unfair advantage?" placeholder="This section defines your unfair advantage. Identify unique assets, partnerships, or positioning hard to replicate. AI can help identify competitive moats. Use this section for sustainable advantage. Chat with AI to discover advantages or learn moat building."}}
+                          {{> question-block id="customer-model-q6" step="12" question="What is your unfair advantage?" placeholder="This section defines your unfair advantage. Identify unique assets, partnerships, or positioning hard to replicate. AI can help identify competitive moats. Use this section for sustainable advantage. Chat with AI to discover advantages or learn moat building." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">7</div>
                   <div class="flex-1">
-                          {{> question-block id="customer-model-q7" step="13" question="Describe your distribution channels." placeholder="This section describes distribution strategies. Include acquisition and delivery channels with rationale. AI can suggest channel strategies. Use this section for go-to-market planning. Chat with AI to learn distribution channels or get strategy recommendations."}}
+                          {{> question-block id="customer-model-q7" step="13" question="Describe your distribution channels." placeholder="This section describes distribution strategies. Include acquisition and delivery channels with rationale. AI can suggest channel strategies. Use this section for go-to-market planning. Chat with AI to learn distribution channels or get strategy recommendations." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">8</div>
                   <div class="flex-1">
-                          {{> question-block id="customer-model-q8" step="14" question="Who are your early adopters?" placeholder="This section identifies early adopters. Describe characteristics, finding methods, motivations, differences from mainstream. AI can help define early adopter profiles. Use this section for initial customer acquisition. Chat with AI to understand early adopters or get targeting strategies."}}
+                          {{> question-block id="customer-model-q8" step="14" question="Who are your early adopters?" placeholder="This section identifies early adopters. Describe characteristics, finding methods, motivations, differences from mainstream. AI can help define early adopter profiles. Use this section for initial customer acquisition. Chat with AI to understand early adopters or get targeting strategies." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">9</div>
                   <div class="flex-1">
-                          {{> question-block id="customer-model-q9" step="15" question="How will you maintain customer relationships?" placeholder="This section plans relationship maintenance. Include acquisition, onboarding, support, communication, retention strategies. AI can suggest relationship tactics. Use this section for customer lifecycle management. Chat with AI to learn relationship strategies or get retention ideas."}}
+                          {{> question-block id="customer-model-q9" step="15" question="How will you maintain customer relationships?" placeholder="This section plans relationship maintenance. Include acquisition, onboarding, support, communication, retention strategies. AI can suggest relationship tactics. Use this section for customer lifecycle management. Chat with AI to learn relationship strategies or get retention ideas." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4">
@@ -229,25 +229,25 @@
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                   <div class="flex-1">
-                          {{> question-block id="branding-q1" step="16" question="Describe your brand identity." placeholder="This section describes your brand identity. Include mission, vision, values, personality, positioning. AI can help develop brand narratives. Use this section for brand foundation. Chat with AI to craft brand identities or learn branding principles."}}
+                          {{> question-block id="branding-q1" step="16" question="Describe your brand identity." placeholder="This section describes your brand identity. Include mission, vision, values, personality, positioning. AI can help develop brand narratives. Use this section for brand foundation. Chat with AI to craft brand identities or learn branding principles." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
                   <div class="flex-1">
-                          {{> question-block id="branding-q2" step="17" question="Craft your brand statement." placeholder="This section creates your brand statement. Make it concise, memorable, communicating purpose, values, position. AI can help craft compelling statements. Use this section for brand messaging. Chat with AI to generate brand statements or get messaging help."}}
+                          {{> question-block id="branding-q2" step="17" question="Craft your brand statement." placeholder="This section creates your brand statement. Make it concise, memorable, communicating purpose, values, position. AI can help craft compelling statements. Use this section for brand messaging. Chat with AI to generate brand statements or get messaging help." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
                   <div class="flex-1">
-                          {{> question-block id="branding-q3" step="18" question="What is your proposed company name?" placeholder="This section proposes your company name. Explain reasoning, memorability, availability, domain, alignment with brand. AI can help brainstorm names. Use this section for naming strategy. Chat with AI to generate name ideas or get naming guidance."}}
+                          {{> question-block id="branding-q3" step="18" question="What is your proposed company name?" placeholder="This section proposes your company name. Explain reasoning, memorability, availability, domain, alignment with brand. AI can help brainstorm names. Use this section for naming strategy. Chat with AI to generate name ideas or get naming guidance." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">4</div>
                   <div class="flex-1">
-                          {{> question-block id="branding-q4" step="19" question="Create a slogan for your brand." placeholder="This section creates your brand slogan. Make it short, memorable, communicating key benefit or USP. AI can help generate catchy slogans. Use this section for brand recall. Chat with AI to brainstorm slogans or learn slogan creation."}}
+                          {{> question-block id="branding-q4" step="19" question="Create a slogan for your brand." placeholder="This section creates your brand slogan. Make it short, memorable, communicating key benefit or USP. AI can help generate catchy slogans. Use this section for brand recall. Chat with AI to brainstorm slogans or learn slogan creation." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4">
@@ -272,19 +272,19 @@
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">1</div>
                   <div class="flex-1">
-                          {{> question-block id="ip-protection-q1" step="20" question="Describe your IP protection measures." placeholder="This section describes IP protection measures. Explain types used, assets protected, filing details, duration. AI can help understand IP strategies. Use this section for intellectual property planning. Chat with AI to learn IP protection or get strategy recommendations."}}
+                          {{> question-block id="ip-protection-q1" step="20" question="Describe your IP protection measures." placeholder="This section describes IP protection measures. Explain types used, assets protected, filing details, duration. AI can help understand IP strategies. Use this section for intellectual property planning. Chat with AI to learn IP protection or get strategy recommendations." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">2</div>
                   <div class="flex-1">
-                          {{> question-block id="ip-protection-q2" step="21" question="Describe your domain registration strategy." placeholder="This section details domain registration. Include primary domain, alternatives, registration details, trademark considerations. AI can help with domain strategy. Use this section for online presence planning. Chat with AI to learn domain strategies or get registration advice."}}
+                          {{> question-block id="ip-protection-q2" step="21" question="Describe your domain registration strategy." placeholder="This section details domain registration. Include primary domain, alternatives, registration details, trademark considerations. AI can help with domain strategy. Use this section for online presence planning. Chat with AI to learn domain strategies or get registration advice." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4 mb-6">
                   <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-sm font-bold relative z-10">3</div>
                   <div class="flex-1">
-                          {{> question-block id="ip-protection-q3" step="22" question="What IP elements are you protecting?" placeholder="This section lists protected IP elements. Detail what each is, value, protection method, competitive contribution. AI can help identify protectable IP. Use this section for IP asset management. Chat with AI to understand IP elements or get protection guidance."}}
+                          {{> question-block id="ip-protection-q3" step="22" question="What IP elements are you protecting?" placeholder="This section lists protected IP elements. Detail what each is, value, protection method, competitive contribution. AI can help identify protectable IP. Use this section for IP asset management. Chat with AI to understand IP elements or get protection guidance." modelType="idea" ideaId=ideaId}}
                   </div>
                 </div>
                 <div class="flex items-start gap-4">
@@ -303,6 +303,7 @@
 
     </div>
 </main>
+
 <div class=" h-[300px]"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

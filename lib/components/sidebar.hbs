@@ -85,7 +85,7 @@
             class="w-full relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-2 text-sm text-left outline-none transition-colors hover:bg-primary/10 hover:text-primary text-muted-foreground">
             <div class="grid flex-1 text-left text-sm leading-tight">
                 <div class="flex justify-between">
-                    <span class="truncate text-xs text-muted-foreground user-email">electro.electra@gmail.com</span>
+                    <span class="truncate text-xs text-muted-foreground user-email">{{user.email}}</span>
 
                     <svg class="lucide lucide-credit-card h-4 w-4 shrink-0" xmlns="http://www.w3.org/2000/svg"
                         width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -99,10 +99,9 @@
                 <div class="bg-border -mx-1 my-1 h-px"></div>
                 <div class="flex items-center justify-between text-sm flex-1">
                     <span
-                        class="truncate text-xs text-muted-foreground self-center flex-1 nav-current-plan-name">Starter
-                        Plan</span>
+                        class="truncate text-xs text-muted-foreground self-center flex-1 nav-current-plan-name">{{capitalize user.profile.package_type}} Plan</span>
                     <span
-                        class="truncate text-xs text-muted-foreground self-center nav-current-plan-details">$9.99/month</span>
+                        class="truncate text-xs text-muted-foreground self-center nav-current-plan-details">{{#if (eq user.profile.package_type "free")}}Free{{else}}${{user.profile.package_type}} /month{{/if}}</span>
                 </div>
             </div>
         </a>

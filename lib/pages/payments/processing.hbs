@@ -1,0 +1,14 @@
+<div class="min-h-screen flex items-center justify-center bg-background">
+    <div class="text-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+        <h1 class="text-2xl font-semibold text-foreground mb-2">Processing Payment...</h1>
+        <p class="text-muted-foreground">Please wait while we process your package upgrade.</p>
+    </div>
+</div>
+
+<script>
+    // Simulate processing delay then redirect
+    setTimeout(() => {
+        window.location.href = '/dashboard';
+    }, 2000);
+</script>

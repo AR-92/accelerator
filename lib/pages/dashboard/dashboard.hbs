@@ -33,13 +33,13 @@
        </div>
 
        <!-- Key Metrics Grid -->
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
-        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
-          <div class="flex items-center justify-between px-3 py-1">
-            <div class="flex flex-col gap-1">
-              <h3 class="text-sm font-medium text-muted-foreground">Active Projects</h3>
-              <p class="text-2xl font-semibold text-foreground">12</p>
-            </div>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
+         <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+           <div class="flex items-center justify-between px-3 py-1">
+             <div class="flex flex-col gap-1">
+               <h3 class="text-sm font-medium text-muted-foreground">Total Ideas</h3>
+               <p class="text-2xl font-semibold text-foreground">{{stats.ideas.total}}</p>
+             </div>
             <div>
               <div class="bg-primary/20 rounded-lg">
                 <div class="w-10 h-10 bg-primary/20 rounded-lg relative">
@@ -71,12 +71,12 @@
             Since last month
           </p>
         </div>
-        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
-          <div class="flex items-center justify-between px-3 py-1">
-            <div class="flex flex-col gap-1">
-              <h3 class="text-sm font-medium text-muted-foreground">Total Ideas</h3>
-              <p class="text-2xl font-semibold text-foreground">47</p>
-            </div>
+         <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+           <div class="flex items-center justify-between px-3 py-1">
+             <div class="flex flex-col gap-1">
+               <h3 class="text-sm font-medium text-muted-foreground">Completed Ideas</h3>
+               <p class="text-2xl font-semibold text-foreground">{{stats.ideas.completed}}</p>
+             </div>
             <div>
               <div class="bg-secondary/20 rounded-lg">
                 <div class="w-10 h-10 bg-secondary/20 rounded-lg relative">
@@ -111,12 +111,12 @@
             Since last month
           </p>
         </div>
-        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
-          <div class="flex items-center justify-between px-3 py-1">
-            <div class="flex flex-col gap-1">
-              <h3 class="text-sm font-medium text-muted-foreground">Team Members</h3>
-              <p class="text-2xl font-semibold text-foreground">15</p>
-            </div>
+         <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+           <div class="flex items-center justify-between px-3 py-1">
+             <div class="flex flex-col gap-1">
+               <h3 class="text-sm font-medium text-muted-foreground">Credit Balance</h3>
+               <p class="text-2xl font-semibold text-foreground">{{stats.credits.currentBalance}}</p>
+             </div>
             <div>
               <div class="bg-primary/20 rounded-lg">
                 <div class="w-10 h-10 bg-primary/20 rounded-lg relative">
@@ -149,12 +149,12 @@
             Since last month
           </p>
         </div>
-        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
-          <div class="flex items-center justify-between px-3 py-1">
-            <div class="flex flex-col gap-1">
-              <h3 class="text-sm font-medium text-muted-foreground">Funding Raised</h3>
-              <p class="text-2xl font-semibold text-foreground">$125K</p>
-            </div>
+         <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+           <div class="flex items-center justify-between px-3 py-1">
+             <div class="flex flex-col gap-1">
+               <h3 class="text-sm font-medium text-muted-foreground">Completion Rate</h3>
+               <p class="text-2xl font-semibold text-foreground">{{stats.ideas.completionRate}}%</p>
+             </div>
             <div>
               <div class="bg-success/20 rounded-lg">
                 <div class="w-10 h-10 bg-success/20 rounded-lg relative">
@@ -185,12 +185,12 @@
             Since last month
           </p>
         </div>
-        <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
-          <div class="flex items-center justify-between px-3 py-1">
-            <div class="flex flex-col gap-1">
-              <h3 class="text-sm font-medium text-muted-foreground">Growth Rate</h3>
-              <p class="text-2xl font-semibold text-foreground">18%</p>
-            </div>
+         <div class="rounded-lg bg-card px-4 py-6 text-card-foreground shadow-sm border border-border">
+           <div class="flex items-center justify-between px-3 py-1">
+             <div class="flex flex-col gap-1">
+               <h3 class="text-sm font-medium text-muted-foreground">Average Rating</h3>
+               <p class="text-2xl font-semibold text-foreground">{{stats.ideas.averageRating}}★</p>
+             </div>
             <div>
               <div class="bg-primary/20 rounded-lg">
                 <div class="w-10 h-10 bg-primary/20 rounded-lg relative">
@@ -224,110 +224,178 @@
       </div>
 
       <!-- Main Content Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Recent Projects -->
-        <div class="lg:col-span-2">
+       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+         <!-- Recent Activity -->
+         <div class="lg:col-span-2">
+           <div class="bg-card rounded-lg border border-border p-6">
+             <div class="flex items-center justify-between mb-4">
+               <h2 class="text-xl font-semibold text-foreground">Recent Activity</h2>
+               <a href="/user-activity" class="btn btn-ghost text-sm">
+                 View All
+                 <svg class="lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                   stroke-linejoin="round">
+                   <path d="M5 12h14"></path>
+                   <path d="m12 5 7 7-7 7"></path>
+                 </svg>
+               </a>
+             </div>
+             <div class="space-y-4">
+               {{#if stats.activity.length}}
+                 {{#each stats.activity}}
+                 <div class="flex items-start gap-3 p-3 rounded-lg bg-muted/30">
+                   <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                     {{#if (eq action_type "idea_created")}}
+                       <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                       </svg>
+                     {{else if (eq action_type "vote_cast")}}
+                       <svg class="w-4 h-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                       </svg>
+                     {{else if (eq action_type "model_completed")}}
+                       <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                       </svg>
+                     {{else}}
+                       <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                       </svg>
+                     {{/if}}
+                   </div>
+                   <div class="flex-1">
+                     <p class="text-sm text-foreground">
+                       {{#if (eq action_type "idea_created")}}
+                         Created a new idea
+                       {{else if (eq action_type "vote_cast")}}
+                         Cast a vote on an idea
+                       {{else if (eq action_type "model_completed")}}
+                         Completed a model section
+                       {{else if (eq action_type "model_section_updated")}}
+                         Updated model section
+                       {{else if (eq action_type "package_selected")}}
+                         Selected a package plan
+                       {{else if (eq action_type "profile_completed")}}
+                         Completed profile setup
+                       {{else}}
+                         {{action_type}}
+                       {{/if}}
+                     </p>
+                     <p class="text-xs text-muted-foreground">{{formatDate created_at}}</p>
+                   </div>
+                 </div>
+                 {{/each}}
+               {{else}}
+                 <div class="text-center py-8">
+                   <div class="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                     <svg class="lucide lucide-activity text-muted-foreground" xmlns="http://www.w3.org/2000/svg"
+                       width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                       <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                     </svg>
+                   </div>
+                   <h3 class="text-lg font-medium text-foreground mb-2">No activity yet</h3>
+                   <p class="text-muted-foreground mb-4">Start creating ideas to see your activity here</p>
+                   <a href="/new-idea" class="btn btn-primary">Create Your First Idea</a>
+                 </div>
+               {{/if}}
+             </div>
+           </div>
+         </div>
+
+         <!-- Notifications -->
+         <div class="bg-card rounded-lg border border-border p-6">
+           <div class="flex items-center justify-between mb-4">
+             <h2 class="text-xl font-semibold text-foreground">Notifications</h2>
+             <a href="/notification" class="btn btn-ghost text-sm">
+               View All
+               <svg class="lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round">
+                 <path d="M5 12h14"></path>
+                 <path d="m12 5 7 7-7 7"></path>
+               </svg>
+             </a>
+           </div>
+           <div id="dashboard-notifications" class="space-y-4">
+             <div class="text-center py-4">
+               <div class="inline-flex items-center gap-2 text-muted-foreground">
+                 <svg class="animate-spin w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                 </svg>
+                 Loading notifications...
+               </div>
+             </div>
+           </div>
+         </div>
+
+         <!-- Model Progress & Credits -->
+         <div class="space-y-6">
+          <!-- Credit Balance -->
           <div class="bg-card rounded-lg border border-border p-6">
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="text-xl font-semibold text-foreground">Recent Projects</h2>
-              <button class="btn btn-ghost text-sm">
-                View All
-
-                <svg class="lucide lucide-arrow-right" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-
-              </button>
-            </div>
-            <div class="space-y-4">
-              <div class="text-center py-8">
-                <div class="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-
-                  <svg class="lucide lucide-folder-open text-muted-foreground" xmlns="http://www.w3.org/2000/svg"
-                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path
-                      d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2">
-                    </path>
-                  </svg>
-
+            <h2 class="text-xl font-semibold text-foreground mb-4">Credit Balance</h2>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-primary mb-2">{{stats.credits.currentBalance}}</div>
+              <p class="text-sm text-muted-foreground mb-4">Available Credits</p>
+              <div class="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span class="text-muted-foreground">Earned (30d)</span>
+                  <div class="font-semibold text-green-600">+{{stats.credits.earned30d}}</div>
                 </div>
-                <h3 class="text-lg font-medium text-foreground mb-2">No projects yet</h3>
-                <p class="text-muted-foreground mb-4">Start your first project to see it here</p>
-                <button class="btn btn-primary">Create Project</button>
+                <div>
+                  <span class="text-muted-foreground">Spent (30d)</span>
+                  <div class="font-semibold text-red-600">-{{stats.credits.spent30d}}</div>
+                </div>
               </div>
+              <a href="/buy-credits" class="btn btn-outline w-full mt-4">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Buy Credits
+              </a>
             </div>
           </div>
-        </div>
 
-        <!-- Trending Indicators & Analytics -->
-        <div class="space-y-6">
-          <!-- Trending Indicators -->
+          <!-- Model Progress -->
           <div class="bg-card rounded-lg border border-border p-6">
-            <h2 class="text-xl font-semibold text-foreground mb-4">Trending Indicators</h2>
+            <h2 class="text-xl font-semibold text-foreground mb-4">Model Progress</h2>
+            <div class="space-y-4">
+              {{#each stats.models}}
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-foreground capitalize">{{@key}} Model</span>
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs text-muted-foreground">{{completed}}/{{total}}</span>
+                    <div class="w-16 h-2 bg-muted rounded-full overflow-hidden">
+                      <div class="h-full bg-primary rounded-full" style="width: {{#if (gt total 0)}}{{math (divide completed total) 100}}%{{else}}0%{{/if}}"></div>
+                    </div>
+                  </div>
+                </div>
+              {{/each}}
+              {{#if (eq (len stats.models) 0)}}
+                <p class="text-sm text-muted-foreground text-center py-4">No model progress yet</p>
+              {{/if}}
+            </div>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="bg-card rounded-lg border border-border p-6">
+            <h2 class="text-xl font-semibold text-foreground mb-4">Quick Stats</h2>
             <div class="space-y-3">
               <div class="flex items-center justify-between">
-                <span class="text-sm font-medium text-foreground">Market Growth</span>
-                <div class="flex items-center gap-2">
-
-                  <svg class="lucide lucide-trending-up text-success" xmlns="http://www.w3.org/2000/svg" width="14"
-                    height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M16 7h6v6"></path>
-                    <path d="m22 7-8.5 8.5-5-5L2 17"></path>
-                  </svg>
-
-                  <span class="text-sm font-medium text-success">+15%</span>
-                </div>
+                <span class="text-sm text-muted-foreground">Ideas Created</span>
+                <span class="text-sm font-medium text-foreground">{{stats.ideas.total}}</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-sm font-medium text-foreground">Competition</span>
-                <div class="flex items-center gap-2">
-
-                  <svg class="lucide lucide-minus text-muted-foreground" xmlns="http://www.w3.org/2000/svg" width="14"
-                    height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12h14"></path>
-                  </svg>
-
-                  <span class="text-sm font-medium text-warning">Medium</span>
-                </div>
+                <span class="text-sm text-muted-foreground">Votes Given</span>
+                <span class="text-sm font-medium text-foreground">{{stats.votes.totalGiven}}</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-sm font-medium text-foreground">Innovation Index</span>
-                <div class="flex items-center gap-2">
-
-                  <svg class="lucide lucide-trending-up text-success" xmlns="http://www.w3.org/2000/svg" width="14"
-                    height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M16 7h6v6"></path>
-                    <path d="m22 7-8.5 8.5-5-5L2 17"></path>
-                  </svg>
-
-                  <span class="text-sm font-medium text-primary">8.2/10</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Analytics Summary -->
-          <div class="bg-card rounded-lg border border-border p-6">
-            <h2 class="text-xl font-semibold text-foreground mb-4">Analytics Summary</h2>
-            <div class="space-y-4">
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-muted-foreground">Project Creation</span>
-                <span class="text-sm font-medium text-foreground">12</span>
+                <span class="text-sm text-muted-foreground">Completion Rate</span>
+                <span class="text-sm font-medium text-foreground">{{stats.ideas.completionRate}}%</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-sm text-muted-foreground">Idea Validation</span>
-                <span class="text-sm font-medium text-foreground">47</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-muted-foreground">Team Productivity</span>
-                <span class="text-sm font-medium text-foreground">85%</span>
+                <span class="text-sm text-muted-foreground">Avg Rating</span>
+                <span class="text-sm font-medium text-foreground">{{stats.ideas.averageRating}}★</span>
               </div>
             </div>
           </div>
@@ -335,60 +403,171 @@
           <!-- Quick Actions -->
           <div class="bg-card rounded-lg border border-border p-6">
             <h2 class="text-xl font-semibold text-foreground mb-4">Quick Actions</h2>
-            <div class="grid grid-cols-2 gap-3">
-              <button class="btn btn-outline w-full justify-start">
-
+            <div class="grid grid-cols-1 gap-3">
+              <a href="/new-idea" class="btn btn-outline w-full justify-start">
                 <svg class="lucide lucide-plus" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round">
                   <path d="M5 12h14"></path>
                   <path d="M12 5v14"></path>
                 </svg>
-
-                New Idea
-              </button>
-              <button class="btn btn-outline w-full justify-start">
-
-                <svg class="lucide lucide-users" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                Create New Idea
+              </a>
+              <a href="/explore-ideas" class="btn btn-outline w-full justify-start">
+                <svg class="lucide lucide-search" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                  <path d="M16 3.128a4 4 0 0 1 0 7.744"></path>
-                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.35-4.35"></path>
                 </svg>
-
-                Add Team
-              </button>
-              <button class="btn btn-outline w-full justify-start">
-
-                <svg class="lucide lucide-dollar-sign" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                Explore Ideas
+              </a>
+              <a href="/portfolio" class="btn btn-outline w-full justify-start">
+                <svg class="lucide lucide-folder-open" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
                   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round">
-                  <line x1="12" x2="12" y1="2" y2="22"></line>
-                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                  <path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"></path>
                 </svg>
-
-                Funding
-              </button>
-              <button class="btn btn-outline w-full justify-start">
-
-                <svg class="lucide lucide-chart-no-axes-column-increasing" xmlns="http://www.w3.org/2000/svg" width="14"
-                  height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 21v-6"></path>
-                  <path d="M12 21V9"></path>
-                  <path d="M19 21V3"></path>
+                View Portfolio
+              </a>
+              {{#if (eq user.package_type 'enterprise')}}
+              <a href="/portfolios" class="btn btn-outline w-full justify-start">
+                <svg class="lucide lucide-archive" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <rect width="20" height="5" x="2" y="3" rx="1"/>
+                  <path d="M4 8v11a2 2 0 0 0 2 2h2"/>
+                  <path d="M20 8v11a2 2 0 0 1-2 2h-2"/>
+                  <path d="m9 12 2 2 4-4"/>
                 </svg>
-
-                Analytics
-              </button>
+                Manage Portfolios
+              </a>
+              {{/if}}
+              <a href="/settings" class="btn btn-outline w-full justify-start">
+                <svg class="lucide lucide-settings" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 0-1-1.73V4a2 2 0 0 0-2-2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 0 0 3.46l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 0 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 0 0-3.46l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                Settings
+              </a>
             </div>
+          </div>
           </div>
         </div>
       </div>
 
-      <!-- Enterprise/Corporate Specific Sections -->
-    </div>
-  </div>
-</main>
+       <!-- Enterprise/Corporate Specific Sections -->
+     </div>
+   </div>
+ </main>
+
+<script>
+  // Load dashboard notifications
+  async function loadDashboardNotifications() {
+    try {
+      const response = await fetch('/api/notifications?limit=5');
+      const notifications = await response.json();
+
+      const container = document.getElementById('dashboard-notifications');
+
+      if (notifications.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-4">
+            <p class="text-sm text-muted-foreground">No notifications yet</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = '';
+
+      notifications.forEach(notification => {
+        const div = document.createElement('div');
+        div.className = `flex items-start gap-3 p-3 rounded-lg ${!notification.is_read ? 'bg-primary/5 border border-primary/20' : 'bg-muted/30'}`;
+
+        const iconClass = getNotificationIcon(notification.type);
+
+        div.innerHTML = `
+          <div class="flex-shrink-0">
+            <div class="w-8 h-8 ${iconClass.bg} rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 ${iconClass.color}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${iconClass.path}"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-foreground">${getNotificationTitle(notification.type)}</p>
+            <p class="text-sm text-muted-foreground">${notification.message}</p>
+            <p class="text-xs text-muted-foreground mt-1">${getTimeAgo(notification.created_at)}</p>
+          </div>
+        `;
+
+        container.appendChild(div);
+      });
+    } catch (error) {
+      console.error('Error loading dashboard notifications:', error);
+      document.getElementById('dashboard-notifications').innerHTML = `
+        <div class="text-center py-4 text-red-600">
+          Failed to load notifications
+        </div>
+      `;
+    }
+  }
+
+  // Helper functions (copied from notification page)
+  function getNotificationIcon(type) {
+    switch (type) {
+      case 'welcome':
+        return { bg: 'bg-purple-100', color: 'text-purple-600', path: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z' };
+      case 'getting_started':
+        return { bg: 'bg-blue-100', color: 'text-blue-600', path: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' };
+      case 'tip':
+        return { bg: 'bg-amber-100', color: 'text-amber-600', path: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z' };
+      case 'profile_complete':
+        return { bg: 'bg-green-100', color: 'text-green-600', path: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' };
+      case 'validation_threshold_reached':
+        return { bg: 'bg-green-100', color: 'text-green-600', path: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' };
+      case 'reward_earned':
+        return { bg: 'bg-yellow-100', color: 'text-yellow-600', path: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1' };
+      default:
+        return { bg: 'bg-blue-100', color: 'text-blue-600', path: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' };
+    }
+  }
+
+  function getNotificationTitle(type) {
+    switch (type) {
+      case 'welcome':
+        return '🎉 Welcome to Accelerator!';
+      case 'getting_started':
+        return '🚀 Getting Started';
+      case 'tip':
+        return '💡 Pro Tip';
+      case 'profile_complete':
+        return '✅ Profile Complete';
+      case 'validation_threshold_reached':
+        return '🎉 Idea Validated!';
+      case 'reward_earned':
+        return '💰 Reward Earned';
+      default:
+        return 'Notification';
+    }
+  }
+
+  function getTimeAgo(dateString) {
+    const now = new Date();
+    const date = new Date(dateString);
+    const diffInSeconds = Math.floor((now - date) / 1000);
+
+    if (diffInSeconds < 60) return 'Just now';
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+    return `${Math.floor(diffInSeconds / 86400)}d ago`;
+  }
+
+  // Load notifications on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    loadDashboardNotifications();
+  });
+</script>

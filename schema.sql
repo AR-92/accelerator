@@ -38,6 +38,7 @@ CREATE TABLE ideas (
     category_icon TEXT,
     description TEXT,
     tags TEXT[] DEFAULT '{}',
+    slug TEXT UNIQUE,
     privacy TEXT CHECK (privacy IN ('public', 'private')) DEFAULT 'public',
     validation_threshold_met BOOLEAN DEFAULT FALSE,
     unlocked_models TEXT[] DEFAULT ARRAY['idea'],
@@ -187,6 +188,7 @@ CREATE TABLE credit_packages (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 ALTER TABLE credit_packages ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow all users to read credit packages" ON credit_packages FOR SELECT USING (true);
 
 CREATE TABLE packages (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -198,6 +200,7 @@ CREATE TABLE packages (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 ALTER TABLE packages ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow all users to read packages" ON packages FOR SELECT USING (true);
 
 CREATE TABLE rewards (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -229,6 +232,7 @@ CREATE POLICY "Users can manage own rewards" ON rewards FOR ALL USING (auth.uid(
 CREATE INDEX idx_profiles_user_id ON profiles(user_id);
 CREATE INDEX idx_ideas_user_id ON ideas(user_id);
 CREATE INDEX idx_ideas_user_id_created_at ON ideas(user_id, created_at);
+CREATE INDEX idx_ideas_slug ON ideas(slug);
 CREATE INDEX idx_votes_idea_id ON votes(idea_id);
 CREATE INDEX idx_model_instances_idea_id ON model_instances(idea_id);
 CREATE INDEX idx_model_instances_user_id_model_type ON model_instances(user_id, model_type);
@@ -274,9 +278,81 @@ CREATE TRIGGER trigger_update_completion
 AFTER INSERT OR UPDATE ON model_sections
 FOR EACH ROW EXECUTE FUNCTION update_completion_on_section_change();
 
+-- 13. portfolios (enterprise feature for grouping ideas)
+CREATE TABLE portfolios (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    name TEXT NOT NULL,
+    description TEXT,
+    color TEXT DEFAULT '#3B82F6', -- Hex color for UI theming
+    is_default BOOLEAN DEFAULT FALSE, -- One default portfolio per user
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+ALTER TABLE portfolios ENABLE ROW LEVEL SECURITY;
+
+-- 14. portfolio_ideas (junction table for portfolio-idea relationships)
+CREATE TABLE portfolio_ideas (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    portfolio_id UUID REFERENCES portfolios(id) ON DELETE CASCADE,
+    idea_id UUID REFERENCES ideas(id) ON DELETE CASCADE,
+    added_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    UNIQUE(portfolio_id, idea_id)
+);
+ALTER TABLE portfolio_ideas ENABLE ROW LEVEL SECURITY;
+
+-- 15. portfolio_members (for sharing portfolios with team members)
+CREATE TABLE portfolio_members (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    portfolio_id UUID REFERENCES portfolios(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    role TEXT CHECK (role IN ('owner', 'editor', 'viewer')) DEFAULT 'viewer',
+    invited_by UUID REFERENCES auth.users(id),
+    invited_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    UNIQUE(portfolio_id, user_id)
+);
+ALTER TABLE portfolio_members ENABLE ROW LEVEL SECURITY;
+
+-- Indexes for portfolios
+CREATE INDEX idx_portfolios_user_id ON portfolios(user_id);
+CREATE INDEX idx_portfolio_ideas_portfolio_id ON portfolio_ideas(portfolio_id);
+CREATE INDEX idx_portfolio_ideas_idea_id ON portfolio_ideas(idea_id);
+CREATE INDEX idx_portfolio_members_portfolio_id ON portfolio_members(portfolio_id);
+CREATE INDEX idx_portfolio_members_user_id ON portfolio_members(user_id);
+
+-- RLS Policies for portfolios
+CREATE POLICY "Users can manage own portfolios" ON portfolios FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "Portfolio members can view shared portfolios" ON portfolios FOR SELECT USING (
+    EXISTS (
+        SELECT 1 FROM portfolio_members
+        WHERE portfolio_id = portfolios.id AND user_id = auth.uid()
+    )
+);
+
+CREATE POLICY "Users can manage portfolio-idea associations for own portfolios" ON portfolio_ideas FOR ALL USING (
+    EXISTS (
+        SELECT 1 FROM portfolios
+        WHERE id = portfolio_id AND user_id = auth.uid()
+    )
+);
+CREATE POLICY "Portfolio members can view portfolio ideas" ON portfolio_ideas FOR SELECT USING (
+    EXISTS (
+        SELECT 1 FROM portfolio_members
+        WHERE portfolio_id = portfolio_ideas.portfolio_id AND user_id = auth.uid()
+    )
+);
+
+CREATE POLICY "Users can manage portfolio memberships for own portfolios" ON portfolio_members FOR ALL USING (
+    EXISTS (
+        SELECT 1 FROM portfolios
+        WHERE id = portfolio_id AND user_id = auth.uid()
+    )
+);
+CREATE POLICY "Users can view their own portfolio memberships" ON portfolio_members FOR SELECT USING (user_id = auth.uid());
+
 -- Sample Data (PRD 6.8)
 INSERT INTO credit_packages (name, credits, price) VALUES ('Basic', 500, 999), ('Pro', 2000, 2999);
-INSERT INTO packages (name, type, price_monthly, credits_monthly, features) VALUES 
+INSERT INTO packages (name, type, price_monthly, credits_monthly, features) VALUES
 ('Free', 'free', 0, 50, '{"vote": true}'),
 ('Student', 'student', 999, 500, '{"create": true, "models": true}'),
 ('Enterprise', 'enterprise', 2999, 2000, '{"all": true, "team": true}');

@@ -1,178 +1,127 @@
-<div class="p-20">
+<main id="buy-credits-main-content" class="flex-1 overflow-auto bg-background">
+  <div class="p-20">
     <div class="grid gap-1 mb-12">
         <h1 class="font-heading text-3xl font-semibold text-foreground">
             Buy Credits
         </h1>
         <p class="text-lg text-muted-foreground">
-            Manage your account Credits
+            Purchase additional credits for AI features
         </p>
     </div>
 
-    <div class="grid grid-cols-4 gap-4 mb-6">
-        <div class="rounded-md bg-card px-6 py-5 text-card-foreground border-2 border-input/80">
-
-            <div class="text-center mb-4">
-                <h3 class="text-lg font-semibold text-foreground">Basic Pack</h3>
-                <p class="text-2xl font-bold text-foreground">100 credits<span
-                        class="text-sm font-normal text-muted-foreground">/1 SAR</span></p>
+    <!-- Current Balance -->
+    <div class="mb-8">
+        <div class="rounded-md bg-card px-6 py-5 text-card-foreground border-2 border-input/80 max-w-xs">
+            <div class="text-center">
+                <div class="text-sm text-muted-foreground mb-1">Current Balance</div>
+                <div class="text-2xl font-bold text-foreground">{{currentBalance}}</div>
+                <div class="text-sm text-muted-foreground">credits available</div>
             </div>
-            <ul class="space-y-2 mb-6">
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    100 credits
-                </li>
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    Instant activation
-                </li>
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    No expiration
-                </li>
-            </ul>
-            <button
-                class="w-full px-4 py-2 border border-input/80 text-foreground hover:bg-muted rounded-md transition-colors"
-                onclick="buyPackage('4ea5270c-6138-4e46-82bb-6581a3ceac56')">Buy Now</button>
-        </div>
-
-        <div class="rounded-md bg-card px-6 py-5 text-card-foreground border-2 border-primary relative">
-
-            <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <span class="bg-primary text-primary-foreground text-xs px-3 py-1 rounded-md">Most
-                    Popular</span>
-            </div>
-
-            <div class="text-center mb-4">
-                <h3 class="text-lg font-semibold text-foreground">Pro Pack</h3>
-                <p class="text-2xl font-bold text-foreground">250 credits<span
-                        class="text-sm font-normal text-muted-foreground">/2.5 SAR</span></p>
-            </div>
-            <ul class="space-y-2 mb-6">
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    250 credits
-                </li>
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    Instant activation
-                </li>
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    No expiration
-                </li>
-            </ul>
-            <button
-                class="w-full px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md transition-colors"
-                onclick="buyPackage('5432d98e-7941-44c7-b515-d5f97907c303')">Buy Now</button>
-        </div>
-
-        <div class="rounded-md bg-card px-6 py-5 text-card-foreground border-2 border-input/80">
-
-            <div class="text-center mb-4">
-                <h3 class="text-lg font-semibold text-foreground">Enterprise Pack</h3>
-                <p class="text-2xl font-bold text-foreground">500 credits<span
-                        class="text-sm font-normal text-muted-foreground">/5 SAR</span></p>
-            </div>
-            <ul class="space-y-2 mb-6">
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    500 credits
-                </li>
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    Instant activation
-                </li>
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    No expiration
-                </li>
-            </ul>
-            <button
-                class="w-full px-4 py-2 border border-input/80 text-foreground hover:bg-muted rounded-md transition-colors"
-                onclick="buyPackage('bd8e59f0-acab-4364-b4c6-b506d5e3ab96')">Buy Now</button>
-        </div>
-
-        <div class="rounded-md bg-card px-6 py-5 text-card-foreground border-2 border-input/80">
-
-            <div class="text-center mb-4">
-                <h3 class="text-lg font-semibold text-foreground">Starter Pack</h3>
-                <p class="text-2xl font-bold text-foreground">100 credits<span
-                        class="text-sm font-normal text-muted-foreground">/1 SAR</span></p>
-            </div>
-            <ul class="space-y-2 mb-6">
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    100 credits
-                </li>
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    Instant activation
-                </li>
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    No expiration
-                </li>
-            </ul>
-            <button
-                class="w-full px-4 py-2 border border-input/80 text-foreground hover:bg-muted rounded-md transition-colors"
-                onclick="buyPackage('a4c6ff7a-4497-4901-b540-e349c6fdf684')">Buy Now</button>
-        </div>
-
-        <div class="rounded-md bg-card px-6 py-5 text-card-foreground border-2 border-input/80">
-
-            <div class="text-center mb-4">
-                <h3 class="text-lg font-semibold text-foreground">Popular Pack</h3>
-                <p class="text-2xl font-bold text-foreground">250 credits<span
-                        class="text-sm font-normal text-muted-foreground">/2.5 SAR</span></p>
-            </div>
-            <ul class="space-y-2 mb-6">
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    250 credits
-                </li>
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    Instant activation
-                </li>
-                <li class="flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                    No expiration
-                </li>
-            </ul>
-            <button
-                class="w-full px-4 py-2 border border-input/80 text-foreground hover:bg-muted rounded-md transition-colors"
-                onclick="buyPackage('76140389-2c42-47f9-b751-d4be32b0f10d')">Buy Now</button>
         </div>
     </div>
 
-</div>
+    <!-- Credit Packages -->
+    {{#if creditPackages.length}}
+    <div class="grid grid-cols-3 gap-4">
+        {{#each creditPackages}}
+        <div class="rounded-md bg-card px-6 py-5 text-card-foreground border-2 border-input/80 {{#if (eq @index 1)}}border-primary relative{{/if}}">
+            {{#if (eq @index 1)}}
+            <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <span class="bg-primary text-primary-foreground text-xs px-3 py-1 rounded-md">Most Popular</span>
+            </div>
+            {{/if}}
+
+            <div class="text-center mb-4">
+                <h3 class="text-lg font-semibold text-foreground">{{name}}</h3>
+                <p class="text-2xl font-bold text-foreground">
+                    ${{price}}
+                </p>
+                <p class="text-sm text-muted-foreground">{{credits}} credits</p>
+                <p class="text-xs text-muted-foreground">{{divide (multiply price 100) credits}}¢ per credit</p>
+            </div>
+
+            <div class="space-y-2 mb-6">
+                <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Instant delivery
+                </div>
+                <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    No expiration
+                </div>
+                <div class="flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Use for any AI feature
+                </div>
+            </div>
+
+            <form method="POST" action="/buy-credits">
+                <input type="hidden" name="_csrf" value="{{csrf}}" />
+                <input type="hidden" name="package_id" value="{{id}}" />
+                <button type="submit" class="w-full {{#if (eq @index 1)}}bg-primary text-primary-foreground hover:bg-primary/90{{else}}border border-input/80 text-foreground hover:bg-muted{{/if}} px-4 py-2 rounded-md transition-colors">
+                    Buy {{name}} Package
+                </button>
+            </form>
+        </div>
+        {{/each}}
+    </div>
+    {{else}}
+    <div class="text-center py-12">
+        <div class="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+            {{{ icon 'package' class='w-8 h-8 text-muted-foreground' }}}
+        </div>
+        <h3 class="text-lg font-medium text-foreground mb-2">No Credit Packages Available</h3>
+        <p class="text-muted-foreground">Credit packages are currently being configured. Please check back later.</p>
+    </div>
+    {{/if}}
+
+    <!-- Usage Guide -->
+    <div class="mt-12 rounded-md bg-card px-6 py-5 text-card-foreground border-2 border-input/80">
+        <h2 class="text-xl font-semibold text-foreground mb-4">How Credits Work</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="text-center">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                </div>
+                <h3 class="font-medium text-foreground mb-1">AI Generations</h3>
+                <p class="text-sm text-muted-foreground">10 credits per model section</p>
+            </div>
+            <div class="text-center">
+                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="font-medium text-foreground mb-1">Reports</h3>
+                <p class="text-sm text-muted-foreground">50 credits per report</p>
+            </div>
+            <div class="text-center">
+                <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                </div>
+                <h3 class="font-medium text-foreground mb-1">AI Features</h3>
+                <p class="text-sm text-muted-foreground">10 credits per use</p>
+            </div>
+            <div class="text-center">
+                <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                    <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                </div>
+                <h3 class="font-medium text-foreground mb-1">Voting Rewards</h3>
+                <p class="text-sm text-muted-foreground">5 credits distributed per idea</p>
+            </div>
+        </div>
+    </div>
+  </div>
+</main>

@@ -1,660 +1,124 @@
-{{> progress-bar activeReport=activeReport}}
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-teal-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto">
 
-<!-- Report Header -->
-<div class="bg-gradient-to-r from-neutral to-neutral/80 text-neutral-content">
-    <div class="px-6 py-12">
-        <div class="text-center">
-            <div class="inline-flex items-center gap-4 mb-6">
-                <div
-                    class="w-16 h-16 bg-neutral-content/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                    {{{ icon 'calculator' class='w-8 h-8 text-neutral-content' }}}
-                </div>
-                <div>
-                    <h1 class="text-4xl font-bold mb-2">Valuation Report</h1>
-                    <p class="text-xl opacity-90">ProjectFlow Inc. - December 2024</p>
-                </div>
-            </div>
-            <div class="bg-neutral-content/10 backdrop-blur-sm rounded-2xl p-6 max-w-3xl mx-auto">
-                <p class="text-lg leading-relaxed mb-4">
-                    Comprehensive valuation analysis of ProjectFlow Inc., a SaaS company developing AI-powered project
-                    management solutions for small businesses.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                    <div>
-                        <div class="text-2xl font-bold">$3.75M - $5.25M</div>
-                        <div class="text-sm opacity-75">Valuation Range</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold">$4.5M</div>
-                        <div class="text-sm opacity-75">Mid-Point</div>
-                    </div>
-                    <div>
-                        <div class="text-2xl font-bold">December 15, 2024</div>
-                        <div class="text-sm opacity-75">Report Date</div>
-                    </div>
-                </div>
-            </div>
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-4 mb-6">
+        <div class="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center">
+          {{{ icon 'calculator' class='w-8 h-8 text-white' }}}
         </div>
+        <div>
+          <h1 class="text-4xl font-bold text-gray-900">Valuation Report Generator</h1>
+          <p class="text-xl text-gray-600 mt-2">Professional startup valuation analysis with AI</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-2">Generate Your Valuation Report</h2>
+          <p class="text-gray-600">Get professional startup valuation with multiple methodologies</p>
+        </div>
+
+        {{#if userIdeas.length}}
+        <form method="post" action="/reports/valuation" class="space-y-6">
+          <input type="hidden" name="_csrf" value="{{csrf}}" />
+
+          <div>
+            <label for="ideaId" class="block text-sm font-medium text-gray-700 mb-2">
+              Select Idea *
+            </label>
+            <select id="ideaId" name="ideaId" required
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all">
+              <option value="">Choose an idea to generate valuation for...</option>
+              {{#each userIdeas}}
+              <option value="{{id}}">{{title}} {{#if completion_percentage}}({{completion_percentage}}% complete){{/if}}</option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+            <div class="flex items-start">
+              <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                {{{ icon 'dollar-sign' class='w-4 h-4 text-green-600' }}}
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold text-green-900 mb-1">Valuation Methodologies</h4>
+                <ul class="text-sm text-green-800 space-y-1">
+                  <li>• Comparable company analysis</li>
+                  <li>• Discounted cash flow (DCF)</li>
+                  <li>• Market size & opportunity assessment</li>
+                  <li>• Risk-adjusted valuation ranges</li>
+                  <li>• Investment readiness evaluation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <div class="flex items-center">
+              <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center mr-3">
+                {{{ icon 'zap' class='w-4 h-4 text-yellow-600' }}}
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold text-yellow-900">Cost: 50 Credits</h4>
+                <p class="text-sm text-yellow-800">Your current balance: <span class="font-semibold">{{userCredits}} credits</span></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <button type="submit"
+              class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              {{#if (lt userCredits 50)}}disabled{{/if}}>
+              <span>Generate Valuation Report</span>
+              {{#if (gte userCredits 50)}}
+                {{{ icon 'calculator' class='w-5 h-5' }}}
+              {{/if}}
+            </button>
+          </div>
+        </form>
+        {{else}}
+        <div class="text-center py-8">
+          <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            {{{ icon 'lightbulb' class='w-8 h-8 text-gray-400' }}}
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">No Ideas Available</h3>
+          <p class="text-gray-600 mb-6">Create your first idea to generate valuation reports</p>
+          <a href="/new-idea" class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors inline-flex items-center space-x-2">
+            {{{ icon 'plus' class='w-4 h-4' }}}
+            <span>Create Your First Idea</span>
+          </a>
+        </div>
+        {{/if}}
+      </div>
     </div>
-</div>
 
-<!-- Navigation -->
-<div class="bg-card border-b border-border sticky top-0 z-10">
-    <div class="px-6 py-4">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-neutral rounded-lg flex items-center justify-center">
-                    {{{ icon 'calculator' class='w-4 h-4 text-neutral-content' }}}
-                </div>
-                <span class="font-semibold text-foreground">ProjectFlow Valuation Analysis</span>
-            </div>
-            <div class="flex items-center gap-4 text-sm text-muted-foreground">
-                <span>7 sections</span>
-                <span>•</span>
-                <span>Confidential</span>
-            </div>
+    <!-- Features -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+      <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+          {{{ icon 'trending-up' class='w-6 h-6 text-blue-600' }}}
         </div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Multiple Methods</h3>
+        <p class="text-gray-600 text-sm">Comprehensive analysis using various valuation approaches</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+          {{{ icon 'shield' class='w-6 h-6 text-purple-600' }}}
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Investment Ready</h3>
+        <p class="text-gray-600 text-sm">Professional reports suitable for investors and stakeholders</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-6 text-center">
+        <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+          {{{ icon 'bar-chart-3' class='w-6 h-6 text-orange-600' }}}
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Data-Driven</h3>
+        <p class="text-gray-600 text-sm">Evidence-based valuations with clear assumptions and methodology</p>
+      </div>
     </div>
+
+  </div>
 </div>
-
-<!-- Report Content -->
-<div class="px-6 py-8 space-y-8">
-
-    <!-- Executive Summary -->
-    <section class="bg-card rounded-lg border border-border overflow-hidden">
-        <div class="bg-muted/30 px-6 py-4 border-b border-border">
-            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
-                <span
-                    class="bg-neutral text-neutral-content rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">1</span>
-                Executive Summary
-            </h2>
-        </div>
-        <div class="p-6 space-y-6">
-            <div class="bg-gradient-to-r from-muted/50 to-muted/30 rounded-lg p-6 border border-border">
-                <h3 class="text-xl font-semibold text-foreground mb-4">Valuation Conclusion</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <div class="text-3xl font-bold text-foreground mb-2">$4.5M</div>
-                        <div class="text-muted-foreground">Mid-point Valuation</div>
-                        <div class="text-sm text-muted-foreground mt-1">Based on DCF and comparable analysis</div>
-                    </div>
-                    <div>
-                        <div class="text-lg text-muted-foreground leading-relaxed">
-                            ProjectFlow's valuation reflects its strong market position, early traction, and significant
-                            growth potential in the $50B project management software market.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-success/10 rounded-lg p-4 border border-success/20">
-                    <div class="text-2xl font-bold text-success mb-1">$3.75M</div>
-                    <div class="text-sm text-success">Low End</div>
-                    <div class="text-xs text-success">Conservative assumptions</div>
-                </div>
-                <div class="bg-info/10 rounded-lg p-4 border border-info/20">
-                    <div class="text-2xl font-bold text-info mb-1">$4.5M</div>
-                    <div class="text-sm text-info">Mid-Point</div>
-                    <div class="text-xs text-info">Base case scenario</div>
-                </div>
-                <div class="bg-accent/10 rounded-lg p-4 border border-accent/20">
-                    <div class="text-2xl font-bold text-accent mb-1">$5.25M</div>
-                    <div class="text-sm text-accent">High End</div>
-                    <div class="text-xs text-accent">Optimistic assumptions</div>
-                </div>
-            </div>
-
-            <div>
-                <h3 class="text-lg font-semibold text-foreground mb-3">Key Valuation Drivers</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <ul class="space-y-2">
-                        <li class="flex items-start gap-2">
-                            {{{ icon 'check-circle' class='w-5 h-5 text-success mt-0.5 flex-shrink-0' }}}
-                            <span class="text-sm text-foreground">Strong product-market fit with 94% user
-                                satisfaction</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            {{{ icon 'check-circle' class='w-5 h-5 text-success mt-0.5 flex-shrink-0' }}}
-                            <span class="text-sm text-foreground">Recurring revenue model with 75% gross margins</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            {{{ icon 'check-circle' class='w-5 h-5 text-success mt-0.5 flex-shrink-0' }}}
-                            <span class="text-sm text-foreground">Proprietary AI technology creating competitive
-                                moat</span>
-                        </li>
-                    </ul>
-                    <ul class="space-y-2">
-                        <li class="flex items-start gap-2">
-                            {{{ icon 'check-circle' class='w-5 h-5 text-success mt-0.5 flex-shrink-0' }}}
-                            <span class="text-sm text-foreground">Experienced founding team with proven track
-                                record</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            {{{ icon 'check-circle' class='w-5 h-5 text-success mt-0.5 flex-shrink-0' }}}
-                            <span class="text-sm text-foreground">$50B TAM with small business focus</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            {{{ icon 'check-circle' class='w-5 h-5 text-success mt-0.5 flex-shrink-0' }}}
-                            <span class="text-sm text-foreground">Early traction with 2,400 beta users</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Business Description -->
-    <section class="bg-card rounded-lg border border-border overflow-hidden">
-        <div class="bg-info/10 px-6 py-4 border-b border-border">
-            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
-                <span
-                    class="bg-info text-info-content rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">2</span>
-                Business Description
-            </h2>
-        </div>
-        <div class="p-6 space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div>
-                    <h3 class="text-lg font-semibold text-foreground mb-3">Company Overview</h3>
-                    <p class="text-muted-foreground leading-relaxed mb-4">
-                        ProjectFlow Inc. is a Delaware C-Corporation founded in January 2023, developing cloud-based
-                        project management software specifically designed for small businesses (5-50 employees). The
-                        company is headquartered in San Francisco, California.
-                    </p>
-                    <div class="space-y-2">
-                        <div class="flex justify-between">
-                            <span class="text-sm text-muted-foreground">Founded:</span>
-                            <span class="text-sm font-medium text-foreground">January 2023</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-sm text-muted-foreground">Location:</span>
-                            <span class="text-sm font-medium text-foreground">San Francisco, CA</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-sm text-muted-foreground">Legal Structure:</span>
-                            <span class="text-sm font-medium text-foreground">C-Corporation</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-sm text-muted-foreground">Current Team:</span>
-                            <span class="text-sm font-medium text-foreground">12 employees</span>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-foreground mb-3">Product Description</h3>
-                    <p class="text-muted-foreground leading-relaxed mb-4">
-                        ProjectFlow offers a SaaS platform that combines intuitive kanban boards with AI-powered
-                        automation. The solution addresses the core pain points of small business project management:
-                        complexity, cost, and poor adoption rates.
-                    </p>
-                    <div class="bg-info/10 rounded-lg p-4 border border-info/20">
-                        <h4 class="font-medium text-info mb-2">Unique Value Proposition</h4>
-                        <p class="text-sm text-info">
-                            "80% simpler than enterprise tools at 50% of the cost, with AI that learns and optimizes
-                            workflows automatically."
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Industry Analysis -->
-    <section class="bg-card rounded-lg border border-border overflow-hidden">
-        <div class="bg-success/10 px-6 py-4 border-b border-border">
-            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
-                <span
-                    class="bg-success text-success-content rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">3</span>
-                Industry Analysis
-            </h2>
-        </div>
-        <div class="p-6 space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <h3 class="text-lg font-semibold text-foreground mb-4">Market Size & Growth</h3>
-                    <div class="space-y-4">
-                        <div
-                            class="bg-gradient-to-r from-success/10 to-success/5 rounded-lg p-4 border border-success/20">
-                            <div class="text-2xl font-bold text-success mb-1">$50B</div>
-                            <div class="text-success font-medium">Global Market Size (2024)</div>
-                            <div class="text-sm text-success">12.5% CAGR through 2029</div>
-                        </div>
-                        <div class="bg-gradient-to-r from-info/10 to-info/5 rounded-lg p-4 border border-info/20">
-                            <div class="text-2xl font-bold text-info mb-1">$8B</div>
-                            <div class="text-info font-medium">Small Business Segment</div>
-                            <div class="text-sm text-info">16% of total market, underserved</div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-foreground mb-4">Market Trends</h3>
-                    <div class="space-y-3">
-                        <div class="flex items-start gap-3">
-                            <div
-                                class="w-8 h-8 bg-success/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                                {{{ icon 'trending-up' class='w-4 h-4 text-success' }}}
-                            </div>
-                            <div>
-                                <div class="font-medium text-foreground">AI Integration</div>
-                                <div class="text-sm text-muted-foreground">Increasing adoption of AI for workflow
-                                    optimization</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <div class="w-8 h-8 bg-info/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                                {{{ icon 'cloud' class='w-4 h-4 text-info' }}}
-                            </div>
-                            <div>
-                                <div class="font-medium text-foreground">Cloud Migration</div>
-                                <div class="text-sm text-muted-foreground">Shift from on-premise to cloud-based
-                                    solutions</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <div class="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                                {{{ icon 'users' class='w-4 h-4 text-accent' }}}
-                            </div>
-                            <div>
-                                <div class="font-medium text-foreground">Remote Work</div>
-                                <div class="text-sm text-muted-foreground">Continued demand for collaboration tools
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <h3 class="text-lg font-semibold text-foreground mb-4">Competitive Landscape</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full border-collapse border border-border rounded-lg">
-                        <thead>
-                            <tr class="bg-muted/50">
-                                <th class="border border-border px-4 py-3 text-left font-semibold text-foreground">
-                                    Company</th>
-                                <th class="border border-border px-4 py-3 text-center font-semibold text-foreground">
-                                    Focus</th>
-                                <th class="border border-border px-4 py-3 text-center font-semibold text-foreground">
-                                    Pricing</th>
-                                <th class="border border-border px-4 py-3 text-center font-semibold text-foreground">
-                                    Market Position</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="border border-border px-4 py-3 font-medium text-foreground">Trello</td>
-                                <td class="border border-border px-4 py-3 text-center text-sm text-foreground">Visual
-                                    kanban</td>
-                                <td class="border border-border px-4 py-3 text-center text-sm text-foreground">
-                                    $17.50/user</td>
-                                <td class="border border-border px-4 py-3 text-center text-sm text-foreground">Mass
-                                    market</td>
-                            </tr>
-                            <tr class="bg-muted/20">
-                                <td class="border border-border px-4 py-3 font-medium text-foreground">Asana</td>
-                                <td class="border border-border px-4 py-3 text-center text-sm text-foreground">Task
-                                    management</td>
-                                <td class="border border-border px-4 py-3 text-center text-sm text-foreground">
-                                    $24.99/user</td>
-                                <td class="border border-border px-4 py-3 text-center text-sm text-foreground">
-                                    Enterprise focus</td>
-                            </tr>
-                            <tr>
-                                <td class="border border-border px-4 py-3 font-medium text-foreground">Monday.com</td>
-                                <td class="border border-border px-4 py-3 text-center text-sm text-foreground">Work
-                                    management</td>
-                                <td class="border border-border px-4 py-3 text-center text-sm text-foreground">$16/user
-                                </td>
-                                <td class="border border-border px-4 py-3 text-center text-sm text-foreground">
-                                    Customizable</td>
-                            </tr>
-                            <tr class="bg-info/5">
-                                <td class="border border-border px-4 py-3 font-medium text-info font-semibold">
-                                    ProjectFlow</td>
-                                <td class="border border-border px-4 py-3 text-center text-sm text-info">AI-powered
-                                    simplicity</td>
-                                <td class="border border-border px-4 py-3 text-center text-sm text-info">$9.99/user</td>
-                                <td class="border border-border px-4 py-3 text-center text-sm text-info">Small business
-                                    focus</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Financial Analysis -->
-    <section class="bg-card rounded-lg border border-border overflow-hidden">
-        <div class="bg-accent/10 px-6 py-4 border-b border-border">
-            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
-                <span
-                    class="bg-accent text-accent-content rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">4</span>
-                Financial Analysis
-            </h2>
-        </div>
-        <div class="p-6 space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div>
-                    <h3 class="text-lg font-semibold text-foreground mb-4">Historical Performance</h3>
-                    <div class="bg-muted/30 rounded-lg p-4">
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span class="text-sm text-foreground">2023 Revenue:</span>
-                                <span class="font-semibold text-foreground">$125K</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-foreground">2023 Customers:</span>
-                                <span class="font-semibold text-foreground">1,200</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-foreground">Current MRR:</span>
-                                <span class="font-semibold text-foreground">$125K</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-foreground">Gross Margins:</span>
-                                <span class="font-semibold text-success">75%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-foreground mb-4">Financial Projections</h3>
-                    <div class="bg-muted/30 rounded-lg p-4">
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span class="text-sm text-foreground">2024 Revenue:</span>
-                                <span class="font-semibold text-foreground">$1.5M</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-foreground">2025 Revenue:</span>
-                                <span class="font-semibold text-foreground">$5.4M</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-foreground">2026 Revenue:</span>
-                                <span class="font-semibold text-foreground">$14.4M</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-foreground">Break-even:</span>
-                                <span class="font-semibold text-success">Q2 2025</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <h3 class="text-lg font-semibold text-foreground mb-4">Unit Economics</h3>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="text-center bg-success/10 rounded-lg p-4 border border-success/20">
-                        <div class="text-xl font-bold text-success mb-1">$150</div>
-                        <div class="text-xs text-success">Customer Acquisition Cost</div>
-                    </div>
-                    <div class="text-center bg-info/10 rounded-lg p-4 border border-info/20">
-                        <div class="text-xl font-bold text-info mb-1">$120</div>
-                        <div class="text-xs text-info">Monthly Revenue/User</div>
-                    </div>
-                    <div class="text-center bg-accent/10 rounded-lg p-4 border border-accent/20">
-                        <div class="text-xl font-bold text-accent mb-1">$2,400</div>
-                        <div class="text-xs text-accent">Customer Lifetime Value</div>
-                    </div>
-                    <div class="text-center bg-warning/10 rounded-lg p-4 border border-warning/20">
-                        <div class="text-xl font-bold text-warning mb-1">4 months</div>
-                        <div class="text-xs text-warning">Payback Period</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Valuation Methodology -->
-    <section class="bg-card rounded-lg border border-border overflow-hidden">
-        <div class="bg-error/10 px-6 py-4 border-b border-border">
-            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
-                <span
-                    class="bg-error text-error-content rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">5</span>
-                Valuation Methodology
-            </h2>
-        </div>
-        <div class="p-6 space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="bg-gradient-to-br from-info/10 to-info/5 rounded-lg p-6 border border-info/20">
-                    <h3 class="text-lg font-semibold text-info mb-3">Discounted Cash Flow (DCF)</h3>
-                    <div class="text-2xl font-bold text-info mb-2">$4.2M</div>
-                    <div class="text-sm text-info mb-3">Primary valuation method</div>
-                    <ul class="text-xs text-info space-y-1">
-                        <li>• 5-year explicit forecast</li>
-                        <li>• Terminal value calculation</li>
-                        <li>• 15% discount rate</li>
-                        <li>• 3% long-term growth</li>
-                    </ul>
-                </div>
-                <div class="bg-gradient-to-br from-success/10 to-success/5 rounded-lg p-6 border border-success/20">
-                    <h3 class="text-lg font-semibold text-success mb-3">Comparable Transactions</h3>
-                    <div class="text-2xl font-bold text-success mb-2">$4.8M</div>
-                    <div class="text-sm text-success mb-3">Market-based approach</div>
-                    <ul class="text-xs text-success space-y-1">
-                        <li>• 8x revenue multiple</li>
-                        <li>• 25x EBITDA multiple</li>
-                        <li>• Recent SaaS acquisitions</li>
-                        <li>• Small business focus</li>
-                    </ul>
-                </div>
-                <div class="bg-gradient-to-br from-accent/10 to-accent/5 rounded-lg p-6 border border-accent/20">
-                    <h3 class="text-lg font-semibold text-accent mb-3">Venture Capital Method</h3>
-                    <div class="text-2xl font-bold text-accent mb-2">$4.5M</div>
-                    <div class="text-sm text-accent mb-3">Exit-based valuation</div>
-                    <ul class="text-xs text-accent space-y-1">
-                        <li>• $50M exit assumption</li>
-                        <li>• 10% ownership target</li>
-                        <li>• 5-7 year timeframe</li>
-                        <li>• 30% dilution factor</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div>
-                <h3 class="text-lg font-semibold text-foreground mb-4">Valuation Sensitivity Analysis</h3>
-                <div class="bg-muted/30 rounded-lg p-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <h4 class="font-medium text-foreground mb-3">Revenue Growth Impact</h4>
-                            <div class="space-y-2">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-foreground">15% growth (base):</span>
-                                    <span class="font-semibold text-foreground">$4.5M</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-foreground">20% growth:</span>
-                                    <span class="font-semibold text-success">$5.2M</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-foreground">10% growth:</span>
-                                    <span class="font-semibold text-error">$3.8M</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 class="font-medium text-foreground mb-3">Discount Rate Impact</h4>
-                            <div class="space-y-2">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-foreground">15% rate (base):</span>
-                                    <span class="font-semibold text-foreground">$4.5M</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-foreground">12% rate:</span>
-                                    <span class="font-semibold text-success">$5.1M</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-foreground">18% rate:</span>
-                                    <span class="font-semibold text-error">$3.9M</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Risk Factors -->
-    <section class="bg-card rounded-lg border border-border overflow-hidden">
-        <div class="bg-warning/10 px-6 py-4 border-b border-border">
-            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
-                <span
-                    class="bg-warning text-warning-content rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">6</span>
-                Risk Factors
-            </h2>
-        </div>
-        <div class="p-6 space-y-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <h3 class="text-lg font-semibold text-foreground mb-4">Market Risks</h3>
-                    <div class="space-y-3">
-                        <div class="bg-error/10 rounded-lg p-3 border border-error/20">
-                            <h4 class="font-medium text-error mb-1">Competition</h4>
-                            <p class="text-sm text-error">Established players like Asana and Monday.com have significant
-                                resources and market share.</p>
-                        </div>
-                        <div class="bg-warning/10 rounded-lg p-3 border border-warning/20">
-                            <h4 class="font-medium text-warning mb-1">Market Adoption</h4>
-                            <p class="text-sm text-warning">Small businesses may be slow to adopt new project management
-                                solutions.</p>
-                        </div>
-                        <div class="bg-info/10 rounded-lg p-3 border border-info/20">
-                            <h4 class="font-medium text-info mb-1">Economic Conditions</h4>
-                            <p class="text-sm text-info">Economic downturns could reduce demand for non-essential
-                                software solutions.</p>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold text-foreground mb-4">Operational Risks</h3>
-                    <div class="space-y-3">
-                        <div class="bg-accent/10 rounded-lg p-3 border border-accent/20">
-                            <h4 class="font-medium text-accent mb-1">Technology Risk</h4>
-                            <p class="text-sm text-accent">AI implementation challenges or technical issues could impact
-                                product performance.</p>
-                        </div>
-                        <div class="bg-success/10 rounded-lg p-3 border border-success/20">
-                            <h4 class="font-medium text-success mb-1">Talent Acquisition</h4>
-                            <p class="text-sm text-success">Difficulty attracting and retaining top technical talent in
-                                competitive market.</p>
-                        </div>
-                        <div class="bg-primary/10 rounded-lg p-3 border border-primary/20">
-                            <h4 class="font-medium text-primary mb-1">Regulatory Changes</h4>
-                            <p class="text-sm text-primary">Data privacy regulations (GDPR, CCPA) could increase
-                                compliance costs.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <h3 class="text-lg font-semibold text-foreground mb-4">Mitigation Strategies</h3>
-                <div class="bg-success/10 rounded-lg p-4 border border-success/20">
-                    <ul class="space-y-2 text-sm text-success">
-                        <li class="flex items-start gap-2">
-                            {{{ icon 'shield' class='w-4 h-4 mt-0.5 flex-shrink-0' }}}
-                            <span><strong>Defensible Technology:</strong> Proprietary AI algorithms create significant
-                                competitive moat</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            {{{ icon 'shield' class='w-4 h-4 mt-0.5 flex-shrink-0' }}}
-                            <span><strong>Strong Unit Economics:</strong> 75% gross margins and 4-month payback period
-                                provide financial stability</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            {{{ icon 'shield' class='w-4 h-4 mt-0.5 flex-shrink-0' }}}
-                            <span><strong>Experienced Team:</strong> Founders with proven track records reduce execution
-                                risk</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            {{{ icon 'shield' class='w-4 h-4 mt-0.5 flex-shrink-0' }}}
-                            <span><strong>Early Traction:</strong> 2,400 beta users and 94% satisfaction validate
-                                product-market fit</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Conclusion -->
-    <section class="bg-card rounded-lg border border-border overflow-hidden">
-        <div class="bg-muted/30 px-6 py-4 border-b border-border">
-            <h2 class="text-2xl font-bold text-foreground flex items-center gap-2">
-                <span
-                    class="bg-neutral text-neutral-content rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold">7</span>
-                Conclusion
-            </h2>
-        </div>
-        <div class="p-6 space-y-6">
-            <div class="bg-gradient-to-r from-muted/50 to-muted/30 rounded-lg p-6 border border-border">
-                <h3 class="text-xl font-semibold text-foreground mb-4">Final Valuation Summary</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                    <div class="text-center">
-                        <div class="text-3xl font-bold text-foreground mb-1">$4.5M</div>
-                        <div class="text-sm text-muted-foreground">Recommended Valuation</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl font-bold text-success mb-1">$3.75M</div>
-                        <div class="text-sm text-muted-foreground">Conservative Range</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl font-bold text-info mb-1">$5.25M</div>
-                        <div class="text-sm text-muted-foreground">Optimistic Range</div>
-                    </div>
-                </div>
-                <p class="text-muted-foreground leading-relaxed">
-                    Based on a comprehensive analysis using DCF, comparable transactions, and venture capital
-                    methodologies, we recommend a pre-money valuation of $4.5M for ProjectFlow Inc. This valuation
-                    reflects the company's strong market position, early traction, and significant growth potential in
-                    the $50B project management software market.
-                </p>
-            </div>
-
-            <div>
-                <h3 class="text-lg font-semibold text-foreground mb-4">Investment Considerations</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-success/10 rounded-lg p-4 border border-success/20">
-                        <h4 class="font-semibold text-success mb-2">Positive Factors</h4>
-                        <ul class="text-sm text-success space-y-1">
-                            <li>• Strong product-market fit</li>
-                            <li>• Experienced founding team</li>
-                            <li>• Proprietary AI technology</li>
-                            <li>• Early customer validation</li>
-                            <li>• Attractive unit economics</li>
-                        </ul>
-                    </div>
-                    <div class="bg-warning/10 rounded-lg p-4 border border-warning/20">
-                        <h4 class="font-semibold text-warning mb-2">Areas of Focus</h4>
-                        <ul class="text-sm text-warning space-y-1">
-                            <li>• Scale customer acquisition</li>
-                            <li>• Expand product features</li>
-                            <li>• Build competitive moat</li>
-                            <li>• Strengthen team capabilities</li>
-                            <li>• Monitor market competition</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg p-6 border border-primary/20">
-                <h3 class="text-lg font-semibold text-foreground mb-3">Disclaimer</h3>
-                <p class="text-sm text-muted-foreground leading-relaxed">
-                    This valuation report is based on information provided by ProjectFlow Inc. and publicly available
-                    data as of December 15, 2024. Valuations are inherently subjective and depend on various assumptions
-                    about future performance. This report should not be considered financial advice or a recommendation
-                    to invest. All projections and estimates are subject to significant uncertainty and should be
-                    independently verified.
-                </p>
-            </div>
-        </div>
-    </section>
-
-</div>
-<div class=" h-[300px]"></div>
-
-{{> floating-form}}
