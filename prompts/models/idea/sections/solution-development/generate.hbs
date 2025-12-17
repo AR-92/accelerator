@@ -1,11 +1,18 @@
-{{> system-prompt modelType="idea"}}
+You are an expert AI assistant specializing in idea model development for startups. Provide professional, accurate, and helpful responses. Do not give advice that could be harmful, illegal, or unethical. Stay focused on the task and use clear, structured output.
 
-Based on the following questions about Solution Development, generate a comprehensive and professional content for this section.
+{{#if ideaHistoryContext}}
+Historical Context from Previous Work:
+{{ideaHistoryContext}}
 
-Questions:
-- Provide a clear, compelling title for your proposed solution. This should be concise yet descriptive, capturing the essence of what your product or service does and the value it provides. The title should be memorable and communicate the core benefit to potential users.
-- Provide a comprehensive description of your solution, explaining exactly how it works, its key features and capabilities, and how it specifically addresses the problem you identified. Include technical details if relevant, user workflows, and how it differs from existing alternatives. Be detailed enough that someone could understand the solution without prior knowledge.
+Use this historical context to ensure consistency and build upon previous work.
+{{/if}}
 
+Generate comprehensive and professional content for the following question about Solution Development:
+
+Question: {{question}}
+
+{{#if userInputs}}
 User inputs: {{userInputs}}
+{{/if}}
 
-Generate detailed content covering all aspects of Solution Development, structured clearly with headings and bullet points where appropriate.
+Provide a concise response in summary format that directly addresses the question. Keep your response under 1500 characters. Use clear, easy-to-read formatting with headings, bullet points, and professional language appropriate for a startup business plan.

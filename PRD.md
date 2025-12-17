@@ -106,6 +106,7 @@
 - Credit purchases
 - Settings changes
 - Package upgrades
+- Portfolio operations (creation, updates, idea additions/removals, member management)
 
 ## 4. Database Schema Updates
 
@@ -127,8 +128,8 @@
 
 - `id` (UUID, PK)
 - `user_id` (UUID, FK → auth.users)
-- `action_type` (TEXT: idea_created/model_completed/vote_cast/reward_earned/credit_spent/etc)
-- `entity_type` (TEXT: idea/model/vote/report/credit/etc)
+- `action_type` (TEXT: idea_created/model_completed/vote_cast/reward_earned/credit_spent/portfolio_created/portfolio_updated/portfolio_idea_added/etc)
+- `entity_type` (TEXT: idea/model/vote/report/credit/portfolio/etc)
 - `entity_id` (UUID)
 - `details` (JSONB)
 - `created_at` (TIMESTAMP)
@@ -181,6 +182,35 @@
 - `generated_at` (TIMESTAMP)
 - `created_at` (TIMESTAMP)
 - `updated_at` (TIMESTAMP)
+
+#### portfolios
+
+- `id` (UUID, PK)
+- `user_id` (UUID, FK → auth.users)
+- `name` (TEXT, NOT NULL)
+- `description` (TEXT)
+- `color` (TEXT, DEFAULT '#3B82F6') // Hex color for UI theming
+- `is_default` (BOOLEAN, DEFAULT FALSE) // One default portfolio per user
+- `created_at` (TIMESTAMP)
+- `updated_at` (TIMESTAMP)
+
+#### portfolio_ideas
+
+- `id` (UUID, PK)
+- `portfolio_id` (UUID, FK → portfolios)
+- `idea_id` (UUID, FK → ideas)
+- `added_at` (TIMESTAMP)
+- UNIQUE(portfolio_id, idea_id)
+
+#### portfolio_members
+
+- `id` (UUID, PK)
+- `portfolio_id` (UUID, FK → portfolios)
+- `user_id` (UUID, FK → auth.users)
+- `role` (TEXT: owner/editor/viewer, DEFAULT 'viewer')
+- `invited_by` (UUID, FK → auth.users)
+- `invited_at` (TIMESTAMP)
+- UNIQUE(portfolio_id, user_id)
 
 ### 4.3 Enhanced Existing Tables
 
@@ -404,8 +434,8 @@
 
 - `id` (UUID, PK)
 - `user_id` (UUID, FK → auth.users)
-- `action_type` (TEXT: idea_created/model_completed/vote_cast/reward_earned/credit_spent/etc)
-- `entity_type` (TEXT: idea/model/vote/report/credit/etc)
+- `action_type` (TEXT: idea_created/model_completed/vote_cast/reward_earned/credit_spent/portfolio_created/portfolio_updated/portfolio_idea_added/etc)
+- `entity_type` (TEXT: idea/model/vote/report/credit/portfolio/etc)
 - `entity_id` (UUID)
 - `details` (JSONB)
 - `created_at` (TIMESTAMP)
@@ -418,6 +448,35 @@
 - `reward_amount` (INTEGER)
 - `distributed_at` (TIMESTAMP)
 - `created_at` (TIMESTAMP)
+
+#### portfolios
+
+- `id` (UUID, PK)
+- `user_id` (UUID, FK → auth.users)
+- `name` (TEXT, NOT NULL)
+- `description` (TEXT)
+- `color` (TEXT, DEFAULT '#3B82F6')
+- `is_default` (BOOLEAN, DEFAULT FALSE)
+- `created_at` (TIMESTAMP)
+- `updated_at` (TIMESTAMP)
+
+#### portfolio_ideas
+
+- `id` (UUID, PK)
+- `portfolio_id` (UUID, FK → portfolios)
+- `idea_id` (UUID, FK → ideas)
+- `added_at` (TIMESTAMP)
+- UNIQUE(portfolio_id, idea_id)
+
+#### portfolio_members
+
+- `id` (UUID, PK)
+- `portfolio_id` (UUID, FK → portfolios)
+- `user_id` (UUID, FK → auth.users)
+- `role` (TEXT: owner/editor/viewer, DEFAULT 'viewer')
+- `invited_by` (UUID, FK → auth.users)
+- `invited_at` (TIMESTAMP)
+- UNIQUE(portfolio_id, user_id)
 
 #### idea_cards (view)
 
@@ -435,6 +494,10 @@ auth.users
 ├── credit_transactions (1:many) // Detailed credit logs
 ├── rewards (1:many) // Reward system
 ├── notifications (1:many) // User notifications
+├── portfolios (1:many) // User's portfolios
+│   ├── portfolio_ideas (1:many) // Ideas in portfolio
+│   │   └── ideas (many:1) // Referenced ideas
+│   └── portfolio_members (1:many) // Team members
 ├── ideas (1:many) // User's ideas
 │   ├── votes (1:many) // Votes on user's ideas
 │   ├── model_instances (1:many) // Model applications
@@ -451,12 +514,14 @@ auth.users
 - Primary keys on all tables
 - Foreign key indexes on all FK columns
 - Composite indexes: (user_id, created_at), (idea_id, model_type), (user_id, action_type)
+- Portfolio indexes: (portfolios.user_id), (portfolio_ideas.portfolio_id), (portfolio_ideas.idea_id), (portfolio_members.portfolio_id), (portfolio_members.user_id)
 - JSONB indexes on frequently queried fields in model_sections/report_data/activity_log.details
 
 ### 5.6 Security & Access Control
 
 - Row Level Security (RLS) enabled on all tables
 - Users can only access their own data
+- Portfolio access: owners have full access, members have role-based permissions (owner/editor/viewer)
 - Public read access for active public ideas and votes
 - Authenticated users can vote on public ideas only
 

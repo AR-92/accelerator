@@ -342,13 +342,30 @@ CREATE POLICY "Portfolio members can view portfolio ideas" ON portfolio_ideas FO
     )
 );
 
-CREATE POLICY "Users can manage portfolio memberships for own portfolios" ON portfolio_members FOR ALL USING (
+CREATE POLICY "Users can view their own portfolio memberships" ON portfolio_members FOR SELECT USING (user_id = auth.uid());
+CREATE POLICY "Users can manage portfolio memberships for own portfolios insert" ON portfolio_members FOR INSERT WITH CHECK (
     EXISTS (
         SELECT 1 FROM portfolios
         WHERE id = portfolio_id AND user_id = auth.uid()
     )
 );
-CREATE POLICY "Users can view their own portfolio memberships" ON portfolio_members FOR SELECT USING (user_id = auth.uid());
+CREATE POLICY "Users can manage portfolio memberships for own portfolios update" ON portfolio_members FOR UPDATE USING (
+    EXISTS (
+        SELECT 1 FROM portfolios
+        WHERE id = portfolio_id AND user_id = auth.uid()
+    )
+) WITH CHECK (
+    EXISTS (
+        SELECT 1 FROM portfolios
+        WHERE id = portfolio_id AND user_id = auth.uid()
+    )
+);
+CREATE POLICY "Users can manage portfolio memberships for own portfolios delete" ON portfolio_members FOR DELETE USING (
+    EXISTS (
+        SELECT 1 FROM portfolios
+        WHERE id = portfolio_id AND user_id = auth.uid()
+    )
+);
 
 -- Sample Data (PRD 6.8)
 INSERT INTO credit_packages (name, credits, price) VALUES ('Basic', 500, 999), ('Pro', 2000, 2999);

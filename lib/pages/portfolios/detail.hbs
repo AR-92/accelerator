@@ -188,7 +188,7 @@
                 <span class="text-muted-foreground">Rating</span>
                 <div class="flex items-center gap-1">
                   <span class="text-foreground font-medium">{{rating}}</span>
-                  <svg class="lucide lucide-star w-3 h-3 fill-yellow-400 text-yellow-400" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <svg class="lucide lucide-star w-3 h-3 fill-yellow text-yellow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
                   </svg>
                 </div>
@@ -245,32 +245,39 @@
           {{/if}}
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {{#each portfolio.members}}
-          <div class="flex items-center gap-3 p-3 rounded-lg border border-border">
-            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-              {{#if avatar}}
-                <img src="{{avatar}}" alt="{{name}}" class="w-full h-full rounded-full object-cover">
-              {{else}}
-                <span class="text-sm font-medium text-primary">{{#if name}}{{name.charAt 0}}{{else}}?{{/if}}</span>
-              {{/if}}
-            </div>
-            <div class="flex-1">
-              <p class="font-medium text-foreground">{{name}}</p>
-              <p class="text-sm text-muted-foreground capitalize">{{role}}</p>
-            </div>
-            {{#if ../portfolio.isOwner}}
-            <button class="btn btn-ghost btn-sm text-destructive hover:text-destructive" onclick="removeMember('{{user_id}}')" title="Remove member">
-              <svg class="lucide lucide-user-minus w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M22 11h-6"/>
-              </svg>
-            </button>
-            {{/if}}
-          </div>
-          {{/each}}
-        </div>
+         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+           {{#each portfolio.members}}
+           <div class="flex items-center gap-3 p-3 rounded-lg border border-border">
+             <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+               {{#if avatar}}
+                 <img src="{{avatar}}" alt="{{name}}" class="w-full h-full rounded-full object-cover">
+               {{else}}
+                 <span class="text-sm font-medium text-primary">{{#if name}}{{name.charAt 0}}{{else}}?{{/if}}</span>
+               {{/if}}
+             </div>
+             <div class="flex-1">
+               <p class="font-medium text-foreground">{{name}}</p>
+               {{#if ../portfolio.isOwner}}
+               <select class="text-sm border border-border rounded px-2 py-1 bg-background" onchange="changeMemberRole('{{user_id}}', this.value)">
+                 <option value="viewer" {{#eq role "viewer"}}selected{{/eq}}>Viewer</option>
+                 <option value="editor" {{#eq role "editor"}}selected{{/eq}}>Editor</option>
+               </select>
+               {{else}}
+               <p class="text-sm text-muted-foreground capitalize">{{role}}</p>
+               {{/if}}
+             </div>
+             {{#if ../portfolio.isOwner}}
+             <button class="btn btn-ghost btn-sm text-destructive hover:text-destructive" onclick="removeMember('{{user_id}}')" title="Remove member">
+               <svg class="lucide lucide-user-minus w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                 <circle cx="9" cy="7" r="4"/>
+                 <path d="M22 11h-6"/>
+               </svg>
+             </button>
+             {{/if}}
+           </div>
+           {{/each}}
+         </div>
       </div>
       {{/if}}
 
@@ -280,8 +287,8 @@
 
 <!-- Invite Member Modal -->
 <div id="invite-member-modal" class="fixed inset-0 bg-black/50 hidden z-50" style="display: none;">
-  <div class="flex items-center justify-center min-h-screen p-4">
-    <div class="bg-card rounded-lg border border-border p-6 w-full max-w-md">
+  <div class="flex items-center justify-center w-full min-h-screen p-4">
+     <div class="bg-card rounded-lg border border-border p-6 max-w-md mx-auto">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-semibold text-foreground">Invite Team Member</h3>
         <button class="btn btn-ghost btn-sm" onclick="closeInviteModal()">
@@ -301,7 +308,7 @@
 
           <div>
             <label for="member-role" class="block text-sm font-medium text-foreground mb-1">Role</label>
-            <select id="member-role" name="role" class="select select-bordered w-full">
+            <select id="member-role" name="role" class="select w-full">
               <option value="viewer">Viewer - Can view portfolio and ideas</option>
               <option value="editor">Editor - Can view and add/remove ideas</option>
             </select>
@@ -335,31 +342,27 @@
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    const data = {
-      email: formData.get('email'),
-      role: formData.get('role')
-    };
 
     try {
-      const response = await fetch(`/api/portfolios/${portfolioId}/invite`, {
+      const response = await fetch(`/portfolios/${portfolioId}/members`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
+        body: formData
       });
 
-      if (response.ok) {
-        showToast({ message: 'Invitation sent successfully!' }, 'success');
+      if (response.redirected) {
+        // Handle server redirect (success)
+        window.location.href = response.url;
+      } else if (response.ok) {
+        showToast({ message: 'Member invited successfully!' }, 'success');
         closeInviteModal();
         window.location.reload();
       } else {
-        const error = await response.json();
-        showToast({ message: error.error || 'Failed to send invitation' }, 'error');
+        const error = await response.text();
+        showToast({ message: error || 'Failed to invite member' }, 'error');
       }
     } catch (error) {
       console.error('Error inviting member:', error);
-      showToast({ message: 'Failed to send invitation' }, 'error');
+      showToast({ message: 'Failed to invite member' }, 'error');
     }
   }
 
@@ -370,20 +373,50 @@
     }
 
     try {
-      const response = await fetch(`/api/portfolios/${portfolioId}/ideas/${ideaId}`, {
+      const response = await fetch(`/portfolios/${portfolioId}/ideas/${ideaId}`, {
         method: 'DELETE'
       });
 
-      if (response.ok) {
+      if (response.redirected) {
+        // Handle server redirect (success)
+        window.location.href = response.url;
+      } else if (response.ok) {
         showToast({ message: 'Idea removed from portfolio successfully!' }, 'success');
         window.location.reload();
       } else {
-        const error = await response.json();
-        showToast({ message: error.error || 'Failed to remove idea' }, 'error');
+        const error = await response.text();
+        showToast({ message: error || 'Failed to remove idea' }, 'error');
       }
     } catch (error) {
       console.error('Error removing idea:', error);
       showToast({ message: 'Failed to remove idea' }, 'error');
+    }
+  }
+
+  // Change member role
+  async function changeMemberRole(memberId, newRole) {
+    try {
+      const formData = new FormData();
+      formData.append('role', newRole);
+
+      const response = await fetch(`/portfolios/${portfolioId}/members/${memberId}`, {
+        method: 'PUT',
+        body: formData
+      });
+
+      if (response.redirected) {
+        // Handle server redirect (success)
+        window.location.href = response.url;
+      } else if (response.ok) {
+        showToast({ message: 'Member role updated successfully!' }, 'success');
+        window.location.reload();
+      } else {
+        const error = await response.text();
+        showToast({ message: error || 'Failed to update member role' }, 'error');
+      }
+    } catch (error) {
+      console.error('Error updating member role:', error);
+      showToast({ message: 'Failed to update member role' }, 'error');
     }
   }
 
@@ -394,16 +427,19 @@
     }
 
     try {
-      const response = await fetch(`/api/portfolios/${portfolioId}/members/${memberId}`, {
+      const response = await fetch(`/portfolios/${portfolioId}/members/${memberId}`, {
         method: 'DELETE'
       });
 
-      if (response.ok) {
+      if (response.redirected) {
+        // Handle server redirect (success)
+        window.location.href = response.url;
+      } else if (response.ok) {
         showToast({ message: 'Team member removed successfully!' }, 'success');
         window.location.reload();
       } else {
-        const error = await response.json();
-        showToast({ message: error.error || 'Failed to remove member' }, 'error');
+        const error = await response.text();
+        showToast({ message: error || 'Failed to remove member' }, 'error');
       }
     } catch (error) {
       console.error('Error removing member:', error);
@@ -417,5 +453,4 @@
       closeInviteModal();
     }
   });
-</script></content>
-<parameter name="filePath">lib/pages/portfolios/detail.hbs
+</script>

@@ -1,6 +1,13 @@
-{{> system-prompt modelType="idea"}}
+You are an expert AI assistant specializing in idea model development for startups. Provide professional, accurate, and helpful responses. Do not give advice that could be harmful, illegal, or unethical. Stay focused on the task and use clear, structured output.
 
-Based on the following questions about Customer Model, improve the existing content for this section.
+{{#if ideaHistoryContext}}
+Historical Context from Previous Work:
+{{ideaHistoryContext}}
+
+Use this historical context to ensure consistency and build upon previous work.
+{{/if}}
+
+Improve the following existing content for the question: {{question}}
 
 Questions:
 - Define your ideal target customers in detail. Create detailed customer personas including demographics, psychographics, behaviors, needs, motivations, and pain points. Explain why these specific customers would be most likely to adopt your solution and how your product fits into their current workflows or lifestyles.
@@ -15,6 +22,8 @@ Questions:
 
 Existing content: {{existingContent}}
 
+{{#if userInputs}}
 User inputs: {{userInputs}}
+{{/if}}
 
-Improve the existing content by making it more comprehensive, professional, and structured. Ensure it covers all aspects of Customer Model with clear headings and bullet points.
+Enhance the content by making it more concise, professional, and well-structured in summary format. Keep the total response under 1500 characters. Use clear, easy-to-read formatting with headings and bullet points. Focus on clarity, relevance, and business-appropriate language.

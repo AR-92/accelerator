@@ -52,8 +52,20 @@
                         <path d="m9 18 6-6-6-6" />
                     </svg>
                 </summary>
-                <input type="text" id="project-search" placeholder="Search projects..."
-                    class="my-5 text-sm border border-input rounded-md shiny-input bg-card text-foreground">
+                <div class="relative my-5">
+                  <svg class="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                  </svg>
+                  <input type="text" id="project-search" placeholder="Search projects..."
+                      class="w-full text-sm border border-input rounded-md bg-card text-foreground pl-10 pr-10 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40 transition-all duration-200">
+                  <button type="button" id="project-search-clear" class="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground hover:text-foreground opacity-0 transition-opacity duration-200" onclick="clearProjectSearch()" style="display: none;">
+                    <svg class="lucide lucide-x w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M18 6L6 18"></path>
+                      <path d="M6 6l12 12"></path>
+                    </svg>
+                  </button>
+                </div>
                 <ul class="space-y-1 overflow-y-auto h-[calc(100vh-370px)]">
                     {{#each projects}}
                     <li>
@@ -107,13 +119,32 @@
         </a>
     </div>
     <script>
-        document.getElementById('project-search').addEventListener('input', function () {
-            const query = this.value.toLowerCase();
+        function filterProjects() {
+            const query = document.getElementById('project-search').value.toLowerCase();
             const lis = document.querySelectorAll('#sidebar details ul li');
             lis.forEach(li => {
                 const title = li.querySelector('.sidebar-text').textContent.toLowerCase();
                 li.style.display = title.includes(query) ? '' : 'none';
             });
-        });
+
+            // Show/hide clear button
+            const clearButton = document.getElementById('project-search-clear');
+            if (query.length > 0) {
+                clearButton.style.display = 'block';
+                setTimeout(() => clearButton.classList.remove('opacity-0'), 10);
+            } else {
+                clearButton.classList.add('opacity-0');
+                setTimeout(() => clearButton.style.display = 'none', 200);
+            }
+        }
+
+        function clearProjectSearch() {
+            const searchInput = document.getElementById('project-search');
+            searchInput.value = '';
+            filterProjects();
+            searchInput.focus();
+        }
+
+        document.getElementById('project-search').addEventListener('input', filterProjects);
     </script>
 </div>

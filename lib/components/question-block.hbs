@@ -352,8 +352,16 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+       document.addEventListener('DOMContentLoaded', () => {
+           // Component parameters
+           const modelType = "{{modelType}}";
+           const section = "{{section}}";
+           const ideaId = "{{ideaId}}";
 
+           // Global variable to track currently expanded question
+           if (typeof window.currentlyExpandedQuestionId === 'undefined') {
+               window.currentlyExpandedQuestionId = null;
+           }
 
         // Customize marked renderer to avoid <pre> for code blocks
         const renderer = new marked.Renderer();
@@ -361,11 +369,14 @@
         // marked.setOptions({ renderer }); // Not needed if passing to parse
 
         // Initialize collapsible functionality
-        const toggleBtn = document.querySelector('#{{id}}-question-card .question-toggle');
-        const expandableContent = document.getElementById('{{id}}-expandable-content');
-        const expandIcon = document.getElementById('{{id}}-expand-icon');
-
         const questionCard = document.getElementById('{{id}}-question-card');
+        const toggleBtn = questionCard.querySelector('.question-toggle');
+        const expandableContent = questionCard.querySelector('#{{id}}-expandable-content');
+        const expandIcon = questionCard.querySelector('#{{id}}-expand-icon');
+
+        // Declare chat variables early for use in toggle handler
+        let isChatOpen = false;
+        const chatContainer = questionCard.querySelector('#{{id}}-chat-container');
 
         if (toggleBtn && expandableContent && expandIcon && questionCard) {
             // Initialize based on data-expanded
@@ -377,6 +388,7 @@
                 questionCard.classList.remove('rounded-full');
                 questionCard.classList.add('rounded-md');
                 toggleBtn.setAttribute('aria-expanded', 'true');
+                window.currentlyExpandedQuestionId = '{{id}}';
             } else {
                 // Collapse
                 expandableContent.style.display = 'none';
@@ -402,7 +414,28 @@
                         isChatOpen = false;
                         chatContainer.classList.add('hidden');
                     }
+                    window.currentlyExpandedQuestionId = null;
                 } else {
+                    // Before expanding, collapse any other expanded question
+                    if (window.currentlyExpandedQuestionId && window.currentlyExpandedQuestionId !== '{{id}}') {
+                        const otherToggleBtn = document.querySelector(`#${window.currentlyExpandedQuestionId}-question-card .question-toggle`);
+                        const otherExpandableContent = document.getElementById(`${window.currentlyExpandedQuestionId}-expandable-content`);
+                        const otherExpandIcon = document.getElementById(`${window.currentlyExpandedQuestionId}-expand-icon`);
+                        const otherQuestionCard = document.getElementById(`${window.currentlyExpandedQuestionId}-question-card`);
+                        const otherChatContainer = document.getElementById(`${window.currentlyExpandedQuestionId}-chat-container`);
+
+                        if (otherToggleBtn && otherExpandableContent && otherExpandIcon && otherQuestionCard) {
+                            otherExpandableContent.style.display = 'none';
+                            otherExpandIcon.style.transform = 'rotate(0deg)';
+                            otherQuestionCard.classList.remove('rounded-md');
+                            otherQuestionCard.classList.add('rounded-full');
+                            otherToggleBtn.dataset.expanded = 'false';
+                            otherToggleBtn.setAttribute('aria-expanded', 'false');
+                            if (otherChatContainer) {
+                                otherChatContainer.classList.add('hidden');
+                            }
+                        }
+                    }
                     // Expand
                     expandableContent.style.display = 'block';
                     expandIcon.style.transform = 'rotate(90deg)';
@@ -410,6 +443,7 @@
                     questionCard.classList.add('rounded-md');
                     toggleBtn.dataset.expanded = 'true';
                     toggleBtn.setAttribute('aria-expanded', 'true');
+                    window.currentlyExpandedQuestionId = '{{id}}';
                 }
             });
 
@@ -420,8 +454,8 @@
         }
 
         // Initialize form elements
-        const form = document.getElementById('{{id}}-new-project-form');
-        const descriptionTextarea = document.getElementById('{{id}}-assistant-prompt');
+        const form = questionCard.querySelector('#{{id}}-new-project-form');
+        const descriptionTextarea = questionCard.querySelector('#{{id}}-assistant-prompt');
         const submitButton = form.querySelector('button[type="submit"]');
 
         // Auto-expand textarea to show full content
@@ -439,7 +473,7 @@
         // Character counter
         function updateCharCounter() {
             const length = descriptionTextarea.value.length;
-            const counter = document.getElementById('{{id}}-char-counter');
+            const counter = questionCard.querySelector('#{{id}}-char-counter');
             counter.textContent = `Characters: ${length} / 2000`;
             if (length < 100 || length > 2000) {
                 counter.className = 'text-xs text-red-500/60 mr-2';
@@ -458,7 +492,7 @@
         descriptionTextarea.addEventListener('input', autoExpandTextarea);
 
         // Handle display/edit mode toggle
-        const displayDiv = document.getElementById('{{id}}-assistant-prompt-display');
+        const displayDiv = questionCard.querySelector('#{{id}}-assistant-prompt-display');
 
         // Function to render markdown to display div
         function renderToDisplay() {
@@ -662,16 +696,16 @@
         // Reset form
         const resetFormBtn = form.querySelector('[aria-label="Reset form"]');
         if (resetFormBtn) {
-            resetFormBtn.addEventListener('click', function (e) {
-                descriptionTextarea.value = '';
-                descriptionTextarea.dataset.originalContent = '';
-                const displayDiv = document.getElementById('{{id}}-assistant-prompt-display');
-                displayDiv.innerHTML = '';
-                displayDiv.style.display = 'none';
-                descriptionTextarea.style.display = 'block';
-                updateCharCounter();
-                showToastMessage('Form reset successfully', 'info');
-            });
+             resetFormBtn.addEventListener('click', function (e) {
+                 descriptionTextarea.value = '';
+                 descriptionTextarea.dataset.originalContent = '';
+                 const displayDiv = questionCard.querySelector('#{{id}}-assistant-prompt-display');
+                 displayDiv.innerHTML = '';
+                 displayDiv.style.display = 'none';
+                 descriptionTextarea.style.display = 'block';
+                 updateCharCounter();
+                 showToastMessage('Form reset successfully', 'info');
+             });
         }
 
 
@@ -691,7 +725,7 @@
                 try {
                     showToastMessage('Generating description with AI...', 'info');
                     const endpoint = section ? `generate/idea/${section}` : 'generate';
-                    const result = await callAIApi(endpoint, { question });
+                     const result = await callAIApi(endpoint, { question, ideaId });
                     if (result.error) {
                         showToastMessage('AI error: ' + result.error, 'error');
                     } else {
@@ -745,7 +779,7 @@
                 try {
                     showToastMessage('Improving description with AI...', 'info');
                     const endpoint = section ? `improve/idea/${section}` : 'improve';
-                    const result = await callAIApi(endpoint, { description });
+                     const result = await callAIApi(endpoint, { description, ideaId });
                     if (result.error) {
                         showToastMessage('AI error: ' + result.error, 'error');
                     } else {
@@ -772,16 +806,12 @@
 
             // Client-side validation
             if (!descriptionTextarea.value.trim()) {
-                if (typeof showToast !== 'undefined') {
-                    showToast('Please enter a project description', 'warning');
-                }
+                showToastMessage('Please enter a description', 'warning');
                 return;
             }
             const descLength = descriptionTextarea.value.length;
-            if (descLength < 100 || descLength > 2000) {
-                if (typeof showToast !== 'undefined') {
-                    showToast('Description must be between 100 and 2000 characters', 'warning');
-                }
+            if (descLength < 10 || descLength > 2000) {
+                showToastMessage('Description must be between 10 and 2000 characters', 'warning');
                 return;
             }
 
@@ -792,46 +822,88 @@
             submitButton.disabled = true;
             submitButton.innerHTML = '<span>Saving...</span>';
 
-            if (typeof showToast !== 'undefined') {
-                showToast('Saving your idea...', 'info');
-            }
+            showToastMessage('Saving...', 'info');
 
             let success = false;
 
             try {
-                const response = await fetch(form.action, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        _csrf: document.querySelector('input[name="_csrf"]').value,
-                        prompt: description
-                    })
-                });
+                if (modelType && section && ideaId) {
+                    // Save to model section
+                    // First, get or create model instance
+                    const modelResponse = await fetch(`/api/models/${modelType}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            idea_id: ideaId
+                        })
+                    });
 
-                if (response.ok) {
-                    const data = await response.json();
-                    success = true;
-                    if (typeof showToast !== 'undefined') {
-                        showToast('Idea saved successfully!', 'success');
+                    if (!modelResponse.ok) {
+                        const errorText = await modelResponse.text();
+                        throw new Error(`Failed to get model instance: ${modelResponse.status} ${errorText}`);
                     }
-                    // Success - redirect to idea detail page after a short delay to show toast
-                    setTimeout(() => {
-                        window.location.href = `/models/idea?ideaId=${data.idea_id}`;
-                    }, 1000);
+
+                    const modelData = await modelResponse.json();
+                    if (!modelData || !modelData.id) {
+                        throw new Error('Invalid model data received');
+                    }
+                    const modelId = modelData.id;
+
+                    // Then save section data
+                    const saveResponse = await fetch(`/api/models/${modelId}/sections/${section}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            section_data: description,
+                            is_completed: true
+                        })
+                    });
+
+                    if (saveResponse.ok) {
+                        success = true;
+                        showToastMessage('Section saved successfully', 'success');
+                        // Update completion if needed
+                        if (typeof window.updateCompletion === 'function') {
+                            window.updateCompletion();
+                        }
+                    } else {
+                        const errorText = await saveResponse.text();
+                        throw new Error(`Failed to save section: ${saveResponse.status} ${errorText}`);
+                    }
                 } else {
-                    const errorData = await response.json();
-                    if (typeof showToast !== 'undefined') {
-                        showToast('Error: ' + (errorData.error || 'Failed to create project'), 'error');
+                    // Original idea creation logic
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            _csrf: document.querySelector('input[name="_csrf"]').value,
+                            prompt: description
+                        })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        success = true;
+                        showToastMessage('Idea saved successfully!', 'success');
+                        // Success - redirect to idea detail page after a short delay to show toast
+                        setTimeout(() => {
+                            window.location.href = `/models/idea?ideaId=${data.idea_id}`;
+                        }, 1000);
+                    } else {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || 'Failed to create project');
                     }
                 }
             } catch (error) {
                 console.error('Submission error:', error);
-                if (typeof showToast !== 'undefined') {
-                    showToast('Network error. Please try again.', 'error');
-                }
+                showToastMessage('Error: ' + error.message, 'error');
             } finally {
                 // Reset loading state only if not already handled in success case
                 if (!success) {
@@ -850,23 +922,24 @@
 
          // Chat functionality
          let chatHistory = [];
-         let isChatOpen = false;
+         // isChatOpen and chatContainer already declared above
 
-        const chatBtn = form.querySelector('[aria-label="Chat with AI about Requirements"]');
-        const chatContainer = document.getElementById('{{id}}-chat-container');
-        const chatMessages = document.getElementById('{{id}}-chat-messages');
-        const chatInput = document.getElementById('{{id}}-chat-input');
-        const chatCharCounter = document.getElementById('{{id}}-chat-char-counter');
+         const chatBtn = form.querySelector('[aria-label="Chat with AI about Requirements"]');
+         const chatMessages = questionCard.querySelector('#{{id}}-chat-messages');
+         const chatInput = questionCard.querySelector('#{{id}}-chat-input');
+         const chatCharCounter = questionCard.querySelector('#{{id}}-chat-char-counter');
 
-         // Toggle chat visibility
-          chatBtn.addEventListener('click', () => {
-              isChatOpen = !isChatOpen;
-              chatContainer.classList.toggle('hidden', !isChatOpen);
 
-              if (isChatOpen && chatHistory.length === 0) {
-                  renderChatMessages();
-              }
-          });
+
+           // Toggle chat visibility
+            chatBtn.addEventListener('click', () => {
+                isChatOpen = !isChatOpen;
+                chatContainer.classList.toggle('hidden', !isChatOpen);
+
+                if (isChatOpen) {
+                    renderChatMessages();
+                }
+            });
 
         // Auto-resize chat input
         function autoResizeChatInput() {
@@ -897,42 +970,116 @@
                 return;
             }
 
-            chatHistory.forEach(message => {
-                const messageGroup = document.createElement('article');
-                messageGroup.className = `message-group message-group--${message.role}`;
+             chatHistory.forEach(message => {
+                 const messageGroup = document.createElement('article');
+                 messageGroup.className = `message-group message-group--${message.role}`;
 
-                // Add timestamp
-                const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                const isoTimestamp = new Date().toISOString();
+                 // Add timestamp
+                 const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                 const isoTimestamp = new Date().toISOString();
 
-                if (message.role === 'user') {
-                    // User message (right side)
-                    messageGroup.innerHTML = `
-                        <div class="flex flex-col items-end space-y-1">
-                            <div class="message message--user bg-primary text-primary-foreground px-4 py-3 rounded-2xl rounded-br-md max-w-[80%] shadow-sm">
-                                ${message.content.replace(/\n/g, '<br>')}
-                            </div>
-                            <time class="message-timestamp message-timestamp--user text-xs text-muted-foreground" datetime="${isoTimestamp}">${timestamp}</time>
-                        </div>
-                    `;
-                } else {
-                    // AI message (left side)
-                    messageGroup.innerHTML = `
-                        <div class="flex flex-col space-y-1">
-                             <div class="message message--ai bg-muted text-foreground px-4 py-3 rounded-2xl rounded-bl-md max-w-[80%] shadow-sm border border-border/50">
-                                 ${DOMPurify.sanitize(marked.parse(message.content, { renderer, breaks: true }))}
+                 if (message.role === 'user') {
+                     // User message (right side)
+                     messageGroup.innerHTML = `
+                         <div class="flex flex-col items-end space-y-1">
+                             <div class="message message--user bg-primary text-primary-foreground px-4 py-3 rounded-2xl rounded-br-md max-w-[80%] shadow-sm">
+                                 ${message.content.replace(/\n/g, '<br>')}
                              </div>
-                            <time class="message-timestamp message-timestamp--ai text-xs text-muted-foreground" datetime="${isoTimestamp}">${timestamp}</time>
-                        </div>
-                    `;
-                }
+                             <time class="message-timestamp message-timestamp--user text-xs text-muted-foreground" datetime="${isoTimestamp}">${timestamp}</time>
+                         </div>
+                     `;
+                   } else {
+                       // AI message (left side)
+                       const aiMessageDiv = document.createElement('div');
+                       aiMessageDiv.className = 'message message--ai bg-muted text-foreground px-4 py-3 rounded-2xl rounded-bl-md max-w-[80%] shadow-sm border border-border/50';
+                       aiMessageDiv.innerHTML = DOMPurify.sanitize(marked.parse(message.content, { renderer, breaks: true }));
+                       aiMessageDiv.dataset.rawContent = message.content;
 
-                chatMessages.appendChild(messageGroup);
-            });
+                       const flexDiv = document.createElement('div');
+                       flexDiv.className = 'flex flex-col space-y-1';
+                       flexDiv.appendChild(aiMessageDiv);
+                       flexDiv.innerHTML += `
+                           <div class="flex justify-start gap-1 mt-1">
+                               <button type="button" class="use-as-answer-btn text-xs text-primary hover:text-primary/80 underline decoration-primary/30 hover:decoration-primary/60 transition-colors cursor-pointer" title="Use this as the new answer">
+                                   Use as Answer
+                               </button>
+                               <span class="text-muted-foreground text-xs">•</span>
+                               <button type="button" class="append-to-answer-btn text-xs text-primary hover:text-primary/80 underline decoration-primary/30 hover:decoration-primary/60 transition-colors cursor-pointer" title="Append this to the current answer">
+                                   Append to Answer
+                               </button>
+                           </div>
+                           <time class="message-timestamp message-timestamp--ai text-xs text-muted-foreground" datetime="${isoTimestamp}">${timestamp}</time>
+                       `;
+
+                       // Add event listeners to the buttons
+                       flexDiv.querySelectorAll('.use-as-answer-btn').forEach(btn => {
+                           btn.addEventListener('click', function(e) {
+                               e.preventDefault();
+                               const messageGroup = this.closest('.message-group--ai');
+                               if (!messageGroup) return;
+                               const messageDiv = messageGroup.querySelector('.message--ai');
+                               if (!messageDiv || !messageDiv.dataset.rawContent) return;
+                               const rawContent = messageDiv.dataset.rawContent;
+
+                               // Switch to edit mode if in display mode
+                               const displayDiv = questionCard.querySelector('#{{id}}-assistant-prompt-display');
+                               if (displayDiv && displayDiv.style.display !== 'none') {
+                                   displayDiv.style.display = 'none';
+                                   descriptionTextarea.style.display = 'block';
+                                   descriptionTextarea.focus();
+                               }
+
+                               // Set the answer
+                               descriptionTextarea.value = rawContent;
+                               updateCharCounter();
+                               autoExpandTextarea();
+
+                               showToastMessage('Answer updated with AI response', 'success');
+                           });
+                       });
+
+                       flexDiv.querySelectorAll('.append-to-answer-btn').forEach(btn => {
+                           btn.addEventListener('click', function(e) {
+                               e.preventDefault();
+                               const messageGroup = this.closest('.message-group--ai');
+                               if (!messageGroup) return;
+                               const messageDiv = messageGroup.querySelector('.message--ai');
+                               if (!messageDiv || !messageDiv.dataset.rawContent) return;
+                               const rawContent = messageDiv.dataset.rawContent;
+
+                               // Switch to edit mode if in display mode
+                               const displayDiv = questionCard.querySelector('#{{id}}-assistant-prompt-display');
+                               if (displayDiv && displayDiv.style.display !== 'none') {
+                                   displayDiv.style.display = 'none';
+                                   descriptionTextarea.style.display = 'block';
+                                   descriptionTextarea.focus();
+                               }
+
+                               // Append to current answer
+                               const currentValue = descriptionTextarea.value.trim();
+                               if (currentValue) {
+                                   descriptionTextarea.value = currentValue + '\n\n' + rawContent;
+                               } else {
+                                   descriptionTextarea.value = rawContent;
+                               }
+                               updateCharCounter();
+                               autoExpandTextarea();
+
+                               showToastMessage('AI response appended to answer', 'success');
+                           });
+                       });
+
+                       messageGroup.appendChild(flexDiv);
+                   }
+
+                 chatMessages.appendChild(messageGroup);
+             });
 
             // Scroll to bottom
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
+
+
 
         // Send chat message
         async function sendChatMessage() {
@@ -977,10 +1124,10 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        messages: chatHistory,
-                        context: context
-                    })
+                     body: JSON.stringify({
+                         messages: chatHistory,
+                         ideaId: ideaId
+                     })
                 });
 
                 const data = await response.json();

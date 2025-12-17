@@ -35,14 +35,33 @@
 
       <!-- Available Ideas -->
       <div class="bg-card rounded-lg border border-border p-6">
-        {{#if availableIdeas}}
+         {{#if hasIdeas}}
         <div class="mb-6">
           <h2 class="text-xl font-semibold text-foreground mb-2">Available Ideas</h2>
           <p class="text-muted-foreground">Select the ideas you want to add to this portfolio</p>
         </div>
 
-        <form id="add-ideas-form" onsubmit="addIdeasToPortfolio(event)">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+         <form id="add-ideas-form" onsubmit="addIdeasToPortfolio(event)">
+           <!-- Search -->
+           <div class="mb-4">
+             <div class="relative max-w-md">
+               <div class="relative">
+                 <svg class="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <circle cx="11" cy="11" r="8"></circle>
+                   <path d="m21 21-4.35-4.35"></path>
+                 </svg>
+                 <input type="text" id="idea-search" placeholder="Search ideas..." class="input w-full pl-10 pr-10" oninput="filterIdeas()">
+                 <button type="button" id="idea-search-clear" class="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground hover:text-foreground opacity-0 transition-opacity duration-200" onclick="clearIdeaSearch()" style="display: none;">
+                   <svg class="lucide lucide-x w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                     <path d="M18 6L6 18"></path>
+                     <path d="M6 6l12 12"></path>
+                   </svg>
+                 </button>
+               </div>
+             </div>
+           </div>
+
+           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6" id="ideas-grid">
             {{#each availableIdeas}}
             <div class="bg-muted/30 rounded-lg p-4 border border-border hover:bg-muted/50 transition-colors">
               <div class="flex items-start gap-3 mb-3">
@@ -77,7 +96,7 @@
                   <span class="text-muted-foreground">Rating</span>
                   <div class="flex items-center gap-1">
                     <span class="text-foreground font-medium">{{rating}}</span>
-                    <svg class="lucide lucide-star w-3 h-3 fill-yellow-400 text-yellow-400" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                     <svg class="lucide lucide-star w-3 h-3 fill-yellow text-yellow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
                     </svg>
                   </div>
@@ -181,8 +200,12 @@
       // Add each idea to portfolio
       for (const ideaId of selectedIdeas) {
         try {
-          const response = await fetch(`/api/portfolios/${portfolioId}/ideas/${ideaId}`, {
-            method: 'POST'
+          const formData = new FormData();
+          formData.append('ideaId', ideaId);
+
+          const response = await fetch(`/portfolios/${portfolioId}/ideas`, {
+            method: 'POST',
+            body: formData
           });
 
           if (response.ok) {
@@ -223,7 +246,99 @@
     }
   }
 
-  // Initialize
-  document.addEventListener('DOMContentLoaded', updateSelection);
-</script></content>
-<parameter name="filePath">lib/pages/portfolios/add-ideas.hbs
+   // Filter ideas
+   let allIdeas = {{{json availableIdeas}}};
+
+   function filterIdeas() {
+     const searchTerm = document.getElementById('idea-search').value.toLowerCase();
+     const filteredIdeas = allIdeas.filter(idea =>
+       idea.title.toLowerCase().includes(searchTerm) ||
+       (idea.category && idea.category.toLowerCase().includes(searchTerm))
+     );
+     renderIdeas(filteredIdeas);
+
+     // Show/hide clear button
+     const clearButton = document.getElementById('idea-search-clear');
+     if (searchTerm.length > 0) {
+       clearButton.style.display = 'block';
+       setTimeout(() => clearButton.classList.remove('opacity-0'), 10);
+     } else {
+       clearButton.classList.add('opacity-0');
+       setTimeout(() => clearButton.style.display = 'none', 200);
+     }
+   }
+
+   function clearIdeaSearch() {
+     const searchInput = document.getElementById('idea-search');
+     searchInput.value = '';
+     filterIdeas();
+     searchInput.focus();
+   }
+
+   function renderIdeas(ideas) {
+     const grid = document.getElementById('ideas-grid');
+     if (ideas.length === 0) {
+       grid.innerHTML = `
+         <div class="col-span-full text-center py-8">
+           <p class="text-muted-foreground">No ideas match your search.</p>
+         </div>
+       `;
+       return;
+     }
+
+     grid.innerHTML = ideas.map(idea => `
+       <div class="bg-muted/30 rounded-lg p-4 border border-border hover:bg-muted/50 transition-colors">
+         <div class="flex items-start gap-3 mb-3">
+           <input type="checkbox" id="idea-${idea.id}" name="ideaIds" value="${idea.id}" class="checkbox checkbox-primary mt-1">
+           <div class="flex-1">
+             <label for="idea-${idea.id}" class="cursor-pointer">
+               <h3 class="font-medium text-foreground mb-1 line-clamp-2">${idea.title}</h3>
+               <p class="text-sm text-muted-foreground">${idea.category || ''}</p>
+             </label>
+           </div>
+         </div>
+
+         <div class="space-y-2 ml-8">
+           <div class="flex items-center justify-between text-sm">
+             <span class="text-muted-foreground">Completion</span>
+             <span class="text-foreground font-medium">${idea.completion_percentage}%</span>
+           </div>
+           <div class="w-full bg-muted rounded-full h-2">
+             <div class="bg-primary h-2 rounded-full transition-all duration-300" style="width: ${idea.completion_percentage}%"></div>
+           </div>
+
+           <div class="flex items-center justify-between text-sm">
+             <span class="text-muted-foreground">Status</span>
+             <span class="px-2 py-1 rounded-full text-xs font-medium
+               ${idea.overall_status === 'completed' ? 'bg-success/20 text-success' :
+                 idea.overall_status === 'in_progress' ? 'bg-warning/20 text-warning' :
+                 'bg-muted text-muted-foreground'}">${idea.overall_status}</span>
+           </div>
+
+           ${idea.rating ? `
+           <div class="flex items-center justify-between text-sm">
+             <span class="text-muted-foreground">Rating</span>
+             <div class="flex items-center gap-1">
+               <span class="text-foreground font-medium">${idea.rating}</span>
+                <svg class="lucide lucide-star w-3 h-3 fill-yellow text-yellow" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                 <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+               </svg>
+             </div>
+           </div>
+           ` : ''}
+
+           <div class="flex items-center justify-between text-sm">
+             <span class="text-muted-foreground">Created</span>
+             <span class="text-foreground">${new Date(idea.created_at).toLocaleDateString()}</span>
+           </div>
+         </div>
+       </div>
+     `).join('');
+     updateSelection();
+   }
+
+   // Initialize
+   document.addEventListener('DOMContentLoaded', function() {
+     renderIdeas(allIdeas);
+   });
+</script>

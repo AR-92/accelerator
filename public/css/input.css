@@ -35,11 +35,12 @@
   --color-base-content: hsl(290 10% 10%);
 
   /* Additional */
+  --color-background: var(--color-base-100);
+  --color-foreground: var(--color-base-content);
   --color-input: var(--color-base-300);
   --color-muted-foreground: var(--color-neutral);
   --color-ring: var(--color-primary);
   --color-muted: var(--color-base-200);
-  --color-foreground: var(--color-base-content);
 
   /* Semantic */
   --color-info: hsl(217 91% 60%);
@@ -49,6 +50,8 @@
   --color-warning: hsl(38 92% 50%);
   --color-warning-content: hsl(38 92% 95%);
   --color-error: hsl(0 84% 60%);
+  --color-yellow: hsl(45 86% 58%);
+  --color-yellow-content: hsl(45 86% 10%);
 
   /* Grid color */
   --grid-color: rgba(0, 0, 0, 0.03);
@@ -102,11 +105,12 @@
   --color-base-content: hsl(290 10% 90%);
 
   /* Additional */
+  --color-background: var(--color-base-100);
+  --color-foreground: var(--color-base-content);
   --color-input: var(--color-base-300);
   --color-muted-foreground: var(--color-neutral);
   --color-ring: var(--color-primary);
   --color-muted: var(--color-base-200);
-  --color-foreground: var(--color-base-content);
 
   /* Semantic (Adjusted for dark) */
   --color-info: hsl(217 91% 65%);
@@ -117,6 +121,8 @@
   --color-warning-content: hsl(38 92% 10%);
   --color-error: hsl(0 84% 65%);
   --color-error-content: hsl(0 84% 10%);
+  --color-yellow: hsl(45 86% 65%);
+  --color-yellow-content: hsl(45 86% 95%);
 
   /* Grid color */
   --grid-color: rgba(255, 255, 255, 0.03);
@@ -218,7 +224,7 @@
 
   /* Inputs */
   .input {
-    @apply block w-full px-3 py-2 border border-base-300 rounded-md shadow-sm placeholder-base-content/50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-0;
+    @apply block w-full px-3 py-2 bg-base-100 text-base-content border border-base-300 rounded-md shadow-sm placeholder-base-content/50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-0;
   }
 
   .input:disabled {
@@ -230,11 +236,11 @@
   }
 
   .textarea {
-    @apply block w-full px-3 py-2 border border-base-300 rounded-md shadow-sm placeholder-base-content/50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-0 resize-none;
+    @apply block w-full px-3 py-2 bg-base-100 text-base-content border border-base-300 rounded-md shadow-sm placeholder-base-content/50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-0 resize-none;
   }
 
   .select {
-    @apply block w-full px-3 py-2 border border-base-300 rounded-md shadow-sm placeholder-base-content/50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-0;
+    @apply block w-full px-3 py-2 bg-base-100 text-base-content border border-base-300 rounded-md shadow-sm placeholder-base-content/50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-0;
   }
 
   /* Cards */
@@ -410,6 +416,14 @@
     @apply text-error;
   }
 
+  .text-yellow {
+    color: var(--color-yellow);
+  }
+
+  .fill-yellow {
+    fill: var(--color-yellow);
+  }
+
   /* Background utilities */
   .bg-primary {
     @apply bg-primary;
@@ -482,6 +496,10 @@
 
   .text-foreground {
     color: var(--color-foreground);
+  }
+
+  .bg-background {
+    background-color: var(--color-background);
   }
 
   .bg-muted {

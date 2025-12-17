@@ -1,5 +1,18 @@
+{{#if (eq user_id ../user.id)}}
+<div class="flex relative flex-col gap-1 items-start p-4 mb-4 overflow-hidden border rounded-md border-primary bg-primary/5 focus:outline-none">
+  <div class="w-full">
+    <span class="text-ellipsis break-words line-clamp-2 text-sm text-foreground font-medium">{{title}}</span>
+    <div class="text-xs text-muted-foreground mt-1">Your Idea</div>
+  </div>
+  <div class="text-xs text-muted-foreground mb-2">This is your own idea. You can edit and manage it from your portfolio.</div>
+  <div class="flex space-x-2 mt-auto pt-2 border-t border-border w-full">
+    <a href="/portfolios" class="btn btn-outline btn-sm flex-1">View in Portfolio</a>
+    <a href="/models/idea?ideaId={{id}}" class="btn btn-primary btn-sm flex-1">Continue Editing</a>
+  </div>
+</div>
+{{else}}
 <a class="flex relative flex-col gap-1 items-start p-4 mb-4 cursor-pointer group-item-btns overflow-hidden border rounded-md border-border bg-card hover:shadow-lg dark:hover:shadow-primary focus:outline-none"
-    href="/models/idea?ideaId={{id}}" draggable="false"
+    href="/idea/{{id}}" draggable="false"
     data-id="{{id}}" data-status="{{status}}" data-type="{{category}}"
     data-favorite="{{is_favorite}}">
     <button data-populate-id="{{id}}"
@@ -144,3 +157,4 @@
         </div>
     </div>
 </a>
+{{/if}}

@@ -477,7 +477,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
     // Wait for marked to load
     window.waitForMarked = function(callback) {
@@ -665,16 +664,15 @@
                 // Switch back to display mode when losing focus
                 const content = this.value;
                 this.dataset.originalContent = content;
-                waitForMarked(() => {
-                    const processedContent = content.replace(/\n/g, '\n\n');
-                    displayDivEdit.innerHTML = marked.parse(processedContent, { breaks: true });
-                    displayDivEdit.style.display = 'block';
-                    this.style.display = 'none';
-                });
+                const processedContent = content.replace(/\n/g, '\n\n');
+                displayDivEdit.innerHTML = marked.parse(processedContent, { breaks: true });
+                displayDivEdit.style.display = 'block';
+                this.style.display = 'none';
             });
         });
 
         // AI button handlers
+        waitForMarked(() => {
         async function callAIApi(endpoint, data) {
             try {
                 const response = await fetch(`/api/ai/${endpoint}`, {
@@ -798,8 +796,6 @@
 
         // Generate random idea
         const randomIdeaBtn = document.querySelector('[aria-label="Generate random idea"]');
-
-        waitForMarked(() => {
         randomIdeaBtn.addEventListener('click', async function (e) {
             e.preventDefault();
 
@@ -1150,13 +1146,9 @@
                     setTimeout(() => {
                         window.location.href = `/models/idea?ideaId=${data.idea_id}`;
                     }, 1000);
-            } else {
-                const description = descriptionTextarea.value;
-                const form = document.getElementById('new-project-form');
-                if (!description.trim()) {
-                    showToastMessage('Please enter a description first', 'warning');
-                    return;
-                }
+                } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to create project');
                 }
             } catch (error) {
                 console.error('Submission error:', error);
@@ -1178,6 +1170,5 @@
             }
         });
     });
-});
-</script>
+}); // End waitForMarked
 </script>
