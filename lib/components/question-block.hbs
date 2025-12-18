@@ -851,14 +851,41 @@
                     }
                     const modelId = modelData.id;
 
-                    // Then save section data
+                    // Extract question key from id (e.g., "problem-validation-q1" -> "q1")
+                    const questionKey = '{{id}}'.split('-').pop();
+
+                    // First, fetch existing section data
+                    const getResponse = await fetch(`/api/models/${modelId}/sections/${section}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    let existingSectionData = {};
+                    if (getResponse.ok) {
+                        const sectionInfo = await getResponse.json();
+                        const existingData = sectionInfo.section_data;
+
+                        if (typeof existingData === 'string') {
+                            // Backward compatibility: convert old string data to object
+                            existingSectionData = { "q1": existingData };
+                        } else if (existingData && typeof existingData === 'object') {
+                            existingSectionData = existingData;
+                        }
+                    }
+
+                    // Update the specific question
+                    existingSectionData[questionKey] = description;
+
+                    // Then save updated section data
                     const saveResponse = await fetch(`/api/models/${modelId}/sections/${section}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            section_data: description,
+                            section_data: existingSectionData,
                             is_completed: true
                         })
                     });

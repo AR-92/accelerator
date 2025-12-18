@@ -133,6 +133,7 @@
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
     --radius-3xl: 1.5rem;
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --animate-spin: spin 1s linear infinite;
@@ -463,6 +464,12 @@
   }
   .right-5 {
     right: calc(var(--spacing) * 5);
+  }
+  .right-10 {
+    right: calc(var(--spacing) * 10);
+  }
+  .right-18 {
+    right: calc(var(--spacing) * 18);
   }
   .right-\[10\%\] {
     right: 10%;
@@ -866,6 +873,9 @@
   .h-\[calc\(100vh-370px\)\] {
     height: calc(100vh - 370px);
   }
+  .h-fit {
+    height: fit-content;
+  }
   .h-full {
     height: 100%;
   }
@@ -1022,8 +1032,17 @@
   .w-\[350px\] {
     width: 350px;
   }
+  .w-\[400px\] {
+    width: 400px;
+  }
+  .w-\[500px\] {
+    width: 500px;
+  }
   .w-\[600px\] {
     width: 600px;
+  }
+  .w-\[800px\] {
+    width: 800px;
   }
   .w-\[900px\] {
     width: 900px;
@@ -1072,6 +1091,15 @@
   }
   .max-w-\[280px\] {
     max-width: 280px;
+  }
+  .max-w-\[300px\] {
+    max-width: 300px;
+  }
+  .max-w-\[600px\] {
+    max-width: 600px;
+  }
+  .max-w-\[800px\] {
+    max-width: 800px;
   }
   .max-w-\[900px\] {
     max-width: 900px;
@@ -1880,6 +1908,9 @@
   }
   .bg-gray-100 {
     background-color: var(--color-gray-100);
+  }
+  .bg-gray-200 {
+    background-color: var(--color-gray-200);
   }
   .bg-gray-600 {
     background-color: var(--color-gray-600);
@@ -3307,6 +3338,20 @@
       rotate: 90deg;
     }
   }
+  .group-hover\:block {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        display: block;
+      }
+    }
+  }
+  .group-hover\:flex {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        display: flex;
+      }
+    }
+  }
   .group-hover\:inline {
     &:is(:where(.group):hover *) {
       @media (hover: hover) {
@@ -3783,6 +3828,16 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-purple-700);
+      }
+    }
+  }
+  .hover\:bg-secondary\/20 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: color-mix(in srgb, hsl(260 56% 44%) 20%, transparent);
+        @supports (color: color-mix(in lab, red, red)) {
+          background-color: color-mix(in oklab, var(--color-secondary) 20%, transparent);
+        }
       }
     }
   }

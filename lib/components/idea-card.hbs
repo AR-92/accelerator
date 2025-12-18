@@ -1,26 +1,22 @@
-{{#if (eq user_id ../user.id)}}
-<div class="flex relative flex-col gap-1 items-start p-4 mb-4 overflow-hidden border rounded-md border-primary bg-primary/5 focus:outline-none">
-  <div class="w-full">
-    <span class="text-ellipsis break-words line-clamp-2 text-sm text-foreground font-medium">{{title}}</span>
-    <div class="text-xs text-muted-foreground mt-1">Your Idea</div>
-  </div>
-  <div class="text-xs text-muted-foreground mb-2">This is your own idea. You can edit and manage it from your portfolio.</div>
-  <div class="flex space-x-2 mt-auto pt-2 border-t border-border w-full">
-    <a href="/portfolios" class="btn btn-outline btn-sm flex-1">View in Portfolio</a>
-    <a href="/models/idea?ideaId={{id}}" class="btn btn-primary btn-sm flex-1">Continue Editing</a>
-  </div>
-</div>
-{{else}}
-<a class="flex relative flex-col gap-1 items-start p-4 mb-4 cursor-pointer group-item-btns overflow-hidden border rounded-md border-border bg-card hover:shadow-lg dark:hover:shadow-primary focus:outline-none"
-    href="/idea/{{id}}" draggable="false"
+
+<div class="flex relative w-[500px] h-fit flex-col gap-1 items-start p-4 mb-4 cursor-pointer group-item-btns overflow-hidden border rounded-md border-border bg-card hover:shadow-lg dark:hover:shadow-primary focus:outline-none"
+    onclick="toggleCardDetails(this)"
     data-id="{{id}}" data-status="{{status}}" data-type="{{category}}"
     data-favorite="{{is_favorite}}">
-    <button data-populate-id="{{id}}"
-        class="absolute top-2 right-2 text-muted-foreground hover:text-primary cursor-pointer">
+     <button data-populate-id="{{id}}"
+         class="absolute top-2 right-2 text-muted-foreground hover:text-primary cursor-pointer">
 
-        {{{icon 'copy' class='w-4 h-4'}}}
+         {{{icon 'copy' class='w-4 h-4'}}}
 
-    </button>
+     </button>
+
+     <button onclick="window.location.href='/idea/{{id}}'"
+         class="absolute top-2 right-10 px-2 py-0.5 bg-secondary/10 text-foreground text-xs rounded-md border border-secondary/40 cursor-pointer hover:bg-secondary/20"
+         title="View Full Details">
+
+         Full Screen
+
+     </button>
     <div class="w-full">
         <span
             class="text-ellipsis break-words line-clamp-2 text-sm text-foreground font-medium">{{title}}</span>
@@ -36,43 +32,45 @@
         </div>
     </div>
 
-    <div class="text-xs text-foreground dark:text-muted-foreground mb-2">
-        {{{markdown description}}}
-    </div>
+    <div class="card-details" style="display: none;">
+        <div class="text-xs text-foreground dark:text-muted-foreground mb-2">
+            {{{markdown description}}}
+        </div>
 
 
 
-    <div class="flex flex-wrap gap-1 mb-2">
-        {{#each tags}}
-        <span
-            class="px-2 py-0.5 bg-secondary/10 text-foreground text-xs rounded-md border border-secondary/40">{{this}}</span>
-        {{/each}}
-    </div>
+        <div class="flex flex-wrap gap-1 mb-2">
+            {{#each tags}}
+            <span
+                class="px-2 py-0.5 bg-secondary/10 text-foreground text-xs rounded-md border border-secondary/40">{{this}}</span>
+            {{/each}}
+        </div>
 
-     <div class="text-xs text-muted-foreground mb-2 flex items-center gap-2">
-         {{#if overall_status}}
-         <span class="px-2 py-1 rounded-full text-xs {{statusClass overall_status}}">
-             {{overall_status}}
-         </span>
-         {{/if}}
-         {{#if privacy}}
-         <span class="px-2 py-1 rounded-full text-xs {{cond (eq privacy 'public') 'bg-green-100 text-green-800' 'bg-gray-100 text-gray-800'}}">
-             {{cond (eq privacy 'public') 'Public' 'Private'}}
-         </span>
-         {{/if}}
-         <span>{{created_at_formatted}} | {{updated_at_formatted}}</span>
-     </div>
+         <div class="text-xs text-muted-foreground mb-2 flex items-center gap-2">
+             {{#if overall_status}}
+             <span class="px-2 py-1 rounded-full text-xs {{statusClass overall_status}}">
+                 {{overall_status}}
+             </span>
+             {{/if}}
+             {{#if privacy}}
+             <span class="px-2 py-1 rounded-full text-xs {{cond (eq privacy 'public') 'bg-green-100 text-green-800' 'bg-gray-100 text-gray-800'}}">
+                 {{cond (eq privacy 'public') 'Public' 'Private'}}
+             </span>
+             {{/if}}
+             <span>{{created_at_formatted}} | {{updated_at_formatted}}</span>
+         </div>
 
-    {{#if completion_percentage}}
-    <div class="text-xs text-muted-foreground mb-2">
-        <div class="flex items-center gap-2">
-            <span>Progress: {{completion_percentage}}%</span>
-            <div class="flex-1 bg-muted rounded-full h-1">
-                <div class="bg-primary h-1 rounded-full" style="width: {{completion_percentage}}%"></div>
+        {{#if completion_percentage}}
+        <div class="text-xs text-muted-foreground mb-2">
+            <div class="flex items-center gap-2">
+                <span>Progress: {{completion_percentage}}%</span>
+                <div class="flex-1 bg-muted rounded-full h-1">
+                    <div class="bg-primary h-1 rounded-full" style="width: {{completion_percentage}}%"></div>
+                </div>
             </div>
         </div>
+        {{/if}}
     </div>
-    {{/if}}
 
 
     <div
@@ -148,13 +146,20 @@
             </button>
             {{/if}}
 
-            <button
-                class="text-muted-foreground hover:text-red-500 rounded-full hover:bg-primary-100 hover:text-primary-900 archive-btn">
+             <button onclick="window.location.href='/models/idea?id={{id}}'"
+                 class="text-muted-foreground hover:text-primary rounded-full hover:bg-primary-100 hover:text-primary-900"
+                 title="Continue Editing in Models">
 
-                 {{{icon 'archive' class='w-4 h-4'}}}
+                  {{{icon 'edit' class='w-4 h-4'}}}
 
-            </button>
+             </button>
+
+             <button
+                 class="text-muted-foreground hover:text-red-500 rounded-full hover:bg-primary-100 hover:text-primary-900 archive-btn">
+
+                  {{{icon 'archive' class='w-4 h-4'}}}
+
+             </button>
         </div>
     </div>
-</a>
-{{/if}}
+</div>

@@ -53,24 +53,32 @@
     {{#if scripts}}{{scripts}}{{/if}}
 
     <script src="/js/toast.js"></script>
-    <script>
-        // Enhanced toast system is now loaded
+     <script>
+         // Enhanced toast system is now loaded
 
-        // Global function for populating new-idea form from existing ideas
-        window.redirectToPopulate = function (ideaId) {
-            window.location.href = `/new-idea?populate=${ideaId}`;
-        };
+         // Global function for populating new-idea form from existing ideas
+         window.redirectToPopulate = function (ideaId) {
+             window.location.href = `/new-idea?populate=${ideaId}`;
+         };
 
-        // Event delegation for populate buttons
-        document.addEventListener('click', function(e) {
-            const button = e.target.closest('[data-populate-id]');
-            if (button) {
-                e.preventDefault();
-                const id = button.dataset.populateId;
-                redirectToPopulate(id);
-            }
-        });
-    </script>
+         // Toggle function for card details
+         function toggleCardDetails(card) {
+             const details = card.querySelector('.card-details');
+             if (details) {
+                 details.style.display = details.style.display === 'none' ? 'block' : 'none';
+             }
+         }
+
+         // Event delegation for populate buttons
+         document.addEventListener('click', function(e) {
+             const button = e.target.closest('[data-populate-id]');
+             if (button) {
+                 e.preventDefault();
+                 const id = button.dataset.populateId;
+                 redirectToPopulate(id);
+             }
+         });
+     </script>
 
     {{#if flash.success}}
     {{#each flash.success}}
